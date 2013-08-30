@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FE917D0FE3A0075F9D8 /* Album.m */; };
+		03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */; };
+		03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */; };
+		0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903A17D103330075F9D8 /* PhotoBoxClient.m */; };
+		0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
 		032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */; };
 		032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
@@ -21,6 +26,8 @@
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
 		032CBBA917D0BDF3001205B1 /* PhotoBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBBA817D0BDF3001205B1 /* PhotoBoxTests.m */; };
+		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
+		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +41,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		03108FE817D0FE3A0075F9D8 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Album.h; path = PhotoBox/Models/Album.h; sourceTree = "<group>"; };
+		03108FE917D0FE3A0075F9D8 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Album.m; path = PhotoBox/Models/Album.m; sourceTree = "<group>"; };
+		03108FF117D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+setValuesForKeysWithJSONDictionary.h"; sourceTree = "<group>"; };
+		03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+setValuesForKeysWithJSONDictionary.m"; sourceTree = "<group>"; };
+		03108FF417D0FF0C0075F9D8 /* PhotoBoxModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxModel.h; path = PhotoBox/Models/PhotoBoxModel.h; sourceTree = "<group>"; };
+		03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxModel.m; path = PhotoBox/Models/PhotoBoxModel.m; sourceTree = "<group>"; };
+		0310903917D103330075F9D8 /* PhotoBoxClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxClient.h; path = PhotoBox/Networking/PhotoBoxClient.h; sourceTree = "<group>"; };
+		0310903A17D103330075F9D8 /* PhotoBoxClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxClient.m; path = PhotoBox/Networking/PhotoBoxClient.m; sourceTree = "<group>"; };
+		0310903C17D103780075F9D8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		0310903D17D104460075F9D8 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectionManager.h; path = PhotoBox/Networking/ConnectionManager.h; sourceTree = "<group>"; };
+		0310903E17D104460075F9D8 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConnectionManager.m; path = PhotoBox/Networking/ConnectionManager.m; sourceTree = "<group>"; };
 		032CBB7A17D0BDF3001205B1 /* PhotoBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB7D17D0BDF3001205B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,6 +71,10 @@
 		032CBBA417D0BDF3001205B1 /* PhotoBoxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PhotoBoxTests-Info.plist"; sourceTree = "<group>"; };
 		032CBBA617D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		032CBBA817D0BDF3001205B1 /* PhotoBoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxTests.m; sourceTree = "<group>"; };
+		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
+		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1D8E459750D4D6DBD1D4F59 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +85,7 @@
 				032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */,
 				032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
+				32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,19 +96,65 @@
 				032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */,
 				032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
+				1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03108FDB17D0F3FA0075F9D8 /* External */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		03108FE717D0FE130075F9D8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				03108FE817D0FE3A0075F9D8 /* Album.h */,
+				03108FE917D0FE3A0075F9D8 /* Album.m */,
+				03108FF417D0FF0C0075F9D8 /* PhotoBoxModel.h */,
+				03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		03108FF017D0FED40075F9D8 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				03108FF117D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.h */,
+				03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */,
+			);
+			name = Categories;
+			path = PhotoBox/Categories;
+			sourceTree = "<group>";
+		};
+		0310903817D1031A0075F9D8 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				0310903917D103330075F9D8 /* PhotoBoxClient.h */,
+				0310903A17D103330075F9D8 /* PhotoBoxClient.m */,
+				0310903D17D104460075F9D8 /* ConnectionManager.h */,
+				0310903E17D104460075F9D8 /* ConnectionManager.m */,
+			);
+			name = Networking;
+			sourceTree = "<group>";
+		};
 		032CBB7117D0BDF3001205B1 = {
 			isa = PBXGroup;
 			children = (
+				0310903817D1031A0075F9D8 /* Networking */,
+				03108FF017D0FED40075F9D8 /* Categories */,
+				03108FE717D0FE130075F9D8 /* Models */,
+				03108FDB17D0F3FA0075F9D8 /* External */,
 				032CBB8317D0BDF3001205B1 /* PhotoBox */,
 				032CBBA217D0BDF3001205B1 /* PhotoBoxTests */,
 				032CBB7C17D0BDF3001205B1 /* Frameworks */,
 				032CBB7B17D0BDF3001205B1 /* Products */,
+				2D8562143BB5431496ECF57D /* Pods.xcconfig */,
+				7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +174,8 @@
 				032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */,
 				032CBB8117D0BDF3001205B1 /* UIKit.framework */,
 				032CBB9C17D0BDF3001205B1 /* XCTest.framework */,
+				A1D8E459750D4D6DBD1D4F59 /* libPods.a */,
+				A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -130,6 +201,7 @@
 				032CBB8617D0BDF3001205B1 /* InfoPlist.strings */,
 				032CBB8917D0BDF3001205B1 /* main.m */,
 				032CBB8B17D0BDF3001205B1 /* PhotoBox-Prefix.pch */,
+				0310903C17D103780075F9D8 /* Constants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -159,9 +231,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBox" */;
 			buildPhases = (
+				5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
+				A426A20BBE3148799A8BAA5E /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -176,9 +250,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 032CBBAF17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBoxTests" */;
 			buildPhases = (
+				1220ACDE87AF4F8CAB118BAF /* Check Pods Manifest.lock */,
 				032CBB9717D0BDF3001205B1 /* Sources */,
 				032CBB9817D0BDF3001205B1 /* Frameworks */,
 				032CBB9917D0BDF3001205B1 /* Resources */,
+				5EBC4A64AF074ED38D3177E6 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -244,14 +320,82 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1220ACDE87AF4F8CAB118BAF /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		5EBC4A64AF074ED38D3177E6 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-PhotoBoxTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A426A20BBE3148799A8BAA5E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		032CBB7617D0BDF3001205B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */,
+				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
+				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
+				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
+				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
+				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,6 +515,7 @@
 		};
 		032CBBAD17D0BDF3001205B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -384,6 +529,7 @@
 		};
 		032CBBAE17D0BDF3001205B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -397,6 +543,7 @@
 		};
 		032CBBB017D0BDF3001205B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PhotoBox.app/PhotoBox";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -419,6 +566,7 @@
 		};
 		032CBBB117D0BDF3001205B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PhotoBox.app/PhotoBox";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -454,6 +602,7 @@
 				032CBBAE17D0BDF3001205B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		032CBBAF17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBoxTests" */ = {
 			isa = XCConfigurationList;
@@ -462,6 +611,7 @@
 				032CBBB117D0BDF3001205B1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
