@@ -109,8 +109,7 @@
                                                [self didFetchItems];
                                                int count = self.items.count;
                                                if (count==self.totalItems) {
-                                                   UIEdgeInsets inset = self.collectionView.contentInset;
-                                                   [self.collectionView performSelector:@selector(setContentInset:) withObject:[NSValue valueWithUIEdgeInsets:UIEdgeInsetsMake(inset.top, inset.left, 0, inset.right)] afterDelay:0.1];
+                                                   [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
                                                }
                                            }
                                            
@@ -206,7 +205,7 @@
         [self.collectionView performBatchUpdates:^{
             
         } completion:^(BOOL finished) {
-            
+            [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
         }];
     }
     

@@ -26,7 +26,7 @@
             [activity setCenter:CGPointMake(contentSize.width/2, contentSize.height+CGRectGetHeight(activity.frame)/2+10)];
             [activity startAnimating];
             UIEdgeInsets inset = cv.collectionView.contentInset;
-            [cv.collectionView setContentInset:UIEdgeInsetsMake(inset.top, inset.left, inset.bottom + CGRectGetHeight(activity.frame)*2, inset.right)];
+            [cv.collectionView setContentInset:UIEdgeInsetsMake(inset.top, inset.left, CGRectGetHeight(activity.frame)*2, inset.right)];
         } else {
             UIActivityIndicatorView *activity = (UIActivityIndicatorView *)[cv.collectionView viewWithTag:kLoadingViewTag];
             [activity stopAnimating];
