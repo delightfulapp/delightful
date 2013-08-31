@@ -42,10 +42,20 @@
 
 - (void)getResource:(ResourceType)type
              action:(ActionType)action
-         resourceId:(int)resourceId
+         resourceId:(NSString *)resourceId
                page:(int)page
             success:(void (^)(id))successBlock
             failure:(void (^)(NSError *))failureBlock {
+    switch (action) {
+        case ListAction:{
+            if (type == AlbumResource) [self getAlbumsForPage:page success:successBlock failure:failureBlock];
+            else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page success:successBlock failure:failureBlock];
+            if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 - (void)getAlbumsForPage:(int)page

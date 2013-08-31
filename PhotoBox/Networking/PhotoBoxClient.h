@@ -29,7 +29,7 @@ typedef NS_ENUM(NSInteger, ActionType) {
 
 - (void)getResource:(ResourceType)type
              action:(ActionType)action
-         resourceId:(int)resourceId
+         resourceId:(NSString *)resourceId
                page:(int)page
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock;
