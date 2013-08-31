@@ -194,6 +194,9 @@
 }
 
 - (void)changeNumberOfColumnsWithPinch:(PinchDirection)direction {
+    NSArray *visibleItems = [self.collectionView visibleCells];
+    UICollectionViewCell *cell = visibleItems[0];
+    NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
     int numCol = self.numberOfColumns;
     switch (direction) {
         case PinchIn:{
@@ -215,6 +218,7 @@
             
         } completion:^(BOOL finished) {
             [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         }];
     }
     

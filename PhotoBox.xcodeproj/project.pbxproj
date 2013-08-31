@@ -21,7 +21,6 @@
 		032CBB8A17D0BDF3001205B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8917D0BDF3001205B1 /* main.m */; };
 		032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8D17D0BDF3001205B1 /* AppDelegate.m */; };
 		032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8F17D0BDF3001205B1 /* Main.storyboard */; };
-		032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB9317D0BDF3001205B1 /* ViewController.m */; };
 		032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB9517D0BDF3001205B1 /* Images.xcassets */; };
 		032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB9C17D0BDF3001205B1 /* XCTest.framework */; };
 		032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
@@ -87,8 +86,6 @@
 		032CBB8C17D0BDF3001205B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		032CBB8D17D0BDF3001205B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		032CBB9017D0BDF3001205B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		032CBB9217D0BDF3001205B1 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		032CBB9317D0BDF3001205B1 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		032CBB9517D0BDF3001205B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		032CBB9B17D0BDF3001205B1 /* PhotoBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB9C17D0BDF3001205B1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -262,8 +259,6 @@
 				032CBB8C17D0BDF3001205B1 /* AppDelegate.h */,
 				032CBB8D17D0BDF3001205B1 /* AppDelegate.m */,
 				032CBB8F17D0BDF3001205B1 /* Main.storyboard */,
-				032CBB9217D0BDF3001205B1 /* ViewController.h */,
-				032CBB9317D0BDF3001205B1 /* ViewController.m */,
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
 				032CBB8417D0BDF3001205B1 /* Supporting Files */,
 			);
@@ -528,7 +523,6 @@
 			files = (
 				035846AE17D22D4400E196D7 /* PhotosViewControllerDataSource.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
-				032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
