@@ -10,4 +10,6 @@
 
 @interface AlbumCell : PhotoBoxCell
 
+@property (weak, nonatomic) IBOutlet UILabel *albumTitle;
+@property (weak, nonatomic) IBOutlet UIView *albumTitleBackgroundView;
 @end

@@ -29,16 +29,39 @@
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
+                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="grv-jT-xAI">
+                                            <rect key="frame" x="0.0" y="134" width="160" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="160" placeholder="YES" id="da8-sU-VmU"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Album Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="140" translatesAutoresizingMaskIntoConstraints="NO" id="4nZ-bH-2aj">
+                                            <rect key="frame" x="10" y="134" width="140" height="26"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="grv-jT-xAI" secondAttribute="bottom" placeholder="YES" id="0eL-jO-9ua"/>
                                     <constraint firstItem="CfN-7p-Xz0" firstAttribute="leading" secondItem="oqy-dN-eMD" secondAttribute="leading" placeholder="YES" id="36V-hO-5FW"/>
+                                    <constraint firstAttribute="centerX" secondItem="grv-jT-xAI" secondAttribute="centerX" id="MJI-TT-WRz"/>
+                                    <constraint firstItem="grv-jT-xAI" firstAttribute="centerX" secondItem="4nZ-bH-2aj" secondAttribute="centerX" id="agU-Xh-9tl"/>
                                     <constraint firstItem="CfN-7p-Xz0" firstAttribute="top" secondItem="oqy-dN-eMD" secondAttribute="top" placeholder="YES" id="fBv-Ry-L0l"/>
+                                    <constraint firstItem="grv-jT-xAI" firstAttribute="height" secondItem="4nZ-bH-2aj" secondAttribute="height" id="hqF-S2-Tfb"/>
+                                    <constraint firstItem="grv-jT-xAI" firstAttribute="centerY" secondItem="4nZ-bH-2aj" secondAttribute="centerY" id="lrW-qL-Mfs"/>
                                     <constraint firstAttribute="bottom" secondItem="CfN-7p-Xz0" secondAttribute="bottom" placeholder="YES" id="qIe-Hw-RCQ"/>
+                                    <constraint firstItem="grv-jT-xAI" firstAttribute="width" secondItem="4nZ-bH-2aj" secondAttribute="width" constant="20" id="tST-Oe-KZV"/>
                                     <constraint firstAttribute="trailing" secondItem="CfN-7p-Xz0" secondAttribute="trailing" placeholder="YES" id="vSp-z7-h56"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="albumTitle" destination="4nZ-bH-2aj" id="oUp-ne-87c"/>
+                                    <outlet property="albumTitleBackgroundView" destination="grv-jT-xAI" id="z1a-Xs-tAl"/>
                                     <outlet property="cellImageView" destination="CfN-7p-Xz0" id="ZAx-Os-Kxn"/>
                                 </connections>
                             </collectionViewCell>

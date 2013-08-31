@@ -9,6 +9,8 @@
 #import "AlbumCell.h"
 #import "Album.h"
 
+#import <UIView+AutoLayout.h>
+
 @implementation AlbumCell
 
 - (id)initWithFrame:(CGRect)frame
@@ -20,11 +22,26 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    
+    [self.albumTitle setFont:[UIFont fontWithName:@"Futura-CondensedMedium" size:20]];
+    
+    [self.albumTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
+    NSLayoutConstraint *constrain = [self.albumTitleBackgroundView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView withMultiplier:0.4];
+    [constrain setPriority:UILayoutPriorityDefaultLow];
+    constrain = [self.albumTitleBackgroundView autoSetDimension:ALDimensionHeight toSize:80 relation:NSLayoutRelationLessThanOrEqual];
+    [constrain setPriority:UILayoutPriorityRequired];
+    
+    [self.albumTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:0];
+}
+
 - (void)setItem:(id)item {
     [super setItem:item];
     
     Album *album = (Album *)item;
     [self.cellImageView setImageWithContentsOfURL:[album albumCover:path200x200xCR] placeholderImage:nil];
+    [self.albumTitle setText:album.name];
 }
 
 @end
