@@ -55,6 +55,10 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
     self.page = 1;
+    self.numberOfColumns = 2;
+    
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(collectionViewPinched:)];
+    [self.collectionView addGestureRecognizer:pinch];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -167,6 +171,45 @@
     if ([scrollView hasReachedBottom] && !self.isFetching && isScrollDown) {
         [self fetchMore];
     }
+}
+
+#pragma mark - Gesture
+
+- (void)collectionViewPinched:(UIPinchGestureRecognizer *)gesture {
+    if (gesture.state == UIGestureRecognizerStateEnded) {
+        if (gesture.scale > 1) {
+            [self changeNumberOfColumnsWithPinch:PinchOut];
+        } else {
+            [self changeNumberOfColumnsWithPinch:PinchIn];
+        }
+    }
+}
+
+- (void)changeNumberOfColumnsWithPinch:(PinchDirection)direction {
+    int numCol = self.numberOfColumns;
+    switch (direction) {
+        case PinchIn:{
+            self.numberOfColumns++;
+            break;
+        }
+        case PinchOut:{
+            self.numberOfColumns--;
+            if (self.numberOfColumns==0) {
+                self.numberOfColumns = 1;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    if (numCol != self.numberOfColumns) {
+        [self.collectionView performBatchUpdates:^{
+            
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+    
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate

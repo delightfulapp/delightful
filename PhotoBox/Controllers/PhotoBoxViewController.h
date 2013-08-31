@@ -12,6 +12,11 @@
 
 #import "CollectionViewDataSource.h"
 
+typedef NS_ENUM(NSUInteger, PinchDirection) {
+    PinchIn,
+    PinchOut
+};
+
 @interface PhotoBoxViewController : UICollectionViewController
 
 @property (nonatomic, assign) ResourceType resourceType;

@@ -54,10 +54,6 @@
     return AlbumResource;
 }
 
-- (int)numberOfColumns {
-    return 3;
-}
-
 - (void)didFetchItems {
     int count = self.items.count;
     [self setAlbumsCount:count max:self.totalItems];
