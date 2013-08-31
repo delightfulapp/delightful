@@ -45,6 +45,8 @@
 		035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */; };
 		035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
 		035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
+		035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
+		035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846C217D2598600E196D7 /* PhotoZoomableCell.m */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -125,6 +127,10 @@
 		035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StickyHeaderFlowLayout.m; path = PhotoBox/Controllers/Layout/StickyHeaderFlowLayout.m; sourceTree = "<group>"; };
 		035846B817D2403500E196D7 /* PhotosSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosSectionHeaderView.h; path = PhotoBox/Cells/PhotosSectionHeaderView.h; sourceTree = "<group>"; };
 		035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosSectionHeaderView.m; path = PhotoBox/Cells/PhotosSectionHeaderView.m; sourceTree = "<group>"; };
+		035846BE17D255A600E196D7 /* PhotosHorizontalScrollingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosHorizontalScrollingViewController.h; path = PhotoBox/Controllers/PhotosHorizontalScrollingViewController.h; sourceTree = "<group>"; };
+		035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingViewController.m; sourceTree = "<group>"; };
+		035846C117D2598600E196D7 /* PhotoZoomableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoZoomableCell.h; path = PhotoBox/Cells/PhotoZoomableCell.h; sourceTree = "<group>"; };
+		035846C217D2598600E196D7 /* PhotoZoomableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoZoomableCell.m; path = PhotoBox/Cells/PhotoZoomableCell.m; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -308,6 +314,8 @@
 				0358467917D1BCC000E196D7 /* AlbumsViewController.m */,
 				035846A617D2021100E196D7 /* PhotosViewController.h */,
 				035846A717D2021100E196D7 /* PhotosViewController.m */,
+				035846BE17D255A600E196D7 /* PhotosHorizontalScrollingViewController.h */,
+				035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -335,6 +343,8 @@
 				035846AA17D20B8100E196D7 /* PhotoCell.m */,
 				035846B817D2403500E196D7 /* PhotosSectionHeaderView.h */,
 				035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */,
+				035846C117D2598600E196D7 /* PhotoZoomableCell.h */,
+				035846C217D2598600E196D7 /* PhotoZoomableCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -528,6 +538,7 @@
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
+				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
@@ -545,6 +556,7 @@
 				0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */,
 				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
+				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

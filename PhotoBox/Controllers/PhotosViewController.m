@@ -14,6 +14,9 @@
 #import "PhotosViewControllerDataSource.h"
 
 #import "PhotosSectionHeaderView.h"
+#import "PhotoBoxCell.h"
+
+#import "PhotosHorizontalScrollingViewController.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout>
 
@@ -39,13 +42,12 @@
 }
 
 - (void)setupDataSource {
-    NSString *identifier = @"photoCell";
     PhotosViewControllerDataSource *dataSource = [[PhotosViewControllerDataSource alloc] init];
     [dataSource setGroupKey:[self groupKey]];
     [dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
     [dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
     self.dataSource = dataSource;
-    [self.dataSource setCellIdentifier:identifier];
+    [self.dataSource setCellIdentifier:[self cellIdentifier]];
     [self.collectionView setDataSource:self.dataSource];
     
     [self setupDataSourceConfigureBlock];
@@ -62,6 +64,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSString *)cellIdentifier {
+    return @"photoCell";
 }
 
 - (NSString *)groupKey {
@@ -103,6 +109,18 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"pushPhoto"]) {
+        PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
+        PhotoBoxCell *cell = (PhotoBoxCell *)sender;
+        [destination setItem:self.item];
+        [destination setItems:self.items];
+        [destination setFirstShownPhoto:cell.item];
+    }
 }
 
 @end

@@ -24,39 +24,21 @@
 
 @implementation PhotoBoxViewController
 
-- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
-    self = [super initWithCollectionViewLayout:layout];
-    if (self) {
-        
-        
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.items = [NSMutableArray array];
-    if (![[ConnectionManager sharedManager] baseURL]) {
-        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"http://nicnocquee.trovebox.com"]
-                                          consumerKey:@"1aea715c0f861ee8c4421b6904396d"
-                                       consumerSecret:@"8043463882"
-                                           oauthToken:@"c2a234a82d5caf468bcc5ed84fc8b8"
-                                          oauthSecret:@"a5669d36c8"];
+    if (!self.items) {
+        self.items = [NSMutableArray array];
     }
-    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
-    [self.collectionView setAlwaysBounceVertical:YES];
-    [self.collectionView setAlwaysBounceVertical:YES];
-    self.refreshControl = [[UIRefreshControl alloc] init];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    [self.collectionView addSubview:self.refreshControl];
-    self.page = 1;
+    if (self.page==0) {
+        self.page = 1;
+    }
     self.numberOfColumns = 2;
     
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(collectionViewPinched:)];
-    [self.collectionView addGestureRecognizer:pinch];
-    
+    [self setupConnectionManager];
+    [self setupCollectionView];
+    [self setupRefreshControl];
+    [self setupPinchGesture];
     [self setupDataSource];
 }
 
@@ -74,10 +56,41 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Setup
+
+- (void)setupConnectionManager {
+    if (![[ConnectionManager sharedManager] baseURL]) {
+        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"http://nicnocquee.trovebox.com"]
+                                          consumerKey:@"1aea715c0f861ee8c4421b6904396d"
+                                       consumerSecret:@"8043463882"
+                                           oauthToken:@"c2a234a82d5caf468bcc5ed84fc8b8"
+                                          oauthSecret:@"a5669d36c8"];
+    }
+}
+
+- (void)setupCollectionView {
+    [self.collectionView setBackgroundColor:[UIColor whiteColor]];
+    [self.collectionView setAlwaysBounceVertical:YES];
+}
+
+- (void)setupPinchGesture {
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(collectionViewPinched:)];
+    [self.collectionView addGestureRecognizer:pinch];
+}
+
+- (void)setupRefreshControl {
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
+}
+
 - (void)setupDataSource {
     self.dataSource = [[CollectionViewDataSource alloc] init];
     self.collectionView.dataSource = self.dataSource;
     [self setupDataSourceConfigureBlock];
+    if (self.items) {
+        [self.dataSource setItems:self.items];
+    }
 }
 
 - (void)setupDataSourceConfigureBlock {
@@ -90,6 +103,8 @@
     };
     return configureCell;
 }
+
+#pragma mark - Connection
 
 - (void)fetchResource {
     [self showLoadingView:YES];
