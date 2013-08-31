@@ -12,6 +12,8 @@
 		03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */; };
 		0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903A17D103330075F9D8 /* PhotoBoxClient.m */; };
 		0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
+		0310904217D1ABED0075F9D8 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
+		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
 		032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */; };
 		032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
@@ -52,6 +54,10 @@
 		0310903C17D103780075F9D8 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		0310903D17D104460075F9D8 /* ConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConnectionManager.h; path = PhotoBox/Networking/ConnectionManager.h; sourceTree = "<group>"; };
 		0310903E17D104460075F9D8 /* ConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConnectionManager.m; path = PhotoBox/Networking/ConnectionManager.m; sourceTree = "<group>"; };
+		0310904017D1ABED0075F9D8 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Photo.h; path = PhotoBox/Models/Photo.h; sourceTree = "<group>"; };
+		0310904117D1ABED0075F9D8 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Photo.m; path = PhotoBox/Models/Photo.m; sourceTree = "<group>"; };
+		0310904317D1B2840075F9D8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = PhotoBox/Models/Tag.h; sourceTree = "<group>"; };
+		0310904417D1B2840075F9D8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = PhotoBox/Models/Tag.m; sourceTree = "<group>"; };
 		032CBB7A17D0BDF3001205B1 /* PhotoBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB7D17D0BDF3001205B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -117,6 +123,10 @@
 				03108FE917D0FE3A0075F9D8 /* Album.m */,
 				03108FF417D0FF0C0075F9D8 /* PhotoBoxModel.h */,
 				03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */,
+				0310904017D1ABED0075F9D8 /* Photo.h */,
+				0310904117D1ABED0075F9D8 /* Photo.m */,
+				0310904317D1B2840075F9D8 /* Tag.h */,
+				0310904417D1B2840075F9D8 /* Tag.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -391,6 +401,8 @@
 				032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
+				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
+				0310904517D1B2840075F9D8 /* Tag.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>14B0BEF7-BD98-4CEA-9652-0140929EB3C5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PhotoBox</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1512CB2D-9374-4045-9465-EE9261FDB35B</key>
+		<string>ssh://github.com/nicnocquee/PhotoBox.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PhotoBox.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1512CB2D-9374-4045-9465-EE9261FDB35B</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/nicnocquee/PhotoBox.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1512CB2D-9374-4045-9465-EE9261FDB35B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1512CB2D-9374-4045-9465-EE9261FDB35B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PhotoBox</string>
+		</dict>
+	</array>
+</dict>
+</plist>

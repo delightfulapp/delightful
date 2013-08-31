@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7B5E29305C28488694089E71"
+               BlueprintIdentifier = "FE9BE8070EF44B72825AE36F"
                BuildableName = "libPods-PhotoBoxTests-UIView+AutoLayout.a"
                BlueprintName = "Pods-PhotoBoxTests-UIView+AutoLayout"
                ReferencedContainer = "container:Pods.xcodeproj">

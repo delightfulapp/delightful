@@ -12,6 +12,8 @@
 #import "ConnectionManager.h"
 
 #import "Album.h"
+#import "Photo.h"
+#import "Tag.h"
 
 @implementation PhotoBoxClient
 
@@ -56,12 +58,38 @@
               NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
               for (NSDictionary *dictionary in result) {
                   Album *album = [[Album alloc] initWithDictionary:dictionary];
-                  [array addObject:album];
+                  if (album) {
+                      [array addObject:album];
+                  }
               }
               successBlock(array);
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               failureBlock(error);
           }];
+}
+
+- (void)getPhotosInAlbum:(NSString *)albumId page:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self getPath:[NSString stringWithFormat:@"/photos/album-%@/list.json?page=%d&returnSizes=200x200xCR", albumId, page] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSArray *result = [responseObject objectForKey:@"result"];
+        NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
+        for (NSDictionary *photos in result) {
+            Photo *photo = [[Photo alloc] initWithDictionary:photos];
+            if (photo) {
+                [array addObject:photo];
+            }
+        }
+        successBlock(array);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failureBlock(error);
+    }];
+}
+
+- (void)getTagsWithSuccess:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self getPath:@"/tags/list.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlock(responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failureBlock(error);
+    }];
 }
 
 NSString *stringForPluralResourceType(ResourceType input) {

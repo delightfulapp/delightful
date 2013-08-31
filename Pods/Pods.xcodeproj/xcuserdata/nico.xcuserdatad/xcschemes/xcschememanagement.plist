@@ -6,152 +6,222 @@
 	<dict>
 		<key>Appirater 2.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>11</integer>
 		</dict>
 		<key>Appirater 4.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>28</integer>
 		</dict>
 		<key>Appirater 6.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>29</integer>
 		</dict>
+		<key>Appirater 8.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+			<key>orderHint</key>
+			<integer>30</integer>
+		</dict>
 		<key>Appirater.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
 		<key>Pods-AFNetworking.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
 		<key>Pods-AFOAuth1Client.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>26</integer>
 		</dict>
 		<key>Pods-Appirater.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
 		<key>Pods-Countly.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
 		<key>Pods-FXBlurView.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
 		<key>Pods-NPRImageView.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
 		<key>Pods-NSDate+TimeAgo.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
 		<key>Pods-NSDate-Escort.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-AFNetworking.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>9</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-AFOAuth1Client.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>27</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-Appirater.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-Countly.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>12</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-FXBlurView.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>13</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-NPRImageView.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>14</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-NSDate+TimeAgo.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>15</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-NSDate-Escort.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>16</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-OCMock.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>17</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-UIColor+MLPFlatColors.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>18</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-UIView+AutoLayout.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>19</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests-libextobjc.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>20</integer>
 		</dict>
 		<key>Pods-PhotoBoxTests.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>25</integer>
 		</dict>
 		<key>Pods-UIColor+MLPFlatColors.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>21</integer>
 		</dict>
 		<key>Pods-UIView+AutoLayout.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>22</integer>
 		</dict>
 		<key>Pods-libextobjc.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>23</integer>
 		</dict>
 		<key>Pods.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<false/>
 			<key>orderHint</key>
 			<integer>24</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0001C547B4E4465592B2F8C5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>011E046EBBFB4B94B2CFD352</key>
 		<dict>
 			<key>primary</key>
@@ -167,7 +237,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>082A249C08B84CF2B406AA4A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>0A8631F47CDF4927A7AE4B78</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0B2D57AA385E434EB4C58E5D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0C8259AD676048168D3E5B47</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -197,6 +282,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>1D121684FBD845CAADE5F0CF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2192993942DF4DC68FE07313</key>
 		<dict>
 			<key>primary</key>
@@ -207,7 +297,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>2B0F3EBB7E0447D18D70F313</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2CFAB6F150084437834557D1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>301CD7E801E846159D91F721</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -247,12 +347,47 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>44A119FE422345C9AE0D1C77</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>44E22BFDED7F44A094105FDA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>466207F6CA9C4694BB808A97</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>46C6F56A14F14F3D87AEC2AB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>470C3047852A4576B18206B5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47807C5C631A46F1B22285EC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>48D7BF872FB8453BBBBEE151</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5130BD316EEE4C8E932ABF86</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>530B496D44BA48DDB832C4FA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -268,6 +403,11 @@
 			<true/>
 		</dict>
 		<key>5B638FF25B5449D49DF60274</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5FCF6ABB0757468086A59EB6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -322,6 +462,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>84FA32A81C5947F29A25B5CE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>8547B483D00546D294EA0A48</key>
 		<dict>
 			<key>primary</key>
@@ -343,6 +488,11 @@
 			<true/>
 		</dict>
 		<key>952151BED60C4833B0D1F93A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>956A63F79A2C433EA94087BB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -387,6 +537,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A51C8BFBBF554A3587F8FD12</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A6652EC176CC41A8A65A1F60</key>
 		<dict>
 			<key>primary</key>
@@ -397,7 +552,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>AF641E633BFE4366BF9E12D0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B100CAD5B8224358B401E11D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B1D2F3EB69B9437495769815</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B2C561198DD64D96BCFED905</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -413,6 +583,11 @@
 			<true/>
 		</dict>
 		<key>BDC0078683B24CF4ADD3B5DA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BE0C866DCC6F428DA0FE0D9A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -437,6 +612,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>CF38D67E118B4ED1BC79F9FE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D4DFAF3B868743008EE40716</key>
 		<dict>
 			<key>primary</key>
@@ -448,6 +628,11 @@
 			<true/>
 		</dict>
 		<key>D591FE3B37F94334A1F3B138</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D79F1F31460B4705AE01AA48</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -472,7 +657,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>F17258DA351647C09D072E6A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>F3712FDCC1DF4AA2B5810D12</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F4FD9220A82D49F58CF45D1A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -498,6 +693,11 @@
 			<true/>
 		</dict>
 		<key>FBF740E5551D48BCB2142839</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FE9BE8070EF44B72825AE36F</key>
 		<dict>
 			<key>primary</key>
 			<true/>

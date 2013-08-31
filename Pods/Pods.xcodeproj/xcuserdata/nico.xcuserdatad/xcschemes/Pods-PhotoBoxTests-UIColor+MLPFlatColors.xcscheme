@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0D58976018BF41AEAB56F29D"
+               BlueprintIdentifier = "466207F6CA9C4694BB808A97"
                BuildableName = "libPods-PhotoBoxTests-UIColor+MLPFlatColors.a"
                BlueprintName = "Pods-PhotoBoxTests-UIColor+MLPFlatColors"
                ReferencedContainer = "container:Pods.xcodeproj">

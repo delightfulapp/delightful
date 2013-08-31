@@ -7,6 +7,7 @@ pod 'NSDate-Escort'
 pod 'UIView+AutoLayout'
 pod 'FXBlurView'
 pod 'AFOAuth1Client'
+pod 'NPRImageView'
 target :PhotoBoxTests do
     pod 'OCMock', '~> 2.2.1'
 end
