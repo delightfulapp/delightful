@@ -41,4 +41,11 @@
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView *supplementaryView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
+    NSDictionary *group = self.items[indexPath.section];
+    self.configureCellHeaderBlock(supplementaryView, group);
+    return supplementaryView;
+}
+
 @end

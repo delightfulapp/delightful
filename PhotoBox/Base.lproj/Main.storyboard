@@ -85,15 +85,15 @@
                     <collectionView key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="hB2-ZY-7pZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="kcu-jP-Gh1">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="kcu-jP-Gh1" customClass="StickyHeaderFlowLayout">
                             <size key="itemSize" width="160" height="160"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="2Mo-ud-Zei" customClass="PhotoCell">
-                                <rect key="frame" x="0.0" y="64" width="160" height="160"/>
+                                <rect key="frame" x="0.0" y="114" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
@@ -118,6 +118,44 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoSection" id="ZZK-no-Wmq" customClass="PhotosSectionHeaderView">
+                            <rect key="frame" x="0.0" y="64" width="320" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bDy-p7-R89" customClass="AMBlurView">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="blurTintColor">
+                                            <color key="value" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ldx-Fa-lWf">
+                                    <rect key="frame" x="141" y="16" width="38" height="19"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="19" placeholder="YES" id="lXL-pk-KST"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="bDy-p7-R89" firstAttribute="leading" secondItem="ZZK-no-Wmq" secondAttribute="leading" id="BXS-gg-bZ3"/>
+                                <constraint firstAttribute="centerY" secondItem="Ldx-Fa-lWf" secondAttribute="centerY" id="FzE-aa-ee9"/>
+                                <constraint firstAttribute="trailing" secondItem="bDy-p7-R89" secondAttribute="trailing" id="GeD-nS-Lby"/>
+                                <constraint firstAttribute="bottom" secondItem="bDy-p7-R89" secondAttribute="bottom" id="QQ3-cg-Nb0"/>
+                                <constraint firstItem="bDy-p7-R89" firstAttribute="top" secondItem="ZZK-no-Wmq" secondAttribute="top" id="pqc-uS-ZdR"/>
+                                <constraint firstItem="Ldx-Fa-lWf" firstAttribute="centerX" secondItem="bDy-p7-R89" secondAttribute="centerX" placeholder="YES" id="vOW-vy-YOy"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="blurView" destination="bDy-p7-R89" id="efL-CM-Hmv"/>
+                                <outlet property="titleLabel" destination="Ldx-Fa-lWf" id="Bdl-5A-DRl"/>
+                            </connections>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="VKN-N6-Fms" id="gyY-eb-ndK"/>
                             <outlet property="delegate" destination="VKN-N6-Fms" id="FEN-1m-VL1"/>

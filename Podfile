@@ -8,6 +8,7 @@ pod 'UIView+AutoLayout'
 pod 'FXBlurView'
 pod 'AFOAuth1Client'
 pod 'NPRImageView'
+pod 'iOS-blur'
 target :PhotoBoxTests do
     pod 'OCMock', '~> 2.2.1'
 end

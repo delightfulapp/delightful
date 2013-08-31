@@ -13,7 +13,9 @@
 
 #import "PhotosViewControllerDataSource.h"
 
-@interface PhotosViewController ()
+#import "PhotosSectionHeaderView.h"
+
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout>
 
 @end
 
@@ -33,12 +35,15 @@
     [super viewDidLoad];
     
     [self setPhotosCount:0 max:0];
+    
 }
 
 - (void)setupDataSource {
     NSString *identifier = @"photoCell";
     PhotosViewControllerDataSource *dataSource = [[PhotosViewControllerDataSource alloc] init];
-    [dataSource setGroupKey:@"dateTakenString"];
+    [dataSource setGroupKey:[self groupKey]];
+    [dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
+    [dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
     self.dataSource = dataSource;
     [self.dataSource setCellIdentifier:identifier];
     [self.collectionView setDataSource:self.dataSource];
@@ -46,10 +51,25 @@
     [self setupDataSourceConfigureBlock];
 }
 
+- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
+    void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
+        [cell.titleLabel setText:[item objectForKey:[self groupKey]]];
+    };
+    return configureCell;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSString *)groupKey {
+    return @"dateTakenString";
+}
+
+- (NSString *)sectionHeaderIdentifier {
+    return @"photoSection";
 }
 
 - (ResourceType)resourceType {
@@ -79,5 +99,10 @@
     }
 }
 
+#pragma mark - Header Things
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+}
 
 @end

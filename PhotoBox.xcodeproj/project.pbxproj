@@ -44,6 +44,8 @@
 		035846AE17D22D4400E196D7 /* PhotosViewControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846AD17D22D4400E196D7 /* PhotosViewControllerDataSource.m */; };
 		035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B017D2312500E196D7 /* NSArray+Additionals.m */; };
 		035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */; };
+		035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
+		035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -122,6 +124,10 @@
 		035846AF17D2312500E196D7 /* NSArray+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additionals.h"; sourceTree = "<group>"; };
 		035846B017D2312500E196D7 /* NSArray+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additionals.m"; sourceTree = "<group>"; };
 		035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+AdditionalTests.m"; sourceTree = "<group>"; };
+		035846B517D23FB800E196D7 /* StickyHeaderFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StickyHeaderFlowLayout.h; path = PhotoBox/Controllers/Layout/StickyHeaderFlowLayout.h; sourceTree = "<group>"; };
+		035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StickyHeaderFlowLayout.m; path = PhotoBox/Controllers/Layout/StickyHeaderFlowLayout.m; sourceTree = "<group>"; };
+		035846B817D2403500E196D7 /* PhotosSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosSectionHeaderView.h; path = PhotoBox/Cells/PhotosSectionHeaderView.h; sourceTree = "<group>"; };
+		035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosSectionHeaderView.m; path = PhotoBox/Cells/PhotosSectionHeaderView.m; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -297,6 +303,7 @@
 		0358467117D1BBE400E196D7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				035846B417D23F9700E196D7 /* Layout */,
 				0358468017D1C0E800E196D7 /* DataSource */,
 				0358467217D1BC1D00E196D7 /* PhotoBoxViewController.h */,
 				0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */,
@@ -331,6 +338,8 @@
 				0358468917D1C1B100E196D7 /* AlbumCell.m */,
 				035846A917D20B8100E196D7 /* PhotoCell.h */,
 				035846AA17D20B8100E196D7 /* PhotoCell.m */,
+				035846B817D2403500E196D7 /* PhotosSectionHeaderView.h */,
+				035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -342,6 +351,15 @@
 				035846A117D1F91000E196D7 /* AlbumTitleView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		035846B417D23F9700E196D7 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				035846B517D23FB800E196D7 /* StickyHeaderFlowLayout.h */,
+				035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */,
+			);
+			name = Layout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -509,8 +527,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				035846AE17D22D4400E196D7 /* PhotosViewControllerDataSource.m in Sources */,
+				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
+				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
