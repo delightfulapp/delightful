@@ -109,7 +109,7 @@
                                                [self didFetchItems];
                                                int count = self.items.count;
                                                if (count==self.totalItems) {
-                                                   [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+                                                   [self performSelector:@selector(restoreContentInset) withObject:Nil afterDelay:0.3];
                                                }
                                            }
                                            
@@ -131,6 +131,10 @@
             }
         }
     }
+}
+
+- (void)restoreContentInset {
+    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
 }
 
 - (void)didFetchItems {
