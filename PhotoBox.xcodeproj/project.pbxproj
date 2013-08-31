@@ -40,6 +40,8 @@
 		0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469717D1D42700E196D7 /* UIViewController+Additionals.m */; };
 		0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
 		035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A117D1F91000E196D7 /* AlbumTitleView.m */; };
+		035846A817D2021100E196D7 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A717D2021100E196D7 /* PhotosViewController.m */; };
+		035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846AA17D20B8100E196D7 /* PhotoCell.m */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -110,6 +112,10 @@
 		0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Additionals.m"; sourceTree = "<group>"; };
 		035846A017D1F91000E196D7 /* AlbumTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumTitleView.h; path = PhotoBox/Views/AlbumTitleView.h; sourceTree = "<group>"; };
 		035846A117D1F91000E196D7 /* AlbumTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumTitleView.m; path = PhotoBox/Views/AlbumTitleView.m; sourceTree = "<group>"; };
+		035846A617D2021100E196D7 /* PhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosViewController.h; path = PhotoBox/Controllers/PhotosViewController.h; sourceTree = "<group>"; };
+		035846A717D2021100E196D7 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosViewController.m; path = PhotoBox/Controllers/PhotosViewController.m; sourceTree = "<group>"; };
+		035846A917D20B8100E196D7 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCell.h; path = PhotoBox/Cells/PhotoCell.h; sourceTree = "<group>"; };
+		035846AA17D20B8100E196D7 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCell.m; path = PhotoBox/Cells/PhotoCell.m; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,6 +296,8 @@
 				0358467617D1BC3D00E196D7 /* TagsViewController.m */,
 				0358467817D1BCC000E196D7 /* AlbumsViewController.h */,
 				0358467917D1BCC000E196D7 /* AlbumsViewController.m */,
+				035846A617D2021100E196D7 /* PhotosViewController.h */,
+				035846A717D2021100E196D7 /* PhotosViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -311,6 +319,8 @@
 				0358468617D1C19A00E196D7 /* PhotoBoxCell.m */,
 				0358468817D1C1B100E196D7 /* AlbumCell.h */,
 				0358468917D1C1B100E196D7 /* AlbumCell.m */,
+				035846A917D20B8100E196D7 /* PhotoCell.h */,
+				035846AA17D20B8100E196D7 /* PhotoCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -491,6 +501,7 @@
 				032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
+				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
@@ -501,6 +512,7 @@
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
+				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,

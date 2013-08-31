@@ -1,19 +1,14 @@
 //
-//  Tag.m
+//  PhotosViewController.h
 //  PhotoBox
 //
 //  Created by Nico Prananta on 8/31/13.
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "Tag.h"
+#import "PhotoBoxViewController.h"
 
-@implementation Tag
+@interface PhotosViewController : PhotoBoxViewController
 
-@synthesize tagId = id;
-
-- (NSString *)itemId {
-return self.tagId;
-}
 
 @end

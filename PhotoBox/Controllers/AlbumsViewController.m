@@ -11,6 +11,8 @@
 #import "AlbumCell.h"
 #import "Album.h"
 
+#import "PhotosViewController.h"
+
 @interface AlbumsViewController ()
 
 @end
@@ -59,5 +61,20 @@
     [self setAlbumsCount:count max:self.totalItems];
 }
 
+- (NSString *)segue {
+    return @"pushPhotosFromAlbums";
+}
+
+#pragma mark - Segue
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:[self segue]]) {
+        AlbumCell *cell = (AlbumCell *)sender;
+        Album *album = cell.item;
+        PhotosViewController *destination = (PhotosViewController *)segue.destinationViewController;
+        [destination setItem:album];
+    }
+}
 
 @end

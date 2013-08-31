@@ -1,19 +1,13 @@
 //
-//  Tag.m
+//  PhotoCell.h
 //  PhotoBox
 //
 //  Created by Nico Prananta on 8/31/13.
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "Tag.h"
+#import "PhotoBoxCell.h"
 
-@implementation Tag
-
-@synthesize tagId = id;
-
-- (NSString *)itemId {
-return self.tagId;
-}
+@interface PhotoCell : PhotoBoxCell
 
 @end

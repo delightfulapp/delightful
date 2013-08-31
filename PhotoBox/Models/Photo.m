@@ -35,4 +35,8 @@
     self.thumbnailStringURL = [photo200x200xCR objectAtIndex:0];
 }
 
+- (NSString *)itemId {
+    return self.photoId;
+}
+
 @end

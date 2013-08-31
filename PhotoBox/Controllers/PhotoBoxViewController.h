@@ -17,8 +17,11 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
     PinchOut
 };
 
+@class PhotoBoxModel;
+
 @interface PhotoBoxViewController : UICollectionViewController
 
+@property (nonatomic, strong) PhotoBoxModel *item;
 @property (nonatomic, assign) ResourceType resourceType;
 @property (nonatomic, strong) NSString *resourceId;
 @property (nonatomic, assign) int page;

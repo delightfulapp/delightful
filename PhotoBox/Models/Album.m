@@ -28,4 +28,8 @@ NSString *stringWithAlbumCoverType(AlbumCoverType input) {
     return (NSString *)[arr objectAtIndex:input];
 }
 
+- (NSString *)itemId {
+    return self.albumId;
+}
+
 @end

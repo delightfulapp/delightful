@@ -16,6 +16,7 @@
 @property (nonatomic, assign) int totalPages;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int currentRow;
+@property (nonatomic, strong) NSString *itemId;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
