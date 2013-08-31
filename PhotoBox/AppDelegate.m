@@ -21,6 +21,7 @@
     UINavigationController *rootNavigationController = [storyBoard instantiateInitialViewController];
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:rootNavigationController];
+    [self.window setTintColor:[UIColor redColor]];
     [self.window makeKeyAndVisible];
     
     return YES;
