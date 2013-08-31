@@ -21,10 +21,17 @@
 @property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isFetching;
+@property (nonatomic, assign) int numberOfColumns;
+
+@property (nonatomic, assign) int totalPages;
+@property (nonatomic, assign) int totalItems;
+@property (nonatomic, assign) int currentPage;
+@property (nonatomic, assign) int currentRow;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
 
 - (void)refresh;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
+- (void)didFetchItems;
 @end

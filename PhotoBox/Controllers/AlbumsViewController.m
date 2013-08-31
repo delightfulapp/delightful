@@ -30,10 +30,18 @@
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"Albums", nil);
+    [self setAlbumsCount:0 max:0];
     NSString *identifier = @"albumCell";
     [self.dataSource setCellIdentifier:identifier];
     
+}
+
+- (void)setAlbumsCount:(int)count max:(int)max{
+    if (count == 0) {
+        self.title = NSLocalizedString(@"Albums", nil);
+    } else {
+        self.title = [NSString stringWithFormat:@"%@ (%d/%d)", NSLocalizedString(@"Albums", nil), count, max];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,6 +52,15 @@
 
 - (ResourceType)resourceType {
     return AlbumResource;
+}
+
+- (int)numberOfColumns {
+    return 2;
+}
+
+- (void)didFetchItems {
+    int count = self.items.count;
+    [self setAlbumsCount:count max:self.totalItems];
 }
 
 

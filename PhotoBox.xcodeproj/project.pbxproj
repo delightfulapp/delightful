@@ -37,6 +37,8 @@
 		0358468D17D1CD2500E196D7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468C17D1CD2500E196D7 /* CFNetwork.framework */; };
 		0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468E17D1CD2A00E196D7 /* QuartzCore.framework */; };
 		0358469017D1CDAE00E196D7 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468B17D1CD1300E196D7 /* Reveal.framework */; };
+		0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469717D1D42700E196D7 /* UIViewController+Additionals.m */; };
+		0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -101,6 +103,10 @@
 		0358468B17D1CD1300E196D7 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		0358468C17D1CD2500E196D7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		0358468E17D1CD2A00E196D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		0358469617D1D42700E196D7 /* UIViewController+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Additionals.h"; sourceTree = "<group>"; };
+		0358469717D1D42700E196D7 /* UIViewController+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Additionals.m"; sourceTree = "<group>"; };
+		0358469917D1D72000E196D7 /* UIScrollView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+Additionals.h"; sourceTree = "<group>"; };
+		0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+Additionals.m"; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,8 +167,12 @@
 		03108FF017D0FED40075F9D8 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				0358469917D1D72000E196D7 /* UIScrollView+Additionals.h */,
+				0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */,
 				03108FF117D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.h */,
 				03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */,
+				0358469617D1D42700E196D7 /* UIViewController+Additionals.h */,
+				0358469717D1D42700E196D7 /* UIViewController+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -467,6 +477,7 @@
 			files = (
 				032CBB9417D0BDF3001205B1 /* ViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
+				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
@@ -480,6 +491,7 @@
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
 				0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */,
+				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
