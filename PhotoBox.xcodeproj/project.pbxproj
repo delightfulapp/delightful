@@ -34,6 +34,9 @@
 		0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */; };
 		0358468717D1C19A00E196D7 /* PhotoBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468617D1C19A00E196D7 /* PhotoBoxCell.m */; };
 		0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468917D1C1B100E196D7 /* AlbumCell.m */; };
+		0358468D17D1CD2500E196D7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468C17D1CD2500E196D7 /* CFNetwork.framework */; };
+		0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468E17D1CD2A00E196D7 /* QuartzCore.framework */; };
+		0358469017D1CDAE00E196D7 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468B17D1CD1300E196D7 /* Reveal.framework */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -95,6 +98,9 @@
 		0358468617D1C19A00E196D7 /* PhotoBoxCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxCell.m; path = PhotoBox/Cells/PhotoBoxCell.m; sourceTree = "<group>"; };
 		0358468817D1C1B100E196D7 /* AlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumCell.h; path = PhotoBox/Cells/AlbumCell.h; sourceTree = "<group>"; };
 		0358468917D1C1B100E196D7 /* AlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumCell.m; path = PhotoBox/Cells/AlbumCell.m; sourceTree = "<group>"; };
+		0358468B17D1CD1300E196D7 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		0358468C17D1CD2500E196D7 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		0358468E17D1CD2A00E196D7 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,9 +112,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */,
+				0358468D17D1CD2500E196D7 /* CFNetwork.framework in Frameworks */,
 				032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */,
 				032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
+				0358469017D1CDAE00E196D7 /* Reveal.framework in Frameworks */,
 				32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,6 +209,9 @@
 		032CBB7C17D0BDF3001205B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0358468E17D1CD2A00E196D7 /* QuartzCore.framework */,
+				0358468C17D1CD2500E196D7 /* CFNetwork.framework */,
+				0358468B17D1CD1300E196D7 /* Reveal.framework */,
 				032CBB7D17D0BDF3001205B1 /* Foundation.framework */,
 				032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */,
 				032CBB8117D0BDF3001205B1 /* UIKit.framework */,
@@ -592,9 +604,36 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/nico/Dropbox/Project/Fun/PhotoBox,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
 				INFOPLIST_FILE = "PhotoBox/PhotoBox-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CFNetwork,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-weak_framework",
+					CoreTelephony,
+					"-weak_framework",
+					StoreKit,
+					"-framework",
+					Reveal,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -606,6 +645,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/nico/Dropbox/Project/Fun/PhotoBox,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
 				INFOPLIST_FILE = "PhotoBox/PhotoBox-Info.plist";
