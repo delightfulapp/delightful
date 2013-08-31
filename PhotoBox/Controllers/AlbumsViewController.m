@@ -55,7 +55,7 @@
 }
 
 - (int)numberOfColumns {
-    return 2;
+    return 3;
 }
 
 - (void)didFetchItems {

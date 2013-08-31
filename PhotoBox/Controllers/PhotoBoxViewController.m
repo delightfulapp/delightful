@@ -173,7 +173,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
-    CGFloat width = floorf(collectionViewWidth/(float)self.numberOfColumns);
+    CGFloat width = (collectionViewWidth/(float)self.numberOfColumns);
     return CGSizeMake(width, width);
 }
 
