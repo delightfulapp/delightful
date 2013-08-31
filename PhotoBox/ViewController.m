@@ -31,20 +31,22 @@
                                    consumerSecret:@"8043463882"
                                        oauthToken:@"c2a234a82d5caf468bcc5ed84fc8b8"
                                       oauthSecret:@"a5669d36c8"];
-    [[PhotoBoxClient sharedClient] getPhotosInAlbum:@"7" page:1 success:^(id object) {
-        for (Photo *photo in object) {
-            NSLog(@"Photo %@: %@", photo.photoId, photo.thumbnailStringURL);
-        }
-    } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error);
-    }];
-////
-//    [[PhotoBoxClient sharedClient] getTagsWithSuccess:^(id object) {
-//        NSLog(@"Tags: %@", object);
+//    [[PhotoBoxClient sharedClient] getPhotosInAlbum:@"7" page:1 success:^(id object) {
+//        for (Photo *photo in object) {
+//            NSLog(@"Photo %@: %@", photo.photoId, photo.thumbnailStringURL);
+//        }
 //    } failure:^(NSError *error) {
 //        NSLog(@"Error: %@", error);
 //    }];
-    /*
+////
+//    [[PhotoBoxClient sharedClient] getTagsWithSuccess:^(id object) {
+//        for (Tag *tag in object) {
+//            NSLog(@"Tags: %@ (%d)", tag.tagId, tag.count);
+//        }
+//    } failure:^(NSError *error) {
+//        NSLog(@"Error: %@", error);
+//    }];
+    
     [[PhotoBoxClient sharedClient] getAlbumsForPage:1 success:^(id object) {
         int i=0;
         for (Album *album in object) {
@@ -57,7 +59,7 @@
     } failure:^(NSError *error) {
         NSLog(@"Error: %@", error);
     }];
-     */
+     
 }
 
 - (void)didReceiveMemoryWarning

@@ -54,15 +54,7 @@
     [self getPath:[NSString stringWithFormat:@"/albums/list.json?page=%d",page]
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSArray *result = [responseObject objectForKey:@"result"];
-              NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
-              for (NSDictionary *dictionary in result) {
-                  Album *album = [[Album alloc] initWithDictionary:dictionary];
-                  if (album) {
-                      [array addObject:album];
-                  }
-              }
-              successBlock(array);
+              successBlock([self processResponseObject:responseObject resourceClass:[Album class]]);
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               failureBlock(error);
           }];
@@ -70,15 +62,7 @@
 
 - (void)getPhotosInAlbum:(NSString *)albumId page:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     [self getPath:[NSString stringWithFormat:@"/photos/album-%@/list.json?page=%d&returnSizes=200x200xCR", albumId, page] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSArray *result = [responseObject objectForKey:@"result"];
-        NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
-        for (NSDictionary *photos in result) {
-            Photo *photo = [[Photo alloc] initWithDictionary:photos];
-            if (photo) {
-                [array addObject:photo];
-            }
-        }
-        successBlock(array);
+        successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];
@@ -86,10 +70,22 @@
 
 - (void)getTagsWithSuccess:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     [self getPath:@"/tags/list.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        successBlock(responseObject);
+        successBlock([self processResponseObject:responseObject resourceClass:[Tag class]]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];
+}
+
+- (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
+    NSArray *result = [responseObject objectForKey:@"result"];
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
+    for (NSDictionary *objectDictionary in result) {
+        id object = [[resource alloc] initWithDictionary:objectDictionary];
+        if (object) {
+            [array addObject:object];
+        }
+    }
+    return array;
 }
 
 NSString *stringForPluralResourceType(ResourceType input) {
