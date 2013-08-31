@@ -46,9 +46,6 @@
                                           oauthSecret:@"a5669d36c8"];
     }
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
-    self.dataSource = [[CollectionViewDataSource alloc] init];
-    self.collectionView.dataSource = self.dataSource;
-    [self setupDataSourceConfigureBlock];
     [self.collectionView setAlwaysBounceVertical:YES];
     [self.collectionView setAlwaysBounceVertical:YES];
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -59,6 +56,8 @@
     
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(collectionViewPinched:)];
     [self.collectionView addGestureRecognizer:pinch];
+    
+    [self setupDataSource];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -73,6 +72,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setupDataSource {
+    self.dataSource = [[CollectionViewDataSource alloc] init];
+    self.collectionView.dataSource = self.dataSource;
+    [self setupDataSourceConfigureBlock];
 }
 
 - (void)setupDataSourceConfigureBlock {

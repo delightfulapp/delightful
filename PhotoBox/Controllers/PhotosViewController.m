@@ -11,6 +11,8 @@
 #import "Album.h"
 #import "Photo.h"
 
+#import "PhotosViewControllerDataSource.h"
+
 @interface PhotosViewController ()
 
 @end
@@ -30,10 +32,18 @@
 {
     [super viewDidLoad];
     
-    NSString *identifier = @"photoCell";
-    [self.dataSource setCellIdentifier:identifier];
-    
     [self setPhotosCount:0 max:0];
+}
+
+- (void)setupDataSource {
+    NSString *identifier = @"photoCell";
+    PhotosViewControllerDataSource *dataSource = [[PhotosViewControllerDataSource alloc] init];
+    [dataSource setGroupKey:@"dateTakenString"];
+    self.dataSource = dataSource;
+    [self.dataSource setCellIdentifier:identifier];
+    [self.collectionView setDataSource:self.dataSource];
+    
+    [self setupDataSourceConfigureBlock];
 }
 
 - (void)didReceiveMemoryWarning

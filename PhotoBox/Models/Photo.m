@@ -39,4 +39,12 @@
     return self.photoId;
 }
 
+- (NSString *)dateTakenString {
+    return [NSString stringWithFormat:@"%d-%02d-%02d", self.dateTakenYear, self.dateTakenMonth, self.dateTakenDay];
+}
+
+- (NSString *)dateMonthYearTakenString {
+    return [NSString stringWithFormat:@"%d-%02d", self.dateTakenYear, self.dateTakenMonth];
+}
+
 @end

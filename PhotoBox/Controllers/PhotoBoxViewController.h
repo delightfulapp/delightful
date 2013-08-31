@@ -42,4 +42,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
 - (void)didFetchItems;
+- (void)setupDataSource;
+- (void)setupDataSourceConfigureBlock;
 @end

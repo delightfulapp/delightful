@@ -44,4 +44,6 @@
 @property (nonatomic, assign) int views;
 @property (nonatomic, assign) int width;
 @property (nonatomic, strong) NSArray *photo200x200xCR;
+@property (nonatomic, readonly) NSString *dateTakenString;
+@property (nonatomic, readonly) NSString *dateMonthYearTakenString;
 @end
