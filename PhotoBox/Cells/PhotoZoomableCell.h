@@ -16,5 +16,6 @@
 @property (nonatomic, strong) NPRImageView *thisImageview;
 
 - (void)loadOriginalImage;
+- (BOOL)hasDownloadedOriginalImage;
 
 @end

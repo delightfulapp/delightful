@@ -55,7 +55,7 @@
     CGFloat minScale = MIN(scaleWidth, scaleHeight);
     self.scrollView.minimumZoomScale = minScale;
     
-    self.scrollView.maximumZoomScale = 2.0f;
+    self.scrollView.maximumZoomScale = 4.0f;
     self.scrollView.zoomScale = minScale;
     
     UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
@@ -106,9 +106,7 @@
 - (void)setItem:(id)item {
     [super setItem:item];
     Photo *photo = (Photo *)item;
-    
-    NSLog(@"CEll thumbnail URL = %@", self.thumbnailURL.absoluteString);
-    
+        
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.thumbnailStringURL]) {
         
         if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
@@ -126,6 +124,11 @@
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
     [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal] placeholderImage:nil];
+}
+
+- (BOOL)hasDownloadedOriginalImage {
+    Photo *photo = (Photo *)self.item;
+    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal];
 }
 
 @end

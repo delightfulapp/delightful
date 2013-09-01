@@ -36,14 +36,13 @@
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
-    
-    [self setupViewOriginalButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self scrollToFirstShownPhoto];
+    [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:nil afterDelay:1];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -51,9 +50,14 @@
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
 
-- (void)setupViewOriginalButton {
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"View Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
-    [self.navigationItem setRightBarButtonItem:rightButton];
+- (void)showViewOriginalButton:(BOOL)show {
+    if (show) {
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"View Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+        [self.navigationItem setRightBarButtonItem:rightButton];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
+    
 }
 
 - (void)scrollToFirstShownPhoto {
@@ -96,7 +100,7 @@
 #pragma mark - Scroll View
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
+    // empty to override superclass
 }
 
 #pragma mark - Interactive Gesture Recognizer Delegate
@@ -136,6 +140,13 @@
     CGFloat width = collectionView.frame.size.width;
     CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
     return CGSizeMake(width, height);
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    if (cell) {
+        [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
+    }
 }
 
 
