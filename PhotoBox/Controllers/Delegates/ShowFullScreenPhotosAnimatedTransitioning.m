@@ -40,7 +40,7 @@
     
     [UIView animateWithDuration:[self transitionDuration:nil]/2 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.imageViewToAnimate.center = CGPointMake(CGRectGetWidth(containerView.frame)/2, CGRectGetHeight(containerView.frame)/2);
-        self.imageViewToAnimate.transform = CGAffineTransformScale(self.imageViewToAnimate.transform, 2, 2);
+        self.imageViewToAnimate.transform = CGAffineTransformScale(self.imageViewToAnimate.transform, CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect), CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect));
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
         [containerView insertSubview:toVC.view belowSubview:self.imageViewToAnimate];
