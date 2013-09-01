@@ -18,7 +18,11 @@
 
 #import "PhotosHorizontalScrollingViewController.h"
 
+#import "UIView+Additionals.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout>
+
+@property (nonatomic, strong) PhotoBoxCell *selectedItem;
 
 @end
 
@@ -120,7 +124,19 @@
         [destination setItem:self.item];
         [destination setItems:self.items];
         [destination setFirstShownPhoto:cell.item];
+        
+        self.selectedItem = cell;
     }
+}
+
+#pragma mark - CustomAnimationTransitionFromViewControllerDelegate
+
+- (UIImage *)imageToAnimate {
+    return self.selectedItem.cellImageView.image;
+}
+
+- (CGRect)startRectInContainerView:(UIView *)containerView {
+    return [self.selectedItem convertFrameRectToView:containerView];
 }
 
 @end

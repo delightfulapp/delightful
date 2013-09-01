@@ -8,7 +8,9 @@
 
 #import "PhotoBoxViewController.h"
 
-@interface PhotosViewController : PhotoBoxViewController
+#import "ShowFullScreenPhotosAnimatedTransitioning.h"
+
+@interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
 
 @end

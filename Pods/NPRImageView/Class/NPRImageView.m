@@ -381,6 +381,10 @@
     return [[NPRDiskCache sharedDiskCache] imageFromDiskWithKey:key];
 }
 
+- (UIImage *)image {
+    return self.customImageView.image;
+}
+
 #pragma mark - Setter
 
 - (void)setImageWithContentsOfURL:(NSURL *)URL placeholderImage:(UIImage *)placeholderImage {

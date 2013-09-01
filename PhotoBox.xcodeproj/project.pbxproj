@@ -47,6 +47,10 @@
 		035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
 		035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
 		035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846C217D2598600E196D7 /* PhotoZoomableCell.m */; };
+		035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
+		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
+		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
+		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -131,6 +135,13 @@
 		035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingViewController.m; sourceTree = "<group>"; };
 		035846C117D2598600E196D7 /* PhotoZoomableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoZoomableCell.h; path = PhotoBox/Cells/PhotoZoomableCell.h; sourceTree = "<group>"; };
 		035846C217D2598600E196D7 /* PhotoZoomableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoZoomableCell.m; path = PhotoBox/Cells/PhotoZoomableCell.m; sourceTree = "<group>"; };
+		035846CA17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxNavigationControllerDelegate.h; path = PhotoBox/Controllers/Delegates/PhotoBoxNavigationControllerDelegate.h; sourceTree = "<group>"; };
+		035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxNavigationControllerDelegate.m; path = PhotoBox/Controllers/Delegates/PhotoBoxNavigationControllerDelegate.m; sourceTree = "<group>"; };
+		035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFullScreenPhotosAnimatedTransitioning.h; path = PhotoBox/Controllers/Delegates/ShowFullScreenPhotosAnimatedTransitioning.h; sourceTree = "<group>"; };
+		035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowFullScreenPhotosAnimatedTransitioning.m; path = PhotoBox/Controllers/Delegates/ShowFullScreenPhotosAnimatedTransitioning.m; sourceTree = "<group>"; };
+		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
+		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
+		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -199,6 +210,8 @@
 				0358469717D1D42700E196D7 /* UIViewController+Additionals.m */,
 				035846AF17D2312500E196D7 /* NSArray+Additionals.h */,
 				035846B017D2312500E196D7 /* NSArray+Additionals.m */,
+				035846D717D364FE00E196D7 /* UIView+Additionals.h */,
+				035846D817D364FE00E196D7 /* UIView+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -288,6 +301,7 @@
 			children = (
 				032CBBA317D0BDF3001205B1 /* Supporting Files */,
 				035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */,
+				035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */,
 			);
 			path = PhotoBoxTests;
 			sourceTree = "<group>";
@@ -304,6 +318,7 @@
 		0358467117D1BBE400E196D7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				035846C617D3470A00E196D7 /* Transition */,
 				035846B417D23F9700E196D7 /* Layout */,
 				0358468017D1C0E800E196D7 /* DataSource */,
 				0358467217D1BC1D00E196D7 /* PhotoBoxViewController.h */,
@@ -365,6 +380,17 @@
 				035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */,
 			);
 			name = Layout;
+			sourceTree = "<group>";
+		};
+		035846C617D3470A00E196D7 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				035846CA17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.h */,
+				035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */,
+				035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */,
+				035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */,
+			);
+			name = Transition;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -538,13 +564,16 @@
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
+				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
 				0358468717D1C19A00E196D7 /* PhotoBoxCell.m in Sources */,
+				035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
 				0310904517D1B2840075F9D8 /* Tag.m in Sources */,
 				0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */,
+				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
@@ -565,6 +594,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */,
+				035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
