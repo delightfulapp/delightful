@@ -187,33 +187,8 @@
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                     <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4bI-hN-xYV">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J5K-2F-FfM" customClass="NPRImageView">
-                                                    <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                            </subviews>
-                                            <connections>
-                                                <outlet property="delegate" destination="5bO-QV-Vwe" id="nkE-YS-ZmK"/>
-                                            </connections>
-                                        </scrollView>
-                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
-                                <constraints>
-                                    <constraint firstItem="4bI-hN-xYV" firstAttribute="top" secondItem="5bO-QV-Vwe" secondAttribute="top" id="8Hh-EV-CS0"/>
-                                    <constraint firstItem="4bI-hN-xYV" firstAttribute="leading" secondItem="5bO-QV-Vwe" secondAttribute="leading" id="UhA-Oh-d3E"/>
-                                    <constraint firstAttribute="bottom" secondItem="4bI-hN-xYV" secondAttribute="bottom" id="Yec-cR-vG3"/>
-                                    <constraint firstAttribute="trailing" secondItem="4bI-hN-xYV" secondAttribute="trailing" id="lah-Wa-xXZ"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="cellImageView" destination="J5K-2F-FfM" id="Anq-Zw-eQY"/>
-                                    <outlet property="scrollView" destination="4bI-hN-xYV" id="WTi-dG-YnX"/>
-                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
