@@ -12,6 +12,8 @@
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
+@property (nonatomic, strong) UITapGestureRecognizer *tapOnce;
+
 @end
 
 @implementation PhotosHorizontalScrollingViewController
@@ -29,6 +31,12 @@
     [self.collectionView reloadData];
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:self];
+    
+    UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
+    [tapOnce setDelegate:self];
+    [tapOnce setNumberOfTapsRequired:1];
+    self.tapOnce = tapOnce;
+    [self.collectionView addGestureRecognizer:tapOnce];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,6 +98,26 @@
     return YES;
 }
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+        UITapGestureRecognizer *tap = (UITapGestureRecognizer *)gestureRecognizer;
+        if (tap.numberOfTapsRequired == 1) {
+            if ([otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+                UITapGestureRecognizer *other = (UITapGestureRecognizer *)otherGestureRecognizer;
+                if (other.numberOfTapsRequired == 2) {
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+- (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
+    NSLog(@"Tap once");
+    [self.navigationController setNavigationBarHidden:!self.navigationController.isNavigationBarHidden animated:YES];
+}
+
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
@@ -98,5 +126,6 @@
     CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
     return CGSizeMake(width, height);
 }
+
 
 @end
