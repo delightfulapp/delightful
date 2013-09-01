@@ -38,11 +38,9 @@
     [self.imageViewToAnimate setImage:image];
     [containerView addSubview:self.imageViewToAnimate];
     
-    
     [UIView animateWithDuration:[self transitionDuration:nil]/2 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.imageViewToAnimate.center = CGPointMake(CGRectGetWidth(containerView.frame)/2, CGRectGetHeight(containerView.frame)/2);
         self.imageViewToAnimate.transform = CGAffineTransformScale(self.imageViewToAnimate.transform, 2, 2);
-        [fromVC.view setAlpha:0];
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
         [containerView insertSubview:toVC.view belowSubview:self.imageViewToAnimate];
@@ -52,10 +50,7 @@
 }
 
 - (void)animationEnded:(BOOL)transitionCompleted {
-    NSLog(@"animation ended");
     if (transitionCompleted) {
-        NSLog(@"transition completed");
-        
         [self performSelector:@selector(removeHelperViews) withObject:nil afterDelay:0.5];
     }
     
