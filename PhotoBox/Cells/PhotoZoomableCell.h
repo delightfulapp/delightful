@@ -15,4 +15,6 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NPRImageView *thisImageview;
 
+- (void)loadOriginalImage;
+
 @end

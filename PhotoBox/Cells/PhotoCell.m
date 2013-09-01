@@ -10,6 +10,12 @@
 
 #import "Photo.h"
 
+@interface PhotoCell ()
+
+@property (nonatomic, strong) NSURL *shownImageURL;
+
+@end
+
 @implementation PhotoCell
 
 - (id)initWithFrame:(CGRect)frame

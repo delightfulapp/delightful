@@ -9,6 +9,8 @@
 #import "PhotosHorizontalScrollingViewController.h"
 
 #import "PhotoBoxModel.h"
+#import "PhotoZoomableCell.h"
+#import "Photo.h"
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
@@ -34,6 +36,8 @@
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
+    
+    [self setupViewOriginalButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -45,6 +49,11 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
+}
+
+- (void)setupViewOriginalButton {
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"View Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+    [self.navigationItem setRightBarButtonItem:rightButton];
 }
 
 - (void)scrollToFirstShownPhoto {
@@ -129,5 +138,15 @@
     return CGSizeMake(width, height);
 }
 
+
+#pragma mark - Button
+
+- (void)viewOriginalButtonTapped:(id)sender {
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    if (cell) {
+        [cell loadOriginalImage];
+    }
+    
+}
 
 @end

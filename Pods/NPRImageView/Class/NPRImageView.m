@@ -24,7 +24,6 @@
 
 @property (nonatomic, strong) NSURL *imageContentURL;
 @property (nonatomic, strong) UIImageView *customImageView;
-@property (nonatomic, strong) NSString *cacheKey;
 
 @end
 
@@ -49,7 +48,7 @@
 
 @end
 
-@interface NPRDiskCache : NSObject
+@interface NPRDiskCache()
 
 + (NPRDiskCache *)sharedDiskCache;
 
@@ -385,7 +384,15 @@
     return self.customImageView.image;
 }
 
+- (NPRDiskCache *)sharedCache {
+    return [NPRDiskCache sharedDiskCache];
+}
+
 #pragma mark - Setter
+
+- (void)setImage:(UIImage *)image {
+    self.customImageView.image = image;
+}
 
 - (void)setImageWithContentsOfURL:(NSURL *)URL placeholderImage:(UIImage *)placeholderImage {
     if (![URL isEqual:self.imageContentURL])

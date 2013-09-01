@@ -8,12 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@interface NPRDiskCache : NSObject
+- (BOOL)imageExistsOnDiskWithKey:(NSString *)key;
+@end
+
 @interface NPRImageView : UIImageView
 
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 @property (nonatomic, strong) UILabel *messageLabel;
 @property (nonatomic, strong) UIImage *placeholderImage;
+
+@property (nonatomic, readonly) NPRDiskCache *sharedCache;
+@property (nonatomic, strong) NSString *cacheKey;
 
 @property (nonatomic, assign) BOOL shouldHideIndicatorView;
 
