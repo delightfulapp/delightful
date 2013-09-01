@@ -12,8 +12,6 @@
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) UITapGestureRecognizer *tapOnce;
-
 @end
 
 @implementation PhotosHorizontalScrollingViewController
@@ -35,7 +33,6 @@
     UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
-    self.tapOnce = tapOnce;
     [self.collectionView addGestureRecognizer:tapOnce];
 }
 
