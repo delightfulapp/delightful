@@ -111,11 +111,9 @@
 }
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
-    NSLog(@"Tap once");
     BOOL show = !self.navigationController.isNavigationBarHidden;
     [self.navigationController setNavigationBarHidden:show animated:YES];
     [[UIApplication sharedApplication] setStatusBarHidden:show withAnimation:UIStatusBarAnimationSlide];
-    [self.navigationController setNeedsStatusBarAppearanceUpdate];
 }
 
 
