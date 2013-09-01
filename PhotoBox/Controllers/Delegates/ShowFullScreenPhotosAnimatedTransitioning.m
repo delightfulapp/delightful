@@ -51,7 +51,7 @@
 
 - (void)animationEnded:(BOOL)transitionCompleted {
     if (transitionCompleted) {
-        [self performSelector:@selector(removeHelperViews) withObject:nil afterDelay:0.5];
+        [self performSelector:@selector(removeHelperViews) withObject:nil afterDelay:1];
     }
     
 }

@@ -71,6 +71,7 @@
     } else {
         [self.scrollView setZoomScale:self.scrollView.maximumZoomScale animated:YES];
     }
+    [self centerScrollViewContents];
 }
 
 - (void)centerScrollViewContents {
