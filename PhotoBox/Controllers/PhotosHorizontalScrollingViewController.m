@@ -10,7 +10,7 @@
 
 #import "PhotoBoxModel.h"
 
-@interface PhotosHorizontalScrollingViewController ()
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
 @end
 
@@ -27,6 +27,13 @@
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
     [self.collectionView reloadData];
+    
+    [self.navigationController.interactivePopGestureRecognizer setDelegate:self];
+    
+    UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
+    [tapOnce setDelegate:self];
+    [tapOnce setNumberOfTapsRequired:1];
+    [self.collectionView addGestureRecognizer:tapOnce];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,6 +86,38 @@
     
 }
 
+#pragma mark - Interactive Gesture Recognizer Delegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
+        return NO;
+    }
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+        UITapGestureRecognizer *tap = (UITapGestureRecognizer *)gestureRecognizer;
+        if (tap.numberOfTapsRequired == 1) {
+            if ([otherGestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
+                UITapGestureRecognizer *other = (UITapGestureRecognizer *)otherGestureRecognizer;
+                if (other.numberOfTapsRequired == 2) {
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+- (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
+    NSLog(@"Tap once");
+    BOOL show = !self.navigationController.isNavigationBarHidden;
+    [self.navigationController setNavigationBarHidden:show animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:show withAnimation:UIStatusBarAnimationSlide];
+    [self.navigationController setNeedsStatusBarAppearanceUpdate];
+}
+
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
@@ -87,5 +126,6 @@
     CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
     return CGSizeMake(width, height);
 }
+
 
 @end

@@ -8,8 +8,11 @@
 
 #import "PhotoCell.h"
 
+#import <NPRImageView.h>
+
 @interface PhotoZoomableCell : PhotoCell <UIScrollViewDelegate>
 
-@property (nonatomic, weak) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NPRImageView *thisImageview;
 
 @end
