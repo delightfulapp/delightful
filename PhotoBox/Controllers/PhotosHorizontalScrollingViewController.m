@@ -10,7 +10,7 @@
 
 #import "PhotoBoxModel.h"
 
-@interface PhotosHorizontalScrollingViewController ()
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
 @end
 
@@ -27,6 +27,8 @@
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
     [self.collectionView reloadData];
+    
+    [self.navigationController.interactivePopGestureRecognizer setDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -77,6 +79,15 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
+}
+
+#pragma mark - Interactive Gesture Recognizer Delegate
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
+        return NO;
+    }
+    return YES;
 }
 
 
