@@ -17,5 +17,6 @@
 
 - (void)loadOriginalImage;
 - (BOOL)hasDownloadedOriginalImage;
+- (UIImage *)originalImage;
 
 @end

@@ -12,4 +12,6 @@
 
 - (void)showLoadingView:(BOOL)show atBottomOfScrollView:(BOOL)bottom;
 
+- (void)openActivityPickerForImage:(UIImage *)image;
+
 @end

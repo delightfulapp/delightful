@@ -8,7 +8,16 @@
 
 #import "UIViewController+Additionals.h"
 
+#import "OpenInActivity.h"
+
+#import <Social/Social.h>
+#import <objc/runtime.h>
+
 #define kLoadingViewTag 87261
+#define HAVE_SHOWN_NO_FACEBOOK @"HAVE_SHOWN_NO_FACEBOOK"
+#define HAVE_SHOWN_NO_TWITTER @"HAVE_SHOWN_NO_TWITTER"
+
+static char const * const documentControllerKey = "documentControllerKey";
 
 @implementation UIViewController (Additionals)
 
@@ -34,6 +43,73 @@
         }
     }
     
+}
+
+- (void)showAlertForNoService:(NSString *)service {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:service message:[NSString stringWithFormat:NSLocalizedString(@"Please log in to %1$@ from Settings app if you want to share to %2$@", nil), service, service] delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
+    [alert show];
+}
+
+- (void)openActivityPickerForImage:(UIImage *)image {
+    void (^UIActivityViewControllerCompletionHandler)(NSString*, BOOL) = ^(NSString *activityType, BOOL completed){
+        if (completed) {
+            if ([activityType isEqualToString:@"openin.activity"]) {
+                [self performSelector:@selector(showDocumentInteractionController:) withObject:image afterDelay:0.3];
+            } else if ([activityType isEqualToString:UIActivityTypeSaveToCameraRoll]){
+                
+            }
+        }
+    };
+    
+    OpenInActivity *openIn = [[OpenInActivity alloc] init];
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:@[openIn]];
+    [activityViewController setCompletionHandler:UIActivityViewControllerCompletionHandler];
+    [activityViewController setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact]];
+    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    
+    if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:HAVE_SHOWN_NO_FACEBOOK]) {
+            [self showAlertForNoService:NSLocalizedString(@"Facebook", nil)];
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HAVE_SHOWN_NO_FACEBOOK];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        } else if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:HAVE_SHOWN_NO_TWITTER]) {
+                [self showAlertForNoService:NSLocalizedString(@"Twitter", nil)];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HAVE_SHOWN_NO_TWITTER];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+        }
+    } else {
+        if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) {
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:HAVE_SHOWN_NO_TWITTER]) {
+                [self showAlertForNoService:NSLocalizedString(@"Twitter", nil)];
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:HAVE_SHOWN_NO_TWITTER];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
+        }
+    }
+}
+
+- (void)showDocumentInteractionController:(UIImage *)image {
+    NSURL *url = [self prepareFileToSendToOtherApp:image];
+    UIDocumentInteractionController *documentController = objc_getAssociatedObject(self, documentControllerKey);
+    if (!documentController) {
+        documentController = [UIDocumentInteractionController interactionControllerWithURL: url];
+        objc_setAssociatedObject(self, documentControllerKey, documentController, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    [documentController setURL:url];
+    [documentController setAnnotation:@{@"InstagramCaption" : @" #scribeit"}];
+    [documentController presentOpenInMenuFromRect:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height) inView:self.view animated:YES];
+}
+
+- (NSURL *)prepareFileToSendToOtherApp:(UIImage *)image {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *savedImagePath = [documentsDirectory stringByAppendingPathComponent:@"savedImage.ig"];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [imageData writeToFile:savedImagePath atomically:NO];
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:savedImagePath];
+    return url;
 }
 
 @end

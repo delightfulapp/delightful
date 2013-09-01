@@ -12,6 +12,8 @@
 #import "PhotoZoomableCell.h"
 #import "Photo.h"
 
+#import "UIViewController+Additionals.h"
+
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
 @end
@@ -55,7 +57,8 @@
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"View Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
         [self.navigationItem setRightBarButtonItem:rightButton];
     } else {
-        [self.navigationItem setRightBarButtonItem:nil];
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
+        [self.navigationItem setRightBarButtonItem:rightButton];
     }
     
 }
@@ -157,7 +160,11 @@
     if (cell) {
         [cell loadOriginalImage];
     }
-    
+}
+
+- (void)actionButtonTapped:(id)sender {
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    [self openActivityPickerForImage:[cell originalImage]];
 }
 
 @end

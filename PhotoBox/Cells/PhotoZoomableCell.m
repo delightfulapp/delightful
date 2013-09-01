@@ -131,4 +131,11 @@
     return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal];
 }
 
+- (UIImage *)originalImage {
+    if ([self hasDownloadedOriginalImage]) {
+        return self.thisImageview.image;
+    }
+    return nil;
+}
+
 @end
