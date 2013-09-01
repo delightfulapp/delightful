@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import "PhotoBoxNavigationControllerDelegate.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -23,6 +25,9 @@
     [self.window setRootViewController:rootNavigationController];
     [self.window setTintColor:[UIColor redColor]];
     [self.window makeKeyAndVisible];
+    
+    self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
+    [rootNavigationController setDelegate:self.navigationDelegate];
     
     return YES;
 }
