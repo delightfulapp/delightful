@@ -17,7 +17,6 @@
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
     if ([fromVC isKindOfClass:[PhotosViewController class]] && [toVC isKindOfClass:[PhotosHorizontalScrollingViewController class]] && operation==UINavigationControllerOperationPush) {
-        NSLog(@"Show full screen photos animated transitioning");
         ShowFullScreenPhotosAnimatedTransitioning *transitioning = [[ShowFullScreenPhotosAnimatedTransitioning alloc] init];
         return transitioning;
     }

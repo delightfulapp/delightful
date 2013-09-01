@@ -38,9 +38,13 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    NSLog(@"Items = %d", self.items.count);
     
     [self scrollToFirstShownPhoto];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
 
 - (void)scrollToFirstShownPhoto {
