@@ -12,6 +12,12 @@
 
 // no idea how to do the zooming inside scrollview inside collection view cell using auto layout. back to the ol' days.
 
+@interface PhotoZoomableCell ()
+
+@property (nonatomic, strong) NSURL *thumbnailURL;
+
+@end
+
 @implementation PhotoZoomableCell 
 
 - (id)initWithFrame:(CGRect)frame
@@ -97,7 +103,15 @@
 - (void)setItem:(id)item {
     [super setItem:item];
     Photo *photo = (Photo *)item;
-    [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.thumbnailStringURL] placeholderImage:nil];
+    NSString *thumbnailStringURL = [NSURL URLWithString:photo.thumbnailStringURL];
+    if (![self.thumbnailURL.absoluteString isEqualToString:thumbnailStringURL]) {
+        NSURL *thumbnailURL = [NSURL URLWithString:photo.thumbnailStringURL];
+        [self.thisImageview setImageWithContentsOfURL:thumbnailURL placeholderImage:nil];
+        self.thumbnailURL = thumbnailURL;
+        
+        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
+    }
+    
 }
 
 @end
