@@ -20,7 +20,7 @@
 
 #import "UIView+Additionals.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedItem;
 
@@ -140,7 +140,7 @@
         [destination setItem:self.item];
         [destination setItems:self.items];
         [destination setFirstShownPhoto:cell.item];
-        
+        [destination setDelegate:self];
         self.selectedItem = cell;
     }
 }
@@ -155,6 +155,11 @@
     return [self.selectedItem convertFrameRectToView:containerView];
 }
 
+#pragma mark - PhotosHorizontalScrollingViewControllerDelegate
 
+- (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
+    NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+}
 
 @end

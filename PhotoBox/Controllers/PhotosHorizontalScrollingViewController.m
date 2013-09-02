@@ -160,6 +160,10 @@
     if (previousPage != page) {
         previousPage = page;
         [self showViewOriginalButtonForPage:page];
+        Photo *photo = (Photo *)[self.items objectAtIndex:page];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
+            [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+        }
     }
 }
 
@@ -188,7 +192,6 @@
 #pragma mark - Notification
 
 - (void)didDownloadImage:(NSNotification *)notification {
-    NSLog(@"are we here?");
     [self showViewOriginalButtonForPage:[self currentCollectionViewPage:self.collectionView]];
 }
 

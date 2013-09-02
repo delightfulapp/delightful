@@ -24,6 +24,23 @@
     return [members objectAtIndex:indexPath.item];
 }
 
+- (NSIndexPath *)indexPathOfItem:(id)item {
+    NSInteger section = 0;
+    NSInteger row = 0;
+    NSInteger i = 0;
+    for (NSDictionary *dict in self.items) {
+        if ([[dict objectForKey:self.groupKey] isEqualToString:[item valueForKey:self.groupKey]]) {
+            section = i;
+            NSArray *members = [dict objectForKey:@"members"];
+            NSInteger index = [members indexOfObject:item];
+            row = index;
+            break;
+        }
+        i++;
+    }
+    return [NSIndexPath indexPathForItem:row inSection:section];
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSDictionary *group = self.items[section];
     NSArray *members = [group objectForKey:@"members"];

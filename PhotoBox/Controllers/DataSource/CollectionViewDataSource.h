@@ -17,5 +17,6 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellBlock;
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)indexPathOfItem:(id)item;
 
 @end
