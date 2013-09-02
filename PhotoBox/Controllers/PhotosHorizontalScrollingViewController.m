@@ -38,18 +38,27 @@
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDownloadImage:) name:NPRDidSetImageNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
     [self scrollToFirstShownPhoto];
-    [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:nil afterDelay:1];
+    [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:1];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
+}
+
+- (void)showViewOriginalButtonForPage:(NSInteger)page{
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+    if (cell) {
+        [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
+    }
 }
 
 - (void)showViewOriginalButton:(BOOL)show {
@@ -146,10 +155,19 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    if (cell) {
-        [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
+    static NSInteger previousPage = 0;
+    NSInteger page = [self currentCollectionViewPage:scrollView];
+    if (previousPage != page) {
+        previousPage = page;
+        [self showViewOriginalButtonForPage:page];
     }
+}
+
+- (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
+    CGFloat pageWidth = scrollView.frame.size.width;
+    float fractionalPage = scrollView.contentOffset.x / pageWidth;
+    NSInteger page = lround(fractionalPage);
+    return page;
 }
 
 
@@ -165,6 +183,13 @@
 - (void)actionButtonTapped:(id)sender {
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     [self openActivityPickerForImage:[cell originalImage]];
+}
+
+#pragma mark - Notification
+
+- (void)didDownloadImage:(NSNotification *)notification {
+    NSLog(@"are we here?");
+    [self showViewOriginalButtonForPage:[self currentCollectionViewPage:self.collectionView]];
 }
 
 @end

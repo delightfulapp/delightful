@@ -42,7 +42,6 @@
     [super viewDidLoad];
     
     [self setPhotosCount:0 max:0];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -155,5 +154,7 @@
 - (CGRect)startRectInContainerView:(UIView *)containerView {
     return [self.selectedItem convertFrameRectToView:containerView];
 }
+
+
 
 @end

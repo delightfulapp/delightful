@@ -14,6 +14,8 @@
 
 #import <objc/message.h>
 
+NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetImage";
+
 @interface NPRImageView () <UIGestureRecognizerDelegate>
 
 + (NSOperationQueue *)processingQueue;
@@ -492,6 +494,10 @@
     if (processedImage) {
         self.customImageView.image = processedImage;
         [self.indicatorView stopAnimating];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            [notificationCenter postNotificationName:NPRDidSetImageNotification object:self];
+        });
         return;
     } else {
         // check if processed image exists on disk
@@ -675,11 +681,12 @@
             
             //set processed image
             self.customImageView.image = processedImage;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+                [notificationCenter postNotificationName:NPRDidSetImageNotification object:self];
+            });
             
             if (processedImage) {
-                if (self.delegate && [self.delegate respondsToSelector:@selector(nprImageView:didFinishDownloading:image:)]) {
-                    [self.delegate nprImageView:self didFinishDownloading:array[2] image:processedImage];
-                }
                 [self.messageLabel setHidden:YES];
             } else {
                 [self.messageLabel setHidden:NO];

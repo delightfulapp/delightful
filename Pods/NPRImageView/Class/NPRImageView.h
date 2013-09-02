@@ -10,11 +10,7 @@
 
 @class NPRImageView;
 
-@protocol NPRImageViewDelegate <NSObject>
-
-- (void)nprImageView:(NPRImageView *)imageView didFinishDownloading:(NSString *)url image:(UIImage *)image;
-
-@end
+extern NSString * const NPRDidSetImageNotification;
 
 @interface NPRDiskCache : NSObject
 - (BOOL)imageExistsOnDiskWithKey:(NSString *)key;
@@ -30,8 +26,6 @@
 
 @property (nonatomic, readonly) NPRDiskCache *sharedCache;
 @property (nonatomic, strong) NSString *cacheKey;
-
-@property (nonatomic, weak) id<NPRImageViewDelegate>delegate;
 
 @property (nonatomic, assign) BOOL shouldHideIndicatorView;
 
