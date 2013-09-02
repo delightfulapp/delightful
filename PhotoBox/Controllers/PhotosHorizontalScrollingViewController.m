@@ -17,6 +17,9 @@
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
+@property (nonatomic, assign) NSInteger previousPage;
+@property (nonatomic, assign) BOOL justOpened;
+
 @end
 
 @implementation PhotosHorizontalScrollingViewController
@@ -24,6 +27,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.previousPage = 0;
+    self.justOpened = YES;
 	
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
@@ -156,14 +162,18 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    static NSInteger previousPage = 0;
     NSInteger page = [self currentCollectionViewPage:scrollView];
-    if (previousPage != page) {
-        previousPage = page;
+    if (self.previousPage != page) {
+        self.previousPage = page;
         [self showViewOriginalButtonForPage:page];
         Photo *photo = (Photo *)[self.items objectAtIndex:page];
-        if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-            [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+        if (!self.justOpened) {
+            NSLog(@"Tell delegate");
+            if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
+                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+            }
+        } else {
+            self.justOpened = NO;
         }
     }
 }

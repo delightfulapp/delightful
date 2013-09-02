@@ -11,6 +11,8 @@
 #import "PhotosHorizontalScrollingViewController.h"
 #import "PhotosViewController.h"
 
+#define ANIMATED_IMAGE_VIEW_ON_PUSH_TAG 456812
+
 @interface ShowFullScreenPhotosAnimatedTransitioning ()
 
 @property (nonatomic, strong) UIImageView *imageViewToAnimate;
@@ -36,7 +38,7 @@
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 1;
+    return 0.5;
 }
 
 - (void)removeHelperViews {
@@ -45,6 +47,8 @@
 }
 
 - (void)animateTransitionForPushOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
+    [self removeHelperViews];
+    
     PhotosViewController *fromVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosHorizontalScrollingViewController *toVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
@@ -59,10 +63,11 @@
     [containerView addSubview:self.whiteView];
     
     self.imageViewToAnimate = [[UIImageView alloc] initWithFrame:startRect];
+    [self.imageViewToAnimate setTag:ANIMATED_IMAGE_VIEW_ON_PUSH_TAG];
     [self.imageViewToAnimate setImage:image];
     [containerView addSubview:self.imageViewToAnimate];
     
-    [UIView animateWithDuration:[self transitionDuration:nil]/2 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.imageViewToAnimate.center = CGPointMake(CGRectGetWidth(containerView.frame)/2, CGRectGetHeight(containerView.frame)/2);
         self.imageViewToAnimate.transform = CGAffineTransformScale(self.imageViewToAnimate.transform, CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect), CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect));
         [self.whiteView setAlpha:1];
@@ -78,6 +83,11 @@
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
     UIView *containerView = transitionContext.containerView;
+    
+    // when push and pop quickly, there still the image view from push
+    UIView *animatedImageViewOnPush = [containerView viewWithTag:ANIMATED_IMAGE_VIEW_ON_PUSH_TAG];
+    [animatedImageViewOnPush removeFromSuperview];
+    
     [containerView insertSubview:toVC.view belowSubview:fromVC.view];
     
     UIView *viewToAnimate = [[fromVC viewToAnimate] snapshotViewAfterScreenUpdates:NO];
@@ -86,12 +96,14 @@
     
     UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
+    
     [containerView addSubview:whiteView];
     
     [containerView addSubview:viewToAnimate];
+    
     [viewToAnimate setFrame:startRect];
     
-    [UIView animateWithDuration:[self transitionDuration:nil]/2 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         [viewToAnimate setFrame:endRect];
         [fromVC.view setAlpha:0];
     } completion:^(BOOL finished) {
