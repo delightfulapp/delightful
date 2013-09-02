@@ -45,6 +45,12 @@
     
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [NPRImageView cancelAllOperations];
+}
+
 - (void)setupDataSource {
     PhotosViewControllerDataSource *dataSource = [[PhotosViewControllerDataSource alloc] init];
     [dataSource setGroupKey:[self groupKey]];
@@ -116,6 +122,17 @@
 }
 
 #pragma mark - Segue
+
+//- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+//    PhotoBoxCell *cell = (PhotoBoxCell *)sender;
+//    NSString *url = cell.cellImageView.imageContentURL.absoluteString;
+//    NSLog(@"imageContentURL = %@.", url);
+//    NSLog(@"is %@downloading image.", ([cell.cellImageView isDownloadingImageAtURLString:url])?@"":@"not ");
+//    NSLog(@"%@image in disk cache.", ([cell.cellImageView.sharedCache imageExistsOnDiskWithKey:url])?@"":@"no ");
+//    
+//    [NPRImageView printOperations];
+//    return NO;
+//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"pushPhoto"]) {
