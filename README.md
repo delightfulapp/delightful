@@ -33,6 +33,12 @@ How to
 4. Copy your consumer key, secret, oauth token, and secret and put it in `PhotoBoxViewController.m` file inside `setupConnectionManager` method. Remove the `#error`.
 5. Build and run!
 
+Contact
+--
+
+[@nicnocquee](https://twitter.com/nicnocquee)
+
+
 License
 --
 
