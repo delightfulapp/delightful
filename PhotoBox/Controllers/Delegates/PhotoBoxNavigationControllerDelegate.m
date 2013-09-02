@@ -16,8 +16,9 @@
 @implementation PhotoBoxNavigationControllerDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
-    if ([fromVC isKindOfClass:[PhotosViewController class]] && [toVC isKindOfClass:[PhotosHorizontalScrollingViewController class]] && operation==UINavigationControllerOperationPush) {
-        ShowFullScreenPhotosAnimatedTransitioning *transitioning = [[ShowFullScreenPhotosAnimatedTransitioning alloc] init];
+    ShowFullScreenPhotosAnimatedTransitioning *transitioning = [[ShowFullScreenPhotosAnimatedTransitioning alloc] init];
+    transitioning.operation = operation;
+    if (([fromVC isKindOfClass:[PhotosViewController class]] && [toVC isKindOfClass:[PhotosHorizontalScrollingViewController class]] && operation==UINavigationControllerOperationPush) || ([fromVC isKindOfClass:[PhotosHorizontalScrollingViewController class]] && [toVC isKindOfClass:[PhotosViewController class]] && operation==UINavigationControllerOperationPop)) {
         return transitioning;
     }
     return nil;

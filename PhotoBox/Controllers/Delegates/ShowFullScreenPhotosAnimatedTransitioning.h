@@ -12,9 +12,13 @@
 
 - (UIImage *)imageToAnimate;
 - (CGRect)startRectInContainerView:(UIView *)view;
+- (CGRect)endRectInContainerView:(UIView *)view;
+- (UIView *)viewToAnimate;
 
 @end
 
 @interface ShowFullScreenPhotosAnimatedTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
+
+@property (nonatomic, assign) UINavigationControllerOperation operation;
 
 @end

@@ -13,6 +13,7 @@
 #import "Photo.h"
 
 #import "UIViewController+Additionals.h"
+#import "UIView+Additionals.h"
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
 
@@ -193,6 +194,26 @@
 
 - (void)didDownloadImage:(NSNotification *)notification {
     [self showViewOriginalButtonForPage:[self currentCollectionViewPage:self.collectionView]];
+}
+
+#pragma mark - Custom Animation Transition Delegate
+
+- (UIView *)viewToAnimate {
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    return cell.thisImageview;
+}
+
+- (UIImage *)imageToAnimate {
+    return nil;
+}
+
+- (CGRect)startRectInContainerView:(UIView *)view {
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    return [cell.thisImageview convertFrameRectToView:view];
+}
+
+- (CGRect)endRectInContainerView:(UIView *)view {
+    return CGRectZero;
 }
 
 @end

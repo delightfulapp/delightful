@@ -21,6 +21,30 @@
 @implementation ShowFullScreenPhotosAnimatedTransitioning
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
+    if (self.operation == UINavigationControllerOperationPush) {
+        [self animateTransitionForPushOperation:transitionContext];
+    } else if (self.operation == UINavigationControllerOperationPop) {
+        [self animateTransitionForPopOperation:transitionContext];
+    }
+}
+
+- (void)animationEnded:(BOOL)transitionCompleted {
+    if (transitionCompleted) {
+        [self performSelector:@selector(removeHelperViews) withObject:nil afterDelay:1];
+    }
+    
+}
+
+- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
+    return 1;
+}
+
+- (void)removeHelperViews {
+    [self.imageViewToAnimate removeFromSuperview];
+    [self.whiteView removeFromSuperview];
+}
+
+- (void)animateTransitionForPushOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
     PhotosViewController *fromVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosHorizontalScrollingViewController *toVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
@@ -46,23 +70,37 @@
         [containerView insertSubview:toVC.view belowSubview:self.imageViewToAnimate];
         [transitionContext completeTransition:YES];
     }];
+}
+
+- (void)animateTransitionForPopOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
+    PhotosHorizontalScrollingViewController *fromVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    PhotosViewController *toVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
-}
-
-- (void)animationEnded:(BOOL)transitionCompleted {
-    if (transitionCompleted) {
-        [self performSelector:@selector(removeHelperViews) withObject:nil afterDelay:1];
-    }
+    UIView *containerView = transitionContext.containerView;
+    [containerView insertSubview:toVC.view belowSubview:fromVC.view];
     
-}
-
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 1;
-}
-
-- (void)removeHelperViews {
-    [self.imageViewToAnimate removeFromSuperview];
-    [self.whiteView removeFromSuperview];
+    UIView *viewToAnimate = [[fromVC viewToAnimate] snapshotViewAfterScreenUpdates:NO];
+    CGRect endRect = [toVC endRectInContainerView:containerView];
+    CGRect startRect = [fromVC startRectInContainerView:containerView];
+    
+    UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
+    [whiteView setBackgroundColor:[UIColor whiteColor]];
+    [containerView addSubview:whiteView];
+    
+    [containerView addSubview:viewToAnimate];
+    [viewToAnimate setFrame:startRect];
+    
+    [UIView animateWithDuration:[self transitionDuration:nil]/2 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [viewToAnimate setFrame:endRect];
+        [fromVC.view setAlpha:0];
+    } completion:^(BOOL finished) {
+        [whiteView removeFromSuperview];
+        [viewToAnimate removeFromSuperview];
+        [fromVC.view removeFromSuperview];
+        [transitionContext completeTransition:YES];
+    }];
+    
 }
 
 @end

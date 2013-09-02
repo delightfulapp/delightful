@@ -7,6 +7,7 @@
 //
 
 #import "PhotosViewController.h"
+#import "ShowFullScreenPhotosAnimatedTransitioning.h"
 
 @class Photo;
 @class PhotosHorizontalScrollingViewController;
@@ -17,7 +18,7 @@
 
 @end
 
-@interface PhotosHorizontalScrollingViewController : PhotoBoxViewController
+@interface PhotosHorizontalScrollingViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
 @property (nonatomic, strong) Photo *firstShownPhoto;
 @property (nonatomic, weak) id<PhotosHorizontalScrollingViewControllerDelegate>delegate;

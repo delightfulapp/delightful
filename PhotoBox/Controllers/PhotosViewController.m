@@ -155,11 +155,16 @@
     return [self.selectedItem convertFrameRectToView:containerView];
 }
 
+- (CGRect)endRectInContainerView:(UIView *)containerView {
+    return [self.selectedItem convertFrameRectToView:containerView];
+}
+
 #pragma mark - PhotosHorizontalScrollingViewControllerDelegate
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+    self.selectedItem = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
 }
 
 @end
