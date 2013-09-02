@@ -40,6 +40,7 @@
     [self setupRefreshControl];
     [self setupPinchGesture];
     [self setupDataSource];
+    [self setupNavigationItemTitle];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -99,11 +100,43 @@
     [self.dataSource setConfigureCellBlock:[self cellConfigureBlock]];
 }
 
+- (void)setupNavigationItemTitle {
+    UILabel *titleLabel = [[UILabel alloc] init];
+    [titleLabel setNumberOfLines:2];
+    [titleLabel setBackgroundColor:[UIColor clearColor]];
+    [titleLabel setAdjustsFontSizeToFitWidth:YES];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    self.navigationTitleLabel = titleLabel;
+    [self.navigationItem setTitleView:self.navigationTitleLabel];
+}
+
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
     void (^configureCell)(PhotoBoxCell*, id) = ^(PhotoBoxCell* cell, id item) {
         [cell setItem:item];
     };
     return configureCell;
+}
+
+#pragma mark - Setter
+
+- (void)setAttributedTitle:(NSAttributedString *)title {
+    super.title = title.string;
+    [self.navigationTitleLabel setAttributedText:title];
+    [self.navigationTitleLabel sizeToFit];
+}
+
+- (void)setTitle:(NSString *)title subtitle:(NSString *)sub {
+    NSString *combine = [NSString stringWithFormat:@"%@%@%@", title, (sub)?@"\n":@"", (sub)?:@""];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:combine];
+    [string addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline] range:[combine rangeOfString:title]];
+    if (sub) {
+        [string addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline] range:[combine rangeOfString:sub]];
+    }
+    [self setAttributedTitle:string];
+}
+
+- (void)setTitle:(NSString *)title {
+    [self setTitle:title subtitle:nil];
 }
 
 #pragma mark - Connection
