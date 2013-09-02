@@ -36,6 +36,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int currentRow;
 
+@property (nonatomic, strong) UILabel *navigationTitleLabel;
+
 @property (nonatomic) CollectionViewDataSource *dataSource;
 
 - (void)refresh;
@@ -44,4 +46,5 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)didFetchItems;
 - (void)setupDataSource;
 - (void)setupDataSourceConfigureBlock;
+- (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
 @end

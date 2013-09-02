@@ -110,7 +110,7 @@
     if (count == 0) {
         self.title = title;
     } else {
-        self.title = [NSString stringWithFormat:@"%@ (%d/%d)", title, count, max];
+        [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"Showing %1$d of %2$d photos", nil), count, max]];
     }
 }
 
@@ -157,6 +157,10 @@
 
 - (CGRect)endRectInContainerView:(UIView *)containerView {
     return [self.selectedItem convertFrameRectToView:containerView];
+}
+
+- (UIView *)viewToAnimate {
+    return nil;
 }
 
 #pragma mark - PhotosHorizontalScrollingViewControllerDelegate
