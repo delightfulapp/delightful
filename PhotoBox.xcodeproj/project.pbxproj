@@ -14,6 +14,7 @@
 		0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
 		0310904217D1ABED0075F9D8 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
 		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
+		032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
 		032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */; };
 		032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
@@ -84,6 +85,8 @@
 		0310904117D1ABED0075F9D8 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Photo.m; path = PhotoBox/Models/Photo.m; sourceTree = "<group>"; };
 		0310904317D1B2840075F9D8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = PhotoBox/Models/Tag.h; sourceTree = "<group>"; };
 		0310904417D1B2840075F9D8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = PhotoBox/Models/Tag.m; sourceTree = "<group>"; };
+		032B0D1C17D4CF4800ABFA9F /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = PhotoBox/Others/LocationManager.h; sourceTree = "<group>"; };
+		032B0D1D17D4CF4800ABFA9F /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = PhotoBox/Others/LocationManager.m; sourceTree = "<group>"; };
 		032CBB7A17D0BDF3001205B1 /* PhotoBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB7D17D0BDF3001205B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -332,6 +335,8 @@
 			children = (
 				0337524517D3953100928409 /* OpenInActivity.h */,
 				0337524617D3953100928409 /* OpenInActivity.m */,
+				032B0D1C17D4CF4800ABFA9F /* LocationManager.h */,
+				032B0D1D17D4CF4800ABFA9F /* LocationManager.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -583,6 +588,7 @@
 				035846AE17D22D4400E196D7 /* PhotosViewControllerDataSource.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
+				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0337524117D3842B00928409 /* PhotoBoxImageView.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,

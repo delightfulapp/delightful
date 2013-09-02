@@ -11,6 +11,8 @@
 #import "Album.h"
 #import "Photo.h"
 
+#import "LocationManager.h"
+
 #import "PhotosViewControllerDataSource.h"
 
 #import "PhotosSectionHeaderView.h"
@@ -23,7 +25,8 @@
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedItem;
-
+@property (nonatomic, strong) NSMutableDictionary *locationDictionary;
+@property (nonatomic, strong) NSMutableDictionary *placemarkDictionary;
 @end
 
 @implementation PhotosViewController
@@ -65,6 +68,12 @@
 - (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
         [cell.titleLabel setText:[item objectForKey:[self groupKey]]];
+        NSIndexPath *indexPath = (NSIndexPath *)[item objectForKey:@"indexPath"];
+        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
+            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
+        } else {
+            [cell.locationLabel setText:nil];
+        }
     };
     return configureCell;
 }
@@ -98,6 +107,7 @@
 - (void)didFetchItems {
     int count = self.items.count;
     [self setPhotosCount:count max:self.totalItems];
+    [self getLocationForEachSection];
 }
 
 
@@ -169,6 +179,46 @@
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
     self.selectedItem = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+}
+
+#pragma mark - Location
+
+- (void)getLocationForEachSection {
+    if (!self.locationDictionary) {
+        self.locationDictionary = [NSMutableDictionary dictionary];
+    }
+    int i = 0;
+    for (NSDictionary *dict in self.dataSource.items) {
+        NSArray *members = [dict objectForKey:@"members"];
+        for (Photo *photo in members) {
+            
+            if (photo.latitude && ![photo.latitude isKindOfClass:[NSNull class]] && photo.longitude && ![photo.longitude isKindOfClass:[NSNull class]]) {
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:[photo.latitude doubleValue] longitude:[photo.longitude doubleValue]];
+                [self.locationDictionary setObject:location forKey:@(i)];
+                break;
+            }
+        }
+        i++;
+    }
+    
+    for (NSNumber *section in self.locationDictionary.allKeys) {
+        CLLocation *location = [self.locationDictionary objectForKey:section];
+        [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (!error && placemarks.count > 0) {
+                [self updateSectionHeader:[section integerValue] placemark:placemarks[0]];
+            }
+        }];
+    }
+}
+
+- (void)updateSectionHeader:(NSInteger)section placemark:(CLPlacemark *)placemark {
+    if (!self.placemarkDictionary) {
+        self.placemarkDictionary = [NSMutableDictionary dictionary];
+    }
+    if (placemark) {
+        [self.placemarkDictionary setObject:placemark forKey:@(section)];
+        [[NSNotificationCenter defaultCenter] postNotificationName:PhotoBoxLocationPlacemarkDidFetchNotification object:@{@"placemark": placemark, @"section":@(section)}];
+    }
 }
 
 @end

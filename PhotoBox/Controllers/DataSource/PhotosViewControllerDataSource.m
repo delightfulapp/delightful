@@ -10,6 +10,8 @@
 
 #import "NSArray+Additionals.h"
 
+#import "PhotosSectionHeaderView.h"
+
 @implementation PhotosViewControllerDataSource
 
 - (void)setItems:(NSArray *)items {
@@ -59,9 +61,12 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView *supplementaryView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
+    PhotosSectionHeaderView *supplementaryView = (PhotosSectionHeaderView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
+    [supplementaryView setSection:indexPath.section];
     NSDictionary *group = self.items[indexPath.section];
-    self.configureCellHeaderBlock(supplementaryView, group);
+    NSMutableDictionary *tempGroup = [NSMutableDictionary dictionaryWithDictionary:group];
+    [tempGroup setObject:indexPath forKey:@"indexPath"];
+    self.configureCellHeaderBlock(supplementaryView, tempGroup);
     return supplementaryView;
 }
 

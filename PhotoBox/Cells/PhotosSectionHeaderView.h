@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@class CLPlacemark;
+
 @interface PhotosSectionHeaderView : UICollectionReusableView
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIView *blurView;
+@property (nonatomic, assign) NSInteger section;
 
+- (void)setLocation:(CLPlacemark *)placemark;
 
 @end

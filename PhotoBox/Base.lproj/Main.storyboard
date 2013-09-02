@@ -142,17 +142,30 @@
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yBd-of-zy9">
+                                    <rect key="frame" x="141" y="15" width="38" height="21"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="W8L-UZ-5fe"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="bDy-p7-R89" firstAttribute="leading" secondItem="ZZK-no-Wmq" secondAttribute="leading" id="BXS-gg-bZ3"/>
                                 <constraint firstAttribute="centerY" secondItem="Ldx-Fa-lWf" secondAttribute="centerY" id="FzE-aa-ee9"/>
                                 <constraint firstAttribute="trailing" secondItem="bDy-p7-R89" secondAttribute="trailing" id="GeD-nS-Lby"/>
                                 <constraint firstAttribute="bottom" secondItem="bDy-p7-R89" secondAttribute="bottom" id="QQ3-cg-Nb0"/>
+                                <constraint firstAttribute="centerX" secondItem="yBd-of-zy9" secondAttribute="centerX" placeholder="YES" id="RPa-k8-cgT"/>
                                 <constraint firstItem="bDy-p7-R89" firstAttribute="top" secondItem="ZZK-no-Wmq" secondAttribute="top" id="pqc-uS-ZdR"/>
                                 <constraint firstItem="Ldx-Fa-lWf" firstAttribute="centerX" secondItem="bDy-p7-R89" secondAttribute="centerX" placeholder="YES" id="vOW-vy-YOy"/>
+                                <constraint firstAttribute="centerY" secondItem="yBd-of-zy9" secondAttribute="centerY" id="zt1-RU-8fz"/>
                             </constraints>
                             <connections>
                                 <outlet property="blurView" destination="bDy-p7-R89" id="efL-CM-Hmv"/>
+                                <outlet property="locationLabel" destination="yBd-of-zy9" id="u3m-XO-Q3J"/>
                                 <outlet property="titleLabel" destination="Ldx-Fa-lWf" id="Bdl-5A-DRl"/>
                             </connections>
                         </collectionReusableView>
