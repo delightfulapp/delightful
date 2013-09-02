@@ -216,7 +216,7 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:@"operationCount"]) {
         int operations = [[change objectForKey:@"new"] intValue];
-       // NSLog(@"%d operations in queue", operations);
+        // NSLog(@"%d operations in queue", operations);
         if (operations == 0) {
             [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
         } else {
@@ -411,8 +411,6 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 }
 
 - (void)setImageWithContentsOfURL:(NSURL *)URL placeholderImage:(UIImage *)placeholderImage {
-    NSString *string = URL.absoluteString;
-    
     if (![URL.absoluteString isEqualToString:self.imageContentURL.absoluteString])
     {
         [self setCacheKeyWithURL:URL.absoluteString];
@@ -478,7 +476,7 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
         if (image) {
             UIImage *im = [self processImage:image key:processKey urlString:urlString];
             dispatch_async(dispatch_get_main_queue(), ^{
-               [self setProcessedImageOnMainThread:@[im, processKey, urlString]]; 
+                [self setProcessedImageOnMainThread:@[im, processKey, urlString]];
             });
             
         } else {
@@ -540,7 +538,6 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
         [self setProcessedImageOnMainThread:@[image,thisKey,request.URL.absoluteString]];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         [[NPRFailDownloadArray array] addObject:request.URL.absoluteString];
-        NSString *operationURL = request.URL.absoluteString;
         [self.downloadingURLs removeObject:request.URL.absoluteString];
         if ([request.URL.absoluteString isEqualToString:url]) {
             [self.messageLabel setText:NSLocalizedString(@"Image cannot be downloaded. Tap to reload.", nil)];
@@ -614,7 +611,6 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
     //make op a dependency of all queued ops
     
     NSInteger maxOperations = ([queue maxConcurrentOperationCount] > 0) ? [queue maxConcurrentOperationCount]: INT_MAX;
-    int operationCount = [queue operationCount];
     NSInteger index = [queue operationCount] - maxOperations;
     if (index >= 0)
     {
@@ -665,46 +661,40 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 }
 
 - (void)setProcessedImageOnMainThread:(NSArray *)array {
-    //dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *cacheKey = [array objectAtIndex:1];
-        UIImage *processedImage = [array objectAtIndex:0];
-        processedImage = ([processedImage isKindOfClass:[NSNull class]])? nil: processedImage;
+    UIImage *processedImage = [array objectAtIndex:0];
+    processedImage = ([processedImage isKindOfClass:[NSNull class]])? nil: processedImage;
+    
+    //set image
+    if ([self.imageContentURL.absoluteString isEqualToString:[array objectAtIndex:2]])
+    {
         
-        //set image
-        if ([self.imageContentURL.absoluteString isEqualToString:[array objectAtIndex:2]])
-        {
-            
-            // crossfade
-            id animation = objc_msgSend(NSClassFromString(@"CATransition"), @selector(animation));
-            objc_msgSend(animation, @selector(setType:), @"kCATransitionFade");
-            objc_msgSend(self.layer, @selector(addAnimation:forKey:), animation, nil);
-            
-            //set processed image
-            self.customImageView.image = processedImage;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-                [notificationCenter postNotificationName:NPRDidSetImageNotification object:self];
-            });
-            
-            if (processedImage) {
-                [self.messageLabel setHidden:YES];
-            } else {
-                [self.messageLabel setHidden:NO];
-                [self setNeedsLayout];
-                [self layoutIfNeeded];
-            }
-            [self.progressView setHidden:YES];
-            [self.indicatorView stopAnimating];
+        // crossfade
+        id animation = objc_msgSend(NSClassFromString(@"CATransition"), @selector(animation));
+        objc_msgSend(animation, @selector(setType:), @"kCATransitionFade");
+        objc_msgSend(self.layer, @selector(addAnimation:forKey:), animation, nil);
+        
+        //set processed image
+        self.customImageView.image = processedImage;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+            [notificationCenter postNotificationName:NPRDidSetImageNotification object:self];
+        });
+        
+        if (processedImage) {
+            [self.messageLabel setHidden:YES];
         } else {
-            NSLog(@"");
+            [self.messageLabel setHidden:NO];
+            [self setNeedsLayout];
+            [self layoutIfNeeded];
         }
-   // });
+        [self.progressView setHidden:YES];
+        [self.indicatorView stopAnimating];
+    } else {
+        NSLog(@"");
+    }
 }
 
 + (void)printOperations {
-    [[NPRImageView processingQueue] cancelAllOperations];
-    return;
-    NSArray *operations = [[NPRImageView processingQueue] operations];
     for (AFImageRequestOperation *operation in [NPRImageView processingQueue].operations) {
         NSLog(@">> Operation %@ state: %@", operation.request.URL.absoluteString, [[self class] stateString:operation]);
         [operation cancel];

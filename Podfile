@@ -7,7 +7,7 @@ pod 'NSDate-Escort'
 pod 'UIView+AutoLayout'
 pod 'FXBlurView'
 pod 'AFOAuth1Client'
-pod 'NPRImageView'
+pod 'NPRImageView', :git => 'https://github.com/nicnocquee/NPRImageView'
 pod 'iOS-blur'
 target :PhotoBoxTests do
     pod 'OCMock', '~> 2.2.1'
