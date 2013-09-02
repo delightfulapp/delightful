@@ -3,6 +3,14 @@ PhotoBox
 
 PhotoBox is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
 
+Features (so far)
+--
+
+1. Albums as initial point of navigation.
+2. Photos grouped by date taken.
+3. Pinch to zoom in/out to see more or less photos. (change number of columns)
+4. View original photos and save to photo album, share to Twitter/Facebook/Email, or open in other apps.
+
 Requirements
 --
 
