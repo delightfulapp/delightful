@@ -31,10 +31,7 @@
 }
 
 - (void)animationEnded:(BOOL)transitionCompleted {
-    if (transitionCompleted) {
-        [self performSelector:@selector(removeHelperViews) withObject:nil afterDelay:1];
-    }
-    
+    [self performSelector:@selector( removeHelperViews) withObject:nil afterDelay:0.5];
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -72,7 +69,7 @@
         self.imageViewToAnimate.transform = CGAffineTransformScale(self.imageViewToAnimate.transform, CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect), CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect));
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
-        [containerView insertSubview:toVC.view belowSubview:self.imageViewToAnimate];
+        [containerView insertSubview:toVC.view belowSubview:self.whiteView];
         [transitionContext completeTransition:YES];
     }];
 }

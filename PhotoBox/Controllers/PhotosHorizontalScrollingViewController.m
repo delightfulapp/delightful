@@ -168,7 +168,6 @@
         [self showViewOriginalButtonForPage:page];
         Photo *photo = (Photo *)[self.items objectAtIndex:page];
         if (!self.justOpened) {
-            NSLog(@"Tell delegate");
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }

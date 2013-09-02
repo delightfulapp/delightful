@@ -43,6 +43,8 @@
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
     [self.scrollView setDelegate:self];
     self.thisImageview = [[NPRImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
+    [self.thisImageview setContentMode:UIViewContentModeScaleAspectFill];
+    [self.thisImageview setCrossFade:NO];
     [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.thisImageview setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.scrollView addSubview:self.thisImageview];
