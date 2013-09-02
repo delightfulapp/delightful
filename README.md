@@ -3,6 +3,12 @@ PhotoBox
 
 PhotoBox is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
 
+Preview
+--
+
+<iframe width="420" height="315" src="//www.youtube.com/embed/PeeV3pGwme0" frameborder="0" allowfullscreen></iframe>
+
+
 Features (so far)
 --
 
