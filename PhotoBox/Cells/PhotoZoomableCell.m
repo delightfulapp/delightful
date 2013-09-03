@@ -133,6 +133,11 @@
     return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal];
 }
 
+- (BOOL)isDownloadingOriginalImage {
+    Photo *photo = (Photo *)self.item;
+    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal];
+}
+
 - (UIImage *)originalImage {
     if ([self hasDownloadedOriginalImage]) {
         return self.thisImageview.image;

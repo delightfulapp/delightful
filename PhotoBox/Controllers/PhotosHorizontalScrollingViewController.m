@@ -64,7 +64,11 @@
 - (void)showViewOriginalButtonForPage:(NSInteger)page{
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
     if (cell) {
-        [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
+        if ([cell isDownloadingOriginalImage]) {
+            [self showDownloadingOriginalButton:YES];
+        } else {
+            [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
+        }
     }
 }
 
@@ -76,7 +80,17 @@
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
         [self.navigationItem setRightBarButtonItem:rightButton];
     }
-    
+}
+
+- (void)showDownloadingOriginalButton:(BOOL)show {
+    if (show) {
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:indicator];
+        [self.navigationItem setRightBarButtonItem:rightButton];
+        [indicator startAnimating];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
 }
 
 - (void)scrollToFirstShownPhoto {
@@ -190,6 +204,7 @@
 - (void)viewOriginalButtonTapped:(id)sender {
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     if (cell) {
+        [self showDownloadingOriginalButton:YES];
         [cell loadOriginalImage];
     }
 }
