@@ -42,4 +42,6 @@ typedef NS_ENUM(NSInteger, ActionType) {
                  failure:(void(^)(NSError*))failureBlock;
 - (void)getTagsWithSuccess:(void(^)(id object))successBlock
                    failure:(void(^)(NSError*))failureBlock;
+- (void)getAllPhotosOnPage:(int)page success:(void(^)(id object))successBlock
+                         failure:(void(^)(NSError*))failureBlock;
 @end

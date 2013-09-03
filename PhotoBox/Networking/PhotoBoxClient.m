@@ -71,7 +71,10 @@
 }
 
 - (void)getPhotosInAlbum:(NSString *)albumId page:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self getPath:[NSString stringWithFormat:@"/photos/album-%@/list.json?page=%d&returnSizes=200x200xCR", albumId, page] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    NSString *album = [NSString stringWithFormat:@"/album-%@", albumId];
+    if (!albumId) album = @"";
+    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&returnSizes=200x200xCR", album, page];
+    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
@@ -84,6 +87,10 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failureBlock(error);
     }];
+}
+
+- (void)getAllPhotosOnPage:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self getPhotosInAlbum:nil page:page success:successBlock failure:failureBlock];
 }
 
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
