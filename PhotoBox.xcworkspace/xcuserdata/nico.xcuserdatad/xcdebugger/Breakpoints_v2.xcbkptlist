@@ -550,11 +550,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Cells/PhotoZoomableCell.m"
-            timestampString = "399920481.809845"
+            timestampString = "399924500.390655"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "-setImageSize:"
             landmarkType = "5">
          </BreakpointContent>
