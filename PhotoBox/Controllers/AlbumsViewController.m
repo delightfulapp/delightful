@@ -12,6 +12,7 @@
 #import "Album.h"
 
 #import "PhotosViewController.h"
+#import "PhotosSectionHeaderView.h"
 
 @interface AlbumsViewController ()
 
@@ -35,7 +36,8 @@
     [self setAlbumsCount:0 max:0];
     NSString *identifier = @"albumCell";
     [self.dataSource setCellIdentifier:identifier];
-    
+    [self.dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
+    [self.dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -65,16 +67,47 @@
     return @"pushPhotosFromAlbums";
 }
 
+- (NSString *)sectionHeaderIdentifier {
+    return @"albumSection";
+}
+
+- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
+    void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
+        [cell.titleLabel setText:@">"];
+        [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
+        [cell setHideLocation:YES];
+        int count = cell.gestureRecognizers.count;
+        if (count == 0) {
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAllAlbum:)];
+            [tap setNumberOfTapsRequired:1];
+            [tap setNumberOfTouchesRequired:1];
+            [cell addGestureRecognizer:tap];
+        }
+    };
+    return configureCell;
+}
+
 #pragma mark - Segue
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:[self segue]]) {
         AlbumCell *cell = (AlbumCell *)sender;
-        Album *album = cell.item;
+        Album *album;
+        if (!cell) {
+            album = [Album allPhotosAlbum];
+        } else {
+            album = cell.item;
+        }
         PhotosViewController *destination = (PhotosViewController *)segue.destinationViewController;
         [destination setItem:album];
     }
+}
+
+#pragma mark - Tap
+
+- (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
+    [self performSegueWithIdentifier:[self segue] sender:nil];
 }
 
 @end

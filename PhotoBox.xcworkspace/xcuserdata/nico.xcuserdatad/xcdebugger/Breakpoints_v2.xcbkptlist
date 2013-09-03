@@ -341,7 +341,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399825718.509266"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "180"
@@ -389,13 +389,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotoBoxViewController.m"
-            timestampString = "399823020.912975"
+            timestampString = "399879417.646005"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
-            landmarkName = "-setTitle:subtitle:"
-            landmarkType = "5">
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "@implementation PhotoBoxViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -405,13 +405,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399829571.409123"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "225"
-            endingLineNumber = "225"
-            landmarkName = "-updateSectionHeader:placemark:"
-            landmarkType = "5">
+            endingLineNumber = "225">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -421,7 +419,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399829571.409123"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "212"
@@ -437,7 +435,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399827855.023809"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "206"
@@ -483,7 +481,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399827855.023809"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "197"
@@ -499,7 +497,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399825610.506978"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "193"
@@ -515,7 +513,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PhotoBox/Controllers/PhotosViewController.m"
-            timestampString = "399825636.612151"
+            timestampString = "399880181.475246"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "191"

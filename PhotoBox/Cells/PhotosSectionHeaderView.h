@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UIView *blurView;
 @property (nonatomic, assign) NSInteger section;
+@property (nonatomic, assign) BOOL hideLocation;
 
 - (void)setLocation:(CLPlacemark *)placemark;
 

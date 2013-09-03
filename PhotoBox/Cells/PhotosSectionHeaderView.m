@@ -24,11 +24,15 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidFetched:) name:PhotoBoxLocationPlacemarkDidFetchNotification object:nil];
+    [self listenToLocationNotification:!self.hideLocation];
     
     [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
     [self.locationLabel setText:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)locationDidFetched:(NSNotification *)notification {
@@ -40,10 +44,22 @@
 }
 
 - (void)setLocation:(CLPlacemark *)placemark {
-    
     NSString *location = placemark.locality;
     if (!location) location = placemark.name;
     [self.locationLabel setText:[NSString stringWithFormat:@"%@, %@", location, placemark.country]];
+}
+
+- (void)setHideLocation:(BOOL)hideLocation {
+    _hideLocation = hideLocation;
+    [self listenToLocationNotification:!_hideLocation];
+}
+
+- (void)listenToLocationNotification:(BOOL)listen {
+    if (!listen) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    } else {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidFetched:) name:PhotoBoxLocationPlacemarkDidFetchNotification object:nil];
+    }
 }
 
 @end

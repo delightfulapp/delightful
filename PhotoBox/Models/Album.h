@@ -26,4 +26,6 @@ typedef NS_ENUM(NSUInteger, AlbumCoverType) {
 
 - (NSURL *)albumCover:(AlbumCoverType)coverType;
 
++ (Album *)allPhotosAlbum;
+
 @end

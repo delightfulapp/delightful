@@ -32,4 +32,13 @@ NSString *stringWithAlbumCoverType(AlbumCoverType input) {
     return self.albumId;
 }
 
++ (Album *)allPhotosAlbum {
+    Album *a = [[Album alloc] initWithDictionary:@{
+                                                   @"id": @"",
+                                                   @"name":NSLocalizedString(@"All Photos", nil)
+                                                   }];
+    a.albumId = nil;
+    return a;
+}
+
 @end

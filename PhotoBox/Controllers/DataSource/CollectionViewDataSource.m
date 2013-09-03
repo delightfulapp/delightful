@@ -30,4 +30,12 @@
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
+    if (self.configureCellHeaderBlock) {
+        self.configureCellHeaderBlock(supplementaryView, (self.items.count>0)?self.items[indexPath.section]:nil);
+    }
+    return supplementaryView;
+}
+
 @end

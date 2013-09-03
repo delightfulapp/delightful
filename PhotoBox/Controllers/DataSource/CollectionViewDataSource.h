@@ -15,6 +15,8 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 @property (nonatomic, copy) NSArray *items;
 @property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellBlock;
+@property (nonatomic, strong) NSString *sectionHeaderIdentifier;
+@property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellHeaderBlock;
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathOfItem:(id)item;

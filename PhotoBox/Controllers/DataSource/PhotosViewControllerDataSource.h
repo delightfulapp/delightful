@@ -14,7 +14,5 @@
 @interface PhotosViewControllerDataSource : CollectionViewDataSource
 
 @property (nonatomic, strong) NSString *groupKey;
-@property (nonatomic, strong) NSString *sectionHeaderIdentifier;
-@property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellHeaderBlock;
 
 @end
