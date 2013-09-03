@@ -51,7 +51,7 @@ THE SOFTWARE.
 
 FXBlurView
 
-Version 1.2, August 28th, 2013
+Version 1.3.2, September 3rd, 2013
 
 Copyright (C) 2013 Charcoal Design
 

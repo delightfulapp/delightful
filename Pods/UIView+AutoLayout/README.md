@@ -1,11 +1,6 @@
 UIView+AutoLayout
 =================
 
-*Originally forked from [jrturton/UIView-Autolayout](https://github.com/jrturton/UIView-Autolayout) by Tyler Fox. Distributed with the MIT License.*
-
-Introduction
-------------
-
 A carefully-crafted category on `UIView` (and a one-method category on `NSLayoutConstraint`) that provides a simpler interface for creating Auto Layout constraints.
 
 The goal is to provide a pleasant API for the vast majority of common Auto Layout use cases. It's designed for clarity and simplicity while simultaneously minimizing the amount of third party code. The API takes inspiration from the Auto Layout UI options available in Interface Builder.
@@ -86,7 +81,6 @@ Limitations
 -----------
 
 *	Will need to use the `NSLayoutConstraint` SDK API directly for some uncommon advanced use cases
-*	For simplicity, UIView+AutoLayout intentionally does not support "Leading" or "Trailing", therefore it is not intended to be used for UI that displays right-to-left languages
 
 UIView+AutoLayout vs. the rest
 ------------------------------
@@ -115,3 +109,8 @@ Problems, Suggestions, Pull Requests?
 Bring 'em on! :)
 
 I'm especially interested in hearing about any common use cases that this API does not currently address. Feel free to add feature requests (and view current work in progress) on the [Feature Requests](https://github.com/smileyborg/UIView-AutoLayout/wiki/Feature-Requests) page of the wiki for this project.
+
+Credits
+-------
+
+Originally forked from [jrturton/UIView-Autolayout](https://github.com/jrturton/UIView-Autolayout) by Tyler Fox. Distributed with the MIT License.

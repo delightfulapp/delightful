@@ -61,13 +61,19 @@
 
 - (void)setupConnectionManager {
     if (![[ConnectionManager sharedManager] baseURL]) {
-#error Get your Consumer key, secret, oauth token, and secret in https://<username>.trovebox.com/manage/settings#apps
+//#error Get your Consumer key, secret, oauth token, and secret in https://<username>.trovebox.com/manage/settings#apps
+//        
+//        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"<YOUR_TROVEBOX_URL>"] // e.g. http://username.trovebox.com
+//                                          consumerKey:@"<YOUR_CONSUMER_KEY>"
+//                                       consumerSecret:@"<YOUR_CONSUMER_SECRET>"
+//                                           oauthToken:@"<YOUR_OAUTH_TOKEN>"
+//                                          oauthSecret:@"<YOUR_OAUTH_SECRET>"];
         
-        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"<YOUR_TROVEBOX_URL>"] // e.g. http://username.trovebox.com
-                                          consumerKey:@"<YOUR_CONSUMER_KEY>"
-                                       consumerSecret:@"<YOUR_CONSUMER_SECRET>"
-                                           oauthToken:@"<YOUR_OAUTH_TOKEN>"
-                                          oauthSecret:@"<YOUR_OAUTH_SECRET>"];
+        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"http://nicnocquee.trovebox.com"]
+                                          consumerKey:@"2d262c20d45cacfd4a9111b54a5454"
+                                       consumerSecret:@"d63bfab472"
+                                           oauthToken:@"ec97b073407cebca08999af2745146"
+                                          oauthSecret:@"328cdfc590"];
     }
 }
 
