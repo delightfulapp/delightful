@@ -42,30 +42,44 @@
 - (void)setup {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
     [self.scrollView setDelegate:self];
-    self.thisImageview = [[NPRImageView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
-    [self.thisImageview setContentMode:UIViewContentModeScaleAspectFill];
+    self.thisImageview = [[NPRImageView alloc] initWithFrame:CGRectZero];
+    [self.thisImageview setContentMode:UIViewContentModeScaleAspectFit];
     [self.thisImageview setCrossFade:NO];
     [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.thisImageview setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.scrollView addSubview:self.thisImageview];
     [self.contentView addSubview:self.scrollView];
-    self.scrollView.contentSize = self.thisImageview.frame.size;
     
-    CGRect scrollViewFrame = self.scrollView.frame;
-    CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
-    CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
-    CGFloat minScale = MIN(scaleWidth, scaleHeight);
-    self.scrollView.minimumZoomScale = minScale;
-    
-    self.scrollView.maximumZoomScale = 4.0f;
-    self.scrollView.zoomScale = minScale;
+    [self setImageSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
     
     UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
     doubleTapRecognizer.numberOfTapsRequired = 2;
     doubleTapRecognizer.numberOfTouchesRequired = 1;
     [self.scrollView addGestureRecognizer:doubleTapRecognizer];
+}
+
+- (void)setImageSize:(CGSize)size {
+    self.scrollView.zoomScale = 1;
     
-    [self.thisImageview setContentMode:UIViewContentModeScaleAspectFit];
+    self.thisImageview.frame = ({
+        CGRect frame = self.thisImageview.frame;
+        frame.size = size;
+        frame;
+    });
+    [self.thisImageview setNeedsLayout];
+    [self.scrollView setContentSize:size];
+    
+    self.scrollView.minimumZoomScale = ({
+        CGRect scrollViewFrame = self.scrollView.frame;
+        CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
+        CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
+        CGFloat minScale = MIN(scaleWidth, scaleHeight);
+        minScale;
+    });
+    
+    self.scrollView.maximumZoomScale = 4.0f;
+    
+    self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
     [self centerScrollViewContents];
 }
 
@@ -110,21 +124,22 @@
     Photo *photo = (Photo *)item;
         
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.thumbnailStringURL]) {
-        
         if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
-            [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal] placeholderImage:nil];
+            [self loadOriginalImage];
         } else {
+            [self.thisImageview setShouldCrop:YES];
+            [self setImageSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
             [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.thumbnailStringURL] placeholderImage:nil];
         }
         
         self.thumbnailURL = [NSURL URLWithString:photo.thumbnailStringURL];
-        
-        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
     }
 }
 
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
+    [self setImageSize:CGSizeMake(photo.width, photo.height)];
+    [self.thisImageview setShouldCrop:NO];
     [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal] placeholderImage:nil];
 }
 
