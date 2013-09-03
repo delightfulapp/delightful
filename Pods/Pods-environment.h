@@ -18,18 +18,6 @@
 #define COCOAPODS_VERSION_MINOR_AFOAuth1Client 3
 #define COCOAPODS_VERSION_PATCH_AFOAuth1Client 0
 
-// Appirater
-#define COCOAPODS_POD_AVAILABLE_Appirater
-#define COCOAPODS_VERSION_MAJOR_Appirater 2
-#define COCOAPODS_VERSION_MINOR_Appirater 0
-#define COCOAPODS_VERSION_PATCH_Appirater 1
-
-// Countly
-#define COCOAPODS_POD_AVAILABLE_Countly
-#define COCOAPODS_VERSION_MAJOR_Countly 1
-#define COCOAPODS_VERSION_MINOR_Countly 0
-#define COCOAPODS_VERSION_PATCH_Countly 0
-
 // FXBlurView
 #define COCOAPODS_POD_AVAILABLE_FXBlurView
 #define COCOAPODS_VERSION_MAJOR_FXBlurView 1

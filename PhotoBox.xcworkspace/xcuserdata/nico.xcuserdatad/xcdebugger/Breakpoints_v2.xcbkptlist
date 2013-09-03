@@ -21,11 +21,11 @@
             condition = "[string isEqualToString:@&quot;http://awesomeness.openphoto.me/custom/201210/IMG_7392-837c54_200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "429"
-            endingLineNumber = "429"
+            startingLineNumber = "427"
+            endingLineNumber = "427"
             landmarkName = "-setImageWithContentsOfURL:placeholderImage:"
             landmarkType = "5">
          </BreakpointContent>
@@ -38,11 +38,11 @@
             condition = "[url isEqualToString:@&quot;http://nicnocquee.trovebox.com/photo/35f/create/239ea/200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "529"
-            endingLineNumber = "529"
+            startingLineNumber = "527"
+            endingLineNumber = "527"
             landmarkName = "-queueImageForProcessingForURLString:"
             landmarkType = "5">
             <Locations>
@@ -113,11 +113,11 @@
             condition = "[urlString isEqualToString:@&quot;http://nicnocquee.trovebox.com/photo/45a/create/44094/200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "595"
-            endingLineNumber = "595"
+            startingLineNumber = "596"
+            endingLineNumber = "596"
             landmarkName = "-queueProcessingOperation:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -130,11 +130,11 @@
             condition = "[urlString isEqualToString:@&quot;http://nicnocquee.trovebox.com/photo/35f/create/239ea/200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "642"
-            endingLineNumber = "642"
+            startingLineNumber = "643"
+            endingLineNumber = "643"
             landmarkName = "-processImage:key:urlString:"
             landmarkType = "5">
             <Locations>
@@ -176,11 +176,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "487"
-            endingLineNumber = "487"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
             landmarkName = "-continueImageProcessingFromDiskWithKey:processingKey:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -192,11 +192,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399898175.25284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "678"
-            endingLineNumber = "678"
+            startingLineNumber = "677"
+            endingLineNumber = "677"
             landmarkName = "-setProcessedImageOnMainThread:"
             landmarkType = "5">
          </BreakpointContent>
@@ -208,11 +208,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399898175.25284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "693"
-            endingLineNumber = "693"
+            startingLineNumber = "692"
+            endingLineNumber = "692"
             landmarkName = "-setProcessedImageOnMainThread:"
             landmarkType = "5">
          </BreakpointContent>
@@ -224,11 +224,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399898175.25284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "663"
-            endingLineNumber = "663"
+            startingLineNumber = "662"
+            endingLineNumber = "662"
             landmarkName = "-processImage:key:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -241,11 +241,11 @@
             condition = "[urlString isEqualToString:@&quot;http://awesomeness.openphoto.me/custom/201209/IMG_0861-3d7c54_200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "607"
-            endingLineNumber = "607"
+            startingLineNumber = "608"
+            endingLineNumber = "608"
             landmarkName = "-queueProcessingOperation:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -258,11 +258,11 @@
             condition = "[urlString isEqualToString:@&quot;http://nicnocquee.trovebox.com/photo/3k0/create/0a835/200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "635"
-            endingLineNumber = "635"
+            startingLineNumber = "636"
+            endingLineNumber = "636"
             landmarkName = "-queueProcessingOperation:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -272,14 +272,13 @@
          <BreakpointContent
             shouldBeEnabled = "No"
             ignoreCount = "0"
-            condition = "[url isEqualToString:@&quot;http://awesomeness.openphoto.me/custom/201209/IMG_0861-3d7c54_200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "533"
-            endingLineNumber = "533"
+            startingLineNumber = "532"
+            endingLineNumber = "532"
             landmarkName = "-queueImageForProcessingForURLString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -292,11 +291,11 @@
             condition = "[urlString isEqualToString:@&quot;http://awesomeness.openphoto.me/custom/201210/IMG_7392-837c54_200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "477"
-            endingLineNumber = "477"
+            startingLineNumber = "475"
+            endingLineNumber = "475"
             landmarkName = "-continueImageProcessingFromDiskWithKey:processingKey:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -309,11 +308,11 @@
             condition = "[urlString isEqualToString:@&quot;http://awesomeness.openphoto.me/custom/201209/IMG_0861-3d7c54_200x200xCR.jpg&quot;]"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399896511.477445"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "638"
-            endingLineNumber = "638"
+            startingLineNumber = "639"
+            endingLineNumber = "639"
             landmarkName = "-queueProcessingOperation:urlString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -325,11 +324,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Pods/NPRImageView/Class/NPRImageView.m"
-            timestampString = "399820119.85343"
+            timestampString = "399898175.25284"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "717"
-            endingLineNumber = "717"
+            startingLineNumber = "716"
+            endingLineNumber = "716"
             landmarkName = "+stateString:"
             landmarkType = "5">
          </BreakpointContent>
@@ -519,6 +518,134 @@
             startingLineNumber = "191"
             endingLineNumber = "191"
             landmarkName = "-getLocationForEachSection"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/NPRImageView/Class/UIImage+FX.m"
+            timestampString = "399894541.128493"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "-imageCroppedAndScaledToSize:contentMode:padToFit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/NPRImageView/Class/UIImage+FX.m"
+            timestampString = "399894541.128493"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "-imageCroppedAndScaledToSize:contentMode:padToFit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/NPRImageView/Class/UIImage+FX.m"
+            timestampString = "399894541.128493"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "-imageCroppedAndScaledToSize:contentMode:padToFit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "PhotoBox/Cells/PhotoZoomableCell.m"
+            timestampString = "399920481.809845"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
+            landmarkName = "-setImageSize:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/NPRImageView/Class/NPRImageView.m"
+            timestampString = "399896511.477445"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "654"
+            endingLineNumber = "654"
+            landmarkName = "-processImage:key:urlString:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/NPRImageView/Class/NPRImageView.m"
+            timestampString = "399888167.286301"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "-writeImageToDisk:key:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/AFNetworking/AFNetworking/AFImageRequestOperation.m"
+            timestampString = "399893881.25705"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "166"
+            endingLineNumber = "166"
+            landmarkName = "+imageRequestOperationWithRequest:imageProcessingBlock:success:failure:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/NPRImageView/Class/NPRImageView.m"
+            timestampString = "399896945.220996"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "479"
+            endingLineNumber = "479"
+            landmarkName = "-continueImageProcessingFromDiskWithKey:processingKey:urlString:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

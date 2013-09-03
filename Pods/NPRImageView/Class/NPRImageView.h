@@ -8,17 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+#import "NPRDiskCache.h"
+#import "NPROperationQueue.h"
+
 @class NPRImageView;
 
 extern NSString * const NPRDidSetImageNotification;
 
-@interface NPRDiskCache : NSObject
-- (BOOL)imageExistsOnDiskWithKey:(NSString *)key;
-@end
-
 @interface NPRImageView : UIImageView
 
 @property (nonatomic, assign) BOOL crossFade;
+@property (nonatomic, assign) BOOL useOriginal;
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
 @property (nonatomic, strong) UILabel *messageLabel;
@@ -26,7 +26,6 @@ extern NSString * const NPRDidSetImageNotification;
 @property (nonatomic, strong) NSURL *imageContentURL;
 
 @property (nonatomic, readonly) NPRDiskCache *sharedCache;
-@property (nonatomic, strong) NSString *cacheKey;
 
 @property (nonatomic, assign) BOOL shouldHideIndicatorView;
 
@@ -34,8 +33,8 @@ extern NSString * const NPRDidSetImageNotification;
 
 + (UIImage *)originalImageForKey:(NSString *)key;
 
-- (BOOL)isDownloadingImageAtURLString:(NSString *)urlString;
-
++ (NPROperationQueue *)processingQueue;
++ (NSCache *)processedImageCache;
 + (void)printOperations;
 + (void)cancelAllOperations;
 

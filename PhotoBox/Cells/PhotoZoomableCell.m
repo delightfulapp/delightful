@@ -10,8 +10,6 @@
 
 #import "Photo.h"
 
-#import "NPRImageView+Additionals.h"
-
 // no idea how to do the zooming inside scrollview inside collection view cell using auto layout. back to the ol' days.
 
 @interface PhotoZoomableCell ()
@@ -124,10 +122,10 @@
     Photo *photo = (Photo *)item;
         
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.thumbnailStringURL]) {
-        if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
+        if ([self hasDownloadedOriginalImage]) {
             [self loadOriginalImage];
         } else {
-            [self.thisImageview setShouldCrop:YES];
+            [self.thisImageview setUseOriginal:NO];
             [self setImageSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
             [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.thumbnailStringURL] placeholderImage:nil];
         }
@@ -139,23 +137,24 @@
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
     [self setImageSize:CGSizeMake(photo.width, photo.height)];
-    [self.thisImageview setShouldCrop:NO];
+    [self.thisImageview setUseOriginal:YES];
     [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal] placeholderImage:nil];
 }
 
 - (BOOL)hasDownloadedOriginalImage {
     Photo *photo = (Photo *)self.item;
-    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal];
+    return [[NPRDiskCache sharedDiskCache] imageExistsOnDiskWithKey:photo.pathOriginal];
 }
 
 - (BOOL)isDownloadingOriginalImage {
     Photo *photo = (Photo *)self.item;
-    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal];
+    return [[NPROperationQueue processingQueue] isDownloadingImageAtURLString:photo.pathOriginal];
 }
 
 - (UIImage *)originalImage {
     if ([self hasDownloadedOriginalImage]) {
-        return self.thisImageview.image;
+        Photo *photo = (Photo *)self.item;
+        return [[NPRDiskCache sharedDiskCache] imageFromDiskWithKey:photo.pathOriginal];
     }
     return nil;
 }
