@@ -7,7 +7,7 @@ PODS:
   - libextobjc/EXTScope (0.3):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.3)
-  - NPRImageView (1.0.6):
+  - NPRImageView (1.0.7):
     - AFNetworking (~> 1.3.2)
     - libextobjc/EXTScope (~> 0.3.0)
   - NSDate+TimeAgo (1.0.2)
@@ -37,7 +37,7 @@ SPEC CHECKSUMS:
   FXBlurView: 93bf69869fbe36d1f851df484d058494a6a8dc9c
   iOS-blur: 1f211234742ce078bf2ab78f5237a63b18b5ed0f
   libextobjc: 820a79dbbbc498611e04fffd07d2d52a5588e7ac
-  NPRImageView: 0764c9c192757e58691d06cc0a6dd9bf74688bb6
+  NPRImageView: 5be0ccaeed92b40c1c8bf56035f04fdd74b0368d
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
   NSDate-Escort: f940f313d71ac25a20c126170074b576df391340
   OCMock: 80e4cfbc71a0e1bd28caf10a9fda27da7c4c8402
