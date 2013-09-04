@@ -223,8 +223,7 @@
 #pragma mark - Custom Animation Transition Delegate
 
 - (UIView *)viewToAnimate {
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    return cell.thisImageview;
+    return self.navigationController.view;
 }
 
 - (UIImage *)imageToAnimate {
@@ -232,8 +231,7 @@
 }
 
 - (CGRect)startRectInContainerView:(UIView *)view {
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    return [cell.thisImageview convertFrameRectToView:view];
+    return CGRectInset(view.frame, 0, (CGRectGetHeight(view.frame)-CGRectGetWidth(view.frame))/2);
 }
 
 - (CGRect)endRectInContainerView:(UIView *)view {

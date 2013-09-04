@@ -39,6 +39,10 @@
 
 - (void)setup {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
+    [self.scrollView setBackgroundColor:[UIColor clearColor]];
+    [self.scrollView setAlwaysBounceHorizontal:YES];
+    [self.scrollView setAlwaysBounceVertical:YES];
+    
     [self.scrollView setDelegate:self];
     self.thisImageview = [[NPRImageView alloc] initWithFrame:CGRectZero];
     [self.thisImageview setContentMode:UIViewContentModeScaleAspectFit];
@@ -65,13 +69,14 @@
         frame;
     });
     [self.thisImageview setNeedsLayout];
-    [self.scrollView setContentSize:size];
+    [self.scrollView setContentSize:CGSizeMake(size.width-1, size.height-1)];
     
     self.scrollView.minimumZoomScale = ({
         CGRect scrollViewFrame = self.scrollView.frame;
         CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
         CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
         CGFloat minScale = MIN(scaleWidth, scaleHeight);
+        NSLog(@"minscale = %f", minScale);
         minScale;
     });
     
@@ -85,8 +90,11 @@
         } else if (maxScale < 1) {
             maxScale = 1;
         }
+        NSLog(@"maxscale = %f", maxScale);
         maxScale;
     });
+    
+    NSLog(@"Max scale = %f min scale = %f", self.scrollView.maximumZoomScale, self.scrollView.minimumZoomScale);
     
     self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
     [self centerScrollViewContents];
@@ -122,6 +130,10 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self centerScrollViewContents];
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    NSLog(@"image rect: %@", NSStringFromCGRect(self.thisImageview.frame));
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {

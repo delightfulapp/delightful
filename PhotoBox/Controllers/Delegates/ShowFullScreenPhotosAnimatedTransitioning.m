@@ -87,25 +87,35 @@
     
     [containerView insertSubview:toVC.view belowSubview:fromVC.view];
     
-    UIView *viewToAnimate = [[fromVC viewToAnimate] snapshotViewAfterScreenUpdates:NO];
     CGRect endRect = [toVC endRectInContainerView:containerView];
     CGRect startRect = [fromVC startRectInContainerView:containerView];
+    
+    UIView *viewToAnimate = [fromVC viewToAnimate];
+    
+    UIGraphicsBeginImageContext(viewToAnimate.frame.size);
+    [viewToAnimate.layer renderInContext:UIGraphicsGetCurrentContext()];
+    
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], startRect);
+    UIImage *result = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    UIImageView *screenshotImage = [[UIImageView alloc] initWithImage:result];
+    [screenshotImage setFrame:startRect];
     
     UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
     
     [containerView addSubview:whiteView];
     
-    [containerView addSubview:viewToAnimate];
-    
-    [viewToAnimate setFrame:startRect];
+    [containerView addSubview:screenshotImage];
     
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [viewToAnimate setFrame:endRect];
+        [screenshotImage setFrame:endRect];
         [fromVC.view setAlpha:0];
     } completion:^(BOOL finished) {
         [whiteView removeFromSuperview];
-        [viewToAnimate removeFromSuperview];
+        [screenshotImage removeFromSuperview];
         [fromVC.view removeFromSuperview];
         [transitionContext completeTransition:YES];
     }];
