@@ -40,7 +40,6 @@ install_resource()
   esac
 }
 install_resource "NSDate+TimeAgo/NSDateTimeAgo.bundle"
-install_resource "${BUILD_DIR}/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}/Appirater.bundle"
 
 rsync -avr --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rm -f "$RESOURCES_TO_COPY"

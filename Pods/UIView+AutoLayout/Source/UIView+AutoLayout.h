@@ -10,7 +10,9 @@ typedef NS_ENUM(NSInteger, ALEdge) {
     ALEdgeTop = 0,      // the top edge of the view
     ALEdgeLeft,         // the left edge of the view
     ALEdgeBottom,       // the bottom edge of the view
-    ALEdgeRight         // the right edge of the view
+    ALEdgeRight,        // the right edge of the view
+    ALEdgeLeading,      // the leading edge of the view (left edge for left-to-right languages like English, right edge for right-to-left languages like Arabic)
+    ALEdgeTrailing      // the trailing edge of the view (right edge for left-to-right languages like English, left edge for right-to-left languages like Arabic)
 };
 
 typedef NS_ENUM(NSInteger, ALAxis) {
@@ -30,17 +32,17 @@ typedef void(^ALConstraintsBlock)(void);    // a block of method calls to the UI
 #pragma mark - UIView+AutoLayout
 
 /**
- A category on UIView that provides a simpler semantic interface for creating Auto Layout constraints.
+ A category on UIView that provides a simpler interface for creating Auto Layout constraints.
  */
 @interface UIView (AutoLayout)
 
 
 #pragma mark Factory & Initializer Methods
 
-/** Creates and returns a new view that does not convert autoresizing masks into constraints. */
+/** Creates and returns a new view that does not convert the autoresizing mask into constraints. */
 + (id)newAutoLayoutView;
 
-/** Initializes and returns a new view that does not convert autoresizing masks into constraints. */
+/** Initializes and returns a new view that does not convert the autoresizing mask into constraints. */
 - (id)initForAutoLayout;
 
 
@@ -57,8 +59,13 @@ typedef void(^ALConstraintsBlock)(void);    // a block of method calls to the UI
 /** Removes the given constraints from the views they have been added to. */
 + (void)removeConstraints:(NSArray *)constraints;
 
-/** Recursively removes all constraints from the view and its subviews. */
+/** Recursively removes all explicit constraints from the view and its subviews.
+    NOTE: This method preserves implicit constraints, such as intrinsic content size constraints, which you usually do not want to remove. */
 - (void)removeAllConstraintsFromViewAndSubviews;
+
+/** Recursively removes all constraints from the view and its subviews, optionally including implicit constraints.
+    WARNING: Implicit constraints are auto-generated lower priority constraints, and you usually do not want to remove these. */
+- (void)removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints;
 
 
 /** Centers the view in its superview. */
@@ -77,6 +84,9 @@ typedef void(^ALConstraintsBlock)(void);    // a block of method calls to the UI
 
 /** Pins the given edge of the view to the same edge of the superview with an inset. */
 - (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset;
+
+/** Pins the given edge of the view to the same edge of the superview with an inset as a maximum or minimum. */
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset relation:(NSLayoutRelation)relation;
 
 /** Pins the edges of the view to the edges of its superview with the given edge insets. */
 - (NSArray *)autoPinEdgesToSuperviewEdgesWithInsets:(UIEdgeInsets)insets;
@@ -152,7 +162,7 @@ typedef void(^ALConstraintsBlock)(void);    // a block of method calls to the UI
 #pragma mark - NSLayoutConstraint+AutoLayout
 
 /**
- A category on NSLayoutConstraint that allows constraints to easily removed.
+ A category on NSLayoutConstraint that allows constraints to be easily removed.
  */
 @interface NSLayoutConstraint (AutoLayout)
 

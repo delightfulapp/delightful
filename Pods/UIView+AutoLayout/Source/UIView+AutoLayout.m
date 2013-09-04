@@ -13,7 +13,7 @@
 #pragma mark Factory & Initializer Methods
 
 /** 
- Creates and returns a new view that does not convert autoresizing masks into constraints.
+ Creates and returns a new view that does not convert the autoresizing mask into constraints.
  */
 + (id)newAutoLayoutView
 {
@@ -23,7 +23,7 @@
 }
 
 /**
- Initializes and returns a new view that does not convert autoresizing masks into constraints.
+ Initializes and returns a new view that does not convert the autoresizing mask into constraints.
  */
 - (id)initForAutoLayout
 {
@@ -103,13 +103,33 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
 }
 
 /**
- Recursively removes all constraints from the view and its subviews.
+ Recursively removes all explicit constraints from the view and its subviews.
+ NOTE: This method preserves implicit constraints, such as intrinsic content size constraints, which you usually do not want to remove.
  */
 - (void)removeAllConstraintsFromViewAndSubviews
 {
-    [UIView removeConstraints:self.constraints];
+    [self removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:NO];
+}
+
+/** 
+ Recursively removes all constraints from the view and its subviews, optionally including implicit constraints.
+ WARNING: WARNING: Implicit constraints are auto-generated lower priority constraints (such as those that attempt to keep a view 
+ at its intrinsic content size by hugging its content & resisting compression), and you usually do not want to remove these.
+ 
+ @param shouldRemoveImplicitConstraints Whether implicit constraints should be removed or skipped.
+ */
+- (void)removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints
+{
+    NSMutableArray *constraintsToRemove = [NSMutableArray new];
+    for (NSLayoutConstraint *constraint in self.constraints) {
+        BOOL isImplicitConstraint = [NSStringFromClass([constraint class]) isEqualToString:@"NSContentSizeLayoutConstraint"];
+        if (shouldRemoveImplicitConstraints || !isImplicitConstraint) {
+            [constraintsToRemove addObject:constraint];
+        }
+    }
+    [UIView removeConstraints:constraintsToRemove];
     for (UIView *subview in self.subviews) {
-        [subview removeAllConstraintsFromViewAndSubviews];
+        [subview removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:shouldRemoveImplicitConstraints];
     }
 }
 
@@ -177,16 +197,25 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
 {
     UIView *superview = self.superview;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
-    NSLayoutAttribute attribute = [UIView attributeForEdge:edge];
-    NSLayoutConstraint *constraint = nil;
-    if (edge == ALEdgeLeft || edge == ALEdgeRight) {
-        constraint = [NSLayoutConstraint constraintWithItem:self attribute:attribute relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeLeft multiplier:1.0f constant:value];
+    ALEdge superviewEdge;
+    switch (edge) {
+        case ALEdgeLeft:
+        case ALEdgeRight:
+            superviewEdge = ALEdgeLeft;
+            break;
+        case ALEdgeTop:
+        case ALEdgeBottom:
+            superviewEdge = ALEdgeTop;
+            break;
+        case ALEdgeLeading:
+        case ALEdgeTrailing:
+            superviewEdge = ALEdgeLeading;
+            break;
+        default:
+            NSAssert(nil, @"Not a valid edge.");
+            break;
     }
-    else {
-        constraint = [NSLayoutConstraint constraintWithItem:self attribute:attribute relatedBy:NSLayoutRelationEqual toItem:superview attribute:NSLayoutAttributeTop multiplier:1.0f constant:value];
-    }
-    [superview addConstraintUsingGlobalPriority:constraint];
-    return constraint;
+    return [self autoPinEdge:edge toEdge:superviewEdge ofView:self.superview withOffset:value];
 }
 
 /**
@@ -198,12 +227,31 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
  */
 - (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset
 {
+    return [self autoPinEdgeToSuperviewEdge:edge withInset:inset relation:NSLayoutRelationEqual];
+}
+
+/**
+ Pins the given edge of the view to the same edge of the superview with an inset as a maximum or minimum.
+ 
+ @param edge The edge of this view and the superview to pin.
+ @param inset The amount to inset this view's edge from the superview's edge.
+ @param relation Whether the inset should be at least, at most, or exactly equal to the given value.
+ @return The constraint added.
+ */
+- (NSLayoutConstraint *)autoPinEdgeToSuperviewEdge:(ALEdge)edge withInset:(CGFloat)inset relation:(NSLayoutRelation)relation
+{
     UIView *superview = self.superview;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
-    if (edge == ALEdgeBottom || edge == ALEdgeRight) {
+    if (edge == ALEdgeBottom || edge == ALEdgeRight || edge == ALEdgeTrailing) {
+        // The bottom, right, and trailing insets (and relations, if an inequality) are inverted to become offsets
         inset = -inset;
+        if (relation == NSLayoutRelationLessThanOrEqual) {
+            relation = NSLayoutRelationGreaterThanOrEqual;
+        } else if (relation == NSLayoutRelationGreaterThanOrEqual) {
+            relation = NSLayoutRelationLessThanOrEqual;
+        }
     }
-    return [self autoPinEdge:edge toEdge:edge ofView:superview withOffset:inset];
+    return [self autoPinEdge:edge toEdge:edge ofView:superview withOffset:inset relation:relation];
 }
 
 /**
@@ -218,9 +266,9 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
     NSAssert(superview, @"View's superview must not be nil.\nView: %@", self);
     NSMutableArray *constraints = [NSMutableArray new];
     [constraints addObject:[self autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:superview withOffset:insets.top]];
-    [constraints addObject:[self autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:superview withOffset:insets.left]];
+    [constraints addObject:[self autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:superview withOffset:insets.left]];
     [constraints addObject:[self autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:superview withOffset:-insets.bottom]];
-    [constraints addObject:[self autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:superview withOffset:-insets.right]];
+    [constraints addObject:[self autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:superview withOffset:-insets.right]];
     return constraints;
 }
 
@@ -525,8 +573,8 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
         case ALAxisHorizontal:
         case ALAxisBaseline:
             matchedDimension = ALDimensionWidth;
-            firstEdge = ALEdgeLeft;
-            lastEdge = ALEdgeRight;
+            firstEdge = ALEdgeLeading;
+            lastEdge = ALEdgeTrailing;
             break;
         case ALAxisVertical:
             matchedDimension = ALDimensionHeight;
@@ -572,6 +620,7 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
     NSLayoutAttribute attribute;
     switch (axis) {
         case ALAxisHorizontal:
+        case ALAxisBaseline:
             fixedDimension = ALDimensionWidth;
             attribute = NSLayoutAttributeCenterX;
             break;
@@ -579,20 +628,18 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
             fixedDimension = ALDimensionHeight;
             attribute = NSLayoutAttributeCenterY;
             break;
-        case ALAxisBaseline:
-            fixedDimension = ALDimensionWidth;
-            attribute = NSLayoutAttributeCenterX;
-            break;
         default:
             NSAssert(nil, @"Not a valid axis.");
             return nil;
     }
+    BOOL isRightToLeftLanguage = [NSLocale characterDirectionForLanguage:[NSLocale preferredLanguages][0]] == NSLocaleLanguageDirectionRightToLeft;
+    BOOL shouldFlipOrder = isRightToLeftLanguage && (axis != ALAxisVertical); // imitate the effect of leading/trailing when distributing horizontally
     
     NSMutableArray *constraints = [NSMutableArray new];
     NSInteger numberOfViews = [views count];
     UIView *previousView = nil;
     for (NSInteger i = 0; i < numberOfViews; i++) {
-        UIView *view = views[i];
+        UIView *view = shouldFlipOrder ? views[numberOfViews - i - 1] : views[i];
         [constraints addObject:[view autoSetDimension:fixedDimension toSize:size]];
         CGFloat multiplier = (i * 2.0f + 2.0f) / (numberOfViews + 1.0f);
         CGFloat constant = (multiplier - 1.0f) * size / 2.0f;
@@ -643,6 +690,12 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
             break;
         case ALEdgeRight:
             attribute = NSLayoutAttributeRight;
+            break;
+        case ALEdgeLeading:
+            attribute = NSLayoutAttributeLeading;
+            break;
+        case ALEdgeTrailing:
+            attribute = NSLayoutAttributeTrailing;
             break;
         default:
             NSAssert(nil, @"Not a valid edge.");
@@ -758,6 +811,14 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
         case NSLayoutFormatAlignAllRight:
             NSAssert(axis == ALAxisVertical, @"Cannot align views that are distributed horizontally with NSLayoutFormatAlignAllRight.");
             constraint = [view autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:peerView];
+            break;
+        case NSLayoutFormatAlignAllLeading:
+            NSAssert(axis == ALAxisVertical, @"Cannot align views that are distributed horizontally with NSLayoutFormatAlignAllLeading.");
+            constraint = [view autoPinEdge:ALEdgeLeading toEdge:ALEdgeLeading ofView:peerView];
+            break;
+        case NSLayoutFormatAlignAllTrailing:
+            NSAssert(axis == ALAxisVertical, @"Cannot align views that are distributed horizontally with NSLayoutFormatAlignAllTrailing.");
+            constraint = [view autoPinEdge:ALEdgeTrailing toEdge:ALEdgeTrailing ofView:peerView];
             break;
         default:
             NSAssert(nil, @"Unsupported alignment option.");

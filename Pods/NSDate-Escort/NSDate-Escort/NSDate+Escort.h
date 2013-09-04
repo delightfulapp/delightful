@@ -64,7 +64,7 @@
 - (BOOL)isInPast;
 
 #pragma mark - Date roles
-// https://github.com/erica/NSDate-Extensions/issues/12
+
 - (BOOL)isTypicallyWorkday;
 
 - (BOOL)isTypicallyWeekend;
@@ -92,18 +92,17 @@
 
 - (NSDate *)dateAtStartOfDay;
 
-// add
-
 - (NSDate *)dateAtEndOfDay;
 
 - (NSDate *)dateAtStartOfMonth;
 
 - (NSDate *)dateAtEndOfMonth;
 
-#pragma mark - Retrieving intervals
 - (NSDate *)dateAtStartOfYear;
 
 - (NSDate *)dateAtEndOfYear;
+
+#pragma mark - Retrieving intervals
 
 - (NSInteger)minutesAfterDate:(NSDate *) aDate;
 
@@ -116,6 +115,10 @@
 - (NSInteger)daysAfterDate:(NSDate *) aDate;
 
 - (NSInteger)daysBeforeDate:(NSDate *) aDate;
+
+- (NSInteger)monthsAfterDate:(NSDate *) aDate;
+
+- (NSInteger)monthsBeforeDate:(NSDate *) aDate;
 
 /**
 * return distance days
@@ -137,6 +140,7 @@
 @property(readonly) NSInteger weekday;
 @property(readonly) NSInteger firstDayOfWeekday;
 @property(readonly) NSInteger lastDayOfWeekday;
-@property(readonly) NSInteger nthWeekday; // e.g. 2nd Tuesday of the month == 2
+// e.g. 2nd Tuesday of the month == 2
+@property(readonly) NSInteger nthWeekday;
 @property(readonly) NSInteger year;
 @end

@@ -1,7 +1,7 @@
 //
 //  FXBlurView.h
 //
-//  Version 1.2
+//  Version 1.3.2
 //
 //  Created by Nick Lockwood on 25/08/2013.
 //  Copyright (c) 2013 Charcoal Design
@@ -37,7 +37,7 @@
 
 @interface UIImage (FXBlurView)
 
-- (UIImage *)blurredImageWithRadius:(CGFloat)radius iterations:(NSUInteger)iterations;
+- (UIImage *)blurredImageWithRadius:(CGFloat)radius iterations:(NSUInteger)iterations tintColor:(UIColor *)tintColor;
 
 @end
 
@@ -51,5 +51,6 @@
 @property (nonatomic, assign) NSUInteger iterations;
 @property (nonatomic, assign) NSTimeInterval updateInterval;
 @property (nonatomic, assign) CGFloat blurRadius;
+@property (nonatomic, strong) UIColor *tintColor;
 
 @end

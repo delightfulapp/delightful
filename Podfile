@@ -1,8 +1,6 @@
 platform :ios, '7.0'
 pod 'UIColor+MLPFlatColors', '~> 1.0'
-pod 'Countly'
 pod 'NSDate+TimeAgo'
-pod 'Appirater'
 pod 'NSDate-Escort'
 pod 'UIView+AutoLayout'
 pod 'FXBlurView'
