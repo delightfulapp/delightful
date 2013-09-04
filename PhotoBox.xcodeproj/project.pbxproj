@@ -38,7 +38,6 @@
 		0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468917D1C1B100E196D7 /* AlbumCell.m */; };
 		0358468D17D1CD2500E196D7 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468C17D1CD2500E196D7 /* CFNetwork.framework */; };
 		0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468E17D1CD2A00E196D7 /* QuartzCore.framework */; };
-		0358469017D1CDAE00E196D7 /* Reveal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468B17D1CD1300E196D7 /* Reveal.framework */; };
 		0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469717D1D42700E196D7 /* UIViewController+Additionals.m */; };
 		0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
 		035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A117D1F91000E196D7 /* AlbumTitleView.m */; };
@@ -170,7 +169,6 @@
 				032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */,
 				032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
-				0358469017D1CDAE00E196D7 /* Reveal.framework in Frameworks */,
 				32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
