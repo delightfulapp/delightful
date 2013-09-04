@@ -18,7 +18,7 @@
 
 @end
 
-@implementation PhotoZoomableCell 
+@implementation PhotoZoomableCell
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -75,18 +75,7 @@
         minScale;
     });
     
-    self.scrollView.maximumZoomScale = ({
-        CGRect scrollViewFrame = self.scrollView.frame;
-        CGFloat scaleWidth = self.scrollView.contentSize.width / scrollViewFrame.size.width;
-        CGFloat scaleHeight = self.scrollView.contentSize.height / scrollViewFrame.size.height;
-        CGFloat maxScale = MAX(scaleWidth, scaleHeight);
-        if (maxScale > 1) {
-            maxScale = 1;
-        } else if (maxScale < 1) {
-            maxScale = 1;
-        }
-        maxScale;
-    });
+    self.scrollView.maximumZoomScale = 4.0f;
     
     self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
     [self centerScrollViewContents];
@@ -131,12 +120,11 @@
 - (void)setItem:(id)item {
     [super setItem:item];
     Photo *photo = (Photo *)item;
-        
+    
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.thumbnailStringURL]) {
-        if ([self hasDownloadedOriginalImage]) {
+        if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
             [self loadOriginalImage];
         } else {
-            [self.thisImageview setUseOriginal:NO];
             [self setImageSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
             [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.thumbnailStringURL] placeholderImage:nil];
         }
@@ -148,24 +136,22 @@
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
     [self setImageSize:CGSizeMake(photo.width, photo.height)];
-    [self.thisImageview setUseOriginal:YES];
     [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal] placeholderImage:nil];
 }
 
 - (BOOL)hasDownloadedOriginalImage {
     Photo *photo = (Photo *)self.item;
-    return [[NPRDiskCache sharedDiskCache] imageExistsOnDiskWithKey:photo.pathOriginal];
+    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal];
 }
 
 - (BOOL)isDownloadingOriginalImage {
     Photo *photo = (Photo *)self.item;
-    return [[NPROperationQueue processingQueue] isDownloadingImageAtURLString:photo.pathOriginal];
+    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal];
 }
 
 - (UIImage *)originalImage {
     if ([self hasDownloadedOriginalImage]) {
-        Photo *photo = (Photo *)self.item;
-        return [[NPRDiskCache sharedDiskCache] imageFromDiskWithKey:photo.pathOriginal];
+        return self.thisImageview.image;
     }
     return nil;
 }
