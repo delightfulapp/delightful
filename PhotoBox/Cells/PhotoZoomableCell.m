@@ -75,7 +75,18 @@
         minScale;
     });
     
-    self.scrollView.maximumZoomScale = 4.0f;
+    self.scrollView.maximumZoomScale = ({
+        CGRect scrollViewFrame = self.scrollView.frame;
+        CGFloat scaleWidth = self.scrollView.contentSize.width / scrollViewFrame.size.width;
+        CGFloat scaleHeight = self.scrollView.contentSize.height / scrollViewFrame.size.height;
+        CGFloat maxScale = MAX(scaleWidth, scaleHeight);
+        if (maxScale > 1) {
+            maxScale = 1;
+        } else if (maxScale < 1) {
+            maxScale = 1;
+        }
+        maxScale;
+    });
     
     self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
     [self centerScrollViewContents];
