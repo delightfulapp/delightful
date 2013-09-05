@@ -17,7 +17,7 @@ PODS:
   - UIView+AutoLayout (0.8.0)
 
 DEPENDENCIES:
-  - AFOAuth1Client (~> 0.3.0)
+  - AFOAuth1Client (from `https://github.com/nicnocquee/AFOAuth1Client`)
   - FXBlurView
   - iOS-blur
   - NPRImageView (from `https://github.com/nicnocquee/NPRImageView`)
@@ -28,6 +28,8 @@ DEPENDENCIES:
   - UIView+AutoLayout
 
 EXTERNAL SOURCES:
+  AFOAuth1Client:
+    :git: https://github.com/nicnocquee/AFOAuth1Client
   NPRImageView:
     :git: https://github.com/nicnocquee/NPRImageView
 

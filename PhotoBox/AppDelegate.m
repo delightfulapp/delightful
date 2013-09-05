@@ -10,6 +10,8 @@
 
 #import "PhotoBoxNavigationControllerDelegate.h"
 
+#import "ConnectionManager.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -57,6 +59,19 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    
+    NSString *urlScheme = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
+    if ([[url scheme] isEqualToString:urlScheme]){
+        NSArray *comp1 = [[url absoluteString] componentsSeparatedByString:@"?"];
+        NSString *query = [comp1 lastObject];
+        [[ConnectionManager sharedManager] continueOauthAuthorizationWithQuery:query];
+    }
+    
+    return YES;
 }
 
 

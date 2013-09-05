@@ -31,10 +31,10 @@ How to
 --
 
 1. After cloning: `pod install`
-2. Copy `PhotoBox/Controllers/PhotoBoxViewController.m.stub` to `PhotoBox/Controllers/PhotoBoxViewController.m` (Same folder, remove .stub).
-2. Get consumer key, secret, oauth token, and secret at your [Trovebox's Settings](https://nicnocquee.trovebox.com/manage/settings#apps) page.
-3. On Trovebox's Settings page, click `Create New App`, put any app name.
-4. Copy your consumer key, secret, oauth token, and secret and put it in `PhotoBoxViewController.m` file inside `setupConnectionManager` method. Remove the `#error`.
+2. ~~Copy `PhotoBox/Controllers/PhotoBoxViewController.m.stub` to `PhotoBox/Controllers/PhotoBoxViewController.m` (Same folder, remove .stub).~~
+2. ~~Get consumer key, secret, oauth token, and secret at your [Trovebox's Settings](https://nicnocquee.trovebox.com/manage/settings#apps) page.~~
+3. ~~On Trovebox's Settings page, click `Create New App`, put any app name.~~
+4. ~~Copy your consumer key, secret, oauth token, and secret and put it in `PhotoBoxViewController.m` file inside `setupConnectionManager` method. Remove the `#error`.~~
 5. Build and run!
 
 Contact
