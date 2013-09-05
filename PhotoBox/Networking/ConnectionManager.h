@@ -24,4 +24,7 @@
         oauthToken:(NSString *)oauthToken
        oauthSecret:(NSString *)oauthSecret;
 
++ (NSURL *)oAuthInitialUrlForServer:(NSString *)server;
++ (NSURL *)oAuthAccessUrlForServer:(NSString *)server;
+
 @end
