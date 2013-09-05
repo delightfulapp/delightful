@@ -17,7 +17,7 @@ PODS:
   - UIView+AutoLayout (0.8.0)
 
 DEPENDENCIES:
-  - AFOAuth1Client
+  - AFOAuth1Client (~> 0.3.0)
   - FXBlurView
   - iOS-blur
   - NPRImageView (from `https://github.com/nicnocquee/NPRImageView`)

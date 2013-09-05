@@ -36,6 +36,7 @@
 @property (nonatomic, strong) NSString *photoId;
 @property (nonatomic, strong) NSString *pathOriginal;
 @property (nonatomic, strong) NSString *thumbnailStringURL;
+@property (nonatomic, strong) NSString *normalSizeStringURL;
 @property (nonatomic, assign) int size;
 @property (nonatomic,strong) NSArray *tags;
 @property (nonatomic, strong) NSString *url;
@@ -44,6 +45,9 @@
 @property (nonatomic, assign) int views;
 @property (nonatomic, assign) int width;
 @property (nonatomic, strong) NSArray *photo200x200xCR;
+@property (nonatomic, strong) NSArray *photo640x640xCR;
 @property (nonatomic, readonly) NSString *dateTakenString;
 @property (nonatomic, readonly) NSString *dateMonthYearTakenString;
+
+
 @end

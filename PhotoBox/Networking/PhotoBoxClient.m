@@ -32,10 +32,12 @@
     if (!self) {
         return nil;
     }
+    
     [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
     AFOAuth1Token *accessToken = [[AFOAuth1Token alloc] initWithKey:[[ConnectionManager sharedManager] oauthToken] secret:[[ConnectionManager sharedManager] oauthSecret] session:nil expiration:nil renewable:YES];
     [AFOAuth1Token storeCredential:accessToken withIdentifier:@"photoBox"];
     [self setAccessToken:accessToken];
+    [self setParameterEncoding:AFFormURLParameterEncoding];
     
     return self;
 }
@@ -73,10 +75,12 @@
 - (void)getPhotosInAlbum:(NSString *)albumId page:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     NSString *album = [NSString stringWithFormat:@"/album-%@", albumId];
     if (!albumId) album = @"";
-    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&returnSizes=200x200xCR", album, page];
+    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&%@", album, page, [self photoSizesString]];
     [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Response: %@", responseObject);
         successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
         failureBlock(error);
     }];
 }
@@ -132,6 +136,13 @@ NSString *stringWithActionType(ActionType input) {
                      @"CreateAction"
                      ];
     return (NSString *)[arr objectAtIndex:input];
+}
+
+- (NSString *)photoSizesString {
+    NSArray *sizes = @[@"200x200xCR",
+                       @"640x640xCR"
+                       ];
+    return AFQueryStringFromParametersWithEncoding(@{@"returnSizes": [sizes componentsJoinedByString:@","]}, NSUTF8StringEncoding);
 }
 
 
