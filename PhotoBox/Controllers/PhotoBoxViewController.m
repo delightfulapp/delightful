@@ -60,14 +60,12 @@
 #pragma mark - Setup
 
 - (void)setupConnectionManager {
-    if (![[ConnectionManager sharedManager] baseURL]) {
-#error Get your Consumer key, secret, oauth token, and secret in https://<username>.trovebox.com/manage/settings#apps
-        
-        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"<YOUR_TROVEBOX_URL>"] // e.g. http://username.trovebox.com
-                                          consumerKey:@"<YOUR_CONSUMER_KEY>"
-                                       consumerSecret:@"<YOUR_CONSUMER_SECRET>"
-                                           oauthToken:@"<YOUR_OAUTH_TOKEN>"
-                                          oauthSecret:@"<YOUR_OAUTH_SECRET>"];
+    if (![[ConnectionManager sharedManager] isUserLoggedIn]) {
+        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"http://trovebox.com"]
+                                          consumerKey:@"somerandomconsumerkey"
+                                       consumerSecret:@"consumersecret"
+                                           oauthToken:nil
+                                          oauthSecret:nil];
     }
 }
 
