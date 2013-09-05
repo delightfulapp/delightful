@@ -310,16 +310,20 @@ static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifi
         parameters[@"oauth_token"] = requestToken.key;
         NSMutableURLRequest *request = [super requestWithMethod:@"GET" path:userAuthorizationPath parameters:parameters];
         [request setHTTPShouldHandleCookies:NO];
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-        [[UIApplication sharedApplication] openURL:[request URL]];
-#else
-        [[NSWorkspace sharedWorkspace] openURL:[request URL]];
-#endif
+        [self openAuthorizationURL:request];
     } failure:^(NSError *error) {
         if (failure) {
             failure(error);
         }
     }];
+}
+
+- (void)openAuthorizationURL:(NSURLRequest *)request{
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+    [[UIApplication sharedApplication] openURL:[request URL]];
+#else
+    [[NSWorkspace sharedWorkspace] openURL:[request URL]];
+#endif
 }
 
 - (void)acquireOAuthRequestTokenWithPath:(NSString *)path
@@ -398,7 +402,7 @@ static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifi
 
     // Only use parameters in the HTTP POST request body (with a content-type of `application/x-www-form-urlencoded`).
     // See RFC 5849, Section 3.4.1.3.1 http://tools.ietf.org/html/rfc5849#section-3.4
-    NSDictionary *authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] isEqualToString:@"application/x-www-form-urlencoded"] ? parameters : nil);
+    NSDictionary *authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil);
     [request setValue:[self authorizationHeaderForMethod:method path:path parameters:authorizationParameters] forHTTPHeaderField:@"Authorization"];
     [request setHTTPShouldHandleCookies:NO];
     
@@ -414,7 +418,7 @@ static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifi
 
     // Only use parameters in the HTTP POST request body (with a content-type of `application/x-www-form-urlencoded`).
     // See RFC 5849, Section 3.4.1.3.1 http://tools.ietf.org/html/rfc5849#section-3.4
-    NSDictionary *authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] isEqualToString:@"application/x-www-form-urlencoded"] ? parameters : nil);
+    NSDictionary *authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil);
     [request setValue:[self authorizationHeaderForMethod:method path:path parameters:authorizationParameters] forHTTPHeaderField:@"Authorization"];
     [request setHTTPShouldHandleCookies:NO];
     

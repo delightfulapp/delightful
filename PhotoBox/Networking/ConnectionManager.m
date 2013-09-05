@@ -8,10 +8,12 @@
 
 #import "ConnectionManager.h"
 #import <AFOAuth1Client.h>
+#import "PhotoBoxClient.h"
 
 NSString *baseURLUserDefaultKey = @"photobox.base.url";
 NSString *consumerTokenIdentifier = @"photobox.consumer.token";
 NSString *oauthTokenIdentifier = @"photobox.oauth.token";
+NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessTokenDidAcquired";
 
 @interface ConnectionManager ()
 
@@ -26,8 +28,7 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedManager = [[ConnectionManager alloc] init];
-        [_sharedManager removeCredentialWithIdentifier:consumerTokenIdentifier];
-        [_sharedManager removeCredentialWithIdentifier:oauthTokenIdentifier];
+        [_sharedManager deleteTokens];
         
     });
     
@@ -55,6 +56,8 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
         } else {
             self.baseURL = [NSURL URLWithString:@"http://trovebox.com"];
         }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accessTokenDidFetchNotification:) name:PhotoBoxAccessTokenDidAcquiredNotification object:nil];
     }
     
     return self;
@@ -81,14 +84,18 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
 - (void)setConsumerToken:(AFOAuth1Token *)consumerToken {
     if (_consumerToken != consumerToken) {
         _consumerToken = consumerToken;
-        [AFOAuth1Token storeCredential:_consumerToken withIdentifier:consumerTokenIdentifier];
+        if (_consumerToken) {
+            [AFOAuth1Token storeCredential:_consumerToken withIdentifier:consumerTokenIdentifier];
+        }
     }
 }
 
 - (void)setOauthToken:(AFOAuth1Token *)oauthToken {
     if (_oauthToken != oauthToken) {
         _oauthToken = oauthToken;
-        [AFOAuth1Token storeCredential:_oauthToken withIdentifier:oauthTokenIdentifier];
+        if (_oauthToken) {
+            [AFOAuth1Token storeCredential:_oauthToken withIdentifier:oauthTokenIdentifier];
+        }
     }
 }
 
@@ -104,13 +111,56 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
     [AFOAuth1Token deleteCredentialWithIdentifier:identifier];
 }
 
+- (void)deleteTokens {
+    self.oauthToken = nil;
+    self.consumerToken = nil;
+    [self removeOauthTokenWithIdentifier:oauthTokenIdentifier];
+    [self removeConsumerTokenWithIdentifier:consumerTokenIdentifier];
+}
+
 - (BOOL)isUserLoggedIn {
     return self.oauthToken?YES:NO;
 }
 
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
     [self setBaseURL:[NSURL URLWithString:serverStringURL]];
+    [[PhotoBoxClient sharedClient] setValue:self.baseURL forKey:@"baseURL"];
     [[UIApplication sharedApplication] openURL:[[self class] oAuthInitialUrlForServer:serverStringURL]];
+}
+
+- (void)continueOauthAuthorizationWithQuery:(NSString *)query {
+    // sample: oauth_consumer_key=c12db8b814d71cf56d1e187ecec048&oauth_consumer_secret=371a5a63fa&oauth_token=a5322075c486ea210c075ae3546403&oauth_token_secret=1f47d2e62e&oauth_verifier=aaa32b81ae
+    
+    NSString *consumerKey, *consumerSecret;
+    NSArray *queryElements = [query componentsSeparatedByString:@"&"];
+    for (NSString *element in queryElements) {
+        NSArray *keyVal = [element componentsSeparatedByString:@"="];
+        NSString *variableKey = [keyVal objectAtIndex:0];
+        NSString *value = [keyVal lastObject];
+        
+        // get all details from the request and save it
+        if ([variableKey isEqualToString:@"oauth_consumer_key"]){
+            consumerKey = value;
+        }else if ([variableKey isEqualToString:@"oauth_consumer_secret"]){
+            consumerSecret = value;
+        }
+    }
+    self.consumerToken = [[AFOAuth1Token alloc] initWithKey:consumerKey secret:consumerSecret session:nil expiration:nil renewable:YES];
+    [[PhotoBoxClient sharedClient] setValue:consumerKey forKey:@"key"];
+    [[PhotoBoxClient sharedClient] setValue:consumerSecret forKey:@"secret"];
+    
+    AFOAuth1Token *requestToken = [[AFOAuth1Token alloc] initWithQueryString:query];
+    NSString *verifier = [requestToken.userInfo objectForKey:@"oauth_verifier"];
+    [requestToken setVerifier:verifier];
+    
+    [[PhotoBoxClient sharedClient] acquireOAuthAccessTokenWithPath:[[self class] oAuthAccessUrlForServer:self.baseURL.absoluteString].absoluteString requestToken:requestToken accessMethod:@"POST" success:^(AFOAuth1Token *accessToken, id responseObject) {
+        self.oauthToken = accessToken;
+        [[PhotoBoxClient sharedClient] setAccessToken:accessToken];
+        [[NSNotificationCenter defaultCenter] postNotificationName:PhotoBoxAccessTokenDidAcquiredNotification object:nil];
+    } failure:^(NSError *error) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Authorization Failure", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles: nil];
+        [alert show];
+    }];
 }
 
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId {
@@ -119,14 +169,14 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *viewController = [mainStoryboard instantiateViewControllerWithIdentifier:storyboardId];
         UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-        [window.rootViewController presentViewController:viewController animated:YES completion:^{
-            [window.rootViewController addObserver:self forKeyPath:@"presentedViewController" options:NSKeyValueObservingOptionNew context:nil];
-        }];
+        [window.rootViewController presentViewController:viewController animated:YES completion:nil];
     }
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
-    NSLog(@"Change = %@", change);
+- (void)accessTokenDidFetchNotification:(NSNotification *)notification {
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    
 }
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server {

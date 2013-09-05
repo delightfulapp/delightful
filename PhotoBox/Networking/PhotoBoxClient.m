@@ -34,7 +34,9 @@
     }
     
     [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    [self setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        [self setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
+    }
     [self setParameterEncoding:AFFormURLParameterEncoding];
     
     return self;
@@ -70,6 +72,7 @@
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               successBlock([self processResponseObject:responseObject resourceClass:[Album class]]);
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"Error %@", error);
               failureBlock(error);
           }];
 }
