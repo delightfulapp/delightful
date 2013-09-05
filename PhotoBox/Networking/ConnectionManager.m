@@ -13,13 +13,22 @@ NSString *baseURLUserDefaultKey = @"photobox.base.url";
 NSString *consumerTokenIdentifier = @"photobox.consumer.token";
 NSString *oauthTokenIdentifier = @"photobox.oauth.token";
 
+@interface ConnectionManager ()
+
+@property (nonatomic, assign) BOOL isShowingLoginPage;
+
+@end
+
 @implementation ConnectionManager
 
 + (ConnectionManager *)sharedManager {
     static ConnectionManager *_sharedManager = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedManager = [[self alloc] init];
+        _sharedManager = [[ConnectionManager alloc] init];
+        [_sharedManager removeCredentialWithIdentifier:consumerTokenIdentifier];
+        [_sharedManager removeCredentialWithIdentifier:oauthTokenIdentifier];
+        
     });
     
     return _sharedManager;
@@ -31,16 +40,23 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
         AFOAuth1Token *consumerToken = [AFOAuth1Token retrieveCredentialWithIdentifier:consumerTokenIdentifier];
         if (consumerToken) {
             self.consumerToken = consumerToken;
+        } else {
+            self.consumerToken = nil;
         }
         AFOAuth1Token *oauthToken = [AFOAuth1Token retrieveCredentialWithIdentifier:oauthTokenIdentifier];
         if (oauthToken) {
             self.oauthToken = oauthToken;
+        } else {
+            self.oauthToken = nil;
         }
         NSURL *baseURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:baseURLUserDefaultKey]];
         if (baseURL) {
             self.baseURL = baseURL;
+        } else {
+            self.baseURL = [NSURL URLWithString:@"http://trovebox.com"];
         }
     }
+    
     return self;
 }
 
@@ -74,6 +90,43 @@ NSString *oauthTokenIdentifier = @"photobox.oauth.token";
         _oauthToken = oauthToken;
         [AFOAuth1Token storeCredential:_oauthToken withIdentifier:oauthTokenIdentifier];
     }
+}
+
+- (void)removeConsumerTokenWithIdentifier:(NSString *)identifier {
+    [self removeCredentialWithIdentifier:identifier];
+}
+
+- (void)removeOauthTokenWithIdentifier:(NSString *)identifier {
+    [self removeCredentialWithIdentifier:identifier];
+}
+
+- (void)removeCredentialWithIdentifier:(NSString *)identifier {
+    [AFOAuth1Token deleteCredentialWithIdentifier:identifier];
+}
+
+- (BOOL)isUserLoggedIn {
+    return self.oauthToken?YES:NO;
+}
+
+- (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
+    [self setBaseURL:[NSURL URLWithString:serverStringURL]];
+    [[UIApplication sharedApplication] openURL:[[self class] oAuthInitialUrlForServer:serverStringURL]];
+}
+
+- (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId {
+    if (!self.isShowingLoginPage) {
+        self.isShowingLoginPage = YES;
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *viewController = [mainStoryboard instantiateViewControllerWithIdentifier:storyboardId];
+        UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+        [window.rootViewController presentViewController:viewController animated:YES completion:^{
+            [window.rootViewController addObserver:self forKeyPath:@"presentedViewController" options:NSKeyValueObservingOptionNew context:nil];
+        }];
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    NSLog(@"Change = %@", change);
 }
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server {

@@ -56,6 +56,8 @@
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		03AE182617D8B004009CD844 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
+		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
+		03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */; };
 		03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */; };
 		1818FAB4C308444482F39014 /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
@@ -157,6 +159,9 @@
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
 		03AE182817D8B2F5009CD844 /* loginbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginbackground.jpg; sourceTree = "<group>"; };
+		03AE182A17D8F266009CD844 /* NSString+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additionals.h"; sourceTree = "<group>"; };
+		03AE182B17D8F267009CD844 /* NSString+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additionals.m"; sourceTree = "<group>"; };
+		03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionalsTests.m"; sourceTree = "<group>"; };
 		03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManagerTests.m; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -229,6 +234,8 @@
 				035846B017D2312500E196D7 /* NSArray+Additionals.m */,
 				035846D717D364FE00E196D7 /* UIView+Additionals.h */,
 				035846D817D364FE00E196D7 /* UIView+Additionals.m */,
+				03AE182A17D8F266009CD844 /* NSString+Additionals.h */,
+				03AE182B17D8F267009CD844 /* NSString+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -324,6 +331,7 @@
 				035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */,
 				035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */,
 				03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */,
+				03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */,
 			);
 			path = PhotoBoxTests;
 			sourceTree = "<group>";
@@ -608,6 +616,7 @@
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
+				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
@@ -641,6 +650,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */,
 				035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */,
 				035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */,
 				03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */,

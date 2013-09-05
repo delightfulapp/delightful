@@ -24,6 +24,10 @@
         oauthToken:(NSString *)oauthToken
        oauthSecret:(NSString *)oauthSecret;
 
+- (BOOL)isUserLoggedIn;
+- (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL;
+- (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId;
+
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server;
 + (NSURL *)oAuthAccessUrlForServer:(NSString *)server;
 

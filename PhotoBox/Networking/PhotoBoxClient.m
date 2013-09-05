@@ -21,7 +21,7 @@
     static PhotoBoxClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[self alloc] initWithBaseURL:[[ConnectionManager sharedManager] baseURL] key:[[[ConnectionManager sharedManager] consumerToken] key] secret:[[[ConnectionManager sharedManager] consumerToken] secret]];
+        _sharedClient = [[PhotoBoxClient alloc] initWithBaseURL:[[ConnectionManager sharedManager] baseURL] key:[[[ConnectionManager sharedManager] consumerToken] key] secret:[[[ConnectionManager sharedManager] consumerToken] secret]];
     });
     
     return _sharedClient;
@@ -46,15 +46,19 @@
                page:(int)page
             success:(void (^)(id))successBlock
             failure:(void (^)(NSError *))failureBlock {
-    switch (action) {
-        case ListAction:{
-            if (type == AlbumResource) [self getAlbumsForPage:page success:successBlock failure:failureBlock];
-            else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page success:successBlock failure:failureBlock];
-            if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
-            break;
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        switch (action) {
+            case ListAction:{
+                if (type == AlbumResource) [self getAlbumsForPage:page success:successBlock failure:failureBlock];
+                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page success:successBlock failure:failureBlock];
+                if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
+                break;
+            }
+            default:
+                break;
         }
-        default:
-            break;
+    } else {
+        [[ConnectionManager sharedManager] openLoginFromStoryboardWithIdentifier:@"loginViewController"];
     }
 }
 

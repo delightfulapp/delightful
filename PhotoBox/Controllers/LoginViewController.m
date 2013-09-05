@@ -8,6 +8,9 @@
 
 #import "LoginViewController.h"
 
+#import "ConnectionManager.h"
+#import "NSString+Additionals.h"
+
 @interface LoginViewController ()
 
 @end
@@ -33,6 +36,20 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)tapOnImage:(id)sender {
+    [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([textField.text isValidURL]) {
+        [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
+    } else {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
+        [alert show];
+    }
+    return YES;
 }
 
 @end

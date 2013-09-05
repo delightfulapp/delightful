@@ -7,7 +7,7 @@
         <!--Login View Controller-->
         <scene sceneID="OUY-Ln-cEK">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="Yna-jB-3a9" customClass="LoginViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="loginViewController" automaticallyAdjustsScrollViewInsets="NO" id="Yna-jB-3a9" customClass="LoginViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hp0-Tb-fwb"/>
                         <viewControllerLayoutGuide type="bottom" id="CKg-v4-fyG"/>
@@ -20,26 +20,43 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8u9-Qt-Zwp" customClass="FXBlurView">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8u9-Qt-Zwp">
+                                <rect key="frame" x="45" y="259" width="231" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="0.83999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username.trovebox.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ejh-My-8b8">
-                                <rect key="frame" x="80" y="276" width="161" height="17"/>
+                                <rect key="frame" x="65" y="274" width="191" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="go"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Yna-jB-3a9" id="CX4-fO-YID"/>
+                                </connections>
                             </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Ejh-My-8b8" secondAttribute="centerX" id="KF0-Dt-vQq"/>
+                            <constraint firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" id="Yio-99-npO"/>
+                            <constraint firstItem="8u9-Qt-Zwp" firstAttribute="height" secondItem="Ejh-My-8b8" secondAttribute="height" constant="30" id="ZrJ-Eh-wyc"/>
+                            <constraint firstItem="8u9-Qt-Zwp" firstAttribute="width" secondItem="Ejh-My-8b8" secondAttribute="width" constant="40" id="cMb-I0-gxH"/>
+                            <constraint firstAttribute="centerY" secondItem="8u9-Qt-Zwp" secondAttribute="centerY" id="e5m-Ag-Z3i"/>
                             <constraint firstAttribute="centerY" secondItem="Ejh-My-8b8" secondAttribute="centerY" id="uX7-U7-488"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="64d-Ay-gh1" appends="YES" id="lcU-ej-QGc"/>
+                        </connections>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IN0-KN-Xt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="64d-Ay-gh1">
+                    <connections>
+                        <action selector="tapOnImage:" destination="Yna-jB-3a9" id="nEh-0b-bTB"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="572" y="-849"/>
         </scene>
