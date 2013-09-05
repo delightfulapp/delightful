@@ -7,6 +7,11 @@
 //
 
 #import "ConnectionManager.h"
+#import <AFOAuth1Client.h>
+
+NSString *baseURLUserDefaultKey = @"photobox.base.url";
+NSString *consumerTokenIdentifier = @"photobox.consumer.token";
+NSString *oauthTokenIdentifier = @"photobox.oauth.token";
 
 @implementation ConnectionManager
 
@@ -20,12 +25,55 @@
     return _sharedManager;
 }
 
+- (id)init {
+    self = [super init];
+    if (self) {
+        AFOAuth1Token *consumerToken = [AFOAuth1Token retrieveCredentialWithIdentifier:consumerTokenIdentifier];
+        if (consumerToken) {
+            self.consumerToken = consumerToken;
+        }
+        AFOAuth1Token *oauthToken = [AFOAuth1Token retrieveCredentialWithIdentifier:oauthTokenIdentifier];
+        if (oauthToken) {
+            self.oauthToken = oauthToken;
+        }
+        NSURL *baseURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:baseURLUserDefaultKey]];
+        if (baseURL) {
+            self.baseURL = baseURL;
+        }
+    }
+    return self;
+}
+
 - (void)setBaseURL:(NSURL *)baseURL consumerKey:(NSString *)consumerKey consumerSecret:(NSString *)consumerSecret oauthToken:(NSString *)oauthToken oauthSecret:(NSString *)oauthSecret {
     self.baseURL = baseURL;
-    self.consumerKey = consumerKey;
-    self.consumerSecret = consumerSecret;
-    self.oauthToken = oauthToken;
-    self.oauthSecret = oauthSecret;
+    if (consumerKey && consumerSecret) {
+        self.consumerToken = [[AFOAuth1Token alloc] initWithKey:consumerKey secret:consumerSecret session:nil expiration:nil renewable:YES];
+    }
+    if (oauthToken && oauthSecret) {
+        self.oauthToken = [[AFOAuth1Token alloc] initWithKey:oauthToken secret:oauthSecret session:nil expiration:nil renewable:YES];
+    }
+}
+
+- (void)setBaseURL:(NSURL *)baseURL {
+    if (_baseURL != baseURL) {
+        _baseURL = baseURL;
+        [[NSUserDefaults standardUserDefaults] setObject:_baseURL.absoluteString forKey:baseURLUserDefaultKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void)setConsumerToken:(AFOAuth1Token *)consumerToken {
+    if (_consumerToken != consumerToken) {
+        _consumerToken = consumerToken;
+        [AFOAuth1Token storeCredential:_consumerToken withIdentifier:consumerTokenIdentifier];
+    }
+}
+
+- (void)setOauthToken:(AFOAuth1Token *)oauthToken {
+    if (_oauthToken != oauthToken) {
+        _oauthToken = oauthToken;
+        [AFOAuth1Token storeCredential:_oauthToken withIdentifier:oauthTokenIdentifier];
+    }
 }
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server {

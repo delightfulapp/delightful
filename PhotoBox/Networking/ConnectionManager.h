@@ -8,15 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#import <AFOAuth1Client.h>
+
 @interface ConnectionManager : NSObject
 
 + (ConnectionManager *)sharedManager;
 
 @property (nonatomic, strong) NSURL *baseURL;
-@property (nonatomic, strong) NSString *consumerKey;
-@property (nonatomic, strong) NSString *consumerSecret;
-@property (nonatomic, strong) NSString *oauthToken;
-@property (nonatomic, strong) NSString *oauthSecret;
+@property (nonatomic, strong) AFOAuth1Token *consumerToken;
+@property (nonatomic, strong) AFOAuth1Token *oauthToken;
 
 - (void)setBaseURL:(NSURL *)baseURL
        consumerKey:(NSString *)consumerKey

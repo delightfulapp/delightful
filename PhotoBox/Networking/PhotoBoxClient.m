@@ -21,7 +21,7 @@
     static PhotoBoxClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _sharedClient = [[self alloc] initWithBaseURL:[[ConnectionManager sharedManager] baseURL] key:[[ConnectionManager sharedManager] consumerKey] secret:[[ConnectionManager sharedManager] consumerSecret]];
+        _sharedClient = [[self alloc] initWithBaseURL:[[ConnectionManager sharedManager] baseURL] key:[[[ConnectionManager sharedManager] consumerToken] key] secret:[[[ConnectionManager sharedManager] consumerToken] secret]];
     });
     
     return _sharedClient;
@@ -34,9 +34,7 @@
     }
     
     [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
-    AFOAuth1Token *accessToken = [[AFOAuth1Token alloc] initWithKey:[[ConnectionManager sharedManager] oauthToken] secret:[[ConnectionManager sharedManager] oauthSecret] session:nil expiration:nil renewable:YES];
-    [AFOAuth1Token storeCredential:accessToken withIdentifier:@"photoBox"];
-    [self setAccessToken:accessToken];
+    [self setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
     [self setParameterEncoding:AFFormURLParameterEncoding];
     
     return self;
