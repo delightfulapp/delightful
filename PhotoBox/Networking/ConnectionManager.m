@@ -28,8 +28,6 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedManager = [[ConnectionManager alloc] init];
-        [_sharedManager deleteTokens];
-        
     });
     
     return _sharedManager;
@@ -55,6 +53,7 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
             self.baseURL = baseURL;
         } else {
             self.baseURL = [NSURL URLWithString:@"http://trovebox.com"];
+            [self deleteTokens];
         }
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accessTokenDidFetchNotification:) name:PhotoBoxAccessTokenDidAcquiredNotification object:nil];
