@@ -132,10 +132,6 @@
     [self centerScrollViewContents];
 }
 
-- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    NSLog(@"image rect: %@", NSStringFromCGRect(self.thisImageview.frame));
-}
-
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.thisImageview;
 }
@@ -144,15 +140,15 @@
     [super setItem:item];
     Photo *photo = (Photo *)item;
     
-    if (![self.thumbnailURL.absoluteString isEqualToString:photo.thumbnailStringURL]) {
+    if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalSizeStringURL]) {
         if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
             [self loadOriginalImage];
         } else {
             [self setImageSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
-            [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.thumbnailStringURL] placeholderImage:nil];
+            [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.normalSizeStringURL] placeholderImage:nil];
         }
         
-        self.thumbnailURL = [NSURL URLWithString:photo.thumbnailStringURL];
+        self.thumbnailURL = [NSURL URLWithString:photo.normalSizeStringURL];
     }
 }
 

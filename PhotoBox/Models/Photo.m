@@ -35,6 +35,11 @@
     self.thumbnailStringURL = [photo200x200xCR objectAtIndex:0];
 }
 
+- (void)setPhoto640x640xCR:(NSArray *)photo640x640xCR {
+    _photo640x640xCR = photo640x640xCR;
+    self.normalSizeStringURL = [_photo640x640xCR objectAtIndex:0];
+}
+
 - (NSString *)itemId {
     return self.photoId;
 }
