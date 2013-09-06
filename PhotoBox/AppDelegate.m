@@ -12,6 +12,10 @@
 
 #import "ConnectionManager.h"
 
+#if __has_include("Crashlytics/Crashlytics.h")
+#import <Crashlytics/Crashlytics.h>
+#endif
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -30,6 +34,8 @@
     
     self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
     [rootNavigationController setDelegate:self.navigationDelegate];
+    
+    [self runCrashlytics];
     
     return YES;
 }
@@ -83,6 +89,23 @@ static BOOL isRunningTests(void)
     NSDictionary* environment = [[NSProcessInfo processInfo] environment];
     NSString* injectBundle = environment[@"XCInjectBundle"];
     return [[injectBundle pathExtension] isEqualToString:@"xctest"];
+}
+
+#pragma mark - Crashlytics
+
+- (void)runCrashlytics {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Crashlytics" ofType:@"plist"];
+    if (filePath) {
+        NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+        if (dict) {
+            NSString *apiKey = [dict objectForKey:@"key"];
+            if (apiKey && apiKey.length > 0) {
+                [Crashlytics startWithAPIKey:apiKey];
+            }
+        }
+    }
+    
+    
 }
 
 @end
