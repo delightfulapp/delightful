@@ -1,6 +1,8 @@
 PhotoBox
 ==
 
+![PhotoBox - Trovebox Photo Viewer](http://f.cl.ly/items/1e272y3F0j0o33221E2P/Photo%202013-09-06%2015%2027%2042.png)
+
 PhotoBox is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
 
 Preview
