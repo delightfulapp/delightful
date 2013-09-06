@@ -13,7 +13,7 @@
 NSString *baseURLUserDefaultKey = @"photobox.base.url";
 NSString *consumerTokenIdentifier = @"photobox.consumer.token";
 NSString *oauthTokenIdentifier = @"photobox.oauth.token";
-NSString const *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessTokenDidAcquired";
+NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessTokenDidAcquired";
 
 @interface ConnectionManager ()
 
@@ -119,6 +119,14 @@ NSString const *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.acce
 
 - (BOOL)isUserLoggedIn {
     return self.oauthToken?YES:NO;
+}
+
+- (void)logout {
+    [self deleteTokens];
+    self.baseURL = nil;
+    [[PhotoBoxClient sharedClient] setAccessToken:nil];
+    [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
+    [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
 }
 
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {

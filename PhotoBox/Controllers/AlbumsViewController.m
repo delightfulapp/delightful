@@ -14,7 +14,9 @@
 #import "PhotosViewController.h"
 #import "PhotosSectionHeaderView.h"
 
-@interface AlbumsViewController ()
+#import "ConnectionManager.h"
+
+@interface AlbumsViewController () <UIActionSheetDelegate>
 
 @end
 
@@ -38,6 +40,9 @@
     [self.dataSource setCellIdentifier:identifier];
     [self.dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
     [self.dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
+    
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
+    [self.navigationItem setLeftBarButtonItem:left];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -108,6 +113,26 @@
 
 - (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
     [self performSegueWithIdentifier:[self segue] sender:nil];
+}
+
+- (void)userTapped:(id)sender {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to logout?", Nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Log out", nil), nil];
+    [actionSheet showInView:self.navigationController.view];
+}
+
+#pragma mark - Action Sheet
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:{
+            self.items = [NSMutableArray array];
+            [self.collectionView reloadData];
+            [[ConnectionManager sharedManager] logout];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 @end

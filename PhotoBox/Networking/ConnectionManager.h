@@ -10,7 +10,7 @@
 
 #import <AFOAuth1Client.h>
 
-extern NSString const *PhotoBoxAccessTokenDidAcquiredNotification;
+extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 
 @interface ConnectionManager : NSObject
 
@@ -31,6 +31,7 @@ extern NSString const *PhotoBoxAccessTokenDidAcquiredNotification;
 - (void)continueOauthAuthorizationWithQuery:(NSString *)query;
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId;
 - (void)deleteTokens;
+- (void)logout;
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server;
 + (NSURL *)oAuthAccessUrlForServer:(NSString *)server;
