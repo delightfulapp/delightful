@@ -10,7 +10,7 @@
 
 #import <AFOAuth1Client.h>
 
-extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
+extern NSString const *PhotoBoxAccessTokenDidAcquiredNotification;
 
 @interface ConnectionManager : NSObject
 

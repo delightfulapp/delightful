@@ -48,6 +48,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([textField.text isValidURL]) {
+        [textField setEnabled:NO];
+        [self.activityView startAnimating];
+        [self.view endEditing:YES];
         [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];

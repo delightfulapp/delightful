@@ -53,6 +53,10 @@
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2gu-0v-pEg">
+                                <rect key="frame" x="142" y="360" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -69,6 +73,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="2gu-0v-pEg" id="uSZ-k6-j6e"/>
                         <outlet property="backgroundImageView" destination="nrr-cA-3go" id="fyc-zM-c4S"/>
                     </connections>
                 </viewController>
