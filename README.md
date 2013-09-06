@@ -20,6 +20,7 @@ Features (so far)
 4. View original photos and save to photo album, share to Twitter/Facebook/Email, or open in other apps.
 5. Reverse Geocoding! If there is a photo with location within photos taken at the same date, the location name will be shown next to the date. Just like that of iOS 7 Photos app.
 6. Browse All Photos.
+7. Parallax effect on login page!
 
 
 Requirements
@@ -37,6 +38,7 @@ How to
 2. ~~Get consumer key, secret, oauth token, and secret at your [Trovebox's Settings](https://nicnocquee.trovebox.com/manage/settings#apps) page.~~
 3. ~~On Trovebox's Settings page, click `Create New App`, put any app name.~~
 4. ~~Copy your consumer key, secret, oauth token, and secret and put it in `PhotoBoxViewController.m` file inside `setupConnectionManager` method. Remove the `#error`.~~
+5. Open `PhotoBox.xcworkspace`.
 5. Build and run!
 
 Contact
