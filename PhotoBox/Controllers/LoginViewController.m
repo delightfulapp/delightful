@@ -46,6 +46,22 @@
     [self.view endEditing:YES];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (!textField.text || textField.text.length == 0) {
+        [textField setText:@".trovebox.com"];
+    }
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField.text isEqualToString:@".trovebox.com"]) {
+        UITextPosition *newCursorPosition = [textField positionFromPosition:textField.beginningOfDocument offset:0];
+        UITextRange *newSelectedRange = [textField textRangeFromPosition:newCursorPosition toPosition:newCursorPosition];
+        [textField setSelectedTextRange:newSelectedRange];
+    }
+}
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([textField.text isValidURL]) {
         [textField setEnabled:NO];
