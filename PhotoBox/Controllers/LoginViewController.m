@@ -10,6 +10,9 @@
 
 #import "ConnectionManager.h"
 #import "NSString+Additionals.h"
+#import "UIView+Additionals.h"
+
+#import <QuartzCore/QuartzCore.h>
 
 @interface LoginViewController ()
 
@@ -29,7 +32,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    [self.backgroundImageView addTransparentGradientWithStartColor:[UIColor blackColor]];
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,4 +12,6 @@
 
 - (CGRect)convertFrameRectToView:(UIView *)toView ;
 
+- (void)addTransparentGradientWithStartColor:(UIColor *)startColor;
+
 @end
