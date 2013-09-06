@@ -140,15 +140,15 @@
     [super setItem:item];
     Photo *photo = (Photo *)item;
     
-    if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalSizeStringURL]) {
+    if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
         if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
             [self loadOriginalImage];
         } else {
-            [self setImageSize:CGSizeMake(CGRectGetWidth(self.scrollView.frame), CGRectGetWidth(self.scrollView.frame))];
-            [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.normalSizeStringURL] placeholderImage:nil];
+            [self setImageSize:CGSizeMake(photo.normalImage.width, photo.normalImage.height)];
+            [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:nil];
         }
         
-        self.thumbnailURL = [NSURL URLWithString:photo.normalSizeStringURL];
+        self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }
 }
 
