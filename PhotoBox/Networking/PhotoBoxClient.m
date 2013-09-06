@@ -82,7 +82,6 @@
     if (!albumId) album = @"";
     NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&%@", album, page, [self photoSizesString]];
     [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response: %@", responseObject);
         successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
@@ -145,7 +144,7 @@ NSString *stringWithActionType(ActionType input) {
 
 - (NSString *)photoSizesString {
     NSArray *sizes = @[@"200x200xCR",
-                       @"640x640xCR"
+                       @"640x640"
                        ];
     return AFQueryStringFromParametersWithEncoding(@{@"returnSizes": [sizes componentsJoinedByString:@","]}, NSUTF8StringEncoding);
 }

@@ -31,13 +31,50 @@
 }
 
 - (void)setPhoto200x200xCR:(NSArray *)photo200x200xCR {
-    _photo200x200xCR = photo200x200xCR;
-    self.thumbnailStringURL = [photo200x200xCR objectAtIndex:0];
+    PhotoBoxImage *image = [[PhotoBoxImage alloc] initWithArray:photo200x200xCR];
+    self.thumbnailImage = image;
 }
 
-- (void)setPhoto640x640xCR:(NSArray *)photo640x640xCR {
-    _photo640x640xCR = photo640x640xCR;
-    self.normalSizeStringURL = [_photo640x640xCR objectAtIndex:0];
+- (void)setPhoto640x640:(NSArray *)photo640x640 {
+    PhotoBoxImage *image = [[PhotoBoxImage alloc] initWithArray:photo640x640];
+    self.normalImage = image;
+}
+
+- (void)setPathOriginal:(NSString *)pathOriginal {
+    if (_pathOriginal != pathOriginal) {
+        _pathOriginal = pathOriginal;
+        [self setOriginalImagePath:pathOriginal];
+    }
+}
+
+- (void)setWidth:(CGFloat)width {
+    _width = width;
+    [self setOriginalImageWidth:width];
+}
+
+- (void)setHeight:(CGFloat)height {
+    _height = height;
+    [self setOriginalImageHeight:height];
+}
+
+- (PhotoBoxImage *)originalImage {
+    if (!_originalImage) {
+        _originalImage = [[PhotoBoxImage alloc] init];
+        [_originalImage setPhoto:self];
+    }
+    return _originalImage;
+}
+
+- (void)setOriginalImagePath:(NSString *)path {
+    [self.originalImage setUrlString:path];
+}
+
+- (void)setOriginalImageHeight:(CGFloat)height {
+    [self.originalImage setHeight:height];
+}
+
+- (void)setOriginalImageWidth:(CGFloat)width {
+    [self.originalImage setWidth:width];
 }
 
 - (NSString *)itemId {

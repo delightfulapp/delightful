@@ -24,4 +24,15 @@
     return rect;
 }
 
+- (void)addTransparentGradientWithStartColor:(UIColor *)startColor {
+    UIView *colorView = [[UIView alloc] initWithFrame:self.bounds];
+    [colorView setBackgroundColor:startColor];
+    [self addSubview:colorView];
+    CAGradientLayer *l = [CAGradientLayer layer];
+    l.frame = self.bounds;
+    l.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
+    l.endPoint = CGPointMake(0.5, 0.5);
+    colorView.layer.mask = l;
+}
+
 @end

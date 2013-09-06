@@ -2,7 +2,6 @@ PODS:
   - AFNetworking (1.3.2)
   - AFOAuth1Client (0.3.0):
     - AFNetworking (~> 1.3)
-  - FXBlurView (1.3.2)
   - iOS-blur (0.0.2)
   - libextobjc/EXTScope (0.3):
     - libextobjc/RuntimeExtensions
@@ -18,7 +17,6 @@ PODS:
 
 DEPENDENCIES:
   - AFOAuth1Client (from `https://github.com/nicnocquee/AFOAuth1Client`)
-  - FXBlurView
   - iOS-blur
   - NPRImageView (from `https://github.com/nicnocquee/NPRImageView`)
   - NSDate+TimeAgo
@@ -36,7 +34,6 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 7f9bcd7c287a75476cd5c61e82fd3380e93e4c54
   AFOAuth1Client: 17d198878103be5afa513752d1ed5694328adc4b
-  FXBlurView: 93bf69869fbe36d1f851df484d058494a6a8dc9c
   iOS-blur: 1f211234742ce078bf2ab78f5237a63b18b5ed0f
   libextobjc: 820a79dbbbc498611e04fffd07d2d52a5588e7ac
   NPRImageView: 06daeaef0c358662c891088f713e4a518b6abd15

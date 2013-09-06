@@ -14,6 +14,8 @@
 		0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
 		0310904217D1ABED0075F9D8 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
 		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
+		031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
+		031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A217D9A08000A80167 /* PhotoModelTests.m */; };
 		032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
 		032B0D2817D5B9A800ABFA9F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */; };
 		032B0D2A17D5B9B400ABFA9F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */; };
@@ -89,6 +91,9 @@
 		0310904117D1ABED0075F9D8 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Photo.m; path = PhotoBox/Models/Photo.m; sourceTree = "<group>"; };
 		0310904317D1B2840075F9D8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = PhotoBox/Models/Tag.h; sourceTree = "<group>"; };
 		0310904417D1B2840075F9D8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = PhotoBox/Models/Tag.m; sourceTree = "<group>"; };
+		031DD29F17D99B1300A80167 /* PhotoBoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxImage.h; path = PhotoBox/Models/PhotoBoxImage.h; sourceTree = "<group>"; };
+		031DD2A017D99B1300A80167 /* PhotoBoxImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxImage.m; path = PhotoBox/Models/PhotoBoxImage.m; sourceTree = "<group>"; };
+		031DD2A217D9A08000A80167 /* PhotoModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModelTests.m; sourceTree = "<group>"; };
 		032B0D1C17D4CF4800ABFA9F /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = PhotoBox/Others/LocationManager.h; sourceTree = "<group>"; };
 		032B0D1D17D4CF4800ABFA9F /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = PhotoBox/Others/LocationManager.m; sourceTree = "<group>"; };
 		032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -217,6 +222,8 @@
 				0310904117D1ABED0075F9D8 /* Photo.m */,
 				0310904317D1B2840075F9D8 /* Tag.h */,
 				0310904417D1B2840075F9D8 /* Tag.m */,
+				031DD29F17D99B1300A80167 /* PhotoBoxImage.h */,
+				031DD2A017D99B1300A80167 /* PhotoBoxImage.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -332,6 +339,7 @@
 				035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */,
 				03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */,
 				03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */,
+				031DD2A217D9A08000A80167 /* PhotoModelTests.m */,
 			);
 			path = PhotoBoxTests;
 			sourceTree = "<group>";
@@ -621,6 +629,7 @@
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
+				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
@@ -652,6 +661,7 @@
 			files = (
 				03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */,
 				035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */,
+				031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */,
 				035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */,
 				03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */,
 			);

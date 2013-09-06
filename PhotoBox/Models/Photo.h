@@ -8,6 +8,8 @@
 
 #import "PhotoBoxModel.h"
 
+#import "PhotoBoxImage.h"
+
 @interface Photo : PhotoBoxModel
 
 @property (nonatomic, assign) int dateTaken;
@@ -27,7 +29,6 @@
 @property (nonatomic, strong) NSString *exifISOSpeed;
 @property (nonatomic, strong) NSString *filenameOriginal;
 @property (nonatomic, strong) NSString *hash;
-@property (nonatomic, assign) int height;
 @property (nonatomic, strong) NSString *host;
 @property (nonatomic, strong) NSString *key;
 @property (nonatomic, strong) NSString *latitude;
@@ -35,19 +36,21 @@
 @property (nonatomic, strong) NSString *longitude;
 @property (nonatomic, strong) NSString *photoId;
 @property (nonatomic, strong) NSString *pathOriginal;
-@property (nonatomic, strong) NSString *thumbnailStringURL;
-@property (nonatomic, strong) NSString *normalSizeStringURL;
 @property (nonatomic, assign) int size;
 @property (nonatomic,strong) NSArray *tags;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *timestamp;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, assign) int views;
-@property (nonatomic, assign) int width;
-@property (nonatomic, strong) NSArray *photo200x200xCR;
-@property (nonatomic, strong) NSArray *photo640x640xCR;
+@property (nonatomic, assign) CGFloat width;
+@property (nonatomic, assign) CGFloat height;
 @property (nonatomic, readonly) NSString *dateTakenString;
 @property (nonatomic, readonly) NSString *dateMonthYearTakenString;
 
+@property (nonatomic, strong) PhotoBoxImage *thumbnailImage;
+@property (nonatomic, strong) PhotoBoxImage *normalImage;
+@property (nonatomic, strong) PhotoBoxImage *originalImage;
+@property (nonatomic, readonly) NSArray *photo200x200xCR;
+@property (nonatomic, readonly) NSArray *photo640x640;
 
 @end

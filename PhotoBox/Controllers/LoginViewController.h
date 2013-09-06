@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
+@property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
 - (IBAction)tapOnImage:(id)sender;
 
 @end
