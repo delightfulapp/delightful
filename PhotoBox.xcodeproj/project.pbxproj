@@ -16,6 +16,13 @@
 		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
 		031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
 		031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A217D9A08000A80167 /* PhotoModelTests.m */; };
+		031DD2AA17D9BB8300A80167 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
+		031DD2AB17D9BB8300A80167 /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A517D9BB8300A80167 /* upload.png */; };
+		031DD2AC17D9BB8300A80167 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A617D9BB8300A80167 /* download.png */; };
+		031DD2AD17D9BB8300A80167 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A717D9BB8300A80167 /* user.png */; };
+		031DD2AE17D9BB8300A80167 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A817D9BB8300A80167 /* info.png */; };
+		031DD2AF17D9BB8300A80167 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A917D9BB8300A80167 /* setting.png */; };
+		031DD2B117D9BD6B00A80167 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2B017D9BD6B00A80167 /* user@2x.png */; };
 		032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
 		032B0D2817D5B9A800ABFA9F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */; };
 		032B0D2A17D5B9B400ABFA9F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */; };
@@ -94,6 +101,13 @@
 		031DD29F17D99B1300A80167 /* PhotoBoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxImage.h; path = PhotoBox/Models/PhotoBoxImage.h; sourceTree = "<group>"; };
 		031DD2A017D99B1300A80167 /* PhotoBoxImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxImage.m; path = PhotoBox/Models/PhotoBoxImage.m; sourceTree = "<group>"; };
 		031DD2A217D9A08000A80167 /* PhotoModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModelTests.m; sourceTree = "<group>"; };
+		031DD2A417D9BB8300A80167 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
+		031DD2A517D9BB8300A80167 /* upload.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload.png; sourceTree = "<group>"; };
+		031DD2A617D9BB8300A80167 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
+		031DD2A717D9BB8300A80167 /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
+		031DD2A817D9BB8300A80167 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
+		031DD2A917D9BB8300A80167 /* setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = setting.png; sourceTree = "<group>"; };
+		031DD2B017D9BD6B00A80167 /* user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user@2x.png"; sourceTree = "<group>"; };
 		032B0D1C17D4CF4800ABFA9F /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = PhotoBox/Others/LocationManager.h; sourceTree = "<group>"; };
 		032B0D1D17D4CF4800ABFA9F /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = PhotoBox/Others/LocationManager.m; sourceTree = "<group>"; };
 		032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -447,6 +461,13 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				031DD2B017D9BD6B00A80167 /* user@2x.png */,
+				031DD2A417D9BB8300A80167 /* camera.png */,
+				031DD2A517D9BB8300A80167 /* upload.png */,
+				031DD2A617D9BB8300A80167 /* download.png */,
+				031DD2A717D9BB8300A80167 /* user.png */,
+				031DD2A817D9BB8300A80167 /* info.png */,
+				031DD2A917D9BB8300A80167 /* setting.png */,
 				03AE182817D8B2F5009CD844 /* loginbackground.jpg */,
 			);
 			name = Images;
@@ -533,10 +554,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
+				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
+				031DD2AD17D9BB8300A80167 /* user.png in Resources */,
 				032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */,
 				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
+				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
+				031DD2AF17D9BB8300A80167 /* setting.png in Resources */,
+				031DD2AA17D9BB8300A80167 /* camera.png in Resources */,
+				031DD2B117D9BD6B00A80167 /* user@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

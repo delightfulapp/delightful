@@ -12,6 +12,8 @@
 @interface LoginViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
+@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityView;
+
 - (IBAction)tapOnImage:(id)sender;
 
 @end

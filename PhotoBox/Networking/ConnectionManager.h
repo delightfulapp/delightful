@@ -31,6 +31,7 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 - (void)continueOauthAuthorizationWithQuery:(NSString *)query;
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId;
 - (void)deleteTokens;
+- (void)logout;
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server;
 + (NSURL *)oAuthAccessUrlForServer:(NSString *)server;

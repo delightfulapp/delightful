@@ -46,8 +46,27 @@
     [self.view endEditing:YES];
 }
 
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    if (!textField.text || textField.text.length == 0) {
+        [textField setText:@".trovebox.com"];
+    }
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    if ([textField.text isEqualToString:@".trovebox.com"]) {
+        UITextPosition *newCursorPosition = [textField positionFromPosition:textField.beginningOfDocument offset:0];
+        UITextRange *newSelectedRange = [textField textRangeFromPosition:newCursorPosition toPosition:newCursorPosition];
+        [textField setSelectedTextRange:newSelectedRange];
+    }
+}
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([textField.text isValidURL]) {
+        [textField setEnabled:NO];
+        [self.activityView startAnimating];
+        [self.view endEditing:YES];
         [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];

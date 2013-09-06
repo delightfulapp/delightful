@@ -121,6 +121,14 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     return self.oauthToken?YES:NO;
 }
 
+- (void)logout {
+    [self deleteTokens];
+    self.baseURL = nil;
+    [[PhotoBoxClient sharedClient] setAccessToken:nil];
+    [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
+    [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
+}
+
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
     [self setBaseURL:[NSURL URLWithString:serverStringURL]];
     [[PhotoBoxClient sharedClient] setValue:self.baseURL forKey:@"baseURL"];
@@ -173,6 +181,7 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 }
 
 - (void)accessTokenDidFetchNotification:(NSNotification *)notification {
+    self.isShowingLoginPage = NO;
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     
