@@ -16,19 +16,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="loginbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nrr-cA-3go">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nrr-cA-3go">
+                                <rect key="frame" x="-30" y="-35" width="380" height="638"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="638" id="2dP-jI-WbE"/>
+                                    <constraint firstAttribute="width" constant="380" id="eaL-aY-yzS"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
+                                        <integer key="value" value="-20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8u9-Qt-Zwp">
                                 <rect key="frame" x="45" y="259" width="231" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.83999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="23" verticalHuggingPriority="23" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username.trovebox.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ejh-My-8b8">
                                 <rect key="frame" x="65" y="274" width="191" height="21"/>
@@ -39,11 +43,6 @@
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="go"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <outlet property="delegate" destination="Yna-jB-3a9" id="CX4-fO-YID"/>
                                 </connections>
@@ -56,11 +55,6 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="1"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trovebox Photo Viewer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpG-xU-tbV">
                                 <rect key="frame" x="45" y="164" width="231" height="21"/>
@@ -70,11 +64,6 @@
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="1"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2gu-0v-pEg">
                                 <rect key="frame" x="142" y="360" width="37" height="37"/>
@@ -84,12 +73,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="nrr-cA-3go" secondAttribute="centerX" id="5Im-Fp-1WW"/>
                             <constraint firstAttribute="centerX" secondItem="Ejh-My-8b8" secondAttribute="centerX" id="KF0-Dt-vQq"/>
                             <constraint firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" id="Yio-99-npO"/>
                             <constraint firstItem="8u9-Qt-Zwp" firstAttribute="height" secondItem="Ejh-My-8b8" secondAttribute="height" constant="30" id="ZrJ-Eh-wyc"/>
                             <constraint firstItem="8u9-Qt-Zwp" firstAttribute="width" secondItem="Ejh-My-8b8" secondAttribute="width" constant="40" id="cMb-I0-gxH"/>
                             <constraint firstAttribute="centerY" secondItem="8u9-Qt-Zwp" secondAttribute="centerY" id="e5m-Ag-Z3i"/>
                             <constraint firstAttribute="centerY" secondItem="Ejh-My-8b8" secondAttribute="centerY" id="uX7-U7-488"/>
+                            <constraint firstAttribute="centerY" secondItem="nrr-cA-3go" secondAttribute="centerY" id="wCP-1b-X9W"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="64d-Ay-gh1" appends="YES" id="lcU-ej-QGc"/>
