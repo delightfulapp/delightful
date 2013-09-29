@@ -58,7 +58,9 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
 {
     NSAssert(block, @"The constraints block cannot be nil.");
     _globalConstraintPriority = priority;
-    block();
+    if (block) {
+        block();
+    }
     _globalConstraintPriority = UILayoutPriorityRequired;
 }
 
@@ -83,7 +85,7 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
         [constraint.firstItem removeConstraint:constraint];
         return;
     }
-    NSLog(nil, @"Failed to remove constraint: %@", constraint);
+    NSAssert(nil, @"Failed to remove constraint: %@", constraint);
 }
 
 /**
@@ -103,33 +105,68 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
 }
 
 /**
- Recursively removes all explicit constraints from the view and its subviews.
+ Removes all explicit constraints that affect the view.
+ WARNING: Apple's constraint solver is not optimized for large-scale constraint changes; you may encounter major performance issues after using this method.
+          It is not recommended to use this method to "reset" a view for reuse in a different way with new constraints. Create a new view instead.
  NOTE: This method preserves implicit constraints, such as intrinsic content size constraints, which you usually do not want to remove.
  */
-- (void)removeAllConstraintsFromViewAndSubviews
+- (void)removeConstraintsAffectingView
 {
-    [self removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:NO];
+    [self removeConstraintsAffectingViewIncludingImplicitConstraints:NO];
 }
 
-/** 
- Recursively removes all constraints from the view and its subviews, optionally including implicit constraints.
- WARNING: WARNING: Implicit constraints are auto-generated lower priority constraints (such as those that attempt to keep a view 
- at its intrinsic content size by hugging its content & resisting compression), and you usually do not want to remove these.
+/**
+ Removes all constraints that affect the view, optionally including implicit constraints.
+ WARNING: Apple's constraint solver is not optimized for large-scale constraint changes; you may encounter major performance issues after using this method.
+          It is not recommended to use this method to "reset" a view for reuse in a different way with new constraints. Create a new view instead.
+ NOTE: Implicit constraints are auto-generated lower priority constraints (such as those that attempt to keep a view at
+ its intrinsic content size by hugging its content & resisting compression), and you usually do not want to remove these.
  
  @param shouldRemoveImplicitConstraints Whether implicit constraints should be removed or skipped.
  */
-- (void)removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints
+- (void)removeConstraintsAffectingViewIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints
 {
     NSMutableArray *constraintsToRemove = [NSMutableArray new];
-    for (NSLayoutConstraint *constraint in self.constraints) {
-        BOOL isImplicitConstraint = [NSStringFromClass([constraint class]) isEqualToString:@"NSContentSizeLayoutConstraint"];
-        if (shouldRemoveImplicitConstraints || !isImplicitConstraint) {
-            [constraintsToRemove addObject:constraint];
+    UIView *startView = self;
+    do {
+        for (NSLayoutConstraint *constraint in startView.constraints) {
+            BOOL isImplicitConstraint = [NSStringFromClass([constraint class]) isEqualToString:@"NSContentSizeLayoutConstraint"];
+            if (shouldRemoveImplicitConstraints || !isImplicitConstraint) {
+                if (constraint.firstItem == self || constraint.secondItem == self) {
+                    [constraintsToRemove addObject:constraint];
+                }
+            }
         }
-    }
+        startView = startView.superview;
+    } while (startView);
     [UIView removeConstraints:constraintsToRemove];
+}
+
+/**
+ Recursively removes all explicit constraints that affect the view and its subviews.
+ WARNING: Apple's constraint solver is not optimized for large-scale constraint changes; you may encounter major performance issues after using this method.
+          It is not recommended to use this method to "reset" views for reuse in a different way with new constraints. Create a new view instead.
+ NOTE: This method preserves implicit constraints, such as intrinsic content size constraints, which you usually do not want to remove.
+ */
+- (void)removeConstraintsAffectingViewAndSubviews
+{
+    [self removeConstraintsAffectingViewAndSubviewsIncludingImplicitConstraints:NO];
+}
+
+/** 
+ Recursively removes all constraints that affect the view and its subviews, optionally including implicit constraints.
+ WARNING: Apple's constraint solver is not optimized for large-scale constraint changes; you may encounter major performance issues after using this method.
+          It is not recommended to use this method to "reset" views for reuse in a different way with new constraints. Create a new view instead.
+ NOTE: Implicit constraints are auto-generated lower priority constraints (such as those that attempt to keep a view at
+ its intrinsic content size by hugging its content & resisting compression), and you usually do not want to remove these.
+ 
+ @param shouldRemoveImplicitConstraints Whether implicit constraints should be removed or skipped.
+ */
+- (void)removeConstraintsAffectingViewAndSubviewsIncludingImplicitConstraints:(BOOL)shouldRemoveImplicitConstraints
+{
+    [self removeConstraintsAffectingViewIncludingImplicitConstraints:shouldRemoveImplicitConstraints];
     for (UIView *subview in self.subviews) {
-        [subview removeAllConstraintsFromViewAndSubviewsIncludingImplicitConstraints:shouldRemoveImplicitConstraints];
+        [subview removeConstraintsAffectingViewAndSubviewsIncludingImplicitConstraints:shouldRemoveImplicitConstraints];
     }
 }
 
@@ -215,7 +252,7 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
             NSAssert(nil, @"Not a valid edge.");
             break;
     }
-    return [self autoPinEdge:edge toEdge:superviewEdge ofView:self.superview withOffset:value];
+    return [self autoPinEdge:edge toEdge:superviewEdge ofView:superview withOffset:value];
 }
 
 /**
@@ -632,7 +669,7 @@ static UILayoutPriority _globalConstraintPriority = UILayoutPriorityRequired;
             NSAssert(nil, @"Not a valid axis.");
             return nil;
     }
-    BOOL isRightToLeftLanguage = [NSLocale characterDirectionForLanguage:[NSLocale preferredLanguages][0]] == NSLocaleLanguageDirectionRightToLeft;
+    BOOL isRightToLeftLanguage = [NSLocale characterDirectionForLanguage:[[NSBundle mainBundle] preferredLocalizations][0]] == NSLocaleLanguageDirectionRightToLeft;
     BOOL shouldFlipOrder = isRightToLeftLanguage && (axis != ALAxisVertical); // imitate the effect of leading/trailing when distributing horizontally
     
     NSMutableArray *constraints = [NSMutableArray new];

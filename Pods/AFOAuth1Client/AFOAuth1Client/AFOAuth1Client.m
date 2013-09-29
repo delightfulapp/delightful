@@ -132,12 +132,12 @@ static inline NSString * AFHMACSHA1Signature(NSURLRequest *request, NSString *co
     return AFEncodeBase64WithData([NSData dataWithBytes:digest length:CC_SHA1_DIGEST_LENGTH]);
 }
 
-NSString * const kAFOAuthCredentialServiceName = @"AFOAuthCredentialService";
+NSString * const kAFOAuth1CredentialServiceName = @"AFOAuthCredentialService";
 
 static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifier) {
     return @{(__bridge id)kSecClass: (__bridge id)kSecClassGenericPassword,
              (__bridge id)kSecAttrAccount: identifier,
-             (__bridge id)kSecAttrService: kAFOAuthCredentialServiceName
+             (__bridge id)kSecAttrService: kAFOAuth1CredentialServiceName
              };
 }
 
@@ -310,20 +310,16 @@ static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifi
         parameters[@"oauth_token"] = requestToken.key;
         NSMutableURLRequest *request = [super requestWithMethod:@"GET" path:userAuthorizationPath parameters:parameters];
         [request setHTTPShouldHandleCookies:NO];
-        [self openAuthorizationURL:request];
+#if __IPHONE_OS_VERSION_MIN_REQUIRED
+        [[UIApplication sharedApplication] openURL:[request URL]];
+#else
+        [[NSWorkspace sharedWorkspace] openURL:[request URL]];
+#endif
     } failure:^(NSError *error) {
         if (failure) {
             failure(error);
         }
     }];
-}
-
-- (void)openAuthorizationURL:(NSURLRequest *)request{
-#if __IPHONE_OS_VERSION_MIN_REQUIRED
-    [[UIApplication sharedApplication] openURL:[request URL]];
-#else
-    [[NSWorkspace sharedWorkspace] openURL:[request URL]];
-#endif
 }
 
 - (void)acquireOAuthRequestTokenWithPath:(NSString *)path
@@ -402,7 +398,11 @@ static NSDictionary * AFKeychainQueryDictionaryWithIdentifier(NSString *identifi
 
     // Only use parameters in the HTTP POST request body (with a content-type of `application/x-www-form-urlencoded`).
     // See RFC 5849, Section 3.4.1.3.1 http://tools.ietf.org/html/rfc5849#section-3.4
-    NSDictionary *authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil);
+    NSDictionary *authorizationParameters = parameters;
+    if ([method isEqualToString:@"POST"]) {
+        authorizationParameters = ([[request valueForHTTPHeaderField:@"Content-Type"] hasPrefix:@"application/x-www-form-urlencoded"] ? parameters : nil);
+    }
+    
     [request setValue:[self authorizationHeaderForMethod:method path:path parameters:authorizationParameters] forHTTPHeaderField:@"Authorization"];
     [request setHTTPShouldHandleCookies:NO];
     
