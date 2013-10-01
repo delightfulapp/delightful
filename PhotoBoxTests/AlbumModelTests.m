@@ -58,6 +58,11 @@
     XCTAssert(testAlbum.cover.tags!=nil, @"Tags should not be nil");
     XCTAssert(testAlbum.cover.tags.count == 4, @"Tags count should be 4. Actual = %d", testAlbum.cover.tags.count);
     XCTAssert([((Tag *)testAlbum.cover.tags[0]).tagId isEqualToString:[[[albumDict objectForKey:@"cover"] objectForKey:@"tags"] objectAtIndex:0]], @"Expected first tag = %@. Actual = %@", [[[albumDict objectForKey:@"cover"] objectForKey:@"tags"] objectAtIndex:0], ((Tag *)testAlbum.cover.tags[0]).tagId);
+    
+    // test cover's album
+    XCTAssert(testAlbum.cover.albums!=nil, @"Albums should not be nil");
+    XCTAssert(testAlbum.cover.albums.count == 2, @"Expected albums count = 2. Actual = %d", testAlbum.cover.albums.count);
+    XCTAssert([((Album *)testAlbum.cover.albums[0]).albumId isEqualToString:[[[albumDict objectForKey:@"cover"] objectForKey:@"albums"] objectAtIndex:0]], @"Expected Cover's first album = 1. Actual = %@", ((Album *)testAlbum.cover.albums[0]).albumId);
 }
 
 @end

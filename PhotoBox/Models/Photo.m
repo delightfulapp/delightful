@@ -8,6 +8,7 @@
 
 #import "Photo.h"
 #import "Tag.h"
+#import "Album.h"
 
 @implementation Photo
 
@@ -43,7 +44,7 @@
     return [NSString stringWithFormat:@"%d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue]];
 }
 
-#pragma mark - Mantle
+#pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{@"photoId": @"id"};
@@ -89,18 +90,27 @@
 }
 
 + (NSValueTransformer *)tagsJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSArray *tags){
-        NSMutableArray *tagObjects = [NSMutableArray arrayWithCapacity:tags.count];
-        for (NSString *tag in tags) {
-            [tagObjects addObject:[[Tag alloc] initWithTagId:tag]];
+    return [[self class] transformerForClass:[Tag class]];
+}
+
++ (NSValueTransformer *)albumsJSONTransformer {
+    return [[self class] transformerForClass:[Album class]];
+}
+
+
++ (MTLValueTransformer *)transformerForClass:(Class)class {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSArray *items){
+        NSMutableArray *itemObjects = [NSMutableArray arrayWithCapacity:items.count];
+        for (NSString *item in items) {
+            [itemObjects addObject:[[class alloc] initWithItemId:item]];
         }
-        return tagObjects;
-    } reverseBlock:^(NSArray *tagsObjects) {
-        NSMutableArray *tags = [NSMutableArray arrayWithCapacity:tagsObjects.count];
-        for (Tag *tag in tagsObjects) {
-            [tags addObject:tag.tagId];
+        return itemObjects;
+    } reverseBlock:^(NSArray *itemsObjects) {
+        NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsObjects.count];
+        for (PhotoBoxModel *item in itemsObjects) {
+            [items addObject:item.itemId];
         }
-        return tags;
+        return items;
     }];
 }
 

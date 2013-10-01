@@ -16,6 +16,5 @@
 @property (nonatomic, copy, readonly) NSString *tagId;
 @property (nonatomic, copy, readonly) NSString *owner;
 
-- (id)initWithTagId:(NSString *)tagId;
 
 @end

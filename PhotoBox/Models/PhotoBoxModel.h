@@ -20,4 +20,6 @@
 @property (nonatomic, assign) int currentRow;
 @property (nonatomic, copy) NSString *itemId;
 
+- (id)initWithItemId:(NSString *)itemId;
+
 @end

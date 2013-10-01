@@ -12,6 +12,14 @@
 
 @implementation Album
 
+- (id)initWithItemId:(NSString *)itemId{
+    self = [super init];
+    if (self) {
+        _albumId = itemId;
+    }
+    return self;
+}
+
 - (NSURL *)albumCover:(AlbumCoverType)coverType {
     return [NSURL URLWithString:self.cover.thumbnailImage.urlString];
 }

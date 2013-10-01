@@ -38,6 +38,7 @@
 @property (nonatomic, copy, readonly) NSURL *pathOriginal;
 @property (nonatomic, copy, readonly) NSNumber *size;
 @property (nonatomic, copy, readonly) NSArray *tags;
+@property (nonatomic, copy, readonly) NSArray *albums;
 @property (nonatomic, copy, readonly) NSURL *url;
 @property (nonatomic, copy, readonly) NSDate *timestamp;
 @property (nonatomic, copy, readonly) NSString *title;

@@ -24,5 +24,13 @@
     return self;
 }
 
+- (id)initWithItemId:(NSString *)itemId {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 
 @end

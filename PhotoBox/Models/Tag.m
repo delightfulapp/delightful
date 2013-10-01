@@ -14,7 +14,7 @@
     return self.tagId;
 }
 
-- (id)initWithTagId:(NSString *)tagId {
+- (id)initWithItemId:(NSString *)tagId {
     self = [super init];
     if (self) {
         _tagId = tagId;
