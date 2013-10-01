@@ -8,24 +8,12 @@
 
 #import "Album.h"
 
+#import "Photo.h"
+
 @implementation Album
 
-@synthesize albumId = id;
-
 - (NSURL *)albumCover:(AlbumCoverType)coverType {
-    NSDictionary *cover = [self.rawDictionary objectForKey:@"cover"];
-    return [NSURL URLWithString:[cover objectForKey:stringWithAlbumCoverType(coverType)]];
-}
-
-NSString *stringWithAlbumCoverType(AlbumCoverType input) {
-    NSArray *arr = @[
-                     @"path100x100",
-                     @"path100x100xCR",
-                     @"path200x200",
-                     @"path200x200xCR",
-                     @"pathOriginal"
-                     ];
-    return (NSString *)[arr objectAtIndex:input];
+    return [NSURL URLWithString:self.cover.thumbnailImage.urlString];
 }
 
 - (NSString *)itemId {
@@ -33,12 +21,22 @@ NSString *stringWithAlbumCoverType(AlbumCoverType input) {
 }
 
 + (Album *)allPhotosAlbum {
+    NSError *error;
     Album *a = [[Album alloc] initWithDictionary:@{
-                                                   @"id": @"",
+                                                   @"id": @"ALL",
                                                    @"name":NSLocalizedString(@"All Photos", nil)
-                                                   }];
-    a.albumId = nil;
+                                                   } error:&error];
     return a;
+}
+
+#pragma mark - Mantle
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{@"albumId": @"id"};
+}
+
++ (NSValueTransformer *)coverJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[Photo class]];
 }
 
 @end

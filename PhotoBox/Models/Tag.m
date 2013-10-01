@@ -10,10 +10,22 @@
 
 @implementation Tag
 
-@synthesize tagId = id;
-
 - (NSString *)itemId {
-return self.tagId;
+    return self.tagId;
+}
+
+- (id)initWithTagId:(NSString *)tagId {
+    self = [super init];
+    if (self) {
+        _tagId = tagId;
+    }
+    return self;
+}
+
+#pragma mark - Mantle
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{@"tagId": @"id"};
 }
 
 @end

@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PhotoBoxModel : NSObject
+#import <MTLModel.h>
+
+@interface PhotoBoxModel : MTLModel <MTLJSONSerializing, MTLManagedObjectSerializing>
 
 @property (nonatomic, strong) NSDictionary *rawDictionary;
 
@@ -16,8 +18,6 @@
 @property (nonatomic, assign) int totalPages;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int currentRow;
-@property (nonatomic, strong) NSString *itemId;
-
-- (id)initWithDictionary:(NSDictionary *)dictionary;
+@property (nonatomic, copy) NSString *itemId;
 
 @end

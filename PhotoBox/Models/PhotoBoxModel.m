@@ -7,17 +7,22 @@
 //
 
 #import "PhotoBoxModel.h"
-#import "NSObject+setValuesForKeysWithJSONDictionary.h"
+
+#import "Album.h"
+#import "Photo.h"
 
 @implementation PhotoBoxModel
 
-- (id)initWithDictionary:(NSDictionary *)dictionary {
-    self = [super init];
-    if (self) {
-        _rawDictionary = dictionary;
-        [self xx_setValuesForKeysWithJSONDictionary:dictionary];
++ (Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary {
+    if (JSONDictionary[@"cover"] != nil) {
+        return Album.class;
     }
+    if (JSONDictionary[@"filenameOriginal"] != nil) {
+        return Photo.class;
+    }
+    NSAssert(NO, @"No matching class for the JSON dictionary '%@'.", JSONDictionary);
     return self;
 }
+
 
 @end
