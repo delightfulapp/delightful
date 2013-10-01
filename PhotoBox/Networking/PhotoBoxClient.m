@@ -104,8 +104,9 @@
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
     NSArray *result = [responseObject objectForKey:@"result"];
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
+    NSError *error;
     for (NSDictionary *objectDictionary in result) {
-        id object = [[resource alloc] initWithDictionary:objectDictionary];
+        id object = [MTLJSONAdapter modelOfClass:resource fromJSONDictionary:objectDictionary error:&error];
         if (object) {
             [array addObject:object];
         }
