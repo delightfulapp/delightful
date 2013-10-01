@@ -10,6 +10,8 @@
 
 #import "Photo.h"
 
+#import "XCTestCase+Additionals.h"
+
 @interface PhotoModelTests : XCTestCase
 
 @end
@@ -30,13 +32,12 @@
 
 - (void)testSetNormalImage
 {
-    Photo *photo = [[Photo alloc] initWithDictionary:@{@"id": @"1",
-                                                       @"photo640x640":@[@"http://image640x640.png", @(640), @(480)],
-                                                       @"photo200x200xCR":@[@"http://image200x200xCR.png", @(200), @(200)]
-                                                       }];
+    NSError *error;
+    NSDictionary *photoDictionary = [self objectFromJSONFile:@"photo"];
+    Photo *photo = [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:photoDictionary error:&error];
     XCTAssertTrue(photo.thumbnailImage, @"Expected thumbnail image");
-    XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:@"http://image200x200xCR.png"], @"Expected thumbnail image url http://image200x200xCR.png. Actual %@", photo.thumbnailImage.urlString);
-    XCTAssertTrue([photo.normalImage.urlString isEqualToString:@"http://image640x640.png"], @"Expected normal image url http://image640x640.png. Actual %@", photo.normalImage.urlString);
+    XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:[photoDictionary objectForKey:@"path200x200xCR"]], @"Expected thumbnail image url %@. Actual %@", [photoDictionary objectForKey:@"path200x200xCR"], photo.thumbnailImage.urlString);
+    XCTAssertTrue([photo.normalImage.urlString isEqualToString:[photoDictionary objectForKey:@"path640x640"]], @"Expected normal image url %@. Actual %@", [photoDictionary objectForKey:@"path640x640"], photo.normalImage.urlString);
 }
 
 @end

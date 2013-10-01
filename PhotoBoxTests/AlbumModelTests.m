@@ -8,6 +8,8 @@
 
 #import <XCTest/XCTest.h>
 
+#import "XCTestCase+Additionals.h"
+
 #import "Album.h"
 #import "PhotoBoxModel.h"
 #import "Photo.h"
@@ -34,9 +36,8 @@
 - (void)testSerializeAlbum
 {
     NSError *error;
-    
-    NSString * filePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"album" ofType:@"json"];
-    NSDictionary *albumDict = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:&error];
+
+    NSDictionary *albumDict = [self objectFromJSONFile:@"album"];
     Album *testAlbum = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:albumDict error:&error];
     
     XCTAssert(testAlbum!=nil, @"Test album should not be nil");
