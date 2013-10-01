@@ -137,10 +137,10 @@
     Photo *photo = (Photo *)item;
     
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
-        if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal]) {
+        if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal.absoluteString]) {
             [self loadOriginalImage];
         } else {
-            [self setImageSize:CGSizeMake(photo.normalImage.width, photo.normalImage.height)];
+            [self setImageSize:CGSizeMake([photo.normalImage.width floatValue], [photo.normalImage.height floatValue])];
             [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:nil];
         }
         
@@ -150,18 +150,18 @@
 
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
-    [self setImageSize:CGSizeMake(photo.width, photo.height)];
-    [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal] placeholderImage:nil];
+    [self setImageSize:CGSizeMake([photo.width floatValue], [photo.height floatValue])];
+    [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
 }
 
 - (BOOL)hasDownloadedOriginalImage {
     Photo *photo = (Photo *)self.item;
-    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal];
+    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal.absoluteString];
 }
 
 - (BOOL)isDownloadingOriginalImage {
     Photo *photo = (Photo *)self.item;
-    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal];
+    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal.absoluteString];
 }
 
 - (UIImage *)originalImage {

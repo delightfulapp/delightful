@@ -15,12 +15,22 @@
     if (self) {
         if (array && array.count == 3) {
             _urlString = array[0];
-            _width = [array[1] floatValue];
-            _height = [array[2] floatValue];
+            _width = array[1];
+            _height = array[2];
         }
         
     }
     return self;
+}
+
+- (NSArray *)toArray {
+    return @[self.urlString, self.width, self.height];
+}
+
+#pragma mark - Mantle
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return nil;
 }
 
 @end

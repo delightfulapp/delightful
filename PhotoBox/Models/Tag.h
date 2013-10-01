@@ -10,10 +10,12 @@
 
 @interface Tag : PhotoBoxModel
 
-@property (nonatomic, strong) NSString *actor;
-@property (nonatomic, assign) int count;
-@property (nonatomic, strong) NSString *extra;
-@property (nonatomic, strong) NSString *tagId;
-@property (nonatomic, strong) NSString *owner;
+@property (nonatomic, copy, readonly) NSString *actor;
+@property (nonatomic, copy, readonly) NSNumber *count;
+@property (nonatomic, copy, readonly) NSString *extra;
+@property (nonatomic, copy, readonly) NSString *tagId;
+@property (nonatomic, copy, readonly) NSString *owner;
+
+- (id)initWithTagId:(NSString *)tagId;
 
 @end

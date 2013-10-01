@@ -12,45 +12,45 @@
 
 @interface Photo : PhotoBoxModel
 
-@property (nonatomic, assign) int dateTaken;
-@property (nonatomic, assign) int dateTakenDay;
-@property (nonatomic, assign) int dateTakenMonth;
-@property (nonatomic, assign) int dateTakenYear;
-@property (nonatomic, assign) int dateUploaded;
-@property (nonatomic, assign) int dateUploadedDay;
-@property (nonatomic, assign) int dateUploadedMonth;
-@property (nonatomic, assign) int dateUploadedYear;
-@property (nonatomic, strong) NSString *description;
-@property (nonatomic, strong) NSString *exifCameraMake;
-@property (nonatomic, strong) NSString *exifCameraModel;
-@property (nonatomic, strong) NSString *exifExposureTime;
-@property (nonatomic, strong) NSString *exifFNumber;
-@property (nonatomic, strong) NSString *exifFocalLength;
-@property (nonatomic, strong) NSString *exifISOSpeed;
-@property (nonatomic, strong) NSString *filenameOriginal;
-@property (nonatomic, strong) NSString *hash;
-@property (nonatomic, strong) NSString *host;
-@property (nonatomic, strong) NSString *key;
-@property (nonatomic, strong) NSString *latitude;
-@property (nonatomic, strong) NSString *license;
-@property (nonatomic, strong) NSString *longitude;
-@property (nonatomic, strong) NSString *photoId;
-@property (nonatomic, strong) NSString *pathOriginal;
-@property (nonatomic, assign) int size;
-@property (nonatomic,strong) NSArray *tags;
-@property (nonatomic, strong) NSString *url;
-@property (nonatomic, strong) NSString *timestamp;
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, assign) int views;
-@property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, copy, readonly) NSNumber *dateTaken;
+@property (nonatomic, copy, readonly) NSNumber *dateTakenDay;
+@property (nonatomic, copy, readonly) NSNumber *dateTakenMonth;
+@property (nonatomic, copy, readonly) NSNumber *dateTakenYear;
+@property (nonatomic, copy, readonly) NSNumber *dateUploaded;
+@property (nonatomic, copy, readonly) NSNumber *dateUploadedDay;
+@property (nonatomic, copy, readonly) NSNumber *dateUploadedMonth;
+@property (nonatomic, copy, readonly) NSNumber *dateUploadedYear;
+@property (nonatomic, copy, readonly) NSString *description;
+@property (nonatomic, copy, readonly) NSString *exifCameraMake;
+@property (nonatomic, copy, readonly) NSString *exifCameraModel;
+@property (nonatomic, copy, readonly) NSString *exifExposureTime;
+@property (nonatomic, copy, readonly) NSString *exifFNumber;
+@property (nonatomic, copy, readonly) NSString *exifFocalLength;
+@property (nonatomic, copy, readonly) NSString *exifISOSpeed;
+@property (nonatomic, copy, readonly) NSString *filenameOriginal;
+@property (nonatomic, copy, readonly) NSString *hash;
+@property (nonatomic, copy, readonly) NSString *host;
+@property (nonatomic, copy, readonly) NSString *key;
+@property (nonatomic, copy, readonly) NSString *latitude;
+@property (nonatomic, copy, readonly) NSString *license;
+@property (nonatomic, copy, readonly) NSString *longitude;
+@property (nonatomic, copy, readonly) NSString *photoId;
+@property (nonatomic, copy, readonly) NSURL *pathOriginal;
+@property (nonatomic, copy, readonly) NSNumber *size;
+@property (nonatomic, copy, readonly) NSArray *tags;
+@property (nonatomic, copy, readonly) NSURL *url;
+@property (nonatomic, copy, readonly) NSDate *timestamp;
+@property (nonatomic, copy, readonly) NSString *title;
+@property (nonatomic, copy, readonly) NSNumber *views;
+@property (nonatomic, copy, readonly) NSNumber *width;
+@property (nonatomic, copy, readonly) NSNumber *height;
+@property (nonatomic, copy, readonly) PhotoBoxImage *photo200x200xCR;
+@property (nonatomic, copy, readonly) PhotoBoxImage *photo640x640;
+
+@property (nonatomic, copy, readonly) PhotoBoxImage *thumbnailImage;
+@property (nonatomic, copy, readonly) PhotoBoxImage *normalImage;
+@property (nonatomic, copy, readonly) PhotoBoxImage *originalImage;
 @property (nonatomic, readonly) NSString *dateTakenString;
 @property (nonatomic, readonly) NSString *dateMonthYearTakenString;
-
-@property (nonatomic, strong) PhotoBoxImage *thumbnailImage;
-@property (nonatomic, strong) PhotoBoxImage *normalImage;
-@property (nonatomic, strong) PhotoBoxImage *originalImage;
-@property (nonatomic, readonly) NSArray *photo200x200xCR;
-@property (nonatomic, readonly) NSArray *photo640x640;
 
 @end

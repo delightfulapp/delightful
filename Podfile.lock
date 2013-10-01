@@ -6,6 +6,9 @@ PODS:
   - libextobjc/EXTScope (0.3):
     - libextobjc/RuntimeExtensions
   - libextobjc/RuntimeExtensions (0.3)
+  - Mantle (1.3):
+    - Mantle/extobjc
+  - Mantle/extobjc (1.3)
   - NPRImageView (1.0.11):
     - AFNetworking (~> 1.3.2)
     - libextobjc/EXTScope (~> 0.3.0)
@@ -18,6 +21,7 @@ PODS:
 DEPENDENCIES:
   - AFOAuth1Client
   - iOS-blur
+  - Mantle
   - NPRImageView (from `https://github.com/nicnocquee/NPRImageView`)
   - NSDate+TimeAgo
   - NSDate-Escort
@@ -34,6 +38,7 @@ SPEC CHECKSUMS:
   AFOAuth1Client: 8e83e357129c6dd4511dbb77b03977b206383dc1
   iOS-blur: 7c8087858e7a685072cf8af52dd08dd3e115531b
   libextobjc: 820a79dbbbc498611e04fffd07d2d52a5588e7ac
+  Mantle: c3e963daaad6f1418feacce974d789b2d0465539
   NPRImageView: 06daeaef0c358662c891088f713e4a518b6abd15
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
   NSDate-Escort: f940f313d71ac25a20c126170074b576df391340
