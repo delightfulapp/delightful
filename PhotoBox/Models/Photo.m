@@ -47,7 +47,7 @@
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return @{@"photoId": @"id"};
+    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"photoId": @"id",@"photoHash":@"hash",@"photoDescription":@"description",@"dateTakenString":NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
 }
 
 + (NSValueTransformer *)timestampJSONTransformer {
@@ -112,6 +112,45 @@
         }
         return items;
     }];
+}
+
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
+    NSArray *stringToNumberKeys = @[@"height", @"width", @"size", @"views"];
+    if ([key hasPrefix:@"date"] || [stringToNumberKeys containsObject:key]) {
+        return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSString *string){
+            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+            [f setNumberStyle:NSNumberFormatterDecimalStyle];
+            return [f numberFromString:string];
+        } reverseBlock:^(NSNumber *number){
+            return [NSString stringWithFormat:@"%d", [number intValue]];
+        }];
+    }
+    return nil;
+}
+
+#pragma mark - Managed object serialization
+
++ (NSString *)managedObjectEntityName {
+    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
+}
+
++ (NSDictionary *)managedObjectKeysByPropertyKey {
+    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateTakenString": NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
+}
+
++ (NSSet *)propertyKeysForManagedObjectUniquing {
+    return [NSSet setWithObject:@"photoId"];
+}
+
++ (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
+    if ([key isEqualToString:@"url"] || [key isEqualToString:@"pathOriginal"]) {
+        return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+    }
+    return nil;
+}
+
++ (NSDictionary *)relationshipModelClassesByPropertyKey {
+    return @{@"albums": Album.class, @"tags": Tag.class};
 }
 
 @end

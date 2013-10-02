@@ -12,7 +12,6 @@
 
 @interface PhotoBoxModel : MTLModel <MTLJSONSerializing, MTLManagedObjectSerializing>
 
-@property (nonatomic, strong) NSDictionary *rawDictionary;
 
 @property (nonatomic, assign) int totalRows;
 @property (nonatomic, assign) int totalPages;
@@ -21,5 +20,9 @@
 @property (nonatomic, copy) NSString *itemId;
 
 - (id)initWithItemId:(NSString *)itemId;
+
++ (NSString *)photoBoxManagedObjectEntityNameForClassName:(NSString *)className;
+
++ (NSDictionary *)photoBoxKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
 
 @end

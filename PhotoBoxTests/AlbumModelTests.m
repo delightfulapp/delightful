@@ -63,6 +63,10 @@
     XCTAssert(testAlbum.cover.albums!=nil, @"Albums should not be nil");
     XCTAssert(testAlbum.cover.albums.count == 2, @"Expected albums count = 2. Actual = %d", testAlbum.cover.albums.count);
     XCTAssert([((Album *)testAlbum.cover.albums[0]).albumId isEqualToString:[[[albumDict objectForKey:@"cover"] objectForKey:@"albums"] objectAtIndex:0]], @"Expected Cover's first album = 1. Actual = %@", ((Album *)testAlbum.cover.albums[0]).albumId);
+    
+    NSManagedObject *albumManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:testAlbum insertingIntoContext:[NSManagedObjectContext mainContext] error:&error];
+    XCTAssert(albumManagedObject != nil, @"Album managed object should not be nil");
+    XCTAssert([[albumManagedObject valueForKey:@"photoId"] isEqualToString:[albumDict objectForKey:@"id"]], @"Expected album id = %@. Actual = %@", albumDict[@"id"], [albumManagedObject valueForKey:@"albumId"]);
 }
 
 @end

@@ -27,6 +27,8 @@ typedef NS_ENUM(NSUInteger, AlbumCoverType) {
 @property (nonatomic, copy, readonly) NSString *name;
 @property (nonatomic, copy, readonly) Photo *cover;
 
+@property (nonatomic, copy, readonly) NSArray *photos;
+
 - (NSURL *)albumCover:(AlbumCoverType)coverType;
 
 + (Album *)allPhotosAlbum;

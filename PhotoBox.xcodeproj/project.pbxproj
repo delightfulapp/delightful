@@ -69,6 +69,8 @@
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */; };
+		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
+		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		03AE182617D8B004009CD844 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
@@ -194,6 +196,7 @@
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
+		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
 		03AE182817D8B2F5009CD844 /* loginbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginbackground.jpg; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */,
 				032B0D2A17D5B9B400ABFA9F /* MobileCoreServices.framework in Frameworks */,
 				032B0D2817D5B9A800ABFA9F /* SystemConfiguration.framework in Frameworks */,
 				0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */,
@@ -231,6 +235,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */,
 				032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */,
 				032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
@@ -334,6 +339,7 @@
 		032CBB7C17D0BDF3001205B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				036E050D17FC1BB10012DFB3 /* CoreData.framework */,
 				0348D23317DA2CC400C932BA /* Crashlytics.framework */,
 				032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */,
 				032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */,

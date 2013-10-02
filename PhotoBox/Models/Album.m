@@ -40,11 +40,25 @@
 #pragma mark - Mantle
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return @{@"albumId": @"id"};
+    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id"}];
 }
 
 + (NSValueTransformer *)coverJSONTransformer {
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[Photo class]];
+}
+
+#pragma mark - Managed object serialization
+
++ (NSString *)managedObjectEntityName {
+    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
+}
+
++ (NSDictionary *)managedObjectKeysByPropertyKey {
+    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:nil];
+}
+
++ (NSSet *)propertyKeysForManagedObjectUniquing {
+    return [NSSet setWithObject:@"albumId"];
 }
 
 @end

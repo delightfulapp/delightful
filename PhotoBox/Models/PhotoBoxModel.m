@@ -32,5 +32,28 @@
     return self;
 }
 
++ (NSString *)photoBoxManagedObjectEntityNameForClassName:(NSString *)className {
+    return [NSString stringWithFormat:@"PBX%@", className];
+}
+
+#pragma mark - JSON serialization
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return @{@"totalRows": NSNull.null, @"totalPages": NSNull.null, @"currentPage": NSNull.null, @"currentRow": NSNull.null, @"itemId": NSNull.null};
+}
+
+#pragma mark - Managed object serialization
+
++ (NSDictionary *)managedObjectKeysByPropertyKey {
+    return [[self class] JSONKeyPathsByPropertyKey];
+}
+
+
++ (NSDictionary *)photoBoxKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary {
+    NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:[PhotoBoxModel JSONKeyPathsByPropertyKey]];
+    if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
+    return mutableDict;
+}
+
 
 @end

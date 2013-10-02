@@ -6,11 +6,10 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-@class Photo;
+#import "PhotoBoxModel.h"
 
-@interface PhotoBoxImage : MTLModel <MTLJSONSerializing>
+@interface PhotoBoxImage : PhotoBoxModel
 
-@property (nonatomic, weak) Photo *photo;
 @property (nonatomic, copy, readonly) NSString *urlString;
 @property (nonatomic, copy, readonly) NSNumber *width;
 @property (nonatomic, copy, readonly) NSNumber *height;
