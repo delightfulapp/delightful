@@ -1,0 +1,1 @@
+../../OGCoreDataStack/OGCoreDataStack/NSManagedObject+OGCoreDataStack.h

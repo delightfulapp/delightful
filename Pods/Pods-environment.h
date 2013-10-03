@@ -48,6 +48,18 @@
 #define COCOAPODS_VERSION_MINOR_NSDate_Escort 2
 #define COCOAPODS_VERSION_PATCH_NSDate_Escort 0
 
+// OGCoreDataStack
+#define COCOAPODS_POD_AVAILABLE_OGCoreDataStack
+#define COCOAPODS_VERSION_MAJOR_OGCoreDataStack 0
+#define COCOAPODS_VERSION_MINOR_OGCoreDataStack 1
+#define COCOAPODS_VERSION_PATCH_OGCoreDataStack 6
+
+// Overcoat
+#define COCOAPODS_POD_AVAILABLE_Overcoat
+#define COCOAPODS_VERSION_MAJOR_Overcoat 1
+#define COCOAPODS_VERSION_MINOR_Overcoat 1
+#define COCOAPODS_VERSION_PATCH_Overcoat 0
+
 // UIColor+MLPFlatColors
 #define COCOAPODS_POD_AVAILABLE_UIColor_MLPFlatColors
 #define COCOAPODS_VERSION_MAJOR_UIColor_MLPFlatColors 1
