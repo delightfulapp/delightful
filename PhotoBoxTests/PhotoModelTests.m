@@ -10,6 +10,7 @@
 
 #import "Photo.h"
 #import "Album.h"
+#import "Tag.h"
 
 #import "XCTestCase+Additionals.h"
 
@@ -38,6 +39,9 @@
     XCTAssertTrue(photo.thumbnailImage, @"Expected thumbnail image");
     XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:[photoDictionary objectForKey:@"path200x200xCR"]], @"Expected thumbnail image url %@. Actual %@", [photoDictionary objectForKey:@"path200x200xCR"], photo.thumbnailImage.urlString);
     XCTAssertTrue([photo.normalImage.urlString isEqualToString:[photoDictionary objectForKey:@"path640x640"]], @"Expected normal image url %@. Actual %@", [photoDictionary objectForKey:@"path640x640"], photo.normalImage.urlString);
+    NSArray *tags = [photo.tags sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"tagId" ascending:YES]]];
+    XCTAssert(tags.count == 4, @"Expected 4 tags. Actual = %d", tags.count);
+    XCTAssert([((Tag *)tags[0]).tagId isEqualToString:@"2010"], @"Expected first tag = 2010. Actual = %@", ((Tag *)tags[0]).tagId);
 }
 
 - (void)testPhotoObjectManagedObjectSerialization {
