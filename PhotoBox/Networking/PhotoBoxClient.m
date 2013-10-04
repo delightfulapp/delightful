@@ -8,8 +8,8 @@
 
 #import "PhotoBoxClient.h"
 
-#import "AFJSONRequestOperation.h"
 #import "ConnectionManager.h"
+#import "PhotoBoxRequestOperation.h"
 
 #import "Album.h"
 #import "Photo.h"
@@ -45,6 +45,7 @@
         [_oauthClient setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
     }
     [self setParameterEncoding:AFFormURLParameterEncoding];
+    [self registerHTTPOperationClass:[PhotoBoxRequestOperation class]];
     
     return self;
 }

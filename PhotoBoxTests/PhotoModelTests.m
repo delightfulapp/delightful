@@ -23,6 +23,7 @@
 - (void)setUp
 {
     [super setUp];
+    [NSPersistentStoreCoordinator clearPersistentStore];
 }
 
 - (void)tearDown

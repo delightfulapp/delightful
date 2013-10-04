@@ -375,7 +375,6 @@ static const NSInteger MTLManagedObjectAdapterErrorExceptionThrown = 1;
 
 	[dictionaryValue enumerateKeysAndObjectsUsingBlock:^(NSString *propertyKey, id value, BOOL *stop) {
 		NSString *managedObjectKey = [self managedObjectKeyForKey:propertyKey];
-        NSLog(@"Managed object key = %@", managedObjectKey);
 		if (managedObjectKey == nil) return;
 		if ([value isEqual:NSNull.null]) value = nil;
 
