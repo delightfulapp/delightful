@@ -10,6 +10,8 @@
 
 #import "Photo.h"
 
+NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
+
 @implementation Album
 
 - (id)initWithItemId:(NSString *)itemId{
@@ -30,10 +32,11 @@
 
 + (Album *)allPhotosAlbum {
     NSError *error;
-    Album *a = [[Album alloc] initWithDictionary:@{
-                                                   @"id": @"ALL",
-                                                   @"name":NSLocalizedString(@"All Photos", nil)
-                                                   } error:&error];
+    Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{
+                                                                               @"id": PBX_allAlbumIdentifier,
+                                                                               @"name":NSLocalizedString(@"All Photos", nil),
+                                                                               @"cover":@{@"id": @"COVER_PHOTO_ALL_ALBUM", @"filenameOriginal":@""}
+                                                                               } error:&error];
     return a;
 }
 
