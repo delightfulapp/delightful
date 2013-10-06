@@ -27,6 +27,7 @@
         if (error) {
             NSLog(@"Error: %@", error);
         }
+        [self.mantleItems setObject:object forKey:indexPath];
     }
     return object;
 }
