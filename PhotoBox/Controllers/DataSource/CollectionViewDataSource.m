@@ -34,7 +34,7 @@
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];
+    return [self.fetchedResultsController objectAtIndexPath:indexPath];;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
@@ -226,7 +226,7 @@
 
 #pragma mark - Setters
 
-- (void)setFetchedResultsController:(NSFetchedResultsController*)fetchedResultsController
+- (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController
 {
     NSAssert(_fetchedResultsController == nil, @"TODO: you can currently only assign this property once");
     _fetchedResultsController = fetchedResultsController;

@@ -127,9 +127,10 @@
     return _fetchRequest;
 }
 
-- (NSFetchedResultsController *)fetchedResultsController {
+- (PhotoBoxFetchedResultsController *)fetchedResultsController {
     if (!_fetchedResultsController) {
-        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+        _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+        [_fetchedResultsController setObjectClass:self.resourceClass];
     }
     return _fetchedResultsController;
 }

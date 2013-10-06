@@ -79,6 +79,7 @@
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */; };
 		03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */; };
+		03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */; };
 		03DD04DF17F9C479001FB8A5 /* AlbumModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */; };
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
@@ -212,6 +213,8 @@
 		03AE182B17D8F267009CD844 /* NSString+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additionals.m"; sourceTree = "<group>"; };
 		03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionalsTests.m"; sourceTree = "<group>"; };
 		03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManagerTests.m; sourceTree = "<group>"; };
+		03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBoxFetchedResultsController.h; sourceTree = "<group>"; };
+		03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxFetchedResultsController.m; sourceTree = "<group>"; };
 		03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumModelTests.m; sourceTree = "<group>"; };
 		03DD04E017F9C58B001FB8A5 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
@@ -463,6 +466,8 @@
 				0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */,
 				035846AC17D22D4400E196D7 /* PhotosViewControllerDataSource.h */,
 				035846AD17D22D4400E196D7 /* PhotosViewControllerDataSource.m */,
+				03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */,
+				03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -734,6 +739,7 @@
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
+				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,

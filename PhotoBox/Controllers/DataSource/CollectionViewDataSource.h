@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PhotoBoxFetchedResultsController.h"
 
 typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 
@@ -18,7 +19,7 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 @property (nonatomic, strong) NSString *sectionHeaderIdentifier;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellHeaderBlock;
 
-@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathOfItem:(id)item;

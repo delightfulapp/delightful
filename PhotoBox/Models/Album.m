@@ -78,4 +78,8 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
     return [NSSet setWithObject:@"albumId"];
 }
 
++ (NSDictionary *)relationshipModelClassesByPropertyKey {
+    return @{@"cover": Photo.class, @"photos":Photo.class};
+}
+
 @end

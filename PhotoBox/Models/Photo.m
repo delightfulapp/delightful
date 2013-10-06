@@ -148,7 +148,7 @@
 }
 
 + (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{@"albums": Album.class, @"tags": Tag.class};
+    return @{@"albums": Album.class, @"tags": Tag.class, @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
 }
 
 @end
