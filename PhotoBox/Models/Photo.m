@@ -10,6 +10,8 @@
 #import "Tag.h"
 #import "Album.h"
 
+#import "NSObject+Additionals.h"
+
 @implementation Photo
 
 @synthesize originalImage = _originalImage;
@@ -115,15 +117,11 @@
 }
 
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
-    NSArray *stringToNumberKeys = @[@"height", @"width", @"size", @"views"];
-    if ([key hasPrefix:@"date"] || [stringToNumberKeys containsObject:key]) {
-        return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSString *string){
-            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-            [f setNumberStyle:NSNumberFormatterDecimalStyle];
-            return [f numberFromString:string];
-        } reverseBlock:^(NSNumber *number){
-            return [NSString stringWithFormat:@"%d", [number intValue]];
-        }];
+    NSString *keyType = [[self class] propertyTypeStringForPropertyName:key];
+    if ([keyType isEqualToString:@"NSNumber"]) {
+        return [[self class] toNumberTransformer];
+    } else if ([keyType isEqualToString:@"NSString"]) {
+        return [[self class] toStringTransformer];
     }
     return nil;
 }

@@ -29,6 +29,7 @@
         if (responseJSON) {
             if (self.valueTransformer) {
                 self.responseObject = [self.valueTransformer transformedValue:responseJSON];
+                
                 if (self.context) {
                     [self serializeToManagedObject:self.responseObject inContext:self.context];
                 }
@@ -52,7 +53,11 @@
     } else {
         [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
     }
-    
+
+    [context save:&error];
+    if (error) {
+        NSLog(@"Fail saving objects to db: %@", error);
+    }
 }
 
 @end

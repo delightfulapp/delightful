@@ -166,5 +166,22 @@ NSString *stringWithActionType(ActionType input) {
     [self.oauthClient acquireOAuthAccessTokenWithPath:path requestToken:requestToken accessMethod:accessMethod success:success failure:failure];
 }
 
+- (void)setKey:(NSString *)key {
+    [self.oauthClient setValue:key forKey:@"key"];
+}
+
+- (void)setSecret:(NSString *)secret {
+    [self.oauthClient setValue:secret forKey:@"secret"];
+}
+
+#pragma mark - OVCClient
+
+- (PhotoBoxRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath completion:(void (^)(AFHTTPRequestOperation *, id, NSError *))block {
+    PhotoBoxRequestOperation *operation = (PhotoBoxRequestOperation *)[super HTTPRequestOperationWithRequest:urlRequest resultClass:resultClass resultKeyPath:keyPath completion:block];
+    [operation setContext:[NSManagedObjectContext workContext]];
+    return operation;
+    
+}
+
 
 @end

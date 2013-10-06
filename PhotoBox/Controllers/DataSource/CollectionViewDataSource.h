@@ -18,7 +18,12 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 @property (nonatomic, strong) NSString *sectionHeaderIdentifier;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellHeaderBlock;
 
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathOfItem:(id)item;
+- (NSInteger)numberOfItems;
+
+- (id)initWithCollectionView:(UICollectionView *)collectionView;
 
 @end

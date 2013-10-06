@@ -7,7 +7,7 @@ pod 'iOS-blur'
 pod 'AFOAuth1Client'
 pod 'Mantle'
 pod 'Overcoat'
-pod 'OGCoreDataStack'
+pod 'OGCoreDataStack', :git => 'https://github.com/nicnocquee/OGCoreDataStack'
 pod 'NPRImageView', :git => 'https://github.com/nicnocquee/NPRImageView'
 target :PhotoBoxTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'

@@ -47,7 +47,21 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 }
 
 + (NSValueTransformer *)coverJSONTransformer {
-    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[Photo class]];
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSDictionary *JSONDictionary){
+        NSMutableDictionary *dictionary = [JSONDictionary mutableCopy];
+        [dictionary removeObjectForKey:@"albums"];
+        [dictionary removeObjectForKey:@"tags"];
+        return [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:dictionary error:NULL];
+    } reverseBlock:^id(id model) {
+        if (model==nil) {
+            return nil;
+        }
+        return [MTLJSONAdapter JSONDictionaryFromModel:model];
+    }];
+}
+
++ (NSValueTransformer *)countJSONTransformer {
+    return [[self class] toNumberTransformer];
 }
 
 #pragma mark - Managed object serialization

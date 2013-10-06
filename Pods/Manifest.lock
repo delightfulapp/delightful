@@ -30,7 +30,7 @@ DEPENDENCIES:
   - NSDate+TimeAgo
   - NSDate-Escort
   - OCMock (~> 2.2.1)
-  - OGCoreDataStack
+  - OGCoreDataStack (from `https://github.com/nicnocquee/OGCoreDataStack`)
   - Overcoat
   - UIColor+MLPFlatColors (~> 1.0)
   - UIView+AutoLayout
@@ -38,6 +38,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   NPRImageView:
     :git: https://github.com/nicnocquee/NPRImageView
+  OGCoreDataStack:
+    :git: https://github.com/nicnocquee/OGCoreDataStack
 
 SPEC CHECKSUMS:
   AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b

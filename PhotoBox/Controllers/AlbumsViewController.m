@@ -59,8 +59,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSArray *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"albumId" ascending:NO]];
+}
+
 - (ResourceType)resourceType {
     return AlbumResource;
+}
+
+- (Class)resourceClass {
+    return [Album class];
 }
 
 - (void)didFetchItems {

@@ -26,6 +26,9 @@ typedef NS_ENUM(NSInteger, ActionType) {
 
 @interface PhotoBoxClient : OVCClient
 
+@property (nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSString *secret;
+
 + (PhotoBoxClient *)sharedClient;
 
 - (void)getResource:(ResourceType)type

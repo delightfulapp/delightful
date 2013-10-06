@@ -79,6 +79,8 @@
     // assign context
     if (context) {
         [operation setContext:context];
+    } else {
+        [operation setContext:nil];
     }
     
     // partially mock the operation
@@ -94,9 +96,11 @@
     XCTAssert([responseObject isKindOfClass:[NSArray class]], @"Expected array of photos. Actual %@", NSStringFromClass([responseObject class]));
     XCTAssert(responseObject.count==1, @"There should be 1 photo. Actual %d", responseObject.count);
     Photo *photo = responseObject[0];
-    XCTAssert([photo.photoId isEqualToString:@"ad"], @"Expected photoId = ad. Actual = %@", photo.photoId);
+    XCTAssert([photo.photoId isEqualToString:@"bd"], @"Expected photoId = bd. Actual = %@", photo.photoId);
+    XCTAssert(photo.albums.count == ((NSArray *)photoJSON[@"albums"]).count, @"Expected %d. Actual %d", ((NSArray *)photoJSON[@"albums"]).count, photo.albums.count);
     
     if (context) {
+        
         NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
         fetchRequest.entity = [NSEntityDescription entityForName:@"PBXPhoto" inManagedObjectContext:mainContext];
         fetchRequest.predicate = [NSPredicate predicateWithFormat:@"photoId == %@", photo.photoId];
@@ -110,7 +114,9 @@
         XCTAssert(results.count==1, @"Expected 1 result from fetch. Actual = %d", results.count);
         NSManagedObject *photoObject = results[0];
         XCTAssert(photoObject!=nil, @"Photo managed object should not be nil");
-        XCTAssert([[photoObject valueForKey:@"photoId"] isEqualToString:@"ad"], @"Expected photoId from managed object = ad. Actual = %@", [photoObject valueForKey:@"photoId"]);
+        XCTAssert([[photoObject valueForKey:@"photoId"] isEqualToString:@"bd"], @"Expected photoId from managed object = bd. Actual = %@", [photoObject valueForKey:@"photoId"]);
+        NSArray *albums = [photoObject valueForKey:@"albums"];
+        XCTAssert(albums.count== ((NSArray *)photoJSON[@"albums"]).count, @"Expected %d. Actual %d", ((NSArray *)photoJSON[@"albums"]).count, albums.count);
     }
     
     // verify

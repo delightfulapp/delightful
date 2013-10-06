@@ -35,6 +35,8 @@
     }
     self.numberOfColumns = 2;
     
+    self.mainContext = [NSManagedObjectContext mainContext];
+    
     [self setupConnectionManager];
     [self setupCollectionView];
     [self setupRefreshControl];
@@ -86,8 +88,8 @@
 }
 
 - (void)setupDataSource {
-    self.dataSource = [[CollectionViewDataSource alloc] init];
-    self.collectionView.dataSource = self.dataSource;
+    self.dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
+    [self.dataSource setFetchedResultsController:self.fetchedResultsController];
     [self setupDataSourceConfigureBlock];
     if (self.items) {
         [self.dataSource setItems:self.items];
@@ -108,11 +110,28 @@
     [self.navigationItem setTitleView:self.navigationTitleLabel];
 }
 
+#pragma mark - Getter
+
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
     void (^configureCell)(PhotoBoxCell*, id) = ^(PhotoBoxCell* cell, id item) {
         [cell setItem:item];
     };
     return configureCell;
+}
+
+- (NSFetchRequest *)fetchRequest {
+    if (!_fetchRequest) {
+        _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
+        [_fetchRequest setSortDescriptors:self.sortDescriptors];
+    }
+    return _fetchRequest;
+}
+
+- (NSFetchedResultsController *)fetchedResultsController {
+    if (!_fetchedResultsController) {
+        _fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+    }
+    return _fetchedResultsController;
 }
 
 #pragma mark - Setter
@@ -149,20 +168,25 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               PhotoBoxModel *firstObject = (PhotoBoxModel *)[objects objectAtIndex:0];
-                                               self.totalItems = firstObject.totalRows;
-                                               self.totalPages = firstObject.totalPages;
-                                               self.currentPage = firstObject.currentPage;
-                                               self.currentRow = firstObject.currentRow;
+                                               NSLog(@"Got %d objects", ((NSArray *)objects).count);
+                                               NSArray *filtered = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"totalRows > 0"]];
+                                               if (filtered.count == 1) {
+                                                   PhotoBoxModel *firstObject = (PhotoBoxModel *)[filtered objectAtIndex:0];
+                                                   self.totalItems = firstObject.totalRows;
+                                                   self.totalPages = firstObject.totalPages;
+                                                   self.currentPage = firstObject.currentPage;
+                                                   self.currentRow = firstObject.currentRow;
+                                               }
                                                
-                                               [self.items addObjectsFromArray:objects];
-                                               [self.dataSource setItems:self.items];
-                                               [self.collectionView reloadData];
+                                               
+                                               //[self.items addObjectsFromArray:objects];
+                                               //[self.dataSource setItems:self.items];
+                                               //[self.collectionView reloadData];
                                                self.isFetching = NO;
                                                [self didFetchItems];
-                                               int count = self.items.count;
+                                               int count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
-                                                   [self performSelector:@selector(restoreContentInset) withObject:Nil afterDelay:0.3];
+                                                   [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
                                            }
                                            

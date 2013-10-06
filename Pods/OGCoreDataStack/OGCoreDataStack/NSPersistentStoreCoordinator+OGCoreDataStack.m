@@ -61,7 +61,7 @@ static NSDictionary*					_ogPersistentStoreOptions			= nil;
 		return YES;
 	
 	NSError* error	= nil;
-	NSString* path	= nil;
+	NSString* path	= _ogSQLiteURL().path;
 	
 	if (![_ogPersistentStoreCoordinator removePersistentStore:_ogPersistentStoreCoordinator.persistentStores[0] error:&error]) {
 #ifdef DEBUG

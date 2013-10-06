@@ -23,7 +23,10 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 @property (nonatomic, strong) PhotoBoxModel *item;
 @property (nonatomic, assign) ResourceType resourceType;
+@property (nonatomic, strong) Class resourceClass;
 @property (nonatomic, strong) NSString *resourceId;
+@property (nonatomic, strong) NSString *groupKey;
+@property (nonatomic, strong) NSArray *sortDescriptors;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSMutableArray *items;
@@ -39,6 +42,9 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
+@property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchRequest *fetchRequest;
+@property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
 - (void)refresh;
 - (void)showError:(NSError *)error;

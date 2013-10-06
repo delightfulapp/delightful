@@ -25,4 +25,8 @@
 
 + (NSDictionary *)photoBoxKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
 
++ (NSValueTransformer *)numberOrStringTransformer;
++ (NSValueTransformer *)toStringTransformer;
++ (NSValueTransformer *)toNumberTransformer;
+
 @end

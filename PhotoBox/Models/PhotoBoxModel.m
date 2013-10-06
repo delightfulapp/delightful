@@ -42,6 +42,48 @@
     return @{@"totalRows": NSNull.null, @"totalPages": NSNull.null, @"currentPage": NSNull.null, @"currentRow": NSNull.null, @"itemId": NSNull.null};
 }
 
++ (NSValueTransformer *)numberOrStringTransformer {
+    // exifFNumber is sometimes number, sometimes string
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(id exifFNumber) {
+        if ([exifFNumber isKindOfClass:[NSString class]]) {
+            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+            [f setNumberStyle:NSNumberFormatterDecimalStyle];
+            return [f numberFromString:exifFNumber];
+        }
+        return exifFNumber;
+    } reverseBlock:^id(NSNumber *exifFNumber) {
+        return [NSString stringWithFormat:@"%f", [exifFNumber floatValue]];
+    }];
+}
+
++ (NSValueTransformer *)toNumberTransformer {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(id exifFNumber) {
+        if ([exifFNumber isKindOfClass:[NSString class]]) {
+            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+            [f setNumberStyle:NSNumberFormatterDecimalStyle];
+            return [f numberFromString:exifFNumber];
+        }
+        return exifFNumber;
+    } reverseBlock:^id(NSNumber *exifFNumber) {
+        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        return [f stringFromNumber:exifFNumber];
+    }];
+}
+
++ (NSValueTransformer *)toStringTransformer {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(id exifFNumber) {
+        if ([exifFNumber isKindOfClass:[NSString class]]) {
+            return exifFNumber;
+        }
+        NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
+        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        return [f stringFromNumber:exifFNumber];
+    } reverseBlock:^id(NSString *exifFNumber) {
+        return exifFNumber;
+    }];
+}
+
 #pragma mark - Managed object serialization
 
 + (NSDictionary *)managedObjectKeysByPropertyKey {
