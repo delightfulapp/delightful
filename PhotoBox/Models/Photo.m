@@ -49,7 +49,7 @@
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"photoId": @"id",@"photoHash":@"hash",@"photoDescription":@"description",@"dateTakenString":NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"photoId": @"id",@"photoHash":@"hash",@"photoDescription":@"description",@"dateTakenString":NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
 }
 
 + (NSValueTransformer *)timestampJSONTransformer {
@@ -133,7 +133,7 @@
 }
 
 + (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateTakenString": NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateTakenString": NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
 }
 
 + (NSSet *)propertyKeysForManagedObjectUniquing {

@@ -25,7 +25,7 @@
 #pragma mark - Mantle
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"tagId": @"id"}];
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"tagId": @"id"}];
 }
 
 #pragma mark - Managed object serialization
@@ -35,7 +35,7 @@
 }
 
 + (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:nil];
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
 }
 
 + (NSSet *)propertyKeysForManagedObjectUniquing {

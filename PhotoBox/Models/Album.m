@@ -10,6 +10,8 @@
 
 #import "Photo.h"
 
+#import "NSObject+Additionals.h"
+
 NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 
 @implementation Album
@@ -43,7 +45,7 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 #pragma mark - Mantle
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id"}];
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id"}];
 }
 
 + (NSValueTransformer *)coverJSONTransformer {
@@ -64,6 +66,19 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
     return [[self class] toNumberTransformer];
 }
 
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
+    NSString *keyType = [[self class] propertyTypeStringForPropertyName:key];
+    if ([keyType isEqualToString:@"NSNumber"]) {
+        if ([key isEqualToString:@"totalRows"]) {
+            NSLog(@"Total row key found");
+        }
+        return [[self class] toNumberTransformer];
+    } else if ([keyType isEqualToString:@"NSString"]) {
+        return [[self class] toStringTransformer];
+    }
+    return nil;
+}
+
 #pragma mark - Managed object serialization
 
 + (NSString *)managedObjectEntityName {
@@ -71,7 +86,7 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 }
 
 + (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxKeyPathsByPropertyKeyWithDictionary:nil];
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
 }
 
 + (NSSet *)propertyKeysForManagedObjectUniquing {

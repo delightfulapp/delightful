@@ -30,7 +30,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) NSArray *sortDescriptors;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSMutableArray *items;
+@property (nonatomic, strong) NSArray *items;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isFetching;
 @property (nonatomic, assign) int numberOfColumns;

@@ -42,20 +42,6 @@
     return @{@"totalRows": NSNull.null, @"totalPages": NSNull.null, @"currentPage": NSNull.null, @"currentRow": NSNull.null, @"itemId": NSNull.null};
 }
 
-+ (NSValueTransformer *)numberOrStringTransformer {
-    // exifFNumber is sometimes number, sometimes string
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(id exifFNumber) {
-        if ([exifFNumber isKindOfClass:[NSString class]]) {
-            NSNumberFormatter * f = [[NSNumberFormatter alloc] init];
-            [f setNumberStyle:NSNumberFormatterDecimalStyle];
-            return [f numberFromString:exifFNumber];
-        }
-        return exifFNumber;
-    } reverseBlock:^id(NSNumber *exifFNumber) {
-        return [NSString stringWithFormat:@"%f", [exifFNumber floatValue]];
-    }];
-}
-
 + (NSValueTransformer *)toNumberTransformer {
     return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(id exifFNumber) {
         if ([exifFNumber isKindOfClass:[NSString class]]) {
@@ -91,7 +77,14 @@
 }
 
 
-+ (NSDictionary *)photoBoxKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary {
++ (NSDictionary *)photoBoxJSONKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary {
+    NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:[PhotoBoxModel JSONKeyPathsByPropertyKey]];
+    [mutableDict removeObjectsForKeys:@[@"totalRows", @"totalPages", @"currentPage", @"currentRow"]];
+    if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
+    return mutableDict;
+}
+
++ (NSDictionary *)photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:[PhotoBoxModel JSONKeyPathsByPropertyKey]];
     if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
     return mutableDict;

@@ -60,7 +60,7 @@
 }
 
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"albumId" ascending:NO]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"albumId" ascending:YES]];
 }
 
 - (ResourceType)resourceType {

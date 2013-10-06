@@ -18,6 +18,7 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellBlock;
 @property (nonatomic, strong) NSString *sectionHeaderIdentifier;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellHeaderBlock;
+@property (nonatomic, assign) BOOL paused;
 
 @property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
 

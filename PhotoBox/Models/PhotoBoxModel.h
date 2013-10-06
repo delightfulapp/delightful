@@ -13,19 +13,19 @@
 @interface PhotoBoxModel : MTLModel <MTLJSONSerializing, MTLManagedObjectSerializing>
 
 
-@property (nonatomic, assign) int totalRows;
-@property (nonatomic, assign) int totalPages;
-@property (nonatomic, assign) int currentPage;
-@property (nonatomic, assign) int currentRow;
+@property (nonatomic, strong) NSNumber *totalRows;
+@property (nonatomic, strong) NSNumber *totalPages;
+@property (nonatomic, strong) NSNumber *currentPage;
+@property (nonatomic, strong) NSNumber *currentRow;
 @property (nonatomic, copy) NSString *itemId;
 
 - (id)initWithItemId:(NSString *)itemId;
 
 + (NSString *)photoBoxManagedObjectEntityNameForClassName:(NSString *)className;
 
-+ (NSDictionary *)photoBoxKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
++ (NSDictionary *)photoBoxJSONKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
++ (NSDictionary *)photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
 
-+ (NSValueTransformer *)numberOrStringTransformer;
 + (NSValueTransformer *)toStringTransformer;
 + (NSValueTransformer *)toNumberTransformer;
 

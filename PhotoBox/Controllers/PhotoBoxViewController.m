@@ -20,6 +20,8 @@
     CGFloat lastOffset;
 }
 
+@property (nonatomic, assign, readonly) int pageSize;
+
 @end
 
 @implementation PhotoBoxViewController
@@ -27,9 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (!self.items) {
-        self.items = [NSMutableArray array];
-    }
+    
     if (self.page==0) {
         self.page = 1;
     }
@@ -43,14 +43,20 @@
     [self setupPinchGesture];
     [self setupDataSource];
     [self setupNavigationItemTitle];
+    
+    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    int count = self.items.count;
-    if (count == 0) {
-        [self fetchResource];
-    }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.dataSource.paused = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.dataSource.paused = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,6 +141,18 @@
     return _fetchedResultsController;
 }
 
+- (NSArray *)items {
+    return self.fetchedResultsController.fetchedObjects;
+}
+
+- (int)pageSize {
+    int size = 20;
+    if (self.items.count > 0) {
+        size = self.items.count;
+    }
+    return size;
+}
+
 #pragma mark - Setter
 
 - (void)setAttributedTitle:(NSAttributedString *)title {
@@ -166,25 +184,16 @@
                                         action:ListAction
                                     resourceId:self.resourceId
                                           page:self.page
+                                      pageSize:self.pageSize
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               NSLog(@"Got %d objects", ((NSArray *)objects).count);
-                                               NSArray *filtered = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"totalRows > 0"]];
-                                               if (filtered.count == 1) {
-                                                   PhotoBoxModel *firstObject = (PhotoBoxModel *)[filtered objectAtIndex:0];
-                                                   self.totalItems = firstObject.totalRows;
-                                                   self.totalPages = firstObject.totalPages;
-                                                   self.currentPage = firstObject.currentPage;
-                                                   self.currentRow = firstObject.currentRow;
-                                               }
+                                               [self processPaginationFromObjects:objects];
                                                
-                                               
-                                               //[self.items addObjectsFromArray:objects];
-                                               //[self.dataSource setItems:self.items];
-                                               //[self.collectionView reloadData];
                                                self.isFetching = NO;
+                                               
                                                [self didFetchItems];
+                                               
                                                int count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
@@ -198,7 +207,6 @@
 }
 
 - (void)fetchMore {
-    
     if (!self.isFetching) {
         int count = self.items.count;
         if (count!=0) {
@@ -208,6 +216,17 @@
                 [self fetchResource];
             }
         }
+    }
+}
+
+- (void)processPaginationFromObjects:(id)objects {
+    NSArray *filtered = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"totalRows > 0"]];
+    if (filtered.count == 1) {
+        PhotoBoxModel *firstObject = (PhotoBoxModel *)[filtered firstObject];
+        self.totalItems = [firstObject.totalRows intValue];
+        self.totalPages = [firstObject.totalPages intValue];
+        self.currentPage = [firstObject.currentPage intValue];
+        self.currentRow = [firstObject.currentRow intValue];
     }
 }
 
