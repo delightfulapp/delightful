@@ -14,7 +14,6 @@
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-@property (nonatomic) BOOL paused;
 
 @end
 
@@ -56,7 +55,9 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
     if (self.configureCellHeaderBlock) {
-        self.configureCellHeaderBlock(supplementaryView, (self.items.count>0)?self.items[indexPath.section]:nil);
+        id<NSFetchedResultsSectionInfo>  section = self.fetchedResultsController.sections[indexPath.section];
+        NSString *title = [section name];
+        self.configureCellHeaderBlock(supplementaryView, title);
     }
     return supplementaryView;
 }
@@ -85,23 +86,29 @@
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath
 {
-    NSLog(@"Controller did change object");
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type)
     {
         case NSFetchedResultsChangeInsert:
+            NSLog(@"Controller did insert object: %@", newIndexPath);
             change[@(type)] = newIndexPath;
             break;
         case NSFetchedResultsChangeDelete:
+            NSLog(@"Controller did delete object %@", newIndexPath);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
+            NSLog(@"Controller did update object %@", newIndexPath);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
+            NSLog(@"Controller did move object %@", newIndexPath);
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
+    NSString *entity = [[((NSManagedObject *)anObject) entity] name];
+    if ([entity isEqualToString:@"PBXAlbum"]) NSLog(@"New object = %@", [anObject valueForKey:@"name"]);
+    else if ([entity isEqualToString:@"PBXPhoto"]) NSLog(@"New object = %@", [anObject valueForKey:@"photoId"]);
     [_objectChanges addObject:change];
 }
 

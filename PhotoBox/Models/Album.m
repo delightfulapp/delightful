@@ -69,9 +69,6 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 + (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
     NSString *keyType = [[self class] propertyTypeStringForPropertyName:key];
     if ([keyType isEqualToString:@"NSNumber"]) {
-        if ([key isEqualToString:@"totalRows"]) {
-            NSLog(@"Total row key found");
-        }
         return [[self class] toNumberTransformer];
     } else if ([keyType isEqualToString:@"NSString"]) {
         return [[self class] toStringTransformer];

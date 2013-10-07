@@ -12,6 +12,7 @@
 
 #import "PhotoBoxCell.h"
 #import "PhotoBoxModel.h"
+#import "Photo.h"
 
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
@@ -97,6 +98,9 @@
     self.dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
     [self.dataSource setFetchedResultsController:self.fetchedResultsController];
     [self setupDataSourceConfigureBlock];
+    [self.dataSource setCellIdentifier:self.cellIdentifier];
+    [self.dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
+    [self.dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
     if (self.items) {
         [self.dataSource setItems:self.items];
     }
@@ -129,8 +133,21 @@
     if (!_fetchRequest) {
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
         [_fetchRequest setSortDescriptors:self.sortDescriptors];
+        if (self.predicate) {
+            [_fetchRequest setPredicate:self.predicate];
+        }
     }
     return _fetchRequest;
+}
+
+- (NSPredicate *)predicate {
+    if (self.item) {
+        if (!_predicate) {
+            _predicate = [NSPredicate predicateWithFormat:@"ANY %K = %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], self.item.itemId];
+        }
+        return _predicate;
+    }
+    return nil;
 }
 
 - (PhotoBoxFetchedResultsController *)fetchedResultsController {
@@ -146,11 +163,14 @@
 }
 
 - (int)pageSize {
-    int size = 20;
-    if (self.items.count > 0) {
-        size = self.items.count;
+    if (self.page == 1) {
+        int size = 20;
+        if ([self.dataSource numberOfItems] > 0) {
+            size = [self.dataSource numberOfItems];
+        }
+        return size;
     }
-    return size;
+    return 20;
 }
 
 #pragma mark - Setter
@@ -188,6 +208,7 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
+                                               NSLog(@"Received %d objects", ((NSArray *)objects).count);
                                                [self processPaginationFromObjects:objects];
                                                
                                                self.isFetching = NO;
@@ -208,7 +229,7 @@
 
 - (void)fetchMore {
     if (!self.isFetching) {
-        int count = self.items.count;
+        int count = [self.dataSource numberOfItems];
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;

@@ -19,15 +19,17 @@
 @implementation PhotoBoxFetchedResultsController
 
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath {
-    id object = [self.mantleItems objectForKey:indexPath];
+    NSManagedObject *managedObject = [super objectAtIndexPath:indexPath];
+    
+    id object = [self.mantleItems objectForKey:managedObject];
     if (!object) {
-        id managedObject = [super objectAtIndexPath:indexPath];
+        
         NSError *error;
         object = [MTLManagedObjectAdapter modelOfClass:self.objectClass fromManagedObject:managedObject error:&error];
         if (error) {
             NSLog(@"Error: %@", error);
         }
-        [self.mantleItems setObject:object forKey:indexPath];
+        [self.mantleItems setObject:object forKey:managedObject];
     }
     return object;
 }

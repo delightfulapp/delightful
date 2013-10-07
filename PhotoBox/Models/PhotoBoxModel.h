@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import <MTLModel.h>
-
 @interface PhotoBoxModel : MTLModel <MTLJSONSerializing, MTLManagedObjectSerializing>
 
 

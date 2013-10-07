@@ -53,27 +53,16 @@
     [NPRImageView cancelAllOperations];
 }
 
-- (void)setupDataSource {
-    PhotosViewControllerDataSource *dataSource = [[PhotosViewControllerDataSource alloc] init];
-    [dataSource setGroupKey:[self groupKey]];
-    [dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
-    [dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
-    self.dataSource = dataSource;
-    [self.dataSource setCellIdentifier:[self cellIdentifier]];
-    [self.collectionView setDataSource:self.dataSource];
-    
-    [self setupDataSourceConfigureBlock];
-}
 
 - (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
-        [cell.titleLabel setText:[item objectForKey:[self groupKey]]];
-        NSIndexPath *indexPath = (NSIndexPath *)[item objectForKey:@"indexPath"];
-        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
-            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
-        } else {
-            [cell.locationLabel setText:nil];
-        }
+        [cell.titleLabel setText:item];
+//        NSIndexPath *indexPath = (NSIndexPath *)[item objectForKey:@"indexPath"];
+//        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
+//            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
+//        } else {
+//            [cell.locationLabel setText:nil];
+//        }
     };
     return configureCell;
 }
@@ -100,8 +89,20 @@
     return PhotoResource;
 }
 
+- (Class)resourceClass {
+    return [Photo class];
+}
+
 - (NSString *)resourceId {
     return self.item.itemId;
+}
+
+- (NSString *)relationshipKeyPathWithItem {
+    return @"albums.albumId";
+}
+
+- (NSArray *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:NO]];
 }
 
 - (void)didFetchItems {
@@ -184,6 +185,7 @@
 #pragma mark - Location
 
 - (void)getLocationForEachSection {
+    return;
     if (!self.locationDictionary) {
         self.locationDictionary = [NSMutableDictionary dictionary];
     }

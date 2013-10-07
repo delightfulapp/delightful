@@ -21,7 +21,7 @@
 
 - (PhotoBoxImage *)originalImage {
     if (!_originalImage) {
-        _originalImage = [[PhotoBoxImage alloc] initWithArray:@[self.pathOriginal.absoluteString, self.width, self.height]];
+        _originalImage = [[PhotoBoxImage alloc] initWithArray:@[(self.pathOriginal)?self.pathOriginal.absoluteString:@"", self.width, self.height]];
     }
     return _originalImage;
 }
@@ -39,7 +39,8 @@
 }
 
 - (NSString *)dateTakenString {
-    return [NSString stringWithFormat:@"%d-%02d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue], [self.dateTakenDay intValue]];
+    NSString *toReturn = [NSString stringWithFormat:@"%d-%02d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue], [self.dateTakenDay intValue]];
+    return toReturn;
 }
 
 - (NSString *)dateMonthYearTakenString {
@@ -49,7 +50,7 @@
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"photoId": @"id",@"photoHash":@"hash",@"photoDescription":@"description",@"dateTakenString":NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"photoId": @"id",@"photoHash":@"hash",@"photoDescription":@"description", @"dateMonthYearTakenString":NSNull.null}];
 }
 
 + (NSValueTransformer *)timestampJSONTransformer {
@@ -126,6 +127,12 @@
     return nil;
 }
 
+- (NSDictionary *)dictionaryValue {
+    NSMutableDictionary *dict = [[super dictionaryValue] mutableCopy];
+    [dict setObject:[self dateTakenString] forKey:@"dateTakenString"];
+    return dict;
+}
+
 #pragma mark - Managed object serialization
 
 + (NSString *)managedObjectEntityName {
@@ -133,7 +140,7 @@
 }
 
 + (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateTakenString": NSNull.null, @"dateMonthYearTakenString":NSNull.null}];
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateMonthYearTakenString":NSNull.null, @"dateTakenString":@"dateTakenString"}];
 }
 
 + (NSSet *)propertyKeysForManagedObjectUniquing {
@@ -149,6 +156,16 @@
 
 + (NSDictionary *)relationshipModelClassesByPropertyKey {
     return @{@"albums": Album.class, @"tags": Tag.class, @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
+}
+
+- (BOOL)validateValue:(inout __autoreleasing id *)ioValue forKey:(NSString *)inKey error:(out NSError *__autoreleasing *)outError {
+    if ([inKey hasPrefix:@"date"]) {
+        if (!ioValue) {
+            return NO;
+        }
+        return YES;
+    }
+    return YES;
 }
 
 @end

@@ -28,6 +28,10 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) NSString *resourceId;
 @property (nonatomic, strong) NSString *groupKey;
 @property (nonatomic, strong) NSArray *sortDescriptors;
+@property (nonatomic, strong) NSPredicate *predicate;
+@property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
+@property (nonatomic, strong, readonly) NSString *cellIdentifier;
+@property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) NSArray *items;
@@ -50,6 +54,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)refresh;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
+- (CollectionViewCellConfigureBlock)headerCellConfigureBlock;
 - (void)didFetchItems;
 - (void)setupDataSource;
 - (void)setupDataSourceConfigureBlock;
