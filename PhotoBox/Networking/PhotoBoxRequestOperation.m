@@ -48,7 +48,7 @@
     NSError *error;
     if ([responseObject isKindOfClass:[NSArray class]]) {
         for (id obj in responseObject) {
-            NSManagedObject *managedObject = [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
+            [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
         }
     } else {
         [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
