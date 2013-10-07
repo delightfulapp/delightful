@@ -27,6 +27,8 @@
 
 @implementation PhotoBoxViewController
 
+@synthesize pageSize = _pageSize;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -143,7 +145,7 @@
 - (NSPredicate *)predicate {
     if (self.item) {
         if (!_predicate) {
-            _predicate = [NSPredicate predicateWithFormat:@"ANY %K = %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], self.item.itemId];
+            _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], self.item.itemId];
         }
         return _predicate;
     }
@@ -164,13 +166,12 @@
 
 - (int)pageSize {
     if (self.page == 1) {
-        int size = 20;
-        if ([self.dataSource numberOfItems] > 0) {
-            size = [self.dataSource numberOfItems];
+        _pageSize = 20;
+        if (self.fetchedResultsController.fetchedObjects.count > 0) {
+            _pageSize = self.fetchedResultsController.fetchedObjects.count;
         }
-        return size;
     }
-    return 20;
+    return _pageSize;
 }
 
 #pragma mark - Setter
@@ -267,8 +268,10 @@
     if (self.page==1) {
         if (show) {
             [self.refreshControl beginRefreshing];
+            [self.refreshControl setHidden:NO];
         } else {
             [self.refreshControl endRefreshing];
+            [self.collectionView.collectionViewLayout invalidateLayout];
         }
     } else {
         [self showLoadingView:show atBottomOfScrollView:YES];

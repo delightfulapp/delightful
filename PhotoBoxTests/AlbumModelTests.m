@@ -53,7 +53,7 @@
     NSManagedObject *albumManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:testAlbum insertingIntoContext:[NSManagedObjectContext mainContext] error:&error];
     XCTAssert(albumManagedObject != nil, @"Album managed object should not be nil");
     XCTAssert([[albumManagedObject valueForKey:@"albumId"] isEqualToString:[albumDict objectForKey:@"id"]], @"Expected album id = %@. Actual = %@", albumDict[@"id"], [albumManagedObject valueForKey:@"albumId"]);
-   
+    XCTAssert([[albumManagedObject valueForKey:@"coverURL"] isEqualToString:testAlbum.coverURL.absoluteString], @"Expected cover url = %@. Actual = %@", testAlbum.coverURL.absoluteString, [albumManagedObject valueForKey:@"coverURL"]);
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     fetchRequest.entity = [NSEntityDescription entityForName:@"PBXAlbum" inManagedObjectContext:[NSManagedObjectContext mainContext]];

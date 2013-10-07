@@ -106,15 +106,14 @@
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
-    NSString *entity = [[((NSManagedObject *)anObject) entity] name];
-    if ([entity isEqualToString:@"PBXAlbum"]) NSLog(@"New object = %@", [anObject valueForKey:@"name"]);
-    else if ([entity isEqualToString:@"PBXPhoto"]) NSLog(@"New object = %@", [anObject valueForKey:@"photoId"]);
     [_objectChanges addObject:change];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     NSLog(@"Controller did change content");
+    [self.collectionView reloadData];
+    return;
     if ([_sectionChanges count] > 0)
     {
         [self.collectionView performBatchUpdates:^{
@@ -246,6 +245,7 @@
     _paused = paused;
     if (paused) {
         self.fetchedResultsController.delegate = nil;
+        NSLog(@"Stopping fcr delegate");
     } else {
         self.fetchedResultsController.delegate = self;
         [self.fetchedResultsController performFetch:NULL];

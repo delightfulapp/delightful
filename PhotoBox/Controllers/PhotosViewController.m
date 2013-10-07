@@ -98,11 +98,11 @@
 }
 
 - (NSString *)relationshipKeyPathWithItem {
-    return @"albums.albumId";
+    return @"albums";
 }
 
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:NO]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:YES]];
 }
 
 - (void)didFetchItems {

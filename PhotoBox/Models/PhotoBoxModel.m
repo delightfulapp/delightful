@@ -105,6 +105,10 @@
 }
 
 + (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
+    NSValueTransformer *transformer = [self JSONTransformerForKey:key];
+    if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
+        return [transformer mtl_invertedTransformer];
+    }
     return [self JSONTransformerForKey:key];
 }
 
