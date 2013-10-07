@@ -115,8 +115,8 @@
         NSManagedObject *photoObject = results[0];
         XCTAssert(photoObject!=nil, @"Photo managed object should not be nil");
         XCTAssert([[photoObject valueForKey:@"photoId"] isEqualToString:@"bd"], @"Expected photoId from managed object = bd. Actual = %@", [photoObject valueForKey:@"photoId"]);
-        NSArray *albums = [photoObject valueForKey:@"albums"];
-        XCTAssert(albums.count== ((NSArray *)photoJSON[@"albums"]).count, @"Expected %d. Actual %d", ((NSArray *)photoJSON[@"albums"]).count, albums.count);
+        NSString *albumsString = [photoObject valueForKey:@"albums"];
+        XCTAssert([albumsString isEqualToString:[((NSArray *)photoJSON[@"albums"]) componentsJoinedByString:@"||"]], @"Expected %@. Actual %@", [((NSArray *)photoJSON[@"albums"]) componentsJoinedByString:@"||"], albumsString);
     }
     
     // verify

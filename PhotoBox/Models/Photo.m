@@ -50,7 +50,12 @@
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"photoId": @"id",@"photoHash":@"hash",@"photoDescription":@"description", @"dateMonthYearTakenString":NSNull.null}];
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{
+                                                                            @"photoId": @"id",
+                                                                            @"photoHash":@"hash",
+                                                                            @"photoDescription":@"description",
+                                                                            @"dateMonthYearTakenString":NSNull.null
+                                                                            }];
 }
 
 + (NSValueTransformer *)timestampJSONTransformer {
@@ -68,14 +73,6 @@
     }];
 }
 
-+ (NSValueTransformer *)urlJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
-}
-
-+ (NSValueTransformer *)pathOriginalJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
-}
-
 + (NSValueTransformer *)photo200x200xCRJSONTransformer {
     return [[self class] photoImageTransformer];
 }
@@ -90,41 +87,6 @@
     } reverseBlock:^(PhotoBoxImage *image) {
         return [image toArray];
     }];
-}
-
-+ (NSValueTransformer *)tagsJSONTransformer {
-    return [[self class] transformerForClass:[Tag class]];
-}
-
-+ (NSValueTransformer *)albumsJSONTransformer {
-    return [[self class] transformerForClass:[Album class]];
-}
-
-
-+ (MTLValueTransformer *)transformerForClass:(Class)class {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSArray *items){
-        NSMutableArray *itemObjects = [NSMutableArray arrayWithCapacity:items.count];
-        for (NSString *item in items) {
-            [itemObjects addObject:[[class alloc] initWithItemId:item]];
-        }
-        return itemObjects;
-    } reverseBlock:^(NSArray *itemsObjects) {
-        NSMutableArray *items = [NSMutableArray arrayWithCapacity:itemsObjects.count];
-        for (PhotoBoxModel *item in itemsObjects) {
-            [items addObject:item.itemId];
-        }
-        return items;
-    }];
-}
-
-+ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
-    NSString *keyType = [[self class] propertyTypeStringForPropertyName:key];
-    if ([keyType isEqualToString:@"NSNumber"]) {
-        return [[self class] toNumberTransformer];
-    } else if ([keyType isEqualToString:@"NSString"]) {
-        return [[self class] toStringTransformer];
-    }
-    return nil;
 }
 
 - (NSDictionary *)dictionaryValue {
@@ -148,14 +110,20 @@
 }
 
 + (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
-    if ([key isEqualToString:@"url"] || [key isEqualToString:@"pathOriginal"]) {
+    if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
         return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+    } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
+        return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
+            return [arrays componentsJoinedByString:@"||"];
+        } reverseBlock:^id(NSString *stringArray) {
+            return [stringArray componentsSeparatedByString:@"||"];
+        }];
     }
     return nil;
 }
 
 + (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{@"albums": Album.class, @"tags": Tag.class, @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
+    return @{ @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
 }
 
 @end

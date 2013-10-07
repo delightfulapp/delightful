@@ -10,8 +10,6 @@
 
 #import "Photo.h"
 
-#import "NSObject+Additionals.h"
-
 NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 
 @implementation Album
@@ -22,10 +20,6 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
         _albumId = itemId;
     }
     return self;
-}
-
-- (NSURL *)albumCover:(AlbumCoverType)coverType {
-    return [NSURL URLWithString:self.cover.thumbnailImage.urlString];
 }
 
 - (NSString *)itemId {
@@ -45,35 +39,9 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 #pragma mark - Mantle
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id"}];
-}
-
-+ (NSValueTransformer *)coverJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSDictionary *JSONDictionary){
-        NSMutableDictionary *dictionary = [JSONDictionary mutableCopy];
-        [dictionary removeObjectForKey:@"albums"];
-        [dictionary removeObjectForKey:@"tags"];
-        return [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:dictionary error:NULL];
-    } reverseBlock:^id(id model) {
-        if (model==nil) {
-            return nil;
-        }
-        return [MTLJSONAdapter JSONDictionaryFromModel:model];
-    }];
-}
-
-+ (NSValueTransformer *)countJSONTransformer {
-    return [[self class] toNumberTransformer];
-}
-
-+ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
-    NSString *keyType = [[self class] propertyTypeStringForPropertyName:key];
-    if ([keyType isEqualToString:@"NSNumber"]) {
-        return [[self class] toNumberTransformer];
-    } else if ([keyType isEqualToString:@"NSString"]) {
-        return [[self class] toStringTransformer];
-    }
-    return nil;
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id",
+                                                                            @"coverId":@"cover.id",
+                                                                            @"coverURL":@"cover.path200x200xCR"}];
 }
 
 #pragma mark - Managed object serialization
@@ -88,10 +56,6 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 
 + (NSSet *)propertyKeysForManagedObjectUniquing {
     return [NSSet setWithObject:@"albumId"];
-}
-
-+ (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{@"cover": Photo.class, @"photos":Photo.class};
 }
 
 @end

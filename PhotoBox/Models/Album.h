@@ -27,11 +27,9 @@ extern NSString *PBX_allAlbumIdentifier;
 @property (nonatomic, copy, readonly) NSNumber *count;
 @property (nonatomic, copy, readonly) NSString *albumId;
 @property (nonatomic, copy, readonly) NSString *name;
-@property (nonatomic, copy, readonly) Photo *cover;
-
-@property (nonatomic, copy, readonly) NSArray *photos;
-
-- (NSURL *)albumCover:(AlbumCoverType)coverType;
+@property (nonatomic, copy, readonly) NSString *coverFilenameOriginal;
+@property (nonatomic, copy, readonly) NSString *coverId;
+@property (nonatomic, copy, readonly) NSURL *coverURL;
 
 + (Album *)allPhotosAlbum;
 

@@ -11,6 +11,8 @@
 #import "Album.h"
 #import "Photo.h"
 
+#import "NSObject+Additionals.h"
+
 @implementation PhotoBoxModel
 
 + (Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary {
@@ -70,6 +72,18 @@
     }];
 }
 
++ (NSValueTransformer *)JSONTransformerForKey:(NSString *)key {
+    NSString *keyType = [[self class] propertyTypeStringForPropertyName:key];
+    if ([keyType isEqualToString:@"NSNumber"]) {
+        return [[self class] toNumberTransformer];
+    } else if ([keyType isEqualToString:@"NSString"]) {
+        return [[self class] toStringTransformer];
+    } else if ([keyType isEqualToString:@"NSURL"]) {
+        return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+    }
+    return nil;
+}
+
 #pragma mark - Managed object serialization
 
 + (NSDictionary *)managedObjectKeysByPropertyKey {
@@ -88,6 +102,10 @@
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:[PhotoBoxModel JSONKeyPathsByPropertyKey]];
     if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
     return mutableDict;
+}
+
++ (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
+    return [self JSONTransformerForKey:key];
 }
 
 
