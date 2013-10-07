@@ -158,14 +158,4 @@
     return @{@"albums": Album.class, @"tags": Tag.class, @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
 }
 
-- (BOOL)validateValue:(inout __autoreleasing id *)ioValue forKey:(NSString *)inKey error:(out NSError *__autoreleasing *)outError {
-    if ([inKey hasPrefix:@"date"]) {
-        if (!ioValue) {
-            return NO;
-        }
-        return YES;
-    }
-    return YES;
-}
-
 @end
