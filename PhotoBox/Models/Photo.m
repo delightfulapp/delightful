@@ -89,6 +89,7 @@
     }];
 }
 
+// NOTE: override MTLModel's dictionaryValue to include dateTakenString in managed object serialization. By default, dateTakenString is not serialized because the isa is nil.
 - (NSDictionary *)dictionaryValue {
     NSMutableDictionary *dict = [[super dictionaryValue] mutableCopy];
     [dict setObject:[self dateTakenString] forKey:@"dateTakenString"];
