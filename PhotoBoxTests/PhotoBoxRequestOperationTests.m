@@ -13,6 +13,7 @@
 
 #import "PhotoBoxRequestOperation.h"
 #import "Photo.h"
+#import "NSArray+Additionals.h"
 #import <OCMock.h>
 
 @interface PhotoBoxRequestOperationTests : XCTestCase {
@@ -32,7 +33,9 @@
 {
     [super setUp];
     // Put setup code here; it will be run once, before the first test case.
-    [NSPersistentStoreCoordinator clearPersistentStore];
+    if ([NSPersistentStoreCoordinator persistentStoreCoordinator]) {
+        [NSPersistentStoreCoordinator clearPersistentStore];
+    }
     
     // mock objects
     mockRequest = [OCMockObject mockForClass:[NSURLRequest class]];
@@ -116,7 +119,8 @@
         XCTAssert(photoObject!=nil, @"Photo managed object should not be nil");
         XCTAssert([[photoObject valueForKey:@"photoId"] isEqualToString:@"bd"], @"Expected photoId from managed object = bd. Actual = %@", [photoObject valueForKey:@"photoId"]);
         NSString *albumsString = [photoObject valueForKey:@"albums"];
-        XCTAssert([albumsString isEqualToString:[((NSArray *)photoJSON[@"albums"]) componentsJoinedByString:@"||"]], @"Expected %@. Actual %@", [((NSArray *)photoJSON[@"albums"]) componentsJoinedByString:@"||"], albumsString);
+        NSString *expectedAlbumsString = [((NSArray *)photoJSON[@"albums"]) photoBoxArrayString];
+        XCTAssert([albumsString isEqualToString:expectedAlbumsString], @"Expected %@. Actual %@", expectedAlbumsString, albumsString);
     }
     
     // verify

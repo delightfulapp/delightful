@@ -11,6 +11,7 @@
 #import "Album.h"
 
 #import "NSObject+Additionals.h"
+#import "NSArray+Additionals.h"
 
 @implementation Photo
 
@@ -115,8 +116,7 @@
         return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
     } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
         return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
-            NSString *albumsString = [arrays componentsJoinedByString:ARRAY_SEPARATOR];
-            return [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, albumsString, ARRAY_SEPARATOR];
+            return [arrays photoBoxArrayString];
         } reverseBlock:^id(NSString *stringArray) {
             return [[stringArray stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:ARRAY_SEPARATOR]] componentsSeparatedByString:ARRAY_SEPARATOR];
         }];

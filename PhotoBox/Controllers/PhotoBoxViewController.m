@@ -16,6 +16,7 @@
 
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
+#import "NSArray+Additionals.h"
 
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout> {
     CGFloat lastOffset;

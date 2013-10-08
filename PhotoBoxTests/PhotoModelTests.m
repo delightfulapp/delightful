@@ -12,6 +12,8 @@
 #import "Album.h"
 #import "Tag.h"
 
+#import "NSArray+Additionals.h"
+
 #import "XCTestCase+Additionals.h"
 
 @interface PhotoModelTests : XCTestCase
@@ -23,7 +25,9 @@
 - (void)setUp
 {
     [super setUp];
-    [NSPersistentStoreCoordinator clearPersistentStore];
+    if ([NSPersistentStoreCoordinator persistentStoreCoordinator]) {
+        [NSPersistentStoreCoordinator clearPersistentStore];
+    }
 }
 
 - (void)tearDown
@@ -55,7 +59,7 @@
     XCTAssert([[photoManagedObject valueForKey:@"photoId"] isEqualToString:[photoDictionary objectForKey:@"id"]], @"Expected photo id = %@. Actual = %@", photoDictionary[@"id"], [photoManagedObject valueForKey:@"photoId"]);
     XCTAssert([photoManagedObject valueForKey:@"dateTakenString"]!=nil, @"Date taken string should not be nil");
     NSArray *albums = [photoDictionary objectForKey:@"albums"];
-    NSString *albumsString = [albums componentsJoinedByString:@"||"];
+    NSString *albumsString = [albums photoBoxArrayString];
     XCTAssert([[photoManagedObject valueForKey:@"albums"] isEqualToString:albumsString], @"Expected albums string = %@. Actual = %@.", albumsString, [photoManagedObject valueForKey:@"albums"]);
 }
 

@@ -13,8 +13,6 @@
 
 #import "LocationManager.h"
 
-#import "PhotosViewControllerDataSource.h"
-
 #import "PhotosSectionHeaderView.h"
 #import "PhotoBoxCell.h"
 

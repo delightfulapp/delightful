@@ -57,7 +57,6 @@
 		035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A117D1F91000E196D7 /* AlbumTitleView.m */; };
 		035846A817D2021100E196D7 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A717D2021100E196D7 /* PhotosViewController.m */; };
 		035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846AA17D20B8100E196D7 /* PhotoCell.m */; };
-		035846AE17D22D4400E196D7 /* PhotosViewControllerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846AD17D22D4400E196D7 /* PhotosViewControllerDataSource.m */; };
 		035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B017D2312500E196D7 /* NSArray+Additionals.m */; };
 		035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */; };
 		035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
@@ -178,8 +177,6 @@
 		035846A717D2021100E196D7 /* PhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosViewController.m; path = PhotoBox/Controllers/PhotosViewController.m; sourceTree = "<group>"; };
 		035846A917D20B8100E196D7 /* PhotoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoCell.h; path = PhotoBox/Cells/PhotoCell.h; sourceTree = "<group>"; };
 		035846AA17D20B8100E196D7 /* PhotoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoCell.m; path = PhotoBox/Cells/PhotoCell.m; sourceTree = "<group>"; };
-		035846AC17D22D4400E196D7 /* PhotosViewControllerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosViewControllerDataSource.h; sourceTree = "<group>"; };
-		035846AD17D22D4400E196D7 /* PhotosViewControllerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerDataSource.m; sourceTree = "<group>"; };
 		035846AF17D2312500E196D7 /* NSArray+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Additionals.h"; sourceTree = "<group>"; };
 		035846B017D2312500E196D7 /* NSArray+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Additionals.m"; sourceTree = "<group>"; };
 		035846B217D2339200E196D7 /* NSArray+AdditionalTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+AdditionalTests.m"; sourceTree = "<group>"; };
@@ -464,8 +461,6 @@
 			children = (
 				0358468117D1C0E800E196D7 /* CollectionViewDataSource.h */,
 				0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */,
-				035846AC17D22D4400E196D7 /* PhotosViewControllerDataSource.h */,
-				035846AD17D22D4400E196D7 /* PhotosViewControllerDataSource.m */,
 				03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */,
 				03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */,
 			);
@@ -726,7 +721,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				035846AE17D22D4400E196D7 /* PhotosViewControllerDataSource.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
