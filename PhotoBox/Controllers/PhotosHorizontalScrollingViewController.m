@@ -129,6 +129,18 @@
     return self.item.itemId;
 }
 
+- (NSString *)relationshipKeyPathWithItem {
+    return @"albums";
+}
+
+- (NSArray *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:YES]];
+}
+
+- (Class)resourceClass {
+    return [Photo class];
+}
+
 
 #pragma mark - Scroll View
 

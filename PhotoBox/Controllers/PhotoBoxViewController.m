@@ -132,6 +132,10 @@
     return configureCell;
 }
 
+- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
+    return nil;
+}
+
 - (NSFetchRequest *)fetchRequest {
     if (!_fetchRequest) {
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
