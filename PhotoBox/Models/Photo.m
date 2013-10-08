@@ -115,9 +115,10 @@
         return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
     } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
         return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
-            return [arrays componentsJoinedByString:@"||"];
+            NSString *albumsString = [arrays componentsJoinedByString:ARRAY_SEPARATOR];
+            return [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, albumsString, ARRAY_SEPARATOR];
         } reverseBlock:^id(NSString *stringArray) {
-            return [stringArray componentsSeparatedByString:@"||"];
+            return [[stringArray stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:ARRAY_SEPARATOR]] componentsSeparatedByString:ARRAY_SEPARATOR];
         }];
     }
     return nil;
