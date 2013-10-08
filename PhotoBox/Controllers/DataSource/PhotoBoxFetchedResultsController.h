@@ -10,6 +10,7 @@
 
 @interface PhotoBoxFetchedResultsController : NSFetchedResultsController
 
+@property (nonatomic, strong) NSString *itemKey;
 @property (nonatomic, assign) Class objectClass;
 @property (nonatomic, strong) NSCache *mantleItemsCache;
 

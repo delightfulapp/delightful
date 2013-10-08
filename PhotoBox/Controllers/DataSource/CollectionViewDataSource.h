@@ -13,7 +13,6 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 
 @interface CollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
-@property (nonatomic, copy) NSArray *items;
 @property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellBlock;
 @property (nonatomic, strong) NSString *sectionHeaderIdentifier;
@@ -24,6 +23,7 @@ typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath *)indexPathOfItem:(id)item;
+- (NSInteger)positionOfItem:(id)item;
 - (NSInteger)numberOfItems;
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView;

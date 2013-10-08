@@ -29,12 +29,12 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) NSString *groupKey;
 @property (nonatomic, strong) NSArray *sortDescriptors;
 @property (nonatomic, strong) NSPredicate *predicate;
+@property (nonatomic, strong) NSString *displayedItemIdKey;
 @property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
 @property (nonatomic, strong, readonly) NSString *cellIdentifier;
 @property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSArray *items;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isFetching;
 @property (nonatomic, assign) int numberOfColumns;

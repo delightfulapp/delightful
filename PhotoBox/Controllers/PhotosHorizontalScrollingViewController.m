@@ -94,11 +94,7 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    NSAssert(self.items!=nil, @"Items should not be nil here");
-    int index = [self.items indexOfObject:self.firstShownPhoto];
-    if (index != NSNotFound) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
-    }
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -192,7 +188,7 @@
     if (self.previousPage != page) {
         self.previousPage = page;
         [self showViewOriginalButtonForPage:page];
-        Photo *photo = (Photo *)[self.items objectAtIndex:page];
+        Photo *photo = (Photo *)[self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];

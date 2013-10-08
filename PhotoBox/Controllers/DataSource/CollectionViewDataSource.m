@@ -231,6 +231,23 @@
     return count;
 }
 
+- (NSIndexPath *)indexPathOfItem:(id)item {
+    return [self.fetchedResultsController indexPathForObject:item];
+}
+
+- (NSInteger)positionOfItem:(id)item {
+    NSIndexPath *indexPath = [self indexPathOfItem:item];
+    NSInteger position = 0;
+    for (int i=0; i<indexPath.section+1; i++) {
+        if (i==indexPath.section) {
+            position += indexPath.item;
+        } else {
+            position += [self collectionView:self.collectionView numberOfItemsInSection:i];
+        }
+    }
+    return position;
+}
+
 #pragma mark - Setters
 
 - (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController

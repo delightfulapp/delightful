@@ -104,9 +104,6 @@
     [self.dataSource setCellIdentifier:self.cellIdentifier];
     [self.dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
     [self.dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
-    if (self.items) {
-        [self.dataSource setItems:self.items];
-    }
 }
 
 - (void)setupDataSourceConfigureBlock {
@@ -161,8 +158,14 @@
     if (!_fetchedResultsController) {
         _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
         [_fetchedResultsController setObjectClass:self.resourceClass];
+        [_fetchedResultsController setItemKey:self.displayedItemIdKey];
     }
     return _fetchedResultsController;
+}
+
+- (NSString *)displayedItemIdKey {
+    NSString *itemClassName = [NSStringFromClass([self resourceClass]) lowercaseString];
+    return [NSString stringWithFormat:@"%@Id", itemClassName];
 }
 
 - (NSArray *)items {

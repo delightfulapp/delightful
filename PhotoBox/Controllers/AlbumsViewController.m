@@ -56,7 +56,7 @@
 }
 
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"albumId" ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:[self displayedItemIdKey] ascending:YES]];
 }
 
 - (ResourceType)resourceType {
@@ -68,7 +68,7 @@
 }
 
 - (void)didFetchItems {
-    int count = self.items.count;
+    int count = [self.dataSource numberOfItems];
     [self setAlbumsCount:count max:self.totalItems];
 }
 
@@ -133,7 +133,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:{
-            self.items = [NSMutableArray array];
+            [NSPersistentStoreCoordinator clearPersistentStore];
             [self.collectionView reloadData];
             [[ConnectionManager sharedManager] logout];
             break;
