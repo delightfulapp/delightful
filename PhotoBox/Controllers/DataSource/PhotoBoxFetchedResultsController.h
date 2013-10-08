@@ -11,5 +11,6 @@
 @interface PhotoBoxFetchedResultsController : NSFetchedResultsController
 
 @property (nonatomic, assign) Class objectClass;
+@property (nonatomic, strong) NSCache *mantleItemsCache;
 
 @end

@@ -106,6 +106,7 @@
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
+    [self.fetchedResultsController.mantleItemsCache removeObjectForKey:anObject];
     [_objectChanges addObject:change];
 }
 

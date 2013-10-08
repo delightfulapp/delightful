@@ -12,8 +12,6 @@
 
 @interface PhotoBoxFetchedResultsController ()
 
-@property (nonatomic, strong) NSCache *mantleItems;
-
 @end
 
 @implementation PhotoBoxFetchedResultsController
@@ -21,7 +19,7 @@
 - (id)objectAtIndexPath:(NSIndexPath *)indexPath {
     NSManagedObject *managedObject = [super objectAtIndexPath:indexPath];
     
-    id object = [self.mantleItems objectForKey:managedObject];
+    id object = [self.mantleItemsCache objectForKey:managedObject];
     if (!object) {
         
         NSError *error;
@@ -29,16 +27,16 @@
         if (error) {
             NSLog(@"Error: %@", error);
         }
-        [self.mantleItems setObject:object forKey:managedObject];
+        [self.mantleItemsCache setObject:object forKey:managedObject];
     }
     return object;
 }
 
-- (NSCache *)mantleItems {
-    if (!_mantleItems) {
-        _mantleItems = [[NSCache alloc] init];
+- (NSCache *)mantleItemsCache {
+    if (!_mantleItemsCache) {
+        _mantleItemsCache = [[NSCache alloc] init];
     }
-    return _mantleItems;
+    return _mantleItemsCache;
 }
 
 @end
