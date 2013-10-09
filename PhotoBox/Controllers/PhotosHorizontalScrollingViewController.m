@@ -230,8 +230,13 @@
 
 #pragma mark - Custom Animation Transition Delegate
 
+- (PhotoZoomableCell *)currentCell {
+    NSInteger page = [self currentCollectionViewPage:self.collectionView];
+    return (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+}
+
 - (UIView *)viewToAnimate {
-    return self.navigationController.view;
+    return [self currentCell].thisImageview;
 }
 
 - (UIImage *)imageToAnimate {
@@ -239,7 +244,8 @@
 }
 
 - (CGRect)startRectInContainerView:(UIView *)view {
-    return CGRectInset(view.frame, 0, (CGRectGetHeight(view.frame)-CGRectGetWidth(view.frame))/2);
+    PhotoZoomableCell *cell = [self currentCell];
+    return cell.thisImageview.frame;
 }
 
 - (CGRect)endRectInContainerView:(UIView *)view {
