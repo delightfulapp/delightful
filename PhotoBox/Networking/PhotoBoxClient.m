@@ -65,6 +65,13 @@
     return self;
 }
 
+#pragma mark - Setter
+
+- (void)setValue:(id)value forKey:(NSString *)key {
+    [super setValue:value forKey:key];
+    [self.oauthClient setValue:value forKey:key];
+}
+
 #pragma mark - Resource Fetch
 
 - (void)getResource:(ResourceType)type

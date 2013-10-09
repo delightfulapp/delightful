@@ -56,7 +56,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
 - (CollectionViewCellConfigureBlock)headerCellConfigureBlock;
 - (void)didFetchItems;
-- (void)setupDataSource;
 - (void)setupDataSourceConfigureBlock;
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
 @end

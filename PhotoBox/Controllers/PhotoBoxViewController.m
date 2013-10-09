@@ -39,13 +39,10 @@
     }
     self.numberOfColumns = 2;
     
-    self.mainContext = [NSManagedObjectContext mainContext];
-    
     [self setupConnectionManager];
     [self setupCollectionView];
     [self setupRefreshControl];
     [self setupPinchGesture];
-    [self setupDataSource];
     [self setupNavigationItemTitle];
     
     [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
@@ -69,6 +66,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)dealloc {
+    [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
+}
+
 #pragma mark - Setup
 
 - (void)setupConnectionManager {
@@ -79,6 +80,8 @@
                                            oauthToken:nil
                                           oauthSecret:nil];
     }
+    [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:NULL];
+    [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage)) options:0 context:NULL];
 }
 
 - (void)setupCollectionView {
@@ -97,15 +100,6 @@
     [self.collectionView addSubview:self.refreshControl];
 }
 
-- (void)setupDataSource {
-    self.dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
-    [self.dataSource setFetchedResultsController:self.fetchedResultsController];
-    [self setupDataSourceConfigureBlock];
-    [self.dataSource setCellIdentifier:self.cellIdentifier];
-    [self.dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
-    [self.dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
-}
-
 - (void)setupDataSourceConfigureBlock {
     [self.dataSource setConfigureCellBlock:[self cellConfigureBlock]];
 }
@@ -121,6 +115,25 @@
 }
 
 #pragma mark - Getter
+
+- (CollectionViewDataSource *)dataSource {
+    if (!_dataSource) {
+        self.dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
+        [_dataSource setFetchedResultsController:self.fetchedResultsController];
+        [self setupDataSourceConfigureBlock];
+        [_dataSource setCellIdentifier:self.cellIdentifier];
+        [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
+        [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
+    }
+    return _dataSource;
+}
+
+- (NSManagedObjectContext *)mainContext {
+    if (!_mainContext) {
+        _mainContext = [NSManagedObjectContext mainContext];
+    }
+    return _mainContext;
+}
 
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
     void (^configureCell)(PhotoBoxCell*, id) = ^(PhotoBoxCell* cell, id item) {
@@ -354,6 +367,30 @@
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     CGFloat width = (collectionViewWidth/(float)self.numberOfColumns);
     return CGSizeMake(width, width);
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isKindOfClass:[ConnectionManager class]]) {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(isUserLoggedIn))]) {
+            BOOL userLoggedIn = [[ConnectionManager sharedManager] isUserLoggedIn];
+            if (userLoggedIn) {
+                [self fetchResource];
+            } else {
+                self.page = 1;
+                self.fetchedResultsController = nil;
+                self.fetchRequest = nil;
+                self.predicate = nil;
+                self.mainContext = nil;
+                self.dataSource = nil;
+            }
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {
+            if ([[ConnectionManager sharedManager] isShowingLoginPage]) {
+                self.isFetching = NO;
+            }
+        }
+    }
 }
 
 @end
