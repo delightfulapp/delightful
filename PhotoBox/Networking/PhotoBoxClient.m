@@ -185,7 +185,7 @@ NSString *stringWithActionType(ActionType input) {
 }
 
 - (NSString *)photoSizesString {
-    NSArray *sizes = @[@"200x200xCR",
+    NSArray *sizes = @[@"200x200",
                        @"640x640"
                        ];
     return AFQueryStringFromParametersWithEncoding(@{@"returnSizes": [sizes componentsJoinedByString:@","]}, NSUTF8StringEncoding);

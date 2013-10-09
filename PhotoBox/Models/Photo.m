@@ -28,7 +28,7 @@
 }
 
 - (PhotoBoxImage *)thumbnailImage {
-    return self.photo200x200xCR;
+    return self.photo200x200;
 }
 
 - (PhotoBoxImage *)normalImage {
@@ -74,7 +74,7 @@
     }];
 }
 
-+ (NSValueTransformer *)photo200x200xCRJSONTransformer {
++ (NSValueTransformer *)photo200x200JSONTransformer {
     return [[self class] photoImageTransformer];
 }
 
@@ -125,7 +125,7 @@
 }
 
 + (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{ @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
+    return @{ @"photo200x200":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
 }
 
 @end
