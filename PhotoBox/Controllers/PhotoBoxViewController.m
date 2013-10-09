@@ -142,7 +142,7 @@
     return configureCell;
 }
 
-- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
+- (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     return nil;
 }
 

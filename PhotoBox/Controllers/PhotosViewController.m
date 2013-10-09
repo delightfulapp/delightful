@@ -52,15 +52,14 @@
 }
 
 
-- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
-    void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
+- (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
+    void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
         [cell.titleLabel setText:item];
-//        NSIndexPath *indexPath = (NSIndexPath *)[item objectForKey:@"indexPath"];
-//        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
-//            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
-//        } else {
-//            [cell.locationLabel setText:nil];
-//        }
+        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
+            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
+        } else {
+            [cell.locationLabel setText:nil];
+        }
     };
     return configureCell;
 }
@@ -131,17 +130,6 @@
 
 #pragma mark - Segue
 
-//- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-//    PhotoBoxCell *cell = (PhotoBoxCell *)sender;
-//    NSString *url = cell.cellImageView.imageContentURL.absoluteString;
-//    NSLog(@"imageContentURL = %@.", url);
-//    NSLog(@"is %@downloading image.", ([cell.cellImageView isDownloadingImageAtURLString:url])?@"":@"not ");
-//    NSLog(@"%@image in disk cache.", ([cell.cellImageView.sharedCache imageExistsOnDiskWithKey:url])?@"":@"no ");
-//    
-//    [NPRImageView printOperations];
-//    return NO;
-//}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"pushPhoto"]) {
         PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
@@ -183,32 +171,31 @@
 #pragma mark - Location
 
 - (void)getLocationForEachSection {
-    return;
-//    if (!self.locationDictionary) {
-//        self.locationDictionary = [NSMutableDictionary dictionary];
-//    }
-//    int i = 0;
-//    for (NSDictionary *dict in self.dataSource.items) {
-//        NSArray *members = [dict objectForKey:@"members"];
-//        for (Photo *photo in members) {
-//            
-//            if (photo.latitude && ![photo.latitude isKindOfClass:[NSNull class]] && photo.longitude && ![photo.longitude isKindOfClass:[NSNull class]]) {
-//                CLLocation *location = [[CLLocation alloc] initWithLatitude:[photo.latitude doubleValue] longitude:[photo.longitude doubleValue]];
-//                [self.locationDictionary setObject:location forKey:@(i)];
-//                break;
-//            }
-//        }
-//        i++;
-//    }
-//    
-//    for (NSNumber *section in self.locationDictionary.allKeys) {
-//        CLLocation *location = [self.locationDictionary objectForKey:section];
-//        [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-//            if (!error && placemarks.count > 0) {
-//                [self updateSectionHeader:[section integerValue] placemark:placemarks[0]];
-//            }
-//        }];
-//    }
+    if (!self.locationDictionary) {
+        self.locationDictionary = [NSMutableDictionary dictionary];
+    }
+    int i = 0;
+    for (id<NSFetchedResultsSectionInfo> section in self.dataSource.fetchedResultsController.sections) {
+        for (NSManagedObject *photo in section.objects) {
+            NSNumber *latitude = [photo valueForKey:@"latitude"];
+            NSNumber *longitude = [photo valueForKey:@"longitude"];
+            if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
+                CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+                [self.locationDictionary setObject:location forKey:@(i)];
+                break;
+            }
+        }
+        i++;
+    }
+    
+    for (NSNumber *section in self.locationDictionary.allKeys) {
+        CLLocation *location = [self.locationDictionary objectForKey:section];
+        [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (!error && placemarks.count > 0) {
+                [self updateSectionHeader:[section integerValue] placemark:placemarks[0]];
+            }
+        }];
+    }
 }
 
 - (void)updateSectionHeader:(NSInteger)section placemark:(CLPlacemark *)placemark {

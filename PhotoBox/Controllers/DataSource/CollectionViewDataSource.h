@@ -10,13 +10,14 @@
 #import "PhotoBoxFetchedResultsController.h"
 
 typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
+typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndexPath *indexPath);
 
 @interface CollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
 @property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellBlock;
 @property (nonatomic, strong) NSString *sectionHeaderIdentifier;
-@property (nonatomic, copy) CollectionViewCellConfigureBlock configureCellHeaderBlock;
+@property (nonatomic, copy) CollectionViewHeaderCellConfigureBlock configureCellHeaderBlock;
 @property (nonatomic, assign) BOOL paused;
 
 @property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;

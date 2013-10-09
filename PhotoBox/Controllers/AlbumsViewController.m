@@ -84,8 +84,8 @@
     return @"albumCell";
 }
 
-- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
-    void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
+- (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
+    void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
         [cell.titleLabel setText:@">"];
         [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
