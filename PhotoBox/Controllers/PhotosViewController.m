@@ -54,11 +54,11 @@
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
-        [cell.titleLabel setText:item];
+        [cell setTitleLabelText:item];
         if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
             [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
         } else {
-            [cell.locationLabel setText:nil];
+            [cell setLocation:nil];
         }
     };
     return configureCell;
