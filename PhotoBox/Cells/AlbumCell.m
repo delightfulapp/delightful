@@ -42,7 +42,7 @@
     [super setItem:item];
     
     Album *album = (Album *)item;
-    NSURL *imageURL = [album albumCover:path200x200xCR];
+    NSURL *imageURL = [album coverURL];
     [self.cellImageView setImageWithContentsOfURL:imageURL placeholderImage:nil];
     [self.albumTitle setText:album.name];
 }

@@ -20,15 +20,15 @@
 @property (nonatomic, copy, readonly) NSNumber *dateUploadedDay;
 @property (nonatomic, copy, readonly) NSNumber *dateUploadedMonth;
 @property (nonatomic, copy, readonly) NSNumber *dateUploadedYear;
-@property (nonatomic, copy, readonly) NSString *description;
+@property (nonatomic, copy, readonly) NSString *photoDescription;
 @property (nonatomic, copy, readonly) NSString *exifCameraMake;
 @property (nonatomic, copy, readonly) NSString *exifCameraModel;
 @property (nonatomic, copy, readonly) NSString *exifExposureTime;
-@property (nonatomic, copy, readonly) NSString *exifFNumber;
-@property (nonatomic, copy, readonly) NSString *exifFocalLength;
-@property (nonatomic, copy, readonly) NSString *exifISOSpeed;
+@property (nonatomic, copy, readonly) NSNumber *exifFNumber;
+@property (nonatomic, copy, readonly) NSNumber *exifFocalLength;
+@property (nonatomic, copy, readonly) NSNumber *exifISOSpeed;
 @property (nonatomic, copy, readonly) NSString *filenameOriginal;
-@property (nonatomic, copy, readonly) NSString *hash;
+@property (nonatomic, copy, readonly) NSString *photoHash;
 @property (nonatomic, copy, readonly) NSString *host;
 @property (nonatomic, copy, readonly) NSString *key;
 @property (nonatomic, copy, readonly) NSString *latitude;
@@ -38,6 +38,7 @@
 @property (nonatomic, copy, readonly) NSURL *pathOriginal;
 @property (nonatomic, copy, readonly) NSNumber *size;
 @property (nonatomic, copy, readonly) NSArray *tags;
+@property (nonatomic, copy, readonly) NSArray *albums;
 @property (nonatomic, copy, readonly) NSURL *url;
 @property (nonatomic, copy, readonly) NSDate *timestamp;
 @property (nonatomic, copy, readonly) NSString *title;
@@ -50,7 +51,7 @@
 @property (nonatomic, copy, readonly) PhotoBoxImage *thumbnailImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *normalImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *originalImage;
-@property (nonatomic, readonly) NSString *dateTakenString;
-@property (nonatomic, readonly) NSString *dateMonthYearTakenString;
+@property (nonatomic, copy, readonly) NSString *dateTakenString;
+@property (nonatomic, copy, readonly) NSString *dateMonthYearTakenString;
 
 @end

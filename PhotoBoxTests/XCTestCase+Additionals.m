@@ -14,7 +14,7 @@
     NSError *error;
     NSString * filePath = [[NSBundle bundleForClass:[self class]] pathForResource:jsonFile ofType:@"json"];
     id object = [NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfFile:filePath] options:0 error:&error];
-    NSAssert(error==nil, @"%@", error);
+    NSAssert(error==nil, @"%@ => %@", jsonFile, error);
     return object;
 }
 

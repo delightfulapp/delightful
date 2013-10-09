@@ -13,8 +13,6 @@
 
 #import "LocationManager.h"
 
-#import "PhotosViewControllerDataSource.h"
-
 #import "PhotosSectionHeaderView.h"
 #import "PhotoBoxCell.h"
 
@@ -53,27 +51,16 @@
     [NPRImageView cancelAllOperations];
 }
 
-- (void)setupDataSource {
-    PhotosViewControllerDataSource *dataSource = [[PhotosViewControllerDataSource alloc] init];
-    [dataSource setGroupKey:[self groupKey]];
-    [dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
-    [dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
-    self.dataSource = dataSource;
-    [self.dataSource setCellIdentifier:[self cellIdentifier]];
-    [self.collectionView setDataSource:self.dataSource];
-    
-    [self setupDataSourceConfigureBlock];
-}
 
 - (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id) = ^(PhotosSectionHeaderView* cell, id item) {
-        [cell.titleLabel setText:[item objectForKey:[self groupKey]]];
-        NSIndexPath *indexPath = (NSIndexPath *)[item objectForKey:@"indexPath"];
-        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
-            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
-        } else {
-            [cell.locationLabel setText:nil];
-        }
+        [cell.titleLabel setText:item];
+//        NSIndexPath *indexPath = (NSIndexPath *)[item objectForKey:@"indexPath"];
+//        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
+//            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
+//        } else {
+//            [cell.locationLabel setText:nil];
+//        }
     };
     return configureCell;
 }
@@ -100,12 +87,24 @@
     return PhotoResource;
 }
 
+- (Class)resourceClass {
+    return [Photo class];
+}
+
 - (NSString *)resourceId {
     return self.item.itemId;
 }
 
+- (NSString *)relationshipKeyPathWithItem {
+    return @"albums";
+}
+
+- (NSArray *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:YES]];
+}
+
 - (void)didFetchItems {
-    int count = self.items.count;
+    int count = [self.dataSource numberOfItems];
     [self setPhotosCount:count max:self.totalItems];
     [self getLocationForEachSection];
 }
@@ -148,8 +147,8 @@
         PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
         PhotoBoxCell *cell = (PhotoBoxCell *)sender;
         [destination setItem:self.item];
-        [destination setItems:self.items];
         [destination setFirstShownPhoto:cell.item];
+        [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
         [destination setDelegate:self];
         self.selectedItem = cell;
     }
@@ -184,31 +183,32 @@
 #pragma mark - Location
 
 - (void)getLocationForEachSection {
-    if (!self.locationDictionary) {
-        self.locationDictionary = [NSMutableDictionary dictionary];
-    }
-    int i = 0;
-    for (NSDictionary *dict in self.dataSource.items) {
-        NSArray *members = [dict objectForKey:@"members"];
-        for (Photo *photo in members) {
-            
-            if (photo.latitude && ![photo.latitude isKindOfClass:[NSNull class]] && photo.longitude && ![photo.longitude isKindOfClass:[NSNull class]]) {
-                CLLocation *location = [[CLLocation alloc] initWithLatitude:[photo.latitude doubleValue] longitude:[photo.longitude doubleValue]];
-                [self.locationDictionary setObject:location forKey:@(i)];
-                break;
-            }
-        }
-        i++;
-    }
-    
-    for (NSNumber *section in self.locationDictionary.allKeys) {
-        CLLocation *location = [self.locationDictionary objectForKey:section];
-        [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            if (!error && placemarks.count > 0) {
-                [self updateSectionHeader:[section integerValue] placemark:placemarks[0]];
-            }
-        }];
-    }
+    return;
+//    if (!self.locationDictionary) {
+//        self.locationDictionary = [NSMutableDictionary dictionary];
+//    }
+//    int i = 0;
+//    for (NSDictionary *dict in self.dataSource.items) {
+//        NSArray *members = [dict objectForKey:@"members"];
+//        for (Photo *photo in members) {
+//            
+//            if (photo.latitude && ![photo.latitude isKindOfClass:[NSNull class]] && photo.longitude && ![photo.longitude isKindOfClass:[NSNull class]]) {
+//                CLLocation *location = [[CLLocation alloc] initWithLatitude:[photo.latitude doubleValue] longitude:[photo.longitude doubleValue]];
+//                [self.locationDictionary setObject:location forKey:@(i)];
+//                break;
+//            }
+//        }
+//        i++;
+//    }
+//    
+//    for (NSNumber *section in self.locationDictionary.allKeys) {
+//        CLLocation *location = [self.locationDictionary objectForKey:section];
+//        [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+//            if (!error && placemarks.count > 0) {
+//                [self updateSectionHeader:[section integerValue] placemark:placemarks[0]];
+//            }
+//        }];
+//    }
 }
 
 - (void)updateSectionHeader:(NSInteger)section placemark:(CLPlacemark *)placemark {

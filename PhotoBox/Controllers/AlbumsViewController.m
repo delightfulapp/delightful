@@ -35,11 +35,7 @@
 {
     [super viewDidLoad];
     
-    [self setAlbumsCount:0 max:0];
-    NSString *identifier = @"albumCell";
-    [self.dataSource setCellIdentifier:identifier];
-    [self.dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
-    [self.dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
+    [self setAlbumsCount:0 max:0];    
     
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
     [self.navigationItem setLeftBarButtonItem:left];
@@ -59,12 +55,20 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (NSArray *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:[self displayedItemIdKey] ascending:YES]];
+}
+
 - (ResourceType)resourceType {
     return AlbumResource;
 }
 
+- (Class)resourceClass {
+    return [Album class];
+}
+
 - (void)didFetchItems {
-    int count = self.items.count;
+    int count = [self.dataSource numberOfItems];
     [self setAlbumsCount:count max:self.totalItems];
 }
 
@@ -74,6 +78,10 @@
 
 - (NSString *)sectionHeaderIdentifier {
     return @"albumSection";
+}
+
+- (NSString *)cellIdentifier {
+    return @"albumCell";
 }
 
 - (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
@@ -125,8 +133,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:{
-            self.items = [NSMutableArray array];
-            [self.collectionView reloadData];
+            [NPRImageView cancelAllOperations];
             [[ConnectionManager sharedManager] logout];
             break;
         }

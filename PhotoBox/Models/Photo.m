@@ -8,6 +8,10 @@
 
 #import "Photo.h"
 #import "Tag.h"
+#import "Album.h"
+
+#import "NSObject+Additionals.h"
+#import "NSArray+Additionals.h"
 
 @implementation Photo
 
@@ -18,7 +22,7 @@
 
 - (PhotoBoxImage *)originalImage {
     if (!_originalImage) {
-        _originalImage = [[PhotoBoxImage alloc] initWithArray:@[self.pathOriginal.absoluteString, self.width, self.height]];
+        _originalImage = [[PhotoBoxImage alloc] initWithArray:@[(self.pathOriginal)?self.pathOriginal.absoluteString:@"", self.width, self.height]];
     }
     return _originalImage;
 }
@@ -36,17 +40,23 @@
 }
 
 - (NSString *)dateTakenString {
-    return [NSString stringWithFormat:@"%d-%02d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue], [self.dateTakenDay intValue]];
+    NSString *toReturn = [NSString stringWithFormat:@"%d-%02d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue], [self.dateTakenDay intValue]];
+    return toReturn;
 }
 
 - (NSString *)dateMonthYearTakenString {
     return [NSString stringWithFormat:@"%d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue]];
 }
 
-#pragma mark - Mantle
+#pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return @{@"photoId": @"id"};
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{
+                                                                            @"photoId": @"id",
+                                                                            @"photoHash":@"hash",
+                                                                            @"photoDescription":@"description",
+                                                                            @"dateMonthYearTakenString":NSNull.null
+                                                                            }];
 }
 
 + (NSValueTransformer *)timestampJSONTransformer {
@@ -62,14 +72,6 @@
     return [MTLValueTransformer transformerWithBlock:^id(NSString *string) {
         return [dateFormatter dateFromString:string];
     }];
-}
-
-+ (NSValueTransformer *)urlJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
-}
-
-+ (NSValueTransformer *)pathOriginalJSONTransformer {
-    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
 }
 
 + (NSValueTransformer *)photo200x200xCRJSONTransformer {
@@ -88,20 +90,42 @@
     }];
 }
 
-+ (NSValueTransformer *)tagsJSONTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSArray *tags){
-        NSMutableArray *tagObjects = [NSMutableArray arrayWithCapacity:tags.count];
-        for (NSString *tag in tags) {
-            [tagObjects addObject:[[Tag alloc] initWithTagId:tag]];
-        }
-        return tagObjects;
-    } reverseBlock:^(NSArray *tagsObjects) {
-        NSMutableArray *tags = [NSMutableArray arrayWithCapacity:tagsObjects.count];
-        for (Tag *tag in tagsObjects) {
-            [tags addObject:tag.tagId];
-        }
-        return tags;
-    }];
+// NOTE: override MTLModel's dictionaryValue to include dateTakenString in managed object serialization. By default, dateTakenString is not serialized because the isa is nil.
+- (NSDictionary *)dictionaryValue {
+    NSMutableDictionary *dict = [[super dictionaryValue] mutableCopy];
+    [dict setObject:[self dateTakenString] forKey:@"dateTakenString"];
+    return dict;
+}
+
+#pragma mark - Managed object serialization
+
++ (NSString *)managedObjectEntityName {
+    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
+}
+
++ (NSDictionary *)managedObjectKeysByPropertyKey {
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateMonthYearTakenString":NSNull.null, @"dateTakenString":@"dateTakenString"}];
+}
+
++ (NSSet *)propertyKeysForManagedObjectUniquing {
+    return [NSSet setWithObject:@"photoId"];
+}
+
++ (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
+    if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
+        return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+    } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
+        return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
+            return [arrays photoBoxArrayString];
+        } reverseBlock:^id(NSString *stringArray) {
+            return [[stringArray stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:ARRAY_SEPARATOR]] componentsSeparatedByString:ARRAY_SEPARATOR];
+        }];
+    }
+    return nil;
+}
+
++ (NSDictionary *)relationshipModelClassesByPropertyKey {
+    return @{ @"photo200x200xCR":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
 }
 
 @end

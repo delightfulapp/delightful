@@ -25,6 +25,9 @@
 {
     [super setUp];
     // Put setup code here; it will be run once, before the first test case.
+    if ([NSPersistentStoreCoordinator persistentStoreCoordinator]) {
+        [NSPersistentStoreCoordinator clearPersistentStore];
+    }
 }
 
 - (void)tearDown
@@ -41,23 +44,23 @@
     Album *testAlbum = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:albumDict error:&error];
     
     XCTAssert(testAlbum!=nil, @"Test album should not be nil");
-    XCTAssert([testAlbum.albumId isEqualToString:@"4"], @"Expected test album id = f. Actual = %@", testAlbum.albumId);
-    XCTAssert([testAlbum.count intValue]==13, @"Expected album count = 13. Actual = %d", [testAlbum.count intValue]);
+    XCTAssert([testAlbum.albumId isEqualToString:albumDict[@"id"]], @"Expected test album id = %@. Actual = %@",albumDict[@"id"], testAlbum.albumId);
+    XCTAssert([testAlbum.count intValue]==[albumDict[@"count"] intValue], @"Expected album count = %d. Actual = %d",[albumDict[@"count"] intValue], [testAlbum.count intValue]);
     XCTAssert([testAlbum.name isEqualToString:[albumDict objectForKey:@"name"]], @"Expected album name = %@. Actual = %@", [albumDict objectForKey:@"name"], testAlbum.name);
-    
-    // test cover's original image
-    XCTAssert(testAlbum.cover!=nil, @"Album cover should not be nil");
-    XCTAssert(testAlbum.cover.originalImage!=nil, @"Original image should not be nil");
-    XCTAssert([testAlbum.cover.originalImage.urlString isEqualToString:[[albumDict objectForKey:@"cover"] objectForKey:@"pathOriginal"]], @"Expected original image = %@. Actual = %@", [[albumDict objectForKey:@"cover"] objectForKey:@"pathOriginal"], testAlbum.cover.originalImage.urlString);
-    
-    // test cover's thumbnail image
-    XCTAssert(testAlbum.cover.thumbnailImage!=nil, @"Thumbnail image should not be nil");
-    XCTAssert([testAlbum.cover.thumbnailImage.urlString isEqualToString:[[[albumDict objectForKey:@"cover"] objectForKey:@"photo200x200xCR"] objectAtIndex:0]], @"Expected thumbnail image = %@. Actual = %@", [[[albumDict objectForKey:@"cover"] objectForKey:@"photo200x200xCR"] objectAtIndex:0], testAlbum.cover.thumbnailImage.urlString);
-    
-    // test cover's tag
-    XCTAssert(testAlbum.cover.tags!=nil, @"Tags should not be nil");
-    XCTAssert(testAlbum.cover.tags.count == 4, @"Tags count should be 4. Actual = %d", testAlbum.cover.tags.count);
-    XCTAssert([((Tag *)testAlbum.cover.tags[0]).tagId isEqualToString:[[[albumDict objectForKey:@"cover"] objectForKey:@"tags"] objectAtIndex:0]], @"Expected first tag = %@. Actual = %@", [[[albumDict objectForKey:@"cover"] objectForKey:@"tags"] objectAtIndex:0], ((Tag *)testAlbum.cover.tags[0]).tagId);
-}
+    NSURL *coverURL = [NSURL URLWithString:[[albumDict objectForKey:@"cover"] objectForKey:@"path200x200xCR"]];
+    NSString *coverId = [[albumDict objectForKey:@"cover"] objectForKey:@"id"];
+    XCTAssert([testAlbum.coverURL isEqual:coverURL], @"Expected cover URL: %@. Actual = %@", coverURL, testAlbum.coverURL);
+    XCTAssert([testAlbum.coverId isEqualToString:coverId], @"Expected coverId: %@. Actual = %@", coverId, testAlbum.coverId);
 
+    NSManagedObject *albumManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:testAlbum insertingIntoContext:[NSManagedObjectContext mainContext] error:&error];
+    XCTAssert(albumManagedObject != nil, @"Album managed object should not be nil");
+    XCTAssert([[albumManagedObject valueForKey:@"albumId"] isEqualToString:[albumDict objectForKey:@"id"]], @"Expected album id = %@. Actual = %@", albumDict[@"id"], [albumManagedObject valueForKey:@"albumId"]);
+    XCTAssert([[albumManagedObject valueForKey:@"coverURL"] isEqualToString:testAlbum.coverURL.absoluteString], @"Expected cover url = %@. Actual = %@", testAlbum.coverURL.absoluteString, [albumManagedObject valueForKey:@"coverURL"]);
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    fetchRequest.entity = [NSEntityDescription entityForName:@"PBXAlbum" inManagedObjectContext:[NSManagedObjectContext mainContext]];
+    fetchRequest.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"albumId" ascending:NO]];
+    NSArray *results = [[NSManagedObjectContext mainContext] executeFetchRequest:fetchRequest error:&error];
+    XCTAssert(results.count==1, @"There should be only 1 album in db at this point. Actual = %d", results.count);
+}
 @end

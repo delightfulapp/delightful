@@ -11,6 +11,7 @@
 #import "PhotoBoxClient.h"
 
 #import "CollectionViewDataSource.h"
+#import "PhotoBoxFetchedResultsController.h"
 
 typedef NS_ENUM(NSUInteger, PinchDirection) {
     PinchIn,
@@ -23,10 +24,17 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 @property (nonatomic, strong) PhotoBoxModel *item;
 @property (nonatomic, assign) ResourceType resourceType;
+@property (nonatomic, strong) Class resourceClass;
 @property (nonatomic, strong) NSString *resourceId;
+@property (nonatomic, strong) NSString *groupKey;
+@property (nonatomic, strong) NSArray *sortDescriptors;
+@property (nonatomic, strong) NSPredicate *predicate;
+@property (nonatomic, strong) NSString *displayedItemIdKey;
+@property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
+@property (nonatomic, strong, readonly) NSString *cellIdentifier;
+@property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
 @property (nonatomic, assign) int page;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSMutableArray *items;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isFetching;
 @property (nonatomic, assign) int numberOfColumns;
@@ -39,12 +47,15 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
+@property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
+@property (nonatomic, strong) NSFetchRequest *fetchRequest;
+@property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
 - (void)refresh;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
+- (CollectionViewCellConfigureBlock)headerCellConfigureBlock;
 - (void)didFetchItems;
-- (void)setupDataSource;
 - (void)setupDataSourceConfigureBlock;
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
 @end

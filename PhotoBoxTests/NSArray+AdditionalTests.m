@@ -33,15 +33,15 @@
 {
     NSError *error;
     NSArray *array = @[
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(12), @"dateTakenMonth":@(1), @"dateTakenYear":@(2013)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(9), @"dateTakenMonth":@(10), @"dateTakenYear":@(2013)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(9), @"dateTakenMonth":@(10), @"dateTakenYear":@(2013)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(12), @"dateTakenMonth":@(5), @"dateTakenYear":@(2012)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(12), @"dateTakenMonth":@(4), @"dateTakenYear":@(2012)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(5), @"dateTakenMonth":@(4), @"dateTakenYear":@(2012)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(7), @"dateTakenMonth":@(1), @"dateTakenYear":@(2013)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(15), @"dateTakenMonth":@(9), @"dateTakenYear":@(2013)} error:&error],
-                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @(30), @"dateTakenMonth":@(8), @"dateTakenYear":@(2013)} error:&error]
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"12", @"dateTakenMonth":@"1", @"dateTakenYear":@"2013"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"9", @"dateTakenMonth":@"10", @"dateTakenYear":@"2013"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"9", @"dateTakenMonth":@"10", @"dateTakenYear":@"2013"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"12", @"dateTakenMonth":@"5", @"dateTakenYear":@"2012"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"12", @"dateTakenMonth":@"4", @"dateTakenYear":@"2012"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"5", @"dateTakenMonth":@"4", @"dateTakenYear":@"2012"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"7", @"dateTakenMonth":@"1", @"dateTakenYear":@"2013"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"15", @"dateTakenMonth":@"9", @"dateTakenYear":@"2013"} error:&error],
+                       [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:@{@"filenameOriginal":@"image", @"dateTakenDay": @"30", @"dateTakenMonth":@"8", @"dateTakenYear":@"2013"} error:&error]
                        ];
     
     NSArray *grouped = [array groupedArrayBy:@"dateMonthYearTakenString"];
