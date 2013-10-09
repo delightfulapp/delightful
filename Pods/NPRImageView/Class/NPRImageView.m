@@ -407,12 +407,17 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 
 #pragma mark - Setter
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    [self.customImageView setFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame))];
+}
+
 - (void)setImage:(UIImage *)image {
     self.customImageView.image = image;
 }
 
 - (void)setImageWithContentsOfURL:(NSURL *)URL placeholderImage:(UIImage *)placeholderImage {
-    if (![URL.absoluteString isEqualToString:self.imageContentURL.absoluteString])
+    if (URL && ![URL.absoluteString isEqualToString:self.imageContentURL.absoluteString])
     {
         [self setCacheKeyWithURL:URL.absoluteString];
         
@@ -426,9 +431,14 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
         self.placeholderImage = placeholderImage;
         
         [self queueImageForProcessingForURLString:URL.absoluteString];
-    } else {
-        if (![self isDownloadingImageAtURLString:URL.absoluteString]) {
+    } else {if (![self isDownloadingImageAtURLString:URL.absoluteString]) {
             [self.indicatorView stopAnimating];
+        }
+        if (!URL) {
+            self.image = self.placeholderImage;
+            [self.indicatorView stopAnimating];
+            [self.progressView setProgress:0];
+            [self.progressView setHidden:YES];
         }
     }
 }

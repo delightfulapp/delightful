@@ -11,5 +11,6 @@
 @interface NSArray (Additionals)
 
 - (NSArray *)groupedArrayBy:(NSString *)property;
+- (NSString *)photoBoxArrayString;
 
 @end

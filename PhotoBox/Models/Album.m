@@ -8,24 +8,18 @@
 
 #import "Album.h"
 
+#import "Photo.h"
+
+NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
+
 @implementation Album
 
-@synthesize albumId = id;
-
-- (NSURL *)albumCover:(AlbumCoverType)coverType {
-    NSDictionary *cover = [self.rawDictionary objectForKey:@"cover"];
-    return [NSURL URLWithString:[cover objectForKey:stringWithAlbumCoverType(coverType)]];
-}
-
-NSString *stringWithAlbumCoverType(AlbumCoverType input) {
-    NSArray *arr = @[
-                     @"path100x100",
-                     @"path100x100xCR",
-                     @"path200x200",
-                     @"path200x200xCR",
-                     @"pathOriginal"
-                     ];
-    return (NSString *)[arr objectAtIndex:input];
+- (id)initWithItemId:(NSString *)itemId{
+    self = [super init];
+    if (self) {
+        _albumId = itemId;
+    }
+    return self;
 }
 
 - (NSString *)itemId {
@@ -33,12 +27,35 @@ NSString *stringWithAlbumCoverType(AlbumCoverType input) {
 }
 
 + (Album *)allPhotosAlbum {
-    Album *a = [[Album alloc] initWithDictionary:@{
-                                                   @"id": @"",
-                                                   @"name":NSLocalizedString(@"All Photos", nil)
-                                                   }];
-    a.albumId = nil;
+    NSError *error;
+    Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{
+                                                                               @"id": PBX_allAlbumIdentifier,
+                                                                               @"name":NSLocalizedString(@"All Photos", nil),
+                                                                               @"cover":@{@"id": @"COVER_PHOTO_ALL_ALBUM", @"filenameOriginal":@""}
+                                                                               } error:&error];
     return a;
+}
+
+#pragma mark - Mantle
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id",
+                                                                            @"coverId":@"cover.id",
+                                                                            @"coverURL":@"cover.path200x200xCR"}];
+}
+
+#pragma mark - Managed object serialization
+
++ (NSString *)managedObjectEntityName {
+    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
+}
+
++ (NSDictionary *)managedObjectKeysByPropertyKey {
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
+}
+
++ (NSSet *)propertyKeysForManagedObjectUniquing {
+    return [NSSet setWithObject:@"albumId"];
 }
 
 @end

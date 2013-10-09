@@ -9,6 +9,12 @@
 #import <XCTest/XCTest.h>
 
 #import "Photo.h"
+#import "Album.h"
+#import "Tag.h"
+
+#import "NSArray+Additionals.h"
+
+#import "XCTestCase+Additionals.h"
 
 @interface PhotoModelTests : XCTestCase
 
@@ -19,7 +25,9 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here; it will be run once, before the first test case.
+    if ([NSPersistentStoreCoordinator persistentStoreCoordinator]) {
+        [NSPersistentStoreCoordinator clearPersistentStore];
+    }
 }
 
 - (void)tearDown
@@ -28,15 +36,31 @@
     [super tearDown];
 }
 
-- (void)testSetNormalImage
-{
-    Photo *photo = [[Photo alloc] initWithDictionary:@{@"id": @"1",
-                                                       @"photo640x640":@[@"http://image640x640.png", @(640), @(480)],
-                                                       @"photo200x200xCR":@[@"http://image200x200xCR.png", @(200), @(200)]
-                                                       }];
+- (void)testPhotoObjectJSONSerialization
+{    
+    NSError *error;
+    NSDictionary *photoDictionary = [self objectFromJSONFile:@"photo"];
+    Photo *photo = [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:photoDictionary error:&error];
+    XCTAssert([photo.photoId isEqualToString:[photoDictionary objectForKey:@"id"]], @"Expected photoId = %@. Actual = %@", [photoDictionary objectForKey:@"id"], photo.photoId);
+    XCTAssert([photo.dateUploadedMonth intValue]==[photoDictionary[@"dateUploadedMonth"] intValue], @"Expected %d. Actual %d", [photoDictionary[@"dateUploadedMonth"] intValue], [photo.dateUploadedMonth intValue]);
     XCTAssertTrue(photo.thumbnailImage, @"Expected thumbnail image");
-    XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:@"http://image200x200xCR.png"], @"Expected thumbnail image url http://image200x200xCR.png. Actual %@", photo.thumbnailImage.urlString);
-    XCTAssertTrue([photo.normalImage.urlString isEqualToString:@"http://image640x640.png"], @"Expected normal image url http://image640x640.png. Actual %@", photo.normalImage.urlString);
+    XCTAssert(photo.albums.count == ((NSArray *)[photoDictionary objectForKey:@"albums"]).count, @"Expected %d albums. Actual %d.",  ((NSArray *)[photoDictionary objectForKey:@"albums"]).count, photo.albums.count);
+    XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:[photoDictionary objectForKey:@"path200x200xCR"]], @"Expected thumbnail image url %@. Actual %@", [photoDictionary objectForKey:@"path200x200xCR"], photo.thumbnailImage.urlString);
+    XCTAssertTrue([photo.normalImage.urlString isEqualToString:[photoDictionary objectForKey:@"path640x640"]], @"Expected normal image url %@. Actual %@", [photoDictionary objectForKey:@"path640x640"], photo.normalImage.urlString);
+    XCTAssert([photo.dateTakenString isEqualToString:@"2013-06-03"], @"Expected date taken string: 2013-06-03. Actual = %@", photo.dateTakenString);
+}
+
+- (void)testPhotoObjectManagedObjectSerialization {
+    NSError *error;
+    NSDictionary *photoDictionary = [self objectFromJSONFile:@"photo"];
+    Photo *photo = [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:photoDictionary error:&error];
+    NSManagedObject *photoManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:photo insertingIntoContext:[NSManagedObjectContext mainContext] error:&error];
+    XCTAssert(photoManagedObject != nil, @"Photo managed object should not be nil");
+    XCTAssert([[photoManagedObject valueForKey:@"photoId"] isEqualToString:[photoDictionary objectForKey:@"id"]], @"Expected photo id = %@. Actual = %@", photoDictionary[@"id"], [photoManagedObject valueForKey:@"photoId"]);
+    XCTAssert([photoManagedObject valueForKey:@"dateTakenString"]!=nil, @"Date taken string should not be nil");
+    NSArray *albums = [photoDictionary objectForKey:@"albums"];
+    NSString *albumsString = [albums photoBoxArrayString];
+    XCTAssert([[photoManagedObject valueForKey:@"albums"] isEqualToString:albumsString], @"Expected albums string = %@. Actual = %@.", albumsString, [photoManagedObject valueForKey:@"albums"]);
 }
 
 @end

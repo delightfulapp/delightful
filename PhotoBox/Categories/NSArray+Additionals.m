@@ -25,4 +25,9 @@
     return array;
 }
 
+- (NSString *)photoBoxArrayString {
+    NSString *arrayString = [self componentsJoinedByString:ARRAY_SEPARATOR];
+    return [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, arrayString, ARRAY_SEPARATOR];
+}
+
 @end

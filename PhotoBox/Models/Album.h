@@ -18,13 +18,18 @@ typedef NS_ENUM(NSUInteger, AlbumCoverType) {
 
 #import "PhotoBoxModel.h"
 
+extern NSString *PBX_allAlbumIdentifier;
+
+@class Photo;
+
 @interface Album : PhotoBoxModel
 
-@property (nonatomic, assign) int count;
-@property (nonatomic, strong) NSString *albumId;
-@property (nonatomic, strong) NSString *name;
-
-- (NSURL *)albumCover:(AlbumCoverType)coverType;
+@property (nonatomic, copy, readonly) NSNumber *count;
+@property (nonatomic, copy, readonly) NSString *albumId;
+@property (nonatomic, copy, readonly) NSString *name;
+@property (nonatomic, copy, readonly) NSString *coverFilenameOriginal;
+@property (nonatomic, copy, readonly) NSString *coverId;
+@property (nonatomic, copy, readonly) NSURL *coverURL;
 
 + (Album *)allPhotosAlbum;
 

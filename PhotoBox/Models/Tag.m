@@ -10,10 +10,37 @@
 
 @implementation Tag
 
-@synthesize tagId = id;
-
 - (NSString *)itemId {
-return self.tagId;
+    return self.tagId;
 }
+
+- (id)initWithItemId:(NSString *)tagId {
+    self = [super init];
+    if (self) {
+        _tagId = tagId;
+    }
+    return self;
+}
+
+#pragma mark - Mantle
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"tagId": @"id"}];
+}
+
+#pragma mark - Managed object serialization
+
++ (NSString *)managedObjectEntityName {
+    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
+}
+
++ (NSDictionary *)managedObjectKeysByPropertyKey {
+    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
+}
+
++ (NSSet *)propertyKeysForManagedObjectUniquing {
+    return [NSSet setWithObject:@"tagId"];
+}
+
 
 @end

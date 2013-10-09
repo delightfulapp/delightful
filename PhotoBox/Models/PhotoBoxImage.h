@@ -6,15 +6,15 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-@class Photo;
+#import "PhotoBoxModel.h"
 
-@interface PhotoBoxImage : NSObject
+@interface PhotoBoxImage : PhotoBoxModel
 
-@property (nonatomic, weak) Photo *photo;
-@property (nonatomic, strong) NSString *urlString;
-@property (nonatomic, assign) CGFloat width;
-@property (nonatomic, assign) CGFloat height;
+@property (nonatomic, copy, readonly) NSString *urlString;
+@property (nonatomic, copy, readonly) NSNumber *width;
+@property (nonatomic, copy, readonly) NSNumber *height;
 
 - (id)initWithArray:(NSArray *)array;
+- (NSArray *)toArray;
 
 @end

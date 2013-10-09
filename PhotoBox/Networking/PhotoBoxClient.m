@@ -8,12 +8,33 @@
 
 #import "PhotoBoxClient.h"
 
-#import "AFJSONRequestOperation.h"
 #import "ConnectionManager.h"
+#import "PhotoBoxRequestOperation.h"
 
 #import "Album.h"
 #import "Photo.h"
 #import "Tag.h"
+
+@interface PhotoBoxClient ()
+
+@property (nonatomic, strong) AFOAuth1Client *oauthClient;
+
+- (void)getAlbumsForPage:(int)page
+                pageSize:(int)pageSize
+                 success:(void(^)(id object))successBlock
+                 failure:(void(^)(NSError*))failureBlock;
+- (void)getPhotosInAlbum:(NSString *)albumId
+                    page:(int)page
+                pageSize:(int)pageSize
+                 success:(void(^)(id object))successBlock
+                 failure:(void(^)(NSError*))failureBlock;
+- (void)getTagsWithSuccess:(void(^)(id object))successBlock
+                   failure:(void(^)(NSError*))failureBlock;
+- (void)getAllPhotosOnPage:(int)page
+                  pageSize:(int)pageSize success:(void(^)(id object))successBlock
+                   failure:(void(^)(NSError*))failureBlock;
+
+@end
 
 @implementation PhotoBoxClient
 
@@ -28,19 +49,30 @@
 }
 
 - (id)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret{
-    self = [super initWithBaseURL:url key:key secret:secret];
+    self = [super initWithBaseURL:url];
     if (!self) {
         return nil;
     }
     
-    [self registerHTTPOperationClass:[AFJSONRequestOperation class]];
+    _oauthClient = [[AFOAuth1Client alloc] initWithBaseURL:url key:key secret:secret];
+    
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
-        [self setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
+        [_oauthClient setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
     }
     [self setParameterEncoding:AFFormURLParameterEncoding];
+    [self registerHTTPOperationClass:[PhotoBoxRequestOperation class]];
     
     return self;
 }
+
+#pragma mark - Setter
+
+- (void)setValue:(id)value forKey:(NSString *)key {
+    [super setValue:value forKey:key];
+    [self.oauthClient setValue:value forKey:key];
+}
+
+#pragma mark - Resource Fetch
 
 - (void)getResource:(ResourceType)type
              action:(ActionType)action
@@ -48,11 +80,16 @@
                page:(int)page
             success:(void (^)(id))successBlock
             failure:(void (^)(NSError *))failureBlock {
+    [self getResource:type action:action resourceId:resourceId page:page pageSize:20 success:successBlock failure:failureBlock];
+}
+
+- (void)getResource:(ResourceType)type action:(ActionType)action resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    if (pageSize==0) pageSize = 20;
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         switch (action) {
             case ListAction:{
-                if (type == AlbumResource) [self getAlbumsForPage:page success:successBlock failure:failureBlock];
-                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page success:successBlock failure:failureBlock];
+                if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize success:successBlock failure:failureBlock];
+                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize success:successBlock failure:failureBlock];
                 if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
                 break;
             }
@@ -65,27 +102,34 @@
 }
 
 - (void)getAlbumsForPage:(int)page
+                pageSize:(int)pageSize
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPath:[NSString stringWithFormat:@"/albums/list.json?page=%d",page]
-       parameters:nil
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              successBlock([self processResponseObject:responseObject resourceClass:[Album class]]);
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"Error %@", error);
-              failureBlock(error);
-          }];
+    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d",page, pageSize] parameters:nil resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        if (!error) {
+            successBlock(responseObject);
+        } else {
+            failureBlock(error);
+        }
+    }];
 }
 
-- (void)getPhotosInAlbum:(NSString *)albumId page:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)getPhotosInAlbum:(NSString *)albumId
+                    page:(int)page
+                pageSize:(int)pageSize
+                 success:(void (^)(id))successBlock
+                 failure:(void (^)(NSError *))failureBlock {
+    
     NSString *album = [NSString stringWithFormat:@"/album-%@", albumId];
-    if (!albumId) album = @"";
-    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&%@", album, page, [self photoSizesString]];
-    [self getPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
-        failureBlock(error);
+    if ([albumId isEqualToString:PBX_allAlbumIdentifier]) album = @"";
+    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&pageSize=%d&%@", album, page, pageSize, [self photoSizesString]];
+    
+    [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        if (!error) {
+            successBlock(responseObject);
+        } else {
+            failureBlock(error);
+        }
     }];
 }
 
@@ -97,21 +141,19 @@
     }];
 }
 
-- (void)getAllPhotosOnPage:(int)page success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInAlbum:nil page:page success:successBlock failure:failureBlock];
+- (void)getAllPhotosOnPage:(int)page
+                  pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self getPhotosInAlbum:nil page:page
+                  pageSize:(int)pageSize success:successBlock failure:failureBlock];
 }
 
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
     NSArray *result = [responseObject objectForKey:@"result"];
-    NSMutableArray *array = [NSMutableArray arrayWithCapacity:result.count];
-    for (NSDictionary *objectDictionary in result) {
-        id object = [[resource alloc] initWithDictionary:objectDictionary];
-        if (object) {
-            [array addObject:object];
-        }
-    }
-    return array;
+    NSValueTransformer *transformer = [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:resource];
+    return [transformer transformedValue:result];
 }
+
+#pragma mark - Getters
 
 NSString *stringForPluralResourceType(ResourceType input) {
     NSArray *arr = @[
@@ -147,6 +189,37 @@ NSString *stringWithActionType(ActionType input) {
                        @"640x640"
                        ];
     return AFQueryStringFromParametersWithEncoding(@{@"returnSizes": [sizes componentsJoinedByString:@","]}, NSUTF8StringEncoding);
+}
+
+#pragma mark - Oauth1Client
+
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
+    return [self.oauthClient requestWithMethod:method path:path parameters:parameters];
+}
+
+- (void)setAccessToken:(AFOAuth1Token *)accessToken {
+    [self.oauthClient setAccessToken:accessToken];
+}
+
+- (void)acquireOAuthAccessTokenWithPath:(NSString *)path requestToken:(AFOAuth1Token *)requestToken accessMethod:(NSString *)accessMethod success:(void (^)(AFOAuth1Token *, id))success failure:(void (^)(NSError *))failure {
+    [self.oauthClient acquireOAuthAccessTokenWithPath:path requestToken:requestToken accessMethod:accessMethod success:success failure:failure];
+}
+
+- (void)setKey:(NSString *)key {
+    [self.oauthClient setValue:key forKey:@"key"];
+}
+
+- (void)setSecret:(NSString *)secret {
+    [self.oauthClient setValue:secret forKey:@"secret"];
+}
+
+#pragma mark - OVCClient
+
+- (PhotoBoxRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath completion:(void (^)(AFHTTPRequestOperation *, id, NSError *))block {
+    PhotoBoxRequestOperation *operation = (PhotoBoxRequestOperation *)[super HTTPRequestOperationWithRequest:urlRequest resultClass:resultClass resultKeyPath:keyPath completion:block];
+    [operation setContext:[NSManagedObjectContext workContext]];
+    return operation;
+    
 }
 
 

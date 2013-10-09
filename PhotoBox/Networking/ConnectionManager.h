@@ -19,6 +19,8 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 @property (nonatomic, strong) NSURL *baseURL;
 @property (nonatomic, strong) AFOAuth1Token *consumerToken;
 @property (nonatomic, strong) AFOAuth1Token *oauthToken;
+@property (nonatomic, assign, getter = isUserLoggedIn) BOOL userLoggedIn;
+@property (nonatomic, assign) BOOL isShowingLoginPage;
 
 - (void)setBaseURL:(NSURL *)baseURL
        consumerKey:(NSString *)consumerKey
@@ -26,7 +28,6 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
         oauthToken:(NSString *)oauthToken
        oauthSecret:(NSString *)oauthSecret;
 
-- (BOOL)isUserLoggedIn;
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL;
 - (void)continueOauthAuthorizationWithQuery:(NSString *)query;
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId;

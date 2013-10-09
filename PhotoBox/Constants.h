@@ -9,6 +9,6 @@
 #ifndef PhotoBox_Constants_h
 #define PhotoBox_Constants_h
 
-#define 
+#define ARRAY_SEPARATOR @"\t"
 
 #endif

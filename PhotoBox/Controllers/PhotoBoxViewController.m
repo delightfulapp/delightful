@@ -12,24 +12,28 @@
 
 #import "PhotoBoxCell.h"
 #import "PhotoBoxModel.h"
+#import "Photo.h"
 
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
+#import "NSArray+Additionals.h"
 
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout> {
     CGFloat lastOffset;
 }
 
+@property (nonatomic, assign, readonly) int pageSize;
+
 @end
 
 @implementation PhotoBoxViewController
 
+@synthesize pageSize = _pageSize;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (!self.items) {
-        self.items = [NSMutableArray array];
-    }
+    
     if (self.page==0) {
         self.page = 1;
     }
@@ -39,22 +43,31 @@
     [self setupCollectionView];
     [self setupRefreshControl];
     [self setupPinchGesture];
-    [self setupDataSource];
     [self setupNavigationItemTitle];
+    
+    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    int count = self.items.count;
-    if (count == 0) {
-        [self fetchResource];
-    }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.dataSource.paused = NO;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.dataSource.paused = YES;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
 }
 
 #pragma mark - Setup
@@ -67,6 +80,8 @@
                                            oauthToken:nil
                                           oauthSecret:nil];
     }
+    [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:NULL];
+    [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage)) options:0 context:NULL];
 }
 
 - (void)setupCollectionView {
@@ -85,15 +100,6 @@
     [self.collectionView addSubview:self.refreshControl];
 }
 
-- (void)setupDataSource {
-    self.dataSource = [[CollectionViewDataSource alloc] init];
-    self.collectionView.dataSource = self.dataSource;
-    [self setupDataSourceConfigureBlock];
-    if (self.items) {
-        [self.dataSource setItems:self.items];
-    }
-}
-
 - (void)setupDataSourceConfigureBlock {
     [self.dataSource setConfigureCellBlock:[self cellConfigureBlock]];
 }
@@ -108,11 +114,85 @@
     [self.navigationItem setTitleView:self.navigationTitleLabel];
 }
 
+#pragma mark - Getter
+
+- (CollectionViewDataSource *)dataSource {
+    if (!_dataSource) {
+        self.dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
+        [_dataSource setFetchedResultsController:self.fetchedResultsController];
+        [self setupDataSourceConfigureBlock];
+        [_dataSource setCellIdentifier:self.cellIdentifier];
+        [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
+        [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
+    }
+    return _dataSource;
+}
+
+- (NSManagedObjectContext *)mainContext {
+    if (!_mainContext) {
+        _mainContext = [NSManagedObjectContext mainContext];
+    }
+    return _mainContext;
+}
+
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
     void (^configureCell)(PhotoBoxCell*, id) = ^(PhotoBoxCell* cell, id item) {
         [cell setItem:item];
     };
     return configureCell;
+}
+
+- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
+    return nil;
+}
+
+- (NSFetchRequest *)fetchRequest {
+    if (!_fetchRequest) {
+        _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
+        [_fetchRequest setSortDescriptors:self.sortDescriptors];
+        if (self.predicate) {
+            [_fetchRequest setPredicate:self.predicate];
+        }
+    }
+    return _fetchRequest;
+}
+
+- (NSPredicate *)predicate {
+    if (self.item) {
+        if (!_predicate) {
+            _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
+        }
+        return _predicate;
+    }
+    return nil;
+}
+
+- (PhotoBoxFetchedResultsController *)fetchedResultsController {
+    if (!_fetchedResultsController) {
+        _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+        [_fetchedResultsController setObjectClass:self.resourceClass];
+        [_fetchedResultsController setItemKey:self.displayedItemIdKey];
+    }
+    return _fetchedResultsController;
+}
+
+- (NSString *)displayedItemIdKey {
+    NSString *itemClassName = [NSStringFromClass([self resourceClass]) lowercaseString];
+    return [NSString stringWithFormat:@"%@Id", itemClassName];
+}
+
+- (NSArray *)items {
+    return self.fetchedResultsController.fetchedObjects;
+}
+
+- (int)pageSize {
+    if (self.page == 1) {
+        _pageSize = 20;
+        if (self.fetchedResultsController.fetchedObjects.count > 0) {
+            _pageSize = self.fetchedResultsController.fetchedObjects.count;
+        }
+    }
+    return _pageSize;
 }
 
 #pragma mark - Setter
@@ -146,23 +226,20 @@
                                         action:ListAction
                                     resourceId:self.resourceId
                                           page:self.page
+                                      pageSize:self.pageSize
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               PhotoBoxModel *firstObject = (PhotoBoxModel *)[objects objectAtIndex:0];
-                                               self.totalItems = firstObject.totalRows;
-                                               self.totalPages = firstObject.totalPages;
-                                               self.currentPage = firstObject.currentPage;
-                                               self.currentRow = firstObject.currentRow;
+                                               NSLog(@"Received %d objects", ((NSArray *)objects).count);
+                                               [self processPaginationFromObjects:objects];
                                                
-                                               [self.items addObjectsFromArray:objects];
-                                               [self.dataSource setItems:self.items];
-                                               [self.collectionView reloadData];
                                                self.isFetching = NO;
+                                               
                                                [self didFetchItems];
-                                               int count = self.items.count;
+                                               
+                                               int count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
-                                                   [self performSelector:@selector(restoreContentInset) withObject:Nil afterDelay:0.3];
+                                                   [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
                                            }
                                            
@@ -173,9 +250,8 @@
 }
 
 - (void)fetchMore {
-    
     if (!self.isFetching) {
-        int count = self.items.count;
+        int count = [self.dataSource numberOfItems];
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
@@ -183,6 +259,17 @@
                 [self fetchResource];
             }
         }
+    }
+}
+
+- (void)processPaginationFromObjects:(id)objects {
+    NSArray *filtered = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"totalRows > 0"]];
+    if (filtered.count == 1) {
+        PhotoBoxModel *firstObject = (PhotoBoxModel *)[filtered firstObject];
+        self.totalItems = [firstObject.totalRows intValue];
+        self.totalPages = [firstObject.totalPages intValue];
+        self.currentPage = [firstObject.currentPage intValue];
+        self.currentRow = [firstObject.currentRow intValue];
     }
 }
 
@@ -202,8 +289,10 @@
     if (self.page==1) {
         if (show) {
             [self.refreshControl beginRefreshing];
+            [self.refreshControl setHidden:NO];
         } else {
             [self.refreshControl endRefreshing];
+            [self.collectionView.collectionViewLayout invalidateLayout];
         }
     } else {
         [self showLoadingView:show atBottomOfScrollView:YES];
@@ -278,6 +367,30 @@
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     CGFloat width = (collectionViewWidth/(float)self.numberOfColumns);
     return CGSizeMake(width, width);
+}
+
+#pragma mark - KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isKindOfClass:[ConnectionManager class]]) {
+        if ([keyPath isEqualToString:NSStringFromSelector(@selector(isUserLoggedIn))]) {
+            BOOL userLoggedIn = [[ConnectionManager sharedManager] isUserLoggedIn];
+            if (userLoggedIn) {
+                [self fetchResource];
+            } else {
+                self.page = 1;
+                self.fetchedResultsController = nil;
+                self.fetchRequest = nil;
+                self.predicate = nil;
+                self.mainContext = nil;
+                self.dataSource = nil;
+            }
+        } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {
+            if ([[ConnectionManager sharedManager] isShowingLoginPage]) {
+                self.isFetching = NO;
+            }
+        }
+    }
 }
 
 @end

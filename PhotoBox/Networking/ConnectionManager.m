@@ -15,12 +15,6 @@ NSString *consumerTokenIdentifier = @"photobox.consumer.token";
 NSString *oauthTokenIdentifier = @"photobox.oauth.token";
 NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessTokenDidAcquired";
 
-@interface ConnectionManager ()
-
-@property (nonatomic, assign) BOOL isShowingLoginPage;
-
-@end
-
 @implementation ConnectionManager
 
 + (ConnectionManager *)sharedManager {
@@ -95,6 +89,9 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
         if (_oauthToken) {
             [AFOAuth1Token storeCredential:_oauthToken withIdentifier:oauthTokenIdentifier];
         }
+        [self willChangeValueForKey:NSStringFromSelector(@selector(isUserLoggedIn))];
+        _userLoggedIn = _oauthToken?YES:NO;
+        [self didChangeValueForKey:NSStringFromSelector(@selector(isUserLoggedIn))];
     }
 }
 
@@ -117,21 +114,19 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [self removeConsumerTokenWithIdentifier:consumerTokenIdentifier];
 }
 
-- (BOOL)isUserLoggedIn {
-    return self.oauthToken?YES:NO;
-}
-
 - (void)logout {
     [self deleteTokens];
     self.baseURL = nil;
     [[PhotoBoxClient sharedClient] setAccessToken:nil];
     [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
     [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
+    [NSPersistentStoreCoordinator clearPersistentStore];
 }
 
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
     [self setBaseURL:[NSURL URLWithString:serverStringURL]];
     [[PhotoBoxClient sharedClient] setValue:self.baseURL forKey:@"baseURL"];
+    NSAssert([[[[PhotoBoxClient sharedClient] baseURL] absoluteString] isEqualToString:self.baseURL.absoluteString], @"Expected base url: %@. Actual: %@", self.baseURL.absoluteString, [[[PhotoBoxClient sharedClient] baseURL] absoluteString]);
     [[UIApplication sharedApplication] openURL:[[self class] oAuthInitialUrlForServer:serverStringURL]];
 }
 
@@ -172,7 +167,9 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId {
     if (!self.isShowingLoginPage) {
+        [self willChangeValueForKey:@"isShowingLoginPage"];
         self.isShowingLoginPage = YES;
+        [self didChangeValueForKey:@"isShowingLoginPage"];
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *viewController = [mainStoryboard instantiateViewControllerWithIdentifier:storyboardId];
         UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
@@ -181,7 +178,9 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 }
 
 - (void)accessTokenDidFetchNotification:(NSNotification *)notification {
+    [self willChangeValueForKey:@"isShowingLoginPage"];
     self.isShowingLoginPage = NO;
+    [self didChangeValueForKey:@"isShowingLoginPage"];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
     

@@ -30,9 +30,9 @@
 
 - (void)testIsURL
 {
-    NSString *url = @"http://nicnocquee.trovebox.com";
+    NSString *url = @"http://somebody.trovebox.com";
     XCTAssertTrue([url isValidURL], @"URL should be valid");
-    url = @"nicnocquee.trovebox.com";
+    url = @"somebody.trovebox.com";
     XCTAssertTrue([url isValidURL], @"URL should be valid");
 }
 

@@ -10,6 +10,7 @@
 
 #import "PhotosHorizontalScrollingViewController.h"
 #import "PhotosViewController.h"
+#import "UIView+Additionals.h"
 
 #define ANIMATED_IMAGE_VIEW_ON_PUSH_TAG 456812
 
@@ -79,43 +80,50 @@
     PhotosViewController *toVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
+    // get the container view where the animation will happen
     UIView *containerView = transitionContext.containerView;
     
     // when push and pop quickly, there still the image view from push
     UIView *animatedImageViewOnPush = [containerView viewWithTag:ANIMATED_IMAGE_VIEW_ON_PUSH_TAG];
     [animatedImageViewOnPush removeFromSuperview];
     
+    // put the destination view controller's view under the starting view controller's view
     [containerView insertSubview:toVC.view belowSubview:fromVC.view];
     
+    // the rect of the image view in photos view controller
     CGRect endRect = [toVC endRectInContainerView:containerView];
-    CGRect startRect = [fromVC startRectInContainerView:containerView];
     
-    UIView *viewToAnimate = [fromVC viewToAnimate];
-    
-    UIGraphicsBeginImageContext(viewToAnimate.frame.size);
-    [viewToAnimate.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    CGImageRef imageRef = CGImageCreateWithImageInRect([screenshot CGImage], startRect);
-    UIImage *result = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    UIImageView *screenshotImage = [[UIImageView alloc] initWithImage:result];
-    [screenshotImage setFrame:startRect];
-    
+    // white view to give the fade from white effect
     UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
-    
     [containerView addSubview:whiteView];
     
-    [containerView addSubview:screenshotImage];
+    // the view to animate which is the image view inside the scroll view of PhotoZoomableCell
+    UIImageView *viewToAnimate = (UIImageView *)[fromVC viewToAnimate];
+    [viewToAnimate setContentMode:UIViewContentModeScaleAspectFill];
+    [viewToAnimate setClipsToBounds:YES];
     
+    // get the rect of the image view in containerView's coordinate
+    CGRect inContainerViewRect = [viewToAnimate convertRect:viewToAnimate.bounds toView:containerView];
+    
+    // set zoom scale to 1 to get the original frame/bounds of image view
+    UIScrollView *scrollView = (UIScrollView *)[viewToAnimate superview];
+    [scrollView setZoomScale:1];
+    
+    // remove the image view from scroll view then move it to containerView
+    [viewToAnimate removeFromSuperview];
+    [containerView addSubview:viewToAnimate];
+    
+    // set the frame of the image view in container's view coordinate
+    [viewToAnimate setFrame:inContainerViewRect];
+    
+    // start the animation
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        [screenshotImage setFrame:endRect];
+        [viewToAnimate setFrame:endRect];
         [fromVC.view setAlpha:0];
     } completion:^(BOOL finished) {
         [whiteView removeFromSuperview];
-        [screenshotImage removeFromSuperview];
+        [viewToAnimate removeFromSuperview];
         [fromVC.view removeFromSuperview];
         [transitionContext completeTransition:YES];
     }];

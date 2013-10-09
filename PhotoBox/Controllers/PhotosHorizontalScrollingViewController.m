@@ -94,11 +94,7 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    NSAssert(self.items!=nil, @"Items should not be nil here");
-    int index = [self.items indexOfObject:self.firstShownPhoto];
-    if (index != NSNotFound) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
-    }
+    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -127,6 +123,18 @@
 
 - (NSString *)resourceId {
     return self.item.itemId;
+}
+
+- (NSString *)relationshipKeyPathWithItem {
+    return @"albums";
+}
+
+- (NSArray *)sortDescriptors {
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:YES]];
+}
+
+- (Class)resourceClass {
+    return [Photo class];
 }
 
 
@@ -180,7 +188,7 @@
     if (self.previousPage != page) {
         self.previousPage = page;
         [self showViewOriginalButtonForPage:page];
-        Photo *photo = (Photo *)[self.items objectAtIndex:page];
+        Photo *photo = (Photo *)[self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
@@ -222,8 +230,13 @@
 
 #pragma mark - Custom Animation Transition Delegate
 
+- (PhotoZoomableCell *)currentCell {
+    NSInteger page = [self currentCollectionViewPage:self.collectionView];
+    return (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+}
+
 - (UIView *)viewToAnimate {
-    return self.navigationController.view;
+    return [self currentCell].thisImageview;
 }
 
 - (UIImage *)imageToAnimate {
@@ -231,7 +244,8 @@
 }
 
 - (CGRect)startRectInContainerView:(UIView *)view {
-    return CGRectInset(view.frame, 0, (CGRectGetHeight(view.frame)-CGRectGetWidth(view.frame))/2);
+    PhotoZoomableCell *cell = [self currentCell];
+    return cell.thisImageview.frame;
 }
 
 - (CGRect)endRectInContainerView:(UIView *)view {

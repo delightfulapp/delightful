@@ -21,6 +21,7 @@
 @interface PhotosHorizontalScrollingViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
 @property (nonatomic, strong) Photo *firstShownPhoto;
+@property (nonatomic, assign) NSInteger firstShownPhotoIndex;
 @property (nonatomic, weak) id<PhotosHorizontalScrollingViewControllerDelegate>delegate;
 
 @end
