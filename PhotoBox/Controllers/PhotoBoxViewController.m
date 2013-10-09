@@ -158,7 +158,7 @@
 }
 
 - (NSPredicate *)predicate {
-    if (self.item) {
+    if (self.item && ![self.item.itemId isEqualToString:PBX_allAlbumIdentifier]) {
         if (!_predicate) {
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }

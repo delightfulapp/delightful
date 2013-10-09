@@ -11,4 +11,6 @@
 
 #define ARRAY_SEPARATOR @"\t"
 
+extern NSString *PBX_allAlbumIdentifier;
+
 #endif
