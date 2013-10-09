@@ -15,7 +15,7 @@ PODS:
   - NSDate+TimeAgo (1.0.2)
   - NSDate-Escort (1.2.0)
   - OCMock (2.2.1)
-  - OGCoreDataStack (0.1.6)
+  - OGCoreDataStack (0.1.7)
   - Overcoat (1.1):
     - AFNetworking (~> 1.3.1)
     - Mantle (~> 1.3)
@@ -30,7 +30,7 @@ DEPENDENCIES:
   - NSDate+TimeAgo
   - NSDate-Escort
   - OCMock (~> 2.2.1)
-  - OGCoreDataStack (from `https://github.com/nicnocquee/OGCoreDataStack`)
+  - OGCoreDataStack
   - Overcoat
   - UIColor+MLPFlatColors (~> 1.0)
   - UIView+AutoLayout
@@ -38,8 +38,6 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   NPRImageView:
     :git: https://github.com/nicnocquee/NPRImageView
-  OGCoreDataStack:
-    :git: https://github.com/nicnocquee/OGCoreDataStack
 
 SPEC CHECKSUMS:
   AFNetworking: 0700ec7a58c36ad217173e167f6e4df7270df66b
@@ -51,9 +49,9 @@ SPEC CHECKSUMS:
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
   NSDate-Escort: f940f313d71ac25a20c126170074b576df391340
   OCMock: 80e4cfbc71a0e1bd28caf10a9fda27da7c4c8402
-  OGCoreDataStack: d33180800d3773c77040b550f1cfd8c0ff9925c5
+  OGCoreDataStack: 11d2f401c3e1fa378346ec00131bc90c8cd618d9
   Overcoat: 4839bdbe2274a9451f6cedaf8c17742d2ab82818
   UIColor+MLPFlatColors: 8631d7f050b0e5afd9af178a60319891c5113d0e
   UIView+AutoLayout: 3cc41c765991cce7cbeee8e70194f228e22eeb82
 
-COCOAPODS: 0.25.0
+COCOAPODS: 0.26.1

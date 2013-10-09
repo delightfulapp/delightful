@@ -52,7 +52,7 @@
 #define COCOAPODS_POD_AVAILABLE_OGCoreDataStack
 #define COCOAPODS_VERSION_MAJOR_OGCoreDataStack 0
 #define COCOAPODS_VERSION_MINOR_OGCoreDataStack 1
-#define COCOAPODS_VERSION_PATCH_OGCoreDataStack 6
+#define COCOAPODS_VERSION_PATCH_OGCoreDataStack 7
 
 // Overcoat
 #define COCOAPODS_POD_AVAILABLE_Overcoat
