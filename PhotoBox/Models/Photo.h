@@ -45,7 +45,7 @@
 @property (nonatomic, copy, readonly) NSNumber *views;
 @property (nonatomic, copy, readonly) NSNumber *width;
 @property (nonatomic, copy, readonly) NSNumber *height;
-@property (nonatomic, copy, readonly) PhotoBoxImage *photo200x200xCR;
+@property (nonatomic, copy, readonly) PhotoBoxImage *photo200x200;
 @property (nonatomic, copy, readonly) PhotoBoxImage *photo640x640;
 
 @property (nonatomic, copy, readonly) PhotoBoxImage *thumbnailImage;

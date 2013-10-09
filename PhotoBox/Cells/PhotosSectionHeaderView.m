@@ -29,6 +29,8 @@
     [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
     [self.locationLabel setText:nil];
+    [self.titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [self.titleLabel setNumberOfLines:2];
 }
 
 - (void)dealloc {
@@ -44,9 +46,14 @@
 }
 
 - (void)setLocation:(CLPlacemark *)placemark {
-    NSString *location = placemark.locality;
-    if (!location) location = placemark.name;
-    [self.locationLabel setText:[NSString stringWithFormat:@"%@, %@", location, placemark.country]];
+    if (placemark) {
+        NSString *location = placemark.locality;
+        if (!location) location = placemark.name;
+        location = [NSString stringWithFormat:@"%@, %@", location, placemark.country];
+        [self.titleLabel setText:[NSString stringWithFormat:@"%@\n%@", self.titleLabel.text, location]];
+    } else {
+        [self.titleLabel setText:self.titleLabelText];
+    }
 }
 
 - (void)setHideLocation:(BOOL)hideLocation {

@@ -45,7 +45,9 @@
     [self setupPinchGesture];
     [self setupNavigationItemTitle];
     
-    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+    if (!self.disableFetchOnLoad) {
+        [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -142,7 +144,7 @@
     return configureCell;
 }
 
-- (CollectionViewCellConfigureBlock)headerCellConfigureBlock {
+- (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     return nil;
 }
 
@@ -158,7 +160,7 @@
 }
 
 - (NSPredicate *)predicate {
-    if (self.item) {
+    if (self.item && ![self.item.itemId isEqualToString:PBX_allAlbumIdentifier]) {
         if (!_predicate) {
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }

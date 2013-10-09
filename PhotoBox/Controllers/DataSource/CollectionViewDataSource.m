@@ -57,7 +57,7 @@
     if (self.configureCellHeaderBlock) {
         id<NSFetchedResultsSectionInfo>  section = self.fetchedResultsController.sections[indexPath.section];
         NSString *title = [section name];
-        self.configureCellHeaderBlock(supplementaryView, title);
+        self.configureCellHeaderBlock(supplementaryView, title,indexPath);
     }
     return supplementaryView;
 }

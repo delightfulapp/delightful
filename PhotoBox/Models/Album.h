@@ -18,8 +18,6 @@ typedef NS_ENUM(NSUInteger, AlbumCoverType) {
 
 #import "PhotoBoxModel.h"
 
-extern NSString *PBX_allAlbumIdentifier;
-
 @class Photo;
 
 @interface Album : PhotoBoxModel
