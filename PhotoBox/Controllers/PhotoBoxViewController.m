@@ -45,7 +45,9 @@
     [self setupPinchGesture];
     [self setupNavigationItemTitle];
     
-    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+    if (!self.disableFetchOnLoad) {
+        [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -26,6 +26,7 @@
 
 - (void)viewDidLoad
 {
+    self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
     self.previousPage = 0;

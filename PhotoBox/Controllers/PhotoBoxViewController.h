@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isFetching;
+@property (nonatomic, assign) BOOL disableFetchOnLoad;
 @property (nonatomic, assign) int numberOfColumns;
 
 @property (nonatomic, assign) int totalPages;
