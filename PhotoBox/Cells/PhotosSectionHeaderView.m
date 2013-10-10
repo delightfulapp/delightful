@@ -50,7 +50,7 @@
         NSString *location = placemark.locality;
         if (!location) location = placemark.name;
         location = [NSString stringWithFormat:@"%@, %@", location, placemark.country];
-        [self.titleLabel setText:[NSString stringWithFormat:@"%@\n%@", self.titleLabel.text, location]];
+        [self.titleLabel setText:[NSString stringWithFormat:@"%@\n%@", self.titleLabelText, location]];
     } else {
         [self.titleLabel setText:self.titleLabelText];
     }

@@ -23,6 +23,7 @@
 }
 
 @property (nonatomic, assign, readonly) int pageSize;
+@property (nonatomic, strong) UIActivityIndicatorView *loadingView;
 
 @end
 
@@ -197,6 +198,14 @@
     return _pageSize;
 }
 
+- (UIActivityIndicatorView *)loadingView {
+    if (!_loadingView) {
+        _loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [_loadingView setHidesWhenStopped:YES];
+    }
+    return _loadingView;
+}
+
 #pragma mark - Setter
 
 - (void)setAttributedTitle:(NSAttributedString *)title {
@@ -290,11 +299,13 @@
 - (void)showLoadingView:(BOOL)show {
     if (self.page==1) {
         if (show) {
-            [self.refreshControl beginRefreshing];
-            [self.refreshControl setHidden:NO];
+            if (!self.navigationItem.rightBarButtonItem) {
+                UIBarButtonItem *loadingItem = [[UIBarButtonItem alloc] initWithCustomView:self.loadingView];
+                [self.navigationItem setRightBarButtonItem:loadingItem];
+            }
+            [self.loadingView startAnimating];
         } else {
-            [self.refreshControl endRefreshing];
-            [self.collectionView.collectionViewLayout invalidateLayout];
+            [self.loadingView stopAnimating];
         }
     } else {
         [self showLoadingView:show atBottomOfScrollView:YES];
