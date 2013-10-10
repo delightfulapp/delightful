@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) int totalItems;
 @property (nonatomic, assign) int currentPage;
 @property (nonatomic, assign) int currentRow;
+@property (nonatomic, assign, readonly) int pageSize;
 
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
@@ -59,4 +60,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)didFetchItems;
 - (void)setupDataSourceConfigureBlock;
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
+
+- (BOOL)isGallery ;
 @end

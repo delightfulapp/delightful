@@ -22,7 +22,6 @@
     CGFloat lastOffset;
 }
 
-@property (nonatomic, assign, readonly) int pageSize;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
 
 @end
@@ -39,6 +38,7 @@
         self.page = 1;
     }
     self.numberOfColumns = 2;
+    _pageSize = 20;
     
     [self setupConnectionManager];
     [self setupCollectionView];
@@ -121,7 +121,7 @@
 
 - (CollectionViewDataSource *)dataSource {
     if (!_dataSource) {
-        self.dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
+        _dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
         [_dataSource setFetchedResultsController:self.fetchedResultsController];
         [self setupDataSourceConfigureBlock];
         [_dataSource setCellIdentifier:self.cellIdentifier];
@@ -156,12 +156,13 @@
         if (self.predicate) {
             [_fetchRequest setPredicate:self.predicate];
         }
+        [_fetchRequest setFetchLimit:self.pageSize];
     }
     return _fetchRequest;
 }
 
 - (NSPredicate *)predicate {
-    if (self.item && ![self.item.itemId isEqualToString:PBX_allAlbumIdentifier]) {
+    if (self.item && ![self isGallery]) {
         if (!_predicate) {
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }
@@ -186,16 +187,6 @@
 
 - (NSArray *)items {
     return self.fetchedResultsController.fetchedObjects;
-}
-
-- (int)pageSize {
-    if (self.page == 1) {
-        _pageSize = 20;
-        if (self.fetchedResultsController.fetchedObjects.count > 0) {
-            _pageSize = self.fetchedResultsController.fetchedObjects.count;
-        }
-    }
-    return _pageSize;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -232,7 +223,7 @@
 
 - (void)fetchResource {
     [self showLoadingView:YES];
-
+    
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction
                                     resourceId:self.resourceId
@@ -261,16 +252,26 @@
 }
 
 - (void)fetchMore {
-    if (!self.isFetching) {
+        if (!self.isFetching) {
         int count = [self.dataSource numberOfItems];
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
                 self.page++;
-                [self fetchResource];
+
+                [self loadItemsFromCoreData];
+                
+                [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
             }
         }
     }
+}
+
+- (void)loadItemsFromCoreData {
+    [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
+    [self.dataSource.fetchedResultsController performFetch:NULL];
+    [self.collectionView reloadData];
+    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
 }
 
 - (void)processPaginationFromObjects:(id)objects {
@@ -372,6 +373,26 @@
         }];
     }
     
+}
+
+#pragma mark - Photos page stuff
+
+- (BOOL)isGallery {
+    return ([self.item.itemId isEqualToString:PBX_allAlbumIdentifier])?YES:NO;
+}
+
+- (NSArray *)sortDescriptors {
+    NSMutableArray *sorts = [NSMutableArray array];
+    
+    NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:([self isGallery])?NO:YES];
+    [sorts addObject:dateTakenStringSort];
+    
+    if ([self isGallery]) {
+        NSSortDescriptor *uploadedSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateUploaded)) ascending:NO];
+        [sorts addObject:uploadedSort];
+    }
+    
+    return sorts;
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate

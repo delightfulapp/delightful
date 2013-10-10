@@ -263,7 +263,6 @@
     _paused = paused;
     if (paused) {
         self.fetchedResultsController.delegate = nil;
-        NSLog(@"Stopping fcr delegate");
     } else {
         self.fetchedResultsController.delegate = self;
         [self.fetchedResultsController performFetch:NULL];
