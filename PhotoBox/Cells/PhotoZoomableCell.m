@@ -69,7 +69,7 @@
         frame;
     });
     [self.thisImageview setNeedsLayout];
-    [self.scrollView setContentSize:CGSizeMake(size.width-1, size.height-1)];
+    [self.scrollView setContentSize:CGSizeMake(size.width, size.height)];
     
     self.scrollView.minimumZoomScale = ({
         CGRect scrollViewFrame = self.scrollView.frame;
