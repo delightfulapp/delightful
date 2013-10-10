@@ -99,7 +99,7 @@
 }
 
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:NO]];
 }
 
 - (void)didFetchItems {

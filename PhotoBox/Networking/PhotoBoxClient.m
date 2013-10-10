@@ -122,7 +122,7 @@
     
     NSString *album = [NSString stringWithFormat:@"/album-%@", albumId];
     if ([albumId isEqualToString:PBX_allAlbumIdentifier]) album = @"";
-    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&pageSize=%d&%@", album, page, pageSize, [self photoSizesString]];
+    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&pageSize=%d&%@&%@", album, page, pageSize, [self sortByQueryString:@"dateTaken,DESC"], [self photoSizesString]];
     
     [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (!error) {
@@ -189,6 +189,10 @@ NSString *stringWithActionType(ActionType input) {
                        @"640x640"
                        ];
     return AFQueryStringFromParametersWithEncoding(@{@"returnSizes": [sizes componentsJoinedByString:@","]}, NSUTF8StringEncoding);
+}
+
+- (NSString *)sortByQueryString:(NSString *)sortBy {
+    return AFQueryStringFromParametersWithEncoding(@{@"sortBy": sortBy}, NSUTF8StringEncoding);
 }
 
 #pragma mark - Oauth1Client
