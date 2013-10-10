@@ -45,7 +45,7 @@
     XCTAssert([photo.dateUploadedMonth intValue]==[photoDictionary[@"dateUploadedMonth"] intValue], @"Expected %d. Actual %d", [photoDictionary[@"dateUploadedMonth"] intValue], [photo.dateUploadedMonth intValue]);
     XCTAssertTrue(photo.thumbnailImage, @"Expected thumbnail image");
     XCTAssert(photo.albums.count == ((NSArray *)[photoDictionary objectForKey:@"albums"]).count, @"Expected %d albums. Actual %d.",  ((NSArray *)[photoDictionary objectForKey:@"albums"]).count, photo.albums.count);
-    XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:[photoDictionary objectForKey:@"path200x200xCR"]], @"Expected thumbnail image url %@. Actual %@", [photoDictionary objectForKey:@"path200x200xCR"], photo.thumbnailImage.urlString);
+    XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:[photoDictionary objectForKey:@"path320x320"]], @"Expected thumbnail image url %@. Actual %@", [photoDictionary objectForKey:@"path320x320"], photo.thumbnailImage.urlString);
     XCTAssertTrue([photo.normalImage.urlString isEqualToString:[photoDictionary objectForKey:@"path640x640"]], @"Expected normal image url %@. Actual %@", [photoDictionary objectForKey:@"path640x640"], photo.normalImage.urlString);
     XCTAssert([photo.dateTakenString isEqualToString:@"2013-06-03"], @"Expected date taken string: 2013-06-03. Actual = %@", photo.dateTakenString);
 }

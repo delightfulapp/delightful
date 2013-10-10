@@ -41,7 +41,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    self.numberOfColumns = 3;
     [self setPhotosCount:0 max:0];
 }
 
@@ -75,7 +75,7 @@
 }
 
 - (NSString *)groupKey {
-    return @"dateTakenString";
+    return NSStringFromSelector(@selector(dateTakenString));
 }
 
 - (NSString *)sectionHeaderIdentifier {
@@ -96,10 +96,6 @@
 
 - (NSString *)relationshipKeyPathWithItem {
     return @"albums";
-}
-
-- (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:NO]];
 }
 
 - (void)didFetchItems {

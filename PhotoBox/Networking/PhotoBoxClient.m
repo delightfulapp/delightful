@@ -105,7 +105,7 @@
                 pageSize:(int)pageSize
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d",page, pageSize] parameters:nil resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (!error) {
             successBlock(responseObject);
         } else {
@@ -120,10 +120,9 @@
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
     
-    NSString *album = [NSString stringWithFormat:@"/album-%@", albumId];
+    NSString *album = [NSString stringWithFormat:@"&%@", [self albumsQueryString:albumId]];
     if ([albumId isEqualToString:PBX_allAlbumIdentifier]) album = @"";
-    NSString *path = [NSString stringWithFormat:@"/photos%@/list.json?page=%d&pageSize=%d&%@&%@", album, page, pageSize, [self sortByQueryString:@"dateTaken,DESC"], [self photoSizesString]];
-    
+    NSString *path = [NSString stringWithFormat:@"/v1/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, [self sortByQueryString:@"dateUploaded,DESC"], [self photoSizesString], album];
     [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (!error) {
             successBlock(responseObject);
@@ -185,7 +184,7 @@ NSString *stringWithActionType(ActionType input) {
 }
 
 - (NSString *)photoSizesString {
-    NSArray *sizes = @[@"200x200",
+    NSArray *sizes = @[@"320x320",
                        @"640x640"
                        ];
     return AFQueryStringFromParametersWithEncoding(@{@"returnSizes": [sizes componentsJoinedByString:@","]}, NSUTF8StringEncoding);
@@ -193,6 +192,10 @@ NSString *stringWithActionType(ActionType input) {
 
 - (NSString *)sortByQueryString:(NSString *)sortBy {
     return AFQueryStringFromParametersWithEncoding(@{@"sortBy": sortBy}, NSUTF8StringEncoding);
+}
+
+- (NSString *)albumsQueryString:(NSString *)album {
+    return AFQueryStringFromParametersWithEncoding(@{@"album": album}, NSUTF8StringEncoding);
 }
 
 #pragma mark - Oauth1Client

@@ -8,14 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, AlbumCoverType) {
-    path100x100,
-    path100x100xCR,
-    path200x200,
-    path200x200xCR,
-    pathOriginal
-};
-
 #import "PhotoBoxModel.h"
 
 @class Photo;

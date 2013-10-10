@@ -95,7 +95,12 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    } else {
+        NSLog(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,14 +135,13 @@
     return @"albums";
 }
 
-- (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"dateTaken" ascending:NO]];
-}
-
 - (Class)resourceClass {
     return [Photo class];
 }
 
+- (int)pageSize {
+    return 0;
+}
 
 #pragma mark - Scroll View
 

@@ -43,7 +43,7 @@
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="views" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="width" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="photo200x200" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBXPhotoBoxImage" syncable="YES"/>
+        <relationship name="photo320x320" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBXPhotoBoxImage" syncable="YES"/>
         <relationship name="photo640x640" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PBXPhotoBoxImage" syncable="YES"/>
     </entity>
     <entity name="PBXPhotoBoxImage" representedClassName="" syncable="YES">
