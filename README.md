@@ -21,6 +21,7 @@ Features (so far)
 5. Reverse Geocoding! If there is a photo with location within photos taken at the same date, the location name will be shown next to the date. Just like that of iOS 7 Photos app.
 6. Browse All Photos.
 7. Parallax effect on login page!
+8. Core data support a.k.a you can see your photos and albums offline.
 
 
 Requirements
