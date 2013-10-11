@@ -19,6 +19,7 @@
 #import "PhotosHorizontalScrollingViewController.h"
 
 #import "UIView+Additionals.h"
+#import "NSString+Additionals.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
@@ -54,7 +55,7 @@
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
-        [cell setTitleLabelText:item];
+        [cell setTitleLabelText:[item localizedDate]];
         if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
             [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
         } else {

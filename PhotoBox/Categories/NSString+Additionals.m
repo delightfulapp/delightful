@@ -41,4 +41,14 @@
     return nil;
 }
 
+- (NSDate *)date {
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"yyyy-MM-dd"];
+    return [df dateFromString:self];
+}
+
+- (NSString *)localizedDate {
+    return [NSDateFormatter localizedStringFromDate:[self date] dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
+}
+
 @end
