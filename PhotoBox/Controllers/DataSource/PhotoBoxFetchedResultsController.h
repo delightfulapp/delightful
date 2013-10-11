@@ -14,4 +14,6 @@
 @property (nonatomic, assign) Class objectClass;
 @property (nonatomic, strong) NSCache *mantleItemsCache;
 
+- (id)mantleObjectAtIndexPath:(NSIndexPath *)indexPath;
+
 @end

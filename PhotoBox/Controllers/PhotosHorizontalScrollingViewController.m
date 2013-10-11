@@ -26,6 +26,8 @@
 
 - (void)viewDidLoad
 {
+    [self adjustCollectionViewWidthToHavePhotosSpacing];
+    
     self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
@@ -92,6 +94,14 @@
     } else {
         [self.navigationItem setRightBarButtonItem:nil];
     }
+}
+
+- (void)adjustCollectionViewWidthToHavePhotosSpacing {
+    self.collectionView.frame = ({
+        CGRect frame = self.collectionView.frame;
+        frame.size.width += PHOTO_SPACING;
+        frame;
+    });
 }
 
 - (void)scrollToFirstShownPhoto {
@@ -182,20 +192,27 @@
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return PHOTO_SPACING;
+}
+
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = collectionView.frame.size.width;
+    CGFloat width = collectionView.frame.size.width-PHOTO_SPACING;
     CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
     return CGSizeMake(width, height);
 }
+
+#pragma mark - Scroll view
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         self.previousPage = page;
         [self showViewOriginalButtonForPage:page];
-        Photo *photo = (Photo *)[self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
+                NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }
         } else {

@@ -33,7 +33,11 @@
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];;
+    return [self.fetchedResultsController mantleObjectAtIndexPath:indexPath];;
+}
+
+- (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {

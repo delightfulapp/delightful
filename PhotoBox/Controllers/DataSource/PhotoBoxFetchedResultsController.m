@@ -28,8 +28,8 @@
 
 @implementation PhotoBoxFetchedResultsController
 
-- (id)objectAtIndexPath:(NSIndexPath *)indexPath {
-    NSManagedObject *managedObject = [super objectAtIndexPath:indexPath];
+- (id)mantleObjectAtIndexPath:(NSIndexPath *)indexPath {
+    NSManagedObject *managedObject = [self objectAtIndexPath:indexPath];
     
     NSString *key = [managedObject valueForKey:self.itemKey];
     ModelManagedObject *object = [self.mantleItemsCache objectForKey:key];
