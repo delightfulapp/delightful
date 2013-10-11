@@ -48,7 +48,7 @@
 }
 
 - (NSString *)localizedDate {
-    return [NSDateFormatter localizedStringFromDate:[self date] dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterNoStyle];
+    return [NSDateFormatter localizedStringFromDate:[self date] dateStyle:NSDateFormatterLongStyle timeStyle:NSDateFormatterNoStyle];
 }
 
 @end
