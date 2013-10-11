@@ -9,6 +9,7 @@
 #import "PhotosSectionHeaderView.h"
 #import <UIView+AutoLayout.h>
 #import "LocationManager.h"
+#import <AMBlurView.h>
 
 @implementation PhotosSectionHeaderView
 
@@ -31,6 +32,10 @@
     [self.locationLabel setText:nil];
     [self.titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.titleLabel setNumberOfLines:2];
+    
+    [self.blurView setBlurTintColor:[UIColor whiteColor]];
+    [self.titleLabel setTextColor:[UIColor redColor]];
+    [self.locationLabel setTextColor:[UIColor redColor]];
 }
 
 - (void)dealloc {
