@@ -23,7 +23,8 @@
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
-@property (nonatomic, strong) PhotoBoxCell *selectedItem;
+@property (nonatomic, strong) PhotoBoxCell *selectedCell;
+@property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) NSMutableDictionary *locationDictionary;
 @property (nonatomic, strong) NSMutableDictionary *placemarkDictionary;
 @end
@@ -105,6 +106,7 @@
     [self getLocationForEachSection];
 }
 
+#pragma mark - Setters
 
 - (void)setPhotosCount:(int)count max:(int)max{
     NSString *title = NSLocalizedString(@"Photos", nil);
@@ -117,6 +119,11 @@
     } else {
         [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"%1$d of %2$d", nil), count, max]];
     }
+}
+
+- (void)setSelectedItemRectAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    self.selectedItemRect = attributes.frame;
 }
 
 #pragma mark - Header Things
@@ -135,22 +142,27 @@
         [destination setFirstShownPhoto:cell.item];
         [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
         [destination setDelegate:self];
-        self.selectedItem = cell;
+        
+        self.selectedCell = cell;
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+        [self setSelectedItemRectAtIndexPath:indexPath];
     }
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate
 
 - (UIImage *)imageToAnimate {
-    return self.selectedItem.cellImageView.image;
+    return self.selectedCell.cellImageView.image;
 }
 
 - (CGRect)startRectInContainerView:(UIView *)containerView {
-    return [self.selectedItem convertFrameRectToView:containerView];
+    return [self.selectedCell convertFrameRectToView:containerView];
 }
 
 - (CGRect)endRectInContainerView:(UIView *)containerView {
-    return [self.selectedItem convertFrameRectToView:containerView];
+    CGRect originalPosition = CGRectOffset(self.selectedItemRect, 0, self.collectionView.contentInset.top);
+    CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+    return CGRectOffset(originalPosition, 0, -adjustment);
 }
 
 - (UIView *)viewToAnimate {
@@ -162,7 +174,8 @@
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-    self.selectedItem = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
+    
+    [self setSelectedItemRectAtIndexPath:indexPath];
 }
 
 #pragma mark - Location
