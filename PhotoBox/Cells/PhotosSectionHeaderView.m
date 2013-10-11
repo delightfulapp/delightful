@@ -11,6 +11,8 @@
 #import "LocationManager.h"
 #import <AMBlurView.h>
 
+#import "UIColor+Additionals.h"
+
 @implementation PhotosSectionHeaderView
 
 - (id)initWithFrame:(CGRect)frame
@@ -35,7 +37,7 @@
     
     [self.blurView setBlurTintColor:[UIColor whiteColor]];
     [self.titleLabel setTextColor:[UIColor redColor]];
-    [self.locationLabel setTextColor:[UIColor redColor]];
+    [self.locationLabel setTextColor:[[UIColor redColor] lighterColor]];
 }
 
 - (void)dealloc {
@@ -55,10 +57,27 @@
         NSString *location = placemark.locality;
         if (!location) location = placemark.name;
         location = [NSString stringWithFormat:@"%@, %@", location, placemark.country];
-        [self.titleLabel setText:[NSString stringWithFormat:@"%@\n%@", self.titleLabelText, location]];
+        [self.titleLabel setAttributedText:[self attributedStringWithTitle:self.titleLabelText location:location]];
     } else {
-        [self.titleLabel setText:self.titleLabelText];
+        [self.titleLabel setAttributedText:[self attributedStringWithTitle:self.titleLabelText location:nil]];
     }
+}
+
+- (NSAttributedString *)attributedStringWithTitle:(NSString *)title location:(NSString *)location {
+    NSString *text = title;
+    if (location) {
+        text = [NSString stringWithFormat:@"%@\n%@", text, location];
+    }
+    
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
+    [string addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] range:[text rangeOfString:title]];
+    if (location) {
+        NSRange locationRange = [text rangeOfString:location];
+        [string addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:8] range:locationRange];
+        [string addAttribute:NSForegroundColorAttributeName value:[[UIColor redColor] lighterColor] range:locationRange];
+    }
+    
+    return string;
 }
 
 - (void)setHideLocation:(BOOL)hideLocation {
