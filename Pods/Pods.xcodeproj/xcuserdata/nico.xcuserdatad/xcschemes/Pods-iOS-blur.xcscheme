@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2323D2DF68924F668977D7E7"
+               BlueprintIdentifier = "B935EE5C105541469EC24637"
                BuildableName = "libPods-iOS-blur.a"
                BlueprintName = "Pods-iOS-blur"
                ReferencedContainer = "container:Pods.xcodeproj">
