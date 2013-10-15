@@ -9,8 +9,6 @@
 #import "CollectionViewDataSource.h"
 
 @interface CollectionViewDataSource () <NSFetchedResultsControllerDelegate> {
-    NSMutableArray *_objectChanges;
-    NSMutableArray *_sectionChanges;
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -24,16 +22,13 @@
     if (self) {
         _collectionView = collectionView;
         _collectionView.dataSource = self;
-        
-        _objectChanges = [NSMutableArray array];
-        _sectionChanges = [NSMutableArray array];
     }
     return self;
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.fetchedResultsController mantleObjectAtIndexPath:indexPath];;
+    return [self.fetchedResultsController mantleObjectAtIndexPath:indexPath];
 }
 
 - (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -66,163 +61,22 @@
     return supplementaryView;
 }
 
-#pragma mark - NSFetchedResultsController 
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    NSLog(@"controller did change section");
-    NSMutableDictionary *change = [NSMutableDictionary new];
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            change[@(type)] = @(sectionIndex);
-            break;
-        case NSFetchedResultsChangeDelete:
-            change[@(type)] = @(sectionIndex);
-            break;
-    }
-    
-    [_sectionChanges addObject:change];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    NSMutableDictionary *change = [NSMutableDictionary new];
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            NSLog(@"Controller did insert object: %@", newIndexPath);
-            change[@(type)] = newIndexPath;
-            break;
-        case NSFetchedResultsChangeDelete:
-            NSLog(@"Controller did delete object %@", newIndexPath);
-            change[@(type)] = indexPath;
-            break;
-        case NSFetchedResultsChangeUpdate:
-            NSLog(@"Controller did update object %@", newIndexPath);
-            change[@(type)] = indexPath;
-            break;
-        case NSFetchedResultsChangeMove:
-            NSLog(@"Controller did move object %@", newIndexPath);
-            change[@(type)] = @[indexPath, newIndexPath];
-            break;
-    }
-    [self.fetchedResultsController.mantleItemsCache removeObjectForKey:anObject];
-    [_objectChanges addObject:change];
-}
+#pragma mark - NSFetchedResultsController
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
-    NSLog(@"Controller did change content");
-    [self.collectionView reloadData];
-    return;
-    if ([_sectionChanges count] > 0)
-    {
-        [self.collectionView performBatchUpdates:^{
-            
-            for (NSDictionary *change in _sectionChanges)
-            {
-                [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                    
-                    NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                    switch (type)
-                    {
-                        case NSFetchedResultsChangeInsert:
-                            [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                            break;
-                        case NSFetchedResultsChangeDelete:
-                            [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                            break;
-                        case NSFetchedResultsChangeUpdate:
-                            [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                            break;
-                    }
-                }];
+    // cache all the MTLModels so that itemAtIndexPath: will be fast
+    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
+        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
+            @autoreleasepool {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
+                [self itemAtIndexPath:indexPath];
             }
-        } completion:nil];
-    }
-    
-    if ([_objectChanges count] > 0 && [_sectionChanges count] == 0)
-    {
-        
-        if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.collectionView.window == nil) {
-            // This is to prevent a bug in UICollectionView from occurring.
-            // The bug presents itself when inserting the first object or deleting the last object in a collection view.
-            // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure
-            // This code should be removed once the bug has been fixed, it is tracked in OpenRadar
-            // http://openradar.appspot.com/12954582
-            [self.collectionView reloadData];
-            
-        } else {
-            
-            [self.collectionView performBatchUpdates:^{
-                
-                for (NSDictionary *change in _objectChanges)
-                {
-                    [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                        
-                        NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                        switch (type)
-                        {
-                            case NSFetchedResultsChangeInsert:
-                                [self.collectionView insertItemsAtIndexPaths:@[obj]];
-                                break;
-                            case NSFetchedResultsChangeDelete:
-                                [self.collectionView deleteItemsAtIndexPaths:@[obj]];
-                                break;
-                            case NSFetchedResultsChangeUpdate:
-                                [self.collectionView reloadItemsAtIndexPaths:@[obj]];
-                                break;
-                            case NSFetchedResultsChangeMove:
-                                [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
-                                break;
-                        }
-                    }];
-                }
-            } completion:nil];
         }
     }
-    
-    [_sectionChanges removeAllObjects];
-    [_objectChanges removeAllObjects];
+    [self.collectionView reloadData];
 }
 
-- (BOOL)shouldReloadCollectionViewToPreventKnownIssue {
-    __block BOOL shouldReload = NO;
-    for (NSDictionary *change in _objectChanges) {
-        [change enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-            NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-            NSIndexPath *indexPath = obj;
-            switch (type) {
-                case NSFetchedResultsChangeInsert:
-                    if ([self.collectionView numberOfItemsInSection:indexPath.section] == 0) {
-                        shouldReload = YES;
-                    } else {
-                        shouldReload = NO;
-                    }
-                    break;
-                case NSFetchedResultsChangeDelete:
-                    if ([self.collectionView numberOfItemsInSection:indexPath.section] == 1) {
-                        shouldReload = YES;
-                    } else {
-                        shouldReload = NO;
-                    }
-                    break;
-                case NSFetchedResultsChangeUpdate:
-                    shouldReload = NO;
-                    break;
-                case NSFetchedResultsChangeMove:
-                    shouldReload = NO;
-                    break;
-            }
-        }];
-    }
-    
-    return shouldReload;
-}
 
 #pragma mark - Getters
 

@@ -24,6 +24,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self.cellImageView setBackgroundColor:[UIColor colorWithWhite:0.911 alpha:1.000]];
+    [self.cellImageView setShouldHideIndicatorView:YES];
+    [self.cellImageView setShouldHideErrorMessage:YES];
+    [self.cellImageView setShouldHideProgressView:YES];
     [self.cellImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.cellImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView];
     [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];

@@ -65,6 +65,7 @@
 - (NSCache *)mantleItemsCache {
     if (!_mantleItemsCache) {
         _mantleItemsCache = [[NSCache alloc] init];
+        [_mantleItemsCache setName:@"photobox.cache.mantleitems"];
     }
     return _mantleItemsCache;
 }
