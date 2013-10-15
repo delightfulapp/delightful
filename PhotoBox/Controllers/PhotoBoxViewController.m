@@ -261,7 +261,7 @@
 
                 [self loadItemsFromCoreData];
                 
-                [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+                [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
             }
         }
     }
@@ -271,7 +271,6 @@
     [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
     [self.dataSource.fetchedResultsController performFetch:NULL];
     [self.collectionView reloadData];
-    [self.collectionView reloadItemsAtIndexPaths:[self.collectionView indexPathsForVisibleItems]];
 }
 
 - (void)processPaginationFromObjects:(id)objects {
@@ -308,6 +307,7 @@
         } else {
             [self.loadingView stopAnimating];
         }
+        [self showLoadingView:show atBottomOfScrollView:YES];
     } else {
         [self showLoadingView:show atBottomOfScrollView:YES];
     }
