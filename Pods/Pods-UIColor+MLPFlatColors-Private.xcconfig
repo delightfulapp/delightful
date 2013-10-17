@@ -1,5 +1,5 @@
 #include "Pods-UIColor+MLPFlatColors.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/UIColor+MLPFlatColors" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/AFOAuth1Client" "${PODS_ROOT}/Headers/Mantle" "${PODS_ROOT}/Headers/NPRImageView" "${PODS_ROOT}/Headers/NSDate+TimeAgo" "${PODS_ROOT}/Headers/NSDate-Escort" "${PODS_ROOT}/Headers/OCMock" "${PODS_ROOT}/Headers/OGCoreDataStack" "${PODS_ROOT}/Headers/Overcoat" "${PODS_ROOT}/Headers/UIColor+MLPFlatColors" "${PODS_ROOT}/Headers/UIView+AutoLayout" "${PODS_ROOT}/Headers/iOS-blur" "${PODS_ROOT}/Headers/libextobjc"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/UIColor+MLPFlatColors" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/AFOAuth1Client" "${PODS_ROOT}/Headers/Mantle" "${PODS_ROOT}/Headers/NSDate+TimeAgo" "${PODS_ROOT}/Headers/NSDate-Escort" "${PODS_ROOT}/Headers/OCMock" "${PODS_ROOT}/Headers/OGCoreDataStack" "${PODS_ROOT}/Headers/Overcoat" "${PODS_ROOT}/Headers/SDWebImage" "${PODS_ROOT}/Headers/UIColor+MLPFlatColors" "${PODS_ROOT}/Headers/UIView+AutoLayout" "${PODS_ROOT}/Headers/iOS-blur"
 OTHER_LDFLAGS = -ObjC
 PODS_ROOT = ${SRCROOT}

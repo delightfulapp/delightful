@@ -44,9 +44,8 @@
     [self.scrollView setAlwaysBounceVertical:YES];
     
     [self.scrollView setDelegate:self];
-    self.thisImageview = [[NPRImageView alloc] initWithFrame:CGRectZero];
+    self.thisImageview = [[UIImageView alloc] initWithFrame:CGRectZero];
     [self.thisImageview setContentMode:UIViewContentModeScaleAspectFit];
-    [self.thisImageview setCrossFade:NO];
     [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.thisImageview setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.scrollView addSubview:self.thisImageview];
@@ -137,12 +136,8 @@
     Photo *photo = (Photo *)item;
     
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
-        if ([self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal.absoluteString]) {
-            [self loadOriginalImage];
-        } else {
-            [self setImageSize:CGSizeMake([photo.normalImage.width floatValue], [photo.normalImage.height floatValue])];
-            [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:nil];
-        }
+        [self setImageSize:CGSizeMake([photo.normalImage.width floatValue], [photo.normalImage.height floatValue])];
+        [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:nil];
         
         self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }
@@ -151,17 +146,19 @@
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
     [self setImageSize:CGSizeMake([photo.width floatValue], [photo.height floatValue])];
-    [self.thisImageview setImageWithContentsOfURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
+    [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
 }
 
 - (BOOL)hasDownloadedOriginalImage {
-    Photo *photo = (Photo *)self.item;
-    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal.absoluteString];
+    return NO;
+//    Photo *photo = (Photo *)self.item;
+//    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal.absoluteString];
 }
 
 - (BOOL)isDownloadingOriginalImage {
-    Photo *photo = (Photo *)self.item;
-    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal.absoluteString];
+    return NO;
+//    Photo *photo = (Photo *)self.item;
+//    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal.absoluteString];
 }
 
 - (UIImage *)originalImage {

@@ -8,7 +8,7 @@ pod 'AFOAuth1Client'
 pod 'Mantle'
 pod 'Overcoat'
 pod 'OGCoreDataStack'
-pod 'NPRImageView', :git => 'https://github.com/nicnocquee/NPRImageView'
+pod 'SDWebImage'
 target :PhotoBoxTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
 end
