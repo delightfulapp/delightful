@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-#import <NPRImageView.h>
+#import <UIImageView+WebCache.h>
 
 @interface PhotoBoxCell : UICollectionViewCell
 
-@property (nonatomic, weak) IBOutlet NPRImageView *cellImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *cellImageView;
 
 @property (nonatomic, strong) id item;
 

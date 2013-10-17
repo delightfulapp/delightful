@@ -49,7 +49,7 @@
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDownloadImage:) name:NPRDidSetImageNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDownloadImage:) name:NPRDidSetImageNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

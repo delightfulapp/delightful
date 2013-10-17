@@ -133,7 +133,6 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     switch (buttonIndex) {
         case 0:{
-            [NPRImageView cancelAllOperations];
             [[ConnectionManager sharedManager] logout];
             break;
         }

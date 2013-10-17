@@ -11,12 +11,15 @@
 #import "PhotosHorizontalScrollingViewController.h"
 #import "PhotosViewController.h"
 #import "UIView+Additionals.h"
+#import "UIImage+Additionals.h"
+
+#import "UIImageViewModeScaleAspect.h"
 
 #define ANIMATED_IMAGE_VIEW_ON_PUSH_TAG 456812
 
 @interface ShowFullScreenPhotosAnimatedTransitioning ()
 
-@property (nonatomic, strong) UIImageView *imageViewToAnimate;
+@property (nonatomic, strong) UIImageViewModeScaleAspect *imageViewToAnimate;
 @property (nonatomic, strong) UIView *whiteView;
 
 @end
@@ -60,14 +63,16 @@
     [self.whiteView setAlpha:0];
     [containerView addSubview:self.whiteView];
     
-    self.imageViewToAnimate = [[UIImageView alloc] initWithFrame:startRect];
+    self.imageViewToAnimate = [[UIImageViewModeScaleAspect alloc] initWithFrame:startRect];
+    [self.imageViewToAnimate setContentMode:UIViewContentModeScaleAspectFill];
     [self.imageViewToAnimate setTag:ANIMATED_IMAGE_VIEW_ON_PUSH_TAG];
     [self.imageViewToAnimate setImage:image];
+    [self.imageViewToAnimate initToScaleAspectFitToFrame:CGRectMake(0, 0, CGRectGetWidth(containerView.frame), CGRectGetHeight(containerView.frame))];
+    
     [containerView addSubview:self.imageViewToAnimate];
     
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-        self.imageViewToAnimate.center = CGPointMake(CGRectGetWidth(containerView.frame)/2, CGRectGetHeight(containerView.frame)/2);
-        self.imageViewToAnimate.transform = CGAffineTransformScale(self.imageViewToAnimate.transform, CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect), CGRectGetWidth(containerView.frame)/CGRectGetWidth(startRect));
+        [self.imageViewToAnimate animaticToScaleAspectFit];
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
         [containerView insertSubview:toVC.view belowSubview:self.whiteView];
