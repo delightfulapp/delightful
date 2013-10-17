@@ -102,6 +102,11 @@
         frame.size.width += PHOTO_SPACING;
         frame;
     });
+    self.collectionView.contentInset = ({
+        UIEdgeInsets inset = self.collectionView.contentInset;
+        inset.right += PHOTO_SPACING;
+        inset;
+    });
 }
 
 - (void)scrollToFirstShownPhoto {
