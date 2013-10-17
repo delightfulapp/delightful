@@ -50,6 +50,9 @@
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
+    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+    [self.navigationItem setRightBarButtonItem:rightButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -62,38 +65,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
-}
-
-- (void)showViewOriginalButtonForPage:(NSInteger)page{
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-    if (cell) {
-        if ([cell isDownloadingOriginalImage]) {
-            [self showDownloadingOriginalButton:YES];
-        } else {
-            [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
-        }
-    }
-}
-
-- (void)showViewOriginalButton:(BOOL)show {
-    if (show) {
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
-        [self.navigationItem setRightBarButtonItem:rightButton];
-    } else {
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
-        [self.navigationItem setRightBarButtonItem:rightButton];
-    }
-}
-
-- (void)showDownloadingOriginalButton:(BOOL)show {
-    if (show) {
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:indicator];
-        [self.navigationItem setRightBarButtonItem:rightButton];
-        [indicator startAnimating];
-    } else {
-        [self.navigationItem setRightBarButtonItem:nil];
-    }
 }
 
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
@@ -214,7 +185,6 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         self.previousPage = page;
-        [self showViewOriginalButtonForPage:page];
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
@@ -258,12 +228,6 @@
 - (void)actionButtonTapped:(id)sender {
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     [self openActivityPickerForImage:[cell originalImage]];
-}
-
-#pragma mark - Notification
-
-- (void)didDownloadImage:(NSNotification *)notification {
-    [self showViewOriginalButtonForPage:[self currentCollectionViewPage:self.collectionView]];
 }
 
 #pragma mark - Custom Animation Transition Delegate
