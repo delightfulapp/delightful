@@ -9,6 +9,9 @@
 #import "NPRImageDownloader.h"
 #import <AFImageRequestOperation.h>
 
+NSString *const NPRImageDownloadDidStartNotification = @"jp.touches.nprimagedownload.notification-didStart";
+NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedownload.notification-didFinish";
+
 @interface NPRImageDownloader ()
 
 @property (nonatomic, strong) NSMutableArray *downloads;
@@ -65,6 +68,7 @@
                 [weakSelf.delegate didFinishDownloadOperation:strongOperation atIndex:index];
             }
         }
+        [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidFinishNotification object:nil];
     } failure:^(NPRImageDownloaderOperation *operation, NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         NPRImageDownloaderOperation *strongOperation = operation;
         if (weakSelf) {
@@ -79,6 +83,8 @@
     @synchronized(self){
         [self.downloads addObject:downloadOperation];
         [self.downloadURLs addObject:URL];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidStartNotification object:nil];
     }
     
     [self.downloadingQueue addOperation:downloadOperation.operation];

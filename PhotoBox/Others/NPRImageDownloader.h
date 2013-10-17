@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const NPRImageDownloadDidStartNotification;
+extern NSString *const NPRImageDownloadDidFinishNotification;
+
 @interface NPRImageDownloaderOperation : NSObject
 
 @property (nonatomic, strong) NSURL *URL;

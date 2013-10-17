@@ -12,6 +12,8 @@
 
 #import "ConnectionManager.h"
 
+#import "NPRImageDownloader.h"
+
 #if __has_include("Crashlytics/Crashlytics.h")
 #import <Crashlytics/Crashlytics.h>
 #endif
@@ -36,6 +38,8 @@
     [rootNavigationController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageDownloadDidFinish:) name:NPRImageDownloadDidFinishNotification object:nil];
     
     return YES;
 }
@@ -104,8 +108,14 @@ static BOOL isRunningTests(void)
             }
         }
     }
-    
-    
+}
+
+#pragma mark - Image Download Notification
+
+- (void)imageDownloadDidFinish:(NSNotification *)notification {
+    if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] == 0) {
+        
+    }
 }
 
 @end
