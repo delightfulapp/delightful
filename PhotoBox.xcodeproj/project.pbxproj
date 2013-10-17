@@ -80,6 +80,9 @@
 		0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */; };
 		0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
 		0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D7711810032A00FDD83B /* UIWindow+Additionals.m */; };
+		0398D7C618103B6E00FDD83B /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C518103B6E00FDD83B /* download@2x.png */; };
+		0398D7C918103CD000FDD83B /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
+		0398D7CA18103CD000FDD83B /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
 		03AE182617D8B004009CD844 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
@@ -223,6 +226,9 @@
 		0398D76E180FE55D00FDD83B /* DownloadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadCell.m; path = PhotoBox/Cells/DownloadCell.m; sourceTree = "<group>"; };
 		0398D7701810032A00FDD83B /* UIWindow+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Additionals.h"; sourceTree = "<group>"; };
 		0398D7711810032A00FDD83B /* UIWindow+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Additionals.m"; sourceTree = "<group>"; };
+		0398D7C518103B6E00FDD83B /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
+		0398D7C718103CD000FDD83B /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
+		0398D7C818103CD000FDD83B /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		039F815118031E4C00C67C36 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
@@ -552,6 +558,9 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0398D7C718103CD000FDD83B /* right.png */,
+				0398D7C818103CD000FDD83B /* right@2x.png */,
+				0398D7C518103B6E00FDD83B /* download@2x.png */,
 				031DD2B017D9BD6B00A80167 /* user@2x.png */,
 				031DD2A417D9BB8300A80167 /* camera.png */,
 				031DD2A517D9BB8300A80167 /* upload.png */,
@@ -650,8 +659,11 @@
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
 				031DD2AD17D9BB8300A80167 /* user.png in Resources */,
+				0398D7C618103B6E00FDD83B /* download@2x.png in Resources */,
 				032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */,
+				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
+				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,

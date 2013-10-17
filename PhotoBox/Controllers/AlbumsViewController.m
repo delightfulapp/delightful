@@ -86,7 +86,7 @@
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
-        [cell.titleLabel setText:@">"];
+        [cell.titleLabel setText:@"＞"];
         [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
         int count = cell.gestureRecognizers.count;
