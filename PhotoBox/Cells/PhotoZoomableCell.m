@@ -145,7 +145,8 @@
     
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
         [self setImageSize:CGSizeMake([photo.normalImage.width floatValue], [photo.normalImage.height floatValue])];
-        [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:[[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:self.thumbnailURL]]];
+        UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
+        [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:placeholderImage];
         
         self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }
