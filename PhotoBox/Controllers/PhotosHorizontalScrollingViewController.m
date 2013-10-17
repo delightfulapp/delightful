@@ -11,7 +11,9 @@
 #import "PhotoBoxModel.h"
 #import "PhotoZoomableCell.h"
 #import "Photo.h"
-
+#import "NPRImageDownloader.h"
+#import "OriginalImageDownloaderViewController.h"
+#import "PhotoBoxImage.h"
 #import "UIViewController+Additionals.h"
 #import "UIView+Additionals.h"
 
@@ -48,8 +50,6 @@
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDownloadImage:) name:NPRDidSetImageNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -77,7 +77,7 @@
 
 - (void)showViewOriginalButton:(BOOL)show {
     if (show) {
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"View Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Download Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
         [self.navigationItem setRightBarButtonItem:rightButton];
     } else {
         UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
@@ -232,11 +232,22 @@
 #pragma mark - Button
 
 - (void)viewOriginalButtonTapped:(id)sender {
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    if (cell) {
-        [self showDownloadingOriginalButton:YES];
-        [cell loadOriginalImage];
+    if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
+        [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
+            OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:original];
+            return nav;
+        }];
     }
+    
+    Photo *currentPhoto = (Photo *)[[self currentCell] item];
+    NSAssert(currentPhoto.pathOriginal, @"Why no path original for url photo = %@", currentPhoto.url);
+    if (currentPhoto.pathOriginal) {
+        [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
+        
+        [[NPRImageDownloader sharedDownloader] showDownloads];
+    }
+    
 }
 
 - (void)actionButtonTapped:(id)sender {
