@@ -50,7 +50,6 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [NPRImageView cancelAllOperations];
 }
 
 

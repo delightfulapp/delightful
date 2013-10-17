@@ -42,8 +42,13 @@
 }
 
 - (NSDate *)date {
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"yyyy-MM-dd"];
+    static NSDateFormatter *df;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"yyyy-MM-dd"];
+    });
+
     return [df dateFromString:self];
 }
 

@@ -13,7 +13,6 @@
 // sticky header flow layout from https://gist.github.com/toblerpwn/5393460
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
-    
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
     UICollectionView * const cv = self.collectionView;
     CGPoint const contentOffset = cv.contentOffset;

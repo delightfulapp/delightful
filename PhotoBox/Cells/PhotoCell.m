@@ -31,7 +31,7 @@
     [super setItem:item];
     
     Photo *photo = (Photo *)item;
-    [self.cellImageView setImageWithContentsOfURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
+    [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
 }
 
 @end
