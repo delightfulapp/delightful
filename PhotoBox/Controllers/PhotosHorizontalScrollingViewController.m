@@ -21,6 +21,7 @@
 
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
+@property (nonatomic, strong) UIView *darkBackgroundView;
 
 @end
 
@@ -53,6 +54,11 @@
     
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
     [self.navigationItem setRightBarButtonItem:rightButton];
+    
+    self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.darkBackgroundView setBackgroundColor:[UIColor blackColor]];
+    [self.darkBackgroundView setAlpha:0];
+    [self.collectionView setBackgroundView:self.darkBackgroundView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -155,6 +161,9 @@
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
     [self toggleNavigationBarHidden];
+    if (self.navigationController.isNavigationBarHidden) {
+        [self darkenBackground];
+    } else [self brightenBackground];
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
@@ -180,6 +189,7 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         [self hideNavigationBar];
+        [self darkenBackground];
         self.previousPage = page;
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
@@ -199,6 +209,19 @@
     return page;
 }
 
+- (void)darkenBackground {
+    [self setBackgroundBrightness:1];
+}
+
+- (void)brightenBackground {
+    [self setBackgroundBrightness:0];
+}
+
+- (void)setBackgroundBrightness:(float)brightness {
+    [UIView animateWithDuration:0.4 animations:^{
+        self.darkBackgroundView.alpha = brightness;
+    }];
+}
 
 #pragma mark - Button
 
