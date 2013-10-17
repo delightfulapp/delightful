@@ -75,6 +75,11 @@
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
 		0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
+		0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
+		0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
+		0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */; };
+		0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
+		0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D7711810032A00FDD83B /* UIWindow+Additionals.m */; };
 		03AE182617D8B004009CD844 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
@@ -208,6 +213,16 @@
 		0391824E1800074A0099480C /* NSObject+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additionals.m"; sourceTree = "<group>"; };
 		0398D760180FB88F00FDD83B /* UIImage+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additionals.h"; sourceTree = "<group>"; };
 		0398D761180FB88F00FDD83B /* UIImage+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additionals.m"; sourceTree = "<group>"; };
+		0398D763180FC56700FDD83B /* NPRImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRImageDownloader.h; path = PhotoBox/Others/NPRImageDownloader.h; sourceTree = "<group>"; };
+		0398D764180FC56700FDD83B /* NPRImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPRImageDownloader.m; path = PhotoBox/Others/NPRImageDownloader.m; sourceTree = "<group>"; };
+		0398D766180FC5F500FDD83B /* OriginalImageDownloaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OriginalImageDownloaderViewController.h; path = PhotoBox/Controllers/OriginalImageDownloaderViewController.h; sourceTree = "<group>"; };
+		0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OriginalImageDownloaderViewController.m; path = PhotoBox/Controllers/OriginalImageDownloaderViewController.m; sourceTree = "<group>"; };
+		0398D769180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRImageDownloaderTableViewDataSource.h; sourceTree = "<group>"; };
+		0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRImageDownloaderTableViewDataSource.m; sourceTree = "<group>"; };
+		0398D76D180FE55D00FDD83B /* DownloadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadCell.h; path = PhotoBox/Cells/DownloadCell.h; sourceTree = "<group>"; };
+		0398D76E180FE55D00FDD83B /* DownloadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadCell.m; path = PhotoBox/Cells/DownloadCell.m; sourceTree = "<group>"; };
+		0398D7701810032A00FDD83B /* UIWindow+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Additionals.h"; sourceTree = "<group>"; };
+		0398D7711810032A00FDD83B /* UIWindow+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Additionals.m"; sourceTree = "<group>"; };
 		039F815118031E4C00C67C36 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
@@ -310,6 +325,8 @@
 				0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */,
 				0398D760180FB88F00FDD83B /* UIImage+Additionals.h */,
 				0398D761180FB88F00FDD83B /* UIImage+Additionals.m */,
+				0398D7701810032A00FDD83B /* UIWindow+Additionals.h */,
+				0398D7711810032A00FDD83B /* UIWindow+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -440,6 +457,8 @@
 				0337524617D3953100928409 /* OpenInActivity.m */,
 				032B0D1C17D4CF4800ABFA9F /* LocationManager.h */,
 				032B0D1D17D4CF4800ABFA9F /* LocationManager.m */,
+				0398D763180FC56700FDD83B /* NPRImageDownloader.h */,
+				0398D764180FC56700FDD83B /* NPRImageDownloader.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -462,6 +481,8 @@
 				035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */,
 				03AE182417D8B004009CD844 /* LoginViewController.h */,
 				03AE182517D8B004009CD844 /* LoginViewController.m */,
+				0398D766180FC5F500FDD83B /* OriginalImageDownloaderViewController.h */,
+				0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -473,6 +494,8 @@
 				0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */,
 				03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */,
 				03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */,
+				0398D769180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.h */,
+				0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -491,6 +514,8 @@
 				035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */,
 				035846C117D2598600E196D7 /* PhotoZoomableCell.h */,
 				035846C217D2598600E196D7 /* PhotoZoomableCell.m */,
+				0398D76D180FE55D00FDD83B /* DownloadCell.h */,
+				0398D76E180FE55D00FDD83B /* DownloadCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -734,15 +759,19 @@
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
+				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
+				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
+				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
+				0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
@@ -759,6 +788,7 @@
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
+				0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,

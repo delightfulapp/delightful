@@ -113,7 +113,7 @@
 
 + (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
     if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
-        return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+        return [[NSValueTransformer valueTransformerForName:MTLURLValueTransformerName] mtl_invertedTransformer];
     } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
         return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
             return [arrays photoBoxArrayString];
