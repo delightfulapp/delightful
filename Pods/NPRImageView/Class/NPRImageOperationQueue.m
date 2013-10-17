@@ -49,9 +49,12 @@ NSString * const NPRImageDownloadProgressChangedNotificationBytesTotalBytesReadK
     if (!self.downloadingURLs) {
         self.downloadingURLs = [NSMutableArray array];
     }
-    if ([self.downloadingURLs containsObject:url]) {
-        return;
+    @synchronized(self) {
+        if ([self.downloadingURLs containsObject:url]) {
+            return;
+        }
     }
+    
     
     NSURL *urlToDownload = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlToDownload];
@@ -60,15 +63,18 @@ NSString * const NPRImageDownloadProgressChangedNotificationBytesTotalBytesReadK
     AFImageRequestOperation *imageOperation = [AFImageRequestOperation imageRequestOperationWithRequest:request
                                                                                    imageProcessingBlock:processingBlock
                                                                                                 success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                                                                                                    [self.downloadingURLs removeObject:request.URL.absoluteString];
+                                                                                                    @synchronized(self) {
+                                                                                                        [self.downloadingURLs removeObject:request.URL.absoluteString];
+                                                                                                    }
                                                                                                     if (image) {
                                                                                                         successBlock(request, response, image);
                                                                                                         [[NSNotificationCenter defaultCenter] postNotificationName:NPRDownloadImageDidSucceedNotification object:nil userInfo:@{NPRDidDownloadImageNotificationImageKey: image, NPRImageURLKey:request.URL}];
                                                                                                     }
                                                                                                 } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
                                                                                                     dispatch_async(dispatch_get_main_queue(), ^{
-                                                                                                        [self.downloadingURLs removeObject:request.URL.absoluteString];
-                                                                                                        failureBlock(request, response, error);
+                                                                                                        @synchronized(self) {
+                                                                                                            [self.downloadingURLs removeObject:request.URL.absoluteString];
+                                                                                                        }                                                                                                        failureBlock(request, response, error);
                                                                                                         [[NSNotificationCenter defaultCenter] postNotificationName:NPRDownloadImageDidFailNotification object:nil userInfo:@{NPRDownloadDidFailNotificationErrorKey: error, NPRImageURLKey:request.URL}];
                                                                                                     });
                                                                                                 }];
@@ -135,7 +141,10 @@ NSString * const NPRImageDownloadProgressChangedNotificationBytesTotalBytesReadK
     
     if (!queued) {
         //add operation to queue
-        [self.downloadingURLs addObject:urlString];
+        @synchronized(self) {
+            [self.downloadingURLs addObject:urlString];
+        }
+        
         [queue addOperation:operation];
     }
     

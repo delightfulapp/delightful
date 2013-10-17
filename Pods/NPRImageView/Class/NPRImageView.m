@@ -16,6 +16,16 @@
 
 #import <objc/message.h>
 
+static dispatch_queue_t image_writing_serial_queue() {
+    static dispatch_queue_t npr_image_writing_queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        npr_image_writing_queue = dispatch_queue_create("jp.touches.nprimageview-image.writing", DISPATCH_QUEUE_SERIAL);
+    });
+    
+    return npr_image_writing_queue;
+}
+
 NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetImage";
 
 @interface NPRImageView () <UIGestureRecognizerDelegate>
@@ -256,11 +266,13 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 }
 
 - (void)setImage:(UIImage *)image fromURL:(NSURL *)url {
-    [self willChangeValueForKey:@"image"];
-    [super setImage:image];
-    [self didChangeValueForKey:@"image"];
-    self.imageContentURL = url;
-    [self hideAllLoadingIndicators];
+    if (self.image != image) {
+        [self willChangeValueForKey:@"image"];
+        [super setImage:image];
+        [self didChangeValueForKey:@"image"];
+        self.imageContentURL = url;
+        [self hideAllLoadingIndicators];
+    }
 }
 
 - (void)setProgressView:(UIProgressView *)progressView {
@@ -289,15 +301,20 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
         [self.progressView setHidden:YES];
         
         self.placeholderImage = placeholderImage;
-        [self showPlaceholderImage];
+        
         if (!self.shouldHideIndicatorView) {
             [self.indicatorView startAnimating];
             [self.indicatorView setHidden:NO];
         }
         
-        if (![self loadImageFromDiskOrCacheForURLString:self.imageContentURL.absoluteString]) {
-            [self queueImageForProcessingForURLString:URL.absoluteString];
-        }
+        [[[self class] imageProcessingQueue] addOperationWithBlock:^{
+            if (![self loadImageFromDiskOrCacheForURLString:self.imageContentURL.absoluteString]) {
+                //NSLog(@"-- Image not found at disk. Downloading");
+                [self showPlaceholderImage];
+                [self queueImageForProcessingForURLString:URL.absoluteString];
+            }
+        }];
+        
     } else {
         if (![self isDownloadingImageAtURLString:URL.absoluteString]) {
             [self.indicatorView stopAnimating];
@@ -346,6 +363,7 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
         UIImage *im = [self processImage:image key:thisKey urlString:url.absoluteString];
         if (im) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                //NSLog(@"Setting downloaded image");
                 [self setProcessedImageOnMainThread:@[im,thisKey,url.absoluteString]];
             });
         }
@@ -389,24 +407,23 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 }
 
 - (void)showPlaceholderImage {
-    [super setImage:self.placeholderImage];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [super setImage:self.placeholderImage];
+    });
+    
 }
 
 - (void)continueImageProcessingFromDiskWithKey:(NSString *)key processingKey:(NSString *)processKey urlString:(NSString *)urlString{
     [self.progressView setHidden:YES];
     
-    NSBlockOperation *blockOperation = [NSBlockOperation blockOperationWithBlock:^{
-        UIImage *image = [[NPRDiskCache sharedDiskCache] imageFromDiskWithKey:key];
-        if (image) {
-            UIImage *im = [self processImage:image key:processKey urlString:urlString];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self setProcessedImageOnMainThread:@[im, processKey, urlString]];
-            });
-            
-        }
-    }];
-    
-    [[[self class] imageProcessingQueue] addOperation:blockOperation];
+    UIImage *image = [[NPRDiskCache sharedDiskCache] imageFromDiskWithKey:key];
+    if (image) {
+        UIImage *im = [self processImage:image key:processKey urlString:urlString];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setProcessedImageOnMainThread:@[im, processKey, urlString]];
+        });
+        
+    }
 }
 
 - (BOOL)loadImageFromDiskOrCacheForURLString:(NSString *)url {
@@ -414,11 +431,17 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
     NSString *key = [self cacheKeyWithURL:url];
     UIImage *processedImage = [self cachedProcessImageForKey:key];
     if (processedImage) {
-        [self setImage:processedImage fromURL:[NSURL URLWithString:url]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //NSLog(@"Found processed image in mem cache");
+            [self setImage:processedImage fromURL:[NSURL URLWithString:url]];
+        });
+        
         return YES;
     } else {
+        [self showPlaceholderImage];
         // check if processed image exists on disk
         if ([[NPRDiskCache sharedDiskCache] imageExistsOnDiskWithKey:key]) {
+            //NSLog(@"Found processed image in disk cache");
             [self continueImageProcessingFromDiskWithKey:key
                                            processingKey:key urlString:url];
             return YES;
@@ -426,6 +449,7 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
         // check if original image exists on disk
         else {
             if ([[NPRDiskCache sharedDiskCache] imageExistsOnDiskWithKey:url]) {
+                //NSLog(@"Found original image in disk cache");
                 [self continueImageProcessingFromDiskWithKey:url
                                                processingKey:key urlString:url];
                 return YES;
@@ -511,11 +535,11 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 
 + (void)printOperations {
     for (AFImageRequestOperation *operation in [NPRImageOperationQueue sharedQueue].operations) {
-        NSLog(@">> Operation %@ state: %@", operation.request.URL.absoluteString, [[self class] stateString:operation]);
+        //NSLog(@">> Operation %@ state: %@", operation.request.URL.absoluteString, [[self class] stateString:operation]);
         [operation cancel];
         return;
         for (AFImageRequestOperation *dependecy in operation.dependencies) {
-            NSLog(@"     -- Dependency: %@ state: %@", dependecy.request.URL.absoluteString, [[self class] stateString:dependecy]);
+            //NSLog(@"     -- Dependency: %@ state: %@", dependecy.request.URL.absoluteString, [[self class] stateString:dependecy]);
         }
     }
 }
@@ -552,7 +576,9 @@ NSString * const NPRDidSetImageNotification = @"nicnocquee.NPRImageView.didSetIm
 
 - (void)cacheProcessedImage:(UIImage *)processedImage forKey:(NSString *)cacheKey {
     [[[self class] processedImageCache] setObject:processedImage forKey:cacheKey];
-    [[NPRDiskCache sharedDiskCache] writeImageToDisk:processedImage key:cacheKey];
+    dispatch_async(image_writing_serial_queue(), ^{
+        [[NPRDiskCache sharedDiskCache] writeImageToDisk:processedImage key:cacheKey];
+    });
 }
 
 @end

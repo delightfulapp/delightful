@@ -24,6 +24,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    
+    [self.cellImageView setCrossFade:NO];
     [self.cellImageView setBackgroundColor:[UIColor colorWithWhite:0.911 alpha:1.000]];
     [self.cellImageView setShouldHideIndicatorView:YES];
     [self.cellImageView setShouldHideErrorMessage:YES];
