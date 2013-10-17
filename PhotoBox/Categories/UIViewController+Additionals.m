@@ -112,4 +112,18 @@ static char const * const documentControllerKey = "documentControllerKey";
     return url;
 }
 
+- (void)toggleNavigationBarHidden {
+    BOOL show = !self.navigationController.isNavigationBarHidden;
+    [self setNavigationBarHidden:show];
+}
+
+- (void)setNavigationBarHidden:(BOOL)hidden {
+    [self.navigationController setNavigationBarHidden:hidden animated:YES];
+    [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:UIStatusBarAnimationSlide];
+}
+
+- (void)hideNavigationBar {
+    [self setNavigationBarHidden:YES];
+}
+
 @end

@@ -14,4 +14,8 @@
 
 - (void)openActivityPickerForImage:(UIImage *)image;
 
+- (void)toggleNavigationBarHidden;
+
+- (void)hideNavigationBar;
+
 @end

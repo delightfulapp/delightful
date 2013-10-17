@@ -129,12 +129,6 @@
     return 0;
 }
 
-#pragma mark - Scroll View
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // empty to override superclass
-}
-
 #pragma mark - Interactive Gesture Recognizer Delegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -160,11 +154,8 @@
 }
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
-    BOOL show = !self.navigationController.isNavigationBarHidden;
-    [self.navigationController setNavigationBarHidden:show animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:show withAnimation:UIStatusBarAnimationSlide];
+    [self toggleNavigationBarHidden];
 }
-
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
@@ -181,9 +172,14 @@
 
 #pragma mark - Scroll view
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // empty to override superclass
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
+        [self hideNavigationBar];
         self.previousPage = page;
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
