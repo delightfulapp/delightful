@@ -17,6 +17,7 @@ PODS:
     - SDWebImage/Core
   - SDWebImage/Core (3.5)
   - UIColor+MLPFlatColors (1.0)
+  - UIImageViewModeScaleAspect (1.1)
   - UIView+AutoLayout (0.9.0)
 
 DEPENDENCIES:
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - Overcoat
   - SDWebImage
   - UIColor+MLPFlatColors (~> 1.0)
+  - UIImageViewModeScaleAspect
   - UIView+AutoLayout
 
 SPEC CHECKSUMS:
@@ -44,6 +46,7 @@ SPEC CHECKSUMS:
   Overcoat: 4839bdbe2274a9451f6cedaf8c17742d2ab82818
   SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
   UIColor+MLPFlatColors: 8631d7f050b0e5afd9af178a60319891c5113d0e
+  UIImageViewModeScaleAspect: 66e2bd965fb6f12631a13ec46ddb9adfb5f856e3
   UIView+AutoLayout: 3cc41c765991cce7cbeee8e70194f228e22eeb82
 
 COCOAPODS: 0.26.2

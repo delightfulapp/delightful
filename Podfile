@@ -9,6 +9,7 @@ pod 'Mantle'
 pod 'Overcoat'
 pod 'OGCoreDataStack'
 pod 'SDWebImage'
+pod 'UIImageViewModeScaleAspect'
 target :PhotoBoxTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
 end

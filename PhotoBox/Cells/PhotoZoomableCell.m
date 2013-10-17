@@ -10,6 +10,14 @@
 
 #import "Photo.h"
 
+#import <SDWebImageManager.h>
+
+@interface SDWebImageManager ()
+
+- (NSString *)cacheKeyForURL:(NSURL *)url;
+
+@end
+
 // no idea how to do the zooming inside scrollview inside collection view cell using auto layout. back to the ol' days.
 
 @interface PhotoZoomableCell ()
@@ -137,7 +145,7 @@
     
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
         [self setImageSize:CGSizeMake([photo.normalImage.width floatValue], [photo.normalImage.height floatValue])];
-        [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:nil];
+        [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:[[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:self.thumbnailURL]]];
         
         self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }

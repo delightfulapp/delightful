@@ -59,6 +59,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-UIImageViewModeScaleAspect.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-UIView+AutoLayout.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,72 +82,77 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1D6DB46663094738B2C21CEA</key>
+		<key>1263143315CC4D66B86E5D74</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>492D9BAE03AD41D2B7BE86A7</key>
+		<key>203A8CC78A0D4C9E9642EB12</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>53A3857E49784501A5A97BC5</key>
+		<key>2ACB87FF339443418870B234</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C340840D1FB4F1F9BBFE1A9</key>
+		<key>36874491DE1141488DF8A065</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>66561DED96C74077903A8E84</key>
+		<key>5E67A404FAB74D84A45199EF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7B95CEEFB3EF4120BF509A5B</key>
+		<key>75D36E9D88C344B790179C6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8700D446C2354B4F8F305293</key>
+		<key>99749BDDE5324F8B8331C94D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>8FA8EB786AA94BD0ABB31998</key>
+		<key>9A9DEB3092CD4CB193BCB5EF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A724BCBA747845A18544DCAD</key>
+		<key>9FFCBF40C2DC42C38AE3ED51</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C55E16A22AB54618AAECE81B</key>
+		<key>A6609BAD96F14DF8AB9B4EED</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C8752A6273FF4AA5AEB2141B</key>
+		<key>BAB2A2B15F24445E98AB65BC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5109CB4B90449679C3FCEE2</key>
+		<key>C1E1E7189E6043CB8D59F569</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D960491C215C48D2A47CB63A</key>
+		<key>DC3FA242538C404BA8B88B9C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E60D6CEEC1DD4E289253F985</key>
+		<key>E20153A8DCC94642BCB4D1F8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>ECA491225BBD4963ACF7C082</key>
 		<dict>
 			<key>primary</key>
 			<true/>
