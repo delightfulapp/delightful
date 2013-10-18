@@ -16,6 +16,7 @@
 #import "PhotoBoxImage.h"
 #import "UIViewController+Additionals.h"
 #import "UIView+Additionals.h"
+#import "PhotoSharingManager.h"
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate> {
     BOOL shouldHideNavigationBar;
@@ -54,8 +55,7 @@
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
     
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
-    [self.navigationItem setRightBarButtonItem:rightButton];
+    [self showLoadingBarButtonItem:NO];
     
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor blackColor]];
@@ -267,12 +267,33 @@
         
         [[NPRImageDownloader sharedDownloader] showDownloads];
     }
+}
+
+- (void)showLoadingBarButtonItem:(BOOL)show {
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+    UIBarButtonItem *shareButton;
     
+    if (show) {
+        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [indicatorView setColor:[[[[UIApplication sharedApplication] delegate] window] tintColor]];
+        shareButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+        [indicatorView startAnimating];
+    } else {
+        shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
+    }
+    [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
 }
 
 - (void)actionButtonTapped:(id)sender {
+    [self showLoadingBarButtonItem:YES];
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    [self openActivityPickerForImage:[cell originalImage]];
+    Photo *photo = cell.item;
+    __weak PhotosHorizontalScrollingViewController *weakSelf = self;
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image completion:^{
+        if (weakSelf) {
+            [weakSelf showLoadingBarButtonItem:NO];
+        }
+    }];
 }
 
 #pragma mark - Custom Animation Transition Delegate

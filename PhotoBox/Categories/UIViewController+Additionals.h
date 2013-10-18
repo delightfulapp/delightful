@@ -14,6 +14,8 @@
 
 - (void)openActivityPickerForImage:(UIImage *)image;
 
+- (void)openActivityPickerForURL:(NSURL *)URL completion:(void(^)())completion;
+
 - (void)toggleNavigationBarHidden;
 
 - (void)hideNavigationBar;

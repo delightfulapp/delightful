@@ -62,10 +62,20 @@ static char const * const documentControllerKey = "documentControllerKey";
     };
     
     OpenInActivity *openIn = [[OpenInActivity alloc] init];
-    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:@[openIn]];
-    [activityViewController setCompletionHandler:UIActivityViewControllerCompletionHandler];
+    [self openActivityPickerForItem:image applicationActivities:@[openIn] completion:nil activityCompletionHandler:UIActivityViewControllerCompletionHandler];
+}
+
+- (void)openActivityPickerForURL:(NSURL *)URL completion:(void (^)())completion {
+    [self openActivityPickerForItem:URL applicationActivities:nil completion:completion activityCompletionHandler:nil];
+}
+
+- (void)openActivityPickerForItem:(id)item applicationActivities:(NSArray *)activities completion:(void(^)())completion activityCompletionHandler:(void(^)(NSString *, BOOL))activityCompletionHandler{
+    
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[item] applicationActivities:activities];
+    [activityViewController setTitle:@"Share Photo's URL"];
+    [activityViewController setCompletionHandler:activityCompletionHandler];
     [activityViewController setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact]];
-    [self.navigationController presentViewController:activityViewController animated:YES completion:nil];
+    [self presentViewController:activityViewController animated:YES completion:completion];
     
     if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {
         if (![[NSUserDefaults standardUserDefaults] boolForKey:HAVE_SHOWN_NO_FACEBOOK]) {
