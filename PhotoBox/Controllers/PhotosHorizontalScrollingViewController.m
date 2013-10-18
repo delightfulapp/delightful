@@ -11,14 +11,20 @@
 #import "PhotoBoxModel.h"
 #import "PhotoZoomableCell.h"
 #import "Photo.h"
-
+#import "NPRImageDownloader.h"
+#import "OriginalImageDownloaderViewController.h"
+#import "PhotoBoxImage.h"
 #import "UIViewController+Additionals.h"
 #import "UIView+Additionals.h"
+#import "PhotoSharingManager.h"
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate> {
+    BOOL shouldHideNavigationBar;
+}
 
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
+@property (nonatomic, strong) UIView *darkBackgroundView;
 
 @end
 
@@ -49,7 +55,12 @@
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
     
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDownloadImage:) name:NPRDidSetImageNotification object:nil];
+    [self showLoadingBarButtonItem:NO];
+    
+    self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
+    [self.darkBackgroundView setBackgroundColor:[UIColor blackColor]];
+    [self.darkBackgroundView setAlpha:0];
+    [self.collectionView setBackgroundView:self.darkBackgroundView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,48 +75,23 @@
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
 
-- (void)showViewOriginalButtonForPage:(NSInteger)page{
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-    if (cell) {
-        if ([cell isDownloadingOriginalImage]) {
-            [self showDownloadingOriginalButton:YES];
-        } else {
-            [self showViewOriginalButton:![cell hasDownloadedOriginalImage]];
-        }
-    }
-}
-
-- (void)showViewOriginalButton:(BOOL)show {
-    if (show) {
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"View Original", nil) style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
-        [self.navigationItem setRightBarButtonItem:rightButton];
-    } else {
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
-        [self.navigationItem setRightBarButtonItem:rightButton];
-    }
-}
-
-- (void)showDownloadingOriginalButton:(BOOL)show {
-    if (show) {
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:indicator];
-        [self.navigationItem setRightBarButtonItem:rightButton];
-        [indicator startAnimating];
-    } else {
-        [self.navigationItem setRightBarButtonItem:nil];
-    }
-}
-
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
     self.collectionView.frame = ({
         CGRect frame = self.collectionView.frame;
         frame.size.width += PHOTO_SPACING;
         frame;
     });
+    self.collectionView.contentInset = ({
+        UIEdgeInsets inset = self.collectionView.contentInset;
+        inset.right += PHOTO_SPACING;
+        inset;
+    });
 }
 
 - (void)scrollToFirstShownPhoto {
     if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
+        shouldHideNavigationBar = YES;
+        self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     } else {
         NSLog(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
@@ -153,10 +139,12 @@
     return 0;
 }
 
-#pragma mark - Scroll View
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    // empty to override superclass
+- (CollectionViewCellConfigureBlock)cellConfigureBlock {
+    void (^configureCell)(PhotoZoomableCell*, id) = ^(PhotoZoomableCell* cell, id item) {
+        [cell setItem:item];
+        [cell setDelegate:self];
+    };
+    return configureCell;
 }
 
 #pragma mark - Interactive Gesture Recognizer Delegate
@@ -184,11 +172,11 @@
 }
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
-    BOOL show = !self.navigationController.isNavigationBarHidden;
-    [self.navigationController setNavigationBarHidden:show animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:show withAnimation:UIStatusBarAnimationSlide];
+    [self toggleNavigationBarHidden];
+    if (self.navigationController.isNavigationBarHidden) {
+        [self darkenBackground];
+    } else [self brightenBackground];
 }
-
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
@@ -205,11 +193,21 @@
 
 #pragma mark - Scroll view
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    // empty to override superclass
+}
+
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
+        if (!shouldHideNavigationBar) {
+            [self hideNavigationBar];
+            [self darkenBackground];
+        } else {
+            shouldHideNavigationBar = NO;
+        }
+        
         self.previousPage = page;
-        [self showViewOriginalButtonForPage:page];
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
@@ -222,32 +220,84 @@
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
-    CGFloat pageWidth = scrollView.frame.size.width;
+    if (self.justOpened) {
+        return self.firstShownPhotoIndex;
+    }
+    CGFloat pageWidth = scrollView.frame.size.width-PHOTO_SPACING;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
     return page;
 }
 
+- (void)darkenBackground {
+    [self setBackgroundBrightness:1];
+}
+
+- (void)brightenBackground {
+    [self setBackgroundBrightness:0];
+}
+
+- (void)setBackgroundBrightness:(float)brightness {
+    [UIView animateWithDuration:0.4 animations:^{
+        self.darkBackgroundView.alpha = brightness;
+    }];
+}
+
+#pragma mark - Zoomable Cell delegate
+
+- (void)didClosePhotosHorizontalViewController{
+    //[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didDragDownWithPercentage:(float)progress {
+    //[self.darkBackgroundView setAlpha:progress];
+}
 
 #pragma mark - Button
 
 - (void)viewOriginalButtonTapped:(id)sender {
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    if (cell) {
-        [self showDownloadingOriginalButton:YES];
-        [cell loadOriginalImage];
+    if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
+        [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
+            OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
+            UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:original];
+            return nav;
+        }];
+    }
+    
+    Photo *currentPhoto = (Photo *)[[self currentCell] item];
+    NSAssert(currentPhoto.pathOriginal, @"Why no path original for url photo = %@", currentPhoto.url);
+    if (currentPhoto.pathOriginal) {
+        [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
+        
+        [[NPRImageDownloader sharedDownloader] showDownloads];
     }
 }
 
-- (void)actionButtonTapped:(id)sender {
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    [self openActivityPickerForImage:[cell originalImage]];
+- (void)showLoadingBarButtonItem:(BOOL)show {
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+    UIBarButtonItem *shareButton;
+    
+    if (show) {
+        UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [indicatorView setColor:[[[[UIApplication sharedApplication] delegate] window] tintColor]];
+        shareButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+        [indicatorView startAnimating];
+    } else {
+        shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
+    }
+    [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
 }
 
-#pragma mark - Notification
-
-- (void)didDownloadImage:(NSNotification *)notification {
-    [self showViewOriginalButtonForPage:[self currentCollectionViewPage:self.collectionView]];
+- (void)actionButtonTapped:(id)sender {
+    [self showLoadingBarButtonItem:YES];
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    Photo *photo = cell.item;
+    __weak PhotosHorizontalScrollingViewController *weakSelf = self;
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image completion:^{
+        if (weakSelf) {
+            [weakSelf showLoadingBarButtonItem:NO];
+        }
+    }];
 }
 
 #pragma mark - Custom Animation Transition Delegate

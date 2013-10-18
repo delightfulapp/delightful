@@ -74,6 +74,22 @@
 
 #pragma mark - Resource Fetch
 
+- (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void (^)(NSString *))completion {
+    NSString *path = [NSString stringWithFormat: @"/token/photo/%@/create.json", photoId];
+    [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (responseObject) {
+            NSDictionary *result = responseObject[@"result"];
+            NSString *token = nil;
+            if ([result isKindOfClass:[NSDictionary class]]){
+                token = result[@"id"];
+            }
+            completion(token);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        completion(nil);
+    }];
+}
+
 - (void)getResource:(ResourceType)type
              action:(ActionType)action
          resourceId:(NSString *)resourceId

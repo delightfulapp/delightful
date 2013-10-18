@@ -1,1 +1,0 @@
-PODS_PHOTOBOXTESTS_COUNTLY_OTHER_LDFLAGS = -weak_framework CoreTelephony

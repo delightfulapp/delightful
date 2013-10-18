@@ -28,7 +28,7 @@ DEPENDENCIES:
   - NSDate-Escort
   - OCMock (~> 2.2.1)
   - OGCoreDataStack
-  - Overcoat
+  - Overcoat (= 1.1)
   - SDWebImage
   - UIColor+MLPFlatColors (~> 1.0)
   - UIImageViewModeScaleAspect

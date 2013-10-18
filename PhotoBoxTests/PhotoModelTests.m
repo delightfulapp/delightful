@@ -47,6 +47,7 @@
     XCTAssert(photo.albums.count == ((NSArray *)[photoDictionary objectForKey:@"albums"]).count, @"Expected %d albums. Actual %d.",  ((NSArray *)[photoDictionary objectForKey:@"albums"]).count, photo.albums.count);
     XCTAssertTrue([photo.thumbnailImage.urlString isEqualToString:[photoDictionary objectForKey:@"path320x320"]], @"Expected thumbnail image url %@. Actual %@", [photoDictionary objectForKey:@"path320x320"], photo.thumbnailImage.urlString);
     XCTAssertTrue([photo.normalImage.urlString isEqualToString:[photoDictionary objectForKey:@"path640x640"]], @"Expected normal image url %@. Actual %@", [photoDictionary objectForKey:@"path640x640"], photo.normalImage.urlString);
+    XCTAssertTrue([photo.pathOriginal.absoluteString isEqual:[photoDictionary objectForKey:@"pathOriginal"]], @"Expected %@. Actual = %@", [photoDictionary objectForKey:@"pathOriginal"], photo.pathOriginal.absoluteString);
     XCTAssert([photo.dateTakenString isEqualToString:@"2013-06-03"], @"Expected date taken string: 2013-06-03. Actual = %@", photo.dateTakenString);
 }
 
@@ -57,6 +58,7 @@
     NSManagedObject *photoManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:photo insertingIntoContext:[NSManagedObjectContext mainContext] error:&error];
     XCTAssert(photoManagedObject != nil, @"Photo managed object should not be nil");
     XCTAssert([[photoManagedObject valueForKey:@"photoId"] isEqualToString:[photoDictionary objectForKey:@"id"]], @"Expected photo id = %@. Actual = %@", photoDictionary[@"id"], [photoManagedObject valueForKey:@"photoId"]);
+    XCTAssertTrue([[photoManagedObject valueForKey:@"pathOriginal"] isEqualToString:photo.pathOriginal.absoluteString], @"Expected %@. Actual = %@", photo.pathOriginal.absoluteString, [photoManagedObject valueForKey:@"pathOriginal"]);
     XCTAssert([photoManagedObject valueForKey:@"dateTakenString"]!=nil, @"Date taken string should not be nil");
     NSArray *albums = [photoDictionary objectForKey:@"albums"];
     NSString *albumsString = [albums photoBoxArrayString];

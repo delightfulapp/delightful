@@ -75,12 +75,24 @@
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
 		0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
+		0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
+		0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
+		0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */; };
+		0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
+		0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D7711810032A00FDD83B /* UIWindow+Additionals.m */; };
+		0398D7C618103B6E00FDD83B /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C518103B6E00FDD83B /* download@2x.png */; };
+		0398D7C918103CD000FDD83B /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
+		0398D7CA18103CD000FDD83B /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
 		03AE182617D8B004009CD844 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */; };
 		03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */; };
 		03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */; };
+		03D97204181116BB008A087B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0348D23317DA2CC400C932BA /* Crashlytics.framework */; };
+		03D972A118115705008A087B /* SharingTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A018115705008A087B /* SharingTokenTests.m */; };
+		03D972A71811865A008A087B /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
+		03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A9181188CE008A087B /* PhotoSharingManager.m */; };
 		03DD04DF17F9C479001FB8A5 /* AlbumModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */; };
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
@@ -208,6 +220,19 @@
 		0391824E1800074A0099480C /* NSObject+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additionals.m"; sourceTree = "<group>"; };
 		0398D760180FB88F00FDD83B /* UIImage+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additionals.h"; sourceTree = "<group>"; };
 		0398D761180FB88F00FDD83B /* UIImage+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additionals.m"; sourceTree = "<group>"; };
+		0398D763180FC56700FDD83B /* NPRImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRImageDownloader.h; path = PhotoBox/Others/NPRImageDownloader.h; sourceTree = "<group>"; };
+		0398D764180FC56700FDD83B /* NPRImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NPRImageDownloader.m; path = PhotoBox/Others/NPRImageDownloader.m; sourceTree = "<group>"; };
+		0398D766180FC5F500FDD83B /* OriginalImageDownloaderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OriginalImageDownloaderViewController.h; path = PhotoBox/Controllers/OriginalImageDownloaderViewController.h; sourceTree = "<group>"; };
+		0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OriginalImageDownloaderViewController.m; path = PhotoBox/Controllers/OriginalImageDownloaderViewController.m; sourceTree = "<group>"; };
+		0398D769180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NPRImageDownloaderTableViewDataSource.h; sourceTree = "<group>"; };
+		0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NPRImageDownloaderTableViewDataSource.m; sourceTree = "<group>"; };
+		0398D76D180FE55D00FDD83B /* DownloadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadCell.h; path = PhotoBox/Cells/DownloadCell.h; sourceTree = "<group>"; };
+		0398D76E180FE55D00FDD83B /* DownloadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadCell.m; path = PhotoBox/Cells/DownloadCell.m; sourceTree = "<group>"; };
+		0398D7701810032A00FDD83B /* UIWindow+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+Additionals.h"; sourceTree = "<group>"; };
+		0398D7711810032A00FDD83B /* UIWindow+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+Additionals.m"; sourceTree = "<group>"; };
+		0398D7C518103B6E00FDD83B /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
+		0398D7C718103CD000FDD83B /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
+		0398D7C818103CD000FDD83B /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		039F815118031E4C00C67C36 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
@@ -218,6 +243,11 @@
 		03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManagerTests.m; sourceTree = "<group>"; };
 		03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBoxFetchedResultsController.h; sourceTree = "<group>"; };
 		03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxFetchedResultsController.m; sourceTree = "<group>"; };
+		03D972A018115705008A087B /* SharingTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharingTokenTests.m; sourceTree = "<group>"; };
+		03D972A51811865A008A087B /* Photo+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Photo+Additionals.h"; sourceTree = "<group>"; };
+		03D972A61811865A008A087B /* Photo+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photo+Additionals.m"; sourceTree = "<group>"; };
+		03D972A8181188CE008A087B /* PhotoSharingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSharingManager.h; path = PhotoBox/Networking/PhotoSharingManager.h; sourceTree = "<group>"; };
+		03D972A9181188CE008A087B /* PhotoSharingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSharingManager.m; path = PhotoBox/Networking/PhotoSharingManager.m; sourceTree = "<group>"; };
 		03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumModelTests.m; sourceTree = "<group>"; };
 		03DD04E017F9C58B001FB8A5 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
@@ -239,6 +269,7 @@
 				0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */,
 				0358468D17D1CD2500E196D7 /* CFNetwork.framework in Frameworks */,
 				032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */,
+				03D97204181116BB008A087B /* Crashlytics.framework in Frameworks */,
 				032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
 				32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */,
@@ -310,6 +341,10 @@
 				0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */,
 				0398D760180FB88F00FDD83B /* UIImage+Additionals.h */,
 				0398D761180FB88F00FDD83B /* UIImage+Additionals.m */,
+				0398D7701810032A00FDD83B /* UIWindow+Additionals.h */,
+				0398D7711810032A00FDD83B /* UIWindow+Additionals.m */,
+				03D972A51811865A008A087B /* Photo+Additionals.h */,
+				03D972A61811865A008A087B /* Photo+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -324,6 +359,8 @@
 				0310903E17D104460075F9D8 /* ConnectionManager.m */,
 				0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */,
 				0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */,
+				03D972A8181188CE008A087B /* PhotoSharingManager.h */,
+				03D972A9181188CE008A087B /* PhotoSharingManager.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -420,6 +457,7 @@
 				034E9F9117FA6BC200E3565E /* photo.json */,
 				034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */,
 				034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */,
+				03D972A018115705008A087B /* SharingTokenTests.m */,
 			);
 			path = PhotoBoxTests;
 			sourceTree = "<group>";
@@ -440,6 +478,8 @@
 				0337524617D3953100928409 /* OpenInActivity.m */,
 				032B0D1C17D4CF4800ABFA9F /* LocationManager.h */,
 				032B0D1D17D4CF4800ABFA9F /* LocationManager.m */,
+				0398D763180FC56700FDD83B /* NPRImageDownloader.h */,
+				0398D764180FC56700FDD83B /* NPRImageDownloader.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -462,6 +502,8 @@
 				035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */,
 				03AE182417D8B004009CD844 /* LoginViewController.h */,
 				03AE182517D8B004009CD844 /* LoginViewController.m */,
+				0398D766180FC5F500FDD83B /* OriginalImageDownloaderViewController.h */,
+				0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -473,6 +515,8 @@
 				0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */,
 				03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */,
 				03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */,
+				0398D769180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.h */,
+				0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -491,6 +535,8 @@
 				035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */,
 				035846C117D2598600E196D7 /* PhotoZoomableCell.h */,
 				035846C217D2598600E196D7 /* PhotoZoomableCell.m */,
+				0398D76D180FE55D00FDD83B /* DownloadCell.h */,
+				0398D76E180FE55D00FDD83B /* DownloadCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -527,6 +573,9 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0398D7C718103CD000FDD83B /* right.png */,
+				0398D7C818103CD000FDD83B /* right@2x.png */,
+				0398D7C518103B6E00FDD83B /* download@2x.png */,
 				031DD2B017D9BD6B00A80167 /* user@2x.png */,
 				031DD2A417D9BB8300A80167 /* camera.png */,
 				031DD2A517D9BB8300A80167 /* upload.png */,
@@ -551,7 +600,6 @@
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
-				A426A20BBE3148799A8BAA5E /* Copy Pods Resources */,
 				0348D22C17DA259100C932BA /* Crashlytics */,
 			);
 			buildRules = (
@@ -625,8 +673,11 @@
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
 				031DD2AD17D9BB8300A80167 /* user.png in Resources */,
+				0398D7C618103B6E00FDD83B /* download@2x.png in Resources */,
 				032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */,
+				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
+				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,
@@ -709,21 +760,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Pods-PhotoBoxTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A426A20BBE3148799A8BAA5E /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-PhotoBox-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -734,15 +770,21 @@
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
+				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
+				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
+				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
+				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
+				0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */,
+				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
@@ -759,6 +801,7 @@
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
+				0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,
@@ -785,6 +828,7 @@
 				031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */,
 				03DD04DF17F9C479001FB8A5 /* AlbumModelTests.m in Sources */,
 				035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */,
+				03D972A118115705008A087B /* SharingTokenTests.m in Sources */,
 				03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */,
 				034E9F9517FA6C2000E3565E /* XCTestCase+Additionals.m in Sources */,
 			);
@@ -906,6 +950,7 @@
 					"$(inherited)",
 					/Users/nico/Dropbox/Project/Fun/PhotoBox,
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
+					/Users/nico/Projects/PhotoBox,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
@@ -951,6 +996,7 @@
 					"$(inherited)",
 					/Users/nico/Dropbox/Project/Fun/PhotoBox,
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
+					/Users/nico/Projects/PhotoBox,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";

@@ -35,7 +35,7 @@
 }
 
 - (void)animationEnded:(BOOL)transitionCompleted {
-    [self performSelector:@selector( removeHelperViews) withObject:nil afterDelay:0.5];
+    [self removeHelperViews];
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -71,7 +71,7 @@
     
     [containerView addSubview:self.imageViewToAnimate];
     
-    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [self.imageViewToAnimate animaticToScaleAspectFit];
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
@@ -123,7 +123,7 @@
     [viewToAnimate setFrame:inContainerViewRect];
     
     // start the animation
-    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
         [viewToAnimate setFrame:endRect];
         [fromVC.view setAlpha:0];
     } completion:^(BOOL finished) {

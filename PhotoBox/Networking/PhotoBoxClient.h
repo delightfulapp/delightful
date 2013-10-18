@@ -46,6 +46,8 @@ typedef NS_ENUM(NSInteger, ActionType) {
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock;
 
+- (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void(^)(NSString *token))completion;
+
 #pragma mark - Oauth1Client interfaces
 
 - (void)setAccessToken:(AFOAuth1Token *)accessToken;
