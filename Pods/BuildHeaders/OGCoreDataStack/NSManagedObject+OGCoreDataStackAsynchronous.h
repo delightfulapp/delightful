@@ -1,1 +1,0 @@
-../../OGCoreDataStack/OGCoreDataStack/NSManagedObject+OGCoreDataStackAsynchronous.h

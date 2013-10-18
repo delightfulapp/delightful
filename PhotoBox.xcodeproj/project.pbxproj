@@ -248,6 +248,7 @@
 		03D972A61811865A008A087B /* Photo+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photo+Additionals.m"; sourceTree = "<group>"; };
 		03D972A8181188CE008A087B /* PhotoSharingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoSharingManager.h; path = PhotoBox/Networking/PhotoSharingManager.h; sourceTree = "<group>"; };
 		03D972A9181188CE008A087B /* PhotoSharingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoSharingManager.m; path = PhotoBox/Networking/PhotoSharingManager.m; sourceTree = "<group>"; };
+		03D972AB18119CE6008A087B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumModelTests.m; sourceTree = "<group>"; };
 		03DD04E017F9C58B001FB8A5 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
@@ -368,6 +369,7 @@
 		032CBB7117D0BDF3001205B1 = {
 			isa = PBXGroup;
 			children = (
+				03D972AB18119CE6008A087B /* README.md */,
 				03AE182717D8B2F5009CD844 /* Images */,
 				0337523B17D382D200928409 /* Others */,
 				0358469F17D1F8F100E196D7 /* Views */,
