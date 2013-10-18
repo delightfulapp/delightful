@@ -399,8 +399,16 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
-    CGFloat width = (collectionViewWidth/(float)self.numberOfColumns);
+    CGFloat width = floorf((collectionViewWidth/(float)self.numberOfColumns));
+
     return CGSizeMake(width, width);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    if ((int)CGRectGetWidth(self.collectionView.frame)%self.numberOfColumns == 0 && self.numberOfColumns != 1) {
+        return 0;
+    }
+    return 1;
 }
 
 #pragma mark - KVO
