@@ -1,1 +1,0 @@
-../../OGCoreDataStack/OGCoreDataStack/OGCoreDataStackCollectionViewVendor.h
