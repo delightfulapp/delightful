@@ -242,11 +242,11 @@
 #pragma mark - Zoomable Cell delegate
 
 - (void)didClosePhotosHorizontalViewController{
-    [self.navigationController popViewControllerAnimated:YES];
+    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    [self.darkBackgroundView setAlpha:progress];
+    //[self.darkBackgroundView setAlpha:progress];
 }
 
 #pragma mark - Button
