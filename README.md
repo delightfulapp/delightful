@@ -17,7 +17,7 @@ Features (so far)
 1. Albums as initial point of navigation.
 2. Photos grouped by date taken.
 3. Pinch to zoom in/out to see more or less photos. (change number of columns)
-4. Down original photos and save to photo album.
+4. Download original photos and save to photo album.
 5. Reverse Geocoding! If there is a photo with location within photos taken at the same date, the location name will be shown next to the date. Just like that of iOS 7 Photos app.
 6. Browse All Photos.
 7. Parallax effect on login page!
