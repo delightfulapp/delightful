@@ -1,1 +1,0 @@
-../../OGCoreDataStack/OGCoreDataStack/NSPersistentStoreCoordinator+OGCoreDataStack.h
