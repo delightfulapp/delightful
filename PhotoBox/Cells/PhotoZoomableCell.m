@@ -20,7 +20,9 @@
 
 // no idea how to do the zooming inside scrollview inside collection view cell using auto layout. back to the ol' days.
 
-@interface PhotoZoomableCell ()
+@interface PhotoZoomableCell () {
+    CGPoint draggingPoint;
+}
 
 @property (nonatomic, strong) NSURL *thumbnailURL;
 
@@ -133,7 +135,40 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self centerScrollViewContents];
+    if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
+        float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
+        if (deltaY <=0) {
+            CGFloat maxDelta = -100;
+            deltaY = MAX(deltaY, maxDelta);
+            CGFloat alpha = (maxDelta-deltaY)/(maxDelta);
+            if (self.delegate && [self.delegate respondsToSelector:@selector(didDragDownWithPercentage:)]) {
+                [self.delegate didDragDownWithPercentage:alpha];
+            }
+        }
+        
+        
+    }
 }
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
+        draggingPoint = scrollView.contentOffset;
+    }
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
+        float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
+        
+        if (deltaY < - 70) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
+                [self.delegate didClosePhotosHorizontalViewController];
+            }
+        }
+        
+    }
+}
+
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.thisImageview;

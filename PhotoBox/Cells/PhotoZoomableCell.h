@@ -8,12 +8,18 @@
 
 #import "PhotoCell.h"
 
+@protocol PhotoZoomableCellDelegate <NSObject>
 
+- (void)didClosePhotosHorizontalViewController;
+- (void)didDragDownWithPercentage:(float)progress;
+
+@end
 
 @interface PhotoZoomableCell : PhotoCell <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *thisImageview;
+@property (nonatomic, weak) id<PhotoZoomableCellDelegate> delegate;
 
 - (void)loadOriginalImage;
 - (BOOL)hasDownloadedOriginalImage;

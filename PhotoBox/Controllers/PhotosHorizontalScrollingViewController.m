@@ -17,7 +17,9 @@
 #import "UIViewController+Additionals.h"
 #import "UIView+Additionals.h"
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate>
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate> {
+    BOOL shouldHideNavigationBar;
+}
 
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
@@ -88,6 +90,7 @@
 
 - (void)scrollToFirstShownPhoto {
     if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
+        shouldHideNavigationBar = YES;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     } else {
         NSLog(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
@@ -133,6 +136,14 @@
 
 - (int)pageSize {
     return 0;
+}
+
+- (CollectionViewCellConfigureBlock)cellConfigureBlock {
+    void (^configureCell)(PhotoZoomableCell*, id) = ^(PhotoZoomableCell* cell, id item) {
+        [cell setItem:item];
+        [cell setDelegate:self];
+    };
+    return configureCell;
 }
 
 #pragma mark - Interactive Gesture Recognizer Delegate
@@ -188,8 +199,13 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
-        [self hideNavigationBar];
-        [self darkenBackground];
+        if (!shouldHideNavigationBar) {
+            [self hideNavigationBar];
+            [self darkenBackground];
+        } else {
+            shouldHideNavigationBar = NO;
+        }
+        
         self.previousPage = page;
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
@@ -221,6 +237,16 @@
     [UIView animateWithDuration:0.4 animations:^{
         self.darkBackgroundView.alpha = brightness;
     }];
+}
+
+#pragma mark - Zoomable Cell delegate
+
+- (void)didClosePhotosHorizontalViewController{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)didDragDownWithPercentage:(float)progress {
+    [self.darkBackgroundView setAlpha:progress];
 }
 
 #pragma mark - Button
