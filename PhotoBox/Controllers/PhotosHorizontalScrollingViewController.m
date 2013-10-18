@@ -91,6 +91,7 @@
 - (void)scrollToFirstShownPhoto {
     if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
         shouldHideNavigationBar = YES;
+        self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     } else {
         NSLog(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
@@ -219,7 +220,10 @@
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
-    CGFloat pageWidth = scrollView.frame.size.width;
+    if (self.justOpened) {
+        return self.firstShownPhotoIndex;
+    }
+    CGFloat pageWidth = scrollView.frame.size.width-PHOTO_SPACING;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
     return page;
