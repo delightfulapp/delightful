@@ -126,7 +126,7 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="grv-jT-xAI">
-                                            <rect key="frame" x="0.0" y="139" width="160" height="21"/>
+                                            <rect key="frame" x="0.0" y="119" width="160" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -134,7 +134,7 @@
                                             </constraints>
                                         </view>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Album Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="140" translatesAutoresizingMaskIntoConstraints="NO" id="4nZ-bH-2aj">
-                                            <rect key="frame" x="10" y="139" width="140" height="21"/>
+                                            <rect key="frame" x="10" y="129" width="140" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -149,7 +149,7 @@
                                     <constraint firstAttribute="centerX" secondItem="grv-jT-xAI" secondAttribute="centerX" id="MJI-TT-WRz"/>
                                     <constraint firstItem="grv-jT-xAI" firstAttribute="centerX" secondItem="4nZ-bH-2aj" secondAttribute="centerX" id="agU-Xh-9tl"/>
                                     <constraint firstItem="CfN-7p-Xz0" firstAttribute="top" secondItem="oqy-dN-eMD" secondAttribute="top" placeholder="YES" id="fBv-Ry-L0l"/>
-                                    <constraint firstItem="grv-jT-xAI" firstAttribute="height" secondItem="4nZ-bH-2aj" secondAttribute="height" id="hqF-S2-Tfb"/>
+                                    <constraint firstItem="grv-jT-xAI" firstAttribute="height" secondItem="4nZ-bH-2aj" secondAttribute="height" constant="20" id="hqF-S2-Tfb"/>
                                     <constraint firstItem="grv-jT-xAI" firstAttribute="centerY" secondItem="4nZ-bH-2aj" secondAttribute="centerY" id="lrW-qL-Mfs"/>
                                     <constraint firstAttribute="bottom" secondItem="CfN-7p-Xz0" secondAttribute="bottom" placeholder="YES" id="qIe-Hw-RCQ"/>
                                     <constraint firstItem="grv-jT-xAI" firstAttribute="width" secondItem="4nZ-bH-2aj" secondAttribute="width" constant="20" id="tST-Oe-KZV"/>

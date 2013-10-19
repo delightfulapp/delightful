@@ -24,6 +24,8 @@
 
 @interface PhotoBoxFetchedResultsController ()
 
+@property (nonatomic, strong) NSCache *mantleItemsCache;
+
 @end
 
 @implementation PhotoBoxFetchedResultsController
@@ -68,6 +70,10 @@
         [_mantleItemsCache setName:@"photobox.cache.mantleitems"];
     }
     return _mantleItemsCache;
+}
+
+- (void)clearCache {
+    [self.mantleItemsCache removeAllObjects];
 }
 
 @end
