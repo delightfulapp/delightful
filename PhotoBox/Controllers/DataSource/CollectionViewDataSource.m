@@ -118,17 +118,28 @@
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
+            NSLog(@"Did update object: %@", anObject);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
             change[@(type)] = @[indexPath, newIndexPath];
             break;
     }
+    
     [_objectChanges addObject:change];
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
+    [self.fetchedResultsController clearCache];
+    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
+        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
+            @autoreleasepool {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
+                [self itemAtIndexPath:indexPath];
+            }
+        }
+    }
     [self.collectionView reloadData];
     return;
     if ([_sectionChanges count] > 0)
