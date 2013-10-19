@@ -199,6 +199,7 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
+    NSLog(@"Did end decelerating now page = %d. previous page = %d", page, self.previousPage);
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
             [self hideNavigationBar];
@@ -223,9 +224,10 @@
     if (self.justOpened) {
         return self.firstShownPhotoIndex;
     }
-    CGFloat pageWidth = scrollView.frame.size.width-PHOTO_SPACING;
+    CGFloat pageWidth = scrollView.frame.size.width;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
+    self.firstShownPhotoIndex = page;
     return page;
 }
 
@@ -265,7 +267,7 @@
     }
     
     Photo *currentPhoto = (Photo *)[[self currentCell] item];
-    NSAssert(currentPhoto.pathOriginal, @"Why no path original for url photo = %@", currentPhoto.url);
+    
     if (currentPhoto.pathOriginal) {
         [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
         
