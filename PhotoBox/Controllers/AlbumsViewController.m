@@ -56,7 +56,7 @@
 }
 
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:[self displayedItemIdKey] ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
 }
 
 - (ResourceType)resourceType {
