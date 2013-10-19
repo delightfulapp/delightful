@@ -303,8 +303,7 @@
 #pragma mark - Custom Animation Transition Delegate
 
 - (PhotoZoomableCell *)currentCell {
-    NSInteger page = [self currentCollectionViewPage:self.collectionView];
-    return (PhotoZoomableCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+    return [self.collectionView visibleCells][0];
 }
 
 - (UIView *)viewToAnimate {
