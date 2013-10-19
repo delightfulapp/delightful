@@ -980,9 +980,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/nico/Dropbox/Project/Fun/PhotoBox,
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
-					/Users/nico/Projects/PhotoBox,
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
@@ -1008,7 +1007,7 @@
 					CoreTelephony,
 					"-weak_framework",
 					StoreKit,
-					"-framework",
+					"-weak_framework",
 					Reveal,
 					"-weak_framework",
 					Crashlytics,
@@ -1027,9 +1026,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/nico/Dropbox/Project/Fun/PhotoBox,
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
-					/Users/nico/Projects/PhotoBox,
+					"$(SRCROOT)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
