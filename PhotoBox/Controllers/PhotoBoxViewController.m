@@ -18,6 +18,8 @@
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
 
+#define INITIAL_PAGE_NUMBER 1
+
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout> {
     CGFloat lastOffset;
 }
@@ -34,9 +36,7 @@
 {
     [super viewDidLoad];
     
-    if (self.page==0) {
-        self.page = 1;
-    }
+    self.page = INITIAL_PAGE_NUMBER;
     self.numberOfColumns = 2;
     _pageSize = 20;
     
@@ -293,7 +293,9 @@
 }
 
 - (void)refresh {
-    
+    self.page = INITIAL_PAGE_NUMBER;
+    [self loadItemsFromCoreData];
+    [self fetchResource];
 }
 
 - (void)showLoadingView:(BOOL)show {
@@ -306,6 +308,9 @@
             [self.loadingView startAnimating];
         } else {
             [self.loadingView stopAnimating];
+            if ([self.refreshControl isRefreshing]) {
+                [self.refreshControl endRefreshing];
+            }
         }
         [self showLoadingView:show atBottomOfScrollView:YES];
     } else {
