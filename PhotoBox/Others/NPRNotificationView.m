@@ -40,8 +40,7 @@
     
     // position the image
     if (self.imageView.image) {
-        [self.imageView setWidth:height*0.8 height:height*0.8];
-        [self.imageView cropCircle:YES radius:CGRectGetWidth(self.imageView.frame)/2];
+        [self.imageView setWidth:height*0.7 height:height*0.7];
         [self.imageView setPositionFromEdge:MNCUIViewLeftEdge margin:margin];
         [self.imageView setPositionInCenterYOfSuperview];
     } else {
@@ -148,7 +147,7 @@
         case NPRNotificationAccessoryTypeCloseButton:
             if (shouldUpdate || !self.accessoryView) {
                 UIButton *closeButton = [[UIButton alloc] init];
-                [closeButton setImage:[[UIImage imageNamed:@"npr_notification_image_error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+                [closeButton setImage:[[UIImage imageNamed:@"npr_notification_image_close.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
                 [closeButton setBackgroundColor:[UIColor clearColor]];
                 [closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                 [self setRightAccessoryView:closeButton];

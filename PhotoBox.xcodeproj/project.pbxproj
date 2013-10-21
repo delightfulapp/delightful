@@ -32,6 +32,8 @@
 		032222B61814CBF0004F3830 /* npr_notification_image_warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B01814CBF0004F3830 /* npr_notification_image_warning@2x.png */; };
 		032222B71814CBF0004F3830 /* npr_notification_image_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B11814CBF0004F3830 /* npr_notification_image_error.png */; };
 		032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B21814CBF0004F3830 /* npr_notification_image_error@2x.png */; };
+		032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */; };
+		032222BC1814F2E4004F3830 /* npr_notification_image_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222BA1814F2E4004F3830 /* npr_notification_image_close.png */; };
 		032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
 		032B0D2817D5B9A800ABFA9F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */; };
 		032B0D2A17D5B9B400ABFA9F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */; };
@@ -156,6 +158,8 @@
 		032222B01814CBF0004F3830 /* npr_notification_image_warning@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "npr_notification_image_warning@2x.png"; sourceTree = "<group>"; };
 		032222B11814CBF0004F3830 /* npr_notification_image_error.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_notification_image_error.png; sourceTree = "<group>"; };
 		032222B21814CBF0004F3830 /* npr_notification_image_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "npr_notification_image_error@2x.png"; sourceTree = "<group>"; };
+		032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "npr_notification_image_close@2x.png"; sourceTree = "<group>"; };
+		032222BA1814F2E4004F3830 /* npr_notification_image_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_notification_image_close.png; sourceTree = "<group>"; };
 		032B0D1C17D4CF4800ABFA9F /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = PhotoBox/Others/LocationManager.h; sourceTree = "<group>"; };
 		032B0D1D17D4CF4800ABFA9F /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = PhotoBox/Others/LocationManager.m; sourceTree = "<group>"; };
 		032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -605,6 +609,8 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */,
+				032222BA1814F2E4004F3830 /* npr_notification_image_close.png */,
 				032222AD1814CBF0004F3830 /* npr_notification_image_success.png */,
 				032222AE1814CBF0004F3830 /* npr_notification_image_success@2x.png */,
 				032222AF1814CBF0004F3830 /* npr_notification_image_warning.png */,
@@ -712,11 +718,13 @@
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
+				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
 				031DD2AD17D9BB8300A80167 /* user.png in Resources */,
 				0398D7C618103B6E00FDD83B /* download@2x.png in Resources */,
 				032222B41814CBF0004F3830 /* npr_notification_image_success@2x.png in Resources */,
 				032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */,
+				032222BC1814F2E4004F3830 /* npr_notification_image_close.png in Resources */,
 				032222B61814CBF0004F3830 /* npr_notification_image_warning@2x.png in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
