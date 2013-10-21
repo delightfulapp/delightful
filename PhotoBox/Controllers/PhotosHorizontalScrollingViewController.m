@@ -297,7 +297,7 @@
         if (token) {
             [[NPRNotificationManager sharedManager] hideNotification];
         } else {
-            [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot fetched", nil) duration:3];
+            [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot be fetched", nil) duration:3];
         }
     } completion:nil];
 }
