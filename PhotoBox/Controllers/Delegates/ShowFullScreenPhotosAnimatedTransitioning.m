@@ -98,7 +98,7 @@
     // the rect of the image view in photos view controller
     CGRect endRect = [toVC endRectInContainerView:containerView];
     
-    // white view to give the fade from white effect
+    // white view to hide the image in photos view controller
     UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
     [containerView addSubview:whiteView];

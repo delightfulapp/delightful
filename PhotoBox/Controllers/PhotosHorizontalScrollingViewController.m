@@ -25,6 +25,7 @@
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
+@property (nonatomic, strong) UIView *backgroundViewControllerView;
 
 @end
 
@@ -43,6 +44,7 @@
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
+    [self.collectionView setBackgroundColor:[UIColor clearColor]];
     
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
@@ -58,9 +60,10 @@
     [self showLoadingBarButtonItem:NO];
     
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.darkBackgroundView setBackgroundColor:[UIColor blackColor]];
-    [self.darkBackgroundView setAlpha:0];
+    [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
+    
+    [self insertBackgroundSnapshotView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -213,10 +216,29 @@
                 NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }
+            [self insertBackgroundSnapshotView];
         } else {
             self.justOpened = NO;
         }
     }
+}
+
+- (void)insertBackgroundSnapshotView {
+    if (self.backgroundViewControllerView) {
+        [self.backgroundViewControllerView removeFromSuperview];
+    }
+    self.backgroundViewControllerView = [self.delegate snapshotView];
+    [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
+    CGRect frame = ({
+        CGRect frame = self.backgroundViewControllerView.frame;
+        frame.origin = self.collectionView.frame.origin;
+        frame;
+    });
+    [self.backgroundViewControllerView setFrame:frame];
+    UIView *whiteView = [[UIView alloc] initWithFrame:[self.delegate selectedItemRectInSnapshot]];
+    [whiteView setBackgroundColor:[UIColor whiteColor]];
+    [self.backgroundViewControllerView addSubview:whiteView];
+    [self.collectionView.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView];
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
@@ -231,27 +253,44 @@
 }
 
 - (void)darkenBackground {
-    [self setBackgroundBrightness:1];
+    [self setBackgroundBrightness:0];
 }
 
 - (void)brightenBackground {
-    [self setBackgroundBrightness:0];
+    [self setBackgroundBrightness:1];
 }
 
 - (void)setBackgroundBrightness:(float)brightness {
     [UIView animateWithDuration:0.4 animations:^{
-        self.darkBackgroundView.alpha = brightness;
+        [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:brightness alpha:1]];
     }];
 }
 
 #pragma mark - Zoomable Cell delegate
 
+- (void)didCancelClosingPhotosHorizontalViewController {
+    //self.backgroundViewControllerView = nil;
+    [self.collectionView setScrollEnabled:YES];
+}
+
 - (void)didClosePhotosHorizontalViewController{
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    //[self.darkBackgroundView setAlpha:progress];
+    [self.collectionView setScrollEnabled:NO];
+    //[self setNavigationBarHidden:NO];
+    [self.darkBackgroundView setAlpha:1-progress+0.1];
+//    //[self.darkBackgroundView setAlpha:progress];
+//    [self darkenBackground];
+//    NSLog(@"Progress: %f", progress);
+//    if (progress < 0.3 && !self.backgroundViewControllerView) {
+////        self.backgroundViewControllerView = [self.delegate snapshotView];
+////        [self.backgroundViewControllerView setFrame:self.collectionView.backgroundView.frame];
+////        [self.navigationController.view.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView.backgroundView];
+//    } else {
+//        [self.collectionView.layer setOpacity:1-progress];
+//    }
 }
 
 #pragma mark - Button

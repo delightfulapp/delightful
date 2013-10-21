@@ -182,6 +182,14 @@
     [self setSelectedItemRectAtIndexPath:indexPath];
 }
 
+- (UIView *)snapshotView {
+    return [self.view snapshotViewAfterScreenUpdates:YES];
+}
+
+- (CGRect)selectedItemRectInSnapshot {
+    return [self endRectInContainerView:nil];
+}
+
 #pragma mark - Location
 
 - (void)getLocationForEachSection {

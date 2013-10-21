@@ -15,6 +15,8 @@
 @protocol PhotosHorizontalScrollingViewControllerDelegate <NSObject>
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(NSManagedObject *)item;
+- (UIView *)snapshotView;
+- (CGRect)selectedItemRectInSnapshot;
 
 @end
 
