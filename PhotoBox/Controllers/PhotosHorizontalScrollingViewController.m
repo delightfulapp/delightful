@@ -44,6 +44,7 @@
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
+    [self.collectionView setBackgroundColor:[UIColor clearColor]];
     
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
@@ -61,6 +62,8 @@
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
+    
+    [self insertBackgroundSnapshotView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -213,10 +216,29 @@
                 NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }
+            [self insertBackgroundSnapshotView];
         } else {
             self.justOpened = NO;
         }
     }
+}
+
+- (void)insertBackgroundSnapshotView {
+    if (self.backgroundViewControllerView) {
+        [self.backgroundViewControllerView removeFromSuperview];
+    }
+    self.backgroundViewControllerView = [self.delegate snapshotView];
+    [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
+    CGRect frame = ({
+        CGRect frame = self.backgroundViewControllerView.frame;
+        frame.origin = self.collectionView.frame.origin;
+        frame;
+    });
+    [self.backgroundViewControllerView setFrame:frame];
+    UIView *whiteView = [[UIView alloc] initWithFrame:[self.delegate selectedItemRectInSnapshot]];
+    [whiteView setBackgroundColor:[UIColor whiteColor]];
+    [self.backgroundViewControllerView addSubview:whiteView];
+    [self.collectionView.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView];
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
@@ -257,6 +279,8 @@
 
 - (void)didDragDownWithPercentage:(float)progress {
     [self.collectionView setScrollEnabled:NO];
+    //[self setNavigationBarHidden:NO];
+    [self.darkBackgroundView setAlpha:1-progress+0.1];
 //    //[self.darkBackgroundView setAlpha:progress];
 //    [self darkenBackground];
 //    NSLog(@"Progress: %f", progress);
