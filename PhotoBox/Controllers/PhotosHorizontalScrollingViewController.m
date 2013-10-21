@@ -199,7 +199,6 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
-    NSLog(@"Did end decelerating now page = %d. previous page = %d", page, self.previousPage);
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
             [self hideNavigationBar];
@@ -270,8 +269,6 @@
     
     if (currentPhoto.pathOriginal) {
         [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
-        
-        [[NPRImageDownloader sharedDownloader] showDownloads];
     }
 }
 

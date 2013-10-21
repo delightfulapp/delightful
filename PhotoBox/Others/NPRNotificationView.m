@@ -123,33 +123,39 @@
 }
 
 - (void)setAccessoryType:(NPRNotificationAccessoryType)accessoryType {
+    BOOL shouldUpdate = NO;
     if (_accessoryType!=accessoryType) {
+        shouldUpdate = YES;
         _accessoryType = accessoryType;
-        switch (_accessoryType) {
-            case NPRNotificationAccessoryTypeNone:
-                if (!self.accessoryView) {
-                    [self setRightAccessoryView:nil];
+        
+    }
+    switch (_accessoryType) {
+        case NPRNotificationAccessoryTypeNone:
+            if (shouldUpdate || !self.accessoryView) {
+                if (self.rightAccessoryView) {
+                    [self.rightAccessoryView removeFromSuperview];
                 }
-                break;
-            case NPRNotificationAccessoryTypeActivityView:
-                if (!self.accessoryView) {
-                    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-                    [self setRightAccessoryView:indicatorView];
-                    [indicatorView startAnimating];
-                }
-                break;
-            case NPRNotificationAccessoryTypeCloseButton:
-                if (!self.accessoryView) {
-                    UIButton *closeButton = [[UIButton alloc] init];
-                    [closeButton setImage:[[UIImage imageNamed:@"npr_notification_image_error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-                    [closeButton setBackgroundColor:[UIColor clearColor]];
-                    [closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-                    [self setRightAccessoryView:closeButton];
-                }
-                break;
-            default:
-                break;
-        }
+                [self setRightAccessoryView:nil];
+            }
+            break;
+        case NPRNotificationAccessoryTypeActivityView:
+            if (shouldUpdate || !self.accessoryView) {
+                UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                [self setRightAccessoryView:indicatorView];
+                [indicatorView startAnimating];
+            }
+            break;
+        case NPRNotificationAccessoryTypeCloseButton:
+            if (shouldUpdate || !self.accessoryView) {
+                UIButton *closeButton = [[UIButton alloc] init];
+                [closeButton setImage:[[UIImage imageNamed:@"npr_notification_image_error.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+                [closeButton setBackgroundColor:[UIColor clearColor]];
+                [closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                [self setRightAccessoryView:closeButton];
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -173,8 +179,10 @@
 - (void)setRightAccessoryView:(UIView *)rightAccessoryView {
     if (_rightAccessoryView != rightAccessoryView) {
         _rightAccessoryView = rightAccessoryView;
-        if (!_rightAccessoryView.superview) {
-            [self addSubview:_rightAccessoryView];
+        if (_rightAccessoryView) {
+            if (!_rightAccessoryView.superview) {
+                [self addSubview:_rightAccessoryView];
+            }
         }
     }
 }
@@ -195,7 +203,7 @@
     if (!_textLabel) {
         _textLabel = [[UILabel alloc] init];
         [_textLabel setBackgroundColor:[UIColor clearColor]];
-        [_textLabel setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleBody]];
+        [_textLabel setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1]];
         [_textLabel setTextColor:[UIColor whiteColor]];
         [_textLabel setNumberOfLines:2];
         [self addSubview:_textLabel];

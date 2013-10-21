@@ -47,7 +47,13 @@
     [self.notificationView setAccessoryView:accessoryView];
     [self.notificationView setNeedsLayout];
     [self.notificationView layoutIfNeeded];
-    [self.notificationView setOrigin:[self startPointForPosition:position]];
+    
+    if (!self.isShowingNotification) {
+        [self.notificationView setOrigin:[self startPointForPosition:position]];
+    } else {
+        [self performSelector:@selector(hideNotification) withObject:nil afterDelay:duration inModes:@[NSRunLoopCommonModes]];
+    }
+    
     
     self.onTapBlock = onTapBlock;
     self.position = position;

@@ -81,8 +81,10 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     }];
     
     @synchronized(self){
+        [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         [self.downloads addObject:downloadOperation];
         [self.downloadURLs addObject:URL];
+        [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidStartNotification object:nil];
     }
@@ -123,8 +125,10 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
 
 - (void)removeOperation:(id)operation URL:(NSURL *)URL {
     @synchronized(self) {
+        [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         [self.downloads removeObject:operation];
         [self.downloadURLs removeObject:URL];
+        [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
     }
 }
 
