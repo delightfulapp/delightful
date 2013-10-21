@@ -17,6 +17,7 @@
     #import "Constants.h"
     #import <Mantle/Mantle.h>
     #import <OGCoreDataStack.h>
+    #import "NPRNotificationManager.h"
 
     #if TARGET_OS_IPHONE
     #import <MobileCoreServices/MobileCoreServices.h>
