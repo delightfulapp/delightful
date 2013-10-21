@@ -38,6 +38,10 @@ typedef NS_ENUM(NSInteger, NPRNotificationPosition) {
                    accessoryView:(UIView *)view
                         duration:(NSInteger)duration
                            onTap:(void(^)())onTapBlock;
+
+- (void)postLoadingNotificationWithText:(NSString *)text;
+- (void)postErrorNotificationWithText:(NSString *)text duration:(NSInteger)duration;
+
 - (void)hideNotification;
 
 @end

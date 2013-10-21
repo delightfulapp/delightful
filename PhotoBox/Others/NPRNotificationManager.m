@@ -62,6 +62,14 @@
     [self showNotificationView:YES position:position];
 }
 
+- (void)postLoadingNotificationWithText:(NSString *)text {
+    [self postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeNone string:text accessoryType:NPRNotificationAccessoryTypeActivityView accessoryView:nil duration:0 onTap:nil];
+}
+
+- (void)postErrorNotificationWithText:(NSString *)text duration:(NSInteger)duration {
+    [self postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeError string:text accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:duration onTap:nil];
+}
+
 - (UIWindow *)window {
     return [[[UIApplication sharedApplication] delegate] window];
 }

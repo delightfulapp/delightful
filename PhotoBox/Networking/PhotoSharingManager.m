@@ -26,8 +26,11 @@
     return _sharedManager;
 }
 
-- (void)sharePhoto:(Photo *)photo image:(UIImage *)image completion:(void (^)())completion {
+- (void)sharePhoto:(Photo *)photo image:(UIImage *)image tokenFetchedBlock:(void (^)(id token))tokenFetchedBlock completion:(void (^)())completion {
     [[PhotoBoxClient sharedClient] fetchSharingTokenForPhotoWithId:photo.photoId completionBlock:^(NSString *token) {
+        if (tokenFetchedBlock) {
+            tokenFetchedBlock(token);
+        }
         if (token) {
             NSURL *sharedURL = [photo sharedURLWithToken:token];
             NSLog(@"Shared URL = %@", sharedURL.absoluteString);
