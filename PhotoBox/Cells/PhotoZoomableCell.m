@@ -22,6 +22,7 @@
 
 @interface PhotoZoomableCell () {
     CGPoint draggingPoint;
+    BOOL isClosingViewController;
 }
 
 @property (nonatomic, strong) NSURL *thumbnailURL;
@@ -161,11 +162,25 @@
         float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
         
         if (deltaY < - 70) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
-                [self.delegate didClosePhotosHorizontalViewController];
+            if (!decelerate) {
+                [self notifyDelegateToCloseHorizontalScrollingViewController];
+            } else {
+                isClosingViewController = YES;
             }
+            
         }
-        
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    if (isClosingViewController) {
+        [self notifyDelegateToCloseHorizontalScrollingViewController];
+    }
+}
+
+- (void)notifyDelegateToCloseHorizontalScrollingViewController {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
+        [self.delegate didClosePhotosHorizontalViewController];
     }
 }
 

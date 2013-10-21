@@ -58,8 +58,7 @@
     [self showLoadingBarButtonItem:NO];
     
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.darkBackgroundView setBackgroundColor:[UIColor blackColor]];
-    [self.darkBackgroundView setAlpha:0];
+    [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
 }
 
@@ -231,16 +230,16 @@
 }
 
 - (void)darkenBackground {
-    [self setBackgroundBrightness:1];
+    [self setBackgroundBrightness:0];
 }
 
 - (void)brightenBackground {
-    [self setBackgroundBrightness:0];
+    [self setBackgroundBrightness:1];
 }
 
 - (void)setBackgroundBrightness:(float)brightness {
     [UIView animateWithDuration:0.4 animations:^{
-        self.darkBackgroundView.alpha = brightness;
+        [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:brightness alpha:1]];
     }];
 }
 
