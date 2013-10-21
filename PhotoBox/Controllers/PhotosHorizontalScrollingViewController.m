@@ -25,6 +25,7 @@
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
+@property (nonatomic, strong) UIView *backgroundViewControllerView;
 
 @end
 
@@ -245,12 +246,27 @@
 
 #pragma mark - Zoomable Cell delegate
 
+- (void)didCancelClosingPhotosHorizontalViewController {
+    //self.backgroundViewControllerView = nil;
+    [self.collectionView setScrollEnabled:YES];
+}
+
 - (void)didClosePhotosHorizontalViewController{
-    //[self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    //[self.darkBackgroundView setAlpha:progress];
+    [self.collectionView setScrollEnabled:NO];
+//    //[self.darkBackgroundView setAlpha:progress];
+//    [self darkenBackground];
+//    NSLog(@"Progress: %f", progress);
+//    if (progress < 0.3 && !self.backgroundViewControllerView) {
+////        self.backgroundViewControllerView = [self.delegate snapshotView];
+////        [self.backgroundViewControllerView setFrame:self.collectionView.backgroundView.frame];
+////        [self.navigationController.view.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView.backgroundView];
+//    } else {
+//        [self.collectionView.layer setOpacity:1-progress];
+//    }
 }
 
 #pragma mark - Button

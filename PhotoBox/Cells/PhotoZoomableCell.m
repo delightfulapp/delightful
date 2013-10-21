@@ -138,10 +138,11 @@
     [self centerScrollViewContents];
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
         float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
-        if (deltaY <=0) {
+        CGFloat startingThreshold = -5;
+        if (deltaY < startingThreshold) {
             CGFloat maxDelta = -100;
             deltaY = MAX(deltaY, maxDelta);
-            CGFloat alpha = (maxDelta-deltaY)/(maxDelta);
+            CGFloat alpha = (deltaY - startingThreshold)/(maxDelta - startingThreshold);
             if (self.delegate && [self.delegate respondsToSelector:@selector(didDragDownWithPercentage:)]) {
                 [self.delegate didDragDownWithPercentage:alpha];
             }
@@ -160,14 +161,13 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
         float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
-        
         if (deltaY < - 70) {
-            if (!decelerate) {
-                [self notifyDelegateToCloseHorizontalScrollingViewController];
-            } else {
-                isClosingViewController = YES;
-            }
+            [self notifyDelegateToCloseHorizontalScrollingViewController];
             
+        } else {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(didCancelClosingPhotosHorizontalViewController)]) {
+                [self.delegate didCancelClosingPhotosHorizontalViewController];
+            }
         }
     }
 }

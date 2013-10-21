@@ -11,7 +11,9 @@
 @protocol PhotoZoomableCellDelegate <NSObject>
 
 - (void)didClosePhotosHorizontalViewController;
+- (void)didCancelClosingPhotosHorizontalViewController;
 - (void)didDragDownWithPercentage:(float)progress;
+- (void)willStartClosingPhotosHorizontalViewController;
 
 @end
 
