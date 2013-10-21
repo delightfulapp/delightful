@@ -139,18 +139,25 @@
             break;
         case NPRNotificationAccessoryTypeActivityView:
             if (shouldUpdate || !self.accessoryView) {
-                UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-                [self setRightAccessoryView:indicatorView];
-                [indicatorView startAnimating];
+                if (![self.rightAccessoryView isKindOfClass:[UIActivityIndicatorView class]]) {
+                    UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+                    [self setRightAccessoryView:indicatorView];
+                    [indicatorView startAnimating];
+                }
             }
             break;
         case NPRNotificationAccessoryTypeCloseButton:
             if (shouldUpdate || !self.accessoryView) {
-                UIButton *closeButton = [[UIButton alloc] init];
+                UIButton *closeButton = (UIButton *)self.rightAccessoryView;
+                if (![self.rightAccessoryView isKindOfClass:[UIButton class]]) {
+                    closeButton = [[UIButton alloc] init];
+                    
+                    [self setRightAccessoryView:closeButton];
+                }
+                [closeButton setTitle:nil forState:UIControlStateNormal];
                 [closeButton setImage:[[UIImage imageNamed:@"npr_notification_image_close.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
                 [closeButton setBackgroundColor:[UIColor clearColor]];
                 [closeButton addTarget:self action:@selector(closeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-                [self setRightAccessoryView:closeButton];
             }
             break;
         default:

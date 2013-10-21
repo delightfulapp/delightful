@@ -51,7 +51,9 @@
     if (!self.isShowingNotification) {
         [self.notificationView setOrigin:[self startPointForPosition:position]];
     } else {
-        [self performSelector:@selector(hideNotification) withObject:nil afterDelay:duration inModes:@[NSRunLoopCommonModes]];
+        if (duration > 0) {
+            [self performSelector:@selector(hideNotification) withObject:nil afterDelay:duration inModes:@[NSRunLoopCommonModes]];
+        }
     }
     
     
