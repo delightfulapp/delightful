@@ -117,8 +117,12 @@
     return color;
 }
 
-- (void)setString:(NSString *)string {
-    [self.textLabel setText:string];
+- (void)setString:(id)string {
+    if ([string isKindOfClass:[NSString class]]) {
+        [self.textLabel setText:string];
+    } else if ([string isKindOfClass:[NSAttributedString class]]) {
+        [self.textLabel setAttributedText:string];
+    }
 }
 
 - (void)setAccessoryType:(NPRNotificationAccessoryType)accessoryType {

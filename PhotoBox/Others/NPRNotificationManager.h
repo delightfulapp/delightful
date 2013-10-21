@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, NPRNotificationPosition) {
 - (void)postNotificationWithImage:(UIImage *)image
                         position:(NPRNotificationPosition)position
                             type:(NPRNotificationType)type
-                          string:(NSString *)string
+                          string:(id)string
                    accessoryType:(NPRNotificationAccessoryType)accessoryType
                    accessoryView:(UIView *)view
                         duration:(NSInteger)duration

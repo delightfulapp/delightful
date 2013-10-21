@@ -115,7 +115,12 @@ static BOOL isRunningTests(void)
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))]) {
         if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] > 0) {
-            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeNone string:[NSString stringWithFormat:NSLocalizedString(@"Downloading %1$d photo(s)", nil), [[NPRImageDownloader sharedDownloader] numberOfDownloads]] accessoryType:NPRNotificationAccessoryTypeActivityView accessoryView:nil duration:0 onTap:^{
+            NSString *text = [NSString stringWithFormat:NSLocalizedString(@"Downloading %1$d photo(s)", nil), [[NPRImageDownloader sharedDownloader] numberOfDownloads]];
+            NSString *tapToSee = @"Tap to see progress";
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"\n%@", tapToSee]];
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:8] range:[text rangeOfString:tapToSee]];
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeNone string:attributedString accessoryType:NPRNotificationAccessoryTypeActivityView accessoryView:nil duration:0 onTap:^{
                 [[NPRImageDownloader sharedDownloader] showDownloads];
             }];
         } else {

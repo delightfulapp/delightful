@@ -16,7 +16,7 @@
 @property (nonatomic, strong) UIView *accessoryView;
 
 - (void)setType:(NPRNotificationType)type;
-- (void)setString:(NSString *)string;
+- (void)setString:(id)string;
 - (void)setAccessoryType:(NPRNotificationAccessoryType)accessoryType;
 
 @end
