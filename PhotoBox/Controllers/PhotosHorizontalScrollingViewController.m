@@ -199,7 +199,6 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
-    NSLog(@"Did end decelerating now page = %d. previous page = %d", page, self.previousPage);
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
             [self hideNavigationBar];
@@ -270,8 +269,6 @@
     
     if (currentPhoto.pathOriginal) {
         [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
-        
-        [[NPRImageDownloader sharedDownloader] showDownloads];
     }
 }
 
@@ -295,11 +292,14 @@
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image completion:^{
-        if (weakSelf) {
-            [weakSelf showLoadingBarButtonItem:NO];
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image tokenFetchedBlock:^(id token) {
+        [weakSelf showLoadingBarButtonItem:NO];
+        if (token) {
+            [[NPRNotificationManager sharedManager] hideNotification];
+        } else {
+            [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot fetched", nil) duration:3];
         }
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Custom Animation Transition Delegate

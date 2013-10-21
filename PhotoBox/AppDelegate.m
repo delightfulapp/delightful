@@ -38,8 +38,8 @@
     [rootNavigationController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageDownloadDidFinish:) name:NPRImageDownloadDidFinishNotification object:nil];
+
+    [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
     
     return YES;
 }
@@ -110,12 +110,19 @@ static BOOL isRunningTests(void)
     }
 }
 
-#pragma mark - Image Download Notification
+#pragma mark - Observer
 
-- (void)imageDownloadDidFinish:(NSNotification *)notification {
-    if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] == 0) {
-        
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))]) {
+        if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] > 0) {
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeNone string:[NSString stringWithFormat:NSLocalizedString(@"Downloading %1$d photo(s)", nil), [[NPRImageDownloader sharedDownloader] numberOfDownloads]] accessoryType:NPRNotificationAccessoryTypeActivityView accessoryView:nil duration:0 onTap:^{
+                [[NPRImageDownloader sharedDownloader] showDownloads];
+            }];
+        } else {
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
+        }
     }
 }
+
 
 @end

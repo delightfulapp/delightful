@@ -8,10 +8,41 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, MNCUIViewEdge) {
+    MNCUIViewLeftEdge,
+    MNCUIViewRightEdge,
+    MNCUIViewTopEdge,
+    MNCUIViewBottomEdge
+};
+
 @interface UIView (Additionals)
 
 - (CGRect)convertFrameRectToView:(UIView *)toView ;
 
 - (void)addTransparentGradientWithStartColor:(UIColor *)startColor;
+
+- (void)setOrigin:(CGPoint)origin;
+- (void)setOriginX:(CGFloat)x;
+- (void)setOriginY:(CGFloat)y;
+- (void)setCenterX:(CGFloat)x;
+- (void)setCenterY:(CGFloat)y;
+- (void)setPositionFromEdge:(MNCUIViewEdge)edge margin:(CGFloat)margin;
+- (void)setPositionInCenterOfSuperview;
+- (void)setPositionInCenterXOfSuperview;
+- (void)setPositionInCenterYOfSuperview;
+
+- (void)setWidth:(CGFloat)width height:(CGFloat)height;
+- (void)setHeight:(CGFloat)height;
+- (void)setWidth:(CGFloat)width;
+
+- (void)fitToWidth:(CGFloat)width;
+- (void)fitHeightToSubview:(UIView *)subview margin:(CGFloat)margin;
+
+- (void)setPositionYSubview:(UIView *)subview1 under:(UIView *)subview2 margin:(CGFloat)margin;
+- (void)setPositionUnder:(UIView *)view margin:(CGFloat)margin;
+
+- (void)removeAllSubviews;
+
+- (void)cropCircle:(BOOL)crop radius:(CGFloat)radius;
 
 @end
