@@ -279,7 +279,7 @@
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    [self.darkBackgroundView setAlpha:1-progress+0.3];
+    [self.darkBackgroundView setAlpha:MIN(1-progress+0.3, 1)];
 }
 
 #pragma mark - Button
