@@ -132,13 +132,18 @@
     }
     
     self.thisImageview.frame = contentsFrame;
+    if (self.scrollView.zoomScale == self.scrollView.minimumZoomScale) {
+        [self.scrollView setDirectionalLockEnabled:YES];
+    } else {
+        [self.scrollView setDirectionalLockEnabled:NO];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self centerScrollViewContents];
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
         float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
-        CGFloat startingThreshold = -5;
+        CGFloat startingThreshold = -1;
         if (deltaY < startingThreshold) {
             CGFloat maxDelta = -100;
             deltaY = MAX(deltaY, maxDelta);
@@ -161,7 +166,7 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
         float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
-        if (deltaY < - 70) {
+        if (deltaY < - 50) {
             [self notifyDelegateToCloseHorizontalScrollingViewController];
             
         } else {

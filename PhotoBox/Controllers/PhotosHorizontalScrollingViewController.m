@@ -280,7 +280,7 @@
 - (void)didDragDownWithPercentage:(float)progress {
     [self.collectionView setScrollEnabled:NO];
     //[self setNavigationBarHidden:NO];
-    [self.darkBackgroundView setAlpha:1-progress+0.1];
+    [self.darkBackgroundView setAlpha:1-progress+0.3];
 //    //[self.darkBackgroundView setAlpha:progress];
 //    [self darkenBackground];
 //    NSLog(@"Progress: %f", progress);
