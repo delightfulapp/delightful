@@ -269,8 +269,7 @@
 #pragma mark - Zoomable Cell delegate
 
 - (void)didCancelClosingPhotosHorizontalViewController {
-    //self.backgroundViewControllerView = nil;
-    [self.collectionView setScrollEnabled:YES];
+
 }
 
 - (void)didClosePhotosHorizontalViewController{
@@ -278,7 +277,6 @@
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    [self.collectionView setScrollEnabled:NO];
     [self.darkBackgroundView setAlpha:1-progress+0.3];
 }
 

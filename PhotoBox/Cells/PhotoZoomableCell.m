@@ -23,6 +23,7 @@
 @interface PhotoZoomableCell () {
     CGPoint draggingPoint;
     BOOL isClosingViewController;
+    BOOL isZooming;
 }
 
 @property (nonatomic, strong) NSURL *thumbnailURL;
@@ -141,7 +142,8 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self centerScrollViewContents];
-    if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
+    if (scrollView.zoomScale == self.scrollView.minimumZoomScale && !isZooming) {
+        
         float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
         CGFloat startingThreshold = -1;
         if (deltaY < startingThreshold) {
@@ -155,6 +157,14 @@
         
         
     }
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    isZooming = YES;
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    isZooming = NO;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
