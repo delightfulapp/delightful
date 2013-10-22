@@ -49,9 +49,7 @@
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
     [self.collectionView reloadData];
-    
-    [self.navigationController.interactivePopGestureRecognizer setDelegate:self];
-    
+        
     UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
@@ -75,7 +73,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
 
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
@@ -152,13 +149,6 @@
 }
 
 #pragma mark - Interactive Gesture Recognizer Delegate
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
-        return NO;
-    }
-    return YES;
-}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {

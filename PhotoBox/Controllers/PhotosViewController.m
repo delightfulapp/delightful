@@ -45,6 +45,8 @@
     [super viewDidLoad];
     self.numberOfColumns = 3;
     [self setPhotosCount:0 max:0];
+    
+    [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
