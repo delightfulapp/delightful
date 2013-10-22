@@ -279,18 +279,7 @@
 
 - (void)didDragDownWithPercentage:(float)progress {
     [self.collectionView setScrollEnabled:NO];
-    //[self setNavigationBarHidden:NO];
     [self.darkBackgroundView setAlpha:1-progress+0.3];
-//    //[self.darkBackgroundView setAlpha:progress];
-//    [self darkenBackground];
-//    NSLog(@"Progress: %f", progress);
-//    if (progress < 0.3 && !self.backgroundViewControllerView) {
-////        self.backgroundViewControllerView = [self.delegate snapshotView];
-////        [self.backgroundViewControllerView setFrame:self.collectionView.backgroundView.frame];
-////        [self.navigationController.view.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView.backgroundView];
-//    } else {
-//        [self.collectionView.layer setOpacity:1-progress];
-//    }
 }
 
 #pragma mark - Button
