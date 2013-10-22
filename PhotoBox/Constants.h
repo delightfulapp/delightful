@@ -14,4 +14,6 @@
 
 extern NSString *PBX_allAlbumIdentifier;
 
+#define PBX_LOG(__FORMAT__, ...) CLS_LOG(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
+
 #endif

@@ -56,7 +56,7 @@
 
     [context save:&error];
     if (error) {
-        NSLog(@"Fail saving objects to db: %@", error);
+        CLS_LOG(@"Fail saving objects to db: %@", error);
     }
 }
 

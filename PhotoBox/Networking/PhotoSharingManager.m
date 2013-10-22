@@ -33,10 +33,9 @@
         }
         if (token) {
             NSURL *sharedURL = [photo sharedURLWithToken:token];
-            NSLog(@"Shared URL = %@", sharedURL.absoluteString);
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] openActivityPickerForURL:sharedURL completion:completion];
         } else {
-            NSLog(@"No token");
+            CLS_LOG(@"No token");
         }
     }];
 }

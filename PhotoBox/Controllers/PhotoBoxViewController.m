@@ -20,10 +20,11 @@
 
 #define INITIAL_PAGE_NUMBER 1
 
-@interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout> {
+@interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
     CGFloat lastOffset;
 }
 
+@property (nonatomic, assign, getter = isShowingAlert) BOOL showingAlert;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
 
 @end
@@ -54,12 +55,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    PBX_LOG(@"Resuming %@ data source.", NSStringFromClass(self.resourceClass));
     self.dataSource.paused = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    PBX_LOG(@"Pausing %@ data source.", NSStringFromClass(self.resourceClass));
     self.dataSource.paused = YES;
 }
 
@@ -127,6 +131,8 @@
         [_dataSource setCellIdentifier:self.cellIdentifier];
         [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
         [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
+        
+        [_dataSource setDebugName:NSStringFromClass([self class])];
     }
     return _dataSource;
 }
@@ -224,6 +230,7 @@
 - (void)fetchResource {
     [self showLoadingView:YES];
     
+    PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction
                                     resourceId:self.resourceId
@@ -232,7 +239,7 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               NSLog(@"Received %d objects", ((NSArray *)objects).count);
+                                               PBX_LOG(@"Received %d %@. Total = %d", ((NSArray *)objects).count, NSStringFromClass(self.resourceClass), [self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
                                                self.isFetching = NO;
@@ -252,13 +259,14 @@
 }
 
 - (void)fetchMore {
-        if (!self.isFetching) {
+    if (!self.isFetching) {
         int count = [self.dataSource numberOfItems];
+        PBX_LOG(@"Photos count = %d", count);
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
                 self.page++;
-
+                
                 [self loadItemsFromCoreData];
                 
                 [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
@@ -268,8 +276,10 @@
 }
 
 - (void)loadItemsFromCoreData {
+    PBX_LOG(@"");
     [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
     [self.dataSource.fetchedResultsController performFetch:NULL];
+    PBX_LOG(@"Reloading coleection view");
     [self.collectionView reloadData];
 }
 
@@ -285,6 +295,7 @@
 }
 
 - (void)restoreContentInset {
+    PBX_LOG(@"");
     [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
 }
 
@@ -293,6 +304,7 @@
 }
 
 - (void)refresh {
+    PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
     self.page = INITIAL_PAGE_NUMBER;
     [self loadItemsFromCoreData];
     [self fetchResource];
@@ -306,22 +318,37 @@
                 [self.navigationItem setRightBarButtonItem:loadingItem];
             }
             [self.loadingView startAnimating];
+            PBX_LOG(@"Showing right loading view");
         } else {
             [self.loadingView stopAnimating];
+            PBX_LOG(@"Stopping right loading view");
             if ([self.refreshControl isRefreshing]) {
                 [self.refreshControl endRefreshing];
+                PBX_LOG(@"End refresh control");
             }
         }
         [self showLoadingView:show atBottomOfScrollView:YES];
+        PBX_LOG(@"Showing bottom loading view");
     } else {
         [self showLoadingView:show atBottomOfScrollView:YES];
+        PBX_LOG(@"Closing bottom loading view");
     }
 }
 
 -(void)showError:(NSError *)error {
     self.isFetching = NO;
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles: nil];
-    [alert show];
+    if (!self.showingAlert) {
+        self.showingAlert = YES;
+        PBX_LOG(@"Showing error: %@", error);
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil) message:error.localizedDescription delegate:self cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles: nil];
+        [alert show];
+    }
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    self.showingAlert = NO;
 }
 
 #pragma mark - Scroll View
@@ -347,9 +374,11 @@
             [self changeNumberOfColumnsWithPinch:PinchIn];
         }
     }
+    PBX_LOG(@"Pinched %@. Number of columns = %d", NSStringFromClass(self.resourceClass), self.numberOfColumns);
 }
 
 - (void)changeNumberOfColumnsWithPinch:(PinchDirection)direction {
+    PBX_LOG(@"");
     NSArray *visibleItems = [self.collectionView visibleCells];
     UICollectionViewCell *cell = visibleItems[0];
     NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];

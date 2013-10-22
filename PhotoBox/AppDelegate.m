@@ -14,10 +14,6 @@
 
 #import "NPRImageDownloader.h"
 
-#if __has_include("Crashlytics/Crashlytics.h")
-#import <Crashlytics/Crashlytics.h>
-#endif
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

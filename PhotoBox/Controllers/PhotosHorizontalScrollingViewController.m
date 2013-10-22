@@ -92,12 +92,13 @@
 }
 
 - (void)scrollToFirstShownPhoto {
+    CLS_LOG(@"");
     if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
         shouldHideNavigationBar = YES;
         self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     } else {
-        NSLog(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
+        CLS_LOG(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
     }
     
 }
@@ -269,10 +270,11 @@
 #pragma mark - Zoomable Cell delegate
 
 - (void)didCancelClosingPhotosHorizontalViewController {
-
+    
 }
 
 - (void)didClosePhotosHorizontalViewController{
+    CLS_LOG(@"Popping from horizontal view controller");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -283,6 +285,7 @@
 #pragma mark - Button
 
 - (void)viewOriginalButtonTapped:(id)sender {
+    CLS_LOG(@"");
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
         [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
             OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -314,6 +317,7 @@
 }
 
 - (void)actionButtonTapped:(id)sender {
+    CLS_LOG(@"Sharing tapped");
     [self showLoadingBarButtonItem:YES];
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;

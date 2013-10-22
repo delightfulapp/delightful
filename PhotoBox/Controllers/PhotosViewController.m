@@ -47,14 +47,11 @@
     [self setPhotosCount:0 max:0];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-}
-
 - (void)viewDidAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    if (self.navigationController.navigationBarHidden) {
+        [self.navigationController setNavigationBarHidden:NO animated:YES];
+        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+    }
 }
 
 
@@ -140,6 +137,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"pushPhoto"]) {
+        CLS_LOG(@"Showing full screen photo");
         PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
         PhotoBoxCell *cell = (PhotoBoxCell *)sender;
         [destination setItem:self.item];
@@ -176,6 +174,7 @@
 #pragma mark - PhotosHorizontalScrollingViewControllerDelegate
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
+    CLS_LOG(@"Change page %d of %d", page, [self.dataSource numberOfItems]);
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
     

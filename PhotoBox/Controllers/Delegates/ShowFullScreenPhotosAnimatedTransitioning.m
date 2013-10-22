@@ -48,11 +48,12 @@
 }
 
 - (void)animateTransitionForPushOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
+    CLS_LOG(@"Animate push transition");
+    
     [self removeHelperViews];
     
     PhotosViewController *fromVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosHorizontalScrollingViewController *toVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
     UIView *containerView = transitionContext.containerView;
     UIImage *image = [fromVC imageToAnimate];
@@ -81,6 +82,8 @@
 }
 
 - (void)animateTransitionForPopOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
+    CLS_LOG(@"Animate pop transition");
+    
     PhotosHorizontalScrollingViewController *fromVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosViewController *toVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
