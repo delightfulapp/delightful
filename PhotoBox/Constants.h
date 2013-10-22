@@ -10,7 +10,7 @@
 #define PhotoBox_Constants_h
 
 #define ARRAY_SEPARATOR @"\t"
-#define PHOTO_SPACING 10
+#define PHOTO_SPACING 20
 
 extern NSString *PBX_allAlbumIdentifier;
 

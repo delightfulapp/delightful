@@ -15,6 +15,7 @@
 - (void)didDragDownWithPercentage:(float)progress;
 - (void)willStartClosingPhotosHorizontalViewController;
 
+
 @end
 
 @interface PhotoZoomableCell : PhotoCell <UIScrollViewDelegate>

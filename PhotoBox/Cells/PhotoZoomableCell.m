@@ -52,7 +52,7 @@
 - (void)setup {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
     [self.scrollView setBackgroundColor:[UIColor clearColor]];
-    [self.scrollView setAlwaysBounceHorizontal:YES];
+    [self.scrollView setAlwaysBounceHorizontal:NO];
     [self.scrollView setAlwaysBounceVertical:YES];
     
     [self.scrollView setDelegate:self];
