@@ -210,6 +210,12 @@
             [self insertBackgroundSnapshotView];
         } else {
             self.justOpened = NO;
+            if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
+                PhotoZoomableCell *currentCell = [self currentCell];
+                if (currentCell) {
+                    [currentCell doTeasingGesture];
+                }
+            }
         }
     }
 }
@@ -265,6 +271,7 @@
 
 - (void)didClosePhotosHorizontalViewController{
     CLS_LOG(@"Popping from horizontal view controller");
+    [[self currentCell] setClosingViewController:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

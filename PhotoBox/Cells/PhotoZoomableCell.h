@@ -22,10 +22,12 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *thisImageview;
 @property (nonatomic, weak) id<PhotoZoomableCellDelegate> delegate;
+@property (nonatomic, assign, getter = isClosingViewController) BOOL closingViewController;
 
 - (void)loadOriginalImage;
 - (BOOL)hasDownloadedOriginalImage;
 - (BOOL)isDownloadingOriginalImage;
 - (UIImage *)originalImage;
+- (void)doTeasingGesture;
 
 @end

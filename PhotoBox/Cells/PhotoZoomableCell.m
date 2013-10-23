@@ -22,7 +22,6 @@
 
 @interface PhotoZoomableCell () {
     CGPoint draggingPoint;
-    BOOL isClosingViewController;
     BOOL isZooming;
 }
 
@@ -180,18 +179,12 @@
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if (isClosingViewController) {
-        [self notifyDelegateToCloseHorizontalScrollingViewController];
-    }
-}
-
 - (void)notifyDelegateToCloseHorizontalScrollingViewController {
+    [self setHaveShownGestureTeasing];
     if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
         [self.delegate didClosePhotosHorizontalViewController];
     }
 }
-
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.thisImageview;
@@ -234,5 +227,32 @@
     }
     return nil;
 }
+
+#pragma mark - Gesture Teasing
+
+- (void)doTeasingGesture {
+    if (!self.isClosingViewController) {
+        NSLog(@"Do teasing gesture");
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
+            [self startTeasing];
+        }
+    }
+}
+
+- (void)startTeasing {
+    [self scrollViewWillBeginDragging:self.scrollView];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.scrollView setContentOffset:CGPointMake(0, -50) animated:NO];
+    } completion:^(BOOL finished) {
+        [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        [self setHaveShownGestureTeasing];
+    }];
+}
+
+- (void)setHaveShownGestureTeasing {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 @end
