@@ -20,6 +20,7 @@
 
 #import "UIView+Additionals.h"
 #import "NSString+Additionals.h"
+#import "UIViewController+Additionals.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
@@ -48,14 +49,6 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    if (self.navigationController.navigationBarHidden) {
-        [self.navigationController setNavigationBarHidden:NO animated:YES];
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
-    }
-}
-
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
@@ -189,6 +182,10 @@
 
 - (CGRect)selectedItemRectInSnapshot {
     return [self endRectInContainerView:nil];
+}
+
+- (void)photosHorizontalWillClose {
+    [self setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - Location

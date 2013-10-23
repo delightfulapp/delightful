@@ -183,6 +183,9 @@
     [self setHaveShownGestureTeasing];
     if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
         [self.delegate didClosePhotosHorizontalViewController];
+        
+        // remove delegate so that didDragDownWithPercentage will not be called anymore. it gives an annoying white flash.
+        self.delegate = nil;
     }
 }
 
@@ -232,7 +235,6 @@
 
 - (void)doTeasingGesture {
     if (!self.isClosingViewController) {
-        NSLog(@"Do teasing gesture");
         if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
             [self startTeasing];
         }
@@ -240,6 +242,7 @@
 }
 
 - (void)startTeasing {
+    CLS_LOG(@"Do teaasing gesture");
     [self scrollViewWillBeginDragging:self.scrollView];
     [UIView animateWithDuration:0.5 animations:^{
         [self.scrollView setContentOffset:CGPointMake(0, -50) animated:NO];

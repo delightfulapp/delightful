@@ -167,7 +167,7 @@
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
     [self toggleNavigationBarHidden];
-    if (self.navigationController.isNavigationBarHidden) {
+    if (self.navigationController.navigationBar.alpha == 0) {
         [self darkenBackground];
     } else [self brightenBackground];
 }
@@ -272,6 +272,7 @@
 - (void)didClosePhotosHorizontalViewController{
     CLS_LOG(@"Popping from horizontal view controller");
     [[self currentCell] setClosingViewController:YES];
+    [self.delegate photosHorizontalWillClose];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
