@@ -14,6 +14,8 @@
 #import "PhotosViewController.h"
 #import "PhotosSectionHeaderView.h"
 
+
+#import "IntroViewController.h"
 #import "ConnectionManager.h"
 
 @interface AlbumsViewController () <UIActionSheetDelegate>
@@ -39,11 +41,9 @@
     
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
     [self.navigationItem setLeftBarButtonItem:left];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
     
+    IntroViewController *intro = [[IntroViewController alloc] init];
+    [self.navigationController presentViewController:intro animated:YES completion:nil];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{

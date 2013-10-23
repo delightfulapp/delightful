@@ -11,5 +11,6 @@
 @interface UIWindow (Additionals)
 
 + (UIViewController *)rootViewController;
++ (UIViewController *)topMostViewController;
 
 @end

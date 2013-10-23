@@ -34,9 +34,13 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>320</string>
+	<string>342</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>shareicons.ttf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
