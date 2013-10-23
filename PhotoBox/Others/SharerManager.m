@@ -12,6 +12,7 @@
 
 #import "UIWindow+Additionals.h"
 #import <FacebookSDK/FacebookSDK.h>
+#import <MessageUI/MessageUI.h>
 
 @implementation SharerManager
 
@@ -20,18 +21,28 @@
         case ShareTypeTwitter:
             [[self class] shareToTwitterWithInitialText:text url:nil];
             break;
-        case ShareTypeSMS:
-            
+        case ShareTypeSMS:{
+            if ([MFMessageComposeViewController canSendText]) {
+                MFMessageComposeViewController *messageCompose = [[MFMessageComposeViewController alloc] init];
+                [messageCompose setMessageComposeDelegate:[[UIApplication sharedApplication] delegate]];
+                [messageCompose setBody:text];
+                [[UIWindow topMostViewController]  presentViewController:messageCompose animated:YES completion:nil];
+            }
             break;
-            
+        }
         case ShareTypeFacebook:
             [[self class] shareToFacebookWithInitialText:text url:URL];
             break;
             
-        case ShareTypeEmail:
-            
+        case ShareTypeEmail:{
+            UIViewController *root = [UIWindow topMostViewController];
+            MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
+            [mailCompose setSubject:subject];
+            [mailCompose setMessageBody:text isHTML:NO];
+            [mailCompose setMailComposeDelegate:[[UIApplication sharedApplication] delegate]];
+            [root  presentViewController:mailCompose animated:YES completion:nil];
             break;
-            
+        }
         default:
             break;
     }

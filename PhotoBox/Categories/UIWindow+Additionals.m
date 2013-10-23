@@ -22,4 +22,8 @@
     return root;
 }
 
++ (UIWindow *)appWindow {
+    return [[[UIApplication sharedApplication] delegate] window];
+}
+
 @end

@@ -14,6 +14,14 @@
 
 #import "NPRImageDownloader.h"
 
+#import <MessageUI/MessageUI.h>
+
+#import "UIWindow+Additionals.h"
+
+@interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
+
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -125,5 +133,14 @@ static BOOL isRunningTests(void)
     }
 }
 
+#pragma mark - Message, Mail
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [[UIWindow topMostViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [[UIWindow topMostViewController] dismissViewControllerAnimated:YES completion:nil];
+}
 
 @end

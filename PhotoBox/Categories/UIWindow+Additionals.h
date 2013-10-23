@@ -12,5 +12,6 @@
 
 + (UIViewController *)rootViewController;
 + (UIViewController *)topMostViewController;
++ (UIWindow *)appWindow;
 
 @end
