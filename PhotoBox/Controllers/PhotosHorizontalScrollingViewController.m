@@ -25,6 +25,7 @@
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
+@property (nonatomic, strong) UIView *backgroundViewControllerView;
 
 @end
 
@@ -43,13 +44,12 @@
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
+    [self.collectionView setBackgroundColor:[UIColor clearColor]];
     
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
     [self.collectionView reloadData];
-    
-    [self.navigationController.interactivePopGestureRecognizer setDelegate:self];
-    
+        
     UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
@@ -58,9 +58,10 @@
     [self showLoadingBarButtonItem:NO];
     
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
-    [self.darkBackgroundView setBackgroundColor:[UIColor blackColor]];
-    [self.darkBackgroundView setAlpha:0];
+    [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
+    
+    [self insertBackgroundSnapshotView];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -72,7 +73,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
 
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
@@ -89,12 +89,13 @@
 }
 
 - (void)scrollToFirstShownPhoto {
+    CLS_LOG(@"");
     if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
         shouldHideNavigationBar = YES;
         self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     } else {
-        NSLog(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
+        CLS_LOG(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
     }
     
 }
@@ -149,13 +150,6 @@
 
 #pragma mark - Interactive Gesture Recognizer Delegate
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer == self.navigationController.interactivePopGestureRecognizer) {
-        return NO;
-    }
-    return YES;
-}
-
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         UITapGestureRecognizer *tap = (UITapGestureRecognizer *)gestureRecognizer;
@@ -173,7 +167,7 @@
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
     [self toggleNavigationBarHidden];
-    if (self.navigationController.isNavigationBarHidden) {
+    if (self.navigationController.navigationBar.alpha == 0) {
         [self darkenBackground];
     } else [self brightenBackground];
 }
@@ -199,7 +193,6 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
-    NSLog(@"Did end decelerating now page = %d. previous page = %d", page, self.previousPage);
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
             [self hideNavigationBar];
@@ -214,10 +207,30 @@
                 NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }
+            [self insertBackgroundSnapshotView];
         } else {
             self.justOpened = NO;
+            [self showHintIfNeeded];
         }
     }
+}
+
+- (void)insertBackgroundSnapshotView {
+    if (self.backgroundViewControllerView) {
+        [self.backgroundViewControllerView removeFromSuperview];
+    }
+    self.backgroundViewControllerView = [self.delegate snapshotView];
+    [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
+    CGRect frame = ({
+        CGRect frame = self.backgroundViewControllerView.frame;
+        frame.origin = self.collectionView.frame.origin;
+        frame;
+    });
+    [self.backgroundViewControllerView setFrame:frame];
+    UIView *whiteView = [[UIView alloc] initWithFrame:[self.delegate selectedItemRectInSnapshot]];
+    [whiteView setBackgroundColor:[UIColor whiteColor]];
+    [self.backgroundViewControllerView addSubview:whiteView];
+    [self.collectionView.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView];
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
@@ -232,32 +245,40 @@
 }
 
 - (void)darkenBackground {
-    [self setBackgroundBrightness:1];
+    [self setBackgroundBrightness:0];
 }
 
 - (void)brightenBackground {
-    [self setBackgroundBrightness:0];
+    [self setBackgroundBrightness:1];
 }
 
 - (void)setBackgroundBrightness:(float)brightness {
     [UIView animateWithDuration:0.4 animations:^{
-        self.darkBackgroundView.alpha = brightness;
+        [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:brightness alpha:1]];
     }];
 }
 
 #pragma mark - Zoomable Cell delegate
 
+- (void)didCancelClosingPhotosHorizontalViewController {
+    
+}
+
 - (void)didClosePhotosHorizontalViewController{
-    //[self.navigationController popViewControllerAnimated:YES];
+    CLS_LOG(@"Popping from horizontal view controller");
+    [[self currentCell] setClosingViewController:YES];
+    [self.delegate photosHorizontalWillClose];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    //[self.darkBackgroundView setAlpha:progress];
+    [self.darkBackgroundView setAlpha:MIN(1-progress+0.3, 1)];
 }
 
 #pragma mark - Button
 
 - (void)viewOriginalButtonTapped:(id)sender {
+    CLS_LOG(@"");
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
         [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
             OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -270,8 +291,6 @@
     
     if (currentPhoto.pathOriginal) {
         [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
-        
-        [[NPRImageDownloader sharedDownloader] showDownloads];
     }
 }
 
@@ -291,15 +310,19 @@
 }
 
 - (void)actionButtonTapped:(id)sender {
+    CLS_LOG(@"Sharing tapped");
     [self showLoadingBarButtonItem:YES];
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image completion:^{
-        if (weakSelf) {
-            [weakSelf showLoadingBarButtonItem:NO];
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image tokenFetchedBlock:^(id token) {
+        [weakSelf showLoadingBarButtonItem:NO];
+        if (token) {
+            [[NPRNotificationManager sharedManager] hideNotification];
+        } else {
+            [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot be fetched", nil) duration:3];
         }
-    }];
+    } completion:nil];
 }
 
 #pragma mark - Custom Animation Transition Delegate
@@ -323,6 +346,17 @@
 
 - (CGRect)endRectInContainerView:(UIView *)view {
     return CGRectZero;
+}
+
+#pragma mark - Hint
+
+- (void)showHintIfNeeded {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
+        PhotoZoomableCell *currentCell = [self currentCell];
+        if (currentCell) {
+            [currentCell doTeasingGesture];
+        }
+    }
 }
 
 @end

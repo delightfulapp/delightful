@@ -17,11 +17,16 @@
     #import "Constants.h"
     #import <Mantle/Mantle.h>
     #import <OGCoreDataStack.h>
+    #import "NPRNotificationManager.h"
+
+    #if __has_include("Crashlytics/Crashlytics.h")
+        #import <Crashlytics/Crashlytics.h>
+    #endif
 
     #if TARGET_OS_IPHONE
-    #import <MobileCoreServices/MobileCoreServices.h>
+        #import <MobileCoreServices/MobileCoreServices.h>
     #else
-    #import <CoreServices/CoreServices.h>
+        #import <CoreServices/CoreServices.h>
     #endif
 
 #endif

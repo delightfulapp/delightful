@@ -48,11 +48,12 @@
 }
 
 - (void)animateTransitionForPushOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
+    CLS_LOG(@"Animate push transition");
+    
     [self removeHelperViews];
     
     PhotosViewController *fromVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosHorizontalScrollingViewController *toVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
     UIView *containerView = transitionContext.containerView;
     UIImage *image = [fromVC imageToAnimate];
@@ -81,6 +82,8 @@
 }
 
 - (void)animateTransitionForPopOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
+    CLS_LOG(@"Animate pop transition");
+    
     PhotosHorizontalScrollingViewController *fromVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosViewController *toVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
@@ -98,7 +101,7 @@
     // the rect of the image view in photos view controller
     CGRect endRect = [toVC endRectInContainerView:containerView];
     
-    // white view to give the fade from white effect
+    // white view to hide the image in photos view controller
     UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
     [containerView addSubview:whiteView];
@@ -122,8 +125,8 @@
     // set the frame of the image view in container's view coordinate
     [viewToAnimate setFrame:inContainerViewRect];
     
-    // start the animation
-    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseOut animations:^{
+    // start the animation. numbers are selected after trial and error.
+    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [viewToAnimate setFrame:endRect];
         [fromVC.view setAlpha:0];
     } completion:^(BOOL finished) {

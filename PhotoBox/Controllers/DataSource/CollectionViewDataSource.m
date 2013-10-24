@@ -118,7 +118,6 @@
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeUpdate:
-            NSLog(@"Did update object: %@", anObject);
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
@@ -140,6 +139,7 @@
             }
         }
     }
+    CLS_LOG(@"[%@] Reloading collection view", self.debugName);
     [self.collectionView reloadData];
     return;
     if ([_sectionChanges count] > 0)
@@ -302,6 +302,7 @@
     } else {
         self.fetchedResultsController.delegate = self;
         [self.fetchedResultsController performFetch:NULL];
+        CLS_LOG(@"[%@] Reloading collection view", self.debugName);
         [self.collectionView reloadData];
     }
 }

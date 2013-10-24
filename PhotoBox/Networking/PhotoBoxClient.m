@@ -75,6 +75,7 @@
 #pragma mark - Resource Fetch
 
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void (^)(NSString *))completion {
+    CLS_LOG(@"Fetching sharing token");
     NSString *path = [NSString stringWithFormat: @"/token/photo/%@/create.json", photoId];
     [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (responseObject) {
@@ -83,9 +84,11 @@
             if ([result isKindOfClass:[NSDictionary class]]){
                 token = result[@"id"];
             }
+            CLS_LOG(@"Fetching sharing token succeed");
             completion(token);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        CLS_LOG(@"Fetching sharing token failed: %@", error);
         completion(nil);
     }];
 }

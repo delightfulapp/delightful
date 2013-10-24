@@ -20,4 +20,6 @@
 
 - (void)hideNavigationBar;
 
+- (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
+
 @end

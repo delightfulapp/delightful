@@ -13,7 +13,7 @@
 - (BOOL)isValidURL;
 - (NSString *)stringWithHttpSchemeAddedIfNeeded;
 - (NSString*)stringBetweenString:(NSString*)start andString:(NSString*)end;
-
 - (NSString *)localizedDate;
+- (NSString *)htmlLinkString;
 
 @end

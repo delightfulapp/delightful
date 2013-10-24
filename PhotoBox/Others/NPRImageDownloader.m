@@ -47,7 +47,9 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
 }
 
 - (BOOL)queueImageURL:(NSURL *)URL thumbnail:(UIImage *)image {
+    CLS_LOG(@"");
     if ([self isDownloadingImageAtURL:URL]) {
+        CLS_LOG(@"Cancel download");
         return NO;
     }
     
@@ -81,8 +83,10 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     }];
     
     @synchronized(self){
+        [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         [self.downloads addObject:downloadOperation];
         [self.downloadURLs addObject:URL];
+        [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidStartNotification object:nil];
     }
@@ -123,8 +127,11 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
 
 - (void)removeOperation:(id)operation URL:(NSURL *)URL {
     @synchronized(self) {
+        CLS_LOG(@"Removing 1 of %d operations.", self.downloadURLs.count);
+        [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         [self.downloads removeObject:operation];
         [self.downloadURLs removeObject:URL];
+        [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
     }
 }
 
@@ -151,6 +158,7 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     __weak NPRImageDownloaderOperation *weakOperation = self;
     self.operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:^UIImage *(UIImage *image) {
         if (image) {
+            CLS_LOG(@"Writing image to photos album");
             UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
         }
         return image;

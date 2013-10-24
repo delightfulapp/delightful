@@ -22,6 +22,7 @@
 
 @interface PhotoZoomableCell () {
     CGPoint draggingPoint;
+    BOOL isZooming;
 }
 
 @property (nonatomic, strong) NSURL *thumbnailURL;
@@ -50,7 +51,7 @@
 - (void)setup {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
     [self.scrollView setBackgroundColor:[UIColor clearColor]];
-    [self.scrollView setAlwaysBounceHorizontal:YES];
+    [self.scrollView setAlwaysBounceHorizontal:NO];
     [self.scrollView setAlwaysBounceVertical:YES];
     
     [self.scrollView setDelegate:self];
@@ -131,23 +132,32 @@
     }
     
     self.thisImageview.frame = contentsFrame;
+    if (self.scrollView.zoomScale == self.scrollView.minimumZoomScale) {
+        [self.scrollView setDirectionalLockEnabled:YES];
+    } else {
+        [self.scrollView setDirectionalLockEnabled:NO];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self centerScrollViewContents];
-    if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
-        float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
-        if (deltaY <=0) {
-            CGFloat maxDelta = -100;
-            deltaY = MAX(deltaY, maxDelta);
-            CGFloat alpha = (maxDelta-deltaY)/(maxDelta);
-            if (self.delegate && [self.delegate respondsToSelector:@selector(didDragDownWithPercentage:)]) {
-                [self.delegate didDragDownWithPercentage:alpha];
-            }
+    if (scrollView.zoomScale == self.scrollView.minimumZoomScale && !isZooming) {
+        float deltaY = fabsf(self.scrollView.contentOffset.y - draggingPoint.y);
+        CGFloat maxDelta = 100;
+        deltaY = MIN(deltaY, maxDelta);
+        CGFloat alpha = (deltaY)/(maxDelta);
+        if (self.delegate && [self.delegate respondsToSelector:@selector(didDragDownWithPercentage:)]) {
+            [self.delegate didDragDownWithPercentage:alpha];
         }
-        
-        
     }
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    isZooming = YES;
+}
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView {
+    isZooming = NO;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
@@ -158,17 +168,26 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
-        float deltaY = self.scrollView.contentOffset.y - draggingPoint.y;
-        
-        if (deltaY < - 70) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
-                [self.delegate didClosePhotosHorizontalViewController];
+        float deltaY = fabsf(self.scrollView.contentOffset.y - draggingPoint.y);
+        if (deltaY > 50) {
+            [self notifyDelegateToCloseHorizontalScrollingViewController];
+        } else {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(didCancelClosingPhotosHorizontalViewController)]) {
+                [self.delegate didCancelClosingPhotosHorizontalViewController];
             }
         }
-        
     }
 }
 
+- (void)notifyDelegateToCloseHorizontalScrollingViewController {
+    [self setHaveShownGestureTeasing];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
+        [self.delegate didClosePhotosHorizontalViewController];
+        
+        // remove delegate so that didDragDownWithPercentage will not be called anymore. it gives an annoying white flash.
+        self.delegate = nil;
+    }
+}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.thisImageview;
@@ -211,5 +230,32 @@
     }
     return nil;
 }
+
+#pragma mark - Gesture Teasing
+
+- (void)doTeasingGesture {
+    if (!self.isClosingViewController) {
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
+            [self startTeasing];
+        }
+    }
+}
+
+- (void)startTeasing {
+    CLS_LOG(@"Do teaasing gesture");
+    [self scrollViewWillBeginDragging:self.scrollView];
+    [UIView animateWithDuration:0.5 animations:^{
+        [self.scrollView setContentOffset:CGPointMake(0, -50) animated:NO];
+    } completion:^(BOOL finished) {
+        [self.scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        [self setHaveShownGestureTeasing];
+    }];
+}
+
+- (void)setHaveShownGestureTeasing {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 
 @end

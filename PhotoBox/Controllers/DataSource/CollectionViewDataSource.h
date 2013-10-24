@@ -20,6 +20,9 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 @property (nonatomic, copy) CollectionViewHeaderCellConfigureBlock configureCellHeaderBlock;
 @property (nonatomic, assign) BOOL paused;
 
+//for debugging purposes
+@property (nonatomic, strong) NSString *debugName;
+
 @property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;

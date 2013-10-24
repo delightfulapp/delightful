@@ -20,6 +20,7 @@
 
 #import "UIView+Additionals.h"
 #import "NSString+Additionals.h"
+#import "UIViewController+Additionals.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
@@ -45,18 +46,9 @@
     [super viewDidLoad];
     self.numberOfColumns = 3;
     [self setPhotosCount:0 max:0];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
     
+    [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
 }
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self.navigationController setNavigationBarHidden:NO animated:NO];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-}
-
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
@@ -140,6 +132,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"pushPhoto"]) {
+        CLS_LOG(@"Showing full screen photo");
         PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
         PhotoBoxCell *cell = (PhotoBoxCell *)sender;
         [destination setItem:self.item];
@@ -176,10 +169,23 @@
 #pragma mark - PhotosHorizontalScrollingViewControllerDelegate
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
+    CLS_LOG(@"Change page %d of %d", page, [self.dataSource numberOfItems]);
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
     
     [self setSelectedItemRectAtIndexPath:indexPath];
+}
+
+- (UIView *)snapshotView {
+    return [self.view snapshotViewAfterScreenUpdates:YES];
+}
+
+- (CGRect)selectedItemRectInSnapshot {
+    return [self endRectInContainerView:nil];
+}
+
+- (void)photosHorizontalWillClose {
+    [self setNavigationBarHidden:NO animated:YES];
 }
 
 #pragma mark - Location

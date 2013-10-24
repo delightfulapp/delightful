@@ -10,6 +10,7 @@ pod 'Overcoat', '1.1'
 pod 'OGCoreDataStack'
 pod 'SDWebImage'
 pod 'UIImageViewModeScaleAspect'
+pod 'MYBlurIntroductionView', '~> 1.0.0'
 target :PhotoBoxTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
 end

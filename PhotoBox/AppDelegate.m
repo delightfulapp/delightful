@@ -14,9 +14,15 @@
 
 #import "NPRImageDownloader.h"
 
-#if __has_include("Crashlytics/Crashlytics.h")
-#import <Crashlytics/Crashlytics.h>
-#endif
+#import "IntroViewController.h"
+
+#import <MessageUI/MessageUI.h>
+
+#import "UIWindow+Additionals.h"
+
+@interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
+
+@end
 
 @implementation AppDelegate
 
@@ -38,8 +44,10 @@
     [rootNavigationController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
+
+    [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageDownloadDidFinish:) name:NPRImageDownloadDidFinishNotification object:nil];
+    [self showUpdateInfoViewIfNeeded];
     
     return YES;
 }
@@ -110,11 +118,46 @@ static BOOL isRunningTests(void)
     }
 }
 
-#pragma mark - Image Download Notification
+#pragma mark - Observer
 
-- (void)imageDownloadDidFinish:(NSNotification *)notification {
-    if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] == 0) {
-        
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))]) {
+        if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] > 0) {
+            NSString *text = [NSString stringWithFormat:NSLocalizedString(@"Downloading %1$d photo(s)", nil), [[NPRImageDownloader sharedDownloader] numberOfDownloads]];
+            NSString *tapToSee = @"Tap to see progress";
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"\n%@", tapToSee]];
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:8] range:[text rangeOfString:tapToSee]];
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeNone string:attributedString accessoryType:NPRNotificationAccessoryTypeActivityView accessoryView:nil duration:0 onTap:^{
+                [[NPRImageDownloader sharedDownloader] showDownloads];
+            }];
+        } else {
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
+        }
+    }
+}
+
+#pragma mark - Message, Mail
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+    [[UIWindow topMostViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+    [[UIWindow topMostViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Intro
+
+- (void)showUpdateInfoViewIfNeeded {
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+        if (![currentVersion isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY]]) {
+            IntroViewController *intro = [[IntroViewController alloc] init];
+            [[UIWindow topMostViewController] presentViewController:intro animated:YES completion:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
 }
 

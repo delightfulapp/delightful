@@ -18,6 +18,7 @@
 #define HAVE_SHOWN_NO_TWITTER @"HAVE_SHOWN_NO_TWITTER"
 
 static char const * const documentControllerKey = "documentControllerKey";
+static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 
 @implementation UIViewController (Additionals)
 
@@ -122,18 +123,36 @@ static char const * const documentControllerKey = "documentControllerKey";
     return url;
 }
 
-- (void)toggleNavigationBarHidden {
-    BOOL show = !self.navigationController.isNavigationBarHidden;
-    [self setNavigationBarHidden:show];
-}
-
-- (void)setNavigationBarHidden:(BOOL)hidden {
-    [self.navigationController setNavigationBarHidden:hidden animated:YES];
-    [[UIApplication sharedApplication] setStatusBarHidden:hidden withAnimation:UIStatusBarAnimationSlide];
+- (void)setNavigationBarHidden:(BOOL)hide animated:(BOOL)animated {
+    if (animated) {
+        [[UIApplication sharedApplication] setStatusBarHidden:hide
+                                                withAnimation:UIStatusBarAnimationFade];
+        
+        //Fade navigation bar
+        [UINavigationBar beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:0.3]; // Approximately the same time the status bar takes to fade.
+        
+        self.navigationController.navigationBar.alpha = hide ? 0 : 1;
+        
+        [UINavigationBar commitAnimations];
+        
+        objc_setAssociatedObject(self, isNavigationBarHidden, @(hide), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    } else {
+        [[UIApplication sharedApplication] setStatusBarHidden:hide];
+        self.navigationController.navigationBar.alpha = (hide)?0:1;
+        self.navigationController.navigationBarHidden = NO;
+    }
 }
 
 - (void)hideNavigationBar {
-    [self setNavigationBarHidden:YES];
+    [self setNavigationBarHidden:YES animated:YES];
+}
+
+- (void)toggleNavigationBarHidden
+{
+    BOOL hide = !([objc_getAssociatedObject(self, isNavigationBarHidden) boolValue]);
+    //Fade status bar
+    [self setNavigationBarHidden:hide animated:YES];
 }
 
 @end
