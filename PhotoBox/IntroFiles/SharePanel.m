@@ -12,6 +12,8 @@
 
 #import "SharerManager.h"
 
+#import "NSString+Additionals.h"
+
 typedef NS_ENUM(NSInteger, SharePanelServiceType) {
     SharePanelServiceTypeSMS = 1000,
     SharePanelServiceTypeEmail,
@@ -102,7 +104,7 @@ typedef NS_ENUM(NSInteger, SharePanelServiceType) {
 }
 
 - (void)serviceTapped:(UITapGestureRecognizer *)gesture {
-    NSLog(@"here?");
+    gesture.enabled = NO;
     SeeThroughCircleView *see = (SeeThroughCircleView *)gesture.view;
     NSInteger type = see.tag;
     ShareType shareType = 0;
@@ -112,6 +114,7 @@ typedef NS_ENUM(NSInteger, SharePanelServiceType) {
     switch (type) {
         case SharePanelServiceTypeEmail:
             shareType = ShareTypeEmail;
+            text = [text stringByReplacingOccurrencesOfString:PHOTOBOX_TESTFLIGHT_BETA_URL withString:[PHOTOBOX_TESTFLIGHT_BETA_URL htmlLinkString]];
             break;
         case SharePanelServiceTypeFacebook:
             shareType = ShareTypeFacebook;
@@ -128,6 +131,11 @@ typedef NS_ENUM(NSInteger, SharePanelServiceType) {
     }
     
     [SharerManager shareTo:shareType URL:URL text:text subject:PHOTOBOX_SHARE_SUBJECT];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1), dispatch_get_main_queue(), ^{
+        gesture.enabled = YES;
+    });
+    
 }
 
 /*

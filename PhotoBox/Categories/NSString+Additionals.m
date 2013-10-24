@@ -56,4 +56,8 @@
     return [NSDateFormatter localizedStringFromDate:[self date] dateStyle:NSDateFormatterLongStyle timeStyle:NSDateFormatterNoStyle];
 }
 
+- (NSString *)htmlLinkString {
+    return [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", self, self];
+}
+
 @end

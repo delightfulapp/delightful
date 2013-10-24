@@ -38,7 +38,7 @@
             UIViewController *root = [UIWindow topMostViewController];
             MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
             [mailCompose setSubject:subject];
-            [mailCompose setMessageBody:text isHTML:NO];
+            [mailCompose setMessageBody:text isHTML:YES];
             [mailCompose setMailComposeDelegate:[[UIApplication sharedApplication] delegate]];
             [root  presentViewController:mailCompose animated:YES completion:nil];
             break;
