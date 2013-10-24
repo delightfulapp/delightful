@@ -124,6 +124,11 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 }
 
 - (void)setNavigationBarHidden:(BOOL)hide animated:(BOOL)animated {
+    if (hide) {
+        CLS_LOG(@"Hiding navigation bar");
+    } else {
+        CLS_LOG(@"Showing navigaiton bar");
+    }
     if (animated) {
         [[UIApplication sharedApplication] setStatusBarHidden:hide
                                                 withAnimation:UIStatusBarAnimationFade];
