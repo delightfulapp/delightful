@@ -14,6 +14,8 @@
 
 #import "NPRImageDownloader.h"
 
+#import "IntroViewController.h"
+
 #import <MessageUI/MessageUI.h>
 
 #import "UIWindow+Additionals.h"
@@ -44,6 +46,8 @@
     [self runCrashlytics];
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
+    
+    [self showUpdateInfoViewIfNeeded];
     
     return YES;
 }
@@ -141,6 +145,20 @@ static BOOL isRunningTests(void)
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [[UIWindow topMostViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Intro
+
+- (void)showUpdateInfoViewIfNeeded {
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+        if (![currentVersion isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY]]) {
+            IntroViewController *intro = [[IntroViewController alloc] init];
+            [[UIWindow topMostViewController] presentViewController:intro animated:YES completion:nil];
+            [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
+    }
 }
 
 @end
