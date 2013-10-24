@@ -14,4 +14,16 @@
     return [[[[UIApplication sharedApplication] delegate] window] rootViewController];
 }
 
++ (UIViewController *)topMostViewController {
+    UIViewController *root = [UIWindow rootViewController];
+    if ([root isKindOfClass:[UINavigationController class]]) {
+        root = ((UINavigationController *)root).visibleViewController;
+    }
+    return root;
+}
+
++ (UIWindow *)appWindow {
+    return [[[UIApplication sharedApplication] delegate] window];
+}
+
 @end

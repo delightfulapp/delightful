@@ -210,12 +210,7 @@
             [self insertBackgroundSnapshotView];
         } else {
             self.justOpened = NO;
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
-                PhotoZoomableCell *currentCell = [self currentCell];
-                if (currentCell) {
-                    [currentCell doTeasingGesture];
-                }
-            }
+            [self showHintIfNeeded];
         }
     }
 }
@@ -351,6 +346,17 @@
 
 - (CGRect)endRectInContainerView:(UIView *)view {
     return CGRectZero;
+}
+
+#pragma mark - Hint
+
+- (void)showHintIfNeeded {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO]) {
+        PhotoZoomableCell *currentCell = [self currentCell];
+        if (currentCell) {
+            [currentCell doTeasingGesture];
+        }
+    }
 }
 
 @end

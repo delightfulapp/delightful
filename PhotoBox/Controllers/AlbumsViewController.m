@@ -41,11 +41,6 @@
     [self.navigationItem setLeftBarButtonItem:left];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-}
-
 - (void)setAlbumsCount:(int)count max:(int)max{
     if (count == 0) {
         self.title = NSLocalizedString(@"Albums", nil);
