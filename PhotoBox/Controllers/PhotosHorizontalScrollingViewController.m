@@ -45,6 +45,7 @@
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
     
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     

@@ -41,6 +41,8 @@
     self.numberOfColumns = 2;
     _pageSize = 20;
     
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
     [self setupConnectionManager];
     [self setupCollectionView];
     [self setupRefreshControl];
@@ -92,6 +94,7 @@
 }
 
 - (void)setupCollectionView {
+    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
 }
