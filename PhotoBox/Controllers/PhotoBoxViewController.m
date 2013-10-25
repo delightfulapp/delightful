@@ -22,6 +22,7 @@
 
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
     CGFloat lastOffset;
+    BOOL isObservingLoggedInUser;
 }
 
 @property (nonatomic, assign, getter = isShowingAlert) BOOL showingAlert;
@@ -76,7 +77,9 @@
 }
 
 - (void)dealloc {
-    [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
+    if (isObservingLoggedInUser) {
+        [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
+    }
 }
 
 #pragma mark - Setup
@@ -91,6 +94,7 @@
     }
     [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:NULL];
     [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage)) options:0 context:NULL];
+    isObservingLoggedInUser = YES;
 }
 
 - (void)setupCollectionView {
@@ -421,8 +425,11 @@
 - (NSArray *)sortDescriptors {
     NSMutableArray *sorts = [NSMutableArray array];
     
-    NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:([self isGallery])?NO:YES];
+    NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTakenString)) ascending:NO];
     [sorts addObject:dateTakenStringSort];
+    
+    NSSortDescriptor *dateTakenSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:YES];
+    [sorts addObject:dateTakenSort];
     
     if ([self isGallery]) {
         NSSortDescriptor *uploadedSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateUploaded)) ascending:NO];

@@ -20,6 +20,7 @@
 @property (nonatomic, copy, readonly) NSNumber *dateUploadedDay;
 @property (nonatomic, copy, readonly) NSNumber *dateUploadedMonth;
 @property (nonatomic, copy, readonly) NSNumber *dateUploadedYear;
+@property (nonatomic, copy, readonly) NSString *dateSortByDay;
 @property (nonatomic, copy, readonly) NSString *photoDescription;
 @property (nonatomic, copy, readonly) NSString *exifCameraMake;
 @property (nonatomic, copy, readonly) NSString *exifCameraModel;

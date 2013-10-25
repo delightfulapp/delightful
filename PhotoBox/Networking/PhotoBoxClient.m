@@ -140,8 +140,12 @@
                  failure:(void (^)(NSError *))failureBlock {
     
     NSString *album = [NSString stringWithFormat:@"&%@", [self albumsQueryString:albumId]];
-    if ([albumId isEqualToString:PBX_allAlbumIdentifier]) album = @"";
-    NSString *path = [NSString stringWithFormat:@"/v1/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, [self sortByQueryString:@"dateUploaded,DESC"], [self photoSizesString], album];
+    NSString *sort = [self sortByQueryString:@"dateTaken,DESC"];
+    if ([albumId isEqualToString:PBX_allAlbumIdentifier]){
+        album = @"";
+        sort = [self sortByQueryString:@"dateUploaded,DESC"];
+    }
+    NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, sort, [self photoSizesString], album];
     [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (!error) {
             successBlock(responseObject);

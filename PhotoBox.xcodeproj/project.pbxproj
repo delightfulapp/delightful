@@ -244,6 +244,7 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
+		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
@@ -1297,9 +1298,10 @@
 		036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */,
 				036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */,
 			);
-			currentVersion = 036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */;
+			currentVersion = 036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */;
 			name = PhotoBoxModel.xcdatamodeld;
 			path = PhotoBox/Models/PhotoBoxModel.xcdatamodeld;
 			sourceTree = "<group>";

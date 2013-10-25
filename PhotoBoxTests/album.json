@@ -49,8 +49,8 @@
         "timestamp": "2013-06-03 05:42:09",
         "path100x100": "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_100x100.jpg",
         "path100x100xCR": "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_100x100xCR.jpg",
-        "path320x320": "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_320x320.jpg",
-        "path320x320": "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_320x320.jpg",
+        "path200x200": "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_200x200.jpg",
+        "path200x200xCR": "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_200x200xCR.jpg",
         "exifCameraMake": "Canon",
         "exifCameraModel": "Canon EOS M",
         "exifFNumber": "5.6",
@@ -67,16 +67,16 @@
                             100,
                             100
                             ],
-        "photo320x320": [
-                         "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_320x320.jpg",
+        "photo200x200": [
+                         "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_200x200.jpg",
                          200,
                          133
                          ],
-        "photo320x320": [
-                            "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_320x320.jpg",
-                            200,
-                            200
-                            ],
+        "photo200x200xCR": [
+                         "http://awesomeness.openphoto.me/custom/201306/IMG_1234-1171e1_200x200.jpg",
+                         200,
+                         133
+                         ],
         "pathDownload": "https://somebody.trovebox.com/photo/bd/download",
         "url": "https://somebody.trovebox.com/p/bd"
     },
