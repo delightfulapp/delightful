@@ -153,12 +153,19 @@ static BOOL isRunningTests(void)
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
         if (![currentVersion isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY]]) {
-            IntroViewController *intro = [[IntroViewController alloc] init];
-            [[UIWindow topMostViewController] presentViewController:intro animated:YES completion:nil];
-            [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            if ([self versionInfOPlistExistsForVersion:currentVersion]) {
+                IntroViewController *intro = [[IntroViewController alloc] init];
+                [[UIWindow topMostViewController] presentViewController:intro animated:YES completion:nil];
+                [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+            }
         }
     }
+}
+
+- (BOOL)versionInfOPlistExistsForVersion:(NSString *)version {
+    NSString * filePath = [[NSBundle bundleForClass:[self class]] pathForResource:version ofType:@"plist"];
+    return (filePath)?YES:NO;
 }
 
 @end
