@@ -278,6 +278,10 @@
 
 #pragma mark - Button
 
+- (void)infoButtonTapped:(id)sender {
+    
+}
+
 - (void)viewOriginalButtonTapped:(id)sender {
     CLS_LOG(@"");
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
@@ -296,6 +300,7 @@
 }
 
 - (void)showLoadingBarButtonItem:(BOOL)show {
+    UIBarButtonItem *infoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonTapped:)];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
     UIBarButtonItem *shareButton;
     
@@ -307,7 +312,7 @@
     } else {
         shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
     }
-    [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
+    [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton, infoButton]];
 }
 
 - (void)actionButtonTapped:(id)sender {
