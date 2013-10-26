@@ -713,9 +713,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		032CBB7917D0BDF3001205B1 /* PhotoBox */ = {
+		032CBB7917D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBox" */;
+			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "Delightful" */;
 			buildPhases = (
 				5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
@@ -729,7 +729,7 @@
 			);
 			dependencies = (
 			);
-			name = PhotoBox;
+			name = Delightful;
 			productName = PhotoBox;
 			productReference = 032CBB7A17D0BDF3001205B1 /* PhotoBox.app */;
 			productType = "com.apple.product-type.application";
@@ -781,7 +781,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				032CBB7917D0BDF3001205B1 /* PhotoBox */,
+				032CBB7917D0BDF3001205B1 /* Delightful */,
 				032CBB9A17D0BDF3001205B1 /* PhotoBoxTests */,
 			);
 		};
@@ -1012,7 +1012,7 @@
 /* Begin PBXTargetDependency section */
 		032CBBA117D0BDF3001205B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 032CBB7917D0BDF3001205B1 /* PhotoBox */;
+			target = 032CBB7917D0BDF3001205B1 /* Delightful */;
 			targetProxy = 032CBBA017D0BDF3001205B1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1282,7 +1282,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBox" */ = {
+		032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "Delightful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				032CBBAD17D0BDF3001205B1 /* Debug */,

@@ -145,6 +145,7 @@
     void (^configureCell)(PhotoZoomableCell*, id) = ^(PhotoZoomableCell* cell, id item) {
         [cell setItem:item];
         [cell setDelegate:self];
+        [cell setGrayscaleAndZoom:NO animated:NO];
     };
     return configureCell;
 }
@@ -279,7 +280,9 @@
 #pragma mark - Button
 
 - (void)infoButtonTapped:(id)sender {
-    
+    BOOL isGrayscaled = [[self currentCell] isGrayscaled];
+    [self setNavigationBarHidden:!isGrayscaled animated:YES];
+    [[self currentCell] setGrayscaleAndZoom:!isGrayscaled];
 }
 
 - (void)viewOriginalButtonTapped:(id)sender {

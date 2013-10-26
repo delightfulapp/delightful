@@ -30,4 +30,8 @@
 - (UIImage *)originalImage;
 - (void)doTeasingGesture;
 
+- (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated;
+- (void)setGrayscaleAndZoom:(BOOL)grayscale;
+- (BOOL)isGrayscaled;
+
 @end
