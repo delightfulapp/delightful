@@ -19,7 +19,8 @@ typedef NS_ENUM(NSInteger, MNCUIViewEdge) {
 
 - (CGRect)convertFrameRectToView:(UIView *)toView ;
 
-- (void)addTransparentGradientWithStartColor:(UIColor *)startColor;
+- (UIView *)addTransparentGradientWithStartColor:(UIColor *)startColor;
+- (UIView *)addTransparentGradientWithStartColor:(UIColor *)startColor fromStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint;
 
 - (void)setOrigin:(CGPoint)origin;
 - (void)setOriginX:(CGFloat)x;

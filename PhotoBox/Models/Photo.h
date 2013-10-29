@@ -54,5 +54,6 @@
 @property (nonatomic, copy, readonly) PhotoBoxImage *originalImage;
 @property (nonatomic, copy, readonly) NSString *dateTakenString;
 @property (nonatomic, copy, readonly) NSString *dateMonthYearTakenString;
+@property (nonatomic, copy, readonly) NSString *dimension;
 
 @end

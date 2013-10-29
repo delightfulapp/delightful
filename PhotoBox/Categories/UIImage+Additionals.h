@@ -16,4 +16,6 @@
 
 - (UIImage *)grayscaledAndBlurredImage;
 
+- (UIImage *)grayscaledAndVignetteImage;
+
 @end

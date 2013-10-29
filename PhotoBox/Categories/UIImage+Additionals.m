@@ -31,4 +31,15 @@
     return nil;
 }
 
+- (UIImage *)grayscaledAndVignetteImage {
+    GPUImagePicture *imagePicture = [[GPUImagePicture alloc] initWithImage:self];
+    GPUImageGrayscaleFilter *gray = [[GPUImageGrayscaleFilter alloc] init];
+    GPUImageVignetteFilter *vignette = [[GPUImageVignetteFilter alloc] init];
+    [gray addTarget:vignette];
+    [imagePicture addTarget:gray];
+    [imagePicture processImage];
+    
+    return [gray imageFromCurrentlyProcessedOutput];
+}
+
 @end

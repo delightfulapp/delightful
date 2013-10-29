@@ -245,6 +245,10 @@
     return nil;
 }
 
+- (UIImageView *)grayImageView {
+    return (UIImageView *)[self.thisImageview viewWithTag:PBX_GRAY_IMAGE_VIEW];
+}
+
 #pragma mark - Gesture Teasing
 
 - (void)doTeasingGesture {
@@ -319,6 +323,10 @@
 
 - (void)setGrayscaleAndZoom:(BOOL)grayscale {
     [self setGrayscaleAndZoom:grayscale animated:YES];
+}
+
+- (void)setZoomScale:(CGFloat)zoomScale {
+    [self.scrollView setZoomScale:zoomScale];
 }
 
 - (BOOL)isGrayscaled {

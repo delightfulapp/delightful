@@ -17,15 +17,18 @@
 #import "UIViewController+Additionals.h"
 #import "UIView+Additionals.h"
 #import "PhotoSharingManager.h"
+#import "PhotoInfoViewController.h"
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate> {
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate> {
     BOOL shouldHideNavigationBar;
+    CGFloat zoomScaleToFillTheScreen;
 }
 
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
+@property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
 
 @end
 
@@ -286,9 +289,31 @@
 #pragma mark - Button
 
 - (void)infoButtonTapped:(id)sender {
+    [sender setEnabled:NO];
+    
     BOOL isGrayscaled = [[self currentCell] isGrayscaled];
     [self setNavigationBarHidden:!isGrayscaled animated:YES];
     [[self currentCell] setGrayscaleAndZoom:!isGrayscaled];
+    zoomScaleToFillTheScreen = [[self currentCell] zoomScaleToFillScreen];
+    
+    UIView *gradientView = [[self currentCell] addTransparentGradientWithStartColor:[UIColor blackColor] fromStartPoint:CGPointMake(0, 1) endPoint:CGPointMake(0.7, 0.5)];
+    self.photoInfoBackgroundGradientView = gradientView;
+    [gradientView setAlpha:0];
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [gradientView setAlpha:1];
+    } completion:^(BOOL finished) {
+        PhotoInfoViewController *photoInfo = [[PhotoInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
+        [photoInfo setPhoto:[[self currentCell] item]];
+        [photoInfo setDelegate:self];
+        
+        [self addChildViewController:photoInfo];
+        [self.view addSubview:photoInfo.view];
+        [photoInfo.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
+        [UIView animateWithDuration:0.5 animations:^{
+            [photoInfo.view setOriginY:0];
+        } ];
+        [sender setEnabled:YES];
+    }];
 }
 
 - (void)viewOriginalButtonTapped:(id)sender {
@@ -372,6 +397,25 @@
             [currentCell doTeasingGesture];
         }
     }
+}
+
+#pragma mark - Photo Info View Controller
+
+- (void)photoInfoViewControllerDidClose:(PhotoInfoViewController *)photoInfo {
+    UIViewController *childVC = [self childViewControllers][0];
+    [childVC removeFromParentViewController];
+    [UIView animateWithDuration:0.5 animations:^{
+        [childVC.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
+        [self.photoInfoBackgroundGradientView setAlpha:0];
+    } completion:^(BOOL finished) {
+        [childVC.view removeFromSuperview];
+        [self.photoInfoBackgroundGradientView removeFromSuperview];
+        [[self currentCell] setGrayscaleAndZoom:NO animated:YES];
+    }];
+}
+
+- (void)photoInfoViewController:(PhotoInfoViewController *)photoInfo didDragToClose:(CGFloat)progress {
+    [[[self currentCell] grayImageView] setAlpha:1-progress];
 }
 
 @end
