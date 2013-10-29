@@ -92,6 +92,19 @@
     return YES;
 }
 
+#pragma mark - Orientation
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
+    
+    if(self.window.rootViewController){
+        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
+        orientations = [presentedViewController supportedInterfaceOrientations];
+    }
+    
+    return orientations;
+}
+
 
 #pragma mark - Unit Test
 

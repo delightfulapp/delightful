@@ -246,7 +246,7 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
-		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		036DF362181A850C002E9FCB /* 0.0.3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.3.plist; path = PhotoBox/IntroFiles/0.0.3.plist; sourceTree = "<group>"; };
 		036DF364181AA60B002E9FCB /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };

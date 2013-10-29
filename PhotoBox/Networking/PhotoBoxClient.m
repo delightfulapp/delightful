@@ -65,6 +65,13 @@
     return self;
 }
 
+- (void)refreshConnectionParameters {
+    [self setValue:[[ConnectionManager sharedManager] baseURL] forKey:@"baseURL"];
+    [self setValue:[[[ConnectionManager sharedManager] consumerToken] key] forKey:@"key"];
+    [self setValue:[[[ConnectionManager sharedManager] consumerToken] secret] forKey:@"secret"];
+    [self setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
+}
+
 #pragma mark - Setter
 
 - (void)setValue:(id)value forKey:(NSString *)key {
@@ -227,12 +234,12 @@ NSString *stringWithActionType(ActionType input) {
     return [self.oauthClient requestWithMethod:method path:path parameters:parameters];
 }
 
-- (void)setAccessToken:(AFOAuth1Token *)accessToken {
-    [self.oauthClient setAccessToken:accessToken];
-}
-
 - (void)acquireOAuthAccessTokenWithPath:(NSString *)path requestToken:(AFOAuth1Token *)requestToken accessMethod:(NSString *)accessMethod success:(void (^)(AFOAuth1Token *, id))success failure:(void (^)(NSError *))failure {
     [self.oauthClient acquireOAuthAccessTokenWithPath:path requestToken:requestToken accessMethod:accessMethod success:success failure:failure];
+}
+
+- (void)setAccessToken:(AFOAuth1Token *)accessToken {
+    [self.oauthClient setAccessToken:accessToken];
 }
 
 - (void)setKey:(NSString *)key {

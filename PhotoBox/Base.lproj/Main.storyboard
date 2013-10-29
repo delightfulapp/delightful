@@ -69,6 +69,19 @@
                                 <rect key="frame" x="142" y="360" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kb1-QM-Jx2">
+                                <rect key="frame" x="45" y="331" width="231" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.62" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Try PhotoBox">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tryTapped:" destination="Yna-jB-3a9" eventType="touchUpInside" id="wYJ-ig-1Ip"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -214,7 +227,9 @@
                             <outlet property="delegate" destination="jo9-6H-dCR" id="0ob-Hg-EOF"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" id="gHk-lE-53d"/>
+                    <navigationItem key="navigationItem" id="gHk-lE-53d">
+                        <barButtonItem key="backBarButtonItem" title="Albums" id="9F3-SH-Yum"/>
+                    </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q5C-cU-Eh8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

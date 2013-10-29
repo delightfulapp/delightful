@@ -15,5 +15,6 @@
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityView;
 
 - (IBAction)tapOnImage:(id)sender;
+- (IBAction)tryTapped:(id)sender;
 
 @end
