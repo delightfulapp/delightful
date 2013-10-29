@@ -79,6 +79,8 @@
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF362181A850C002E9FCB /* 0.0.3.plist */; };
+		036DF365181AA60B002E9FCB /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 036DF364181AA60B002E9FCB /* info@2x.png */; };
+		036DF368181F65D8002E9FCB /* PhotoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */; };
 		036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */; };
 		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
@@ -176,7 +178,7 @@
 		032B0D1D17D4CF4800ABFA9F /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = PhotoBox/Others/LocationManager.m; sourceTree = "<group>"; };
 		032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
-		032CBB7A17D0BDF3001205B1 /* PhotoBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		032CBB7A17D0BDF3001205B1 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Delightful.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB7D17D0BDF3001205B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		032CBB8117D0BDF3001205B1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -247,6 +249,9 @@
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
 		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		036DF362181A850C002E9FCB /* 0.0.3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.3.plist; path = PhotoBox/IntroFiles/0.0.3.plist; sourceTree = "<group>"; };
+		036DF364181AA60B002E9FCB /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
+		036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoInfoViewController.h; path = PhotoBox/Controllers/PhotoInfoViewController.h; sourceTree = "<group>"; };
+		036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoInfoViewController.m; path = PhotoBox/Controllers/PhotoInfoViewController.m; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
@@ -458,7 +463,7 @@
 		032CBB7B17D0BDF3001205B1 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				032CBB7A17D0BDF3001205B1 /* PhotoBox.app */,
+				032CBB7A17D0BDF3001205B1 /* Delightful.app */,
 				032CBB9B17D0BDF3001205B1 /* PhotoBoxTests.xctest */,
 			);
 			name = Products;
@@ -576,6 +581,8 @@
 				03AE182517D8B004009CD844 /* LoginViewController.m */,
 				0398D766180FC5F500FDD83B /* OriginalImageDownloaderViewController.h */,
 				0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */,
+				036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */,
+				036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -645,6 +652,7 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				036DF364181AA60B002E9FCB /* info@2x.png */,
 				03CE50DE1818136E00445084 /* introbg.jpg */,
 				03CE50DF1818136E00445084 /* introbg@2x.jpg */,
 				032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */,
@@ -728,7 +736,7 @@
 			);
 			name = Delightful;
 			productName = PhotoBox;
-			productReference = 032CBB7A17D0BDF3001205B1 /* PhotoBox.app */;
+			productReference = 032CBB7A17D0BDF3001205B1 /* Delightful.app */;
 			productType = "com.apple.product-type.application";
 		};
 		032CBB9A17D0BDF3001205B1 /* PhotoBoxTests */ = {
@@ -793,6 +801,7 @@
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
+				036DF365181AA60B002E9FCB /* info@2x.png in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
 				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
@@ -972,6 +981,7 @@
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,
+				036DF368181F65D8002E9FCB /* PhotoInfoViewController.m in Sources */,
 				03CE50E41818148800445084 /* IntroViewController.m in Sources */,
 				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,

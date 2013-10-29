@@ -12,4 +12,10 @@
 
 - (BOOL)isLandscape;
 
+- (UIImage *)grayscaleImage;
+
+- (UIImage *)grayscaledAndBlurredImage;
+
+- (UIImage *)grayscaledAndVignetteImage;
+
 @end
