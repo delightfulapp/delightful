@@ -9,7 +9,6 @@
 #import "PhotoInfoViewController.h"
 
 #import "Photo.h"
-#import "Tag.h"
 #import "UIView+Additionals.h"
 
 #define PHOTO_INFO_FONT_SIZE 12
@@ -96,7 +95,7 @@
     if (indexPath.section == 0) {
         [self configureCameraDataCell:cell forIndexPath:indexPath];
     } else {
-        Tag *tag = self.photo.tags[indexPath.row];
+        NSString *tag = self.photo.tags[indexPath.row];
         [cell.textLabel setText:tag];
         [cell.textLabel setFont:[UIFont systemFontOfSize:PHOTO_INFO_FONT_SIZE]];
     }

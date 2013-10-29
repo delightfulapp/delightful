@@ -50,8 +50,8 @@
     XCTAssertTrue([photo.pathOriginal.absoluteString isEqual:[photoDictionary objectForKey:@"pathOriginal"]], @"Expected %@. Actual = %@", [photoDictionary objectForKey:@"pathOriginal"], photo.pathOriginal.absoluteString);
     XCTAssert([photo.dateTakenString isEqualToString:@"2013-06-03"], @"Expected date taken string: 2013-06-03. Actual = %@", photo.dateTakenString);
     XCTAssert(photo.tags.count == 4, @"Expected 4 tags. Actual = %d", photo.tags.count);
-    XCTAssert([photo.tags[0] isKindOfClass:[Tag class]], @"Expected Tag class. Actual %@", NSStringFromClass([photo.tags[0] class]));
-    XCTAssert([((Tag *)photo.tags[0]).tagId isEqualToString:@"2013"], @"Expected tag: 2013. Actual %@", ((Tag *)photo.tags[0]).tagId);
+    XCTAssert([photo.tags[0] isKindOfClass:[NSString class]], @"Expected NSString class. Actual %@", NSStringFromClass([photo.tags[0] class]));
+    XCTAssert([((NSString *)photo.tags[0]) isEqualToString:@"2013"], @"Expected tag: 2013. Actual %@", ((Tag *)photo.tags[0]).tagId);
 }
 
 - (void)testPhotoObjectManagedObjectSerialization {

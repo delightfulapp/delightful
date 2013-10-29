@@ -1209,7 +1209,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PhotoBox.app/PhotoBox";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1245,7 +1245,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */;
 			buildSettings = {
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PhotoBox.app/PhotoBox";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",

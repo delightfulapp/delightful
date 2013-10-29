@@ -350,7 +350,6 @@
 }
 
 - (void)showLoadingBarButtonItem:(BOOL)show {
-    UIBarButtonItem *infoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonTapped:)];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
     UIBarButtonItem *shareButton;
     
