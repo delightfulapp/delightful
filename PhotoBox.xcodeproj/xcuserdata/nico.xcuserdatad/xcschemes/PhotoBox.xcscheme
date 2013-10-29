@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "032CBB7917D0BDF3001205B1"
-               BuildableName = "PhotoBox.app"
+               BuildableName = "Delightful.app"
                BlueprintName = "Delightful"
                ReferencedContainer = "container:PhotoBox.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "032CBB7917D0BDF3001205B1"
-            BuildableName = "PhotoBox.app"
+            BuildableName = "Delightful.app"
             BlueprintName = "Delightful"
             ReferencedContainer = "container:PhotoBox.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "032CBB7917D0BDF3001205B1"
-            BuildableName = "PhotoBox.app"
+            BuildableName = "Delightful.app"
             BlueprintName = "Delightful"
             ReferencedContainer = "container:PhotoBox.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "032CBB7917D0BDF3001205B1"
-            BuildableName = "PhotoBox.app"
+            BuildableName = "Delightful.app"
             BlueprintName = "Delightful"
             ReferencedContainer = "container:PhotoBox.xcodeproj">
          </BuildableReference>
