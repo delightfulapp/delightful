@@ -34,6 +34,8 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 - (void)deleteTokens;
 - (void)logout;
 
+- (void)connectAsTester;
+
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server;
 + (NSURL *)oAuthAccessUrlForServer:(NSString *)server;
 

@@ -46,6 +46,10 @@
     [self.view endEditing:YES];
 }
 
+- (void)tryTapped:(id)sender {
+    [[ConnectionManager sharedManager] connectAsTester];
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (!textField.text || textField.text.length == 0) {
         [textField setText:@".trovebox.com"];

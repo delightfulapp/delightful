@@ -245,7 +245,7 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
-		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
+		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		036DF362181A850C002E9FCB /* 0.0.3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.3.plist; path = PhotoBox/IntroFiles/0.0.3.plist; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -710,9 +710,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		032CBB7917D0BDF3001205B1 /* PhotoBox */ = {
+		032CBB7917D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBox" */;
+			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "Delightful" */;
 			buildPhases = (
 				5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
@@ -726,7 +726,7 @@
 			);
 			dependencies = (
 			);
-			name = PhotoBox;
+			name = Delightful;
 			productName = PhotoBox;
 			productReference = 032CBB7A17D0BDF3001205B1 /* PhotoBox.app */;
 			productType = "com.apple.product-type.application";
@@ -778,7 +778,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				032CBB7917D0BDF3001205B1 /* PhotoBox */,
+				032CBB7917D0BDF3001205B1 /* Delightful */,
 				032CBB9A17D0BDF3001205B1 /* PhotoBoxTests */,
 			);
 		};
@@ -1008,7 +1008,7 @@
 /* Begin PBXTargetDependency section */
 		032CBBA117D0BDF3001205B1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 032CBB7917D0BDF3001205B1 /* PhotoBox */;
+			target = 032CBB7917D0BDF3001205B1 /* Delightful */;
 			targetProxy = 032CBBA017D0BDF3001205B1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1278,7 +1278,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBox" */ = {
+		032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "Delightful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				032CBBAD17D0BDF3001205B1 /* Debug */,

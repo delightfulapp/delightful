@@ -107,6 +107,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Orientation
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - Override setup
 
 - (NSString *)cellIdentifier {

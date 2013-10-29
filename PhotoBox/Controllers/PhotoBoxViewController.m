@@ -67,7 +67,10 @@
 {
     [super viewWillDisappear:animated];
     PBX_LOG(@"Pausing %@ data source.", NSStringFromClass(self.resourceClass));
-    self.dataSource.paused = YES;
+    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+        // no need to pause data source when login page is showing
+        self.dataSource.paused = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,7 +82,22 @@
 - (void)dealloc {
     if (isObservingLoggedInUser) {
         [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
+        [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage))];
     }
+}
+
+#pragma mark - Orientation
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
 }
 
 #pragma mark - Setup
@@ -132,6 +150,7 @@
 
 - (CollectionViewDataSource *)dataSource {
     if (!_dataSource) {
+        NSLog(@"Create data source");
         _dataSource = [[CollectionViewDataSource alloc] initWithCollectionView:self.collectionView];
         [_dataSource setFetchedResultsController:self.fetchedResultsController];
         [self setupDataSourceConfigureBlock];
@@ -146,6 +165,7 @@
 
 - (NSManagedObjectContext *)mainContext {
     if (!_mainContext) {
+        NSLog(@"create main context");
         _mainContext = [NSManagedObjectContext mainContext];
     }
     return _mainContext;
@@ -164,6 +184,7 @@
 
 - (NSFetchRequest *)fetchRequest {
     if (!_fetchRequest) {
+        NSLog(@"create fetch request");
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
         [_fetchRequest setSortDescriptors:self.sortDescriptors];
         if (self.predicate) {
@@ -177,6 +198,7 @@
 - (NSPredicate *)predicate {
     if (self.item && ![self isGallery]) {
         if (!_predicate) {
+            NSLog(@"create predicate");
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }
         return _predicate;
@@ -186,6 +208,7 @@
 
 - (PhotoBoxFetchedResultsController *)fetchedResultsController {
     if (!_fetchedResultsController) {
+        NSLog(@"create fetch result controller");
         _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
         [_fetchedResultsController setObjectClass:self.resourceClass];
         [_fetchedResultsController setItemKey:self.displayedItemIdKey];
@@ -464,6 +487,7 @@
             if (userLoggedIn) {
                 [self fetchResource];
             } else {
+                self.dataSource = nil;
                 self.page = 1;
                 self.fetchedResultsController = nil;
                 self.fetchRequest = nil;
