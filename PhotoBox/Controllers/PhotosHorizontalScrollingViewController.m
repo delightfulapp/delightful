@@ -36,8 +36,6 @@
 
 - (void)viewDidLoad
 {
-    [self adjustCollectionViewWidthToHavePhotosSpacing];
-    
     self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
@@ -48,7 +46,7 @@
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
-    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self adjustCollectionViewWidthToHavePhotosSpacing];
     
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
@@ -89,6 +87,7 @@
     });
     self.collectionView.contentInset = ({
         UIEdgeInsets inset = self.collectionView.contentInset;
+        inset.top = 0;
         inset.right += PHOTO_SPACING;
         inset;
     });
