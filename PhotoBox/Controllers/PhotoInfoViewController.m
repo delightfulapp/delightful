@@ -116,6 +116,7 @@
 }
 
 - (NSAttributedString *)attributedStringForCameraData:(NSString *)cameraData value:(NSString *)value {
+    if (!value) value = NSLocalizedString(@"Not available", nil);
     NSString *cameraDataString = [NSString stringWithFormat:@"%@ %@", cameraData, value];
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:cameraDataString];
     [attr addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:PHOTO_INFO_FONT_SIZE] range:[cameraDataString rangeOfString:cameraData]];
