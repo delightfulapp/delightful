@@ -94,6 +94,23 @@
     }];
 }
 
++ (MTLValueTransformer *)tagsJSONTransformer {
+    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *tagIds) {
+        NSMutableArray *tagObjects = [NSMutableArray arrayWithCapacity:tagIds.count];
+        for (NSString *tagId in tagIds) {
+            Tag *tag = [[Tag alloc] initWithItemId:tagId];
+            [tagObjects addObject:tag];
+        }
+        return tagObjects;
+    } reverseBlock:^id(NSArray *tagObjects) {
+        NSMutableArray *tagIds = [NSMutableArray arrayWithCapacity:tagObjects.count];
+        for (Tag *tag in tagObjects) {
+            [tagIds addObject:tag.tagId];
+        }
+        return tagIds;
+    }];
+}
+
 // NOTE: override MTLModel's dictionaryValue to include dateTakenString in managed object serialization. By default, dateTakenString is not serialized because the isa is nil.
 - (NSDictionary *)dictionaryValue {
     NSMutableDictionary *dict = [[super dictionaryValue] mutableCopy];
