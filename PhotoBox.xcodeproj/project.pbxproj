@@ -84,6 +84,7 @@
 		036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF369181FBA67002E9FCB /* 0.0.4.plist */; };
 		036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */; };
 		036DF36E181FBB9E002E9FCB /* intro0.0.4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */; };
+		036DF3741820D05E002E9FCB /* PhotoSectionHeaderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */; };
 		036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */; };
 		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
@@ -258,6 +259,7 @@
 		036DF369181FBA67002E9FCB /* 0.0.4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.4.plist; path = PhotoBox/IntroFiles/0.0.4.plist; sourceTree = "<group>"; };
 		036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro0.0.4.jpg; sourceTree = "<group>"; };
 		036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "intro0.0.4@2x.jpg"; sourceTree = "<group>"; };
+		036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSectionHeaderViewTests.m; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 				034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */,
 				034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */,
 				03D972A018115705008A087B /* SharingTokenTests.m */,
+				036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */,
 			);
 			path = PhotoBoxTests;
 			sourceTree = "<group>";
@@ -1013,6 +1016,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				036DF3741820D05E002E9FCB /* PhotoSectionHeaderViewTests.m in Sources */,
 				03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */,
 				035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */,
 				0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */,

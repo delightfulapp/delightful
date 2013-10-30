@@ -69,15 +69,18 @@
         text = [NSString stringWithFormat:@"%@\n%@", text, location];
     }
     
-    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
-    [string addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] range:[text rangeOfString:title]];
-    if (location) {
-        NSRange locationRange = [text rangeOfString:location];
-        [string addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:8] range:locationRange];
-        [string addAttribute:NSForegroundColorAttributeName value:[[UIColor redColor] lighterColor] range:locationRange];
+    if (text && text.length > 0) {
+        NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text];
+        [string addAttribute:NSFontAttributeName value:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1] range:[text rangeOfString:title]];
+        if (location) {
+            NSRange locationRange = [text rangeOfString:location];
+            [string addAttribute:NSFontAttributeName value:[UIFont italicSystemFontOfSize:8] range:locationRange];
+            [string addAttribute:NSForegroundColorAttributeName value:[[UIColor redColor] lighterColor] range:locationRange];
+        }
+        return string;
     }
     
-    return string;
+    return nil;
 }
 
 - (void)setHideLocation:(BOOL)hideLocation {
