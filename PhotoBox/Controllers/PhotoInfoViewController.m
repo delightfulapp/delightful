@@ -55,7 +55,6 @@
     
     CGFloat cellHeight = [self tableView:nil heightForRowAtIndexPath:nil];
     [self.tableView setContentInset:UIEdgeInsetsMake(CGRectGetHeight(self.tableView.frame)-cellHeight*(self.cameraDataSectionRows.count+1), 0, 0, 0)];
-    NSLog(@"Top inset = %f", self.tableView.contentInset.top);
 }
 
 - (void)didReceiveMemoryWarning

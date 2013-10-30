@@ -25,10 +25,14 @@
 }
 
 - (UIImage *)grayscaledAndBlurredImage {
-//    GPUImagePicture *imagePicture = [[GPUImagePicture alloc] initWithImage:self];
-//    GPUImageGrayscaleFilter *grayFilter = [[GPUImageGrayscaleFilter alloc] init];
-//
-    return nil;
+    GPUImagePicture *imagePicture = [[GPUImagePicture alloc] initWithImage:self];
+    GPUImageGrayscaleFilter *grayFilter = [[GPUImageGrayscaleFilter alloc] init];
+    GPUImageGaussianBlurFilter *blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
+    [grayFilter addTarget:blurFilter];
+    [imagePicture addTarget:grayFilter];
+    [imagePicture processImage];
+
+    return [blurFilter imageFromCurrentlyProcessedOutput];
 }
 
 - (UIImage *)grayscaledAndVignetteImage {

@@ -115,7 +115,7 @@
 - (CGFloat)zoomScaleToFillScreen {
     CGFloat zoom = 0;
     CGFloat frameHeight = CGRectGetHeight([[UIWindow appWindow] frame]);
-    CGFloat imageHeight = self.thisImageview.image.size.height;
+    CGFloat imageHeight = self.thisImageview.bounds.size.height;
     zoom = frameHeight/imageHeight;
     return zoom;
 }
@@ -280,7 +280,8 @@
 - (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated {
     if (grayscale) {
         if (self.thisImageview.image) {
-            UIImage *grayscaleImage = [self.thisImageview.image grayscaleImage];
+            CGFloat maxZoom = [self zoomScaleToFillScreen];
+            UIImage *grayscaleImage = [self.thisImageview.image grayscaledAndBlurredImage];
             UIImageView *grayImageView = [[UIImageView alloc] initWithImage:grayscaleImage];
             [grayImageView setTag:PBX_GRAY_IMAGE_VIEW];
             [grayImageView setFrame:self.thisImageview.bounds];
@@ -288,7 +289,6 @@
             [self.thisImageview addSubview:grayImageView];
             
             if (animated) {
-                CGFloat maxZoom = [self zoomScaleToFillScreen];
                 maxZoomScale = self.scrollView.maximumZoomScale;
                 self.scrollView.maximumZoomScale = maxZoom;
                 [self.scrollView setZoomScale:maxZoom animated:YES];
