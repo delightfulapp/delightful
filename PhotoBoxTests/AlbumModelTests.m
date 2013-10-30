@@ -47,7 +47,7 @@
     XCTAssert([testAlbum.albumId isEqualToString:albumDict[@"id"]], @"Expected test album id = %@. Actual = %@",albumDict[@"id"], testAlbum.albumId);
     XCTAssert([testAlbum.count intValue]==[albumDict[@"count"] intValue], @"Expected album count = %d. Actual = %d",[albumDict[@"count"] intValue], [testAlbum.count intValue]);
     XCTAssert([testAlbum.name isEqualToString:[albumDict objectForKey:@"name"]], @"Expected album name = %@. Actual = %@", [albumDict objectForKey:@"name"], testAlbum.name);
-    NSURL *coverURL = [NSURL URLWithString:[[albumDict objectForKey:@"cover"] objectForKey:@"path320x320"]];
+    NSURL *coverURL = [NSURL URLWithString:[[albumDict objectForKey:@"cover"] objectForKey:@"path200x200xCR"]];
     NSString *coverId = [[albumDict objectForKey:@"cover"] objectForKey:@"id"];
     XCTAssert([testAlbum.coverURL isEqual:coverURL], @"Expected cover URL: %@. Actual = %@", coverURL, testAlbum.coverURL);
     XCTAssert([testAlbum.coverId isEqualToString:coverId], @"Expected coverId: %@. Actual = %@", coverId, testAlbum.coverId);

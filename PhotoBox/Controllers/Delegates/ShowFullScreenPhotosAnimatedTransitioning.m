@@ -104,7 +104,7 @@
     // white view to hide the image in photos view controller
     UIView *whiteView = [[UIView alloc] initWithFrame:endRect];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
-    [containerView addSubview:whiteView];
+    [containerView insertSubview:whiteView aboveSubview:toVC.view];
     
     // the view to animate which is the image view inside the scroll view of PhotoZoomableCell
     UIImageView *viewToAnimate = (UIImageView *)[fromVC viewToAnimate];

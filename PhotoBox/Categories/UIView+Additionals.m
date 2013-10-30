@@ -24,15 +24,21 @@
     return rect;
 }
 
-- (void)addTransparentGradientWithStartColor:(UIColor *)startColor {
+- (UIView *)addTransparentGradientWithStartColor:(UIColor *)startColor {
+    return [self addTransparentGradientWithStartColor:startColor fromStartPoint:CGPointMake(0.5, 0) endPoint:CGPointMake(0.5, 0.5)];
+}
+
+- (UIView *)addTransparentGradientWithStartColor:(UIColor *)startColor fromStartPoint:(CGPoint)startPoint endPoint:(CGPoint)endPoint {
     UIView *colorView = [[UIView alloc] initWithFrame:self.bounds];
     [colorView setBackgroundColor:startColor];
     [self addSubview:colorView];
     CAGradientLayer *l = [CAGradientLayer layer];
     l.frame = self.bounds;
     l.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
-    l.endPoint = CGPointMake(0.5, 0.5);
+    l.startPoint = startPoint;
+    l.endPoint = endPoint;
     colorView.layer.mask = l;
+    return colorView;
 }
 
 - (void)setOrigin:(CGPoint)origin {

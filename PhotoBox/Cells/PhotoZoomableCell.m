@@ -12,6 +12,11 @@
 
 #import <SDWebImageManager.h>
 
+#import "UIImage+Additionals.h"
+#import "UIWindow+Additionals.h"
+
+#define PBX_GRAY_IMAGE_VIEW 12381
+
 @interface SDWebImageManager ()
 
 - (NSString *)cacheKeyForURL:(NSURL *)url;
@@ -23,6 +28,7 @@
 @interface PhotoZoomableCell () {
     CGPoint draggingPoint;
     BOOL isZooming;
+    CGFloat maxZoomScale;
 }
 
 @property (nonatomic, strong) NSURL *thumbnailURL;
@@ -104,6 +110,14 @@
         
     self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
     [self centerScrollViewContents];
+}
+
+- (CGFloat)zoomScaleToFillScreen {
+    CGFloat zoom = 0;
+    CGFloat frameHeight = CGRectGetHeight([[UIWindow appWindow] frame]);
+    CGFloat imageHeight = self.thisImageview.bounds.size.height;
+    zoom = frameHeight/imageHeight;
+    return zoom;
 }
 
 - (void)scrollViewDoubleTapped:(UITapGestureRecognizer*)recognizer {
@@ -231,6 +245,10 @@
     return nil;
 }
 
+- (UIImageView *)grayImageView {
+    return (UIImageView *)[self.thisImageview viewWithTag:PBX_GRAY_IMAGE_VIEW];
+}
+
 #pragma mark - Gesture Teasing
 
 - (void)doTeasingGesture {
@@ -255,6 +273,65 @@
 - (void)setHaveShownGestureTeasing {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Photo Detail
+
+- (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated {
+    if (grayscale) {
+        if (self.thisImageview.image) {
+            CGFloat maxZoom = [self zoomScaleToFillScreen];
+            UIImage *grayscaleImage = [self.thisImageview.image grayscaledAndBlurredImage];
+            UIImageView *grayImageView = [[UIImageView alloc] initWithImage:grayscaleImage];
+            [grayImageView setTag:PBX_GRAY_IMAGE_VIEW];
+            [grayImageView setFrame:self.thisImageview.bounds];
+            [grayImageView setAlpha:0];
+            [self.thisImageview addSubview:grayImageView];
+            
+            if (animated) {
+                maxZoomScale = self.scrollView.maximumZoomScale;
+                self.scrollView.maximumZoomScale = maxZoom;
+                [self.scrollView setZoomScale:maxZoom animated:YES];
+                [UIView animateWithDuration:0.5 animations:^{
+                    [grayImageView setAlpha:1];
+                }];
+            } else {
+                [grayImageView setAlpha:1];
+            }
+        }
+    } else {
+        UIImageView *grayImageView = (UIImageView *)[self.thisImageview viewWithTag:PBX_GRAY_IMAGE_VIEW];
+        if (grayImageView) {
+            if (animated) {
+                [self.scrollView setMaximumZoomScale:maxZoomScale];
+                [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+                [UIView animateWithDuration:0.5 animations:^{
+                    [grayImageView setAlpha:0];
+                    
+                } completion:^(BOOL finished) {
+                    if (finished) {
+                        [grayImageView removeFromSuperview];
+                    }
+                }];
+            } else {
+                [grayImageView removeFromSuperview];
+                [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
+            }
+        }
+    }
+}
+
+- (void)setGrayscaleAndZoom:(BOOL)grayscale {
+    [self setGrayscaleAndZoom:grayscale animated:YES];
+}
+
+- (void)setZoomScale:(CGFloat)zoomScale {
+    [self.scrollView setZoomScale:zoomScale];
+}
+
+- (BOOL)isGrayscaled {
+    UIImageView *grayImageView = (UIImageView *)[self.thisImageview viewWithTag:PBX_GRAY_IMAGE_VIEW];
+    return (grayImageView)?YES:NO;
 }
 
 

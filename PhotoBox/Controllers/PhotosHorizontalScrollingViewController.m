@@ -17,8 +17,9 @@
 #import "UIViewController+Additionals.h"
 #import "UIView+Additionals.h"
 #import "PhotoSharingManager.h"
+#import "PhotoInfoViewController.h"
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate> {
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate> {
     BOOL shouldHideNavigationBar;
 }
 
@@ -26,6 +27,8 @@
 @property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
+@property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
+@property (nonatomic, strong) UIButton *infoButton;
 
 @end
 
@@ -33,8 +36,6 @@
 
 - (void)viewDidLoad
 {
-    [self adjustCollectionViewWidthToHavePhotosSpacing];
-    
     self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
@@ -45,6 +46,7 @@
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
+    [self adjustCollectionViewWidthToHavePhotosSpacing];
     
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
@@ -69,10 +71,12 @@
     
     [self scrollToFirstShownPhoto];
     [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:1];
+    [self showInfoButton:YES animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
+    [self showInfoButton:NO animated:YES];
 }
 
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
@@ -83,6 +87,7 @@
     });
     self.collectionView.contentInset = ({
         UIEdgeInsets inset = self.collectionView.contentInset;
+        inset.top = 0;
         inset.right += PHOTO_SPACING;
         inset;
     });
@@ -104,6 +109,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Orientation
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 #pragma mark - Override setup
@@ -144,6 +155,7 @@
     void (^configureCell)(PhotoZoomableCell*, id) = ^(PhotoZoomableCell* cell, id item) {
         [cell setItem:item];
         [cell setDelegate:self];
+        [cell setGrayscaleAndZoom:NO animated:NO];
     };
     return configureCell;
 }
@@ -277,6 +289,33 @@
 
 #pragma mark - Button
 
+- (void)infoButtonTapped:(id)sender {
+    [sender setEnabled:NO];
+    [self showInfoButton:NO animated:YES];
+    
+    BOOL isGrayscaled = [[self currentCell] isGrayscaled];
+    [self setNavigationBarHidden:!isGrayscaled animated:YES];
+    [[self currentCell] setGrayscaleAndZoom:!isGrayscaled];
+    
+    UIView *gradientView = [[self currentCell] addTransparentGradientWithStartColor:[UIColor blackColor] fromStartPoint:CGPointMake(0, 1) endPoint:CGPointMake(0.7, 0.5)];
+    self.photoInfoBackgroundGradientView = gradientView;
+    [gradientView setAlpha:0];
+    
+    PhotoInfoViewController *photoInfo = [[PhotoInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [photoInfo setPhoto:[[self currentCell] item]];
+    [photoInfo setDelegate:self];
+    [self addChildViewController:photoInfo];
+    [self.view addSubview:photoInfo.view];
+    [photoInfo.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
+    
+    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        [gradientView setAlpha:1];
+        [photoInfo.view setOriginY:0];
+    } completion:^(BOOL finished) {
+        [sender setEnabled:YES];
+    }];
+}
+
 - (void)viewOriginalButtonTapped:(id)sender {
     CLS_LOG(@"");
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
@@ -294,6 +333,22 @@
     }
 }
 
+- (void)actionButtonTapped:(id)sender {
+    CLS_LOG(@"Sharing tapped");
+    [self showLoadingBarButtonItem:YES];
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    Photo *photo = cell.item;
+    __weak PhotosHorizontalScrollingViewController *weakSelf = self;
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image tokenFetchedBlock:^(id token) {
+        [weakSelf showLoadingBarButtonItem:NO];
+        if (token) {
+            [[NPRNotificationManager sharedManager] hideNotification];
+        } else {
+            [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot be fetched", nil) duration:3];
+        }
+    } completion:nil];
+}
+
 - (void)showLoadingBarButtonItem:(BOOL)show {
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
     UIBarButtonItem *shareButton;
@@ -309,20 +364,36 @@
     [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
 }
 
-- (void)actionButtonTapped:(id)sender {
-    CLS_LOG(@"Sharing tapped");
-    [self showLoadingBarButtonItem:YES];
-    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
-    Photo *photo = cell.item;
-    __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image tokenFetchedBlock:^(id token) {
-        [weakSelf showLoadingBarButtonItem:NO];
-        if (token) {
-            [[NPRNotificationManager sharedManager] hideNotification];
-        } else {
-            [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot be fetched", nil) duration:3];
-        }
-    } completion:nil];
+- (void)showInfoButton:(BOOL)show animated:(BOOL)animated{
+    if (show) {
+        [self.infoButton setAlpha:0];
+        if (animated) {
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.infoButton setAlpha:1];
+            }];
+        } else [self.infoButton setAlpha:1];
+    }
+    else {
+        if (animated) {
+            [UIView animateWithDuration:0.5 animations:^{
+                [self.infoButton setAlpha:0];
+            }];
+        } else [self.infoButton setAlpha:1];
+    }
+}
+
+- (UIButton *)infoButton {
+    if (!_infoButton) {
+        _infoButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
+        [_infoButton setShowsTouchWhenHighlighted:YES];
+        [_infoButton setImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [_infoButton setBackgroundColor:[UIColor clearColor]];
+        [_infoButton addTarget:self action:@selector(infoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.view addSubview:_infoButton];
+        [_infoButton setPositionFromEdge:MNCUIViewRightEdge margin:10];
+        [_infoButton setPositionFromEdge:MNCUIViewBottomEdge margin:10];
+    }
+    return _infoButton;
 }
 
 #pragma mark - Custom Animation Transition Delegate
@@ -357,6 +428,26 @@
             [currentCell doTeasingGesture];
         }
     }
+}
+
+#pragma mark - Photo Info View Controller
+
+- (void)photoInfoViewControllerDidClose:(PhotoInfoViewController *)photoInfo {
+    UIViewController *childVC = [self childViewControllers][0];
+    [childVC removeFromParentViewController];
+    [UIView animateWithDuration:0.5 animations:^{
+        [childVC.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
+        [self.photoInfoBackgroundGradientView setAlpha:0];
+    } completion:^(BOOL finished) {
+        [childVC.view removeFromSuperview];
+        [self.photoInfoBackgroundGradientView removeFromSuperview];
+        [[self currentCell] setGrayscaleAndZoom:NO animated:YES];
+        [self showInfoButton:YES animated:YES];
+    }];
+}
+
+- (void)photoInfoViewController:(PhotoInfoViewController *)photoInfo didDragToClose:(CGFloat)progress {
+    [[[self currentCell] grayImageView] setAlpha:1-progress];
 }
 
 @end

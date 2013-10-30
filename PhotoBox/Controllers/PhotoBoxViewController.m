@@ -22,6 +22,7 @@
 
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
     CGFloat lastOffset;
+    BOOL isObservingLoggedInUser;
 }
 
 @property (nonatomic, assign, getter = isShowingAlert) BOOL showingAlert;
@@ -40,6 +41,8 @@
     self.page = INITIAL_PAGE_NUMBER;
     self.numberOfColumns = 2;
     _pageSize = 20;
+    
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
     [self setupConnectionManager];
     [self setupCollectionView];
@@ -64,7 +67,10 @@
 {
     [super viewWillDisappear:animated];
     PBX_LOG(@"Pausing %@ data source.", NSStringFromClass(self.resourceClass));
-    self.dataSource.paused = YES;
+    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+        // no need to pause data source when login page is showing
+        self.dataSource.paused = YES;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -74,7 +80,24 @@
 }
 
 - (void)dealloc {
-    [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
+    if (isObservingLoggedInUser) {
+        [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
+        [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage))];
+    }
+}
+
+#pragma mark - Orientation
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    return UIInterfaceOrientationPortrait;
+}
+
+- (BOOL)shouldAutorotate {
+    return NO;
 }
 
 #pragma mark - Setup
@@ -89,9 +112,11 @@
     }
     [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:NULL];
     [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage)) options:0 context:NULL];
+    isObservingLoggedInUser = YES;
 }
 
 - (void)setupCollectionView {
+    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
 }
@@ -418,8 +443,11 @@
 - (NSArray *)sortDescriptors {
     NSMutableArray *sorts = [NSMutableArray array];
     
-    NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:([self isGallery])?NO:YES];
+    NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTakenString)) ascending:NO];
     [sorts addObject:dateTakenStringSort];
+    
+    NSSortDescriptor *dateTakenSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:YES];
+    [sorts addObject:dateTakenSort];
     
     if ([self isGallery]) {
         NSSortDescriptor *uploadedSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateUploaded)) ascending:NO];
@@ -454,6 +482,7 @@
             if (userLoggedIn) {
                 [self fetchResource];
             } else {
+                self.dataSource = nil;
                 self.page = 1;
                 self.fetchedResultsController = nil;
                 self.fetchRequest = nil;

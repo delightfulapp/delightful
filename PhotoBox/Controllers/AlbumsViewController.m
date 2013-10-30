@@ -39,6 +39,8 @@
     
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
     [self.navigationItem setLeftBarButtonItem:left];
+    
+    [self.navigationItem.backBarButtonItem setTitle:NSLocalizedString(@"Albums", nil)];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{

@@ -29,7 +29,12 @@
             _value = [[UIImageView alloc] initWithImage:[UIImage imageNamed:dictionary[@"value"]]];
         } else {
             NSString *className = dictionary[@"value"];
-            _value = [[NSClassFromString(className) alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+            CGRect frame = CGRectMake(0, 0, 180, 180);
+            UIView *headerView = (UIView *)[[NSClassFromString(className) alloc] initWithFrame:frame];
+            [headerView setBackgroundColor:[UIColor clearColor]];
+            _value = [[UIView alloc] initWithFrame:CGRectInset(frame, 0, -20)];
+            [_value addSubview:headerView];
+            [headerView setCenter:CGPointMake(CGRectGetMidX(((UIView *)_value).frame), CGRectGetMidY(((UIView *)_value).frame))];
             [_value setBackgroundColor:[UIColor clearColor]];
         }
     }

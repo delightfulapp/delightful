@@ -48,6 +48,10 @@
     return [NSString stringWithFormat:@"%d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue]];
 }
 
+- (NSString *)dimension {
+    return [NSString stringWithFormat:@"%dx%d", [self.width intValue], [self.height intValue]];
+}
+
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {

@@ -49,6 +49,9 @@
     XCTAssertTrue([photo.normalImage.urlString isEqualToString:[photoDictionary objectForKey:@"path640x640"]], @"Expected normal image url %@. Actual %@", [photoDictionary objectForKey:@"path640x640"], photo.normalImage.urlString);
     XCTAssertTrue([photo.pathOriginal.absoluteString isEqual:[photoDictionary objectForKey:@"pathOriginal"]], @"Expected %@. Actual = %@", [photoDictionary objectForKey:@"pathOriginal"], photo.pathOriginal.absoluteString);
     XCTAssert([photo.dateTakenString isEqualToString:@"2013-06-03"], @"Expected date taken string: 2013-06-03. Actual = %@", photo.dateTakenString);
+    XCTAssert(photo.tags.count == 4, @"Expected 4 tags. Actual = %d", photo.tags.count);
+    XCTAssert([photo.tags[0] isKindOfClass:[NSString class]], @"Expected NSString class. Actual %@", NSStringFromClass([photo.tags[0] class]));
+    XCTAssert([((NSString *)photo.tags[0]) isEqualToString:@"2013"], @"Expected tag: 2013. Actual %@", ((Tag *)photo.tags[0]).tagId);
 }
 
 - (void)testPhotoObjectManagedObjectSerialization {
@@ -56,7 +59,7 @@
     NSDictionary *photoDictionary = [self objectFromJSONFile:@"photo"];
     Photo *photo = [MTLJSONAdapter modelOfClass:[Photo class] fromJSONDictionary:photoDictionary error:&error];
     NSManagedObject *photoManagedObject = [MTLManagedObjectAdapter managedObjectFromModel:photo insertingIntoContext:[NSManagedObjectContext mainContext] error:&error];
-    XCTAssert(photoManagedObject != nil, @"Photo managed object should not be nil");
+    XCTAssert(photoManagedObject != nil, @"Photo managed object should not be nil. Error: %@", error);
     XCTAssert([[photoManagedObject valueForKey:@"photoId"] isEqualToString:[photoDictionary objectForKey:@"id"]], @"Expected photo id = %@. Actual = %@", photoDictionary[@"id"], [photoManagedObject valueForKey:@"photoId"]);
     XCTAssertTrue([[photoManagedObject valueForKey:@"pathOriginal"] isEqualToString:photo.pathOriginal.absoluteString], @"Expected %@. Actual = %@", photo.pathOriginal.absoluteString, [photoManagedObject valueForKey:@"pathOriginal"]);
     XCTAssert([photoManagedObject valueForKey:@"dateTakenString"]!=nil, @"Date taken string should not be nil");
