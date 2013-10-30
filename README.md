@@ -1,9 +1,9 @@
-PhotoBox
+Delightful
 ==
 
-![PhotoBox - Trovebox Photo Viewer](http://f.cl.ly/items/1e272y3F0j0o33221E2P/Photo%202013-09-06%2015%2027%2042.png)
+![Delightful - Trovebox Photo Viewer](http://f.cl.ly/items/1e272y3F0j0o33221E2P/Photo%202013-09-06%2015%2027%2042.png)
 
-PhotoBox is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
+Delightful is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
 
 Preview
 --
@@ -23,6 +23,7 @@ Features (so far)
 7. Parallax effect on login page!
 8. Core data support a.k.a you can see your photos and albums offline.
 9. Share your Trovebox Photo's URL to Twitter/Facebook/Email.
+10. View photo's camera data and tags.
 
 Requirements
 --
@@ -51,4 +52,4 @@ Contact
 License
 --
 
-PhotoBox is available under the MIT license. See the LICENSE file for more info.
+Delightful is available under the MIT license. See the LICENSE file for more info.
