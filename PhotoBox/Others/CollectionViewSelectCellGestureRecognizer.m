@@ -10,6 +10,7 @@
 
 @interface CollectionViewSelectCellGestureRecognizer () <UIGestureRecognizerDelegate> {
     CGPoint initialPoint;
+    CGRect selectionRect;
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -53,9 +54,13 @@
     switch (gesture.state) {
         case UIGestureRecognizerStateBegan:
             NSLog(@"Gesture began: %@", NSStringFromCGPoint([gesture locationInView:self.collectionView]));
+            CGPoint initPoint = [gesture locationInView:self.collectionView];
+            selectionRect = CGRectMake(initPoint.x, initPoint.y, 0, 0);
             break;
         case UIGestureRecognizerStateChanged:
-            NSLog(@"Gesture changed: %@", NSStringFromCGPoint([gesture translationInView:self.collectionView]));
+            NSLog(@"Gesture changed %@. Collection view size = %@", NSStringFromCGPoint([gesture locationInView:self.collectionView.superview]), NSStringFromCGSize(self.collectionView.frame.size));
+            [self updateSelectionRectWithTouchPoint:[gesture locationInView:self.collectionView]];
+            [self toggleSelectedStateOfVisibleCellsInRect:selectionRect];
             break;
         case UIGestureRecognizerStateCancelled:
             NSLog(@"Gesture cancelled");
@@ -73,6 +78,26 @@
             break;
     }
 }
+
+- (void)updateSelectionRectWithTouchPoint:(CGPoint)point {
+    selectionRect = ({
+        selectionRect.size = CGSizeMake(point.x - selectionRect.origin.x, point.y - selectionRect.origin.y);
+        selectionRect;
+    });
+}
+
+- (void)toggleSelectedStateOfVisibleCellsInRect:(CGRect)rect {
+    NSArray *visibleCells = [self.collectionView visibleCells];
+    for (UICollectionViewCell *cell in visibleCells) {
+        if (CGRectIntersectsRect(rect, cell.frame)) {
+            [cell setSelected:YES];
+        } else {
+            [cell setSelected:NO];
+        }
+    }
+}
+
+#pragma mark - Gesture delegate
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
     CGPoint velocity = [gestureRecognizer velocityInView:self.collectionView];
