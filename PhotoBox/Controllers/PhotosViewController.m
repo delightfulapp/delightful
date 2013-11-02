@@ -18,6 +18,8 @@
 
 #import "PhotosHorizontalScrollingViewController.h"
 
+#import "CollectionViewSelectCellGestureRecognizer.h"
+
 #import "UIView+Additionals.h"
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
@@ -28,6 +30,7 @@
 @property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) NSMutableDictionary *locationDictionary;
 @property (nonatomic, strong) NSMutableDictionary *placemarkDictionary;
+@property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @end
 
 @implementation PhotosViewController
@@ -48,6 +51,8 @@
     [self setPhotosCount:0 max:0];
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
+    
+    self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
