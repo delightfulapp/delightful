@@ -9,13 +9,15 @@
 #import "CollectionViewSelectCellGestureRecognizer.h"
 
 @interface CollectionViewSelectCellGestureRecognizer () <UIGestureRecognizerDelegate> {
-    CGPoint initialPoint;
     CGRect selectionRect;
+    BOOL continueScrolling;
+    BOOL isTimerRunning;
 }
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, copy) NSMutableArray *selectedIndexPaths;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGesture;
+@property (nonatomic, strong) NSTimer *scrollingTimer;
 
 @end
 
@@ -48,6 +50,27 @@
     }
 }
 
+- (NSTimer *)scrollingTimer {
+    if (!_scrollingTimer) {
+        _scrollingTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(continuouslyScrollCollectionView) userInfo:nil repeats:YES];
+    }
+    return _scrollingTimer;
+}
+
+#pragma mark - Collection View
+
+- (void)continuouslyScrollCollectionView {
+    if (continueScrolling) {
+        [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 50) animated:YES];
+        [self updateSelectionRectWithTouchPoint:[self.panGesture locationInView:self.collectionView]];
+        [self toggleSelectedStateOfVisibleCellsInRect:selectionRect];
+    } else {
+        [self.scrollingTimer invalidate];
+        self.scrollingTimer = nil;
+        isTimerRunning = NO;
+    }
+}
+
 #pragma mark - Pan Gesture
 
 - (void)collectionViewPanned:(UIPanGestureRecognizer *)gesture {
@@ -59,6 +82,16 @@
             break;
         case UIGestureRecognizerStateChanged:
             NSLog(@"Gesture changed %@. Collection view size = %@", NSStringFromCGPoint([gesture locationInView:self.collectionView.superview]), NSStringFromCGSize(self.collectionView.frame.size));
+            if ([gesture locationInView:self.collectionView.superview].y >= CGRectGetHeight(self.collectionView.frame) - 50) {
+                continueScrolling = YES;
+                if (!isTimerRunning) {
+                    NSLog(@"Are we here?");
+                    [[NSRunLoop currentRunLoop] addTimer:self.scrollingTimer forMode:NSRunLoopCommonModes];
+                    isTimerRunning = YES;
+                }
+            } else {
+                continueScrolling = NO;
+            }
             [self updateSelectionRectWithTouchPoint:[gesture locationInView:self.collectionView]];
             [self toggleSelectedStateOfVisibleCellsInRect:selectionRect];
             break;
