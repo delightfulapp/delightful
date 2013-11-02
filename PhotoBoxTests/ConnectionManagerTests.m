@@ -34,7 +34,7 @@
 {
     NSString *baseURL = @"http://someone.trovebox.com";
     NSURL *initialOauthURL = [ConnectionManager oAuthInitialUrlForServer:baseURL];
-    XCTAssertTrue([initialOauthURL.absoluteString isEqualToString:@"http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=photoboxbaby://&name=PhotoBox"], @"Expected initial URL: http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=photoboxbaby://&name=PhotoBox Actual: %@", initialOauthURL.absoluteString);
+    XCTAssertTrue([initialOauthURL.absoluteString isEqualToString:@"http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=photoboxbaby://&name=Delightful"], @"Expected initial URL: http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=photoboxbaby://&name=PhotoBox Actual: %@", initialOauthURL.absoluteString);
     NSURL *oauthAccessURL = [ConnectionManager oAuthAccessUrlForServer:baseURL];
     XCTAssertTrue([oauthAccessURL.absoluteString isEqualToString:@"http://someone.trovebox.com/v1/oauth/token/access"], @"Expected access URL: http://someone.trovebox.com/v1/oauth/token/access Actual: %@", oauthAccessURL.absoluteString);
 }

@@ -14,6 +14,7 @@ pod 'MYBlurIntroductionView', '~> 1.0.0'
 pod 'GPUImage'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
+    pod 'Expecta', '~> 0.2.3'
 end
 
 
