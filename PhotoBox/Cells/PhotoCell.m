@@ -52,11 +52,18 @@
 - (void)setup {
     [super setup];
     
-    [self.photoTitle setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1]];
-    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
     [self.photoTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:-10];
-    
+    [self.photoTitle autoCenterInSuperviewAlongAxis:ALAxisVertical];
+    [self.photoTitle autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
+    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
+    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.photoTitle withOffset:20];
+    [self.photoTitleBackgroundView autoAlignAxis:ALAxisVertical toSameAxisOfView:self.photoTitle];
+    [self.photoTitleBackgroundView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.photoTitle];
+
+    [self.photoTitle setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1]];
     [self.photoTitle setBackgroundColor:[UIColor clearColor]];
+    [self.photoTitle setNumberOfLines:2];
+    [self.contentView insertSubview:self.photoTitle aboveSubview:self.photoTitleBackgroundView];
     [self.photoTitleBackgroundView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
 }
 
