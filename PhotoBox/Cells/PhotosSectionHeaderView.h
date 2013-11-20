@@ -12,11 +12,17 @@
 @class AMBlurView;
 
 @interface PhotosSectionHeaderView : UICollectionReusableView
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
+
 @property (weak, nonatomic) IBOutlet AMBlurView *blurView;
+
 @property (nonatomic, assign) NSInteger section;
+
 @property (nonatomic, assign) BOOL hideLocation;
+
 @property (nonatomic, strong) NSString *titleLabelText;
 
 - (void)setLocation:(CLPlacemark *)placemark;

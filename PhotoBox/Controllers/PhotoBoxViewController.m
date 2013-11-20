@@ -116,6 +116,7 @@
 }
 
 - (void)setupCollectionView {
+    [self.collectionView setDelegate:self];
     [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
@@ -460,10 +461,13 @@
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     CGFloat width = floorf((collectionViewWidth/(float)self.numberOfColumns));
-
     return CGSizeMake(width, width);
 }
 
@@ -472,6 +476,10 @@
         return 0;
     }
     return 1;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0;
 }
 
 #pragma mark - KVO

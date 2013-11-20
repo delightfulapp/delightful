@@ -24,6 +24,8 @@
 
 #import "AlbumsViewController.h"
 
+#import "StickyHeaderFlowLayout.h"
+
 #import "Album.h"
 
 #import <JASidePanelController.h>
@@ -41,16 +43,14 @@
         return YES;
     }
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    
-    UINavigationController *photosNavigationViewController = [storyBoard instantiateInitialViewController];
-    PhotosViewController *photosViewController = (PhotosViewController *)photosNavigationViewController.viewControllers[0];
+    PhotosViewController *photosViewController = [[PhotosViewController alloc] initWithCollectionViewLayout:[[StickyHeaderFlowLayout alloc] init]];
+    UINavigationController *photosNavigationViewController = [[UINavigationController alloc] initWithRootViewController:photosViewController];
     [photosViewController setItem:[Album allPhotosAlbum]];
     
-    AlbumsViewController *albumsViewController = (AlbumsViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"albumsViewController"];
+    //AlbumsViewController *albumsViewController = (AlbumsViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"albumsViewController"];
     
     JASidePanelController *rootViewController = [[JASidePanelController alloc] init];
-    [rootViewController setLeftPanel:albumsViewController];
+    //[rootViewController setLeftPanel:albumsViewController];
     [rootViewController setCenterPanel:photosNavigationViewController];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

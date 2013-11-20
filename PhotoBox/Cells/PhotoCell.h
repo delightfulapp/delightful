@@ -8,8 +8,11 @@
 
 #import "AlbumCell.h"
 
-@interface PhotoCell : AlbumCell
+@interface PhotoCell : PhotoBoxCell
 
 @property (nonatomic, assign) NSInteger numberOfColumns;
+
+@property (weak, nonatomic) IBOutlet UILabel *photoTitle;
+@property (weak, nonatomic) IBOutlet UIView *photoTitleBackgroundView;
 
 @end

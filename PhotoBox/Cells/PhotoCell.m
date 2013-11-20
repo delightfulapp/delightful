@@ -12,6 +12,10 @@
 
 #import "NSString+Additionals.h"
 
+#import "UICollectionViewCell+Additionals.h"
+
+#import <UIView+AutoLayout.h>
+
 @interface PhotoCell ()
 
 @property (nonatomic, strong) UIView *selectedView;
@@ -22,11 +26,19 @@
 
 @synthesize item = _item;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setup];
     }
     return self;
 }
@@ -35,6 +47,17 @@
     [super awakeFromNib];
     
     [self setText:nil];
+}
+
+- (void)setup {
+    [super setup];
+    
+    [self.photoTitle setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1]];
+    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
+    [self.photoTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:-10];
+    
+    [self.photoTitle setBackgroundColor:[UIColor clearColor]];
+    [self.photoTitleBackgroundView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
 }
 
 - (void)setItem:(id)item {
@@ -48,13 +71,42 @@
 
 - (void)setNumberOfColumns:(NSInteger)numberOfColumns {
     if (_numberOfColumns != numberOfColumns) {
-        NSLog(@"Setting number of columns");
         _numberOfColumns = numberOfColumns;
         if (self.item) {
             [self setText:[self photoCellTitle]];
         }
     }
 }
+
+- (void)setSelected:(BOOL)selected {
+    if (self.isSelected!=selected) {
+        [super setSelected:selected];
+        [self showSelectedView:selected];
+    }
+}
+
+- (void)setText:(id)text {
+    [self.photoTitleBackgroundView setHidden:(text)?NO:YES];
+    [self.photoTitle setAttributedText:text];
+}
+
+- (void)showSelectedView:(BOOL)selected {
+    if (selected) {
+        if (!self.selectedView) {
+            self.selectedView = [[UIView alloc] initWithFrame:self.bounds];
+            [self.selectedView setBackgroundColor:[UIColor whiteColor]];
+            [self.selectedView setAlpha:0.5];
+            [self.contentView addSubview:self.selectedView];
+        }
+    } else {
+        if (self.selectedView) {
+            [self.selectedView removeFromSuperview];
+            self.selectedView = nil;
+        }
+    }
+}
+
+#pragma mark - Getters
 
 - (id)photoCellTitle {
     if (self.item) {
@@ -87,32 +139,19 @@
     return attributedString;
 }
 
-- (void)setSelected:(BOOL)selected {
-    if (self.isSelected!=selected) {
-        [super setSelected:selected];
-        [self showSelectedView:selected];
+- (UILabel *)photoTitle {
+    if (!_photoTitle) {
+        _photoTitle = [self addSubviewToContentViewWithClass:[UILabel class]];
     }
+    return _photoTitle;
 }
 
-- (void)setText:(id)text {
-    [self.albumTitleBackgroundView setHidden:(text)?NO:YES];
-    [self.albumTitle setAttributedText:text];
-}
-
-- (void)showSelectedView:(BOOL)selected {
-    if (selected) {
-        if (!self.selectedView) {
-            self.selectedView = [[UIView alloc] initWithFrame:self.bounds];
-            [self.selectedView setBackgroundColor:[UIColor whiteColor]];
-            [self.selectedView setAlpha:0.5];
-            [self.contentView addSubview:self.selectedView];
-        }
-    } else {
-        if (self.selectedView) {
-            [self.selectedView removeFromSuperview];
-            self.selectedView = nil;
-        }
+- (UIView *)photoTitleBackgroundView {
+    if (!_photoTitleBackgroundView) {
+        _photoTitleBackgroundView = [self addSubviewToContentViewWithClass:[UIView class]];
+        
     }
+    return _photoTitleBackgroundView;
 }
 
 @end
