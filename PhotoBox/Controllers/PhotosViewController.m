@@ -52,7 +52,7 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
-    self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
+    //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {

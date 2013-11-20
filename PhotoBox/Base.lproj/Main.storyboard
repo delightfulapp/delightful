@@ -294,6 +294,7 @@
                                     <outlet property="albumTitle" destination="ick-m7-1tg" id="AbW-fW-7PN"/>
                                     <outlet property="albumTitleBackgroundView" destination="TOG-dz-UKz" id="mWh-jS-oHr"/>
                                     <outlet property="cellImageView" destination="t7n-yR-l97" id="x0H-dO-KGn"/>
+                                    <segue destination="7w5-I5-bpa" kind="push" identifier="pushPhoto" id="7C8-9l-CfF"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
