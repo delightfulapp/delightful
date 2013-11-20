@@ -20,6 +20,10 @@
 
 #import "UIWindow+Additionals.h"
 
+#import "PhotosViewController.h"
+
+#import "Album.h"
+
 @interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @end
@@ -48,6 +52,8 @@
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
     
     [self showUpdateInfoViewIfNeeded];
+    
+    [self showAllPhotosWithStoryboard:storyBoard rootViewController:rootNavigationController];
     
     return YES;
 }
@@ -90,6 +96,14 @@
     }
     
     return YES;
+}
+
+#pragma mark - Navigation
+
+- (void)showAllPhotosWithStoryboard:(UIStoryboard *)storyBoard rootViewController:(UINavigationController *)rootNavigationController {
+    PhotosViewController *photos = [storyBoard instantiateViewControllerWithIdentifier:@"photosViewController"];
+    [photos setItem:[Album allPhotosAlbum]];
+    [rootNavigationController pushViewController:photos animated:NO];
 }
 
 #pragma mark - Orientation
