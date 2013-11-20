@@ -58,4 +58,4 @@ SPEC CHECKSUMS:
   UIImageViewModeScaleAspect: 66e2bd965fb6f12631a13ec46ddb9adfb5f856e3
   UIView+AutoLayout: 3cc41c765991cce7cbeee8e70194f228e22eeb82
 
-COCOAPODS: 0.26.2
+COCOAPODS: 0.28.0

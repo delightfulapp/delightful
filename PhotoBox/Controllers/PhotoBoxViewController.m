@@ -427,6 +427,7 @@
         [self.collectionView performBatchUpdates:^{
             
         } completion:^(BOOL finished) {
+            [self didChangeNumberOfColumns];
             [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         }];
