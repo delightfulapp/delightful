@@ -10,14 +10,17 @@
 
 #import "Photo.h"
 
+#import "NSString+Additionals.h"
+
 @interface PhotoCell ()
 
-@property (nonatomic, strong) NSURL *shownImageURL;
 @property (nonatomic, strong) UIView *selectedView;
 
 @end
 
 @implementation PhotoCell
+
+@synthesize item = _item;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -28,11 +31,60 @@
     return self;
 }
 
-- (void)setItem:(id)item {
-    [super setItem:item];
+- (void)awakeFromNib {
+    [super awakeFromNib];
     
-    Photo *photo = (Photo *)item;
-    [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
+    [self setText:nil];
+}
+
+- (void)setItem:(id)item {
+    if (_item != item) {
+        _item = item;
+        
+        Photo *photo = (Photo *)item;
+        [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
+    }
+}
+
+- (void)setNumberOfColumns:(NSInteger)numberOfColumns {
+    if (_numberOfColumns != numberOfColumns) {
+        NSLog(@"Setting number of columns");
+        _numberOfColumns = numberOfColumns;
+        if (self.item) {
+            [self setText:[self photoCellTitle]];
+        }
+    }
+}
+
+- (id)photoCellTitle {
+    if (self.item) {
+        if (_numberOfColumns < 3) {
+            Photo *photo = (Photo *)self.item;
+            NSString *title = photo.filenameOriginal;
+            NSString *subtitle = nil;
+            if (_numberOfColumns == 1) {
+                subtitle = [photo.dateTakenString localizedDate];
+            }
+            return [self attributedPhotoCellTitleForTitle:title subtitle:subtitle];
+            
+        }
+    }
+    return nil;
+}
+
+- (NSAttributedString *)attributedPhotoCellTitleForTitle:(NSString *)title subtitle:(NSString *)subtitle {
+    NSString *combined = title;
+    if (subtitle) {
+        combined = [combined stringByAppendingFormat:@"\n%@", subtitle];
+    }
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:combined];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:17] range:[combined rangeOfString:title]];
+    if (subtitle) {
+        [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:[combined rangeOfString:subtitle]];
+    }
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, combined.length)];
+    
+    return attributedString;
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -40,6 +92,11 @@
         [super setSelected:selected];
         [self showSelectedView:selected];
     }
+}
+
+- (void)setText:(id)text {
+    [self.albumTitleBackgroundView setHidden:(text)?NO:YES];
+    [self.albumTitle setAttributedText:text];
 }
 
 - (void)showSelectedView:(BOOL)selected {
@@ -56,6 +113,11 @@
             self.selectedView = nil;
         }
     }
+}
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
+    [super applyLayoutAttributes:layoutAttributes];
+    [self setText:[self photoCellTitle]];
 }
 
 @end

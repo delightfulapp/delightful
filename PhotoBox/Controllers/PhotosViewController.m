@@ -14,7 +14,7 @@
 #import "LocationManager.h"
 
 #import "PhotosSectionHeaderView.h"
-#import "PhotoBoxCell.h"
+#import "PhotoCell.h"
 
 #import "PhotosHorizontalScrollingViewController.h"
 
@@ -63,6 +63,14 @@
         } else {
             [cell setLocation:nil];
         }
+    };
+    return configureCell;
+}
+
+- (CollectionViewCellConfigureBlock)cellConfigureBlock {
+    void (^configureCell)(PhotoCell*, id) = ^(PhotoCell* cell, id item) {
+        [cell setItem:item];
+        [cell setNumberOfColumns:self.numberOfColumns];
     };
     return configureCell;
 }
@@ -237,6 +245,12 @@
     if (placemark) {
         [self.placemarkDictionary setObject:placemark forKey:@(section)];
         [[NSNotificationCenter defaultCenter] postNotificationName:PhotoBoxLocationPlacemarkDidFetchNotification object:@{@"placemark": placemark, @"section":@(section)}];
+    }
+}
+
+- (void)didChangeNumberOfColumns {
+    for (PhotoCell *cell in self.collectionView.visibleCells) {
+        [cell setNumberOfColumns:self.numberOfColumns];
     }
 }
 

@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "PhotoBoxCell.h"
+#import "AlbumCell.h"
 
-@interface PhotoCell : PhotoBoxCell
+@interface PhotoCell : AlbumCell
+
+@property (nonatomic, assign) NSInteger numberOfColumns;
 
 @end

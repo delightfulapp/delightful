@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Gj3-pX-UEE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A598" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="Gj3-pX-UEE">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3746"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -249,29 +249,51 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="2Mo-ud-Zei" customClass="PhotoCell">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="iEW-xc-PDg" customClass="PhotoCell">
                                 <rect key="frame" x="0.0" y="114" width="160" height="160"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fet-GR-b1x">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="t7n-yR-l97">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TOG-dz-UKz">
+                                            <rect key="frame" x="0.0" y="119" width="160" height="41"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.51000000000000001" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="160" placeholder="YES" id="hXs-aW-rEz"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Album Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="8" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="140" translatesAutoresizingMaskIntoConstraints="NO" id="ick-m7-1tg">
+                                            <rect key="frame" x="10" y="129" width="140" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
-                                    <constraint firstItem="fet-GR-b1x" firstAttribute="top" secondItem="2Mo-ud-Zei" secondAttribute="top" placeholder="YES" id="3Fr-X8-tWF"/>
-                                    <constraint firstAttribute="trailing" secondItem="fet-GR-b1x" secondAttribute="trailing" placeholder="YES" id="AYu-KV-7su"/>
-                                    <constraint firstItem="fet-GR-b1x" firstAttribute="leading" secondItem="2Mo-ud-Zei" secondAttribute="leading" placeholder="YES" id="C6D-Vj-yVu"/>
-                                    <constraint firstAttribute="bottom" secondItem="fet-GR-b1x" secondAttribute="bottom" placeholder="YES" id="gSr-Jr-9Rv"/>
+                                    <constraint firstAttribute="bottom" secondItem="t7n-yR-l97" secondAttribute="bottom" placeholder="YES" id="0n2-I6-6nQ"/>
+                                    <constraint firstItem="TOG-dz-UKz" firstAttribute="height" secondItem="ick-m7-1tg" secondAttribute="height" constant="20" id="3bb-Ca-bJc"/>
+                                    <constraint firstItem="TOG-dz-UKz" firstAttribute="width" secondItem="ick-m7-1tg" secondAttribute="width" constant="20" id="9x0-Ta-khv"/>
+                                    <constraint firstItem="t7n-yR-l97" firstAttribute="leading" secondItem="iEW-xc-PDg" secondAttribute="leading" placeholder="YES" id="JiE-yU-Y9E"/>
+                                    <constraint firstItem="TOG-dz-UKz" firstAttribute="centerY" secondItem="ick-m7-1tg" secondAttribute="centerY" id="Otk-li-wwq"/>
+                                    <constraint firstAttribute="trailing" secondItem="t7n-yR-l97" secondAttribute="trailing" placeholder="YES" id="Xf7-hh-Gjh"/>
+                                    <constraint firstAttribute="bottom" secondItem="TOG-dz-UKz" secondAttribute="bottom" placeholder="YES" id="cFs-rp-8HV"/>
+                                    <constraint firstItem="TOG-dz-UKz" firstAttribute="centerX" secondItem="ick-m7-1tg" secondAttribute="centerX" id="eJg-nF-7de"/>
+                                    <constraint firstAttribute="centerX" secondItem="TOG-dz-UKz" secondAttribute="centerX" id="gpC-Tf-vxM"/>
+                                    <constraint firstItem="t7n-yR-l97" firstAttribute="top" secondItem="iEW-xc-PDg" secondAttribute="top" placeholder="YES" id="uFb-76-hfh"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="cellImageView" destination="fet-GR-b1x" id="WUz-Lr-qfy"/>
-                                    <segue destination="7w5-I5-bpa" kind="push" identifier="pushPhoto" id="8Kj-PB-8pa"/>
+                                    <outlet property="albumTitle" destination="ick-m7-1tg" id="AbW-fW-7PN"/>
+                                    <outlet property="albumTitleBackgroundView" destination="TOG-dz-UKz" id="mWh-jS-oHr"/>
+                                    <outlet property="cellImageView" destination="t7n-yR-l97" id="x0H-dO-KGn"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
