@@ -22,7 +22,11 @@
 
 #import "PhotosViewController.h"
 
+#import "AlbumsViewController.h"
+
 #import "Album.h"
+
+#import <JASidePanelController.h>
 
 @interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
@@ -38,22 +42,30 @@
     }
     
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *rootNavigationController = [storyBoard instantiateInitialViewController];
+    
+    UINavigationController *photosNavigationViewController = [storyBoard instantiateInitialViewController];
+    PhotosViewController *photosViewController = (PhotosViewController *)photosNavigationViewController.viewControllers[0];
+    [photosViewController setItem:[Album allPhotosAlbum]];
+    
+    AlbumsViewController *albumsViewController = (AlbumsViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"albumsViewController"];
+    
+    JASidePanelController *rootViewController = [[JASidePanelController alloc] init];
+    [rootViewController setLeftPanel:albumsViewController];
+    [rootViewController setCenterPanel:photosNavigationViewController];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:rootNavigationController];
+    [self.window setRootViewController:rootViewController];
     [self.window setTintColor:[UIColor redColor]];
     [self.window makeKeyAndVisible];
     
     self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
-    [rootNavigationController setDelegate:self.navigationDelegate];
+    [photosNavigationViewController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
     
     [self showUpdateInfoViewIfNeeded];
-    
-    [self showAllPhotosWithStoryboard:storyBoard rootViewController:rootNavigationController];
     
     return YES;
 }
@@ -107,17 +119,17 @@
 }
 
 #pragma mark - Orientation
-
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
-    
-    if(self.window.rootViewController){
-        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
-        orientations = [presentedViewController supportedInterfaceOrientations];
-    }
-    
-    return orientations;
-}
+//
+//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+//    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
+//    
+//    if(self.window.rootViewController){
+//        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
+//        orientations = [presentedViewController supportedInterfaceOrientations];
+//    }
+//    
+//    return orientations;
+//}
 
 
 #pragma mark - Unit Test
