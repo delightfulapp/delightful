@@ -115,9 +115,4 @@
     }
 }
 
-- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes {
-    [super applyLayoutAttributes:layoutAttributes];
-    [self setText:[self photoCellTitle]];
-}
-
 @end
