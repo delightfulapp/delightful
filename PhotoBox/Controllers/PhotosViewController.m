@@ -35,6 +35,8 @@
 
 @implementation PhotosViewController
 
+@synthesize item = _item;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -119,6 +121,22 @@
 }
 
 #pragma mark - Setters
+
+- (void)setItem:(PhotoBoxModel *)item {
+    if (_item != item) {
+        _item = item;
+        
+        Album *album = (Album *)_item;
+        
+        [self setTitle:album.name];
+        
+        self.predicate = nil;
+        
+        [self.dataSource.fetchedResultsController.fetchRequest setPredicate:self.predicate];
+        
+        [self refresh];
+    }
+}
 
 - (void)setPhotosCount:(int)count max:(int)max{
     NSString *title = NSLocalizedString(@"Photos", nil);

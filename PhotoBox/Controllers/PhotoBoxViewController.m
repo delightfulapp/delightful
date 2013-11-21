@@ -233,17 +233,6 @@
 
 #pragma mark - Setter
 
-- (void)setItem:(PhotoBoxModel *)item {
-    if (_item != item) {
-        _item = item;
-        self.fetchedResultsController = nil;
-        self.fetchRequest = nil;
-        self.predicate = nil;
-        self.dataSource = nil;
-        [self.collectionView reloadData];
-    }
-}
-
 - (void)setAttributedTitle:(NSAttributedString *)title {
     super.title = title.string;
     [self.navigationTitleLabel setAttributedText:title];
