@@ -93,6 +93,7 @@
 		038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
 		038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
 		038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
+		038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
 		0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
@@ -277,6 +278,8 @@
 		038EC59F183D806B00AFEA53 /* AlbumRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumRowCell.m; path = PhotoBox/Cells/AlbumRowCell.m; sourceTree = "<group>"; };
 		038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumSectionHeaderView.h; path = PhotoBox/Cells/AlbumSectionHeaderView.h; sourceTree = "<group>"; };
 		038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumSectionHeaderView.m; path = PhotoBox/Cells/AlbumSectionHeaderView.m; sourceTree = "<group>"; };
+		038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DelightfulViewControllers.h"; sourceTree = "<group>"; };
+		038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DelightfulViewControllers.m"; sourceTree = "<group>"; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
 		0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxRequestOperation.m; path = PhotoBox/Networking/PhotoBoxRequestOperation.m; sourceTree = "<group>"; };
 		0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxRequestOperationTests.m; sourceTree = "<group>"; };
@@ -433,6 +436,8 @@
 				03D972A61811865A008A087B /* Photo+Additionals.m */,
 				038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */,
 				038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */,
+				038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */,
+				038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -1038,6 +1043,7 @@
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
 				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
+				038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
 				03CE50EF181829BF00445084 /* VersionNumberHeaderView.m in Sources */,

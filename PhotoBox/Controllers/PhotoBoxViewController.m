@@ -53,6 +53,8 @@
     if (!self.disableFetchOnLoad) {
         [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
     }
+    
+    [self restoreContentInset];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -230,6 +232,17 @@
 }
 
 #pragma mark - Setter
+
+- (void)setItem:(PhotoBoxModel *)item {
+    if (_item != item) {
+        _item = item;
+        self.fetchedResultsController = nil;
+        self.fetchRequest = nil;
+        self.predicate = nil;
+        self.dataSource = nil;
+        [self.collectionView reloadData];
+    }
+}
 
 - (void)setAttributedTitle:(NSAttributedString *)title {
     super.title = title.string;

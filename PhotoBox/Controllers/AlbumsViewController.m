@@ -17,6 +17,11 @@
 
 #import "ConnectionManager.h"
 
+#import "UIViewController+DelightfulViewControllers.h"
+
+#import <JASidePanelController.h>
+#import "AppDelegate.h"
+
 @interface AlbumsViewController () <UIActionSheetDelegate>
 
 @end
@@ -111,6 +116,16 @@
 - (void)restoreContentInset {
     PBX_LOG(@"");
     [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]), 0, 0, 0)];
+}
+
+#pragma mark - Collection view delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
+    [photosViewController setItem:[self.dataSource itemAtIndexPath:indexPath]];
+    
+    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
+    [panelController toggleLeftPanel:nil];
 }
 
 #pragma mark - Segue
