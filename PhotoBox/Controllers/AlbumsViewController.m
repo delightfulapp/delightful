@@ -185,4 +185,8 @@
     return CGSizeMake(collectionViewWidth, 80);
 }
 
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
+}
+
 @end

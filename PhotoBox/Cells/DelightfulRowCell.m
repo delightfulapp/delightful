@@ -14,11 +14,6 @@
 
 #import "UIView+Additionals.h"
 
-@interface DelightfulRowCell ()
-
-@property (nonatomic, weak) UIView *lineView;
-
-@end
 
 @implementation DelightfulRowCell
 
@@ -43,24 +38,34 @@
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
     [self.cellImageView setClipsToBounds:YES];
     
-    [self.cellImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView withOffset:-20];
-    [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.cellImageView];
-    [self.cellImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10];
-    [self.cellImageView autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    
-    [self.textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cellImageView withOffset:10];
-    [self.textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-10];
-    [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    
-    [self.lineView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:1];
-    [self.lineView autoCenterInSuperviewAlongAxis:ALAxisVertical];
-    [self.lineView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView];
+    [self setupCellImageViewConstrains];
+    [self setupLineViewConstrains];
+    [self setupTextLabelConstrains];
     
     [self.contentView bringSubviewToFront:self.textLabel];
     
     [self.textLabel setBackgroundColor:[UIColor clearColor]];
     [self.textLabel setTextColor:[UIColor blackColor]];
+}
+
+- (void)setupCellImageViewConstrains {
+    [self.cellImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView withOffset:-20];
+    [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.cellImageView];
+    [self.cellImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10];
+    [self.cellImageView autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+}
+
+- (void)setupTextLabelConstrains {
+    [self.textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cellImageView withOffset:10];
+    [self.textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-10];
+    [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+}
+
+- (void)setupLineViewConstrains {
+    [self.lineView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
+    [self.lineView autoSetDimension:ALDimensionHeight toSize:1];
+    [self.lineView autoCenterInSuperviewAlongAxis:ALAxisVertical];
+    [self.lineView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView];
 }
 
 - (void)layoutSubviews {

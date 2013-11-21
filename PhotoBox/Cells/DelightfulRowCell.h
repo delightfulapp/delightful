@@ -11,5 +11,6 @@
 @interface DelightfulRowCell : PhotoBoxCell
 
 @property (nonatomic, weak) IBOutlet UILabel *textLabel;
+@property (nonatomic, weak) IBOutlet UIView *lineView;
 
 @end

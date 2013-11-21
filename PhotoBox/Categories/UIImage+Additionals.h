@@ -12,6 +12,8 @@
 
 - (BOOL)isLandscape;
 
+- (UIImage *)blurredImage;
+
 - (UIImage *)grayscaleImage;
 
 - (UIImage *)grayscaledAndBlurredImage;
