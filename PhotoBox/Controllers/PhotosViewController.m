@@ -126,10 +126,6 @@
     if (_item != item) {
         _item = item;
         
-        Album *album = (Album *)_item;
-        
-        [self setTitle:album.name];
-        
         self.predicate = nil;
         
         [self.dataSource.fetchedResultsController.fetchRequest setPredicate:self.predicate];

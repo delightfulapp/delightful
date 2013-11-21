@@ -122,7 +122,9 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
-    [photosViewController setItem:[self.dataSource itemAtIndexPath:indexPath]];
+    Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
+    [photosViewController setItem:album];
+    [photosViewController setTitle:album.name];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];
