@@ -102,8 +102,10 @@
         [cell.titleLabel setText:@"＞"];
         [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
+        NSLog(@"cell gestures count = %d", cell.gestureRecognizers.count);
         int count = cell.gestureRecognizers.count;
         if (count == 0) {
+            NSLog(@"here???");
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAllAlbum:)];
             [tap setNumberOfTapsRequired:1];
             [tap setNumberOfTouchesRequired:1];
@@ -121,8 +123,12 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
     Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
+    [self loadPhotosInAlbum:album];
+}
+
+- (void)loadPhotosInAlbum:(Album *)album {
+    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
     [photosViewController setItem:album];
     [photosViewController setTitle:album.name];
     
@@ -150,7 +156,8 @@
 #pragma mark - Tap
 
 - (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
-    [self performSegueWithIdentifier:[self segue] sender:nil];
+    NSLog(@"tao");
+    [self loadPhotosInAlbum:[Album allPhotosAlbum]];
 }
 
 - (void)userTapped:(id)sender {

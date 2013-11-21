@@ -14,15 +14,6 @@
 
 @implementation AlbumSectionHeaderView
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (void)setupConstrains {
     
     [self.locationLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
