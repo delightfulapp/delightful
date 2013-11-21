@@ -38,14 +38,7 @@
 - (void)setup {
     [self listenToLocationNotification:!self.hideLocation];
     
-    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
-    NSLayoutConstraint * constraint = [self.titleLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    [constraint setPriority:100];
-    [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
-    [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
-    [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
-    [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
-    [self.blurView autoCenterInSuperview];
+    [self setupConstrains];
     
     [self.locationLabel setText:nil];
     [self.titleLabel setTextAlignment:NSTextAlignmentRight];
@@ -56,6 +49,17 @@
     [self insertSubview:self.blurView atIndex:0];
     [self.titleLabel setTextColor:[UIColor redColor]];
     [self.locationLabel setTextColor:[[UIColor redColor] lighterColor]];
+}
+
+- (void)setupConstrains {
+    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
+    NSLayoutConstraint * constraint = [self.titleLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [constraint setPriority:100];
+    [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
+    [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
+    [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
+    [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
+    [self.blurView autoCenterInSuperview];
 }
 
 - (void)dealloc {

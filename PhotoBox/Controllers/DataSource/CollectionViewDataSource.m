@@ -52,6 +52,7 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     // There's a bug that causes the app crashes occasionally in photos page. The collection view receives layout attributes for a cell with an index path that does not exist. So we need to invalidate the layout (StickyHeaderFlowLayout in this case) according to http://stackoverflow.com/a/19378624
     [collectionView.collectionViewLayout invalidateLayout];
+    NSLog(@"Sections: %d", self.fetchedResultsController.sections.count);
     return self.fetchedResultsController.sections.count;
 }
 

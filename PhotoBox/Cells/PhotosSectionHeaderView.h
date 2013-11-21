@@ -27,4 +27,6 @@
 
 - (void)setLocation:(CLPlacemark *)placemark;
 
+- (void)setup;
+
 @end

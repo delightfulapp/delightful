@@ -8,11 +8,12 @@
 
 #import "AlbumsViewController.h"
 
-#import "AlbumCell.h"
 #import "Album.h"
+#import "AlbumRowCell.h"
 
 #import "PhotosViewController.h"
-#import "PhotosSectionHeaderView.h"
+#import "AlbumSectionHeaderView.h"
+#import "DelightfulRowCell.h"
 
 #import "ConnectionManager.h"
 
@@ -41,6 +42,11 @@
     [self.navigationItem setLeftBarButtonItem:left];
     
     [self.navigationItem.backBarButtonItem setTitle:NSLocalizedString(@"Albums", nil)];
+    
+    [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
+    [self.collectionView registerClass:[AlbumSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:self.sectionHeaderIdentifier];
+    
+    [self restoreContentInset];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -87,7 +93,7 @@
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
-    void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
+    void (^configureCell)(AlbumSectionHeaderView*, id,NSIndexPath*) = ^(AlbumSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
         [cell.titleLabel setText:@"＞"];
         [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
@@ -102,12 +108,17 @@
     return configureCell;
 }
 
+- (void)restoreContentInset {
+    PBX_LOG(@"");
+    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]), 0, 0, 0)];
+}
+
 #pragma mark - Segue
 
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:[self segue]]) {
-        AlbumCell *cell = (AlbumCell *)sender;
+        AlbumRowCell *cell = (AlbumRowCell *)sender;
         Album *album;
         if (!cell) {
             album = [Album allPhotosAlbum];
@@ -141,6 +152,13 @@
         default:
             break;
     }
+}
+
+#pragma mark - Collection View Flow Layout Delegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    return CGSizeMake(collectionViewWidth, 80);
 }
 
 @end

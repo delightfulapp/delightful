@@ -47,10 +47,10 @@
     UINavigationController *photosNavigationViewController = [[UINavigationController alloc] initWithRootViewController:photosViewController];
     [photosViewController setItem:[Album allPhotosAlbum]];
     
-    //AlbumsViewController *albumsViewController = (AlbumsViewController *)[storyBoard instantiateViewControllerWithIdentifier:@"albumsViewController"];
+    AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[StickyHeaderFlowLayout alloc] init]];
     
     JASidePanelController *rootViewController = [[JASidePanelController alloc] init];
-    //[rootViewController setLeftPanel:albumsViewController];
+    [rootViewController setLeftPanel:albumsViewController];
     [rootViewController setCenterPanel:photosNavigationViewController];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
