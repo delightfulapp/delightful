@@ -1199,6 +1199,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -1236,6 +1237,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "CD3B576C-1151-4283-9613-AC8753506041";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1248,6 +1250,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -1275,7 +1278,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C9F8CC0F-ACD1-4A67-9CA0-3B65F115C963";
+				PROVISIONING_PROFILE = "CD3B576C-1151-4283-9613-AC8753506041";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

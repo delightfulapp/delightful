@@ -85,7 +85,6 @@
             if ([gesture locationInView:self.collectionView.superview].y >= CGRectGetHeight(self.collectionView.frame) - 50) {
                 continueScrolling = YES;
                 if (!isTimerRunning) {
-                    NSLog(@"Are we here?");
                     [[NSRunLoop currentRunLoop] addTimer:self.scrollingTimer forMode:NSRunLoopCommonModes];
                     isTimerRunning = YES;
                 }

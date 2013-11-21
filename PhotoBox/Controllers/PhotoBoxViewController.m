@@ -267,14 +267,14 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               PBX_LOG(@"Received %d %@. Total = %d", ((NSArray *)objects).count, NSStringFromClass(self.resourceClass), [self.dataSource numberOfItems]);
+                                               PBX_LOG(@"Received %lu %@. Total = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
                                                self.isFetching = NO;
                                                
                                                [self didFetchItems];
                                                
-                                               int count = [self.dataSource numberOfItems];
+                                               NSInteger count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
@@ -288,8 +288,8 @@
 
 - (void)fetchMore {
     if (!self.isFetching) {
-        int count = [self.dataSource numberOfItems];
-        PBX_LOG(@"Photos count = %d", count);
+        NSInteger count = [self.dataSource numberOfItems];
+        PBX_LOG(@"Photos count = %ld", (long)count);
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;

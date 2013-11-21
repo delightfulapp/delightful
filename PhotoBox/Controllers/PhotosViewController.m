@@ -24,6 +24,9 @@
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
 
+#import <JASidePanelController.h>
+#import "UIViewController+DelightfulViewControllers.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -31,6 +34,7 @@
 @property (nonatomic, strong) NSMutableDictionary *locationDictionary;
 @property (nonatomic, strong) NSMutableDictionary *placemarkDictionary;
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
+@property (nonatomic, assign) BOOL observing;
 @end
 
 @implementation PhotosViewController
@@ -57,7 +61,19 @@
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
+    
+    
     //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (!self.observing) {
+        self.observing = YES;
+        JASidePanelController *panel = [UIViewController panelViewController];
+        if (panel) {
+            [panel addObserver:self forKeyPath:@"state" options:0 context:nil];
+        }
+    }
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
@@ -268,6 +284,23 @@
 - (void)didChangeNumberOfColumns {
     for (PhotoCell *cell in self.collectionView.visibleCells) {
         [cell setNumberOfColumns:self.numberOfColumns];
+    }
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"state"]) {
+        JASidePanelController *side = [[self class] panelViewController];
+        switch (side.state) {
+            case JASidePanelCenterVisible:
+                [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
+                break;
+            case JASidePanelLeftVisible:
+                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+                break;
+            default:
+                break;
+        }
     }
 }
 

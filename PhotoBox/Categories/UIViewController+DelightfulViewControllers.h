@@ -12,4 +12,6 @@
 
 + (id)mainPhotosViewController;
 
++ (id)panelViewController;
+
 @end

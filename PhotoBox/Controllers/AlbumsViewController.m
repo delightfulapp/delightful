@@ -41,7 +41,13 @@
 {
     [super viewDidLoad];
     
-    [self setAlbumsCount:0 max:0];    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars=NO;
+    self.automaticallyAdjustsScrollViewInsets=NO;
+    
+    [self.collectionView setClipsToBounds:YES];
+    
+    [self setAlbumsCount:0 max:0];
     
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
     [self.navigationItem setLeftBarButtonItem:left];
