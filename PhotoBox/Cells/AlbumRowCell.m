@@ -31,13 +31,16 @@
     [super setup];
     
     [self.textLabel setTextColor:[UIColor whiteColor]];
-    [self.textLabel setFont:[UIFont boldSystemFontOfSize:30]];
+    [self.textLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [self.textLabel setNumberOfLines:2];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
-    [self.lineView setBackgroundColor:[UIColor clearColor]];
+    [self.lineView setBackgroundColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000]];
 }
 
 - (void)layoutSubviews {
+    [super layoutSubviews];
     
+    [self.cellImageView.layer setCornerRadius:CGRectGetWidth(self.cellImageView.frame)/2];
 }
 
 #pragma mark - Setters
@@ -49,7 +52,7 @@
         Album *album = (Album *)item;
         NSURL *imageURL = [album coverURL];
         
-        [self.cellImageView npr_setImageWithURL:imageURL placeholderImage:nil filter:NPRImageFilterGaussianBlur];
+        [self.cellImageView setImageWithURL:imageURL];
         
         [self.textLabel setText:album.name];
     }
@@ -57,17 +60,10 @@
 
 #pragma mark - Override constrains
 
-- (void)setupCellImageViewConstrains {
-    [self.cellImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView];
-    [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
-    [self.cellImageView autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    [self.cellImageView autoCenterInSuperviewAlongAxis:ALAxisVertical];
-}
-
 - (void)setupTextLabelConstrains {
-    [self.textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10];
-    [self.textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-10];
-    [self.textLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:8];
+    [self.textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cellImageView withOffset:10];
+    [self.textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-80];
+    [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
 }
 
 @end

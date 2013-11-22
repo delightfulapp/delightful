@@ -58,6 +58,8 @@
     [self.collectionView registerClass:[AlbumSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:self.sectionHeaderIdentifier];
     
     [self restoreContentInset];
+    
+    [self.collectionView setBackgroundColor:[UIColor colorWithRed:41.f/255.f green:39.f/255.f blue:46.f/255.f alpha:1]];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -105,13 +107,13 @@
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(AlbumSectionHeaderView*, id,NSIndexPath*) = ^(AlbumSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
+        [cell setBackgroundColor:nil];
+        [(UIView *)cell.blurView removeFromSuperview];
         [cell.titleLabel setText:@"＞"];
         [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
-        NSLog(@"cell gestures count = %d", cell.gestureRecognizers.count);
         int count = cell.gestureRecognizers.count;
         if (count == 0) {
-            NSLog(@"here???");
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAllAlbum:)];
             [tap setNumberOfTapsRequired:1];
             [tap setNumberOfTouchesRequired:1];
@@ -123,7 +125,7 @@
 
 - (void)restoreContentInset {
     PBX_LOG(@"");
-    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]), 0, 0, 0)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
 }
 
 #pragma mark - Collection view delegate

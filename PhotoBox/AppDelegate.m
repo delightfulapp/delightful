@@ -54,7 +54,7 @@
     UINavigationController *photosNavigationViewController = [[UINavigationController alloc] initWithRootViewController:photosViewController];
     [photosViewController setItem:[Album allPhotosAlbum]];
     
-    AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[StickyHeaderFlowLayout alloc] init]];
+    AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     
     [rootViewController setLeftPanel:albumsViewController];
     [rootViewController setCenterPanel:photosNavigationViewController];
