@@ -81,9 +81,9 @@
     
     // assign context
     if (context) {
-        [operation setContext:context];
+        [operation setUseCoreData:YES];
     } else {
-        [operation setContext:nil];
+        [operation setUseCoreData:NO];
     }
     
     // partially mock the operation
