@@ -14,6 +14,16 @@
 
 #import "UIImageView+Additionals.h"
 
+#import "UIView+Additionals.h"
+
+@interface AlbumRowCell ()
+
+@property (nonatomic, weak) UIView *selectedView;
+
+@property (nonatomic, weak) UIView *roundedMaskView;
+
+@end
+
 
 @implementation AlbumRowCell
 
@@ -31,6 +41,8 @@
 - (void)setup {
     [super setup];
     
+    [self setupSelectedViewConstrains];
+    
     [self.textLabel setNumberOfLines:2];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
     [self.lineView setBackgroundColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000]];
@@ -39,7 +51,11 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    [self.cellImageView.layer setCornerRadius:CGRectGetWidth(self.cellImageView.frame)/2];
+    // some weird bug in iOS 7 where the image view is not circled if we call setCornerRadius directly here.
+    __weak UIImageView *selfieImageView = self.cellImageView;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [selfieImageView.layer setCornerRadius:CGRectGetWidth(selfieImageView.frame)/2];
+    });
 }
 
 #pragma mark - Setters
@@ -51,10 +67,16 @@
         Album *album = (Album *)item;
         NSURL *imageURL = [album coverURL];
         
-        [self.cellImageView setImageWithURL:imageURL];
+        [self.cellImageView setImageWithURL:imageURL placeholderImage:nil];
         
         [self.textLabel setAttributedText:[self attributedTextForAlbumName:album.name count:album.count.intValue]];
     }
+}
+
+- (void)setHighlighted:(BOOL)selected {
+    [super setHighlighted:selected];
+    
+    [self.selectedView setHidden:!selected];
 }
 
 #pragma mark - Override constrains
@@ -65,7 +87,25 @@
     [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
 }
 
+- (void)setupSelectedViewConstrains {
+    [self.selectedView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView];
+    [self.selectedView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
+    [self.selectedView autoCenterInSuperview];
+}
+
 #pragma mark - Getters
+
+- (UIView *)selectedView {
+    if (!_selectedView) {
+        _selectedView = [self addSubviewClass:[UIView class]];
+        [_selectedView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [_selectedView setBackgroundColor:[UIColor colorWithWhite:1.000 alpha:0.180]];
+        [_selectedView setHidden:YES];
+    }
+    return _selectedView;
+}
+
+
 
 - (NSAttributedString *)attributedTextForAlbumName:(NSString *)name count:(NSInteger)count {
     NSString *photos = [NSString stringWithFormat:@"%d %@", count, NSLocalizedString(@"photos", nil)];

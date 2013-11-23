@@ -68,9 +68,6 @@
     [self.lineView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView];
 }
 
-- (void)layoutSubviews {
-    [self.cellImageView.layer setCornerRadius:CGRectGetWidth(self.cellImageView.frame)/2];
-}
 
 #pragma mark - Getters
 
