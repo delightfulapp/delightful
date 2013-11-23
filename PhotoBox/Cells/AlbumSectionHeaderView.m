@@ -79,7 +79,7 @@
 - (void)setText:(NSString *)text {
     NSShadow *shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[UIColor blackColor]];
-    [shadow setShadowOffset:CGSizeMake(0, -0.5)];
+    [shadow setShadowOffset:CGSizeMake(0, -1)];
     [shadow setShadowBlurRadius:0];
     
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:text attributes:@{NSShadowAttributeName: shadow}];
