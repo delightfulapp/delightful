@@ -188,6 +188,11 @@
 
 #pragma mark - Collection View Flow Layout Delegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    return CGSizeMake(collectionViewWidth, 80);
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     return CGSizeMake(collectionViewWidth, 80);
