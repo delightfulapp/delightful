@@ -24,6 +24,10 @@
 
 #import "AlbumsViewController.h"
 
+#import "TagsViewController.h"
+
+#import "AlbumsTagsViewController.h"
+
 #import "StickyHeaderFlowLayout.h"
 
 #import "Album.h"
@@ -55,8 +59,11 @@
     [photosViewController setItem:[Album allPhotosAlbum]];
     
     AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    TagsViewController *tagsViewController = [[TagsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    AlbumsTagsViewController *albumsTagsViewController = [[AlbumsTagsViewController alloc] init];
+    [albumsTagsViewController setViewControllers:@[albumsViewController, tagsViewController]];
     
-    [rootViewController setLeftPanel:albumsViewController];
+    [rootViewController setLeftPanel:albumsTagsViewController];
     [rootViewController setCenterPanel:photosNavigationViewController];
     
     self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];

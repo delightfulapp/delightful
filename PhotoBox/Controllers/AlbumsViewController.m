@@ -60,6 +60,9 @@
     [self restoreContentInset];
     
     [self.collectionView setBackgroundColor:[UIColor colorWithRed:41.f/255.f green:39.f/255.f blue:46.f/255.f alpha:1]];
+    
+    [self.tabBarItem setTitle:NSLocalizedString(@"Albums", nil)];
+    [self.tabBarItem setImage:[[UIImage imageNamed:@"Albums"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -124,7 +127,7 @@
 
 - (void)restoreContentInset {
     PBX_LOG(@"");
-    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0)];
 }
 
 #pragma mark - Collection view delegate

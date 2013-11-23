@@ -122,7 +122,7 @@
     
     UIFont* font = [UIFont boldSystemFontOfSize:12];
     
-    UIColor* textColor = [UIColor colorWithRed:0.469 green:0.444 blue:0.530 alpha:1.000];
+    UIColor* textColor = [UIColor colorWithRed:0.596 green:0.565 blue:0.676 alpha:1.000];
     
     NSShadow *shadow = [[NSShadow alloc] init];
     [shadow setShadowColor:[UIColor blackColor]];
