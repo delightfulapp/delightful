@@ -73,6 +73,7 @@
         
         Photo *photo = (Photo *)item;
         [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
+        [self setText:[self photoCellTitle]];
     }
 }
 

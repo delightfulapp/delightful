@@ -130,10 +130,18 @@
     return @"albums";
 }
 
+#pragma mark - Did something
+
 - (void)didFetchItems {
     int count = [self.dataSource numberOfItems];
     [self setPhotosCount:count max:self.totalItems];
     [self getLocationForEachSection];
+}
+
+- (void)didChangeNumberOfColumns {
+    for (PhotoCell *cell in self.collectionView.visibleCells) {
+        [cell setNumberOfColumns:self.numberOfColumns];
+    }
 }
 
 #pragma mark - Setters
@@ -278,12 +286,6 @@
     if (placemark) {
         [self.placemarkDictionary setObject:placemark forKey:@(section)];
         [[NSNotificationCenter defaultCenter] postNotificationName:PhotoBoxLocationPlacemarkDidFetchNotification object:@{@"placemark": placemark, @"section":@(section)}];
-    }
-}
-
-- (void)didChangeNumberOfColumns {
-    for (PhotoCell *cell in self.collectionView.visibleCells) {
-        [cell setNumberOfColumns:self.numberOfColumns];
     }
 }
 
