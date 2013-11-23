@@ -32,11 +32,17 @@
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
     [self.cellImageView setBackgroundColor:[UIColor colorWithWhite:0.905 alpha:1.000]];
     [self.cellImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
+    [self.cellImageView setClipsToBounds:YES];
+    
+    [self setupCellImageViewConstrains];
+}
+
+- (void)setupCellImageViewConstrains {
     [self.cellImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView];
     [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
     [self.cellImageView autoCenterInSuperview];
-    [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
-    [self.cellImageView setClipsToBounds:YES];
 }
 
 - (UIImageView *)cellImageView {

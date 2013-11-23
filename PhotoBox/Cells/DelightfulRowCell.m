@@ -14,6 +14,12 @@
 
 #import "UIView+Additionals.h"
 
+@interface DelightfulRowCell ()
+
+@property (nonatomic, assign) CGSize contentViewSize;
+
+@end
+
 
 @implementation DelightfulRowCell
 
@@ -33,13 +39,15 @@
 - (void)setup {
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    [self.contentView setClipsToBounds:YES];
+    [self setOpaque:YES];
+    
     [self.cellImageView setBackgroundColor:[UIColor colorWithWhite:0.905 alpha:1.000]];
     [self.cellImageView setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
     [self.cellImageView setClipsToBounds:YES];
     
     [self setupCellImageViewConstrains];
-    [self setupLineViewConstrains];
     [self setupTextLabelConstrains];
     
     [self.contentView bringSubviewToFront:self.textLabel];
@@ -61,13 +69,24 @@
     [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
 }
 
-- (void)setupLineViewConstrains {
-    [self.lineView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:0.5];
-    [self.lineView autoCenterInSuperviewAlongAxis:ALAxisVertical];
-    [self.lineView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView];
-}
+#pragma mark - Layout subviews
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (!CGSizeEqualToSize(self.contentView.frame.size, self.contentViewSize)) {
+        self.contentViewSize = self.contentView.frame.size;
+        UIBezierPath *linePath = [UIBezierPath bezierPath];
+        [linePath moveToPoint:CGPointMake(10, CGRectGetHeight(self.contentView.frame))];
+        [linePath addLineToPoint:CGPointMake(CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame))];
+        [self.lineLayer setPath:linePath.CGPath];
+        
+        linePath = [UIBezierPath bezierPath];
+        [linePath moveToPoint:CGPointMake(10, CGRectGetHeight(self.contentView.frame)-1)];
+        [linePath addLineToPoint:CGPointMake(CGRectGetWidth(self.contentView.frame), CGRectGetHeight(self.contentView.frame)-1)];
+        [self.lineShadowLayer setPath:linePath.CGPath];
+    }
+}
 
 #pragma mark - Getters
 
@@ -78,12 +97,28 @@
     return _textLabel;
 }
 
-- (UIView *)lineView {
-    if (!_lineView) {
-        _lineView = [self.contentView addSubviewClass:[UIView class]];
-        [_lineView setBackgroundColor:[UIColor colorWithRed:0.9 green:0.9 blue:0.9 alpha:1]];
+- (CAShapeLayer *)lineLayer {
+    if (!_lineLayer) {
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setStrokeColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000].CGColor];
+        [layer setFillColor:[UIColor clearColor].CGColor];
+        [layer setLineWidth:0.5];
+        [self.contentView.layer addSublayer:layer];
+        _lineLayer = layer;
     }
-    return _lineView;
+    return _lineLayer;
+}
+
+- (CAShapeLayer *)lineShadowLayer {
+    if (!_lineShadowLayer) {
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setStrokeColor:[UIColor blackColor].CGColor];
+        [layer setFillColor:[UIColor clearColor].CGColor];
+        [layer setLineWidth:0.5];
+        [self.contentView.layer addSublayer:layer];
+        _lineShadowLayer = layer;
+    }
+    return _lineShadowLayer;
 }
 
 @end

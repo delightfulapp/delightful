@@ -29,4 +29,5 @@
         #import <CoreServices/CoreServices.h>
     #endif
 
+    #import "UIColor+DelightfulColors.h"
 #endif

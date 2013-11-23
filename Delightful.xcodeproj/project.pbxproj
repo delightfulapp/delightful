@@ -91,6 +91,7 @@
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
 		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
+		038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
 		038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */; };
 		038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
 		038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
@@ -277,6 +278,8 @@
 		03866322184072BA006C76DE /* AlbumsTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsTagsViewController.m; path = PhotoBox/Controllers/AlbumsTagsViewController.m; sourceTree = "<group>"; };
 		03866324184073D7006C76DE /* DelightfulTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulTabBar.h; path = PhotoBox/Views/DelightfulTabBar.h; sourceTree = "<group>"; };
 		03866325184073D7006C76DE /* DelightfulTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulTabBar.m; path = PhotoBox/Views/DelightfulTabBar.m; sourceTree = "<group>"; };
+		038663271840C57C006C76DE /* UIColor+DelightfulColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+DelightfulColors.h"; sourceTree = "<group>"; };
+		038663281840C57C006C76DE /* UIColor+DelightfulColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DelightfulColors.m"; sourceTree = "<group>"; };
 		038EC593183D5FB100AFEA53 /* DelightfulRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulRowCell.h; path = PhotoBox/Cells/DelightfulRowCell.h; sourceTree = "<group>"; };
 		038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulRowCell.m; path = PhotoBox/Cells/DelightfulRowCell.m; sourceTree = "<group>"; };
 		038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+Additionals.h"; sourceTree = "<group>"; };
@@ -449,6 +452,8 @@
 				038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */,
 				038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */,
 				038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */,
+				038663271840C57C006C76DE /* UIColor+DelightfulColors.h */,
+				038663281840C57C006C76DE /* UIColor+DelightfulColors.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -1011,6 +1016,7 @@
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
+				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
 				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,

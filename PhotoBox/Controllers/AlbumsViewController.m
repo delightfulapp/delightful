@@ -45,8 +45,6 @@
     self.extendedLayoutIncludesOpaqueBars=NO;
     self.automaticallyAdjustsScrollViewInsets=NO;
     
-    [self.collectionView setClipsToBounds:YES];
-    
     [self setAlbumsCount:0 max:0];
     
     UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
@@ -59,7 +57,7 @@
     
     [self restoreContentInset];
     
-    [self.collectionView setBackgroundColor:[UIColor colorWithRed:41.f/255.f green:39.f/255.f blue:46.f/255.f alpha:1]];
+    [self.collectionView setBackgroundColor:[UIColor albumsBackgroundColor]];
     
     [self.tabBarItem setTitle:NSLocalizedString(@"Albums", nil)];
     [self.tabBarItem setImage:[[UIImage imageNamed:@"Albums"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];

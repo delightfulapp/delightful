@@ -29,31 +29,15 @@
 
 @synthesize item = _item;
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
 - (void)setup {
     [super setup];
     
     [self setupSelectedViewConstrains];
     
-    [self.textLabel setNumberOfLines:2];
+    [self.textLabel setBackgroundColor:[UIColor albumsBackgroundColor]];
+    [self.textLabel setNumberOfLines:4];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
-    [self setupLineView];
-}
-
-- (void)setupLineView {
-    [self.lineView setBackgroundColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000]];
-    [self.lineView.layer setShadowColor:[UIColor blackColor].CGColor];
-    [self.lineView.layer setShadowOffset:CGSizeMake(0, -0.5)];
-    [self.lineView.layer setShadowOpacity:1];
-    [self.lineView.layer setShadowRadius:0];
+    
 }
 
 - (void)layoutSubviews {
@@ -63,7 +47,6 @@
     __weak UIImageView *selfieImageView = self.cellImageView;
     dispatch_async(dispatch_get_main_queue(), ^{
         [selfieImageView.layer setCornerRadius:CGRectGetWidth(selfieImageView.frame)/2];
-        
     });
 }
 
@@ -113,8 +96,6 @@
     }
     return _selectedView;
 }
-
-
 
 - (NSAttributedString *)attributedTextForAlbumName:(NSString *)name count:(NSInteger)count {
     NSString *photos = [NSString stringWithFormat:@"%d %@", count, NSLocalizedString(@"photos", nil)];
