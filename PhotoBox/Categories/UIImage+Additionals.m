@@ -19,6 +19,11 @@
     return NO;
 }
 
+- (UIImage *)blurredImage {
+    GPUImageGaussianBlurFilter *blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
+    return [blurFilter imageByFilteringImage:self];
+}
+
 - (UIImage *)grayscaleImage {
     GPUImageGrayscaleFilter *gray = [[GPUImageGrayscaleFilter alloc] init];
     return [gray imageByFilteringImage:self];

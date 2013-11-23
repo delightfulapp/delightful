@@ -12,5 +12,4 @@
 
 @interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
-
 @end

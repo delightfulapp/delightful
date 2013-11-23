@@ -20,6 +20,20 @@
 
 #import "UIWindow+Additionals.h"
 
+#import "PhotosViewController.h"
+
+#import "AlbumsViewController.h"
+
+#import "TagsViewController.h"
+
+#import "AlbumsTagsViewController.h"
+
+#import "StickyHeaderFlowLayout.h"
+
+#import "Album.h"
+
+#import <JASidePanelController.h>
+
 @interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @end
@@ -33,15 +47,27 @@
         return YES;
     }
     
-    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UINavigationController *rootNavigationController = [storyBoard instantiateInitialViewController];
+    JASidePanelController *rootViewController = [[JASidePanelController alloc] init];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:rootNavigationController];
+    [self.window setRootViewController:rootViewController];
     [self.window setTintColor:[UIColor redColor]];
     [self.window makeKeyAndVisible];
     
+    PhotosViewController *photosViewController = [[PhotosViewController alloc] initWithCollectionViewLayout:[[StickyHeaderFlowLayout alloc] init]];
+    UINavigationController *photosNavigationViewController = [[UINavigationController alloc] initWithRootViewController:photosViewController];
+    [photosViewController setItem:[Album allPhotosAlbum]];
+    
+    AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    TagsViewController *tagsViewController = [[TagsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    AlbumsTagsViewController *albumsTagsViewController = [[AlbumsTagsViewController alloc] init];
+    [albumsTagsViewController setViewControllers:@[albumsViewController, tagsViewController]];
+    
+    [rootViewController setLeftPanel:albumsTagsViewController];
+    [rootViewController setCenterPanel:photosNavigationViewController];
+    
     self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
-    [rootNavigationController setDelegate:self.navigationDelegate];
+    [photosNavigationViewController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
 
@@ -92,18 +118,26 @@
     return YES;
 }
 
-#pragma mark - Orientation
+#pragma mark - Navigation
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
-    
-    if(self.window.rootViewController){
-        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
-        orientations = [presentedViewController supportedInterfaceOrientations];
-    }
-    
-    return orientations;
+- (void)showAllPhotosWithStoryboard:(UIStoryboard *)storyBoard rootViewController:(UINavigationController *)rootNavigationController {
+    PhotosViewController *photos = [storyBoard instantiateViewControllerWithIdentifier:@"photosViewController"];
+    [photos setItem:[Album allPhotosAlbum]];
+    [rootNavigationController pushViewController:photos animated:NO];
 }
+
+#pragma mark - Orientation
+//
+//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
+//    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
+//    
+//    if(self.window.rootViewController){
+//        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
+//        orientations = [presentedViewController supportedInterfaceOrientations];
+//    }
+//    
+//    return orientations;
+//}
 
 
 #pragma mark - Unit Test

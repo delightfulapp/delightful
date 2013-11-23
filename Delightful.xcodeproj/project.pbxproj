@@ -89,6 +89,14 @@
 		036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */; };
 		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
+		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
+		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
+		038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */; };
+		038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
+		038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
+		038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
+		038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
+		038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */; };
 		0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
@@ -265,6 +273,22 @@
 		036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSectionHeaderViewTests.m; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		03866321184072BA006C76DE /* AlbumsTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsTagsViewController.h; path = PhotoBox/Controllers/AlbumsTagsViewController.h; sourceTree = "<group>"; };
+		03866322184072BA006C76DE /* AlbumsTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsTagsViewController.m; path = PhotoBox/Controllers/AlbumsTagsViewController.m; sourceTree = "<group>"; };
+		03866324184073D7006C76DE /* DelightfulTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulTabBar.h; path = PhotoBox/Views/DelightfulTabBar.h; sourceTree = "<group>"; };
+		03866325184073D7006C76DE /* DelightfulTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulTabBar.m; path = PhotoBox/Views/DelightfulTabBar.m; sourceTree = "<group>"; };
+		038EC593183D5FB100AFEA53 /* DelightfulRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulRowCell.h; path = PhotoBox/Cells/DelightfulRowCell.h; sourceTree = "<group>"; };
+		038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulRowCell.m; path = PhotoBox/Cells/DelightfulRowCell.m; sourceTree = "<group>"; };
+		038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+Additionals.h"; sourceTree = "<group>"; };
+		038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+Additionals.m"; sourceTree = "<group>"; };
+		038EC59E183D806B00AFEA53 /* AlbumRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumRowCell.h; path = PhotoBox/Cells/AlbumRowCell.h; sourceTree = "<group>"; };
+		038EC59F183D806B00AFEA53 /* AlbumRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumRowCell.m; path = PhotoBox/Cells/AlbumRowCell.m; sourceTree = "<group>"; };
+		038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumSectionHeaderView.h; path = PhotoBox/Cells/AlbumSectionHeaderView.h; sourceTree = "<group>"; };
+		038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumSectionHeaderView.m; path = PhotoBox/Cells/AlbumSectionHeaderView.m; sourceTree = "<group>"; };
+		038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DelightfulViewControllers.h"; sourceTree = "<group>"; };
+		038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DelightfulViewControllers.m"; sourceTree = "<group>"; };
+		038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Additionals.h"; sourceTree = "<group>"; };
+		038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Additionals.m"; sourceTree = "<group>"; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
 		0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxRequestOperation.m; path = PhotoBox/Networking/PhotoBoxRequestOperation.m; sourceTree = "<group>"; };
 		0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxRequestOperationTests.m; sourceTree = "<group>"; };
@@ -419,6 +443,12 @@
 				0398D7711810032A00FDD83B /* UIWindow+Additionals.m */,
 				03D972A51811865A008A087B /* Photo+Additionals.h */,
 				03D972A61811865A008A087B /* Photo+Additionals.m */,
+				038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */,
+				038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */,
+				038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */,
+				038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */,
+				038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */,
+				038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -603,6 +633,8 @@
 				0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */,
 				036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */,
 				036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */,
+				03866321184072BA006C76DE /* AlbumsTagsViewController.h */,
+				03866322184072BA006C76DE /* AlbumsTagsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -636,6 +668,12 @@
 				035846C217D2598600E196D7 /* PhotoZoomableCell.m */,
 				0398D76D180FE55D00FDD83B /* DownloadCell.h */,
 				0398D76E180FE55D00FDD83B /* DownloadCell.m */,
+				038EC593183D5FB100AFEA53 /* DelightfulRowCell.h */,
+				038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */,
+				038EC59E183D806B00AFEA53 /* AlbumRowCell.h */,
+				038EC59F183D806B00AFEA53 /* AlbumRowCell.m */,
+				038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */,
+				038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -645,6 +683,8 @@
 			children = (
 				035846A017D1F91000E196D7 /* AlbumTitleView.h */,
 				035846A117D1F91000E196D7 /* AlbumTitleView.m */,
+				03866324184073D7006C76DE /* DelightfulTabBar.h */,
+				03866325184073D7006C76DE /* DelightfulTabBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -971,6 +1011,7 @@
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
+				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
@@ -979,8 +1020,10 @@
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
+				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
+				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
@@ -1003,6 +1046,7 @@
 				03CE5103181842F200445084 /* SharerManager.m in Sources */,
 				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
+				038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				03CE50FA18183A6000445084 /* SeeThroughCircleView.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
@@ -1014,12 +1058,16 @@
 				03CE50E41818148800445084 /* IntroViewController.m in Sources */,
 				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
+				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
+				038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
 				03CE50EF181829BF00445084 /* VersionNumberHeaderView.m in Sources */,
 				0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */,
 				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
+				038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */,
+				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
@@ -1162,7 +1210,8 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -1200,6 +1249,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1211,7 +1261,8 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -1239,7 +1290,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C9F8CC0F-ACD1-4A67-9CA0-3B65F115C963";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

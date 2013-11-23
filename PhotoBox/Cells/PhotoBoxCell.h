@@ -16,4 +16,6 @@
 
 @property (nonatomic, strong) id item;
 
+- (void)setup;
+
 @end

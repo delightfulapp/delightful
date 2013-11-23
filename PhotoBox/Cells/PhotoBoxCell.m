@@ -16,7 +16,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setup];
     }
     return self;
 }
@@ -24,6 +24,10 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self setup];
+}
+
+- (void)setup {
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
     [self.cellImageView setBackgroundColor:[UIColor colorWithWhite:0.905 alpha:1.000]];
@@ -32,6 +36,17 @@
     [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
     [self.cellImageView autoCenterInSuperview];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
+    [self.cellImageView setClipsToBounds:YES];
+}
+
+- (UIImageView *)cellImageView {
+    if (!_cellImageView) {
+        UIImageView *imageView = [[UIImageView alloc] init];
+        [self.contentView addSubview:imageView];
+        _cellImageView = imageView;
+    }
+    
+    return _cellImageView;
 }
 
 @end

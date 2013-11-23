@@ -11,6 +11,6 @@
 @interface PhotoBoxRequestOperation : OVCRequestOperation
 
 @property (strong, nonatomic, readonly) id responseObject;
-@property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, assign) BOOL useCoreData;
 
 @end

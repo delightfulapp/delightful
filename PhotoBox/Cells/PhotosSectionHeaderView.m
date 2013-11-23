@@ -7,11 +7,22 @@
 //
 
 #import "PhotosSectionHeaderView.h"
+
 #import <UIView+AutoLayout.h>
+
 #import "LocationManager.h"
+
 #import <AMBlurView.h>
 
 #import "UIColor+Additionals.h"
+
+#import "UIView+Additionals.h"
+
+@interface PhotosSectionHeaderView ()
+
+@property (nonatomic, weak) UIView *gestureView;
+
+@end
 
 @implementation PhotosSectionHeaderView
 
@@ -19,7 +30,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        [self setup];
     }
     return self;
 }
@@ -27,17 +38,46 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     
+    [self setup];
+}
+
+- (void)setup {
     [self listenToLocationNotification:!self.hideLocation];
     
-    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
-    [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
+    [self setupConstrains];
+    
     [self.locationLabel setText:nil];
+    [self.titleLabel setTextAlignment:NSTextAlignmentRight];
     [self.titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.titleLabel setNumberOfLines:2];
     
+    [self insertSubview:self.blurView atIndex:0];
     [self.blurView setBlurTintColor:[UIColor whiteColor]];
     [self.titleLabel setTextColor:[UIColor redColor]];
     [self.locationLabel setTextColor:[[UIColor redColor] lighterColor]];
+    
+    [self setUserInteractionEnabled:YES];
+    
+    [self setBackgroundColor:[UIColor clearColor]];
+    
+    [self setupGestureViewConstrains];
+}
+
+- (void)setupConstrains {
+    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
+    NSLayoutConstraint * constraint = [self.titleLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [constraint setPriority:100];
+    [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
+    [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
+    [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
+    [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
+    [self.blurView autoCenterInSuperview];
+}
+
+- (void)setupGestureViewConstrains {
+    [self.gestureView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
+    [self.gestureView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
+    [self.gestureView autoCenterInSuperview];
 }
 
 - (void)dealloc {
@@ -94,6 +134,51 @@
     } else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(locationDidFetched:) name:PhotoBoxLocationPlacemarkDidFetchNotification object:nil];
     }
+}
+
+#pragma mark - Getters
+
+- (UILabel *)titleLabel {
+    if (!_titleLabel) {
+        _titleLabel = [self addSubviewClass:[UILabel class]];
+        [_titleLabel setUserInteractionEnabled:YES];
+    }
+    return _titleLabel;
+}
+
+- (UILabel *)locationLabel {
+    if (!_locationLabel) {
+        _locationLabel = [self addSubviewClass:[UILabel class]];
+        [_locationLabel setUserInteractionEnabled:YES];
+    }
+    return _locationLabel;
+}
+
+- (AMBlurView *)blurView {
+    if (!_blurView) {
+        _blurView = [self addSubviewClass:[AMBlurView class]];
+        [_blurView setUserInteractionEnabled:YES];
+    }
+    return _blurView;
+}
+
+- (UIView *)gestureView {
+    if (!_gestureView) {
+        _gestureView = [self addSubviewClass:[UIView class]];
+        [_gestureView setBackgroundColor:[UIColor clearColor]];
+        [_gestureView setUserInteractionEnabled:YES];
+    }
+    return _gestureView;
+}
+
+#pragma mark - Gestures
+
+- (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer {
+    [self.gestureView addGestureRecognizer:gestureRecognizer];
+}
+
+- (NSArray *)gestureRecognizers {
+    return [self.gestureView gestureRecognizers];
 }
 
 @end

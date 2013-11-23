@@ -12,6 +12,7 @@ pod 'SDWebImage'
 pod 'UIImageViewModeScaleAspect'
 pod 'MYBlurIntroductionView', '~> 1.0.0'
 pod 'GPUImage'
+pod 'JASidePanels'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

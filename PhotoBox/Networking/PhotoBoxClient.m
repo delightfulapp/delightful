@@ -254,7 +254,7 @@ NSString *stringWithActionType(ActionType input) {
 
 - (PhotoBoxRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath completion:(void (^)(AFHTTPRequestOperation *, id, NSError *))block {
     PhotoBoxRequestOperation *operation = (PhotoBoxRequestOperation *)[super HTTPRequestOperationWithRequest:urlRequest resultClass:resultClass resultKeyPath:keyPath completion:block];
-    [operation setContext:[NSManagedObjectContext workContext]];
+    [operation setUseCoreData:YES];
     return operation;
     
 }

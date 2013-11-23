@@ -10,4 +10,6 @@
 
 @interface AlbumsViewController : PhotoBoxViewController
 
+- (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture;
+
 @end

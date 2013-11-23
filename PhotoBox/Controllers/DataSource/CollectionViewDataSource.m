@@ -15,17 +15,17 @@
     NSMutableArray *_sectionChanges;
 }
 
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) id collectionView;
 
 @end
 
 @implementation CollectionViewDataSource
 
-- (id)initWithCollectionView:(UICollectionView *)collectionView {
+- (id)initWithCollectionView:(id)collectionView {
     self = [super init];
     if (self) {
         _collectionView = collectionView;
-        _collectionView.dataSource = self;
+        ((UICollectionView *)_collectionView).dataSource = self;
         
         _objectChanges = [NSMutableArray array];
         _sectionChanges = [NSMutableArray array];
@@ -42,6 +42,8 @@
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
+#pragma mark - Collection View Data Source
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
     id<NSFetchedResultsSectionInfo> section = self.fetchedResultsController.sections[sectionIndex];
     return section.numberOfObjects;
@@ -50,6 +52,7 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     // There's a bug that causes the app crashes occasionally in photos page. The collection view receives layout attributes for a cell with an index path that does not exist. So we need to invalidate the layout (StickyHeaderFlowLayout in this case) according to http://stackoverflow.com/a/19378624
     [collectionView.collectionViewLayout invalidateLayout];
+    NSLog(@"Sections: %d", self.fetchedResultsController.sections.count);
     return self.fetchedResultsController.sections.count;
 }
 
@@ -71,21 +74,29 @@
     return supplementaryView;
 }
 
-#pragma mark - NSFetchedResultsController
+#pragma mark - Table View Data Source
 
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-//{
-//    // cache all the MTLModels so that itemAtIndexPath: will be fast
-//    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
-//        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
-//            @autoreleasepool {
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
-//                [self itemAtIndexPath:indexPath];
-//            }
-//        }
-//    }
-//    [self.collectionView reloadData];
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return [self numberOfSectionsInCollectionView:nil];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self collectionView:nil numberOfItemsInSection:section];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *CellIdentifier = @"Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    
+    return cell;
+}
+
+#pragma mark - NSFetchedResultsController
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
@@ -173,7 +184,7 @@
     if ([_objectChanges count] > 0 && [_sectionChanges count] == 0)
     {
         
-        if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.collectionView.window == nil) {
+        if ([self shouldReloadCollectionViewToPreventKnownIssue] || ((UICollectionView *)self.collectionView).window == nil) {
             // This is to prevent a bug in UICollectionView from occurring.
             // The bug presents itself when inserting the first object or deleting the last object in a collection view.
             // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure

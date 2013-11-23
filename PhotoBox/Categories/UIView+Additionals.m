@@ -147,4 +147,11 @@
     [self setCenterY:CGRectGetHeight(self.superview.frame)/2];
 }
 
+- (id)addSubviewClass:(Class)subviewClass {
+    UIView *view = [[subviewClass alloc] init];
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    [self addSubview:view];
+    return view;
+}
+
 @end

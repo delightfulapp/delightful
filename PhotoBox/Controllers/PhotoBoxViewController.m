@@ -53,6 +53,8 @@
     if (!self.disableFetchOnLoad) {
         [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
     }
+    
+    [self restoreContentInset];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,6 +118,7 @@
 }
 
 - (void)setupCollectionView {
+    [self.collectionView setDelegate:self];
     [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
@@ -264,14 +267,14 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               PBX_LOG(@"Received %d %@. Total = %d", ((NSArray *)objects).count, NSStringFromClass(self.resourceClass), [self.dataSource numberOfItems]);
+                                               PBX_LOG(@"Received %lu %@. Total = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
                                                self.isFetching = NO;
                                                
                                                [self didFetchItems];
                                                
-                                               int count = [self.dataSource numberOfItems];
+                                               NSInteger count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
@@ -285,8 +288,8 @@
 
 - (void)fetchMore {
     if (!self.isFetching) {
-        int count = [self.dataSource numberOfItems];
-        PBX_LOG(@"Photos count = %d", count);
+        NSInteger count = [self.dataSource numberOfItems];
+        PBX_LOG(@"Photos count = %ld", (long)count);
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
@@ -428,7 +431,7 @@
             
         } completion:^(BOOL finished) {
             [self didChangeNumberOfColumns];
-            [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+            [self restoreContentInset];
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         }];
     }
@@ -460,18 +463,27 @@
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     CGFloat width = floorf((collectionViewWidth/(float)self.numberOfColumns));
-
     return CGSizeMake(width, width);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     if ((int)CGRectGetWidth(self.collectionView.frame)%self.numberOfColumns == 0 && self.numberOfColumns != 1) {
         return 0;
+    } else if (self.numberOfColumns == 1) {
+        return 5;
     }
     return 1;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0;
 }
 
 #pragma mark - KVO
