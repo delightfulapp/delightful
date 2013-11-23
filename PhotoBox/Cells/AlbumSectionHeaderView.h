@@ -12,4 +12,6 @@
 
 @property (nonatomic, weak) IBOutlet UIView *lineView;
 
+- (void)setText:(NSString *)text;
+
 @end

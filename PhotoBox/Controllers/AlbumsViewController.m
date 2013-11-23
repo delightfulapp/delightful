@@ -109,8 +109,7 @@
     void (^configureCell)(AlbumSectionHeaderView*, id,NSIndexPath*) = ^(AlbumSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
         [cell setBackgroundColor:nil];
         [(UIView *)cell.blurView removeFromSuperview];
-        [cell.titleLabel setText:@"＞"];
-        [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
+        [cell setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
         int count = cell.gestureRecognizers.count;
         if (count == 0) {
