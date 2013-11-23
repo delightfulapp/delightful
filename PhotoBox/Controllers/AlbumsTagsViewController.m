@@ -12,6 +12,8 @@
 
 #import <UIView+AutoLayout.h>
 
+#import "UIViewController+DelightfulViewControllers.h"
+
 @interface AlbumsTagsViewController ()
 
 @property (nonatomic, weak) DelightfulTabBar *customTabBar;
@@ -52,7 +54,7 @@
         [tabBar setTranslatesAutoresizingMaskIntoConstraints:NO];
         [tabBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [tabBar autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
-        [tabBar autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.view withOffset:-60];
+        [tabBar autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.view withOffset:([[self class] leftViewControllerVisibleWidth] - CGRectGetWidth(self.view.frame))];
         [tabBar autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.tabBar];
         _customTabBar = tabBar;
     }

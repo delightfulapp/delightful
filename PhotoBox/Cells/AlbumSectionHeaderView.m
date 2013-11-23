@@ -14,6 +14,8 @@
 
 #import "UIView+Additionals.h"
 
+#import "UIViewController+DelightfulViewControllers.h"
+
 @interface AlbumSectionHeaderView ()
 
 @property (nonatomic, weak) UIImageView *arrowImage;
@@ -55,14 +57,16 @@
 }
 
 - (void)setupConstrains {
+    CGFloat visibleWidth = [UIViewController leftViewControllerVisibleWidth];
+    CGFloat offset = visibleWidth - CGRectGetWidth(self.frame) - 20;
     [self.arrowImage autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    [self.arrowImage autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-80];
+    [self.arrowImage autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:offset];
     
     [self.locationLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
     
     [self.titleLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
-    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-80];
+    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:offset];
     
     [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
     [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];

@@ -256,7 +256,11 @@
 #pragma mark - Connection
 
 - (void)fetchResource {
-    [self showLoadingView:YES];
+    
+    // if we show the loading view directly here, the bottom loading view position is weird because the collection view content size is not properly set yet. so we show the loading view on the next run loop.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showLoadingView:YES];
+    });
     
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType

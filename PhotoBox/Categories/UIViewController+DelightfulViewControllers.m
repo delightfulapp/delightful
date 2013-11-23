@@ -28,4 +28,9 @@
     return rootViewController;
 }
 
++ (CGFloat)leftViewControllerVisibleWidth {
+    JASidePanelController *sidePanel = [[self class] panelViewController];
+    return sidePanel.leftVisibleWidth;
+}
+
 @end
