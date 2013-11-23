@@ -427,6 +427,9 @@
             break;
     }
     if (numCol != self.numberOfColumns) {
+        if (self.numberOfColumns == 1) {
+            [self.collectionView.collectionViewLayout invalidateLayout];
+        }
         [self.collectionView performBatchUpdates:^{
             
         } completion:^(BOOL finished) {
@@ -464,6 +467,9 @@
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (self.numberOfColumns == 1) {
+        return CGSizeZero;
+    }
     return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
 }
 

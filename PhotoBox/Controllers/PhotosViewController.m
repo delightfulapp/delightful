@@ -177,10 +177,13 @@
     self.selectedItemRect = attributes.frame;
 }
 
-#pragma mark - Header Things
+#pragma mark - Collection view flow layout delegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    if (self.numberOfColumns == 1) {
+        return UIEdgeInsetsMake(5, 0, 0, 0);
+    }
+    return UIEdgeInsetsZero;
 }
 
 #pragma mark - Segue
