@@ -65,7 +65,7 @@
     [self.blurView autoCenterInSuperview];
     
     [self.lineView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self withOffset:-20];
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:1];
+    [self.lineView autoSetDimension:ALDimensionHeight toSize:0.5];
     [self.lineView autoCenterInSuperviewAlongAxis:ALAxisVertical];
     [self.lineView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self];
 }
