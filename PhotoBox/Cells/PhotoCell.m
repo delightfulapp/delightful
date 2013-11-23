@@ -52,17 +52,30 @@
 - (void)setup {
     [super setup];
     
-    [self.photoTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:-10];
+    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
+    [self.photoTitleBackgroundView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.photoTitle withOffset:-10];
+    [self.photoTitleBackgroundView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView];
+    [self.photoTitleBackgroundView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
+    
+    [self.dateTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:-10];
+    [self.dateTitle autoCenterInSuperviewAlongAxis:ALAxisVertical];
+    [self.dateTitle autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
+    
+    [self.photoTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.dateTitle withOffset:-5];
     [self.photoTitle autoCenterInSuperviewAlongAxis:ALAxisVertical];
     [self.photoTitle autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
-    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
-    [self.photoTitleBackgroundView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.photoTitle withOffset:20];
-    [self.photoTitleBackgroundView autoAlignAxis:ALAxisVertical toSameAxisOfView:self.photoTitle];
-    [self.photoTitleBackgroundView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.photoTitle];
 
-    [self.photoTitle setFont:[UIFont preferredFontForTextStyle:UIFontTextStyleCaption1]];
     [self.photoTitle setBackgroundColor:[UIColor clearColor]];
-    [self.photoTitle setNumberOfLines:2];
+    [self.photoTitle setNumberOfLines:1];
+    [self.photoTitle setFont:[UIFont boldSystemFontOfSize:14]];
+    [self.photoTitle setTextColor:[UIColor whiteColor]];
+    [self.photoTitle setLineBreakMode:NSLineBreakByTruncatingMiddle];
+    
+    [self.dateTitle setBackgroundColor:[UIColor clearColor]];
+    [self.dateTitle setNumberOfLines:1];
+    [self.dateTitle setFont:[UIFont boldSystemFontOfSize:10]];
+    [self.dateTitle setTextColor:[UIColor whiteColor]];
+    
     [self.contentView insertSubview:self.photoTitle aboveSubview:self.photoTitleBackgroundView];
     [self.photoTitleBackgroundView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
 }
@@ -95,7 +108,10 @@
 
 - (void)setText:(id)text {
     [self.photoTitleBackgroundView setHidden:(text)?NO:YES];
-    [self.photoTitle setAttributedText:text];
+    [self.photoTitle setText:text];
+    if (text) {
+        [self.dateTitle setText:[self dateString]];
+    } else [self.dateTitle setText:nil];
 }
 
 - (void)showSelectedView:(BOOL)selected {
@@ -120,14 +136,16 @@
     if (self.item) {
         if (_numberOfColumns < 3) {
             Photo *photo = (Photo *)self.item;
-            NSString *title = photo.filenameOriginal;
-            NSString *subtitle = nil;
-            if (_numberOfColumns == 1) {
-                subtitle = [photo.dateTakenString localizedDate];
-            }
-            return [self attributedPhotoCellTitleForTitle:title subtitle:subtitle];
-            
+            return  photo.filenameOriginal;
         }
+    }
+    return nil;
+}
+
+- (id)dateString {
+    if (_numberOfColumns < 3) {
+        Photo *photo = (Photo *)self.item;
+        return  [photo.dateTakenString localizedDate];
     }
     return nil;
 }
@@ -152,6 +170,13 @@
         _photoTitle = [self addSubviewToContentViewWithClass:[UILabel class]];
     }
     return _photoTitle;
+}
+
+- (UILabel *)dateTitle {
+    if (!_dateTitle) {
+        _dateTitle = [self addSubviewToContentViewWithClass:[UILabel class]];
+    }
+    return _dateTitle;
 }
 
 - (UIView *)photoTitleBackgroundView {

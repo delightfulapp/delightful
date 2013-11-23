@@ -78,6 +78,7 @@
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
+        [cell setHidden:(self.numberOfColumns==1)?YES:NO];
         [cell setTitleLabelText:[item localizedDate]];
         if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
             [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
