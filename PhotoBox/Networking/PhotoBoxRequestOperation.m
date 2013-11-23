@@ -30,8 +30,11 @@
             if (self.valueTransformer) {
                 self.responseObject = [self.valueTransformer transformedValue:responseJSON];
 
-                if (self.context) {
-                    [self serializeToManagedObject:self.responseObject inContext:self.context];
+                if (self.useCoreData) {
+                    NSManagedObjectContext *workContext = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSPrivateQueueConcurrencyType];
+                    workContext.mergePolicy					= NSMergeByPropertyObjectTrumpMergePolicy;
+                    workContext.persistentStoreCoordinator	= [NSPersistentStoreCoordinator persistentStoreCoordinator];
+                    [self serializeToManagedObject:self.responseObject inContext:workContext];
                 }
             }
             else {
