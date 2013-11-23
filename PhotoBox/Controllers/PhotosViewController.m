@@ -168,7 +168,8 @@
     if (count == 0) {
         self.title = title;
     } else {
-        [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"%1$d of %2$d", nil), count, max]];
+        if (count != max) [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"%1$d of %2$d", nil), count, max]];
+        else [self setTitle:title subtitle:[NSString stringWithFormat:@"%d photos", count]];
     }
 }
 
