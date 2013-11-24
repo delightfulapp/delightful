@@ -1,7 +1,7 @@
 Delightful
 ==
 
-![Delightful - Trovebox Photo Viewer](http://f.cl.ly/items/1e272y3F0j0o33221E2P/Photo%202013-09-06%2015%2027%2042.png)
+![Delightful - Trovebox Photo Viewer](http://f.cl.ly/items/2k3n0Q0e053m2n2h0p2c/iOS%20Simulator%20Screen%20shot%20Nov%2024,%202013,%209.40.42%20PM.png)
 
 ![Delightful app](http://f.cl.ly/items/24113E420E3i2l2c3I1W/Photo_Nov_24%252C_8_26_54_PM-3.png)
 
