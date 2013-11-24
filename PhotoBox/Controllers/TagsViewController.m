@@ -116,7 +116,7 @@
 - (void)loadPhotosInTag:(Tag *)tag {
     PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
     [photosViewController setItem:tag];
-    [photosViewController setTitle:tag.tagId];
+    [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
     [photosViewController setRelationshipKeyPathWithItem:@"tags"];
     [photosViewController setResourceType:PhotoWithTagsResource];
     

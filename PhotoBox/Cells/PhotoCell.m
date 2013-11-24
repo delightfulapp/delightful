@@ -73,7 +73,7 @@
     
     [self.dateTitle setBackgroundColor:[UIColor clearColor]];
     [self.dateTitle setNumberOfLines:1];
-    [self.dateTitle setFont:[UIFont boldSystemFontOfSize:10]];
+    [self.dateTitle setFont:[UIFont systemFontOfSize:10]];
     [self.dateTitle setTextColor:[UIColor whiteColor]];
     
     [self.contentView insertSubview:self.photoTitle aboveSubview:self.photoTitleBackgroundView];

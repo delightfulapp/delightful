@@ -425,6 +425,7 @@
     switch (direction) {
         case PinchIn:{
             self.numberOfColumns++;
+            self.numberOfColumns = MIN(self.numberOfColumns, 10);
             break;
         }
         case PinchOut:{

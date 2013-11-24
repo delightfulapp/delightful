@@ -167,7 +167,7 @@
     } else if ([self.item isKindOfClass:[Tag class]]) {
         Tag *tag = (Tag *)self.item;
         if (tag) {
-            title = tag.tagId;
+            title = [NSString stringWithFormat:@"#%@", tag.tagId];
         }
     }
     if (count == 0) {
