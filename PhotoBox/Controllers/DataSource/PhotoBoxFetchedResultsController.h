@@ -15,5 +15,6 @@
 
 - (id)mantleObjectAtIndexPath:(NSIndexPath *)indexPath;
 - (void)clearCache;
+- (void)preLoadCache;
 
 @end

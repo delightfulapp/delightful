@@ -144,14 +144,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.fetchedResultsController clearCache];
-    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
-        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
-            @autoreleasepool {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
-                [self itemAtIndexPath:indexPath];
-            }
-        }
-    }
+    [self.fetchedResultsController preLoadCache];
     CLS_LOG(@"[%@] Reloading collection view", self.debugName);
     [self.collectionView reloadData];
     return;
@@ -311,7 +304,6 @@
     _paused = paused;
     if (paused) {
         CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-        [self.fetchedResultsController clearCache];
         self.fetchedResultsController.delegate = nil;
     } else {
         self.fetchedResultsController.delegate = self;
