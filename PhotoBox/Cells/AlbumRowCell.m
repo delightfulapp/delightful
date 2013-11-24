@@ -34,7 +34,7 @@
     
     [self setupSelectedViewConstrains];
     
-    [self.textLabel setBackgroundColor:[UIColor albumsBackgroundColor]];
+    [self.textLabel setBackgroundColor:[UIColor clearColor]];
     [self.textLabel setNumberOfLines:4];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
     

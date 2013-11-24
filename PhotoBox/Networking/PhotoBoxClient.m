@@ -163,10 +163,12 @@
 }
 
 - (void)getTagsWithSuccess:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self getPath:@"/tags/list.json" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        successBlock([self processResponseObject:responseObject resourceClass:[Tag class]]);
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        failureBlock(error);
+    [self GET:@"/tags/list.json" parameters:nil resultClass:[Tag class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        if (!error) {
+            successBlock(responseObject);
+        } else {
+            failureBlock(error);
+        }
     }];
 }
 

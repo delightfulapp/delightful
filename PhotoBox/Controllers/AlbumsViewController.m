@@ -72,8 +72,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Getters
+
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(name)) ascending:YES]];
 }
 
 - (ResourceType)resourceType {
@@ -82,15 +84,6 @@
 
 - (Class)resourceClass {
     return [Album class];
-}
-
-- (void)didFetchItems {
-    int count = [self.dataSource numberOfItems];
-    [self setAlbumsCount:count max:self.totalItems];
-}
-
-- (NSString *)segue {
-    return @"pushPhotosFromAlbums";
 }
 
 - (NSString *)sectionHeaderIdentifier {
@@ -116,6 +109,13 @@
         }
     };
     return configureCell;
+}
+
+#pragma mark - Did stuff
+
+- (void)didFetchItems {
+    int count = [self.dataSource numberOfItems];
+    [self setAlbumsCount:count max:self.totalItems];
 }
 
 - (void)restoreContentInset {

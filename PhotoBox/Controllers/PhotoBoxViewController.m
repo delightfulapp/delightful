@@ -325,6 +325,11 @@
         self.totalPages = [firstObject.totalPages intValue];
         self.currentPage = [firstObject.currentPage intValue];
         self.currentRow = [firstObject.currentRow intValue];
+    } else {
+        self.totalItems = ((NSArray *)objects).count;
+        self.totalPages = 1;
+        self.currentPage = 1;
+        self.currentRow = 0;
     }
 }
 

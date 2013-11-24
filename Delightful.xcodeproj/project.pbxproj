@@ -50,6 +50,7 @@
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
 		0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
+		0334EBB81841DF37001B262F /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
@@ -212,6 +213,8 @@
 		032CBBA617D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0334EBB318417AB8001B262F /* PanelsContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PanelsContainerViewController.h; path = PhotoBox/Controllers/PanelsContainerViewController.h; sourceTree = "<group>"; };
 		0334EBB418417AB8001B262F /* PanelsContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PanelsContainerViewController.m; path = PhotoBox/Controllers/PanelsContainerViewController.m; sourceTree = "<group>"; };
+		0334EBB61841DF37001B262F /* TagRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagRowCell.h; path = PhotoBox/Cells/TagRowCell.h; sourceTree = "<group>"; };
+		0334EBB71841DF37001B262F /* TagRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagRowCell.m; path = PhotoBox/Cells/TagRowCell.m; sourceTree = "<group>"; };
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
 		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
@@ -503,7 +506,7 @@
 				03108FF017D0FED40075F9D8 /* Categories */,
 				03108FE717D0FE130075F9D8 /* Models */,
 				03108FDB17D0F3FA0075F9D8 /* External */,
-				032CBB8317D0BDF3001205B1 /* PhotoBox */,
+				032CBB8317D0BDF3001205B1 /* Delightful */,
 				032CBBA217D0BDF3001205B1 /* DelightfulTests */,
 				032CBB7C17D0BDF3001205B1 /* Frameworks */,
 				032CBB7B17D0BDF3001205B1 /* Products */,
@@ -544,7 +547,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		032CBB8317D0BDF3001205B1 /* PhotoBox */ = {
+		032CBB8317D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXGroup;
 			children = (
 				032CBB8C17D0BDF3001205B1 /* AppDelegate.h */,
@@ -553,6 +556,7 @@
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
 				032CBB8417D0BDF3001205B1 /* Supporting Files */,
 			);
+			name = Delightful;
 			path = PhotoBox;
 			sourceTree = "<group>";
 		};
@@ -684,6 +688,8 @@
 				038EC59F183D806B00AFEA53 /* AlbumRowCell.m */,
 				038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */,
 				038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */,
+				0334EBB61841DF37001B262F /* TagRowCell.h */,
+				0334EBB71841DF37001B262F /* TagRowCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1018,6 +1024,7 @@
 			files = (
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
+				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
