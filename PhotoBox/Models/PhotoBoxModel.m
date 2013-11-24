@@ -10,6 +10,7 @@
 
 #import "Album.h"
 #import "Photo.h"
+#import "Tag.h"
 
 #import "NSObject+Additionals.h"
 
@@ -21,6 +22,9 @@
     }
     if (JSONDictionary[@"filenameOriginal"] != nil) {
         return Photo.class;
+    }
+    if (JSONDictionary[@"actor"] != nil && JSONDictionary[@"count"] != nil && JSONDictionary[@"owner"] != nil) {
+        return Tag.class;
     }
     NSAssert(NO, @"No matching class for the JSON dictionary '%@'.", JSONDictionary);
     return self;

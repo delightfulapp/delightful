@@ -185,6 +185,7 @@
 
 - (NSFetchRequest *)fetchRequest {
     if (!_fetchRequest) {
+        NSLog(@"new fetch request");
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
         [_fetchRequest setSortDescriptors:self.sortDescriptors];
         if (self.predicate) {
@@ -198,6 +199,7 @@
 - (NSPredicate *)predicate {
     if (self.item && ![self isGallery]) {
         if (!_predicate) {
+            NSLog(@"new predicate");
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }
         return _predicate;
@@ -206,12 +208,11 @@
 }
 
 - (PhotoBoxFetchedResultsController *)fetchedResultsController {
-    if (!_fetchedResultsController) {
-        _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
-        [_fetchedResultsController setObjectClass:self.resourceClass];
-        [_fetchedResultsController setItemKey:self.displayedItemIdKey];
-    }
-    return _fetchedResultsController;
+    NSLog(@"new fetched results controller");
+    PhotoBoxFetchedResultsController *fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+    [fetchedResultsController setObjectClass:self.resourceClass];
+    [fetchedResultsController setItemKey:self.displayedItemIdKey];
+    return fetchedResultsController;
 }
 
 - (NSString *)displayedItemIdKey {
@@ -220,7 +221,7 @@
 }
 
 - (NSArray *)items {
-    return self.fetchedResultsController.fetchedObjects;
+    return self.dataSource.fetchedResultsController.fetchedObjects;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -271,6 +272,9 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
+                                               // not sure why context save changes not propagated to data source's fetched result controller's delegate. Let's just performFetch here again.
+                                               [self.dataSource.fetchedResultsController performFetch:NULL];
+                                               [self.collectionView reloadData];
                                                PBX_LOG(@"Received %lu %@. Total = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
@@ -293,7 +297,6 @@
 - (void)fetchMore {
     if (!self.isFetching) {
         NSInteger count = [self.dataSource numberOfItems];
-        PBX_LOG(@"Photos count = %ld", (long)count);
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
@@ -308,7 +311,6 @@
 }
 
 - (void)loadItemsFromCoreData {
-    PBX_LOG(@"");
     [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
     [self.dataSource.fetchedResultsController performFetch:NULL];
     PBX_LOG(@"Reloading coleection view");
@@ -323,6 +325,11 @@
         self.totalPages = [firstObject.totalPages intValue];
         self.currentPage = [firstObject.currentPage intValue];
         self.currentRow = [firstObject.currentRow intValue];
+    } else {
+        self.totalItems = ((NSArray *)objects).count;
+        self.totalPages = 1;
+        self.currentPage = 1;
+        self.currentRow = 0;
     }
 }
 
@@ -418,6 +425,7 @@
     switch (direction) {
         case PinchIn:{
             self.numberOfColumns++;
+            self.numberOfColumns = MIN(self.numberOfColumns, 10);
             break;
         }
         case PinchOut:{
@@ -471,7 +479,7 @@
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (self.numberOfColumns == 1) {
+    if (self.numberOfColumns <= 1) {
         return CGSizeZero;
     }
     return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
@@ -505,9 +513,9 @@
             if (userLoggedIn) {
                 [self fetchResource];
             } else {
+                self.dataSource.fetchedResultsController = nil;
                 self.dataSource = nil;
                 self.page = 1;
-                self.fetchedResultsController = nil;
                 self.fetchRequest = nil;
                 self.predicate = nil;
                 self.mainContext = nil;

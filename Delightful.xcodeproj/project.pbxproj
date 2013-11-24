@@ -43,12 +43,17 @@
 		032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8617D0BDF3001205B1 /* InfoPlist.strings */; };
 		032CBB8A17D0BDF3001205B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8917D0BDF3001205B1 /* main.m */; };
 		032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8D17D0BDF3001205B1 /* AppDelegate.m */; };
-		032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8F17D0BDF3001205B1 /* Main.storyboard */; };
 		032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB9517D0BDF3001205B1 /* Images.xcassets */; };
 		032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB9C17D0BDF3001205B1 /* XCTest.framework */; };
 		032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
+		0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
+		0334EBB81841DF37001B262F /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
+		0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
+		0334EBBD1842018D001B262F /* intro0.0.5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBB1842018D001B262F /* intro0.0.5.jpg */; };
+		0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */; };
+		0334EBC01842093A001B262F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
@@ -203,12 +208,19 @@
 		032CBB8B17D0BDF3001205B1 /* Delightful-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Delightful-Prefix.pch"; sourceTree = "<group>"; };
 		032CBB8C17D0BDF3001205B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		032CBB8D17D0BDF3001205B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		032CBB9017D0BDF3001205B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		032CBB9517D0BDF3001205B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelightfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB9C17D0BDF3001205B1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		032CBBA417D0BDF3001205B1 /* DelightfulTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DelightfulTests-Info.plist"; sourceTree = "<group>"; };
 		032CBBA617D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0334EBB318417AB8001B262F /* PanelsContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PanelsContainerViewController.h; path = PhotoBox/Controllers/PanelsContainerViewController.h; sourceTree = "<group>"; };
+		0334EBB418417AB8001B262F /* PanelsContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PanelsContainerViewController.m; path = PhotoBox/Controllers/PanelsContainerViewController.m; sourceTree = "<group>"; };
+		0334EBB61841DF37001B262F /* TagRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagRowCell.h; path = PhotoBox/Cells/TagRowCell.h; sourceTree = "<group>"; };
+		0334EBB71841DF37001B262F /* TagRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagRowCell.m; path = PhotoBox/Cells/TagRowCell.m; sourceTree = "<group>"; };
+		0334EBB91841FDC8001B262F /* 0.0.5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.5.plist; path = PhotoBox/IntroFiles/0.0.5.plist; sourceTree = "<group>"; };
+		0334EBBB1842018D001B262F /* intro0.0.5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro0.0.5.jpg; sourceTree = "<group>"; };
+		0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "intro0.0.5@2x.jpg"; sourceTree = "<group>"; };
+		0334EBBF1842093A001B262F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
 		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
@@ -500,7 +512,7 @@
 				03108FF017D0FED40075F9D8 /* Categories */,
 				03108FE717D0FE130075F9D8 /* Models */,
 				03108FDB17D0F3FA0075F9D8 /* External */,
-				032CBB8317D0BDF3001205B1 /* PhotoBox */,
+				032CBB8317D0BDF3001205B1 /* Delightful */,
 				032CBBA217D0BDF3001205B1 /* DelightfulTests */,
 				032CBB7C17D0BDF3001205B1 /* Frameworks */,
 				032CBB7B17D0BDF3001205B1 /* Products */,
@@ -541,15 +553,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		032CBB8317D0BDF3001205B1 /* PhotoBox */ = {
+		032CBB8317D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBBF1842093A001B262F /* Main.storyboard */,
 				032CBB8C17D0BDF3001205B1 /* AppDelegate.h */,
 				032CBB8D17D0BDF3001205B1 /* AppDelegate.m */,
-				032CBB8F17D0BDF3001205B1 /* Main.storyboard */,
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
 				032CBB8417D0BDF3001205B1 /* Supporting Files */,
 			);
+			name = Delightful;
 			path = PhotoBox;
 			sourceTree = "<group>";
 		};
@@ -640,6 +653,8 @@
 				036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */,
 				03866321184072BA006C76DE /* AlbumsTagsViewController.h */,
 				03866322184072BA006C76DE /* AlbumsTagsViewController.m */,
+				0334EBB318417AB8001B262F /* PanelsContainerViewController.h */,
+				0334EBB418417AB8001B262F /* PanelsContainerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -679,6 +694,8 @@
 				038EC59F183D806B00AFEA53 /* AlbumRowCell.m */,
 				038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */,
 				038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */,
+				0334EBB61841DF37001B262F /* TagRowCell.h */,
+				0334EBB71841DF37001B262F /* TagRowCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -717,6 +734,8 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBBB1842018D001B262F /* intro0.0.5.jpg */,
+				0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */,
 				036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */,
 				036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */,
 				036DF364181AA60B002E9FCB /* info@2x.png */,
@@ -749,6 +768,7 @@
 		03CE50E518181CE700445084 /* IntroPlist */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBB91841FDC8001B262F /* 0.0.5.plist */,
 				036DF369181FBA67002E9FCB /* 0.0.4.plist */,
 				036DF362181A850C002E9FCB /* 0.0.3.plist */,
 				03CE50E618181D1B00445084 /* 0.0.2.plist */,
@@ -871,10 +891,12 @@
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
+				0334EBBD1842018D001B262F /* intro0.0.5.jpg in Resources */,
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
 				036DF365181AA60B002E9FCB /* info@2x.png in Resources */,
 				036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */,
 				036DF36E181FBB9E002E9FCB /* intro0.0.4@2x.jpg in Resources */,
+				0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
 				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
@@ -887,10 +909,11 @@
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
-				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
+				0334EBC01842093A001B262F /* Main.storyboard in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
 				032222B31814CBF0004F3830 /* npr_notification_image_success.png in Resources */,
+				0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,
@@ -1013,6 +1036,7 @@
 			files = (
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
+				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
@@ -1030,6 +1054,7 @@
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
 				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
+				0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
@@ -1116,14 +1141,6 @@
 				032CBB8717D0BDF3001205B1 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		032CBB8F17D0BDF3001205B1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				032CBB9017D0BDF3001205B1 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		032CBBA517D0BDF3001205B1 /* InfoPlist.strings */ = {
@@ -1305,6 +1322,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1336,6 +1354,7 @@
 				INFOPLIST_FILE = "PhotoBoxTests/DelightfulTests-Info.plist";
 				PRODUCT_NAME = DelightfulTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -1344,6 +1363,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1371,6 +1391,7 @@
 				INFOPLIST_FILE = "PhotoBoxTests/DelightfulTests-Info.plist";
 				PRODUCT_NAME = DelightfulTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;

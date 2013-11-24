@@ -10,6 +10,9 @@
 
 @interface AlbumSectionHeaderView : PhotosSectionHeaderView
 
+@property (nonatomic, weak) CAShapeLayer *lineLayer;
+@property (nonatomic, weak) CAShapeLayer *lineShadowLayer;
+
 - (void)setText:(NSString *)text;
 
 @end

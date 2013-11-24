@@ -25,7 +25,6 @@
     [self.lock lock];
     if (!_responseObject) {
         id responseJSON = self.responseJSON;
-        
         if (responseJSON) {
             if (self.valueTransformer) {
                 self.responseObject = [self.valueTransformer transformedValue:responseJSON];

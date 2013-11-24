@@ -10,4 +10,6 @@
 
 @interface AlbumRowCell : DelightfulRowCell
 
+- (NSAttributedString *)attributedTextForAlbumName:(NSString *)name count:(NSInteger)count;
+
 @end

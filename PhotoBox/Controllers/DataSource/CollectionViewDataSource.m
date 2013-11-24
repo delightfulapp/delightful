@@ -29,6 +29,7 @@
         
         _objectChanges = [NSMutableArray array];
         _sectionChanges = [NSMutableArray array];
+        _paused = YES;
     }
     return self;
 }
@@ -52,13 +53,11 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     // There's a bug that causes the app crashes occasionally in photos page. The collection view receives layout attributes for a cell with an index path that does not exist. So we need to invalidate the layout (StickyHeaderFlowLayout in this case) according to http://stackoverflow.com/a/19378624
     [collectionView.collectionViewLayout invalidateLayout];
-    NSLog(@"Sections: %d", self.fetchedResultsController.sections.count);
     return self.fetchedResultsController.sections.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
-    [cell.cellImageView setImage:nil];
     id item = [self itemAtIndexPath:indexPath];
     self.configureCellBlock(cell, item);
     return cell;
@@ -72,28 +71,6 @@
         self.configureCellHeaderBlock(supplementaryView, title,indexPath);
     }
     return supplementaryView;
-}
-
-#pragma mark - Table View Data Source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return [self numberOfSectionsInCollectionView:nil];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self collectionView:nil numberOfItemsInSection:section];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return cell;
 }
 
 #pragma mark - NSFetchedResultsController
@@ -144,14 +121,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.fetchedResultsController clearCache];
-    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
-        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
-            @autoreleasepool {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
-                [self itemAtIndexPath:indexPath];
-            }
-        }
-    }
+    [self.fetchedResultsController preLoadCache];
     CLS_LOG(@"[%@] Reloading collection view", self.debugName);
     [self.collectionView reloadData];
     return;
@@ -301,24 +271,30 @@
 
 - (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController
 {
-    NSAssert(_fetchedResultsController == nil, @"TODO: you can currently only assign this property once");
-    _fetchedResultsController = fetchedResultsController;
-    fetchedResultsController.delegate = self;
-    [fetchedResultsController performFetch:NULL];
-}
-
-- (void)setPaused:(BOOL)paused
-{
-    _paused = paused;
-    if (paused) {
-        CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-        self.fetchedResultsController.delegate = nil;
-    } else {
-        self.fetchedResultsController.delegate = self;
-        [self.fetchedResultsController performFetch:NULL];
-        CLS_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+    if (_fetchedResultsController != fetchedResultsController) {
+        _fetchedResultsController = fetchedResultsController;
+        _paused = NO;
+        _fetchedResultsController.delegate = self;
+        [_fetchedResultsController performFetch:NULL];
         CLS_LOG(@"[%@] Reloading collection view", self.debugName);
         [self.collectionView reloadData];
+    }
+}
+
+- (void)setPaused:(BOOL)paused {
+    if (_paused != paused) {
+        _paused = paused;
+        if (paused) {
+            CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+            CLS_LOG(@"[%@] Before pausing. Number of fetched objects = %d", self.debugName, self.fetchedResultsController.fetchedObjects.count);
+            self.fetchedResultsController.delegate = nil;
+        } else {
+            self.fetchedResultsController.delegate = self;
+            [self.fetchedResultsController performFetch:NULL];
+            CLS_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+            CLS_LOG(@"[%@] Reloading collection view", self.debugName);
+            [self.collectionView reloadData];
+        }
     }
 }
 

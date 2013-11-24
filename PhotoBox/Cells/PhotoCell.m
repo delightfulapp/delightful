@@ -73,7 +73,7 @@
     
     [self.dateTitle setBackgroundColor:[UIColor clearColor]];
     [self.dateTitle setNumberOfLines:1];
-    [self.dateTitle setFont:[UIFont boldSystemFontOfSize:10]];
+    [self.dateTitle setFont:[UIFont systemFontOfSize:10]];
     [self.dateTitle setTextColor:[UIColor whiteColor]];
     
     [self.contentView insertSubview:self.photoTitle aboveSubview:self.photoTitleBackgroundView];
@@ -85,7 +85,9 @@
         _item = item;
         
         Photo *photo = (Photo *)item;
-        [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
+        [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            
+        }];
         [self setText:[self photoCellTitle]];
     }
 }

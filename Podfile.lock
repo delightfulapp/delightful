@@ -37,7 +37,7 @@ DEPENDENCIES:
   - OCMock (~> 2.2.1)
   - OGCoreDataStack
   - Overcoat (= 1.1)
-  - SDWebImage
+  - SDWebImage (= 3.5)
   - UIColor+MLPFlatColors (~> 1.0)
   - UIImageViewModeScaleAspect
   - UIView+AutoLayout

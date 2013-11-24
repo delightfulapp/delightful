@@ -10,8 +10,6 @@
 
 #import <UIView+AutoLayout.h>
 
-#import <AMBlurView.h>
-
 #import "UIView+Additionals.h"
 
 #import "UIViewController+DelightfulViewControllers.h"
@@ -19,10 +17,6 @@
 @interface AlbumSectionHeaderView ()
 
 @property (nonatomic, weak) UIImageView *arrowImage;
-
-@property (nonatomic, weak) CAShapeLayer *lineLayer;
-
-@property (nonatomic, weak) CAShapeLayer *lineShadowLayer;
 
 @property (nonatomic, assign) CGSize contentViewSize;
 
@@ -50,30 +44,6 @@
     return _arrowImage;
 }
 
-- (CAShapeLayer *)lineLayer {
-    if (!_lineLayer) {
-        CAShapeLayer *layer = [CAShapeLayer layer];
-        [layer setStrokeColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000].CGColor];
-        [layer setFillColor:[UIColor clearColor].CGColor];
-        [layer setLineWidth:0.5];
-        [self.layer addSublayer:layer];
-        _lineLayer = layer;
-    }
-    return _lineLayer;
-}
-
-- (CAShapeLayer *)lineShadowLayer {
-    if (!_lineShadowLayer) {
-        CAShapeLayer *layer = [CAShapeLayer layer];
-        [layer setStrokeColor:[UIColor blackColor].CGColor];
-        [layer setFillColor:[UIColor clearColor].CGColor];
-        [layer setLineWidth:0.5];
-        [self.layer addSublayer:layer];
-        _lineShadowLayer = layer;
-    }
-    return _lineShadowLayer;
-}
-
 - (void)setupConstrains {
     CGFloat visibleWidth = [UIViewController leftViewControllerVisibleWidth];
     CGFloat offset = visibleWidth - CGRectGetWidth(self.frame) - 20;
@@ -90,8 +60,6 @@
     [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
     [self.blurView autoCenterInSuperview];
 }
-
-#pragma mark - Layout subviews
 
 - (void)layoutSubviews {
     [super layoutSubviews];
@@ -121,6 +89,32 @@
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:text attributes:@{NSShadowAttributeName: shadow}];
     
     [self.locationLabel setAttributedText:attributedString];
+}
+
+#pragma mark - Getters
+
+- (CAShapeLayer *)lineLayer {
+    if (!_lineLayer) {
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setStrokeColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000].CGColor];
+        [layer setFillColor:[UIColor clearColor].CGColor];
+        [layer setLineWidth:0.5];
+        [self.layer addSublayer:layer];
+        _lineLayer = layer;
+    }
+    return _lineLayer;
+}
+
+- (CAShapeLayer *)lineShadowLayer {
+    if (!_lineShadowLayer) {
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setStrokeColor:[UIColor blackColor].CGColor];
+        [layer setFillColor:[UIColor clearColor].CGColor];
+        [layer setLineWidth:0.5];
+        [self.layer addSublayer:layer];
+        _lineShadowLayer = layer;
+    }
+    return _lineShadowLayer;
 }
 
 @end

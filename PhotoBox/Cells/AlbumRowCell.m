@@ -34,7 +34,7 @@
     
     [self setupSelectedViewConstrains];
     
-    [self.textLabel setBackgroundColor:[UIColor albumsBackgroundColor]];
+    [self.textLabel setBackgroundColor:[UIColor clearColor]];
     [self.textLabel setNumberOfLines:4];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
     
@@ -59,7 +59,8 @@
         Album *album = (Album *)item;
         NSURL *imageURL = [album coverURL];
         
-        [self.cellImageView setImageWithURL:imageURL placeholderImage:nil];
+        [self.cellImageView setImageWithURL:imageURL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        }];
         
         [self.textLabel setAttributedText:[self attributedTextForAlbumName:album.name count:album.count.intValue]];
     }

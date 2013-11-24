@@ -39,8 +39,12 @@
     self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
+    self.numberOfColumns = 0;
     self.previousPage = 0;
     self.justOpened = YES;
+    
+    ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    [self.collectionView registerClass:[PhotoZoomableCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
 	
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
@@ -64,6 +68,9 @@
     [self.collectionView setBackgroundView:self.darkBackgroundView];
     
     [self insertBackgroundSnapshotView];
+    
+    self.resourceType = PhotoResource;
+    self.relationshipKeyPathWithItem = @"albums";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -131,16 +138,8 @@
     // refresh control not needed
 }
 
-- (ResourceType)resourceType {
-    return PhotoResource;
-}
-
 - (NSString *)resourceId {
     return self.item.itemId;
-}
-
-- (NSString *)relationshipKeyPathWithItem {
-    return @"albums";
 }
 
 - (Class)resourceClass {

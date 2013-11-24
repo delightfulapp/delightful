@@ -30,6 +30,8 @@
 
 #import "StickyHeaderFlowLayout.h"
 
+#import "PanelsContainerViewController.h"
+
 #import "Album.h"
 
 #import <JASidePanelController.h>
@@ -47,7 +49,10 @@
         return YES;
     }
     
-    JASidePanelController *rootViewController = [[JASidePanelController alloc] init];
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
+    
+    PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:rootViewController];
@@ -196,7 +201,7 @@ static BOOL isRunningTests(void)
 
 #pragma mark - Intro
 
-- (void)showUpdateInfoViewIfNeeded {
+- (BOOL)showUpdateInfoViewIfNeeded {
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
         if (![currentVersion isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY]]) {
@@ -205,9 +210,11 @@ static BOOL isRunningTests(void)
                 [[UIWindow topMostViewController] presentViewController:intro animated:YES completion:nil];
                 [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
                 [[NSUserDefaults standardUserDefaults] synchronize];
+                return YES;
             }
         }
     }
+    return NO;
 }
 
 - (BOOL)versionInfOPlistExistsForVersion:(NSString *)version {
