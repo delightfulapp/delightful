@@ -149,15 +149,13 @@
     if (_item != item) {
         _item = item;
         
-        self.predicate = nil;
-        
-        self.page = 1;
-        
-        if (!self.dataSource.fetchedResultsController) {
-            self.dataSource.fetchedResultsController = self.fetchedResultsController;
+        if ([self.dataSource numberOfItems]>0) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         }
 
-        [self.dataSource.fetchedResultsController.fetchRequest setPredicate:self.predicate];
+        self.predicate = nil;
+        self.fetchRequest = nil;
+        self.dataSource.fetchedResultsController = self.fetchedResultsController;
         
         [self refresh];
     }

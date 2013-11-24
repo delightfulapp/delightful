@@ -185,6 +185,7 @@
 
 - (NSFetchRequest *)fetchRequest {
     if (!_fetchRequest) {
+        NSLog(@"new fetch request");
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
         [_fetchRequest setSortDescriptors:self.sortDescriptors];
         if (self.predicate) {
@@ -198,6 +199,7 @@
 - (NSPredicate *)predicate {
     if (self.item && ![self isGallery]) {
         if (!_predicate) {
+            NSLog(@"new predicate");
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }
         return _predicate;
@@ -206,6 +208,7 @@
 }
 
 - (PhotoBoxFetchedResultsController *)fetchedResultsController {
+    NSLog(@"new fetched results controller");
     PhotoBoxFetchedResultsController *fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
     [fetchedResultsController setObjectClass:self.resourceClass];
     [fetchedResultsController setItemKey:self.displayedItemIdKey];
@@ -269,6 +272,9 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
+                                               // not sure why context save changes not propagated to data source's fetched result controller's delegate. Let's just performFetch here again.
+                                               [self.dataSource.fetchedResultsController performFetch:NULL];
+                                               [self.collectionView reloadData];
                                                PBX_LOG(@"Received %lu %@. Total = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
@@ -291,7 +297,6 @@
 - (void)fetchMore {
     if (!self.isFetching) {
         NSInteger count = [self.dataSource numberOfItems];
-        PBX_LOG(@"Photos count = %ld", (long)count);
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
@@ -306,7 +311,6 @@
 }
 
 - (void)loadItemsFromCoreData {
-    PBX_LOG(@"");
     [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
     [self.dataSource.fetchedResultsController performFetch:NULL];
     PBX_LOG(@"Reloading coleection view");

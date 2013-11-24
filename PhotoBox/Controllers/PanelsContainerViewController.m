@@ -46,7 +46,6 @@
 }
 
 - (void)toggleDataSourcePaused {
-    NSLog(@"toggle data source paused");
     PhotoBoxViewController *visibleController, *hiddenController;
     
     PhotoBoxViewController *centerPanel = (PhotoBoxViewController *)((UINavigationController *)self.centerPanel).viewControllers[0];

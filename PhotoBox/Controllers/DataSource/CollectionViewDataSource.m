@@ -29,6 +29,7 @@
         
         _objectChanges = [NSMutableArray array];
         _sectionChanges = [NSMutableArray array];
+        _paused = YES;
     }
     return self;
 }
@@ -52,13 +53,11 @@
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     // There's a bug that causes the app crashes occasionally in photos page. The collection view receives layout attributes for a cell with an index path that does not exist. So we need to invalidate the layout (StickyHeaderFlowLayout in this case) according to http://stackoverflow.com/a/19378624
     [collectionView.collectionViewLayout invalidateLayout];
-    NSLog(@"Sections: %d", self.fetchedResultsController.sections.count);
     return self.fetchedResultsController.sections.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
-    [cell.cellImageView setImage:nil];
     id item = [self itemAtIndexPath:indexPath];
     self.configureCellBlock(cell, item);
     return cell;
@@ -272,13 +271,17 @@
 
 - (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController
 {
-    _fetchedResultsController = fetchedResultsController;
-    fetchedResultsController.delegate = self;
-    [fetchedResultsController performFetch:NULL];
+    if (_fetchedResultsController != fetchedResultsController) {
+        _fetchedResultsController = fetchedResultsController;
+        _paused = NO;
+        _fetchedResultsController.delegate = self;
+        [_fetchedResultsController performFetch:NULL];
+        CLS_LOG(@"[%@] Reloading collection view", self.debugName);
+        [self.collectionView reloadData];
+    }
 }
 
-- (void)setPaused:(BOOL)paused
-{
+- (void)setPaused:(BOOL)paused {
     if (_paused != paused) {
         _paused = paused;
         if (paused) {

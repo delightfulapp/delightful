@@ -154,6 +154,7 @@
 - (UIView *)blurView {
     if (!_blurView) {
         _blurView = [self addSubviewClass:[UIView class]];
+        [_blurView setBackgroundColor:[UIColor whiteColor]];
         [_blurView setUserInteractionEnabled:YES];
     }
     return _blurView;

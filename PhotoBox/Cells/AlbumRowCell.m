@@ -59,7 +59,8 @@
         Album *album = (Album *)item;
         NSURL *imageURL = [album coverURL];
         
-        [self.cellImageView setImageWithURL:imageURL placeholderImage:nil];
+        [self.cellImageView setImageWithURL:imageURL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        }];
         
         [self.textLabel setAttributedText:[self attributedTextForAlbumName:album.name count:album.count.intValue]];
     }

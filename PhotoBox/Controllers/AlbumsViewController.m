@@ -123,6 +123,10 @@
     [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0)];
 }
 
+- (void)setupPinchGesture {
+    // override with empty implementation because we don't need the albums pinchable.
+}
+
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {

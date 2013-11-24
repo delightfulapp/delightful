@@ -61,9 +61,7 @@
     [photosViewController setItem:[Album allPhotosAlbum]];
     
     AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    albumsViewController.disableFetchOnLoad = YES;
     TagsViewController *tagsViewController = [[TagsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    tagsViewController.disableFetchOnLoad = YES;
     AlbumsTagsViewController *albumsTagsViewController = [[AlbumsTagsViewController alloc] init];
     [albumsTagsViewController setViewControllers:@[albumsViewController, tagsViewController]];
     

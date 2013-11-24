@@ -85,7 +85,9 @@
         _item = item;
         
         Photo *photo = (Photo *)item;
-        [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil];
+        [self.cellImageView setImageWithURL:[NSURL URLWithString:photo.thumbnailImage.urlString] placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            
+        }];
         [self setText:[self photoCellTitle]];
     }
 }
