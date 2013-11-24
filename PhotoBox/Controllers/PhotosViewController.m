@@ -76,6 +76,7 @@
             [panel addObserver:self forKeyPath:@"state" options:0 context:nil];
         }
     }
+    [self showPinchGestureTipIfNeeded];
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
@@ -136,6 +137,16 @@
 - (void)didChangeNumberOfColumns {
     for (PhotoCell *cell in self.collectionView.visibleCells) {
         [cell setNumberOfColumns:self.numberOfColumns];
+    }
+}
+
+- (void)showPinchGestureTipIfNeeded {
+    BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+    if (!hasShownTip) {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
+        [[NPRNotificationManager sharedManager] postNotificationWithImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Try pinch in and out on this screen", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
     }
 }
 
