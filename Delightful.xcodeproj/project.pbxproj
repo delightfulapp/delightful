@@ -53,6 +53,7 @@
 		0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
 		0334EBBD1842018D001B262F /* intro0.0.5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBB1842018D001B262F /* intro0.0.5.jpg */; };
 		0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */; };
+		0334EBC01842093A001B262F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
@@ -219,6 +220,7 @@
 		0334EBB91841FDC8001B262F /* 0.0.5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.5.plist; path = PhotoBox/IntroFiles/0.0.5.plist; sourceTree = "<group>"; };
 		0334EBBB1842018D001B262F /* intro0.0.5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro0.0.5.jpg; sourceTree = "<group>"; };
 		0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "intro0.0.5@2x.jpg"; sourceTree = "<group>"; };
+		0334EBBF1842093A001B262F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
 		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
@@ -554,6 +556,7 @@
 		032CBB8317D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBBF1842093A001B262F /* Main.storyboard */,
 				032CBB8C17D0BDF3001205B1 /* AppDelegate.h */,
 				032CBB8D17D0BDF3001205B1 /* AppDelegate.m */,
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
@@ -906,6 +909,7 @@
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
+				0334EBC01842093A001B262F /* Main.storyboard in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
 				032222B31814CBF0004F3830 /* npr_notification_image_success.png in Resources */,

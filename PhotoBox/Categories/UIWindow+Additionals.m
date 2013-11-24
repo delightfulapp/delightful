@@ -8,6 +8,8 @@
 
 #import "UIWindow+Additionals.h"
 
+#import "PanelsContainerViewController.h"
+
 @implementation UIWindow (Additionals)
 
 + (UIViewController *)rootViewController {
@@ -15,11 +17,13 @@
 }
 
 + (UIViewController *)topMostViewController {
-    UIViewController *root = [UIWindow rootViewController];
-    if ([root isKindOfClass:[UINavigationController class]]) {
-        root = ((UINavigationController *)root).visibleViewController;
+    id topMostViewController;
+    PanelsContainerViewController *root = (PanelsContainerViewController *)[UIWindow rootViewController];
+    UINavigationController *rootNavigationController = (UINavigationController *)root.centerPanel;
+    if ([rootNavigationController isKindOfClass:[UINavigationController class]]) {
+        topMostViewController = ((UINavigationController *)rootNavigationController).viewControllers[0];
     }
-    return root;
+    return topMostViewController;
 }
 
 + (UIWindow *)appWindow {

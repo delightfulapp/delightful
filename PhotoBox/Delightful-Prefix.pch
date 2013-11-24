@@ -31,3 +31,5 @@
 
     #import "UIColor+DelightfulColors.h"
 #endif
+
+#define EXP_SHORTHAND

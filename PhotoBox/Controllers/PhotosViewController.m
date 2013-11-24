@@ -13,6 +13,7 @@
 #import "Tag.h"
 
 #import "LocationManager.h"
+#import "ConnectionManager.h"
 
 #import "PhotosSectionHeaderView.h"
 #import "PhotoCell.h"
@@ -141,12 +142,17 @@
 }
 
 - (void)showPinchGestureTipIfNeeded {
-    BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
-    if (!hasShownTip) {
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        [[NPRNotificationManager sharedManager] postNotificationWithImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Try pinch in and out on this screen", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
+    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+        if (!self.presentedViewController) {
+            BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+            if (!hasShownTip) {
+                
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                [[NPRNotificationManager sharedManager] postNotificationWithImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Try pinch in and out on this screen", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
+            }
+        }
     }
 }
 

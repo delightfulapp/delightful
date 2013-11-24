@@ -49,6 +49,9 @@
         return YES;
     }
     
+    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+    //[[NSUserDefaults standardUserDefaults] synchronize];
+    
     PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
