@@ -301,7 +301,6 @@
 
 - (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController
 {
-    NSAssert(_fetchedResultsController == nil, @"TODO: you can currently only assign this property once");
     _fetchedResultsController = fetchedResultsController;
     fetchedResultsController.delegate = self;
     [fetchedResultsController performFetch:NULL];
@@ -312,6 +311,7 @@
     _paused = paused;
     if (paused) {
         CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+        [self.fetchedResultsController clearCache];
         self.fetchedResultsController.delegate = nil;
     } else {
         self.fetchedResultsController.delegate = self;

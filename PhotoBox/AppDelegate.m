@@ -30,6 +30,8 @@
 
 #import "StickyHeaderFlowLayout.h"
 
+#import "PanelsContainerViewController.h"
+
 #import "Album.h"
 
 #import <JASidePanelController.h>
@@ -47,7 +49,7 @@
         return YES;
     }
     
-    JASidePanelController *rootViewController = [[JASidePanelController alloc] init];
+    PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:rootViewController];

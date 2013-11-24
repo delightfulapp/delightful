@@ -206,12 +206,10 @@
 }
 
 - (PhotoBoxFetchedResultsController *)fetchedResultsController {
-    if (!_fetchedResultsController) {
-        _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
-        [_fetchedResultsController setObjectClass:self.resourceClass];
-        [_fetchedResultsController setItemKey:self.displayedItemIdKey];
-    }
-    return _fetchedResultsController;
+    PhotoBoxFetchedResultsController *fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+    [fetchedResultsController setObjectClass:self.resourceClass];
+    [fetchedResultsController setItemKey:self.displayedItemIdKey];
+    return fetchedResultsController;
 }
 
 - (NSString *)displayedItemIdKey {
@@ -220,7 +218,7 @@
 }
 
 - (NSArray *)items {
-    return self.fetchedResultsController.fetchedObjects;
+    return self.dataSource.fetchedResultsController.fetchedObjects;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -505,9 +503,9 @@
             if (userLoggedIn) {
                 [self fetchResource];
             } else {
+                self.dataSource.fetchedResultsController = nil;
                 self.dataSource = nil;
                 self.page = 1;
-                self.fetchedResultsController = nil;
                 self.fetchRequest = nil;
                 self.predicate = nil;
                 self.mainContext = nil;

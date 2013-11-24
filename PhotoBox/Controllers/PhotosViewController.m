@@ -61,8 +61,6 @@
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
-    
-    
     //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
 }
 
@@ -153,6 +151,11 @@
         
         self.predicate = nil;
         
+        self.page = 1;
+        
+        if (!self.dataSource.fetchedResultsController) {
+            self.dataSource.fetchedResultsController = self.fetchedResultsController;
+        }
         [self.dataSource.fetchedResultsController.fetchRequest setPredicate:self.predicate];
         
         [self refresh];
@@ -291,23 +294,6 @@
     if (placemark) {
         [self.placemarkDictionary setObject:placemark forKey:@(section)];
         [[NSNotificationCenter defaultCenter] postNotificationName:PhotoBoxLocationPlacemarkDidFetchNotification object:@{@"placemark": placemark, @"section":@(section)}];
-    }
-}
-
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:@"state"]) {
-        JASidePanelController *side = [[self class] panelViewController];
-        switch (side.state) {
-            case JASidePanelCenterVisible:
-                [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
-                break;
-            case JASidePanelLeftVisible:
-                [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-                break;
-            default:
-                break;
-        }
     }
 }
 
