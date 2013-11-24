@@ -12,6 +12,14 @@
 
 #import "TagRowCell.h"
 
+#import "PhotosViewController.h"
+
+#import "UIViewController+DelightfulViewControllers.h"
+
+#import <JASidePanelController.h>
+
+#import "AppDelegate.h"
+
 @interface TagsViewController ()
 
 @end
@@ -96,6 +104,24 @@
     } else {
         self.title = [NSString stringWithFormat:@"%@ (%d/%d)", NSLocalizedString(@"Tags", nil), count, max];
     }
+}
+
+#pragma mark - Collection view delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    Tag *tag = (Tag *)[self.dataSource itemAtIndexPath:indexPath];
+    [self loadPhotosInTag:tag];
+}
+
+- (void)loadPhotosInTag:(Tag *)tag {
+    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
+    [photosViewController setItem:tag];
+    [photosViewController setTitle:tag.tagId];
+    [photosViewController setRelationshipKeyPathWithItem:@"tags"];
+    [photosViewController setResourceType:PhotoWithTagsResource];
+    
+    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
+    [panelController toggleLeftPanel:nil];
 }
 
 #pragma mark - Collection View Flow Layout Delegate

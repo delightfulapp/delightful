@@ -138,6 +138,8 @@
     PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
     [photosViewController setItem:album];
     [photosViewController setTitle:album.name];
+    [photosViewController setRelationshipKeyPathWithItem:@"albums"];
+    [photosViewController setResourceType:PhotoResource];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];

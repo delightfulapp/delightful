@@ -15,6 +15,8 @@
 #import "Photo.h"
 #import "Tag.h"
 
+#import <objc/runtime.h>
+
 @interface PhotoBoxClient ()
 
 @property (nonatomic, strong) AFOAuth1Client *oauthClient;
@@ -116,7 +118,8 @@
             case ListAction:{
                 if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize success:successBlock failure:failureBlock];
                 else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize success:successBlock failure:failureBlock];
-                if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
+                else if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
+                else if (type == PhotoWithTagsResource) [self getPhotosInTag:resourceId page:page pageSize:pageSize success:successBlock failure:failureBlock];
                 break;
             }
             default:
@@ -140,19 +143,20 @@
     }];
 }
 
-- (void)getPhotosInAlbum:(NSString *)albumId
-                    page:(int)page
-                pageSize:(int)pageSize
-                 success:(void (^)(id))successBlock
-                 failure:(void (^)(NSError *))failureBlock {
+- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    NSString *resource = nil;
+    if ([resourceClass isSubclassOfClass:Album.class]) {
+        resource = [NSString stringWithFormat:@"&%@", [self albumsQueryString:resourceId]];
+    } else if ([resourceClass isSubclassOfClass:Tag.class]) {
+        resource = [NSString stringWithFormat:@"&%@", [self tagsQueryString:resourceId]];
+    }
     
-    NSString *album = [NSString stringWithFormat:@"&%@", [self albumsQueryString:albumId]];
     NSString *sort = [self sortByQueryString:@"dateTaken,DESC"];
-    if ([albumId isEqualToString:PBX_allAlbumIdentifier]){
-        album = @"";
+    if ([resourceId isEqualToString:PBX_allAlbumIdentifier]){
+        resource = @"";
         sort = [self sortByQueryString:@"dateUploaded,DESC"];
     }
-    NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, sort, [self photoSizesString], album];
+    NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, sort, [self photoSizesString], resource];
     [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (!error) {
             successBlock(responseObject);
@@ -160,6 +164,22 @@
             failureBlock(error);
         }
     }];
+}
+
+- (void)getPhotosInAlbum:(NSString *)albumId
+                    page:(int)page
+                pageSize:(int)pageSize
+                 success:(void (^)(id))successBlock
+                 failure:(void (^)(NSError *))failureBlock {
+    [self getPhotosInResource:Album.class resourceId:albumId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+}
+
+- (void)getPhotosInTag:(NSString *)tagId
+                    page:(int)page
+                pageSize:(int)pageSize
+                 success:(void (^)(id))successBlock
+                 failure:(void (^)(NSError *))failureBlock {
+    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
 - (void)getTagsWithSuccess:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
@@ -228,6 +248,10 @@ NSString *stringWithActionType(ActionType input) {
 
 - (NSString *)albumsQueryString:(NSString *)album {
     return AFQueryStringFromParametersWithEncoding(@{@"album": album}, NSUTF8StringEncoding);
+}
+
+- (NSString *)tagsQueryString:(NSString *)tag {
+    return AFQueryStringFromParametersWithEncoding(@{@"tags": tag}, NSUTF8StringEncoding);
 }
 
 #pragma mark - Oauth1Client

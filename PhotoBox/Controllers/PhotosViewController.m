@@ -10,6 +10,7 @@
 
 #import "Album.h"
 #import "Photo.h"
+#import "Tag.h"
 
 #import "LocationManager.h"
 
@@ -62,6 +63,9 @@
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
     //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
+    
+    self.resourceType = PhotoResource;
+    self.relationshipKeyPathWithItem = @"albums";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -113,20 +117,12 @@
     return @"photoSection";
 }
 
-- (ResourceType)resourceType {
-    return PhotoResource;
-}
-
 - (Class)resourceClass {
     return [Photo class];
 }
 
 - (NSString *)resourceId {
     return self.item.itemId;
-}
-
-- (NSString *)relationshipKeyPathWithItem {
-    return @"albums";
 }
 
 #pragma mark - Did something
@@ -163,9 +159,16 @@
 
 - (void)setPhotosCount:(int)count max:(int)max{
     NSString *title = NSLocalizedString(@"Photos", nil);
-    Album *album = (Album *)self.item;
-    if (album) {
-        title = album.name;
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *album = (Album *)self.item;
+        if (album) {
+            title = album.name;
+        }
+    } else if ([self.item isKindOfClass:[Tag class]]) {
+        Tag *tag = (Tag *)self.item;
+        if (tag) {
+            title = tag.tagId;
+        }
     }
     if (count == 0) {
         self.title = title;
