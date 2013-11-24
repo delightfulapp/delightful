@@ -43,13 +43,19 @@
 		032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8617D0BDF3001205B1 /* InfoPlist.strings */; };
 		032CBB8A17D0BDF3001205B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8917D0BDF3001205B1 /* main.m */; };
 		032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8D17D0BDF3001205B1 /* AppDelegate.m */; };
-		032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8F17D0BDF3001205B1 /* Main.storyboard */; };
 		032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB9517D0BDF3001205B1 /* Images.xcassets */; };
 		032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB9C17D0BDF3001205B1 /* XCTest.framework */; };
 		032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
+		0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
+		0334EBB81841DF37001B262F /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
+		0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
+		0334EBBD1842018D001B262F /* intro0.0.5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBB1842018D001B262F /* intro0.0.5.jpg */; };
+		0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */; };
+		0334EBC01842093A001B262F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
+		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
 		0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */; };
 		0348D23017DA263500C932BA /* Crashlytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0348D22F17DA263500C932BA /* Crashlytics.plist */; };
@@ -84,9 +90,19 @@
 		036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF369181FBA67002E9FCB /* 0.0.4.plist */; };
 		036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */; };
 		036DF36E181FBB9E002E9FCB /* intro0.0.4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */; };
+		036DF3741820D05E002E9FCB /* PhotoSectionHeaderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */; };
 		036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */; };
 		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
+		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
+		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
+		038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
+		038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */; };
+		038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
+		038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
+		038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
+		038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
+		038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */; };
 		0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
@@ -123,8 +139,9 @@
 		03DD04DF17F9C479001FB8A5 /* AlbumModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */; };
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
+		03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
+		2E15CC58E2DA463A9B704097 /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1644D68684E1494081588FE9 /* libPods-DelightfulTests.a */; };
 		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
-		A2569D1E0C8F41A1B5DFA12B /* libPods-PhotoBoxTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,20 +202,28 @@
 		032CBB7D17D0BDF3001205B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		032CBB8117D0BDF3001205B1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		032CBB8517D0BDF3001205B1 /* PhotoBox-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PhotoBox-Info.plist"; sourceTree = "<group>"; };
+		032CBB8517D0BDF3001205B1 /* Delightful-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Delightful-Info.plist"; sourceTree = "<group>"; };
 		032CBB8717D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		032CBB8917D0BDF3001205B1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		032CBB8B17D0BDF3001205B1 /* PhotoBox-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PhotoBox-Prefix.pch"; sourceTree = "<group>"; };
+		032CBB8B17D0BDF3001205B1 /* Delightful-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Delightful-Prefix.pch"; sourceTree = "<group>"; };
 		032CBB8C17D0BDF3001205B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		032CBB8D17D0BDF3001205B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		032CBB9017D0BDF3001205B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		032CBB9517D0BDF3001205B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		032CBB9B17D0BDF3001205B1 /* PhotoBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PhotoBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelightfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB9C17D0BDF3001205B1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		032CBBA417D0BDF3001205B1 /* PhotoBoxTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PhotoBoxTests-Info.plist"; sourceTree = "<group>"; };
+		032CBBA417D0BDF3001205B1 /* DelightfulTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DelightfulTests-Info.plist"; sourceTree = "<group>"; };
 		032CBBA617D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0334EBB318417AB8001B262F /* PanelsContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PanelsContainerViewController.h; path = PhotoBox/Controllers/PanelsContainerViewController.h; sourceTree = "<group>"; };
+		0334EBB418417AB8001B262F /* PanelsContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PanelsContainerViewController.m; path = PhotoBox/Controllers/PanelsContainerViewController.m; sourceTree = "<group>"; };
+		0334EBB61841DF37001B262F /* TagRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagRowCell.h; path = PhotoBox/Cells/TagRowCell.h; sourceTree = "<group>"; };
+		0334EBB71841DF37001B262F /* TagRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagRowCell.m; path = PhotoBox/Cells/TagRowCell.m; sourceTree = "<group>"; };
+		0334EBB91841FDC8001B262F /* 0.0.5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.5.plist; path = PhotoBox/IntroFiles/0.0.5.plist; sourceTree = "<group>"; };
+		0334EBBB1842018D001B262F /* intro0.0.5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro0.0.5.jpg; sourceTree = "<group>"; };
+		0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "intro0.0.5@2x.jpg"; sourceTree = "<group>"; };
+		0334EBBF1842093A001B262F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
+		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
 		0348D22317DA208000C932BA /* MWInterpollationMotionEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWInterpollationMotionEffect.h; sourceTree = "<group>"; };
 		0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWInterpollationMotionEffect.m; sourceTree = "<group>"; };
 		0348D22517DA208000C932BA /* UIView+NGAParallaxMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NGAParallaxMotion.h"; sourceTree = "<group>"; };
@@ -258,8 +283,27 @@
 		036DF369181FBA67002E9FCB /* 0.0.4.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.4.plist; path = PhotoBox/IntroFiles/0.0.4.plist; sourceTree = "<group>"; };
 		036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro0.0.4.jpg; sourceTree = "<group>"; };
 		036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "intro0.0.4@2x.jpg"; sourceTree = "<group>"; };
+		036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSectionHeaderViewTests.m; sourceTree = "<group>"; };
 		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		03866321184072BA006C76DE /* AlbumsTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsTagsViewController.h; path = PhotoBox/Controllers/AlbumsTagsViewController.h; sourceTree = "<group>"; };
+		03866322184072BA006C76DE /* AlbumsTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsTagsViewController.m; path = PhotoBox/Controllers/AlbumsTagsViewController.m; sourceTree = "<group>"; };
+		03866324184073D7006C76DE /* DelightfulTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulTabBar.h; path = PhotoBox/Views/DelightfulTabBar.h; sourceTree = "<group>"; };
+		03866325184073D7006C76DE /* DelightfulTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulTabBar.m; path = PhotoBox/Views/DelightfulTabBar.m; sourceTree = "<group>"; };
+		038663271840C57C006C76DE /* UIColor+DelightfulColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+DelightfulColors.h"; sourceTree = "<group>"; };
+		038663281840C57C006C76DE /* UIColor+DelightfulColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+DelightfulColors.m"; sourceTree = "<group>"; };
+		038EC593183D5FB100AFEA53 /* DelightfulRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulRowCell.h; path = PhotoBox/Cells/DelightfulRowCell.h; sourceTree = "<group>"; };
+		038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulRowCell.m; path = PhotoBox/Cells/DelightfulRowCell.m; sourceTree = "<group>"; };
+		038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionViewCell+Additionals.h"; sourceTree = "<group>"; };
+		038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+Additionals.m"; sourceTree = "<group>"; };
+		038EC59E183D806B00AFEA53 /* AlbumRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumRowCell.h; path = PhotoBox/Cells/AlbumRowCell.h; sourceTree = "<group>"; };
+		038EC59F183D806B00AFEA53 /* AlbumRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumRowCell.m; path = PhotoBox/Cells/AlbumRowCell.m; sourceTree = "<group>"; };
+		038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumSectionHeaderView.h; path = PhotoBox/Cells/AlbumSectionHeaderView.h; sourceTree = "<group>"; };
+		038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumSectionHeaderView.m; path = PhotoBox/Cells/AlbumSectionHeaderView.m; sourceTree = "<group>"; };
+		038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DelightfulViewControllers.h"; sourceTree = "<group>"; };
+		038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DelightfulViewControllers.m"; sourceTree = "<group>"; };
+		038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Additionals.h"; sourceTree = "<group>"; };
+		038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Additionals.m"; sourceTree = "<group>"; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
 		0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxRequestOperation.m; path = PhotoBox/Networking/PhotoBoxRequestOperation.m; sourceTree = "<group>"; };
 		0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxRequestOperationTests.m; sourceTree = "<group>"; };
@@ -316,8 +360,11 @@
 		03DD04DE17F9C479001FB8A5 /* AlbumModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumModelTests.m; sourceTree = "<group>"; };
 		03DD04E017F9C58B001FB8A5 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
+		03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewSelectCellGestureRecognizer.h; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.h; sourceTree = "<group>"; };
+		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
+		1644D68684E1494081588FE9 /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DelightfulTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.xcconfig"; path = "Pods/Pods-DelightfulTests.xcconfig"; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoBoxTests.xcconfig"; path = "Pods/Pods-PhotoBoxTests.xcconfig"; sourceTree = SOURCE_ROOT; };
 		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1D8E459750D4D6DBD1D4F59 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E845C4361E114610AD496CB5 /* libPods-PhotoBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -350,7 +397,7 @@
 				032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */,
 				032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
-				A2569D1E0C8F41A1B5DFA12B /* libPods-PhotoBoxTests.a in Frameworks */,
+				2E15CC58E2DA463A9B704097 /* libPods-DelightfulTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +458,14 @@
 				0398D7711810032A00FDD83B /* UIWindow+Additionals.m */,
 				03D972A51811865A008A087B /* Photo+Additionals.h */,
 				03D972A61811865A008A087B /* Photo+Additionals.m */,
+				038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */,
+				038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */,
+				038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */,
+				038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */,
+				038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */,
+				038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */,
+				038663271840C57C006C76DE /* UIColor+DelightfulColors.h */,
+				038663281840C57C006C76DE /* UIColor+DelightfulColors.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -457,12 +512,12 @@
 				03108FF017D0FED40075F9D8 /* Categories */,
 				03108FE717D0FE130075F9D8 /* Models */,
 				03108FDB17D0F3FA0075F9D8 /* External */,
-				032CBB8317D0BDF3001205B1 /* PhotoBox */,
-				032CBBA217D0BDF3001205B1 /* PhotoBoxTests */,
+				032CBB8317D0BDF3001205B1 /* Delightful */,
+				032CBBA217D0BDF3001205B1 /* DelightfulTests */,
 				032CBB7C17D0BDF3001205B1 /* Frameworks */,
 				032CBB7B17D0BDF3001205B1 /* Products */,
 				2D8562143BB5431496ECF57D /* Pods.xcconfig */,
-				7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */,
+				2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -470,7 +525,7 @@
 			isa = PBXGroup;
 			children = (
 				032CBB7A17D0BDF3001205B1 /* Delightful.app */,
-				032CBB9B17D0BDF3001205B1 /* PhotoBoxTests.xctest */,
+				032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -493,36 +548,38 @@
 				A1D8E459750D4D6DBD1D4F59 /* libPods.a */,
 				A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */,
 				E845C4361E114610AD496CB5 /* libPods-PhotoBox.a */,
+				1644D68684E1494081588FE9 /* libPods-DelightfulTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		032CBB8317D0BDF3001205B1 /* PhotoBox */ = {
+		032CBB8317D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBBF1842093A001B262F /* Main.storyboard */,
 				032CBB8C17D0BDF3001205B1 /* AppDelegate.h */,
 				032CBB8D17D0BDF3001205B1 /* AppDelegate.m */,
-				032CBB8F17D0BDF3001205B1 /* Main.storyboard */,
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
 				032CBB8417D0BDF3001205B1 /* Supporting Files */,
 			);
+			name = Delightful;
 			path = PhotoBox;
 			sourceTree = "<group>";
 		};
 		032CBB8417D0BDF3001205B1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				032CBB8517D0BDF3001205B1 /* PhotoBox-Info.plist */,
+				032CBB8517D0BDF3001205B1 /* Delightful-Info.plist */,
 				032CBB8617D0BDF3001205B1 /* InfoPlist.strings */,
 				032CBB8917D0BDF3001205B1 /* main.m */,
-				032CBB8B17D0BDF3001205B1 /* PhotoBox-Prefix.pch */,
+				032CBB8B17D0BDF3001205B1 /* Delightful-Prefix.pch */,
 				0310903C17D103780075F9D8 /* Constants.h */,
 				0348D22F17DA263500C932BA /* Crashlytics.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		032CBBA217D0BDF3001205B1 /* PhotoBoxTests */ = {
+		032CBBA217D0BDF3001205B1 /* DelightfulTests */ = {
 			isa = PBXGroup;
 			children = (
 				032CBBA317D0BDF3001205B1 /* Supporting Files */,
@@ -539,14 +596,17 @@
 				034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */,
 				034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */,
 				03D972A018115705008A087B /* SharingTokenTests.m */,
+				036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */,
+				034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */,
 			);
+			name = DelightfulTests;
 			path = PhotoBoxTests;
 			sourceTree = "<group>";
 		};
 		032CBBA317D0BDF3001205B1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				032CBBA417D0BDF3001205B1 /* PhotoBoxTests-Info.plist */,
+				032CBBA417D0BDF3001205B1 /* DelightfulTests-Info.plist */,
 				032CBBA517D0BDF3001205B1 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -555,6 +615,8 @@
 		0337523B17D382D200928409 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */,
+				03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */,
 				0337524517D3953100928409 /* OpenInActivity.h */,
 				0337524617D3953100928409 /* OpenInActivity.m */,
 				032B0D1C17D4CF4800ABFA9F /* LocationManager.h */,
@@ -589,6 +651,10 @@
 				0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */,
 				036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */,
 				036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */,
+				03866321184072BA006C76DE /* AlbumsTagsViewController.h */,
+				03866322184072BA006C76DE /* AlbumsTagsViewController.m */,
+				0334EBB318417AB8001B262F /* PanelsContainerViewController.h */,
+				0334EBB418417AB8001B262F /* PanelsContainerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -622,6 +688,14 @@
 				035846C217D2598600E196D7 /* PhotoZoomableCell.m */,
 				0398D76D180FE55D00FDD83B /* DownloadCell.h */,
 				0398D76E180FE55D00FDD83B /* DownloadCell.m */,
+				038EC593183D5FB100AFEA53 /* DelightfulRowCell.h */,
+				038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */,
+				038EC59E183D806B00AFEA53 /* AlbumRowCell.h */,
+				038EC59F183D806B00AFEA53 /* AlbumRowCell.m */,
+				038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */,
+				038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */,
+				0334EBB61841DF37001B262F /* TagRowCell.h */,
+				0334EBB71841DF37001B262F /* TagRowCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -631,6 +705,8 @@
 			children = (
 				035846A017D1F91000E196D7 /* AlbumTitleView.h */,
 				035846A117D1F91000E196D7 /* AlbumTitleView.m */,
+				03866324184073D7006C76DE /* DelightfulTabBar.h */,
+				03866325184073D7006C76DE /* DelightfulTabBar.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -658,6 +734,8 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBBB1842018D001B262F /* intro0.0.5.jpg */,
+				0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */,
 				036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */,
 				036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */,
 				036DF364181AA60B002E9FCB /* info@2x.png */,
@@ -690,6 +768,7 @@
 		03CE50E518181CE700445084 /* IntroPlist */ = {
 			isa = PBXGroup;
 			children = (
+				0334EBB91841FDC8001B262F /* 0.0.5.plist */,
 				036DF369181FBA67002E9FCB /* 0.0.4.plist */,
 				036DF362181A850C002E9FCB /* 0.0.3.plist */,
 				03CE50E618181D1B00445084 /* 0.0.2.plist */,
@@ -748,9 +827,9 @@
 			productReference = 032CBB7A17D0BDF3001205B1 /* Delightful.app */;
 			productType = "com.apple.product-type.application";
 		};
-		032CBB9A17D0BDF3001205B1 /* PhotoBoxTests */ = {
+		032CBB9A17D0BDF3001205B1 /* DelightfulTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 032CBBAF17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBoxTests" */;
+			buildConfigurationList = 032CBBAF17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "DelightfulTests" */;
 			buildPhases = (
 				1220ACDE87AF4F8CAB118BAF /* Check Pods Manifest.lock */,
 				032CBB9717D0BDF3001205B1 /* Sources */,
@@ -763,9 +842,9 @@
 			dependencies = (
 				032CBBA117D0BDF3001205B1 /* PBXTargetDependency */,
 			);
-			name = PhotoBoxTests;
+			name = DelightfulTests;
 			productName = PhotoBoxTests;
-			productReference = 032CBB9B17D0BDF3001205B1 /* PhotoBoxTests.xctest */;
+			productReference = 032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -777,12 +856,15 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = Touches;
 				TargetAttributes = {
+					032CBB7917D0BDF3001205B1 = {
+						DevelopmentTeam = NNTV3ZQR3E;
+					};
 					032CBB9A17D0BDF3001205B1 = {
 						TestTargetID = 032CBB7917D0BDF3001205B1;
 					};
 				};
 			};
-			buildConfigurationList = 032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "PhotoBox" */;
+			buildConfigurationList = 032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "Delightful" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -796,7 +878,7 @@
 			projectRoot = "";
 			targets = (
 				032CBB7917D0BDF3001205B1 /* Delightful */,
-				032CBB9A17D0BDF3001205B1 /* PhotoBoxTests */,
+				032CBB9A17D0BDF3001205B1 /* DelightfulTests */,
 			);
 		};
 /* End PBXProject section */
@@ -809,10 +891,12 @@
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
+				0334EBBD1842018D001B262F /* intro0.0.5.jpg in Resources */,
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
 				036DF365181AA60B002E9FCB /* info@2x.png in Resources */,
 				036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */,
 				036DF36E181FBB9E002E9FCB /* intro0.0.4@2x.jpg in Resources */,
+				0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
 				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
@@ -825,10 +909,11 @@
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
-				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
+				0334EBC01842093A001B262F /* Main.storyboard in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
 				032222B31814CBF0004F3830 /* npr_notification_image_success.png in Resources */,
+				0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,
@@ -939,7 +1024,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-PhotoBoxTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Pods-DelightfulTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -951,9 +1036,12 @@
 			files = (
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
+				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
+				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
+				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
@@ -962,8 +1050,11 @@
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
+				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
+				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
+				0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
@@ -986,6 +1077,7 @@
 				03CE5103181842F200445084 /* SharerManager.m in Sources */,
 				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
+				038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				03CE50FA18183A6000445084 /* SeeThroughCircleView.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
@@ -997,12 +1089,17 @@
 				03CE50E41818148800445084 /* IntroViewController.m in Sources */,
 				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
+				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
+				038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
 				03CE50EF181829BF00445084 /* VersionNumberHeaderView.m in Sources */,
 				0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */,
 				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
+				038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */,
+				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
+				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
@@ -1013,6 +1110,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */,
+				036DF3741820D05E002E9FCB /* PhotoSectionHeaderViewTests.m in Sources */,
 				03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */,
 				035846B317D2339200E196D7 /* NSArray+AdditionalTests.m in Sources */,
 				0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */,
@@ -1044,14 +1143,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		032CBB8F17D0BDF3001205B1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				032CBB9017D0BDF3001205B1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		032CBBA517D0BDF3001205B1 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1079,6 +1170,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -1096,6 +1188,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = Delightful;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1116,6 +1209,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1126,6 +1220,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = Delightful;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1135,8 +1230,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -1145,8 +1243,8 @@
 					/Users/nico/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
-				INFOPLIST_FILE = "PhotoBox/PhotoBox-Info.plist";
+				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
+				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1174,6 +1272,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1182,9 +1281,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
@@ -1193,8 +1294,8 @@
 					/Users/nico/Documents/FacebookSDK,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
-				INFOPLIST_FILE = "PhotoBox/PhotoBox-Info.plist";
+				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
+				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1212,15 +1313,16 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "C9F8CC0F-ACD1-4A67-9CA0-3B65F115C963";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 		032CBBB017D0BDF3001205B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */;
+			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1228,8 +1330,11 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"EXP_SHORTHAND=1",
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers\"",
@@ -1246,17 +1351,19 @@
 					"\"${PODS_ROOT}/Headers/libextobjc\"",
 					"$(PROJECT_DIR)/[..]/Pods/BuildHeaders/**",
 				);
-				INFOPLIST_FILE = "PhotoBoxTests/PhotoBoxTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "PhotoBoxTests/DelightfulTests-Info.plist";
+				PRODUCT_NAME = DelightfulTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
 		};
 		032CBBB117D0BDF3001205B1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7886DE63DB6640C196C77B87 /* Pods-PhotoBoxTests.xcconfig */;
+			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1264,7 +1371,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PhotoBox/PhotoBox-Prefix.pch";
+				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers\"",
@@ -1281,9 +1388,10 @@
 					"\"${PODS_ROOT}/Headers/libextobjc\"",
 					"$(PROJECT_DIR)/[..]/Pods/BuildHeaders/**",
 				);
-				INFOPLIST_FILE = "PhotoBoxTests/PhotoBoxTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "PhotoBoxTests/DelightfulTests-Info.plist";
+				PRODUCT_NAME = DelightfulTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
@@ -1291,7 +1399,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "PhotoBox" */ = {
+		032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "Delightful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				032CBBAA17D0BDF3001205B1 /* Debug */,
@@ -1309,7 +1417,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		032CBBAF17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "PhotoBoxTests" */ = {
+		032CBBAF17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "DelightfulTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				032CBBB017D0BDF3001205B1 /* Debug */,

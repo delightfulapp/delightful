@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSInteger, ResourceType) {
     AlbumResource,
     PhotoResource,
+    PhotoWithTagsResource,
     TagResource
 };
 

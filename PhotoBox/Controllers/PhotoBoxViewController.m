@@ -53,6 +53,8 @@
     if (!self.disableFetchOnLoad) {
         [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
     }
+    
+    [self restoreContentInset];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -116,6 +118,7 @@
 }
 
 - (void)setupCollectionView {
+    [self.collectionView setDelegate:self];
     [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
@@ -182,6 +185,7 @@
 
 - (NSFetchRequest *)fetchRequest {
     if (!_fetchRequest) {
+        NSLog(@"new fetch request");
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
         [_fetchRequest setSortDescriptors:self.sortDescriptors];
         if (self.predicate) {
@@ -195,6 +199,7 @@
 - (NSPredicate *)predicate {
     if (self.item && ![self isGallery]) {
         if (!_predicate) {
+            NSLog(@"new predicate");
             _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
         }
         return _predicate;
@@ -203,12 +208,11 @@
 }
 
 - (PhotoBoxFetchedResultsController *)fetchedResultsController {
-    if (!_fetchedResultsController) {
-        _fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
-        [_fetchedResultsController setObjectClass:self.resourceClass];
-        [_fetchedResultsController setItemKey:self.displayedItemIdKey];
-    }
-    return _fetchedResultsController;
+    NSLog(@"new fetched results controller");
+    PhotoBoxFetchedResultsController *fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
+    [fetchedResultsController setObjectClass:self.resourceClass];
+    [fetchedResultsController setItemKey:self.displayedItemIdKey];
+    return fetchedResultsController;
 }
 
 - (NSString *)displayedItemIdKey {
@@ -217,7 +221,7 @@
 }
 
 - (NSArray *)items {
-    return self.fetchedResultsController.fetchedObjects;
+    return self.dataSource.fetchedResultsController.fetchedObjects;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -253,7 +257,11 @@
 #pragma mark - Connection
 
 - (void)fetchResource {
-    [self showLoadingView:YES];
+    
+    // if we show the loading view directly here, the bottom loading view position is weird because the collection view content size is not properly set yet. so we show the loading view on the next run loop.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self showLoadingView:YES];
+    });
     
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
@@ -264,14 +272,17 @@
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               PBX_LOG(@"Received %d %@. Total = %d", ((NSArray *)objects).count, NSStringFromClass(self.resourceClass), [self.dataSource numberOfItems]);
+                                               // not sure why context save changes not propagated to data source's fetched result controller's delegate. Let's just performFetch here again.
+                                               [self.dataSource.fetchedResultsController performFetch:NULL];
+                                               [self.collectionView reloadData];
+                                               PBX_LOG(@"Received %lu %@. Total = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
                                                self.isFetching = NO;
                                                
                                                [self didFetchItems];
                                                
-                                               int count = [self.dataSource numberOfItems];
+                                               NSInteger count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
@@ -285,8 +296,7 @@
 
 - (void)fetchMore {
     if (!self.isFetching) {
-        int count = [self.dataSource numberOfItems];
-        PBX_LOG(@"Photos count = %d", count);
+        NSInteger count = [self.dataSource numberOfItems];
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
@@ -301,7 +311,6 @@
 }
 
 - (void)loadItemsFromCoreData {
-    PBX_LOG(@"");
     [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
     [self.dataSource.fetchedResultsController performFetch:NULL];
     PBX_LOG(@"Reloading coleection view");
@@ -316,6 +325,11 @@
         self.totalPages = [firstObject.totalPages intValue];
         self.currentPage = [firstObject.currentPage intValue];
         self.currentRow = [firstObject.currentRow intValue];
+    } else {
+        self.totalItems = ((NSArray *)objects).count;
+        self.totalPages = 1;
+        self.currentPage = 1;
+        self.currentRow = 0;
     }
 }
 
@@ -411,6 +425,7 @@
     switch (direction) {
         case PinchIn:{
             self.numberOfColumns++;
+            self.numberOfColumns = MIN(self.numberOfColumns, 10);
             break;
         }
         case PinchOut:{
@@ -424,10 +439,14 @@
             break;
     }
     if (numCol != self.numberOfColumns) {
+        if (self.numberOfColumns == 1) {
+            [self.collectionView.collectionViewLayout invalidateLayout];
+        }
         [self.collectionView performBatchUpdates:^{
             
         } completion:^(BOOL finished) {
-            [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+            [self didChangeNumberOfColumns];
+            [self restoreContentInset];
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         }];
     }
@@ -459,18 +478,30 @@
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    if (self.numberOfColumns <= 1) {
+        return CGSizeZero;
+    }
+    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+}
+
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     CGFloat width = floorf((collectionViewWidth/(float)self.numberOfColumns));
-
     return CGSizeMake(width, width);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     if ((int)CGRectGetWidth(self.collectionView.frame)%self.numberOfColumns == 0 && self.numberOfColumns != 1) {
         return 0;
+    } else if (self.numberOfColumns == 1) {
+        return 5;
     }
     return 1;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0;
 }
 
 #pragma mark - KVO
@@ -482,9 +513,9 @@
             if (userLoggedIn) {
                 [self fetchResource];
             } else {
+                self.dataSource.fetchedResultsController = nil;
                 self.dataSource = nil;
                 self.page = 1;
-                self.fetchedResultsController = nil;
                 self.fetchRequest = nil;
                 self.predicate = nil;
                 self.mainContext = nil;

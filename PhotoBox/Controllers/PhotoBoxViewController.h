@@ -49,7 +49,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
-@property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
+@property (nonatomic, weak, readonly) PhotoBoxFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
@@ -60,6 +60,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)didFetchItems;
 - (void)setupDataSourceConfigureBlock;
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
+- (void)didChangeNumberOfColumns;
 
 - (BOOL)isGallery ;
 @end

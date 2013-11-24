@@ -15,20 +15,21 @@
     NSMutableArray *_sectionChanges;
 }
 
-@property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) id collectionView;
 
 @end
 
 @implementation CollectionViewDataSource
 
-- (id)initWithCollectionView:(UICollectionView *)collectionView {
+- (id)initWithCollectionView:(id)collectionView {
     self = [super init];
     if (self) {
         _collectionView = collectionView;
-        _collectionView.dataSource = self;
+        ((UICollectionView *)_collectionView).dataSource = self;
         
         _objectChanges = [NSMutableArray array];
         _sectionChanges = [NSMutableArray array];
+        _paused = YES;
     }
     return self;
 }
@@ -41,6 +42,8 @@
 - (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath {
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
+
+#pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
     id<NSFetchedResultsSectionInfo> section = self.fetchedResultsController.sections[sectionIndex];
@@ -55,7 +58,6 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView dequeueReusableCellWithReuseIdentifier:self.cellIdentifier forIndexPath:indexPath];
-    [cell.cellImageView setImage:nil];
     id item = [self itemAtIndexPath:indexPath];
     self.configureCellBlock(cell, item);
     return cell;
@@ -72,20 +74,6 @@
 }
 
 #pragma mark - NSFetchedResultsController
-
-//- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-//{
-//    // cache all the MTLModels so that itemAtIndexPath: will be fast
-//    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
-//        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
-//            @autoreleasepool {
-//                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
-//                [self itemAtIndexPath:indexPath];
-//            }
-//        }
-//    }
-//    [self.collectionView reloadData];
-//}
 
 - (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
            atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
@@ -133,14 +121,7 @@
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
 {
     [self.fetchedResultsController clearCache];
-    for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
-        for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
-            @autoreleasepool {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
-                [self itemAtIndexPath:indexPath];
-            }
-        }
-    }
+    [self.fetchedResultsController preLoadCache];
     CLS_LOG(@"[%@] Reloading collection view", self.debugName);
     [self.collectionView reloadData];
     return;
@@ -173,7 +154,7 @@
     if ([_objectChanges count] > 0 && [_sectionChanges count] == 0)
     {
         
-        if ([self shouldReloadCollectionViewToPreventKnownIssue] || self.collectionView.window == nil) {
+        if ([self shouldReloadCollectionViewToPreventKnownIssue] || ((UICollectionView *)self.collectionView).window == nil) {
             // This is to prevent a bug in UICollectionView from occurring.
             // The bug presents itself when inserting the first object or deleting the last object in a collection view.
             // http://stackoverflow.com/questions/12611292/uicollectionview-assertion-failure
@@ -290,24 +271,30 @@
 
 - (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController
 {
-    NSAssert(_fetchedResultsController == nil, @"TODO: you can currently only assign this property once");
-    _fetchedResultsController = fetchedResultsController;
-    fetchedResultsController.delegate = self;
-    [fetchedResultsController performFetch:NULL];
-}
-
-- (void)setPaused:(BOOL)paused
-{
-    _paused = paused;
-    if (paused) {
-        CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-        self.fetchedResultsController.delegate = nil;
-    } else {
-        self.fetchedResultsController.delegate = self;
-        [self.fetchedResultsController performFetch:NULL];
-        CLS_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+    if (_fetchedResultsController != fetchedResultsController) {
+        _fetchedResultsController = fetchedResultsController;
+        _paused = NO;
+        _fetchedResultsController.delegate = self;
+        [_fetchedResultsController performFetch:NULL];
         CLS_LOG(@"[%@] Reloading collection view", self.debugName);
         [self.collectionView reloadData];
+    }
+}
+
+- (void)setPaused:(BOOL)paused {
+    if (_paused != paused) {
+        _paused = paused;
+        if (paused) {
+            CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+            CLS_LOG(@"[%@] Before pausing. Number of fetched objects = %d", self.debugName, self.fetchedResultsController.fetchedObjects.count);
+            self.fetchedResultsController.delegate = nil;
+        } else {
+            self.fetchedResultsController.delegate = self;
+            [self.fetchedResultsController performFetch:NULL];
+            CLS_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+            CLS_LOG(@"[%@] Reloading collection view", self.debugName);
+            [self.collectionView reloadData];
+        }
     }
 }
 

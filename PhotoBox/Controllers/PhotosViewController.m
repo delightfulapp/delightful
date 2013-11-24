@@ -10,17 +10,26 @@
 
 #import "Album.h"
 #import "Photo.h"
+#import "Tag.h"
 
 #import "LocationManager.h"
+#import "ConnectionManager.h"
 
 #import "PhotosSectionHeaderView.h"
-#import "PhotoBoxCell.h"
+#import "PhotoCell.h"
 
 #import "PhotosHorizontalScrollingViewController.h"
+
+#import "CollectionViewSelectCellGestureRecognizer.h"
 
 #import "UIView+Additionals.h"
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
+
+#import <JASidePanelController.h>
+#import "UIViewController+DelightfulViewControllers.h"
+
+#import "AppDelegate.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
@@ -28,9 +37,13 @@
 @property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) NSMutableDictionary *locationDictionary;
 @property (nonatomic, strong) NSMutableDictionary *placemarkDictionary;
+@property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
+@property (nonatomic, assign) BOOL observing;
 @end
 
 @implementation PhotosViewController
+
+@synthesize item = _item;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -48,16 +61,47 @@
     [self setPhotosCount:0 max:0];
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
+    
+    [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
+    [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
+    
+    //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
+    
+    self.resourceType = PhotoResource;
+    self.relationshipKeyPathWithItem = @"albums";
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (!self.observing) {
+        self.observing = YES;
+        JASidePanelController *panel = [UIViewController panelViewController];
+        if (panel) {
+            [panel addObserver:self forKeyPath:@"state" options:0 context:nil];
+        }
+    }
+    
+    if (![((AppDelegate *)[[UIApplication sharedApplication] delegate]) showUpdateInfoViewIfNeeded]) {
+        [self showPinchGestureTipIfNeeded];
+    }
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
+        [cell setHidden:(self.numberOfColumns==1)?YES:NO];
         [cell setTitleLabelText:[item localizedDate]];
         if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
             [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
         } else {
             [cell setLocation:nil];
         }
+    };
+    return configureCell;
+}
+
+- (CollectionViewCellConfigureBlock)cellConfigureBlock {
+    void (^configureCell)(PhotoCell*, id) = ^(PhotoCell* cell, id item) {
+        [cell setItem:item];
+        [cell setNumberOfColumns:self.numberOfColumns];
     };
     return configureCell;
 }
@@ -80,10 +124,6 @@
     return @"photoSection";
 }
 
-- (ResourceType)resourceType {
-    return PhotoResource;
-}
-
 - (Class)resourceClass {
     return [Photo class];
 }
@@ -92,9 +132,7 @@
     return self.item.itemId;
 }
 
-- (NSString *)relationshipKeyPathWithItem {
-    return @"albums";
-}
+#pragma mark - Did something
 
 - (void)didFetchItems {
     int count = [self.dataSource numberOfItems];
@@ -102,18 +140,64 @@
     [self getLocationForEachSection];
 }
 
+- (void)didChangeNumberOfColumns {
+    for (PhotoCell *cell in self.collectionView.visibleCells) {
+        [cell setNumberOfColumns:self.numberOfColumns];
+    }
+}
+
+- (void)showPinchGestureTipIfNeeded {
+    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+        if (!self.presentedViewController) {
+            BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+            if (!hasShownTip) {
+                
+                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", nil) message:NSLocalizedString(@"Try to pinch-in and out on this screen :)", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+                [alert show];
+            }
+        }
+    }
+}
+
 #pragma mark - Setters
+
+- (void)setItem:(PhotoBoxModel *)item {
+    if (_item != item) {
+        _item = item;
+        
+        if ([self.dataSource numberOfItems]>0) {
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }
+
+        self.predicate = nil;
+        self.fetchRequest = nil;
+        self.dataSource.fetchedResultsController = self.fetchedResultsController;
+        
+        [self refresh];
+    }
+}
 
 - (void)setPhotosCount:(int)count max:(int)max{
     NSString *title = NSLocalizedString(@"Photos", nil);
-    Album *album = (Album *)self.item;
-    if (album) {
-        title = album.name;
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *album = (Album *)self.item;
+        if (album) {
+            title = album.name;
+        }
+    } else if ([self.item isKindOfClass:[Tag class]]) {
+        Tag *tag = (Tag *)self.item;
+        if (tag) {
+            title = [NSString stringWithFormat:@"#%@", tag.tagId];
+        }
     }
     if (count == 0) {
         self.title = title;
     } else {
-        [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"%1$d of %2$d", nil), count, max]];
+        if (count != max) [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"%1$d of %2$d", nil), count, max]];
+        else [self setTitle:title subtitle:[NSString stringWithFormat:@"%d photos", count]];
     }
 }
 
@@ -122,28 +206,32 @@
     self.selectedItemRect = attributes.frame;
 }
 
-#pragma mark - Header Things
+#pragma mark - Collection view flow layout delegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    if (self.numberOfColumns == 1) {
+        return UIEdgeInsetsMake(5, 0, 0, 0);
+    }
+    return UIEdgeInsetsZero;
 }
 
-#pragma mark - Segue
+#pragma mark - Collection view delegate
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"pushPhoto"]) {
-        CLS_LOG(@"Showing full screen photo");
-        PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
-        PhotoBoxCell *cell = (PhotoBoxCell *)sender;
-        [destination setItem:self.item];
-        [destination setFirstShownPhoto:cell.item];
-        [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
-        [destination setDelegate:self];
-        
-        self.selectedCell = cell;
-        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-        [self setSelectedItemRectAtIndexPath:indexPath];
-    }
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    
+    PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [destination setItem:self.item];
+    [destination setFirstShownPhoto:cell.item];
+    [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
+    [destination setDelegate:self];
+    [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
+    [destination setResourceType:self.resourceType];
+    
+    self.selectedCell = cell;
+    [self setSelectedItemRectAtIndexPath:indexPath];
+    
+    [self.navigationController pushViewController:destination animated:YES];
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

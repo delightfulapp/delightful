@@ -8,13 +8,19 @@
 
 #import "AlbumsViewController.h"
 
-#import "AlbumCell.h"
 #import "Album.h"
+#import "AlbumRowCell.h"
 
 #import "PhotosViewController.h"
-#import "PhotosSectionHeaderView.h"
+#import "AlbumSectionHeaderView.h"
+#import "DelightfulRowCell.h"
 
 #import "ConnectionManager.h"
+
+#import "UIViewController+DelightfulViewControllers.h"
+
+#import <JASidePanelController.h>
+#import "AppDelegate.h"
 
 @interface AlbumsViewController () <UIActionSheetDelegate>
 
@@ -35,12 +41,21 @@
 {
     [super viewDidLoad];
     
-    [self setAlbumsCount:0 max:0];    
+    self.edgesForExtendedLayout=UIRectEdgeNone;
+    self.extendedLayoutIncludesOpaqueBars=NO;
+    self.automaticallyAdjustsScrollViewInsets=NO;
     
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
-    [self.navigationItem setLeftBarButtonItem:left];
+    [self setAlbumsCount:0 max:0];
     
-    [self.navigationItem.backBarButtonItem setTitle:NSLocalizedString(@"Albums", nil)];
+    [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
+    [self.collectionView registerClass:[AlbumSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:self.sectionHeaderIdentifier];
+    
+    [self restoreContentInset];
+    
+    [self.collectionView setBackgroundColor:[UIColor albumsBackgroundColor]];
+    
+    [self.tabBarItem setTitle:NSLocalizedString(@"Albums", nil)];
+    [self.tabBarItem setImage:[[UIImage imageNamed:@"Albums"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -57,8 +72,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - Getters
+
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:@"name" ascending:YES]];
+    return @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(name)) ascending:YES]];
 }
 
 - (ResourceType)resourceType {
@@ -67,15 +84,6 @@
 
 - (Class)resourceClass {
     return [Album class];
-}
-
-- (void)didFetchItems {
-    int count = [self.dataSource numberOfItems];
-    [self setAlbumsCount:count max:self.totalItems];
-}
-
-- (NSString *)segue {
-    return @"pushPhotosFromAlbums";
 }
 
 - (NSString *)sectionHeaderIdentifier {
@@ -87,9 +95,10 @@
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
-    void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
-        [cell.titleLabel setText:@"＞"];
-        [cell.locationLabel setText:NSLocalizedString(@"All Photos", nil)];
+    void (^configureCell)(AlbumSectionHeaderView*, id,NSIndexPath*) = ^(AlbumSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
+        [cell setBackgroundColor:nil];
+        [(UIView *)cell.blurView removeFromSuperview];
+        [cell setText:NSLocalizedString(@"All Photos", nil)];
         [cell setHideLocation:YES];
         int count = cell.gestureRecognizers.count;
         if (count == 0) {
@@ -102,27 +111,44 @@
     return configureCell;
 }
 
-#pragma mark - Segue
+#pragma mark - Did stuff
 
+- (void)didFetchItems {
+    int count = [self.dataSource numberOfItems];
+    [self setAlbumsCount:count max:self.totalItems];
+}
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:[self segue]]) {
-        AlbumCell *cell = (AlbumCell *)sender;
-        Album *album;
-        if (!cell) {
-            album = [Album allPhotosAlbum];
-        } else {
-            album = cell.item;
-        }
-        PhotosViewController *destination = (PhotosViewController *)segue.destinationViewController;
-        [destination setItem:album];
-    }
+- (void)restoreContentInset {
+    PBX_LOG(@"");
+    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0)];
+}
+
+- (void)setupPinchGesture {
+    // override with empty implementation because we don't need the albums pinchable.
+}
+
+#pragma mark - Collection view delegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
+    [self loadPhotosInAlbum:album];
+}
+
+- (void)loadPhotosInAlbum:(Album *)album {
+    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
+    [photosViewController setItem:album];
+    [photosViewController setTitle:album.name];
+    [photosViewController setRelationshipKeyPathWithItem:@"albums"];
+    [photosViewController setResourceType:PhotoResource];
+    
+    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
+    [panelController toggleLeftPanel:nil];
 }
 
 #pragma mark - Tap
 
 - (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
-    [self performSegueWithIdentifier:[self segue] sender:nil];
+    [self loadPhotosInAlbum:[Album allPhotosAlbum]];
 }
 
 - (void)userTapped:(id)sender {
@@ -141,6 +167,22 @@
         default:
             break;
     }
+}
+
+#pragma mark - Collection View Flow Layout Delegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    return CGSizeMake(collectionViewWidth, 80);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    return CGSizeMake(collectionViewWidth, 80);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
 }
 
 @end

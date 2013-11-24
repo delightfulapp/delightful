@@ -8,12 +8,14 @@ pod 'AFOAuth1Client'
 pod 'Mantle'
 pod 'Overcoat', '1.1'
 pod 'OGCoreDataStack'
-pod 'SDWebImage'
+pod 'SDWebImage' , '3.5'
 pod 'UIImageViewModeScaleAspect'
 pod 'MYBlurIntroductionView', '~> 1.0.0'
 pod 'GPUImage'
-target :PhotoBoxTests, :exclusive => true do
+pod 'JASidePanels'
+target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
+    pod 'Expecta', '~> 0.2.3'
 end
 
 

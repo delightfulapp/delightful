@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, MNCUIViewEdge) {
 
 @interface UIView (Additionals)
 
+- (id)addSubviewClass:(Class)subviewClass;
+
 - (CGRect)convertFrameRectToView:(UIView *)toView ;
 
 - (UIView *)addTransparentGradientWithStartColor:(UIColor *)startColor;

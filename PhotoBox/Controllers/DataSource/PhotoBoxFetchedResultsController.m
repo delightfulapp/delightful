@@ -76,4 +76,18 @@
     [self.mantleItemsCache removeAllObjects];
 }
 
+- (void)preLoadCache {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        for (int i = 0; i< self.sections.count; i++) {
+            id<NSFetchedResultsSectionInfo> section = self.sections[i];
+            NSInteger numberOfObjectsInSection = section.numberOfObjects;
+            for (int j=0; j<numberOfObjectsInSection; j++) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
+                [self mantleObjectAtIndexPath:indexPath];
+            }
+        }
+    });
+    
+}
+
 @end
