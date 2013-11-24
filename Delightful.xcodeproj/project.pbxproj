@@ -1311,6 +1311,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1342,6 +1343,7 @@
 				INFOPLIST_FILE = "PhotoBoxTests/DelightfulTests-Info.plist";
 				PRODUCT_NAME = DelightfulTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -1350,6 +1352,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1377,6 +1380,7 @@
 				INFOPLIST_FILE = "PhotoBoxTests/DelightfulTests-Info.plist";
 				PRODUCT_NAME = DelightfulTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALID_ARCHS = "arm64 armv7 armv7s";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Release;
