@@ -20,6 +20,8 @@
 
 @property (nonatomic, weak) UIImageView *arrowImage;
 
+@property (nonatomic, assign) CGSize contentViewSize;
+
 @end
 
 @implementation AlbumSectionHeaderView
@@ -44,18 +46,6 @@
     return _arrowImage;
 }
 
-- (UIView *)lineView {
-    if (!_lineView) {
-        _lineView = [self addSubviewClass:[UIView class]];
-        [_lineView setBackgroundColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000]];
-        [_lineView.layer setShadowColor:[UIColor blackColor].CGColor];
-        [_lineView.layer setShadowOffset:CGSizeMake(0, -0.5)];
-        [_lineView.layer setShadowOpacity:1];
-        [_lineView.layer setShadowRadius:0];
-    }
-    return _lineView;
-}
-
 - (void)setupConstrains {
     CGFloat visibleWidth = [UIViewController leftViewControllerVisibleWidth];
     CGFloat offset = visibleWidth - CGRectGetWidth(self.frame) - 20;
@@ -71,11 +61,23 @@
     [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
     [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
     [self.blurView autoCenterInSuperview];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
     
-    [self.lineView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self withOffset:-20];
-    [self.lineView autoSetDimension:ALDimensionHeight toSize:0.5];
-    [self.lineView autoCenterInSuperviewAlongAxis:ALAxisVertical];
-    [self.lineView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self];
+    if (!CGSizeEqualToSize(self.frame.size, self.contentViewSize)) {
+        self.contentViewSize = self.frame.size;
+        UIBezierPath *linePath = [UIBezierPath bezierPath];
+        [linePath moveToPoint:CGPointMake(10, CGRectGetHeight(self.frame))];
+        [linePath addLineToPoint:CGPointMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
+        [self.lineLayer setPath:linePath.CGPath];
+        
+        linePath = [UIBezierPath bezierPath];
+        [linePath moveToPoint:CGPointMake(10, CGRectGetHeight(self.frame)-1)];
+        [linePath addLineToPoint:CGPointMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame)-1)];
+        [self.lineShadowLayer setPath:linePath.CGPath];
+    }
 }
 
 #pragma mark - Setters
@@ -89,6 +91,32 @@
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:text attributes:@{NSShadowAttributeName: shadow}];
     
     [self.locationLabel setAttributedText:attributedString];
+}
+
+#pragma mark - Getters
+
+- (CAShapeLayer *)lineLayer {
+    if (!_lineLayer) {
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setStrokeColor:[UIColor colorWithRed:0.297 green:0.284 blue:0.335 alpha:1.000].CGColor];
+        [layer setFillColor:[UIColor clearColor].CGColor];
+        [layer setLineWidth:0.5];
+        [self.layer addSublayer:layer];
+        _lineLayer = layer;
+    }
+    return _lineLayer;
+}
+
+- (CAShapeLayer *)lineShadowLayer {
+    if (!_lineShadowLayer) {
+        CAShapeLayer *layer = [CAShapeLayer layer];
+        [layer setStrokeColor:[UIColor blackColor].CGColor];
+        [layer setFillColor:[UIColor clearColor].CGColor];
+        [layer setLineWidth:0.5];
+        [self.layer addSublayer:layer];
+        _lineShadowLayer = layer;
+    }
+    return _lineShadowLayer;
 }
 
 @end
