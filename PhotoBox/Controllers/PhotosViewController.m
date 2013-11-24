@@ -192,22 +192,23 @@
     return UIEdgeInsetsZero;
 }
 
-#pragma mark - Segue
+#pragma mark - Collection view delegate
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"pushPhoto"]) {
-        CLS_LOG(@"Showing full screen photo");
-        PhotosHorizontalScrollingViewController *destination = (PhotosHorizontalScrollingViewController *)segue.destinationViewController;
-        PhotoBoxCell *cell = (PhotoBoxCell *)sender;
-        [destination setItem:self.item];
-        [destination setFirstShownPhoto:cell.item];
-        [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
-        [destination setDelegate:self];
-        
-        self.selectedCell = cell;
-        NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-        [self setSelectedItemRectAtIndexPath:indexPath];
-    }
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    
+    PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [destination setItem:self.item];
+    [destination setFirstShownPhoto:cell.item];
+    [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
+    [destination setDelegate:self];
+    [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
+    [destination setResourceType:self.resourceType];
+    
+    self.selectedCell = cell;
+    [self setSelectedItemRectAtIndexPath:indexPath];
+    
+    [self.navigationController pushViewController:destination animated:YES];
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

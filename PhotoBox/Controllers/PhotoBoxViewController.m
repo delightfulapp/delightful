@@ -478,7 +478,7 @@
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (self.numberOfColumns == 1) {
+    if (self.numberOfColumns <= 1) {
         return CGSizeZero;
     }
     return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
