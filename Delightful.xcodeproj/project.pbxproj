@@ -43,7 +43,6 @@
 		032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8617D0BDF3001205B1 /* InfoPlist.strings */; };
 		032CBB8A17D0BDF3001205B1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8917D0BDF3001205B1 /* main.m */; };
 		032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8D17D0BDF3001205B1 /* AppDelegate.m */; };
-		032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8F17D0BDF3001205B1 /* Main.storyboard */; };
 		032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB9517D0BDF3001205B1 /* Images.xcassets */; };
 		032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB9C17D0BDF3001205B1 /* XCTest.framework */; };
 		032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
@@ -205,7 +204,6 @@
 		032CBB8B17D0BDF3001205B1 /* Delightful-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Delightful-Prefix.pch"; sourceTree = "<group>"; };
 		032CBB8C17D0BDF3001205B1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		032CBB8D17D0BDF3001205B1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		032CBB9017D0BDF3001205B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		032CBB9517D0BDF3001205B1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DelightfulTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		032CBB9C17D0BDF3001205B1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -552,7 +550,6 @@
 			children = (
 				032CBB8C17D0BDF3001205B1 /* AppDelegate.h */,
 				032CBB8D17D0BDF3001205B1 /* AppDelegate.m */,
-				032CBB8F17D0BDF3001205B1 /* Main.storyboard */,
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
 				032CBB8417D0BDF3001205B1 /* Supporting Files */,
 			);
@@ -898,7 +895,6 @@
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
-				032CBB9117D0BDF3001205B1 /* Main.storyboard in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
 				032222B31814CBF0004F3830 /* npr_notification_image_success.png in Resources */,
@@ -1129,14 +1125,6 @@
 				032CBB8717D0BDF3001205B1 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		032CBB8F17D0BDF3001205B1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				032CBB9017D0BDF3001205B1 /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		032CBBA517D0BDF3001205B1 /* InfoPlist.strings */ = {
