@@ -33,4 +33,9 @@
     return sidePanel.leftVisibleWidth;
 }
 
++ (id)leftViewController {
+    JASidePanelController *sidePanel = [[self class] panelViewController];
+    return sidePanel.leftPanel;
+}
+
 @end

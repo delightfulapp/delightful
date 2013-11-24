@@ -14,6 +14,8 @@
 
 + (id)panelViewController;
 
++ (id)leftViewController;
+
 + (CGFloat)leftViewControllerVisibleWidth;
 
 @end
