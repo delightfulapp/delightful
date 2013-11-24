@@ -29,6 +29,8 @@
 #import <JASidePanelController.h>
 #import "UIViewController+DelightfulViewControllers.h"
 
+#import "AppDelegate.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -77,7 +79,10 @@
             [panel addObserver:self forKeyPath:@"state" options:0 context:nil];
         }
     }
-    [self showPinchGestureTipIfNeeded];
+    
+    if (![((AppDelegate *)[[UIApplication sharedApplication] delegate]) showUpdateInfoViewIfNeeded]) {
+        [self showPinchGestureTipIfNeeded];
+    }
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
@@ -150,7 +155,8 @@
                 [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 
-                [[NPRNotificationManager sharedManager] postNotificationWithImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Try pinch in and out on this screen", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", nil) message:NSLocalizedString(@"Try to pinch-in and out on this screen :)", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+                [alert show];
             }
         }
     }
