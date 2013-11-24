@@ -47,11 +47,6 @@
     
     [self setAlbumsCount:0 max:0];
     
-    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"user.png"] style:UIBarButtonItemStylePlain target:self action:@selector(userTapped:)];
-    [self.navigationItem setLeftBarButtonItem:left];
-    
-    [self.navigationItem.backBarButtonItem setTitle:NSLocalizedString(@"Albums", nil)];
-    
     [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[AlbumSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:self.sectionHeaderIdentifier];
     
@@ -144,27 +139,9 @@
     [panelController toggleLeftPanel:nil];
 }
 
-#pragma mark - Segue
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:[self segue]]) {
-        AlbumRowCell *cell = (AlbumRowCell *)sender;
-        Album *album;
-        if (!cell) {
-            album = [Album allPhotosAlbum];
-        } else {
-            album = cell.item;
-        }
-        PhotosViewController *destination = (PhotosViewController *)segue.destinationViewController;
-        [destination setItem:album];
-    }
-}
-
 #pragma mark - Tap
 
 - (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
-    NSLog(@"tao");
     [self loadPhotosInAlbum:[Album allPhotosAlbum]];
 }
 
