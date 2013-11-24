@@ -55,4 +55,8 @@
     return _cellImageView;
 }
 
+- (void)prepareForReuse {
+    [self.cellImageView setImage:nil];
+}
+
 @end
