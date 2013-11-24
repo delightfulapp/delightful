@@ -12,8 +12,6 @@
 
 #import "LocationManager.h"
 
-#import <AMBlurView.h>
-
 #import "UIColor+Additionals.h"
 
 #import "UIView+Additionals.h"
@@ -52,7 +50,6 @@
     [self.titleLabel setNumberOfLines:2];
     
     [self insertSubview:self.blurView atIndex:0];
-    [self.blurView setBlurTintColor:[UIColor whiteColor]];
     [self.titleLabel setTextColor:[UIColor redColor]];
     [self.locationLabel setTextColor:[[UIColor redColor] lighterColor]];
     
@@ -154,9 +151,9 @@
     return _locationLabel;
 }
 
-- (AMBlurView *)blurView {
+- (UIView *)blurView {
     if (!_blurView) {
-        _blurView = [self addSubviewClass:[AMBlurView class]];
+        _blurView = [self addSubviewClass:[UIView class]];
         [_blurView setUserInteractionEnabled:YES];
     }
     return _blurView;

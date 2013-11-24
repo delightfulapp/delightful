@@ -156,6 +156,7 @@
         if (!self.dataSource.fetchedResultsController) {
             self.dataSource.fetchedResultsController = self.fetchedResultsController;
         }
+
         [self.dataSource.fetchedResultsController.fetchRequest setPredicate:self.predicate];
         
         [self refresh];

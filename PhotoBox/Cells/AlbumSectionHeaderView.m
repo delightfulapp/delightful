@@ -10,8 +10,6 @@
 
 #import <UIView+AutoLayout.h>
 
-#import <AMBlurView.h>
-
 #import "UIView+Additionals.h"
 
 #import "UIViewController+DelightfulViewControllers.h"

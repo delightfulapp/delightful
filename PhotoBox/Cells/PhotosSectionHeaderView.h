@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @class CLPlacemark;
-@class AMBlurView;
 
 @interface PhotosSectionHeaderView : UICollectionReusableView
 
@@ -17,7 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 
-@property (weak, nonatomic) IBOutlet AMBlurView *blurView;
+@property (weak, nonatomic) IBOutlet UIView *blurView;
 
 @property (nonatomic, assign) NSInteger section;
 
