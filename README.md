@@ -3,19 +3,15 @@ Delightful
 
 ![Delightful - Trovebox Photo Viewer](http://f.cl.ly/items/1e272y3F0j0o33221E2P/Photo%202013-09-06%2015%2027%2042.png)
 
+![Delightful app](http://f.cl.ly/items/24113E420E3i2l2c3I1W/Photo_Nov_24%252C_8_26_54_PM-3.png)
+
 Delightful is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
-
-Preview
---
-
-[![](http://f.cl.ly/items/2g2e3e1p3c1l1I342Z1V/Screen%20Shot%202013-09-02%20at%207.06.52%20PM.png)](http://www.youtube.com/watch?v=PeeV3pGwme0)
-
 
 Features (so far)
 --
 
-1. Albums as initial point of navigation.
-2. Photos grouped by date taken.
+1. Photos grouped by date taken.
+2. View albums and lists.
 3. Pinch to zoom in/out to see more or less photos. (change number of columns)
 4. Download original photos and save to photo album.
 5. Reverse Geocoding! If there is a photo with location within photos taken at the same date, the location name will be shown next to the date. Just like that of iOS 7 Photos app.
