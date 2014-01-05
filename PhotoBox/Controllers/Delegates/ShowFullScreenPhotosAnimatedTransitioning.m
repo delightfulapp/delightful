@@ -48,7 +48,7 @@
 }
 
 - (void)animateTransitionForPushOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
-    CLS_LOG(@"Animate push transition");
+    PBX_LOG(@"Animate push transition");
     
     [self removeHelperViews];
     
@@ -82,7 +82,7 @@
 }
 
 - (void)animateTransitionForPopOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
-    CLS_LOG(@"Animate pop transition");
+    PBX_LOG(@"Animate pop transition");
     
     PhotosHorizontalScrollingViewController *fromVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosViewController *toVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];

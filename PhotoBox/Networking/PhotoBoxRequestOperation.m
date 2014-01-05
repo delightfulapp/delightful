@@ -58,7 +58,7 @@
 
     [context save:&error];
     if (error) {
-        CLS_LOG(@"Fail saving objects to db: %@", error);
+        PBX_LOG(@"Fail saving objects to db: %@", error);
     }
 }
 

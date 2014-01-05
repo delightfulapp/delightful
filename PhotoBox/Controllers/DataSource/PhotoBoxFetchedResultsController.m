@@ -40,7 +40,7 @@
         NSError *error;
         id managed = [MTLManagedObjectAdapter modelOfClass:self.objectClass fromManagedObject:managedObject error:&error];
         if (error) {
-            CLS_LOG(@"Error: %@", error);
+            PBX_LOG(@"Error: %@", error);
         }
         object = [[ModelManagedObject alloc] init];
         object.managedObject = managedObject;

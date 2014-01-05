@@ -84,6 +84,8 @@
 		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
+		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
+		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF362181A850C002E9FCB /* 0.0.3.plist */; };
 		036DF365181AA60B002E9FCB /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 036DF364181AA60B002E9FCB /* info@2x.png */; };
 		036DF368181F65D8002E9FCB /* PhotoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */; };
@@ -130,9 +132,7 @@
 		03CE50F51818364500445084 /* SharePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F41818364500445084 /* SharePanel.m */; };
 		03CE50F7181838B700445084 /* shareicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50F6181838B700445084 /* shareicons.ttf */; };
 		03CE50FA18183A6000445084 /* SeeThroughCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F918183A6000445084 /* SeeThroughCircleView.m */; };
-		03CE5100181842CF00445084 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CE50FF181842CF00445084 /* FacebookSDK.framework */; };
 		03CE5103181842F200445084 /* SharerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE5102181842F200445084 /* SharerManager.m */; };
-		03D97204181116BB008A087B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0348D23317DA2CC400C932BA /* Crashlytics.framework */; };
 		03D972A118115705008A087B /* SharingTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A018115705008A087B /* SharingTokenTests.m */; };
 		03D972A71811865A008A087B /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
 		03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A9181188CE008A087B /* PhotoSharingManager.m */; };
@@ -140,8 +140,6 @@
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
 		03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
-		2E15CC58E2DA463A9B704097 /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1644D68684E1494081588FE9 /* libPods-DelightfulTests.a */; };
-		32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A1D8E459750D4D6DBD1D4F59 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,7 +227,6 @@
 		0348D22517DA208000C932BA /* UIView+NGAParallaxMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+NGAParallaxMotion.h"; sourceTree = "<group>"; };
 		0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+NGAParallaxMotion.m"; sourceTree = "<group>"; };
 		0348D22F17DA263500C932BA /* Crashlytics.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Crashlytics.plist; sourceTree = "<group>"; };
-		0348D23317DA2CC400C932BA /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		034E9F9117FA6BC200E3565E /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photo.json; sourceTree = "<group>"; };
 		034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Additionals.h"; sourceTree = "<group>"; };
 		034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Additionals.m"; sourceTree = "<group>"; };
@@ -275,6 +272,8 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
+		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = file; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		036DF362181A850C002E9FCB /* 0.0.3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.3.plist; path = PhotoBox/IntroFiles/0.0.3.plist; sourceTree = "<group>"; };
 		036DF364181AA60B002E9FCB /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
@@ -324,7 +323,6 @@
 		0398D7C518103B6E00FDD83B /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
 		0398D7C718103CD000FDD83B /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		0398D7C818103CD000FDD83B /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
-		039F815118031E4C00C67C36 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Reveal.framework; path = "../../../../../../Applications/Reveal.app/Contents/SharedSupport/iOS-Libraries/Reveal.framework"; sourceTree = "<group>"; };
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
 		03AE182817D8B2F5009CD844 /* loginbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginbackground.jpg; sourceTree = "<group>"; };
@@ -348,7 +346,6 @@
 		03CE50F6181838B700445084 /* shareicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = shareicons.ttf; path = PhotoBox/IntroFiles/shareicons.ttf; sourceTree = "<group>"; };
 		03CE50F818183A6000445084 /* SeeThroughCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SeeThroughCircleView.h; path = PhotoBox/IntroFiles/SeeThroughCircleView.h; sourceTree = "<group>"; };
 		03CE50F918183A6000445084 /* SeeThroughCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeeThroughCircleView.m; path = PhotoBox/IntroFiles/SeeThroughCircleView.m; sourceTree = "<group>"; };
-		03CE50FF181842CF00445084 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = ../../Documents/FacebookSDK/FacebookSDK.framework; sourceTree = "<group>"; };
 		03CE5101181842F200445084 /* SharerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharerManager.h; path = PhotoBox/Others/SharerManager.h; sourceTree = "<group>"; };
 		03CE5102181842F200445084 /* SharerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharerManager.m; path = PhotoBox/Others/SharerManager.m; sourceTree = "<group>"; };
 		03D972A018115705008A087B /* SharingTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharingTokenTests.m; sourceTree = "<group>"; };
@@ -362,12 +359,8 @@
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
 		03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewSelectCellGestureRecognizer.h; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.h; sourceTree = "<group>"; };
 		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
-		1644D68684E1494081588FE9 /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DelightfulTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.xcconfig"; path = "Pods/Pods-DelightfulTests.xcconfig"; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
-		A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBoxTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1D8E459750D4D6DBD1D4F59 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E845C4361E114610AD496CB5 /* libPods-PhotoBox.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PhotoBox.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,17 +368,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03635E181879745D0037851F /* libPods.a in Frameworks */,
 				036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */,
 				032B0D2A17D5B9B400ABFA9F /* MobileCoreServices.framework in Frameworks */,
 				032B0D2817D5B9A800ABFA9F /* SystemConfiguration.framework in Frameworks */,
 				0358468F17D1CD2A00E196D7 /* QuartzCore.framework in Frameworks */,
 				0358468D17D1CD2500E196D7 /* CFNetwork.framework in Frameworks */,
 				032CBB8017D0BDF3001205B1 /* CoreGraphics.framework in Frameworks */,
-				03D97204181116BB008A087B /* Crashlytics.framework in Frameworks */,
 				032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */,
-				03CE5100181842CF00445084 /* FacebookSDK.framework in Frameworks */,
 				032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
-				32CCCA973319465F8B41F5A2 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,11 +384,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */,
 				036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */,
 				032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */,
 				032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
-				2E15CC58E2DA463A9B704097 /* libPods-DelightfulTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,10 +524,9 @@
 		032CBB7C17D0BDF3001205B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				03CE50FF181842CF00445084 /* FacebookSDK.framework */,
-				039F815118031E4C00C67C36 /* Reveal.framework */,
+				03635E191879746D0037851F /* libPods-DelightfulTests.a */,
+				03635E171879745D0037851F /* libPods.a */,
 				036E050D17FC1BB10012DFB3 /* CoreData.framework */,
-				0348D23317DA2CC400C932BA /* Crashlytics.framework */,
 				032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */,
 				032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */,
 				0358468E17D1CD2A00E196D7 /* QuartzCore.framework */,
@@ -545,10 +535,6 @@
 				032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */,
 				032CBB8117D0BDF3001205B1 /* UIKit.framework */,
 				032CBB9C17D0BDF3001205B1 /* XCTest.framework */,
-				A1D8E459750D4D6DBD1D4F59 /* libPods.a */,
-				A1726016635D4784B088DF1D /* libPods-PhotoBoxTests.a */,
-				E845C4361E114610AD496CB5 /* libPods-PhotoBox.a */,
-				1644D68684E1494081588FE9 /* libPods-DelightfulTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -814,7 +800,6 @@
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
-				0348D22C17DA259100C932BA /* Crashlytics */,
 				03D972AC18123A20008A087B /* Build number increment */,
 				03D972AD18123A69008A087B /* Version number increment */,
 			);
@@ -940,20 +925,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0348D22C17DA259100C932BA /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Crashlytics;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run e2c34125953b33a5ab021b095a449f744b70187a";
-		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1237,10 +1208,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
-					"$(SRCROOT)",
-					"\\\\\\\"$(SRCROOT)/../../../../../Documents/FacebookSDK\\\\\\\"",
-					/Users/nico/Documents/FacebookSDK,
+					"$(SRCROOT)/PhotoBox",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -1266,10 +1234,6 @@
 					CoreTelephony,
 					"-weak_framework",
 					StoreKit,
-					"-weak_framework",
-					Reveal,
-					"-weak_framework",
-					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1288,10 +1252,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(SYSTEM_APPS_DIR)/Reveal.app/Contents/SharedSupport/iOS-Libraries",
-					"$(SRCROOT)",
-					"\\\\\\\"$(SRCROOT)/../../../../../Documents/FacebookSDK\\\\\\\"",
-					/Users/nico/Documents/FacebookSDK,
+					"$(SRCROOT)/PhotoBox",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -1309,8 +1270,6 @@
 					Security,
 					"-framework",
 					SystemConfiguration,
-					"-weak_framework",
-					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

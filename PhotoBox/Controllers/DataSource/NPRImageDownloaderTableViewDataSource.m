@@ -46,7 +46,7 @@
 #pragma mark - NPRImageDownloaderDelegate
 
 - (void)didFailDownloadOperation:(NPRImageDownloaderOperation *)operation atIndex:(NSInteger)index {
-    CLS_LOG(@"Download %@ failed at index: %d", operation.URL, index);
+    PBX_LOG(@"Download %@ failed at index: %d", operation.URL, index);
 }
 
 - (void)didStartDownloadOperation:(id)operation {

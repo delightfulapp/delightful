@@ -122,7 +122,7 @@
 {
     [self.fetchedResultsController clearCache];
     [self.fetchedResultsController preLoadCache];
-    CLS_LOG(@"[%@] Reloading collection view", self.debugName);
+    PBX_LOG(@"[%@] Reloading collection view", self.debugName);
     [self.collectionView reloadData];
     return;
     if ([_sectionChanges count] > 0)
@@ -276,7 +276,7 @@
         _paused = NO;
         _fetchedResultsController.delegate = self;
         [_fetchedResultsController performFetch:NULL];
-        CLS_LOG(@"[%@] Reloading collection view", self.debugName);
+        PBX_LOG(@"[%@] Reloading collection view", self.debugName);
         [self.collectionView reloadData];
     }
 }
@@ -285,14 +285,14 @@
     if (_paused != paused) {
         _paused = paused;
         if (paused) {
-            CLS_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-            CLS_LOG(@"[%@] Before pausing. Number of fetched objects = %d", self.debugName, self.fetchedResultsController.fetchedObjects.count);
+            PBX_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+            PBX_LOG(@"[%@] Before pausing. Number of fetched objects = %d", self.debugName, self.fetchedResultsController.fetchedObjects.count);
             self.fetchedResultsController.delegate = nil;
         } else {
             self.fetchedResultsController.delegate = self;
             [self.fetchedResultsController performFetch:NULL];
-            CLS_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-            CLS_LOG(@"[%@] Reloading collection view", self.debugName);
+            PBX_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
+            PBX_LOG(@"[%@] Reloading collection view", self.debugName);
             [self.collectionView reloadData];
         }
     }

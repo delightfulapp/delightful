@@ -11,8 +11,11 @@
 #import <Social/Social.h>
 
 #import "UIWindow+Additionals.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import <MessageUI/MessageUI.h>
+#if __has_include("FacebookSDK/FacebookSDK.h")
+    #import <FacebookSDK/FacebookSDK.h>
+#endif
+
 
 @implementation SharerManager
 
@@ -50,7 +53,7 @@
 
 + (void)shareToFacebookWithInitialText:(NSString *)text url:(NSURL *)url{
     UIViewController *root = [UIWindow topMostViewController];
-    
+#if __has_include("FacebookSDK/FacebookSDK.h")
     if (![FBDialogs presentOSIntegratedShareDialogModallyFrom:root initialText:text image:nil url:url handler:^(FBOSIntegratedShareDialogResult result, NSError *error) {}]) {
         NSMutableDictionary *params =
         [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -88,6 +91,7 @@
              }
          }];
     }
+#endif
 }
 
 + (NSDictionary*)parseURLParams:(NSString *)query {

@@ -35,7 +35,7 @@
             NSURL *sharedURL = [photo sharedURLWithToken:token];
             [[[[[UIApplication sharedApplication] delegate] window] rootViewController] openActivityPickerForURL:sharedURL completion:completion];
         } else {
-            CLS_LOG(@"No token");
+            PBX_LOG(@"No token");
         }
     }];
 }

@@ -158,6 +158,7 @@ static BOOL isRunningTests(void)
 #pragma mark - Crashlytics
 
 - (void)runCrashlytics {
+#if __has_include("Crashlytics/Crashlytics.h")
     NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Crashlytics" ofType:@"plist"];
     if (filePath) {
         NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
@@ -168,6 +169,7 @@ static BOOL isRunningTests(void)
             }
         }
     }
+#endif
 }
 
 #pragma mark - Observer

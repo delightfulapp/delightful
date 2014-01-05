@@ -15,10 +15,10 @@
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
     UICollectionView * const cv = self.collectionView;
-    //CLS_LOG(@"Number of sections = %d", [cv numberOfSections]);
+    //PBX_LOG(@"Number of sections = %d", [cv numberOfSections]);
     CGPoint const contentOffset = cv.contentOffset;
     
-    //CLS_LOG(@"Adding missing sections");
+    //PBX_LOG(@"Adding missing sections");
     NSMutableIndexSet *missingSections = [NSMutableIndexSet indexSet];
     for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
         if (layoutAttributes.representedElementCategory == UICollectionElementCategoryCell) {
@@ -43,13 +43,13 @@
     
     NSInteger numberOfSections = [cv numberOfSections];
     
-    //CLS_LOG(@"For loop");
+    //PBX_LOG(@"For loop");
     for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
         
         if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
             
             NSInteger section = layoutAttributes.indexPath.section;
-            //CLS_LOG(@"Customizing layout attribute for header in section %d with number of items = %d", section, [cv numberOfItemsInSection:section]);
+            //PBX_LOG(@"Customizing layout attribute for header in section %d with number of items = %d", section, [cv numberOfItemsInSection:section]);
             
             if (section < numberOfSections) {
                 NSInteger numberOfItemsInSection = [cv numberOfItemsInSection:section];

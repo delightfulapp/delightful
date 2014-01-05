@@ -101,13 +101,13 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    CLS_LOG(@"");
+    PBX_LOG(@"");
     if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
         shouldHideNavigationBar = YES;
         self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     } else {
-        CLS_LOG(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
+        PBX_LOG(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
     }
     
 }
@@ -276,7 +276,7 @@
 }
 
 - (void)didClosePhotosHorizontalViewController{
-    CLS_LOG(@"Popping from horizontal view controller");
+    PBX_LOG(@"Popping from horizontal view controller");
     [[self currentCell] setClosingViewController:YES];
     [self.delegate photosHorizontalWillClose];
     [self.navigationController popViewControllerAnimated:YES];
@@ -316,7 +316,7 @@
 }
 
 - (void)viewOriginalButtonTapped:(id)sender {
-    CLS_LOG(@"");
+    PBX_LOG(@"");
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
         [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
             OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -333,7 +333,7 @@
 }
 
 - (void)actionButtonTapped:(id)sender {
-    CLS_LOG(@"Sharing tapped");
+    PBX_LOG(@"Sharing tapped");
     [self showLoadingBarButtonItem:YES];
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;

@@ -262,7 +262,7 @@
 }
 
 - (void)startTeasing {
-    CLS_LOG(@"Do teaasing gesture");
+    PBX_LOG(@"Do teaasing gesture");
     [self scrollViewWillBeginDragging:self.scrollView];
     [UIView animateWithDuration:0.5 animations:^{
         [self.scrollView setContentOffset:CGPointMake(0, -50) animated:NO];

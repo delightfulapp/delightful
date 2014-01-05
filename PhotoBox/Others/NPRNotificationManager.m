@@ -132,13 +132,13 @@
 
 - (void)showNotificationView:(BOOL)show position:(NPRNotificationPosition)position {
     if (show) {
-        CLS_LOG(@"Showing notification");
+        PBX_LOG(@"Showing notification");
         if (!self.isShowingNotification) {
             NSTimer *timer = [NSTimer timerWithTimeInterval:NPR_NOTIFICATION_ANIMATION_DURATION target:self selector:@selector(executeAnimationWithTimer:) userInfo:@(show) repeats:NO];
             [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
         }
     } else {
-        CLS_LOG(@"hide notification");
+        PBX_LOG(@"hide notification");
         if (self.isShowingNotification) {
             NSTimer *timer = [NSTimer timerWithTimeInterval:NPR_NOTIFICATION_ANIMATION_DURATION target:self selector:@selector(executeAnimationWithTimer:) userInfo:@(show) repeats:NO];
             [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
