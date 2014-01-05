@@ -23,7 +23,7 @@ extern NSString *PBX_allAlbumIdentifier;
 #define PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO @"photobox.PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO"
 #define PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY @"photobox.PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY"
 
-#if __has_include("Crashlytics/Crashlytics.h")
+#if !defined DEBUG && __has_include("Crashlytics/Crashlytics.h")
 #define PBX_LOG(__FORMAT__, ...) PBX_LOG(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
 #else
 #define PBX_LOG(__FORMAT__, ...) NSLog(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
