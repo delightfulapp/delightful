@@ -20,6 +20,7 @@ DerivedData
 #Crashlytics
 Crashlytics.framework
 crashlytics-code
+PhotoBox/Crashlytics.plist
 
 #CocoaPods
 Pods

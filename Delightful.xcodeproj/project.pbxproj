@@ -1247,7 +1247,7 @@
 					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
 					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
 					"\"${PODS_ROOT}/Headers/iOS-blur\"",
-					"$(SRCROOT)/PhotoBox/**",
+					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
 				OTHER_LDFLAGS = (
@@ -1271,6 +1271,8 @@
 					CoreTelephony,
 					"-weak_framework",
 					StoreKit,
+					"-weak_framework",
+					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1313,7 +1315,7 @@
 					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
 					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
 					"\"${PODS_ROOT}/Headers/iOS-blur\"",
-					"$(SRCROOT)/PhotoBox/**",
+					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
 				OTHER_LDFLAGS = (
