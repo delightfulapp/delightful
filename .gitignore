@@ -19,6 +19,7 @@ DerivedData
 
 #Crashlytics
 Crashlytics.framework
+crashlytics-code
 
 #CocoaPods
 Pods

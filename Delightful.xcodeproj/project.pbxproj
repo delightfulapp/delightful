@@ -800,8 +800,8 @@
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
-				03D972AC18123A20008A087B /* Build number increment */,
 				03635E1B187996290037851F /* Crashlytics */,
+				03D972AC18123A20008A087B /* Build number increment */,
 				03D972AD18123A69008A087B /* Version number increment */,
 			);
 			buildRules = (
@@ -938,7 +938,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=./Crashlytics.framework/run\n\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run e2c34125953b33a5ab021b095a449f744b70187a\nelse\necho \"No Crashlytics\"\nfi\n\n";
+			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nfi\n\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\n\n";
 		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
