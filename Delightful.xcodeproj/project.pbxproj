@@ -801,6 +801,7 @@
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
 				03D972AC18123A20008A087B /* Build number increment */,
+				03635E1B187996290037851F /* Crashlytics */,
 				03D972AD18123A69008A087B /* Version number increment */,
 			);
 			buildRules = (
@@ -925,6 +926,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		03635E1B187996290037851F /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytics;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./Crashlytics.framework/run\n\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run e2c34125953b33a5ab021b095a449f744b70187a\nelse\necho \"No Crashlytics\"\nfi\n\n";
+		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
