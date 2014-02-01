@@ -165,7 +165,9 @@ static BOOL isRunningTests(void)
         if (dict) {
             NSString *apiKey = [dict objectForKey:@"key"];
             if (apiKey && apiKey.length > 0) {
-                [Crashlytics startWithAPIKey:apiKey];
+                if (![Crashlytics startWithAPIKey:apiKey]) {
+                    NSLog(@"No crashlytics");
+                }
             }
         }
     }
