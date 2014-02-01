@@ -803,6 +803,7 @@
 				5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
+				037EC053189D05AF009C54EE /* Copy Crashlytics */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
 				03635E1B187996290037851F /* Crashlytics */,
 				03D972AC18123A20008A087B /* Build number increment */,
@@ -942,7 +943,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nfi\n\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\n\n";
+			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\nfi\n\n";
+		};
+		037EC053189D05AF009C54EE /* Copy Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Crashlytics";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
 		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
