@@ -62,7 +62,7 @@
 
 - (void)setupConstrains {
     [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
-    NSLayoutConstraint * constraint = [self.titleLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    NSLayoutConstraint * constraint = [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [constraint setPriority:100];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
     [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
@@ -154,7 +154,7 @@
 - (UIView *)blurView {
     if (!_blurView) {
         _blurView = [self addSubviewClass:[UIView class]];
-        [_blurView setBackgroundColor:[UIColor whiteColor]];
+        [_blurView setBackgroundColor:[UIColor colorWithWhite:1.000 alpha:0.880]];
         [_blurView setUserInteractionEnabled:YES];
     }
     return _blurView;
