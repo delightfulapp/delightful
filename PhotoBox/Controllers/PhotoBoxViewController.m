@@ -262,7 +262,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [self showLoadingView:YES];
     });
-    
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction
@@ -303,7 +302,10 @@
                 self.page++;
                 
                 [self loadItemsFromCoreData];
-                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showLoadingView:YES];
+                });
+                return;
                 [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
             }
         }

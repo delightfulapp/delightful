@@ -29,6 +29,8 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 @property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
 
+@property (nonatomic, strong) NSIndexPath *loadingViewIndexPath;
+
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath;
