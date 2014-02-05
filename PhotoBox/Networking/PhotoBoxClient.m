@@ -17,22 +17,28 @@
 
 #import <objc/runtime.h>
 
+#import <OGCoreDataStack.h>
+
 @interface PhotoBoxClient ()
 
 @property (nonatomic, strong) AFOAuth1Client *oauthClient;
 
 - (void)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
+             mainContext:(NSManagedObjectContext *)mainContext
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
 - (void)getPhotosInAlbum:(NSString *)albumId
                     page:(int)page
                 pageSize:(int)pageSize
+             mainContext:(NSManagedObjectContext *)mainContext
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (void)getTagsWithSuccess:(void(^)(id object))successBlock
+- (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext
+                       success:(void(^)(id object))successBlock
                    failure:(void(^)(NSError*))failureBlock;
 - (void)getAllPhotosOnPage:(int)page
+               mainContext:(NSManagedObjectContext *)mainContext
                   pageSize:(int)pageSize success:(void(^)(id object))successBlock
                    failure:(void(^)(NSError*))failureBlock;
 
@@ -108,18 +114,25 @@
                page:(int)page
             success:(void (^)(id))successBlock
             failure:(void (^)(NSError *))failureBlock {
-    [self getResource:type action:action resourceId:resourceId page:page pageSize:20 success:successBlock failure:failureBlock];
+    [self getResource:type action:action resourceId:resourceId page:page pageSize:20 mainContext:nil success:successBlock failure:failureBlock];
 }
 
-- (void)getResource:(ResourceType)type action:(ActionType)action resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)getResource:(ResourceType)type
+             action:(ActionType)action
+         resourceId:(NSString *)resourceId
+               page:(int)page
+           pageSize:(int)pageSize
+        mainContext:(NSManagedObjectContext *)context
+            success:(void (^)(id))successBlock
+            failure:(void (^)(NSError *))failureBlock {
     if (pageSize==0) pageSize = 20;
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         switch (action) {
             case ListAction:{
-                if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize success:successBlock failure:failureBlock];
-                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize success:successBlock failure:failureBlock];
-                else if (type == TagResource) [self getTagsWithSuccess:successBlock failure:failureBlock];
-                else if (type == PhotoWithTagsResource) [self getPhotosInTag:resourceId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+                if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize mainContext:context success:successBlock failure:failureBlock];
+                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize mainContext:context success:successBlock failure:failureBlock];
+                else if (type == TagResource) [self getTagsWithMainContext:context success:successBlock failure:failureBlock];
+                else if (type == PhotoWithTagsResource) [self getPhotosInTag:resourceId page:page pageSize:pageSize mainContext:context success:successBlock failure:failureBlock];
                 break;
             }
             default:
@@ -132,18 +145,13 @@
 
 - (void)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
+             mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-        if (!error) {
-            successBlock(responseObject);
-        } else {
-            failureBlock(error);
-        }
-    }];
+    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
-- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     NSString *resource = nil;
     if ([resourceClass isSubclassOfClass:Album.class]) {
         resource = [NSString stringWithFormat:@"&%@", [self albumsQueryString:resourceId]];
@@ -157,51 +165,77 @@
         sort = [self sortByQueryString:@"dateUploaded,DESC"];
     }
     NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, sort, [self photoSizesString], resource];
-    [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-        if (!error) {
-            successBlock(responseObject);
-        } else {
-            failureBlock(error);
-        }
-    }];
+    
+    [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInAlbum:(NSString *)albumId
                     page:(int)page
                 pageSize:(int)pageSize
+             mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:Album.class resourceId:albumId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    [self getPhotosInResource:Album.class resourceId:albumId page:page pageSize:pageSize mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInTag:(NSString *)tagId
                     page:(int)page
                 pageSize:(int)pageSize
+           mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
-- (void)getTagsWithSuccess:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self GET:@"/tags/list.json" parameters:nil resultClass:[Tag class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-        if (!error) {
-            successBlock(responseObject);
-        } else {
-            failureBlock(error);
-        }
-    }];
+- (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self GET:@"/tags/list.json" parameters:nil resultClass:[Tag class] resultKeyPath:@"result" mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getAllPhotosOnPage:(int)page
-                  pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+                  pageSize:(int)pageSize mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     [self getPhotosInAlbum:nil page:page
-                  pageSize:(int)pageSize success:successBlock failure:failureBlock];
+                  pageSize:(int)pageSize mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
     NSArray *result = [responseObject objectForKey:@"result"];
     NSValueTransformer *transformer = [NSValueTransformer mtl_JSONArrayTransformerWithModelClass:resource];
     return [transformer transformedValue:result];
+}
+
+- (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    return [self GET:path parameters:parameters resultClass:resultClass resultKeyPath:keyPath completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        if (!error) {
+            [self serializeToManagedObject:responseObject mainContext:mainContext];
+            successBlock(responseObject);
+        } else {
+            failureBlock(error);
+        }
+    }];
+}
+
+- (void)serializeToManagedObject:(id)responseObject mainContext:(NSManagedObjectContext *)mainContext {
+    NSManagedObjectContext *context = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyBackgroundQueue];
+    if (mainContext) {
+        [mainContext observeSavesInContext:context];
+    }
+    NSError *error;
+    if ([responseObject isKindOfClass:[NSArray class]]) {
+        for (id obj in responseObject) {
+            [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
+        }
+    } else {
+        [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
+    }
+    
+    [context performBlockAndWait:^{
+        NSError *error;
+        [context save:&error];
+        if (error) {
+            PBX_LOG(@"Fail saving objects to db: %@", error);
+        }
+    }];
+    
 }
 
 #pragma mark - Getters
@@ -274,15 +308,6 @@ NSString *stringWithActionType(ActionType input) {
 
 - (void)setSecret:(NSString *)secret {
     [self.oauthClient setValue:secret forKey:@"secret"];
-}
-
-#pragma mark - OVCClient
-
-- (PhotoBoxRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath completion:(void (^)(AFHTTPRequestOperation *, id, NSError *))block {
-    PhotoBoxRequestOperation *operation = (PhotoBoxRequestOperation *)[super HTTPRequestOperationWithRequest:urlRequest resultClass:resultClass resultKeyPath:keyPath completion:block];
-    [operation setUseCoreData:YES];
-    return operation;
-    
 }
 
 

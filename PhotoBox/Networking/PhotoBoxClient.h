@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger, ActionType) {
          resourceId:(NSString *)resourceId
                page:(int)page
            pageSize:(int)pageSize
+        mainContext:(NSManagedObjectContext *)context
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock;
 

@@ -9,11 +9,11 @@ PODS:
   - Mantle (1.3.1):
     - Mantle/extobjc
   - Mantle/extobjc (1.3.1)
-  - MYBlurIntroductionView (1.0.1)
+  - MYBlurIntroductionView (1.0.2)
   - NSDate+TimeAgo (1.0.2)
   - NSDate-Escort (1.2.2)
   - OCMock (2.2.2)
-  - OGCoreDataStack (0.1.7)
+  - OGCoreDataStack (0.2.5)
   - Overcoat (1.1):
     - AFNetworking (~> 1.3.1)
     - Mantle (~> 1.3)
@@ -50,11 +50,11 @@ SPEC CHECKSUMS:
   iOS-blur: 7c8087858e7a685072cf8af52dd08dd3e115531b
   JASidePanels: c0e642a7311ec9cc9adfa616fa4a795e4e169f20
   Mantle: abc3b0c81bc66eb624cf9cebb8640e377d5a44ae
-  MYBlurIntroductionView: 5ba3472c3d858a10738761a086ad7446cc17ab08
+  MYBlurIntroductionView: bc6ba612651c54210c5d302738774f82bfcc3cec
   NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
   NSDate-Escort: 67a92b0e8de0a69f974f3147170a367bc312a417
   OCMock: ffba68873fd32cfd35d885bddad23bfa816da4a3
-  OGCoreDataStack: 11d2f401c3e1fa378346ec00131bc90c8cd618d9
+  OGCoreDataStack: 57d4769dfccab011d4fa24846a2fd5dc84d8e851
   Overcoat: 4839bdbe2274a9451f6cedaf8c17742d2ab82818
   SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
   UIColor+MLPFlatColors: 8631d7f050b0e5afd9af178a60319891c5113d0e

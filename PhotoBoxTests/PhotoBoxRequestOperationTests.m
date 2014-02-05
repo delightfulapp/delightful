@@ -33,8 +33,8 @@
 {
     [super setUp];
     // Put setup code here; it will be run once, before the first test case.
-    if ([NSPersistentStoreCoordinator persistentStoreCoordinator]) {
-        [NSPersistentStoreCoordinator clearPersistentStore];
+    if ([NSPersistentStoreCoordinator sharedPersistentStoreCoordinator]) {
+        [NSPersistentStoreCoordinator reset];
     }
     
     // mock objects
@@ -46,8 +46,9 @@
     responseJSON = @{@"result": @[photoJSON]};
     
     // managed object context
-    mainContext = [NSManagedObjectContext mainContext];
-    workContext = [NSManagedObjectContext workContext];
+    mainContext = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyMainQueue];
+    workContext = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyBackgroundQueue];
+    [mainContext observeSavesInContext:workContext];
 }
 
 - (void)tearDown

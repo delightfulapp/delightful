@@ -18,6 +18,8 @@
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
 
+#import <OGCoreDataStack.h>
+
 #define INITIAL_PAGE_NUMBER 1
 
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
@@ -167,7 +169,7 @@
 
 - (NSManagedObjectContext *)mainContext {
     if (!_mainContext) {
-        _mainContext = [NSManagedObjectContext mainContext];
+        _mainContext = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyMainQueue];
     }
     return _mainContext;
 }
@@ -191,7 +193,7 @@
         if (self.predicate) {
             [_fetchRequest setPredicate:self.predicate];
         }
-        [_fetchRequest setFetchLimit:self.pageSize];
+        //[_fetchRequest setFetchLimit:self.pageSize];
     }
     return _fetchRequest;
 }
@@ -259,22 +261,19 @@
 - (void)fetchResource {
     
     // if we show the loading view directly here, the bottom loading view position is weird because the collection view content size is not properly set yet. so we show the loading view on the next run loop.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self showLoadingView:YES];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self showLoadingView:YES];
+//    });
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction
                                     resourceId:self.resourceId
                                           page:self.page
-                                      pageSize:self.pageSize
+                                      pageSize:self.pageSize mainContext:self.mainContext
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
-                                               // not sure why context save changes not propagated to data source's fetched result controller's delegate. Let's just performFetch here again.
-                                               [self.dataSource.fetchedResultsController performFetch:NULL];
-                                               [self.collectionView reloadData];
-                                               PBX_LOG(@"Received %lu %@. Total = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
+                                               PBX_LOG(@"Received %lu %@. Total shown = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
                                                self.isFetching = NO;
@@ -300,8 +299,10 @@
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
                 self.page++;
-                [self willLoadItemsFromCoreData];
-                [self loadItemsFromCoreData];
+                PBX_LOG(@"Fetch more");
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self showLoadingView:YES];
+                });
                 [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
             }
         }
@@ -313,10 +314,8 @@
 }
 
 - (void)loadItemsFromCoreData {
-    [self.dataSource.fetchedResultsController.fetchRequest setFetchLimit:self.page*self.pageSize];
+    [self willLoadItemsFromCoreData];
     [self.dataSource.fetchedResultsController performFetch:NULL];
-    PBX_LOG(@"Reloading coleection view");
-    [self.collectionView reloadData];
 }
 
 - (void)processPaginationFromObjects:(id)objects {
