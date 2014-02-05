@@ -123,8 +123,7 @@
     [self.fetchedResultsController clearCache];
     [self.fetchedResultsController preLoadCache];
     PBX_LOG(@"[%@] Reloading collection view", self.debugName);
-    [self.collectionView reloadData];
-    return;
+    
     if ([_sectionChanges count] > 0)
     {
         [self.collectionView performBatchUpdates:^{
