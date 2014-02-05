@@ -346,7 +346,7 @@
 - (void)refresh {
     PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
     self.page = INITIAL_PAGE_NUMBER;
-    [self loadItemsFromCoreData];
+    //[self loadItemsFromCoreData];
     [self fetchResource];
 }
 
