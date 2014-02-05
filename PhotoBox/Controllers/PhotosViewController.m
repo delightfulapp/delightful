@@ -145,6 +145,7 @@
 
 - (void)showLoadingView:(BOOL)show {
     DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
+    [layout updateLastIndexPath];
     [layout setShowLoadingView:show];
     
     CGFloat centerY = LOADING_VIEW_HEIGHT/2;

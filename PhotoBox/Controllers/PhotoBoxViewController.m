@@ -22,6 +22,8 @@
 
 #define INITIAL_PAGE_NUMBER 1
 
+#define BATCH_SIZE 20
+
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
     CGFloat lastOffset;
     BOOL isObservingLoggedInUser;
@@ -42,7 +44,7 @@
     
     self.page = INITIAL_PAGE_NUMBER;
     self.numberOfColumns = 2;
-    _pageSize = 20;
+    _pageSize = BATCH_SIZE;
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
@@ -187,13 +189,11 @@
 
 - (NSFetchRequest *)fetchRequest {
     if (!_fetchRequest) {
-        NSLog(@"new fetch request");
         _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
         [_fetchRequest setSortDescriptors:self.sortDescriptors];
         if (self.predicate) {
             [_fetchRequest setPredicate:self.predicate];
         }
-        //[_fetchRequest setFetchLimit:self.pageSize];
     }
     return _fetchRequest;
 }
@@ -298,7 +298,7 @@
         if (count!=0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
-                self.page++;
+                self.page = ([self.dataSource numberOfItems]/self.pageSize)+1;
                 PBX_LOG(@"Fetch more");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self showLoadingView:YES];
@@ -351,7 +351,7 @@
 }
 
 - (void)showLoadingView:(BOOL)show {
-    if (self.page==1) {
+    if (self.page==INITIAL_PAGE_NUMBER) {
         if (show) {
             if (!self.navigationItem.rightBarButtonItem) {
                 UIBarButtonItem *loadingItem = [[UIBarButtonItem alloc] initWithCustomView:self.loadingView];
@@ -516,7 +516,7 @@
             } else {
                 self.dataSource.fetchedResultsController = nil;
                 self.dataSource = nil;
-                self.page = 1;
+                self.page = INITIAL_PAGE_NUMBER;
                 self.fetchRequest = nil;
                 self.predicate = nil;
                 self.mainContext = nil;
