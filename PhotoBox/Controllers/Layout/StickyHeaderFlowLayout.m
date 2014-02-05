@@ -24,7 +24,7 @@
         
         // if the attribute is header
         if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-                [self adjustHeaderLayoutAttributes:layoutAttributes];
+            [self adjustHeaderLayoutAttributes:layoutAttributes];
         }
     }
     

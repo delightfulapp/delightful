@@ -31,6 +31,8 @@
 
 #import "AppDelegate.h"
 
+#import "DelightfulLayout.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -44,6 +46,8 @@
 @implementation PhotosViewController
 
 @synthesize item = _item;
+
+@synthesize numberOfColumns = _numberOfColumns;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -133,6 +137,35 @@
 }
 
 #pragma mark - Did something
+
+- (void)willLoadItemsFromCoreData {
+    DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
+    [layout updateLastIndexPath];
+}
+
+- (void)showLoadingView:(BOOL)show {
+    DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
+    [layout setShowLoadingView:show];
+    
+    CGFloat centerY = LOADING_VIEW_HEIGHT/2;
+    if (layout.lastIndexPath && layout.lastIndexPath.section != NSIntegerMin && layout.lastIndexPath.item != NSIntegerMin) {
+        centerY += CGRectGetMaxY([layout layoutAttributesForItemAtIndexPath:layout.lastIndexPath].frame);
+    }
+    
+    [self showLoadingView:show atCenterY:centerY];
+    [layout invalidateLayout];
+}
+
+- (void)setNumberOfColumns:(int)numberOfColumns {
+    if (_numberOfColumns != numberOfColumns) {
+        _numberOfColumns = numberOfColumns;
+        
+        
+        DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
+        [layout setNumberOfColumns:_numberOfColumns];
+    }
+}
+
 
 - (void)didFetchItems {
     int count = [self.dataSource numberOfItems];

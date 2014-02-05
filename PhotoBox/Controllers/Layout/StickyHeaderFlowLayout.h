@@ -6,8 +6,10 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "DelightfulLayout.h"
 
-@interface StickyHeaderFlowLayout : UICollectionViewFlowLayout
+@interface StickyHeaderFlowLayout : DelightfulLayout
+
+- (void)adjustHeaderLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes;
 
 @end

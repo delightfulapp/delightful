@@ -300,16 +300,16 @@
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
                 self.page++;
-                
+                [self willLoadItemsFromCoreData];
                 [self loadItemsFromCoreData];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self showLoadingView:YES];
-                });
-                return;
                 [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
             }
         }
     }
+}
+
+- (void)willLoadItemsFromCoreData {
+    
 }
 
 - (void)loadItemsFromCoreData {

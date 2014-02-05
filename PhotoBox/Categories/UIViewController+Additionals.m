@@ -22,7 +22,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 
 @implementation UIViewController (Additionals)
 
-- (void)showLoadingView:(BOOL)show atBottomOfScrollView:(BOOL)bottom {
+- (void)showLoadingView:(BOOL)show atCenterY:(CGFloat)centerY {
     if ([self isKindOfClass:[UICollectionViewController class]]) {
         UICollectionViewController *cv = (UICollectionViewController *)self;
         if (show) {
@@ -33,7 +33,13 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
                 [cv.collectionView addSubview:activity];
             }
             CGSize contentSize = cv.collectionView.contentSize;
-            [activity setCenter:CGPointMake(contentSize.width/2, contentSize.height+CGRectGetHeight(activity.frame)/2+10)];
+            if (centerY == CGFLOAT_MIN) {
+                [activity setCenter:CGPointMake(contentSize.width/2, contentSize.height+CGRectGetHeight(activity.frame)/2+10)];
+                
+            } else {
+                [activity setCenter:CGPointMake(contentSize.width/2, centerY)];
+            }
+            
             [activity startAnimating];
             UIEdgeInsets inset = cv.collectionView.contentInset;
             [cv.collectionView setContentInset:UIEdgeInsetsMake(inset.top, inset.left, CGRectGetHeight(activity.frame)*2, inset.right)];
@@ -43,7 +49,10 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
             [activity removeFromSuperview];
         }
     }
-    
+}
+
+- (void)showLoadingView:(BOOL)show atBottomOfScrollView:(BOOL)bottom {
+    [self showLoadingView:show atCenterY:CGFLOAT_MIN];
 }
 
 - (void)showAlertForNoService:(NSString *)service {

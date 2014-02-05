@@ -12,6 +12,8 @@
 
 - (void)showLoadingView:(BOOL)show atBottomOfScrollView:(BOOL)bottom;
 
+- (void)showLoadingView:(BOOL)show atCenterY:(CGFloat)centerY;
+
 - (void)openActivityPickerForImage:(UIImage *)image;
 
 - (void)openActivityPickerForURL:(NSURL *)URL completion:(void(^)())completion;
