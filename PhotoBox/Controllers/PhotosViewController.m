@@ -33,6 +33,8 @@
 
 #import "DelightfulLayout.h"
 
+#import "PhotosDataSource.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -66,6 +68,7 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
+    [self.collectionView.viewForBaselineLayout.layer setSpeed:0.4f];
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
@@ -136,6 +139,10 @@
     return self.item.itemId;
 }
 
+- (Class)dataSourceClass {
+    return [PhotosDataSource class];
+}
+
 #pragma mark - Did something
 
 - (void)willLoadItemsFromCoreData {
@@ -198,20 +205,11 @@
 
 #pragma mark - Setters
 
-- (void)setItem:(PhotoBoxModel *)item {
-    if (_item != item) {
-        _item = item;
-        
-        if ([self.dataSource numberOfItems]>0) {
-            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-        }
-
-        self.predicate = nil;
-        self.fetchRequest = nil;
-        self.dataSource.fetchedResultsController = self.fetchedResultsController;
-        
-        [self refresh];
-    }
+- (void)reloadFetchedResultsController {
+    self.predicate = nil;
+    self.fetchRequest = nil;
+    self.dataSource.fetchedResultsController = self.fetchedResultsController;
+    [self.collectionView reloadData];
 }
 
 - (void)setPhotosCount:(int)count max:(int)max{

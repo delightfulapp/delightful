@@ -53,6 +53,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
+- (Class)dataSourceClass;
 - (void)refresh;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;

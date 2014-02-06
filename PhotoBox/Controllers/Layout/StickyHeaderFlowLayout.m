@@ -8,9 +8,24 @@
 
 #import "StickyHeaderFlowLayout.h"
 
+@interface StickyHeaderFlowLayout ()
+
+@property (nonatomic, strong) NSMutableArray *insertIndexPaths;
+
+@end
+
 @implementation StickyHeaderFlowLayout
 
-// sticky header flow layout from https://gist.github.com/toblerpwn/5393460
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
+        attr.alpha = 0;
+        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
+        attr.center = CGPointMake(attr.center.x, centerY);
+    }
+    
+    return attr;
+}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
@@ -128,6 +143,29 @@
             .size = layoutAttributes.frame.size
         };
     }
+}
+
+- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
+{
+    // Keep track of insert and delete index paths
+    [super prepareForCollectionViewUpdates:updateItems];
+    
+    self.insertIndexPaths = [NSMutableArray array];
+    
+    for (UICollectionViewUpdateItem *update in updateItems)
+    {
+        if (update.updateAction == UICollectionUpdateActionInsert)
+        {
+            [self.insertIndexPaths addObject:update.indexPathAfterUpdate];
+        }
+    }
+}
+
+- (void)finalizeCollectionViewUpdates
+{
+    [super finalizeCollectionViewUpdates];
+    // release the insert and delete index paths
+    self.insertIndexPaths = nil;
 }
 
 @end

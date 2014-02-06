@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger, SharePanelServiceType) {
 }
 
 - (void)panelDidAppear {
-    NSLog(@"Panel did appear");
+    PBX_LOG(@"Panel did appear");
     for (int i=SharePanelServiceTypeSMS; i<SharePanelServiceTypeTwitter+1; i++) {
         SeeThroughCircleView *see = (SeeThroughCircleView *)[self buttonForService:i];
         see.frame = ({
@@ -56,7 +56,7 @@ typedef NS_ENUM(NSInteger, SharePanelServiceType) {
 }
 
 - (void)panelDidDisappear {
-    NSLog(@"panel did disappear");
+    PBX_LOG(@"panel did disappear");
     [UIView animateWithDuration:0.5 animations:^{
         for (int i=SharePanelServiceTypeSMS; i<SharePanelServiceTypeTwitter+1; i++) {
             SeeThroughCircleView *see = (SeeThroughCircleView *)[self buttonForService:i];

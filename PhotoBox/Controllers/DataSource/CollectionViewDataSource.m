@@ -10,9 +10,8 @@
 
 #import "PhotoBoxCell.h"
 
-@interface CollectionViewDataSource () <NSFetchedResultsControllerDelegate> {
-    NSMutableArray *_objectChanges;
-    NSMutableArray *_sectionChanges;
+@interface CollectionViewDataSource () {
+    
 }
 
 @property (nonatomic, strong) id collectionView;
@@ -120,61 +119,7 @@
     [self.fetchedResultsController clearCache];
     [self.fetchedResultsController preLoadCache];
     
-    [self.collectionView performBatchUpdates:^{
-        
-        for (NSDictionary *change in _sectionChanges)
-        {
-            [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                
-                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                switch (type)
-                {
-                    case NSFetchedResultsChangeInsert:
-                        [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                        break;
-                    case NSFetchedResultsChangeDelete:
-                        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                        break;
-                    case NSFetchedResultsChangeUpdate:
-                        [self.collectionView reloadSections:[NSIndexSet indexSetWithIndex:[obj unsignedIntegerValue]]];
-                        break;
-                }
-            }];
-        }
-        
-        for (NSDictionary *change in _objectChanges)
-        {
-            [change enumerateKeysAndObjectsUsingBlock:^(NSNumber *key, id obj, BOOL *stop) {
-                
-                NSFetchedResultsChangeType type = [key unsignedIntegerValue];
-                switch (type)
-                {
-                    case NSFetchedResultsChangeInsert:
-                        [self.collectionView insertItemsAtIndexPaths:@[obj]];
-                        break;
-                    case NSFetchedResultsChangeDelete:
-                        [self.collectionView deleteItemsAtIndexPaths:@[obj]];
-                        break;
-                    case NSFetchedResultsChangeUpdate:
-                        [self.collectionView reloadItemsAtIndexPaths:@[obj]];
-                        break;
-                    case NSFetchedResultsChangeMove:
-                        [self.collectionView moveItemAtIndexPath:obj[0] toIndexPath:obj[1]];
-                        break;
-                }
-            }];
-        }
-        
-    } completion:^(BOOL finished) {
-        for (int i = 0; i< self.fetchedResultsController.sections.count; i++) {
-            for (int j=0; j<[self collectionView:self.collectionView numberOfItemsInSection:i]; j++) {
-                @autoreleasepool {
-                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:i];
-                    [self itemAtIndexPath:indexPath];
-                }
-            }
-        }
-    }];
+    [self.collectionView reloadData];
     
     [_sectionChanges removeAllObjects];
     [_objectChanges removeAllObjects];
@@ -218,8 +163,6 @@
         _paused = NO;
         _fetchedResultsController.delegate = self;
         [_fetchedResultsController performFetch:NULL];
-        PBX_LOG(@"[%@] Reloading collection view", self.debugName);
-        [self.collectionView reloadData];
     }
 }
 
@@ -227,15 +170,9 @@
     if (_paused != paused) {
         _paused = paused;
         if (paused) {
-            PBX_LOG(@"[%@] Before pausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-            PBX_LOG(@"[%@] Before pausing. Number of fetched objects = %d", self.debugName, self.fetchedResultsController.fetchedObjects.count);
             self.fetchedResultsController.delegate = nil;
         } else {
             self.fetchedResultsController.delegate = self;
-            [self.fetchedResultsController performFetch:NULL];
-            PBX_LOG(@"[%@] After unpausing. Number of sections = %d", self.debugName, [self numberOfSectionsInCollectionView:self.collectionView]);
-            PBX_LOG(@"[%@] Reloading collection view", self.debugName);
-            [self.collectionView reloadData];
         }
     }
 }

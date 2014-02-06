@@ -12,7 +12,7 @@
 typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndexPath *indexPath);
 
-@interface CollectionViewDataSource : NSObject <UICollectionViewDataSource>
+@interface CollectionViewDataSource : NSObject <UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
 
 @property (nonatomic, copy) NSString *cellIdentifier;
 
@@ -30,6 +30,10 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 @property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
 
 @property (nonatomic, strong) NSIndexPath *loadingViewIndexPath;
+
+@property (nonatomic, copy) NSMutableArray *objectChanges;
+@property (nonatomic, copy) NSMutableArray *sectionChanges;
+@property (nonatomic, strong, readonly) id collectionView;
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 

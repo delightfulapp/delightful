@@ -75,13 +75,11 @@
 
 - (void)collectionViewPanned:(UIPanGestureRecognizer *)gesture {
     switch (gesture.state) {
-        case UIGestureRecognizerStateBegan:
-            NSLog(@"Gesture began: %@", NSStringFromCGPoint([gesture locationInView:self.collectionView]));
+        case UIGestureRecognizerStateBegan:{
             CGPoint initPoint = [gesture locationInView:self.collectionView];
             selectionRect = CGRectMake(initPoint.x, initPoint.y, 0, 0);
             break;
-        case UIGestureRecognizerStateChanged:
-            NSLog(@"Gesture changed %@. Collection view size = %@", NSStringFromCGPoint([gesture locationInView:self.collectionView.superview]), NSStringFromCGSize(self.collectionView.frame.size));
+        } case UIGestureRecognizerStateChanged: {
             if ([gesture locationInView:self.collectionView.superview].y >= CGRectGetHeight(self.collectionView.frame) - 50) {
                 continueScrolling = YES;
                 if (!isTimerRunning) {
@@ -94,17 +92,17 @@
             [self updateSelectionRectWithTouchPoint:[gesture locationInView:self.collectionView]];
             [self toggleSelectedStateOfVisibleCellsInRect:selectionRect];
             break;
-        case UIGestureRecognizerStateCancelled:
-            NSLog(@"Gesture cancelled");
+        } case UIGestureRecognizerStateCancelled:
+            PBX_LOG(@"Gesture cancelled");
             break;
         case UIGestureRecognizerStateEnded:
-            NSLog(@"Gesture ended");
+            PBX_LOG(@"Gesture ended");
             break;
         case UIGestureRecognizerStateFailed:
-            NSLog(@"Gesture failed");
+            PBX_LOG(@"Gesture failed");
             break;
         case UIGestureRecognizerStatePossible:
-            NSLog(@"Gesture possible");
+            PBX_LOG(@"Gesture possible");
             break;
         default:
             break;
