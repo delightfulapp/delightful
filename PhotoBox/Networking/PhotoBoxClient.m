@@ -230,7 +230,6 @@
     
     [context performBlockAndWait:^{
         NSError *error;
-        NSLog(@"Save context");
         [context save:&error];
         if (error) {
             PBX_LOG(@"Fail saving objects to db: %@", error);

@@ -16,16 +16,16 @@
 
 @implementation StickyHeaderFlowLayout
 
-//- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-//    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
-//    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
-//        attr.alpha = 0;
-//        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
-//        attr.center = CGPointMake(attr.center.x, centerY);
-//    }
-//    
-//    return attr;
-//}
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
+        attr.alpha = 0;
+        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
+        attr.center = CGPointMake(attr.center.x, centerY);
+    }
+    
+    return attr;
+}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
@@ -145,36 +145,27 @@
     }
 }
 
-//- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
-//{
-//    // Keep track of insert and delete index paths
-//    NSArray *array = [updateItems filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UICollectionViewUpdateItem *evaluatedObject, NSDictionary *bindings) {
-//        NSIndexPath *path = evaluatedObject.indexPathAfterUpdate;
-//        NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:path.section];
-//        if (path.item > numberOfItems - 1) {
-//            return NO;
-//        }
-//        return YES;
-//    }]];
-//    
-//    [super prepareForCollectionViewUpdates:array];
-//    
-//    self.insertIndexPaths = [NSMutableArray array];
-//    
-//    for (UICollectionViewUpdateItem *update in array)
-//    {
-//        if (update.updateAction == UICollectionUpdateActionInsert)
-//        {
-//            [self.insertIndexPaths addObject:update.indexPathAfterUpdate];
-//        }
-//    }
-//}
-//
-//- (void)finalizeCollectionViewUpdates
-//{
-//    [super finalizeCollectionViewUpdates];
-//    // release the insert and delete index paths
-//    self.insertIndexPaths = nil;
-//}
+- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
+{
+    // Keep track of insert and delete index paths
+    [super prepareForCollectionViewUpdates:updateItems];
+    
+    self.insertIndexPaths = [NSMutableArray array];
+    
+    for (UICollectionViewUpdateItem *update in updateItems)
+    {
+        if (update.updateAction == UICollectionUpdateActionInsert)
+        {
+            [self.insertIndexPaths addObject:update.indexPathAfterUpdate];
+        }
+    }
+}
+
+- (void)finalizeCollectionViewUpdates
+{
+    [super finalizeCollectionViewUpdates];
+    // release the insert and delete index paths
+    self.insertIndexPaths = nil;
+}
 
 @end

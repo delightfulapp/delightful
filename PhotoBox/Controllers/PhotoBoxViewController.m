@@ -486,9 +486,6 @@
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if ([collectionView numberOfItemsInSection:section] == 0) {
-        return CGSizeZero;
-    }
     if (self.numberOfColumns <= 1) {
         return CGSizeZero;
     }

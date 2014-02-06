@@ -35,8 +35,6 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 @property (nonatomic, copy) NSMutableArray *sectionChanges;
 @property (nonatomic, strong, readonly) id collectionView;
 
-@property (nonatomic, assign) BOOL shouldReloadCollectionView;
-
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath;
