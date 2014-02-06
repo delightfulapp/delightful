@@ -97,13 +97,27 @@
     NSMutableDictionary *change = [NSMutableDictionary new];
     switch(type)
     {
-        case NSFetchedResultsChangeInsert:
-            change[@(type)] = newIndexPath;
+        case NSFetchedResultsChangeInsert:{
+            if ([self.collectionView numberOfSections] > 0) {
+                if ([self.collectionView numberOfItemsInSection:indexPath.section] == 0) {
+                    self.shouldReloadCollectionView = YES;
+                } else {
+                    change[@(type)] = newIndexPath;
+                }
+            } else {
+                self.shouldReloadCollectionView = YES;
+            }
+            
             break;
-        case NSFetchedResultsChangeDelete:
-            change[@(type)] = indexPath;
+        } case NSFetchedResultsChangeDelete:{
+            if ([self.collectionView numberOfItemsInSection:indexPath.section] == 1) {
+                self.shouldReloadCollectionView = YES;
+            } else {
+                change[@(type)] = indexPath;
+            }
+            
             break;
-        case NSFetchedResultsChangeUpdate:
+        } case NSFetchedResultsChangeUpdate:
             change[@(type)] = indexPath;
             break;
         case NSFetchedResultsChangeMove:
@@ -163,6 +177,7 @@
         _paused = NO;
         _fetchedResultsController.delegate = self;
         [_fetchedResultsController performFetch:NULL];
+        [self.collectionView reloadData];
     }
 }
 

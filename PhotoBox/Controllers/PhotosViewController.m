@@ -68,7 +68,7 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
-    [self.collectionView.viewForBaselineLayout.layer setSpeed:0.4f];
+    //[self.collectionView.viewForBaselineLayout.layer setSpeed:0.4f];
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
@@ -206,6 +206,9 @@
 #pragma mark - Setters
 
 - (void)reloadFetchedResultsController {
+    self.dataSource.fetchedResultsController = nil;
+    [self.collectionView  reloadData];
+    
     self.predicate = nil;
     self.fetchRequest = nil;
     self.dataSource.fetchedResultsController = self.fetchedResultsController;
