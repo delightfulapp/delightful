@@ -162,7 +162,7 @@
     self.dataSource.fetchedResultsController = nil;
     [self.collectionView reloadData];
     
-    NSLog(@"Number of sections = %d", [self.collectionView numberOfSections]);
+    NSLog(@"Number of sections = %ld", (long)[self.dataSource numberOfSectionsInCollectionView:self.collectionView]);
     
     self.predicate = nil;
     self.fetchRequest = nil;
@@ -277,11 +277,6 @@
 #pragma mark - Connection
 
 - (void)fetchResource {
-    
-    // if we show the loading view directly here, the bottom loading view position is weird because the collection view content size is not properly set yet. so we show the loading view on the next run loop.
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self showLoadingView:YES];
-//    });
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction

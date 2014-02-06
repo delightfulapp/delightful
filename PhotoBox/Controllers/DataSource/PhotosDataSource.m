@@ -23,7 +23,6 @@
             _paused = NO;
             _fetchedResultsController.delegate = self;
             
-            
             if ([self.collectionView numberOfSections] == 0) {
                 NSError *error;
                 [self.fetchedResultsController performFetch:&error];
@@ -46,7 +45,6 @@
                 }
             }
         }
-        
     }
 }
 
@@ -55,7 +53,7 @@
     [self.fetchedResultsController clearCache];
     [self.fetchedResultsController preLoadCache];
     
-    if (self.sectionChanges.count > 0) {
+    if (self.sectionChanges.count > 0 || self.objectChanges.count > 0) {
         [self.collectionView performBatchUpdates:^{
             
             for (NSDictionary *change in self.sectionChanges)
