@@ -54,8 +54,6 @@
     [self setupPinchGesture];
     [self setupNavigationItemTitle];
     
-    [self.dataSource setFetchedResultsController:self.fetchedResultsController];
-    
     if (!self.disableFetchOnLoad) {
         PBX_LOG(@"Gonna fetch resource in view did load");
         [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
@@ -67,17 +65,19 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    PBX_LOG(@"Setting fetchedresultscontroller");
-    
-    PBX_LOG(@"Resuming %@ data source.", NSStringFromClass(self.resourceClass));
+    NSInteger sections = [self.dataSource numberOfSectionsInCollectionView:self.collectionView];
+    if (sections == 0) {
+        [self.dataSource setFetchedResultsController:[self newFetchedResultsController]];
+    }
     self.dataSource.paused = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    PBX_LOG(@"Pausing %@ data source.", NSStringFromClass(self.resourceClass));
+    
     if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+        PBX_LOG(@"Pausing %@ data source.", NSStringFromClass(self.resourceClass));
         // no need to pause data source when login page is showing
         self.dataSource.paused = YES;
     }
@@ -157,6 +157,18 @@
     [self.navigationItem setTitleView:self.navigationTitleLabel];
 }
 
+- (void)reloadFetchedResultsController {
+    [self.dataSource setPaused:YES];
+    self.dataSource.fetchedResultsController = nil;
+    [self.collectionView reloadData];
+    
+    NSLog(@"Number of sections = %ld", (long)[self.dataSource numberOfSectionsInCollectionView:self.collectionView]);
+    
+    self.predicate = nil;
+    self.fetchRequest = nil;
+    self.dataSource.fetchedResultsController = [self newFetchedResultsController];
+}
+
 #pragma mark - Getter
 
 - (CollectionViewDataSource *)dataSource {
@@ -216,7 +228,7 @@
     return nil;
 }
 
-- (PhotoBoxFetchedResultsController *)fetchedResultsController {
+- (PhotoBoxFetchedResultsController *)newFetchedResultsController {
     PhotoBoxFetchedResultsController *fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
     [fetchedResultsController setObjectClass:self.resourceClass];
     [fetchedResultsController setItemKey:self.displayedItemIdKey];
@@ -265,11 +277,6 @@
 #pragma mark - Connection
 
 - (void)fetchResource {
-    
-    // if we show the loading view directly here, the bottom loading view position is weird because the collection view content size is not properly set yet. so we show the loading view on the next run loop.
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self showLoadingView:YES];
-//    });
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction

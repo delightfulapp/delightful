@@ -49,11 +49,11 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
-@property (nonatomic, weak, readonly) PhotoBoxFetchedResultsController *fetchedResultsController;
 @property (nonatomic, strong) NSFetchRequest *fetchRequest;
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
 - (Class)dataSourceClass;
+- (void)reloadFetchedResultsController;
 - (void)refresh;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;

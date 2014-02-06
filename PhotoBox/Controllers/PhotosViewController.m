@@ -205,13 +205,6 @@
 
 #pragma mark - Setters
 
-- (void)reloadFetchedResultsController {
-    self.predicate = nil;
-    self.fetchRequest = nil;
-    self.dataSource.fetchedResultsController = self.fetchedResultsController;
-    [self.collectionView reloadData];
-}
-
 - (void)setPhotosCount:(int)count max:(int)max{
     NSString *title = NSLocalizedString(@"Photos", nil);
     if ([self.item isKindOfClass:[Album class]]) {

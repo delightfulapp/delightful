@@ -12,6 +12,4 @@
 
 @interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
-- (void)reloadFetchedResultsController;
-
 @end
