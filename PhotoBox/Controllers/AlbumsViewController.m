@@ -114,7 +114,7 @@
 #pragma mark - Did stuff
 
 - (void)didFetchItems {
-    int count = [self.dataSource numberOfItems];
+    NSInteger count = [self.dataSource numberOfItems];
     [self setAlbumsCount:count max:self.totalItems];
 }
 

@@ -42,6 +42,7 @@ typedef NS_ENUM(NSInteger, ActionType) {
 - (void)getResource:(ResourceType)type
              action:(ActionType)action
          resourceId:(NSString *)resourceId
+          fetchedIn:(NSString *)fetchedIn
                page:(int)page
            pageSize:(int)pageSize
         mainContext:(NSManagedObjectContext *)context

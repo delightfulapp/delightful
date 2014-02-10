@@ -113,12 +113,14 @@
     [self loadPhotosInTag:tag];
 }
 
-- (void)loadPhotosInTag:(Tag *)tag {
+- (void)loadPhotosInTag:(Tag *)tag {    
     PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
     [photosViewController setItem:tag];
     [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
     [photosViewController setRelationshipKeyPathWithItem:@"tags"];
     [photosViewController setResourceType:PhotoWithTagsResource];
+    [photosViewController reloadFetchedResultsController];
+    [photosViewController refresh];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];

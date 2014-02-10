@@ -143,6 +143,13 @@
     return [PhotosDataSource class];
 }
 
+- (NSString *)fetchedInIdentifier {
+    if ([self isGallery]) {
+        return galleryContainerType;
+    }
+    return [[self relationshipKeyPathWithItem] stringByAppendingFormat:@"-%@", [self.item itemId]];
+}
+
 #pragma mark - Did something
 
 - (void)willLoadItemsFromCoreData {
@@ -176,7 +183,7 @@
 
 
 - (void)didFetchItems {
-    int count = [self.dataSource numberOfItems];
+    NSInteger count = [self.dataSource numberOfItems];
     [self setPhotosCount:count max:self.totalItems];
     [self getLocationForEachSection];
 }

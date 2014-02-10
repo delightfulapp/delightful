@@ -49,6 +49,7 @@
         return YES;
     }
     
+    //[[ConnectionManager sharedManager] logout];
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
     //[[NSUserDefaults standardUserDefaults] synchronize];
     

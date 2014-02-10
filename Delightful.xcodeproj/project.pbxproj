@@ -98,6 +98,7 @@
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
 		037BA8AB18A355D70072760C /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
+		037BA8BC18A63C830072760C /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
 		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
 		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
@@ -292,6 +293,9 @@
 		037BA89718A0EB470072760C /* DelightfulLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelightfulLayout.m; sourceTree = "<group>"; };
 		037BA8A918A355D70072760C /* PhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosDataSource.h; sourceTree = "<group>"; };
 		037BA8AA18A355D70072760C /* PhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosDataSource.m; sourceTree = "<group>"; };
+		037BA8B618A4E7AE0072760C /* PhotoBoxModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PhotoBoxModel 3.xcdatamodel"; sourceTree = "<group>"; };
+		037BA8BA18A63C830072760C /* FetchedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedIn.h; sourceTree = "<group>"; };
+		037BA8BB18A63C830072760C /* FetchedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedIn.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		03866321184072BA006C76DE /* AlbumsTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsTagsViewController.h; path = PhotoBox/Controllers/AlbumsTagsViewController.h; sourceTree = "<group>"; };
 		03866322184072BA006C76DE /* AlbumsTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsTagsViewController.m; path = PhotoBox/Controllers/AlbumsTagsViewController.m; sourceTree = "<group>"; };
@@ -425,6 +429,8 @@
 				0310904417D1B2840075F9D8 /* Tag.m */,
 				031DD29F17D99B1300A80167 /* PhotoBoxImage.h */,
 				031DD2A017D99B1300A80167 /* PhotoBoxImage.m */,
+				037BA8BA18A63C830072760C /* FetchedIn.h */,
+				037BA8BB18A63C830072760C /* FetchedIn.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1073,6 +1079,7 @@
 				0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */,
 				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
+				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
 				0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */,
 				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
@@ -1487,10 +1494,11 @@
 		036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				037BA8B618A4E7AE0072760C /* PhotoBoxModel 3.xcdatamodel */,
 				036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */,
 				036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */,
 			);
-			currentVersion = 036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */;
+			currentVersion = 037BA8B618A4E7AE0072760C /* PhotoBoxModel 3.xcdatamodel */;
 			name = PhotoBoxModel.xcdatamodeld;
 			path = PhotoBox/Models/PhotoBoxModel.xcdatamodeld;
 			sourceTree = "<group>";

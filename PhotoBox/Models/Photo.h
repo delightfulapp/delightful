@@ -56,4 +56,6 @@
 @property (nonatomic, copy, readonly) NSString *dateMonthYearTakenString;
 @property (nonatomic, copy, readonly) NSString *dimension;
 
+@property (nonatomic, copy, readonly) NSArray *fetchedIn;
+
 @end

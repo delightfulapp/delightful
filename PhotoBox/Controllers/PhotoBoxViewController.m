@@ -24,6 +24,8 @@
 
 #define BATCH_SIZE 20
 
+NSString *const galleryContainerType = @"gallery";
+
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
     CGFloat lastOffset;
     BOOL isObservingLoggedInUser;
@@ -219,13 +221,26 @@
 }
 
 - (NSPredicate *)predicate {
-    if (self.item && ![self isGallery]) {
-        if (!_predicate) {
-            _predicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR]];
+    if (!_predicate) {
+        NSPredicate *fetchedInPredicate;
+        if (self.fetchedInIdentifier) {
+            fetchedInPredicate = [NSPredicate predicateWithFormat:@"fetchedIn.fetchedIn CONTAINS[cd] %@", self.fetchedInIdentifier];
         }
-        return _predicate;
+        
+        if ([self isGallery]) {
+            NSLog(@"Predicate = %@", fetchedInPredicate);
+            _predicate = fetchedInPredicate;
+        } else {
+            if (self.item) {
+                NSPredicate *containerPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@ && fetchedIn.fetchedIn CONTAINS[cd] %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR], self.fetchedInIdentifier];
+                
+                _predicate = containerPredicate;
+            }
+        }
     }
-    return nil;
+    
+
+    return _predicate;
 }
 
 - (PhotoBoxFetchedResultsController *)newFetchedResultsController {
@@ -250,6 +265,10 @@
         [_loadingView setHidesWhenStopped:YES];
     }
     return _loadingView;
+}
+
+- (NSString *)fetchedInIdentifier {
+    return nil;
 }
 
 #pragma mark - Setter
@@ -281,6 +300,7 @@
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction
                                     resourceId:self.resourceId
+                                     fetchedIn:[self fetchedInIdentifier]
                                           page:self.page
                                       pageSize:self.pageSize mainContext:self.mainContext
                                        success:^(id objects) {
@@ -464,6 +484,9 @@
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
         }];
     }
+}
+
+- (void)didChangeNumberOfColumns {
     
 }
 

@@ -25,22 +25,25 @@
 
 - (void)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
+               fetchedIn:(NSString *)fetchedIn
              mainContext:(NSManagedObjectContext *)mainContext
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
 - (void)getPhotosInAlbum:(NSString *)albumId
                     page:(int)page
                 pageSize:(int)pageSize
+               fetchedIn:(NSString *)fetchedIn
              mainContext:(NSManagedObjectContext *)mainContext
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
 - (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext
+                     fetchedIn:(NSString *)fetchedIn
                        success:(void(^)(id object))successBlock
                    failure:(void(^)(NSError*))failureBlock;
 - (void)getAllPhotosOnPage:(int)page
-               mainContext:(NSManagedObjectContext *)mainContext
-                  pageSize:(int)pageSize success:(void(^)(id object))successBlock
-                   failure:(void(^)(NSError*))failureBlock;
+                  pageSize:(int)pageSize mainContext:(NSManagedObjectContext *)mainContext
+                   success:(void (^)(id))successBlock
+                   failure:(void (^)(NSError *))failureBlock;
 
 @end
 
@@ -114,12 +117,13 @@
                page:(int)page
             success:(void (^)(id))successBlock
             failure:(void (^)(NSError *))failureBlock {
-    [self getResource:type action:action resourceId:resourceId page:page pageSize:20 mainContext:nil success:successBlock failure:failureBlock];
+    [self getResource:type action:action resourceId:resourceId fetchedIn:nil page:page pageSize:20 mainContext:nil success:successBlock failure:failureBlock];
 }
 
 - (void)getResource:(ResourceType)type
              action:(ActionType)action
          resourceId:(NSString *)resourceId
+          fetchedIn:(NSString *)fetchedIn
                page:(int)page
            pageSize:(int)pageSize
         mainContext:(NSManagedObjectContext *)context
@@ -129,10 +133,10 @@
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         switch (action) {
             case ListAction:{
-                if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize mainContext:context success:successBlock failure:failureBlock];
-                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize mainContext:context success:successBlock failure:failureBlock];
-                else if (type == TagResource) [self getTagsWithMainContext:context success:successBlock failure:failureBlock];
-                else if (type == PhotoWithTagsResource) [self getPhotosInTag:resourceId page:page pageSize:pageSize mainContext:context success:successBlock failure:failureBlock];
+                if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize fetchedIn:fetchedIn mainContext:context success:successBlock failure:failureBlock];
+                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:context success:successBlock failure:failureBlock];
+                else if (type == TagResource) [self getTagsWithMainContext:context fetchedIn:fetchedIn success:successBlock failure:failureBlock];
+                else if (type == PhotoWithTagsResource) [self getPhotosInTag:resourceId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:context success:successBlock failure:failureBlock];
                 break;
             }
             default:
@@ -145,13 +149,24 @@
 
 - (void)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
+               fetchedIn:(NSString *)fetchedIn
              mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" mainContext:mainContext success:successBlock failure:failureBlock];
+    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
-- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)getPhotosInAlbum:(NSString *)albumId
+                    page:(int)page
+                pageSize:(int)pageSize
+               fetchedIn:(NSString *)fetchedIn
+             mainContext:(NSManagedObjectContext *)mainContext
+                 success:(void (^)(id))successBlock
+                 failure:(void (^)(NSError *))failureBlock {
+    [self getPhotosInResource:Album.class resourceId:albumId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
+}
+
+- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     NSString *resource = nil;
     if ([resourceClass isSubclassOfClass:Album.class]) {
         resource = [NSString stringWithFormat:@"&%@", [self albumsQueryString:resourceId]];
@@ -166,35 +181,26 @@
     }
     NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, sort, [self photoSizesString], resource];
     
-    [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" mainContext:mainContext success:successBlock failure:failureBlock];
-}
-
-- (void)getPhotosInAlbum:(NSString *)albumId
-                    page:(int)page
-                pageSize:(int)pageSize
-             mainContext:(NSManagedObjectContext *)mainContext
-                 success:(void (^)(id))successBlock
-                 failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:Album.class resourceId:albumId page:page pageSize:pageSize mainContext:mainContext success:successBlock failure:failureBlock];
+    [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInTag:(NSString *)tagId
                     page:(int)page
-                pageSize:(int)pageSize
+              pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn
            mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize mainContext:mainContext success:successBlock failure:failureBlock];
+    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
-- (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self GET:@"/tags/list.json" parameters:nil resultClass:[Tag class] resultKeyPath:@"result" mainContext:mainContext success:successBlock failure:failureBlock];
+- (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext fetchedIn:(NSString *)fetchedIn success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self GET:@"/tags/list.json" parameters:nil resultClass:[Tag class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getAllPhotosOnPage:(int)page
-                  pageSize:(int)pageSize mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+                  pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     [self getPhotosInAlbum:nil page:page
-                  pageSize:(int)pageSize mainContext:mainContext success:successBlock failure:failureBlock];
+                  pageSize:(int)pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
@@ -203,11 +209,11 @@
     return [transformer transformedValue:result];
 }
 
-- (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     return [self GET:path parameters:parameters resultClass:resultClass resultKeyPath:keyPath completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         NSLog(@"Fetched responses");
         if (!error) {
-            [self serializeToManagedObject:responseObject mainContext:mainContext];
+            [self serializeToManagedObject:responseObject mainContext:mainContext fetchedIn:fetchedIn];
             successBlock(responseObject);
         } else {
             failureBlock(error);
@@ -215,7 +221,7 @@
     }];
 }
 
-- (void)serializeToManagedObject:(id)responseObject mainContext:(NSManagedObjectContext *)mainContext {
+- (void)serializeToManagedObject:(id)responseObject mainContext:(NSManagedObjectContext *)mainContext fetchedIn:(NSString *)fetchedIn {
     NSManagedObjectContext *context = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyBackgroundQueue];
     if (mainContext) {
         [mainContext observeSavesInContext:context];
@@ -223,10 +229,20 @@
     NSError *error;
     if ([responseObject isKindOfClass:[NSArray class]]) {
         for (id obj in responseObject) {
-            [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
+            id managedObject = [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
+            if (fetchedIn) {
+                id fetchedInManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"PBXFetchedInHistory" inManagedObjectContext:context];
+                [fetchedInManagedObject setValue:fetchedIn forKey:NSStringFromSelector(@selector(fetchedIn))];
+                [fetchedInManagedObject setValue:managedObject forKey:@"photo"];;
+            }
         }
     } else {
-        [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
+        id managedObject = [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
+        if (fetchedIn) {
+            id fetchedInManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"PBXFetchedInHistory" inManagedObjectContext:context];
+            [fetchedInManagedObject setValue:fetchedIn forKey:NSStringFromSelector(@selector(fetchedIn))];
+            [fetchedInManagedObject setValue:managedObject forKey:@"photo"];;
+        }
     }
     
     [context performBlockAndWait:^{

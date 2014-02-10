@@ -9,6 +9,7 @@
 #import "Photo.h"
 #import "Tag.h"
 #import "Album.h"
+#import "FetchedIn.h"
 
 #import "NSObject+Additionals.h"
 #import "NSArray+Additionals.h"
@@ -129,7 +130,7 @@
 }
 
 + (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{ @"photo320x320":PhotoBoxImage.class, @"photo640x640":PhotoBoxImage.class};
+    return @{ NSStringFromSelector(@selector(photo320x320)):PhotoBoxImage.class, NSStringFromSelector(@selector(photo640x640)):PhotoBoxImage.class, NSStringFromSelector(@selector(fetchedIn)): FetchedIn.class};
 }
 
 @end

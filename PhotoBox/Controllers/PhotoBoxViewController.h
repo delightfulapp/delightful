@@ -13,6 +13,8 @@
 #import "CollectionViewDataSource.h"
 #import "PhotoBoxFetchedResultsController.h"
 
+extern NSString *const galleryContainerType;
+
 typedef NS_ENUM(NSUInteger, PinchDirection) {
     PinchIn,
     PinchOut
@@ -39,6 +41,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) BOOL isFetching;
 @property (nonatomic, assign) BOOL disableFetchOnLoad;
 @property (nonatomic, assign) int numberOfColumns;
+@property (nonatomic, strong) NSString *fetchedInIdentifier;
 
 @property (nonatomic, assign) int totalPages;
 @property (nonatomic, assign) int totalItems;
