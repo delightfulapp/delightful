@@ -40,6 +40,8 @@
         // if the attribute is header
         if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
             [self adjustHeaderLayoutAttributes:layoutAttributes];
+        }  else {
+            layoutAttributes.zIndex = 0;
         }
     }
     
@@ -137,7 +139,7 @@
                        (CGRectGetMaxY(lastObjectAttrs.frame) - bottomHeaderHeight)
                     );
         
-        layoutAttributes.zIndex = 1024;
+        layoutAttributes.zIndex = 10000;
         layoutAttributes.frame = (CGRect){
             .origin = origin,
             .size = layoutAttributes.frame.size
