@@ -143,13 +143,6 @@
     return [PhotosDataSource class];
 }
 
-- (NSString *)fetchedInIdentifier {
-    if ([self isGallery]) {
-        return galleryContainerType;
-    }
-    return [[self relationshipKeyPathWithItem] stringByAppendingFormat:@"-%@", [self.item itemId]];
-}
-
 #pragma mark - Did something
 
 - (void)willLoadItemsFromCoreData {
@@ -253,6 +246,8 @@
     PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    
+    [destination setMainContext:self.mainContext];
     [destination setItem:self.item];
     [destination setFirstShownPhoto:cell.item];
     [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];

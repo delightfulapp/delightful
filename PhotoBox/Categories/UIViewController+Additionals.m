@@ -34,10 +34,10 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
             }
             CGSize contentSize = cv.collectionView.contentSize;
             if (centerY == CGFLOAT_MIN) {
-                [activity setCenter:CGPointMake(contentSize.width/2, contentSize.height+CGRectGetHeight(activity.frame)/2+10)];
+                [activity setCenter:CGPointMake(cv.collectionView.frame.size.width/2, contentSize.height+CGRectGetHeight(activity.frame)/2+10)];
                 
             } else {
-                [activity setCenter:CGPointMake(contentSize.width/2, centerY)];
+                [activity setCenter:CGPointMake(cv.collectionView.frame.size.width/2, centerY)];
             }
             
             [activity startAnimating];

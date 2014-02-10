@@ -268,7 +268,10 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (NSString *)fetchedInIdentifier {
-    return nil;
+    if ([self isGallery]) {
+        return galleryContainerType;
+    }
+    return [[self relationshipKeyPathWithItem] stringByAppendingFormat:@"-%@", [self.item itemId]];
 }
 
 #pragma mark - Setter
@@ -296,6 +299,7 @@ NSString *const galleryContainerType = @"gallery";
 #pragma mark - Connection
 
 - (void)fetchResource {
+    [self showLoadingView:YES];
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction

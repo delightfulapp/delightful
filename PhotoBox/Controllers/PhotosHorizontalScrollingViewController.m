@@ -70,7 +70,6 @@
     [self insertBackgroundSnapshotView];
     
     self.resourceType = PhotoResource;
-    self.relationshipKeyPathWithItem = @"albums";
 }
 
 - (void)viewDidAppear:(BOOL)animated {

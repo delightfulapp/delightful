@@ -111,6 +111,10 @@
     return configureCell;
 }
 
+- (NSString *)fetchedInIdentifier {
+    return nil;
+}
+
 #pragma mark - Did stuff
 
 - (void)didFetchItems {
