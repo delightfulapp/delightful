@@ -14,6 +14,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) NSOperationQueue *queue;
+@property (nonatomic, strong) NSMutableDictionary *locationCache;
 
 @end
 
@@ -33,15 +34,25 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 - (void)setup {
     _queue = [[NSOperationQueue alloc] init];
     [_queue setMaxConcurrentOperationCount:1];
+    
+    _locationCache = [[NSMutableDictionary alloc] init];
 }
 
 - (void)nameForLocation:(CLLocation*)location completionHandler:(void(^)(NSArray* placemarks, NSError* error))completionHandler {
     if (!self.geocoder)
         self.geocoder = [[CLGeocoder alloc] init];
-
+    
+    if ([self.locationCache objectForKey:location]) {
+        if (completionHandler) {
+            completionHandler(self.locationCache[location], nil);
+            return;
+        }
+    }
+    
     __weak typeof (self) selfie = self;
     [self.queue addOperationWithBlock:^{
         [selfie.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            [selfie.locationCache setObject:placemarks forKey:location];
             if (completionHandler) {
                 completionHandler(placemarks, error);
             }
