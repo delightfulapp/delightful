@@ -143,7 +143,14 @@
     return [PhotosDataSource class];
 }
 
-#pragma mark - Did something
+#pragma mark - Do something
+
+- (void)reloadFetchedResultsController {
+    [self.placemarkDictionary removeAllObjects];
+    [self.locationDictionary removeAllObjects];
+    
+    [super reloadFetchedResultsController];
+}
 
 - (void)willLoadItemsFromCoreData {
     DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
