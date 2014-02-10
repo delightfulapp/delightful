@@ -23,7 +23,7 @@
 
 - (PhotoBoxImage *)originalImage {
     if (!_originalImage) {
-        _originalImage = [[PhotoBoxImage alloc] initWithArray:@[(self.pathOriginal)?self.pathOriginal.absoluteString:@"", self.width, self.height]];
+        _originalImage = [[PhotoBoxImage alloc] initWithArray:@[(self.pathOriginal)?self.pathOriginal.absoluteString:@"", self.width?:@(0), self.height?:@(0)]];
     }
     return _originalImage;
 }

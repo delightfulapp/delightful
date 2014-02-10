@@ -230,18 +230,24 @@
     if ([responseObject isKindOfClass:[NSArray class]]) {
         for (id obj in responseObject) {
             id managedObject = [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
-            if (fetchedIn) {
+            if (fetchedIn && managedObject) {
                 id fetchedInManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"PBXFetchedInHistory" inManagedObjectContext:context];
                 [fetchedInManagedObject setValue:fetchedIn forKey:NSStringFromSelector(@selector(fetchedIn))];
                 [fetchedInManagedObject setValue:managedObject forKey:@"photo"];;
             }
+            if (error) {
+                PBX_LOG(@"Error saving managed object: %@", error);
+            }
         }
     } else {
         id managedObject = [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
-        if (fetchedIn) {
+        if (fetchedIn && managedObject) {
             id fetchedInManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"PBXFetchedInHistory" inManagedObjectContext:context];
             [fetchedInManagedObject setValue:fetchedIn forKey:NSStringFromSelector(@selector(fetchedIn))];
             [fetchedInManagedObject setValue:managedObject forKey:@"photo"];;
+        }
+        if (error) {
+            PBX_LOG(@"Error saving managed object: %@", error);
         }
     }
     

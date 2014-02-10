@@ -39,8 +39,6 @@
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
 @property (nonatomic, assign) CGRect selectedItemRect;
-@property (nonatomic, strong) NSMutableDictionary *locationDictionary;
-@property (nonatomic, strong) NSMutableDictionary *placemarkDictionary;
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
 @end
@@ -93,11 +91,19 @@
 }
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
+    __weak typeof (self) selfie = self;
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
-        [cell setHidden:(self.numberOfColumns==1)?YES:NO];
+        [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
         [cell setTitleLabelText:[item localizedDate]];
-        if ([self.placemarkDictionary objectForKey:@(indexPath.section)]) {
-            [cell setLocation:[self.placemarkDictionary objectForKey:@(indexPath.section)]];
+        CLLocation *location = [selfie locationSampleForSection:indexPath.section];
+        if (location) {
+            [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+                if (!error && placemarks && placemarks.count > 0) {
+                    [cell setLocation:placemarks[0]];
+                } else {
+                    [cell setLocation:nil];
+                }
+            }];
         } else {
             [cell setLocation:nil];
         }
@@ -145,13 +151,6 @@
 
 #pragma mark - Do something
 
-- (void)reloadFetchedResultsController {
-    [self.placemarkDictionary removeAllObjects];
-    [self.locationDictionary removeAllObjects];
-    
-    [super reloadFetchedResultsController];
-}
-
 - (void)willLoadItemsFromCoreData {
     DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
     [layout updateLastIndexPath];
@@ -184,7 +183,6 @@
 - (void)didFetchItems {
     NSInteger count = [self.dataSource numberOfItems];
     [self setPhotosCount:count max:self.totalItems];
-    [self getLocationForEachSection];
 }
 
 - (void)didChangeNumberOfColumns {
@@ -318,42 +316,20 @@
 
 #pragma mark - Location
 
-- (void)getLocationForEachSection {
-    if (!self.locationDictionary) {
-        self.locationDictionary = [NSMutableDictionary dictionary];
-    }
-    int i = 0;
-    for (id<NSFetchedResultsSectionInfo> section in self.dataSource.fetchedResultsController.sections) {
-        for (NSManagedObject *photo in section.objects) {
-            NSNumber *latitude = [photo valueForKey:@"latitude"];
-            NSNumber *longitude = [photo valueForKey:@"longitude"];
-            if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
-                CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
-                [self.locationDictionary setObject:location forKey:@(i)];
-                break;
-            }
+- (CLLocation *)locationSampleForSection:(NSInteger)sectionIndex {
+    CLLocation *location;
+    id<NSFetchedResultsSectionInfo> section = self.dataSource.fetchedResultsController.sections[sectionIndex];
+    for (NSManagedObject *photo in section.objects) {
+        NSNumber *latitude = [photo valueForKey:@"latitude"];
+        NSNumber *longitude = [photo valueForKey:@"longitude"];
+        if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
+            location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+            
+            break;
         }
-        i++;
     }
-    
-    for (NSNumber *section in self.locationDictionary.allKeys) {
-        CLLocation *location = [self.locationDictionary objectForKey:section];
-        [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            if (!error && placemarks.count > 0) {
-                [self updateSectionHeader:[section integerValue] placemark:placemarks[0]];
-            }
-        }];
-    }
+    return location;
 }
 
-- (void)updateSectionHeader:(NSInteger)section placemark:(CLPlacemark *)placemark {
-    if (!self.placemarkDictionary) {
-        self.placemarkDictionary = [NSMutableDictionary dictionary];
-    }
-    if (placemark) {
-        [self.placemarkDictionary setObject:placemark forKey:@(section)];
-        [[NSNotificationCenter defaultCenter] postNotificationName:PhotoBoxLocationPlacemarkDidFetchNotification object:@{@"placemark": placemark, @"section":@(section)}];
-    }
-}
 
 @end

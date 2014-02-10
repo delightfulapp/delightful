@@ -216,6 +216,9 @@ NSString *const galleryContainerType = @"gallery";
         if (self.predicate) {
             [_fetchRequest setPredicate:self.predicate];
         }
+        if (self.fetchedInIdentifier) {
+            [_fetchRequest setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(fetchedIn))]];
+        }
     }
     return _fetchRequest;
 }

@@ -25,21 +25,21 @@
             
             if ([self.collectionView numberOfSections] == 0) {
                 NSError *error;
-                [self.fetchedResultsController performFetch:&error];
+                [_fetchedResultsController performFetch:&error];
                 if (error) {
                     PBX_LOG(@"Error perform fetch: %@", error);
                 } else {
                     NSInteger index = 0;
-                    for (id<NSFetchedResultsSectionInfo>section in self.fetchedResultsController.sections) {
-                        [self controller:self.fetchedResultsController didChangeSection:section atIndex:index forChangeType:NSFetchedResultsChangeInsert];
+                    for (id<NSFetchedResultsSectionInfo>section in _fetchedResultsController.sections) {
+                        [self controller:_fetchedResultsController didChangeSection:section atIndex:index forChangeType:NSFetchedResultsChangeInsert];
                         for (NSInteger item = 0; item < [section numberOfObjects]; item++) {
                             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:index];
-                            [self controller:self.fetchedResultsController didChangeObject:nil atIndexPath:nil forChangeType:NSFetchedResultsChangeInsert newIndexPath:indexPath];
+                            [self controller:_fetchedResultsController didChangeObject:nil atIndexPath:nil forChangeType:NSFetchedResultsChangeInsert newIndexPath:indexPath];
                         }
                         index++;
                     }
                     if (self.sectionChanges.count > 0 && self.sectionChanges) {
-                        [self controllerDidChangeContent:self.fetchedResultsController];
+                        [self controllerDidChangeContent:_fetchedResultsController];
                     }
                     
                 }
