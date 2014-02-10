@@ -13,8 +13,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 @interface LocationManager ()
 
 @property (nonatomic, strong) CLGeocoder *geocoder;
-@property (nonatomic, assign) BOOL isFetching;
-@property (nonatomic, strong) NSMutableArray *queues;
+@property (nonatomic, strong) NSOperationQueue *queue;
 
 @end
 
@@ -32,48 +31,23 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 }
 
 - (void)setup {
-    [self addObserver:self forKeyPath:@"isFetching" options:NSKeyValueObservingOptionNew context:nil];
+    _queue = [[NSOperationQueue alloc] init];
+    [_queue setMaxConcurrentOperationCount:1];
 }
 
 - (void)nameForLocation:(CLLocation*)location completionHandler:(void(^)(NSArray* placemarks, NSError* error))completionHandler {
     if (!self.geocoder)
         self.geocoder = [[CLGeocoder alloc] init];
-    if (!self.queues) {
-        self.queues = [NSMutableArray array];
-    }
-    NSDictionary *dict = @{@"location": location, @"completion":completionHandler};
-    [self.queues addObject:dict];
-    
-    if (self.queues.count == 1) {
-        self.isFetching = YES;
-        [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            completionHandler(placemarks, error);
-            self.isFetching = NO;
-            [self.queues removeObject:dict];
+
+    __weak typeof (self) selfie = self;
+    [self.queue addOperationWithBlock:^{
+        [selfie.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (completionHandler) {
+                completionHandler(placemarks, error);
+            }
         }];
-    }
+    }];
 }
 
-- (void)getNameForLocationInQueue {
-    int count = self.queues.count;
-    self.isFetching = YES;
-    if (count > 0) {
-        NSDictionary *dict = [self.queues firstObject];
-        [self.queues removeObject:dict];
-        CLLocation *location = [dict objectForKey:@"location"];
-        void(^completionBlock)(NSArray *, NSError*) = [dict objectForKey:@"completion"];
-        [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-            completionBlock(placemarks, error);
-            self.isFetching = NO;
-        }];
-    }
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    BOOL isFetchingHere = [[change objectForKey:@"new"] boolValue];
-    if (!isFetchingHere) {
-        [self getNameForLocationInQueue];
-    }
-}
 
 @end

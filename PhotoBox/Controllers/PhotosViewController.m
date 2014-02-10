@@ -167,8 +167,7 @@
 - (void)setNumberOfColumns:(int)numberOfColumns {
     if (_numberOfColumns != numberOfColumns) {
         _numberOfColumns = numberOfColumns;
-        
-        
+                
         DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
         [layout setNumberOfColumns:_numberOfColumns];
     }
