@@ -75,7 +75,7 @@
 #pragma mark - Getters
 
 - (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(name)) ascending:YES]];
+    return nil;
 }
 
 - (ResourceType)resourceType {

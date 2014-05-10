@@ -18,7 +18,7 @@
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
 
-#define INITIAL_PAGE_NUMBER 0
+#define INITIAL_PAGE_NUMBER 1
 
 #define BATCH_SIZE 30
 
@@ -254,6 +254,7 @@ NSString *const galleryContainerType = @"gallery";
                                            }
                                            
                                        } failure:^(NSError *error) {
+                                           PBX_LOG(@"Error: %@", error);
                                            [self showError:error];
                                            [self showLoadingView:NO];
                                        }];

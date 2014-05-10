@@ -55,7 +55,7 @@
     UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
     if (self.configureCellHeaderBlock) {
         NSArray *group = self.items[indexPath.section];
-        NSString *title = [[group firstObject] valueForKey:self.groupKey];
+        NSString *title = (self.groupKey)?[[group firstObject] valueForKey:self.groupKey]:nil;
         self.configureCellHeaderBlock(supplementaryView, title, indexPath);
     }
     return supplementaryView;

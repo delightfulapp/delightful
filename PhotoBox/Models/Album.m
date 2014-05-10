@@ -30,7 +30,7 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
     NSError *error;
     Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{
                                                                                @"id": PBX_allAlbumIdentifier,
-                                                                               @"name":NSLocalizedString(@"All Photos", nil),
+                                                                               @"name":NSLocalizedString(@"Gallery", nil),
                                                                                @"cover":@{@"id": @"COVER_PHOTO_ALL_ALBUM", @"filenameOriginal":@""}
                                                                                } error:&error];
     return a;
