@@ -93,7 +93,6 @@
 		036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */; };
 		036DF36E181FBB9E002E9FCB /* intro0.0.4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */; };
 		036DF3741820D05E002E9FCB /* PhotoSectionHeaderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */; };
-		036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */; };
 		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
@@ -278,7 +277,6 @@
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
-		036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "PhotoBoxModel 2.xcdatamodel"; sourceTree = "<group>"; };
 		036DF362181A850C002E9FCB /* 0.0.3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.3.plist; path = PhotoBox/IntroFiles/0.0.3.plist; sourceTree = "<group>"; };
 		036DF364181AA60B002E9FCB /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoInfoViewController.h; path = PhotoBox/Controllers/PhotoInfoViewController.h; sourceTree = "<group>"; };
@@ -287,13 +285,11 @@
 		036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro0.0.4.jpg; sourceTree = "<group>"; };
 		036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "intro0.0.4@2x.jpg"; sourceTree = "<group>"; };
 		036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSectionHeaderViewTests.m; sourceTree = "<group>"; };
-		036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PhotoBoxModel.xcdatamodel; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		037BA89618A0EB470072760C /* DelightfulLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelightfulLayout.h; sourceTree = "<group>"; };
 		037BA89718A0EB470072760C /* DelightfulLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelightfulLayout.m; sourceTree = "<group>"; };
 		037BA8A918A355D70072760C /* PhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosDataSource.h; sourceTree = "<group>"; };
 		037BA8AA18A355D70072760C /* PhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosDataSource.m; sourceTree = "<group>"; };
-		037BA8B618A4E7AE0072760C /* PhotoBoxModel 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PhotoBoxModel 3.xcdatamodel"; sourceTree = "<group>"; };
 		037BA8BA18A63C830072760C /* FetchedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedIn.h; sourceTree = "<group>"; };
 		037BA8BB18A63C830072760C /* FetchedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedIn.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -418,7 +414,6 @@
 		03108FE717D0FE130075F9D8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */,
 				03108FE817D0FE3A0075F9D8 /* Album.h */,
 				03108FE917D0FE3A0075F9D8 /* Album.m */,
 				03108FF417D0FF0C0075F9D8 /* PhotoBoxModel.h */,
@@ -860,7 +855,7 @@
 		032CBB7217D0BDF3001205B1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Touches;
 				TargetAttributes = {
 					032CBB7917D0BDF3001205B1 = {
@@ -1077,7 +1072,6 @@
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
 				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
 				0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */,
-				036E050717FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
 				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
@@ -1254,7 +1248,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1323,7 +1316,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1384,7 +1376,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1425,7 +1416,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -1489,22 +1479,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		036E050517FB1A780012DFB3 /* PhotoBoxModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				037BA8B618A4E7AE0072760C /* PhotoBoxModel 3.xcdatamodel */,
-				036DF35F181A70B8002E9FCB /* PhotoBoxModel 2.xcdatamodel */,
-				036E050617FB1A780012DFB3 /* PhotoBoxModel.xcdatamodel */,
-			);
-			currentVersion = 037BA8B618A4E7AE0072760C /* PhotoBoxModel 3.xcdatamodel */;
-			name = PhotoBoxModel.xcdatamodeld;
-			path = PhotoBox/Models/PhotoBoxModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 032CBB7217D0BDF3001205B1 /* Project object */;
 }

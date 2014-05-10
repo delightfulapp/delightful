@@ -17,8 +17,6 @@
 
 #import <objc/runtime.h>
 
-#import <OGCoreDataStack.h>
-
 @interface PhotoBoxClient ()
 
 @property (nonatomic, strong) AFOAuth1Client *oauthClient;
@@ -129,7 +127,7 @@
         mainContext:(NSManagedObjectContext *)context
             success:(void (^)(id))successBlock
             failure:(void (^)(NSError *))failureBlock {
-    if (pageSize==0) pageSize = 20;
+    if (pageSize==0) pageSize = 30;
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         switch (action) {
             case ListAction:{
@@ -213,54 +211,11 @@
     return [self GET:path parameters:parameters resultClass:resultClass resultKeyPath:keyPath completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         NSLog(@"Fetched responses");
         if (!error) {
-            [self serializeToManagedObject:responseObject mainContext:mainContext fetchedIn:fetchedIn];
             successBlock(responseObject);
         } else {
             failureBlock(error);
         }
     }];
-}
-
-- (void)serializeToManagedObject:(id)responseObject mainContext:(NSManagedObjectContext *)mainContext fetchedIn:(NSString *)fetchedIn {
-    NSManagedObjectContext *context = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyBackgroundQueue];
-    if (mainContext) {
-        [mainContext observeSavesInContext:context];
-    }
-    NSError *error;
-    if ([responseObject isKindOfClass:[NSArray class]]) {
-        for (id obj in responseObject) {
-            id managedObject = [MTLManagedObjectAdapter managedObjectFromModel:obj insertingIntoContext:context error:&error];
-            if (fetchedIn && managedObject) {
-                id fetchedInManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"PBXFetchedInHistory" inManagedObjectContext:context];
-                [fetchedInManagedObject setValue:fetchedIn forKey:NSStringFromSelector(@selector(fetchedIn))];
-                [fetchedInManagedObject setValue:managedObject forKey:@"photo"];;
-            }
-            if (error) {
-                PBX_LOG(@"Error saving managed object: %@", error);
-            }
-        }
-    } else {
-        id managedObject = [MTLManagedObjectAdapter managedObjectFromModel:responseObject insertingIntoContext:context error:&error];
-        if (fetchedIn && managedObject) {
-            id fetchedInManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"PBXFetchedInHistory" inManagedObjectContext:context];
-            [fetchedInManagedObject setValue:fetchedIn forKey:NSStringFromSelector(@selector(fetchedIn))];
-            [fetchedInManagedObject setValue:managedObject forKey:@"photo"];;
-        }
-        if (error) {
-            PBX_LOG(@"Error saving managed object: %@", error);
-        }
-    }
-    
-    [context performBlockAndWait:^{
-        NSError *error;
-        [context save:&error];
-        if (error) {
-            PBX_LOG(@"Fail saving objects to db: %@", error);
-        } else {
-            PBX_LOG(@"Objects saved");
-        }
-    }];
-    
 }
 
 #pragma mark - Getters

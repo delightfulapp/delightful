@@ -144,7 +144,6 @@
     [photosViewController setTitle:album.name];
     [photosViewController setRelationshipKeyPathWithItem:@"albums"];
     [photosViewController setResourceType:PhotoResource];
-    [photosViewController reloadFetchedResultsController];
     [photosViewController refresh];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];

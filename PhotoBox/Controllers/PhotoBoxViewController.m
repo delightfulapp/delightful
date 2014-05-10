@@ -18,11 +18,9 @@
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
 
-#import <OGCoreDataStack.h>
+#define INITIAL_PAGE_NUMBER 0
 
-#define INITIAL_PAGE_NUMBER 1
-
-#define BATCH_SIZE 20
+#define BATCH_SIZE 30
 
 NSString *const galleryContainerType = @"gallery";
 
@@ -62,27 +60,6 @@ NSString *const galleryContainerType = @"gallery";
     }
     
     [self restoreContentInset];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    NSInteger sections = [self.dataSource numberOfSectionsInCollectionView:self.collectionView];
-    if (sections == 0) {
-        [self.dataSource setFetchedResultsController:[self newFetchedResultsController]];
-    }
-    self.dataSource.paused = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
-        PBX_LOG(@"Pausing %@ data source.", NSStringFromClass(self.resourceClass));
-        // no need to pause data source when login page is showing
-        self.dataSource.paused = YES;
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -159,28 +136,19 @@ NSString *const galleryContainerType = @"gallery";
     [self.navigationItem setTitleView:self.navigationTitleLabel];
 }
 
-- (void)reloadFetchedResultsController {
-    [self.dataSource setPaused:YES];
-    self.dataSource.fetchedResultsController = nil;
-    [self.collectionView reloadData];
-    
-    NSLog(@"Number of sections = %ld", (long)[self.dataSource numberOfSectionsInCollectionView:self.collectionView]);
-    
-    self.predicate = nil;
-    self.fetchRequest = nil;
-    self.dataSource.fetchedResultsController = [self newFetchedResultsController];
-}
 
 #pragma mark - Getter
 
 - (CollectionViewDataSource *)dataSource {
     if (!_dataSource) {
         _dataSource = [[[self dataSourceClass] alloc] initWithCollectionView:self.collectionView];
-        //[_dataSource setFetchedResultsController:self.fetchedResultsController];
         [self setupDataSourceConfigureBlock];
         [_dataSource setCellIdentifier:self.cellIdentifier];
         [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
         [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
+        [_dataSource setPredicate:[self predicate]];
+        [_dataSource setGroupKey:[self groupKey]];
+        [_dataSource setSortDescriptors:[self sortDescriptors]];
         
         [_dataSource setDebugName:NSStringFromClass([self class])];
     }
@@ -189,13 +157,6 @@ NSString *const galleryContainerType = @"gallery";
 
 - (Class)dataSourceClass {
     return [CollectionViewDataSource class];
-}
-
-- (NSManagedObjectContext *)mainContext {
-    if (!_mainContext) {
-        _mainContext = [NSManagedObjectContext newContextWithConcurrency:OGCoreDataStackContextConcurrencyMainQueue];
-    }
-    return _mainContext;
 }
 
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
@@ -209,57 +170,13 @@ NSString *const galleryContainerType = @"gallery";
     return nil;
 }
 
-- (NSFetchRequest *)fetchRequest {
-    if (!_fetchRequest) {
-        _fetchRequest = [[NSFetchRequest alloc] initWithEntityName:[PhotoBoxModel photoBoxManagedObjectEntityNameForClassName:NSStringFromClass(self.resourceClass)]];
-        [_fetchRequest setSortDescriptors:self.sortDescriptors];
-        if (self.predicate) {
-            [_fetchRequest setPredicate:self.predicate];
-        }
-        if (self.fetchedInIdentifier) {
-            [_fetchRequest setRelationshipKeyPathsForPrefetching:@[NSStringFromSelector(@selector(fetchedIn))]];
-        }
-    }
-    return _fetchRequest;
-}
-
-- (NSPredicate *)predicate {
-    if (!_predicate) {
-        NSPredicate *fetchedInPredicate;
-        if (self.fetchedInIdentifier) {
-            fetchedInPredicate = [NSPredicate predicateWithFormat:@"fetchedIn.fetchedIn CONTAINS[cd] %@", self.fetchedInIdentifier];
-        }
-        
-        if ([self isGallery]) {
-            NSLog(@"Predicate = %@", fetchedInPredicate);
-            _predicate = fetchedInPredicate;
-        } else {
-            if (self.item) {
-                NSPredicate *containerPredicate = [NSPredicate predicateWithFormat:@"%K CONTAINS %@ && fetchedIn.fetchedIn CONTAINS[cd] %@", [NSString stringWithFormat:@"%@", self.relationshipKeyPathWithItem], [NSString stringWithFormat:@"%@%@%@", ARRAY_SEPARATOR, self.item.itemId, ARRAY_SEPARATOR], self.fetchedInIdentifier];
-                
-                _predicate = containerPredicate;
-            }
-        }
-    }
-    
-
-    return _predicate;
-}
-
-- (PhotoBoxFetchedResultsController *)newFetchedResultsController {
-    PhotoBoxFetchedResultsController *fetchedResultsController = [[PhotoBoxFetchedResultsController alloc] initWithFetchRequest:self.fetchRequest managedObjectContext:self.mainContext sectionNameKeyPath:[self groupKey] cacheName:nil];
-    [fetchedResultsController setObjectClass:self.resourceClass];
-    [fetchedResultsController setItemKey:self.displayedItemIdKey];
-    return fetchedResultsController;
-}
-
 - (NSString *)displayedItemIdKey {
     NSString *itemClassName = [NSStringFromClass([self resourceClass]) lowercaseString];
     return [NSString stringWithFormat:@"%@Id", itemClassName];
 }
 
 - (NSArray *)items {
-    return self.dataSource.fetchedResultsController.fetchedObjects;
+    return self.dataSource.items;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -275,6 +192,14 @@ NSString *const galleryContainerType = @"gallery";
         return galleryContainerType;
     }
     return [[self relationshipKeyPathWithItem] stringByAppendingFormat:@"-%@", [self.item itemId]];
+}
+
+- (NSString *)groupKey {
+    return nil;
+}
+
+- (NSPredicate *)predicate {
+    return nil;
 }
 
 #pragma mark - Setter
@@ -309,7 +234,7 @@ NSString *const galleryContainerType = @"gallery";
                                     resourceId:self.resourceId
                                      fetchedIn:[self fetchedInIdentifier]
                                           page:self.page
-                                      pageSize:self.pageSize mainContext:self.mainContext
+                                      pageSize:self.pageSize mainContext:nil
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
@@ -318,8 +243,10 @@ NSString *const galleryContainerType = @"gallery";
                                                
                                                self.isFetching = NO;
                                                
-                                               [self didFetchItems];
+                                               [self.dataSource addItems:objects];
                                                
+                                               [self didFetchItems];
+                                                                                              
                                                NSInteger count = [self.dataSource numberOfItems];
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
@@ -351,11 +278,6 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)willLoadItemsFromCoreData {
     
-}
-
-- (void)loadItemsFromCoreData {
-    [self willLoadItemsFromCoreData];
-    [self.dataSource.fetchedResultsController performFetch:NULL];
 }
 
 - (void)processPaginationFromObjects:(id)objects {
@@ -506,16 +428,16 @@ NSString *const galleryContainerType = @"gallery";
 - (NSArray *)sortDescriptors {
     NSMutableArray *sorts = [NSMutableArray array];
     
+    if ([self isGallery]) {
+        NSSortDescriptor *uploadedSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateUploaded)) ascending:NO];
+        [sorts addObject:uploadedSort];
+    }
+    
     NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTakenString)) ascending:NO];
     [sorts addObject:dateTakenStringSort];
     
     NSSortDescriptor *dateTakenSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:YES];
     [sorts addObject:dateTakenSort];
-    
-    if ([self isGallery]) {
-        NSSortDescriptor *uploadedSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateUploaded)) ascending:NO];
-        [sorts addObject:uploadedSort];
-    }
     
     return sorts;
 }
@@ -558,12 +480,9 @@ NSString *const galleryContainerType = @"gallery";
                 PBX_LOG(@"Gonna fetch resource in KVO");
                 [self fetchResource];
             } else {
-                self.dataSource.fetchedResultsController = nil;
+                [self.dataSource removeAllItems];
                 self.dataSource = nil;
                 self.page = INITIAL_PAGE_NUMBER;
-                self.fetchRequest = nil;
-                self.predicate = nil;
-                self.mainContext = nil;
                 self.dataSource = nil;
             }
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {

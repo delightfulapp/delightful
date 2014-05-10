@@ -58,9 +58,6 @@
         visibleController = leftPanel;
         hiddenController = centerPanel;
     }
-    
-    [visibleController.dataSource setPaused:NO];
-    [hiddenController.dataSource setPaused:YES];
 }
 
 - (void)toggleStatusBarHidden {

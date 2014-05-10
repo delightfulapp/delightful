@@ -102,35 +102,4 @@
     return dict;
 }
 
-#pragma mark - Managed object serialization
-
-+ (NSString *)managedObjectEntityName {
-    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
-}
-
-+ (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateMonthYearTakenString":NSNull.null, @"dateTakenString":@"dateTakenString"}];
-}
-
-+ (NSSet *)propertyKeysForManagedObjectUniquing {
-    return [NSSet setWithObject:@"photoId"];
-}
-
-+ (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
-    if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
-        return [[NSValueTransformer valueTransformerForName:MTLURLValueTransformerName] mtl_invertedTransformer];
-    } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
-        return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
-            return [arrays photoBoxArrayString];
-        } reverseBlock:^id(NSString *stringArray) {
-            return [[stringArray stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:ARRAY_SEPARATOR]] componentsSeparatedByString:ARRAY_SEPARATOR];
-        }];
-    }
-    return nil;
-}
-
-+ (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{ NSStringFromSelector(@selector(photo320x320)):PhotoBoxImage.class, NSStringFromSelector(@selector(photo640x640)):PhotoBoxImage.class, NSStringFromSelector(@selector(fetchedIn)): FetchedIn.class};
-}
-
 @end

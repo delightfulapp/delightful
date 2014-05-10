@@ -16,6 +16,10 @@
 
 @property (nonatomic, strong) id collectionView;
 
+@property (nonatomic, copy) NSMutableOrderedSet *uniqueItems;
+
+@property (nonatomic, copy) NSArray *shownItems;
+
 @end
 
 @implementation CollectionViewDataSource
@@ -25,32 +29,19 @@
     if (self) {
         _collectionView = collectionView;
         ((UICollectionView *)_collectionView).dataSource = self;
-        
-        _objectChanges = [NSMutableArray array];
-        _sectionChanges = [NSMutableArray array];
-        _paused = YES;
+        _uniqueItems = [NSMutableOrderedSet orderedSet];
     }
     return self;
-}
-
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath
-{
-    return [self.fetchedResultsController mantleObjectAtIndexPath:indexPath];
-}
-
-- (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }
 
 #pragma mark - Collection View Data Source
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
-    id<NSFetchedResultsSectionInfo> section = self.fetchedResultsController.sections[sectionIndex];
-    return section.numberOfObjects;
+    return [self.shownItems[sectionIndex] count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.fetchedResultsController.sections.count;
+    return self.shownItems.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -63,72 +54,16 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
     if (self.configureCellHeaderBlock) {
-        id<NSFetchedResultsSectionInfo>  section = self.fetchedResultsController.sections[indexPath.section];
-        NSString *title = [section name];
-        self.configureCellHeaderBlock(supplementaryView, title,indexPath);
+        NSArray *group = self.items[indexPath.section];
+        NSString *title = [[group firstObject] valueForKey:self.groupKey];
+        self.configureCellHeaderBlock(supplementaryView, title, indexPath);
     }
     return supplementaryView;
 }
 
-#pragma mark - NSFetchedResultsController
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeSection:(id <NSFetchedResultsSectionInfo>)sectionInfo
-           atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type
-{
-    
-    NSMutableDictionary *change = [NSMutableDictionary new];
-    
-    switch(type) {
-        case NSFetchedResultsChangeInsert:
-            change[@(type)] = @(sectionIndex);
-            break;
-        case NSFetchedResultsChangeDelete:
-            change[@(type)] = @(sectionIndex);
-            break;
-    }
-    [_sectionChanges addObject:change];
-}
-
-- (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
-      newIndexPath:(NSIndexPath *)newIndexPath
-{
-    
-    NSMutableDictionary *change = [NSMutableDictionary new];
-    switch(type)
-    {
-        case NSFetchedResultsChangeInsert:
-            change[@(type)] = newIndexPath;
-            break;
-        case NSFetchedResultsChangeDelete:
-            change[@(type)] = indexPath;
-            break;
-        case NSFetchedResultsChangeUpdate:
-            change[@(type)] = indexPath;
-            break;
-        case NSFetchedResultsChangeMove:
-            change[@(type)] = @[indexPath, newIndexPath];
-            break;
-    }
-    
-    [_objectChanges addObject:change];
-}
-
-- (void)controllerDidChangeContent:(NSFetchedResultsController *)controller
-{
-    [self.fetchedResultsController clearCache];
-    [self.fetchedResultsController preLoadCache];
-    
-    [self.collectionView reloadData];
-    
-    [_sectionChanges removeAllObjects];
-    [_objectChanges removeAllObjects];
-}
-
-#pragma mark - Getters
+#pragma mark - Items
 
 - (NSInteger)numberOfItems {
-    
     NSInteger sections = [self numberOfSectionsInCollectionView:self.collectionView];
     NSInteger count = 0;
     for (NSInteger i=0; i<sections; i++) {
@@ -137,8 +72,9 @@
     return count;
 }
 
+#warning need to implement this?
 - (NSIndexPath *)indexPathOfItem:(id)item {
-    return [self.fetchedResultsController indexPathForObject:item];
+    return nil;
 }
 
 - (NSInteger)positionOfItem:(id)item {
@@ -154,27 +90,60 @@
     return position;
 }
 
-#pragma mark - Setters
-
-- (void)setFetchedResultsController:(PhotoBoxFetchedResultsController*)fetchedResultsController
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_fetchedResultsController != fetchedResultsController) {
-        _fetchedResultsController = fetchedResultsController;
-        _paused = NO;
-        _fetchedResultsController.delegate = self;
-        [_fetchedResultsController performFetch:NULL];
-    }
+    return self.shownItems[indexPath.section][indexPath.item];
 }
 
-- (void)setPaused:(BOOL)paused {
-    if (_paused != paused) {
-        _paused = paused;
-        if (paused) {
-            self.fetchedResultsController.delegate = nil;
-        } else {
-            self.fetchedResultsController.delegate = self;
+- (void)addItems:(NSArray *)items {
+    [self.uniqueItems addObjectsFromArray:items];
+    
+    self.shownItems = [self processedItems];
+    
+    [self.collectionView reloadData];
+}
+
+- (NSArray *)items {
+    return self.shownItems;
+}
+
+- (void)removeAllItems {
+    self.shownItems = [NSArray array];
+    [self.uniqueItems removeAllObjects];
+}
+
+- (NSArray *)processedItems {
+    NSArray *processed = self.uniqueItems.array;
+    if (self.predicate) {
+        processed = [processed filteredArrayUsingPredicate:self.predicate];
+    }
+    
+    BOOL groupKeyAscending = NO;
+    if (self.sortDescriptors) {
+        processed = [processed sortedArrayUsingDescriptors:self.sortDescriptors];
+        if (self.groupKey) {
+            NSSortDescriptor *sortDescriptor = [[self.sortDescriptors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"key = %@", self.groupKey]] firstObject];
+            if (sortDescriptor) {
+                groupKeyAscending = sortDescriptor.ascending;
+            }
         }
     }
+    if (self.groupKey) {
+        NSArray *groups = [processed valueForKeyPath:[NSString stringWithFormat:@"@distinctUnionOfObjects.%@", self.groupKey]];
+        groups = [groups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:groupKeyAscending]]];
+        NSMutableArray *groupedArray = [NSMutableArray array];
+        for (NSString *groupString in groups) {
+            NSArray *group = [processed filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", self.groupKey, groupString]];
+            if (group) {
+                [groupedArray addObject:group];
+            }
+        }
+        processed = groupedArray;
+    } else {
+        processed = [NSArray arrayWithObject:processed];
+    }
+    
+    return processed;
 }
 
 @end

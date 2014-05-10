@@ -16,7 +16,6 @@
     #import <SystemConfiguration/SystemConfiguration.h>
     #import "Constants.h"
     #import <Mantle/Mantle.h>
-    #import <OGCoreDataStack.h>
     #import "NPRNotificationManager.h"
 
     #if __has_include("Crashlytics/Crashlytics.h")

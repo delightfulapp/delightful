@@ -28,19 +28,5 @@
     return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"tagId": @"id"}];
 }
 
-#pragma mark - Managed object serialization
-
-+ (NSString *)managedObjectEntityName {
-    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
-}
-
-+ (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
-}
-
-+ (NSSet *)propertyKeysForManagedObjectUniquing {
-    return [NSSet setWithObject:@"tagId"];
-}
-
 
 @end

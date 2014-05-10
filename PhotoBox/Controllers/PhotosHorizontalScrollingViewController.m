@@ -214,8 +214,8 @@
         self.previousPage = page;
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-                NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+                //NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:nil];
             }
             [self insertBackgroundSnapshotView];
         } else {

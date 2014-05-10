@@ -133,6 +133,10 @@
     return NSStringFromSelector(@selector(dateTakenString));
 }
 
+- (NSArray *)sortDescriptors {
+    return nil;
+}
+
 - (NSString *)sectionHeaderIdentifier {
     return @"photoSection";
 }
@@ -251,7 +255,6 @@
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    [destination setMainContext:self.mainContext];
     [destination setItem:self.item];
     [destination setFirstShownPhoto:cell.item];
     [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
@@ -318,7 +321,7 @@
 
 - (CLLocation *)locationSampleForSection:(NSInteger)sectionIndex {
     CLLocation *location;
-    id<NSFetchedResultsSectionInfo> section = self.dataSource.fetchedResultsController.sections[sectionIndex];
+    /*id<NSFetchedResultsSectionInfo> section = self.dataSource.fetchedResultsController.sections[sectionIndex];
     for (NSManagedObject *photo in section.objects) {
         NSNumber *latitude = [photo valueForKey:@"latitude"];
         NSNumber *longitude = [photo valueForKey:@"longitude"];
@@ -327,7 +330,7 @@
             
             break;
         }
-    }
+    }*/
     return location;
 }
 
