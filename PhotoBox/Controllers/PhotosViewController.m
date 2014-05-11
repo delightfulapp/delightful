@@ -245,19 +245,22 @@
 }
 
 - (void)showPinchGestureTipIfNeeded {
-    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
-        if (!self.presentedViewController) {
-            BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
-            if (!hasShownTip) {
-                
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", nil) message:NSLocalizedString(@"Try to pinch-in and out on this screen :)", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
-                [alert show];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+            if (!self.presentedViewController) {
+                BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+                if (!hasShownTip) {
+                    
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", nil) message:NSLocalizedString(@"Try to pinch-in and out on this screen :)", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+                    [alert show];
+                }
             }
         }
-    }
+    });
+    
 }
 
 #pragma mark - Setters
