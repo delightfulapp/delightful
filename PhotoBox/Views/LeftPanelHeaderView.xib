@@ -19,40 +19,47 @@
                     </state>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRO-bt-CQu">
-                    <rect key="frame" x="10" y="35" width="290" height="30"/>
+                    <rect key="frame" x="10" y="50" width="290" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Downloaded">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k1a-iw-4um">
-                    <rect key="frame" x="10" y="60" width="290" height="30"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="nH6-Z1-R2A">
+                    <rect key="frame" x="275" y="13" width="25" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Favorites">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-MP-iqA">
+                    <rect key="frame" x="275" y="53" width="25" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="k1a-iw-4um" firstAttribute="top" secondItem="nRO-bt-CQu" secondAttribute="bottom" constant="-5" id="1d7-dv-L3f"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" constant="10" id="39K-fw-YKt"/>
-                <constraint firstItem="nRO-bt-CQu" firstAttribute="leading" secondItem="k1a-iw-4um" secondAttribute="leading" id="5ZQ-2I-boJ"/>
+                <constraint firstItem="nRO-bt-CQu" firstAttribute="centerY" secondItem="M9l-MP-iqA" secondAttribute="centerY" id="Bb9-Zz-ZZ8"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="top" secondItem="ixM-wn-jMC" secondAttribute="top" constant="10" id="C9g-cK-XSa"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="leading" secondItem="n4q-Kz-wQu" secondAttribute="leading" id="O17-vS-Nng"/>
-                <constraint firstItem="nRO-bt-CQu" firstAttribute="top" secondItem="n4q-Kz-wQu" secondAttribute="bottom" constant="-5" id="UsS-Yf-dN3"/>
+                <constraint firstItem="nRO-bt-CQu" firstAttribute="top" secondItem="n4q-Kz-wQu" secondAttribute="bottom" constant="10" id="UsS-Yf-dN3"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="n4q-Kz-wQu" secondAttribute="trailing" id="YHy-BS-Yvv"/>
-                <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="k1a-iw-4um" secondAttribute="trailing" id="ao0-fL-JxV"/>
+                <constraint firstItem="n4q-Kz-wQu" firstAttribute="centerY" secondItem="nH6-Z1-R2A" secondAttribute="centerY" id="ce6-PX-ghK"/>
+                <constraint firstItem="n4q-Kz-wQu" firstAttribute="trailing" secondItem="nH6-Z1-R2A" secondAttribute="trailing" id="iye-Ru-APS"/>
                 <constraint firstAttribute="trailing" secondItem="n4q-Kz-wQu" secondAttribute="trailing" constant="20" id="ooK-j4-NwI"/>
+                <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="M9l-MP-iqA" secondAttribute="trailing" id="xOX-IE-pIE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="downloadedArrow" destination="M9l-MP-iqA" id="uUx-cA-AWK"/>
                 <outlet property="downloadedButton" destination="nRO-bt-CQu" id="due-ZA-gMi"/>
-                <outlet property="favoritesButton" destination="k1a-iw-4um" id="TKO-iN-BFC"/>
+                <outlet property="galleryArrow" destination="nH6-Z1-R2A" id="EtA-zb-EHe"/>
                 <outlet property="galleryButton" destination="n4q-Kz-wQu" id="cJn-e2-BUa"/>
             </connections>
         </view>
     </objects>
+    <resources>
+        <image name="right.png" width="25" height="24"/>
+    </resources>
 </document>

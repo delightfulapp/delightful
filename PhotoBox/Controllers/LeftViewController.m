@@ -54,7 +54,6 @@
     [super viewDidLoad];
     
     [self.headerView.galleryButton addTarget:self action:@selector(didTapGallery:) forControlEvents:UIControlEventTouchUpInside];
-    [self.headerView.favoritesButton addTarget:self action:@selector(didTapFavorites:) forControlEvents:UIControlEventTouchUpInside];
     [self.headerView.downloadedButton addTarget:self action:@selector(didTapDownloadHistory:) forControlEvents:UIControlEventTouchUpInside];
 }
 

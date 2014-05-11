@@ -11,6 +11,7 @@
 @interface LeftPanelHeaderView : UIView
 @property (weak, nonatomic) IBOutlet UIButton *galleryButton;
 @property (weak, nonatomic) IBOutlet UIButton *downloadedButton;
-@property (weak, nonatomic) IBOutlet UIButton *favoritesButton;
+@property (weak, nonatomic) IBOutlet UIImageView *galleryArrow;
+@property (weak, nonatomic) IBOutlet UIImageView *downloadedArrow;
 
 @end
