@@ -2,17 +2,17 @@ PODS:
   - AFNetworking (1.3.4)
   - AFOAuth1Client (0.3.3):
     - AFNetworking (~> 1.3)
-  - Expecta (0.2.3)
-  - GPUImage (0.1.2)
-  - iOS-blur (0.0.3)
+  - Expecta (0.2.4)
+  - GPUImage (0.1.4)
+  - iOS-blur (0.0.5)
   - JASidePanels (1.3.2)
-  - Mantle (1.3.1):
+  - Mantle (1.4.1):
     - Mantle/extobjc
-  - Mantle/extobjc (1.3.1)
-  - MYBlurIntroductionView (1.0.2)
-  - NSDate+TimeAgo (1.0.2)
-  - NSDate-Escort (1.2.2)
-  - OCMock (2.2.2)
+  - Mantle/extobjc (1.4.1)
+  - MYBlurIntroductionView (1.0.3)
+  - NSDate+TimeAgo (1.0.3)
+  - NSDate-Escort (1.3.0)
+  - OCMock (2.2.4)
   - Overcoat (1.1):
     - AFNetworking (~> 1.3.1)
     - Mantle (~> 1.3)
@@ -20,8 +20,8 @@ PODS:
     - SDWebImage/Core
   - SDWebImage/Core (3.5)
   - UIColor+MLPFlatColors (1.0)
-  - UIImageViewModeScaleAspect (1.1)
-  - UIView+AutoLayout (1.1.0)
+  - UIImageViewModeScaleAspect (1.3)
+  - UIView+AutoLayout (1.3.0)
 
 DEPENDENCIES:
   - AFOAuth1Client
@@ -43,19 +43,19 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: e403d4333a4e1956cb3fe42364c3c879f820c9a0
   AFOAuth1Client: 8b06e54087732068e19c4efcd7bed5d74bc9538a
-  Expecta: 2434bb2e2b3b1814280ec5d9a11359433d035975
-  GPUImage: 007145faa0e27f1ddbcab93e07f026c9776e2fa2
-  iOS-blur: 7c8087858e7a685072cf8af52dd08dd3e115531b
+  Expecta: 5c147dedfea5fbcf773995f7e65020abcc936ce5
+  GPUImage: f9b32e12350792a630e596ffc7b050bea3662670
+  iOS-blur: 2610bc818831fa4eec051a7193e47639d480fb32
   JASidePanels: c0e642a7311ec9cc9adfa616fa4a795e4e169f20
-  Mantle: abc3b0c81bc66eb624cf9cebb8640e377d5a44ae
-  MYBlurIntroductionView: bc6ba612651c54210c5d302738774f82bfcc3cec
-  NSDate+TimeAgo: fe93d3042e83093ae3630bc47ae7d57f782733f6
-  NSDate-Escort: 67a92b0e8de0a69f974f3147170a367bc312a417
-  OCMock: 233db993fabda22597349856ee3d3c6f4fcfa87f
+  Mantle: 0714cdb2b8559d9e6c2410d6a8529e3307bff189
+  MYBlurIntroductionView: 0ed5699c570ceb1cdfc86dc6cf7dae869950d677
+  NSDate+TimeAgo: ca09306750ac2564418042aa10cf8365c36d2cee
+  NSDate-Escort: 5ec28190777f3c6042f88bbbb447a3c552e0d540
+  OCMock: 5008fae4b4789b8fc3e48cd7660f2eb5ef8ce89e
   Overcoat: 4839bdbe2274a9451f6cedaf8c17742d2ab82818
   SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
   UIColor+MLPFlatColors: 8631d7f050b0e5afd9af178a60319891c5113d0e
-  UIImageViewModeScaleAspect: 66e2bd965fb6f12631a13ec46ddb9adfb5f856e3
-  UIView+AutoLayout: 94cea4d2f3ed095434afdf6ed2a6d288f7f2d611
+  UIImageViewModeScaleAspect: 74f439899d4f28625ea08c947bfad5a3339b0741
+  UIView+AutoLayout: 43373a18797954fd8ee3b1423af364f1b80a2af8
 
 COCOAPODS: 0.32.1
