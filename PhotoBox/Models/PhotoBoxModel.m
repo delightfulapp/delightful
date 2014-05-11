@@ -88,32 +88,11 @@
     return nil;
 }
 
-#pragma mark - Managed object serialization
-
-+ (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[self class] JSONKeyPathsByPropertyKey];
-}
-
-
 + (NSDictionary *)photoBoxJSONKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary {
     NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:[PhotoBoxModel JSONKeyPathsByPropertyKey]];
     [mutableDict removeObjectsForKeys:@[@"totalRows", @"totalPages", @"currentPage", @"currentRow"]];
     if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
     return mutableDict;
-}
-
-+ (NSDictionary *)photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary {
-    NSMutableDictionary *mutableDict = [NSMutableDictionary dictionaryWithDictionary:[PhotoBoxModel JSONKeyPathsByPropertyKey]];
-    if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
-    return mutableDict;
-}
-
-+ (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
-    NSValueTransformer *transformer = [self JSONTransformerForKey:key];
-    if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
-        return [transformer mtl_invertedTransformer];
-    }
-    return [self JSONTransformerForKey:key];
 }
 
 

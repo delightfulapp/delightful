@@ -10,6 +10,16 @@
 
 #import "OpenInActivity.h"
 
+#import "PhotosViewController.h"
+
+#import "Album.h"
+
+#import "UIViewController+DelightfulViewControllers.h"
+
+#import <JASidePanelController.h>
+
+#import "AppDelegate.h"
+
 #import <Social/Social.h>
 #import <objc/runtime.h>
 
@@ -167,6 +177,18 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     BOOL hide = !([objc_getAssociatedObject(self, isNavigationBarHidden) boolValue]);
     //Fade status bar
     [self setNavigationBarHidden:hide animated:YES];
+}
+
+- (void)loadPhotosInAlbum:(Album *)album {
+    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
+    [photosViewController setItem:album];
+    [photosViewController setTitle:album.name];
+    [photosViewController setRelationshipKeyPathWithItem:@"albums"];
+    [photosViewController setResourceType:PhotoResource];
+    [photosViewController refresh];
+    
+    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
+    [panelController toggleLeftPanel:nil];
 }
 
 @end

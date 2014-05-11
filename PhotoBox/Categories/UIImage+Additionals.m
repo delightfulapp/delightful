@@ -35,9 +35,10 @@
     GPUImageGaussianBlurFilter *blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
     [grayFilter addTarget:blurFilter];
     [imagePicture addTarget:grayFilter];
+    [blurFilter useNextFrameForImageCapture];
     [imagePicture processImage];
 
-    return [blurFilter imageFromCurrentlyProcessedOutput];
+    return [blurFilter imageFromCurrentFramebuffer];
 }
 
 - (UIImage *)grayscaledAndVignetteImage {
@@ -48,7 +49,7 @@
     [imagePicture addTarget:gray];
     [imagePicture processImage];
     
-    return [gray imageFromCurrentlyProcessedOutput];
+    return [gray imageFromCurrentFramebuffer];
 }
 
 @end

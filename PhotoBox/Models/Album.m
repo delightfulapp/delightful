@@ -10,7 +10,11 @@
 
 #import "Photo.h"
 
+#import "DownloadedImageManager.h"
+
 NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
+NSString *PBX_downloadHistoryIdentifier = @"PBX_DOWNLOADED_HISTORY_ALBUM";
+NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
 
 @implementation Album
 
@@ -30,10 +34,26 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
     NSError *error;
     Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{
                                                                                @"id": PBX_allAlbumIdentifier,
-                                                                               @"name":NSLocalizedString(@"All Photos", nil),
+                                                                               @"name":NSLocalizedString(@"Gallery", nil),
                                                                                @"cover":@{@"id": @"COVER_PHOTO_ALL_ALBUM", @"filenameOriginal":@""}
                                                                                } error:&error];
     return a;
+}
+
++ (Album *)downloadHistoryAlbum {
+    NSError *error;
+    Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{
+                                                                               @"id": PBX_downloadHistoryIdentifier,
+                                                                               @"name":NSLocalizedString(@"Downloaded", nil),
+                                                                               @"cover":@{@"id": @"COVER_PHOTO_ALL_ALBUM", @"filenameOriginal":@""}
+                                                                               } error:&error];
+    NSArray *downloaded = [[DownloadedImageManager sharedManager] photos];
+    [a setValue:downloaded forKey:NSStringFromSelector(@selector(photos))];
+    return a;
+}
+
++ (Album *)favoritesAlbum {
+    return nil;
 }
 
 #pragma mark - Mantle
@@ -44,18 +64,6 @@ NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
                                                                             @"coverURL":@"cover.path200x200xCR"}];
 }
 
-#pragma mark - Managed object serialization
 
-+ (NSString *)managedObjectEntityName {
-    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
-}
-
-+ (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
-}
-
-+ (NSSet *)propertyKeysForManagedObjectUniquing {
-    return [NSSet setWithObject:@"albumId"];
-}
 
 @end

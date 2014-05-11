@@ -10,6 +10,8 @@
 
 #import "PhotoBoxViewController.h"
 
+#import "LeftViewController.h"
+
 @interface PanelsContainerViewController ()
 
 @end
@@ -31,6 +33,8 @@
 	// Do any additional setup after loading the view.
     
     [self addObserver:self forKeyPath:NSStringFromSelector(@selector(state)) options:0 context:nil];
+    
+    self.shouldResizeLeftPanel = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -49,7 +53,7 @@
     PhotoBoxViewController *visibleController, *hiddenController;
     
     PhotoBoxViewController *centerPanel = (PhotoBoxViewController *)((UINavigationController *)self.centerPanel).viewControllers[0];
-    PhotoBoxViewController *leftPanel = (PhotoBoxViewController *)((UITabBarController *)self.leftPanel).selectedViewController;
+    PhotoBoxViewController *leftPanel = (PhotoBoxViewController *)((UITabBarController *)((LeftViewController *)self.leftPanel).rootViewController).selectedViewController;
     
     if (self.state == JASidePanelCenterVisible) {
         visibleController = centerPanel;
@@ -58,9 +62,6 @@
         visibleController = leftPanel;
         hiddenController = centerPanel;
     }
-    
-    [visibleController.dataSource setPaused:NO];
-    [hiddenController.dataSource setPaused:YES];
 }
 
 - (void)toggleStatusBarHidden {

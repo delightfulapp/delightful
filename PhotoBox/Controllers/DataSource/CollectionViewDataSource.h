@@ -7,12 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PhotoBoxFetchedResultsController.h"
 
 typedef void (^CollectionViewCellConfigureBlock)(id cell, id item);
 typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndexPath *indexPath);
 
-@interface CollectionViewDataSource : NSObject <UICollectionViewDataSource, NSFetchedResultsControllerDelegate>
+@interface CollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
 @property (nonatomic, copy) NSString *cellIdentifier;
 
@@ -22,22 +21,28 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 @property (nonatomic, copy) CollectionViewHeaderCellConfigureBlock configureCellHeaderBlock;
 
-@property (nonatomic, assign) BOOL paused;
-
 //for debugging purposes
 @property (nonatomic, strong) NSString *debugName;
 
-@property (nonatomic, strong) PhotoBoxFetchedResultsController *fetchedResultsController;
-
 @property (nonatomic, strong) NSIndexPath *loadingViewIndexPath;
 
-@property (nonatomic, copy) NSMutableArray *objectChanges;
-@property (nonatomic, copy) NSMutableArray *sectionChanges;
 @property (nonatomic, strong, readonly) id collectionView;
 
-- (id)itemAtIndexPath:(NSIndexPath *)indexPath;
+@property (nonatomic, strong) NSPredicate *predicate;
 
-- (NSManagedObject *)managedObjectItemAtIndexPath:(NSIndexPath *)indexPath;
+@property (nonatomic, strong) NSString *groupKey;
+
+@property (nonatomic, strong) NSArray *sortDescriptors;
+
+- (NSArray *)items;
+
+- (NSArray *)flattenedItems;
+
+- (void)removeAllItems;
+
+- (void)addItems:(NSArray *)items;
+
+- (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSIndexPath *)indexPathOfItem:(id)item;
 

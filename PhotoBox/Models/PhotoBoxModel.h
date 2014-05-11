@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PhotoBoxModel : MTLModel <MTLJSONSerializing, MTLManagedObjectSerializing>
+@interface PhotoBoxModel : MTLModel <MTLJSONSerializing>
 
 
 @property (nonatomic, strong) NSNumber *totalRows;
@@ -19,10 +19,7 @@
 
 - (id)initWithItemId:(NSString *)itemId;
 
-+ (NSString *)photoBoxManagedObjectEntityNameForClassName:(NSString *)className;
-
 + (NSDictionary *)photoBoxJSONKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
-+ (NSDictionary *)photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
 
 + (NSValueTransformer *)toStringTransformer;
 + (NSValueTransformer *)toNumberTransformer;

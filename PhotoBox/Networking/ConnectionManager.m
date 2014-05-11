@@ -9,7 +9,7 @@
 #import "ConnectionManager.h"
 #import <AFOAuth1Client.h>
 #import "PhotoBoxClient.h"
-#import <OGCoreDataStack.h>
+#import "DownloadedImageManager.h"
 
 NSString *baseURLUserDefaultKey = @"photobox.base.url";
 NSString *consumerTokenIdentifier = @"photobox.consumer.token";
@@ -133,11 +133,11 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 
 - (void)logout {
     [self deleteTokens];
+    [[DownloadedImageManager sharedManager] clearHistory];
     self.baseURL = nil;
     [[PhotoBoxClient sharedClient] setAccessToken:nil];
     [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
     [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
-    [NSPersistentStoreCoordinator reset];
 }
 
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {

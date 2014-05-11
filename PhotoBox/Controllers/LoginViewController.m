@@ -29,11 +29,20 @@
     return self;
 }
 
+- (void)awakeFromNib {
+    [self.infoButton setImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	
     [self.backgroundImageView addTransparentGradientWithStartColor:[UIColor blackColor]];
+    
+    [self.infoButton setImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infoButtonTapped:)];
+    [self.infoButton setUserInteractionEnabled:YES];
+    [self.infoButton addGestureRecognizer:tap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,6 +57,10 @@
 
 - (void)tryTapped:(id)sender {
     [[ConnectionManager sharedManager] connectAsTester];
+}
+
+- (void)infoButtonTapped:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://trovebox.com"]];
 }
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {

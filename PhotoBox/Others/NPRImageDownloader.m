@@ -8,6 +8,8 @@
 
 #import "NPRImageDownloader.h"
 #import <AFImageRequestOperation.h>
+#import "Photo.h"
+#import "DownloadedImageManager.h"
 
 NSString *const NPRImageDownloadDidStartNotification = @"jp.touches.nprimagedownload.notification-didStart";
 NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedownload.notification-didFinish";
@@ -47,6 +49,14 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
 }
 
 - (BOOL)queueImageURL:(NSURL *)URL thumbnail:(UIImage *)image {
+    return [self queuePhoto:nil URL:URL thumbnail:image];
+}
+
+- (BOOL)queuePhoto:(Photo *)photo thumbnail:(UIImage *)image {
+    return [self queuePhoto:photo URL:photo.pathOriginal thumbnail:image];
+}
+
+- (BOOL)queuePhoto:(Photo *)photo URL:(NSURL *)URL thumbnail:(UIImage *)image {
     if ([self isDownloadingImageAtURL:URL]) {
         PBX_LOG(@"Cancel download");
         return NO;
@@ -65,6 +75,9 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
         if (weakSelf) {
             NSInteger index = [weakSelf indexOfOperation:strongOperation];
             [weakSelf removeOperation:strongOperation URL:request.URL];
+            if (photo) {
+                [[DownloadedImageManager sharedManager] addPhoto:photo];
+            }
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didFinishDownloadOperation:atIndex:)]) {
                 [weakSelf.delegate didFinishDownloadOperation:strongOperation atIndex:index];
             }

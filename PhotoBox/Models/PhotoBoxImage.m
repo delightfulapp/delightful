@@ -33,14 +33,4 @@
     return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:nil];
 }
 
-#pragma mark - Managed Object Serialization
-
-+ (NSString *)managedObjectEntityName {
-    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
-}
-
-+ (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:nil];
-}
-
 @end

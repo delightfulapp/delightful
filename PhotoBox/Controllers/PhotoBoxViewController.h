@@ -28,9 +28,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) ResourceType resourceType;
 @property (nonatomic, strong) Class resourceClass;
 @property (nonatomic, strong) NSString *resourceId;
-@property (nonatomic, strong) NSString *groupKey;
-@property (nonatomic, strong) NSArray *sortDescriptors;
-@property (nonatomic, strong) NSPredicate *predicate;
 @property (nonatomic, strong) NSString *displayedItemIdKey;
 @property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
 @property (nonatomic, strong, readonly) NSString *cellIdentifier;
@@ -52,11 +49,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
-@property (nonatomic, strong) NSFetchRequest *fetchRequest;
-@property (nonatomic, strong) NSManagedObjectContext *mainContext;
 
 - (Class)dataSourceClass;
-- (void)reloadFetchedResultsController;
 - (void)refresh;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
@@ -65,7 +59,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)setupDataSourceConfigureBlock;
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
 - (void)didChangeNumberOfColumns;
-- (void)willLoadItemsFromCoreData;
 
 - (BOOL)isGallery ;
 @end

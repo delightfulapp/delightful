@@ -19,6 +19,7 @@
 #import "PhotoCell.h"
 
 #import "PhotosHorizontalScrollingViewController.h"
+#import "SettingsTableViewController.h"
 
 #import "CollectionViewSelectCellGestureRecognizer.h"
 
@@ -34,6 +35,8 @@
 #import "DelightfulLayout.h"
 
 #import "PhotosDataSource.h"
+
+#import "Photo.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
@@ -74,6 +77,12 @@
     
     self.resourceType = PhotoResource;
     self.relationshipKeyPathWithItem = @"albums";
+    
+    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
+    [self.navigationItem setRightBarButtonItem:settingBarButtonItem];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,6 +98,14 @@
         [self showPinchGestureTipIfNeeded];
     }
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Override
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     __weak typeof (self) selfie = self;
@@ -119,18 +136,16 @@
     return configureCell;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (NSString *)cellIdentifier {
     return @"photoCell";
 }
 
 - (NSString *)groupKey {
     return NSStringFromSelector(@selector(dateTakenString));
+}
+
+- (NSArray *)sortDescriptors {
+    return nil;
 }
 
 - (NSString *)sectionHeaderIdentifier {
@@ -149,11 +164,50 @@
     return [PhotosDataSource class];
 }
 
+- (void)refresh {
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *album = (Album *)self.item;
+        if ([album.albumId isEqualToString:PBX_downloadHistoryIdentifier] ||[album.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+            [self.dataSource removeAllItems];
+            [self.dataSource addItems:album.photos];
+            return;
+        }
+    }
+    [super refresh];
+}
+
 #pragma mark - Do something
 
-- (void)willLoadItemsFromCoreData {
-    DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
-    [layout updateLastIndexPath];
+- (void)settingButtonTapped:(id)sender {
+    SettingsTableViewController *settings = [[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:settings];
+    [self presentViewController:navCon animated:YES completion:nil];
+}
+
+- (void)backNavigationTapped:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)setupBackNavigationItemTitle {
+    if (self.item) {
+        if ([self.item isKindOfClass:[Album class]]) {
+            [self setBackButtonNavigationItemTitle:((Album *)self.item).name];
+        } else if ([self.item isKindOfClass:[Tag class]]) {
+            [self setBackButtonNavigationItemTitle:((Tag *)self.item).tagId];
+        }
+    } else {
+        [self setBackButtonNavigationItemTitle:nil];
+    }
+}
+
+- (void)setBackButtonNavigationItemTitle:(NSString *)title {
+    if (!title) {
+        title = NSLocalizedString(@"Gallery", nil);
+    }
+    if (!self.navigationItem.backBarButtonItem) {
+        [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backNavigationTapped:)]];
+    }
+    [self.navigationItem.backBarButtonItem setTitle:title];
 }
 
 - (void)showLoadingView:(BOOL)show {
@@ -179,7 +233,6 @@
     }
 }
 
-
 - (void)didFetchItems {
     NSInteger count = [self.dataSource numberOfItems];
     [self setPhotosCount:count max:self.totalItems];
@@ -192,19 +245,22 @@
 }
 
 - (void)showPinchGestureTipIfNeeded {
-    if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
-        if (!self.presentedViewController) {
-            BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
-            if (!hasShownTip) {
-                
-                [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", nil) message:NSLocalizedString(@"Try to pinch-in and out on this screen :)", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
-                [alert show];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (![[ConnectionManager sharedManager] isShowingLoginPage]) {
+            if (!self.presentedViewController) {
+                BOOL hasShownTip = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+                if (!hasShownTip) {
+                    
+                    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:DLF_DID_SHOW_PINCH_GESTURE_TIP];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Hint", nil) message:NSLocalizedString(@"Try to pinch-in and out on this screen :)", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+                    [alert show];
+                }
             }
         }
-    }
+    });
+    
 }
 
 #pragma mark - Setters
@@ -251,16 +307,24 @@
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
-    [destination setMainContext:self.mainContext];
     [destination setItem:self.item];
+    [destination.dataSource addItems:self.dataSource.flattenedItems];
     [destination setFirstShownPhoto:cell.item];
     [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
     [destination setDelegate:self];
     [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
     [destination setResourceType:self.resourceType];
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *album = (Album *)self.item;
+        if ([album.albumId isEqualToString:PBX_favoritesAlbumIdentifier] || [album.albumId isEqualToString:PBX_downloadHistoryIdentifier]) {
+            [destination setHideDownloadButton:YES];
+        }
+    }
     
     self.selectedCell = cell;
     [self setSelectedItemRectAtIndexPath:indexPath];
+    
+    [self setupBackNavigationItemTitle];
     
     [self.navigationController pushViewController:destination animated:YES];
 }
@@ -318,8 +382,8 @@
 
 - (CLLocation *)locationSampleForSection:(NSInteger)sectionIndex {
     CLLocation *location;
-    id<NSFetchedResultsSectionInfo> section = self.dataSource.fetchedResultsController.sections[sectionIndex];
-    for (NSManagedObject *photo in section.objects) {
+    NSArray *photos = [self.dataSource items][sectionIndex];
+    for (Photo *photo in photos) {
         NSNumber *latitude = [photo valueForKey:@"latitude"];
         NSNumber *longitude = [photo valueForKey:@"longitude"];
         if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {

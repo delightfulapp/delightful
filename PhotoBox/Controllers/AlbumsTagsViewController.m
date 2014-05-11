@@ -54,7 +54,7 @@
         [tabBar setTranslatesAutoresizingMaskIntoConstraints:NO];
         [tabBar autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [tabBar autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
-        [tabBar autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.view withOffset:([[self class] leftViewControllerVisibleWidth] - CGRectGetWidth(self.view.frame))];
+        [tabBar autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.view];
         [tabBar autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.tabBar];
         _customTabBar = tabBar;
     }
@@ -78,6 +78,29 @@
     [super setSelectedIndex:selectedIndex];
     
     [self.customTabBar setSelectedItem:((UIViewController *)self.viewControllers[selectedIndex]).tabBarItem];
+}
+
+// Workaround for iOS UITabBarController layout issue.
+// In iOS7, the tab bar overlaps with the view to be displayed.
+// The height of the view to be displayed with a UITabBarController needs
+// to be shrinked by the height of the tab bar.
+-(void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    static int barHeight = 0;
+    if (barHeight == 0) {
+        barHeight = CGRectGetHeight(self.tabBar.frame);
+    }
+    UIView* CV = (UIView*)self.view.subviews.firstObject;
+    CV.autoresizesSubviews = YES;
+    UIView* GCV = (UIView*) CV.subviews.firstObject;
+    UIView* GGCV = (UIView*) GCV.subviews.firstObject;
+    CGRect frame = CV.frame;
+    frame.size.height = self.view.frame.size.height - barHeight;
+    CV.frame = frame;
+    GCV.frame = frame;
+    GGCV.frame = frame;
+    
 }
 
 @end

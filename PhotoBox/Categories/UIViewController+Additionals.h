@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class Album;
+
 @interface UIViewController (Additionals)
 
 - (void)showLoadingView:(BOOL)show atBottomOfScrollView:(BOOL)bottom;
@@ -23,5 +25,7 @@
 - (void)hideNavigationBar;
 
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
+
+- (void)loadPhotosInAlbum:(Album *)album;
 
 @end

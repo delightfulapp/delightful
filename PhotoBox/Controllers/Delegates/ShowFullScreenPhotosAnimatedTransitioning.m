@@ -13,7 +13,7 @@
 #import "UIView+Additionals.h"
 #import "UIImage+Additionals.h"
 
-#import "UIImageViewModeScaleAspect.h"
+#import <UIImageViewModeScaleAspect.h>
 
 #define ANIMATED_IMAGE_VIEW_ON_PUSH_TAG 456812
 

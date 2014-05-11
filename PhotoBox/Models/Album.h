@@ -21,6 +21,12 @@
 @property (nonatomic, copy, readonly) NSString *coverId;
 @property (nonatomic, copy, readonly) NSURL *coverURL;
 
+@property (nonatomic, copy, readonly) NSArray *photos;
+
 + (Album *)allPhotosAlbum;
+
++ (Album *)favoritesAlbum;
+
++ (Album *)downloadHistoryAlbum;
 
 @end

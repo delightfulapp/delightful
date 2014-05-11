@@ -102,35 +102,26 @@
     return dict;
 }
 
-#pragma mark - Managed object serialization
+#pragma mark - Equality
 
-+ (NSString *)managedObjectEntityName {
-    return [[self class] photoBoxManagedObjectEntityNameForClassName:NSStringFromClass([self class])];
-}
-
-+ (NSDictionary *)managedObjectKeysByPropertyKey {
-    return [[super class] photoBoxManagedObjectKeyPathsByPropertyKeyWithDictionary:@{@"thumbnailImage": NSNull.null, @"normalImage": NSNull.null, @"originalImage": NSNull.null, @"dateMonthYearTakenString":NSNull.null, @"dateTakenString":@"dateTakenString"}];
-}
-
-+ (NSSet *)propertyKeysForManagedObjectUniquing {
-    return [NSSet setWithObject:@"photoId"];
-}
-
-+ (NSValueTransformer *)entityAttributeTransformerForKey:(NSString *)key {
-    if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSURL"]) {
-        return [[NSValueTransformer valueTransformerForName:MTLURLValueTransformerName] mtl_invertedTransformer];
-    } else if ([[[self class] propertyTypeStringForPropertyName:key] isEqualToString:@"NSArray"]) {
-        return [MTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSArray *arrays) {
-            return [arrays photoBoxArrayString];
-        } reverseBlock:^id(NSString *stringArray) {
-            return [[stringArray stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:ARRAY_SEPARATOR]] componentsSeparatedByString:ARRAY_SEPARATOR];
-        }];
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
     }
-    return nil;
+    
+    if (![object isKindOfClass:[Photo class]]) {
+        return NO;
+    }
+    
+    return [self isEqualToPhoto:object];
 }
 
-+ (NSDictionary *)relationshipModelClassesByPropertyKey {
-    return @{ NSStringFromSelector(@selector(photo320x320)):PhotoBoxImage.class, NSStringFromSelector(@selector(photo640x640)):PhotoBoxImage.class, NSStringFromSelector(@selector(fetchedIn)): FetchedIn.class};
+- (BOOL)isEqualToPhoto:(Photo *)photo {
+    return [self.photoId isEqualToString:photo.photoId];
+}
+
+- (NSUInteger)hash {
+    return [self.photoHash intValue];
 }
 
 @end

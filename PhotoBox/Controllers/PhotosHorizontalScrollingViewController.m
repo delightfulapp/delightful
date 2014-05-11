@@ -18,8 +18,9 @@
 #import "UIView+Additionals.h"
 #import "PhotoSharingManager.h"
 #import "PhotoInfoViewController.h"
+#import "DownloadedImageManager.h"
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate> {
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate> {
     BOOL shouldHideNavigationBar;
 }
 
@@ -67,15 +68,18 @@
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
     
-    [self insertBackgroundSnapshotView];
-    
     self.resourceType = PhotoResource;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self insertBackgroundSnapshotView];
+    [self scrollToFirstShownPhoto];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self scrollToFirstShownPhoto];
+    
     [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:1];
     [self showInfoButton:YES animated:YES];
 }
@@ -101,7 +105,9 @@
 
 - (void)scrollToFirstShownPhoto {
     PBX_LOG(@"");
-    if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
+    NSInteger numberOfItems = [self.dataSource numberOfItems];
+    NSInteger firstPhotoIndex = self.firstShownPhotoIndex;
+    if (numberOfItems>firstPhotoIndex) {
         shouldHideNavigationBar = YES;
         self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
@@ -115,6 +121,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setHideDownloadButton:(BOOL)hideDownloadButton{
+    _hideDownloadButton = hideDownloadButton;
+    
+    [self showLoadingBarButtonItem:NO];
 }
 
 #pragma mark - Orientation
@@ -139,6 +151,14 @@
 
 - (NSString *)resourceId {
     return self.item.itemId;
+}
+
+- (NSString *)groupKey {
+    return nil;
+}
+
+- (NSArray *)sortDescriptors {
+    return nil;
 }
 
 - (Class)resourceClass {
@@ -214,7 +234,8 @@
         self.previousPage = page;
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-                NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+                //NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+                id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }
             [self insertBackgroundSnapshotView];
@@ -229,7 +250,8 @@
     if (self.backgroundViewControllerView) {
         [self.backgroundViewControllerView removeFromSuperview];
     }
-    self.backgroundViewControllerView = [self.delegate snapshotView];
+    UIView *bgView = [self.delegate snapshotView];
+    self.backgroundViewControllerView = bgView;
     [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
     CGRect frame = ({
         CGRect frame = self.backgroundViewControllerView.frame;
@@ -316,6 +338,15 @@
 
 - (void)viewOriginalButtonTapped:(id)sender {
     PBX_LOG(@"");
+    if ([[DownloadedImageManager sharedManager] photoHasBeenDownloaded:[self currentPhoto]]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Re-download", nil) message:NSLocalizedString(@"This photo has been downloaded to your phone. Would you like to download it again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
+        [alert show];
+    } else {
+        [self continueDownloadOriginalImage];
+    }
+}
+
+- (void)continueDownloadOriginalImage {
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
         [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
             OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -324,11 +355,15 @@
         }];
     }
     
-    Photo *currentPhoto = (Photo *)[[self currentCell] item];
+    Photo *currentPhoto = [self currentPhoto];
     
     if (currentPhoto.pathOriginal) {
-        [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
+        [[NPRImageDownloader sharedDownloader] queuePhoto:currentPhoto thumbnail:[self currentCell].thisImageview.image];
     }
+}
+
+- (Photo *)currentPhoto {
+    return (Photo *)[[self currentCell] item];
 }
 
 - (void)actionButtonTapped:(id)sender {
@@ -359,7 +394,8 @@
     } else {
         shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
     }
-    [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
+    if (!self.hideDownloadButton) [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
+    else [self.navigationItem setRightBarButtonItems:@[shareButton]];
 }
 
 - (void)showInfoButton:(BOOL)show animated:(BOOL)animated{
@@ -446,6 +482,14 @@
 
 - (void)photoInfoViewController:(PhotoInfoViewController *)photoInfo didDragToClose:(CGFloat)progress {
     [[[self currentCell] grayImageView] setAlpha:1-progress];
+}
+
+#pragma mark - Alert 
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self continueDownloadOriginalImage];
+    }
 }
 
 @end

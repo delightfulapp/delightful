@@ -29,21 +29,14 @@
     return self;
 }
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
 - (void)setup {
-    self.barTintColor = [UIColor colorWithRed:0.116 green:0.111 blue:0.131 alpha:1.000];
+    self.barTintColor = [UIColor tabBarTintColor];
     self.barStyle = UIBarStyleDefault;
-    self.backgroundColor = [UIColor colorWithRed:41.f/255.f green:39.f/255.f blue:46.f/255.f alpha:1];
+    self.backgroundColor = [UIColor tabBarBackgroundColor];
     self.backgroundImage = nil;
     self.selectedImageTintColor = [[[[UIApplication sharedApplication] delegate] window] tintColor];
+    
+    [self setAccessibilityIdentifier:@"delightfultabbar"];
 }
 
 - (void)layoutSubviews {

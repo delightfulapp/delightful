@@ -13,6 +13,7 @@
 
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
 @property (nonatomic, weak) IBOutlet UIActivityIndicatorView *activityView;
+@property (weak, nonatomic) IBOutlet UIImageView *infoButton;
 
 - (IBAction)tapOnImage:(id)sender;
 - (IBAction)tryTapped:(id)sender;

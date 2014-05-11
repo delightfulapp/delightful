@@ -119,7 +119,6 @@
     [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
     [photosViewController setRelationshipKeyPathWithItem:@"tags"];
     [photosViewController setResourceType:PhotoWithTagsResource];
-    [photosViewController reloadFetchedResultsController];
     [photosViewController refresh];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
