@@ -35,6 +35,8 @@
 
 #import "PhotosDataSource.h"
 
+#import "Photo.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -346,8 +348,8 @@
 
 - (CLLocation *)locationSampleForSection:(NSInteger)sectionIndex {
     CLLocation *location;
-    /*id<NSFetchedResultsSectionInfo> section = self.dataSource.fetchedResultsController.sections[sectionIndex];
-    for (NSManagedObject *photo in section.objects) {
+    NSArray *photos = [self.dataSource items][sectionIndex];
+    for (Photo *photo in photos) {
         NSNumber *latitude = [photo valueForKey:@"latitude"];
         NSNumber *longitude = [photo valueForKey:@"longitude"];
         if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
@@ -355,7 +357,7 @@
             
             break;
         }
-    }*/
+    }
     return location;
 }
 
