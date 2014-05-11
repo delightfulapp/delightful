@@ -10,6 +10,8 @@
 
 #import "PhotoBoxViewController.h"
 
+#import "LeftViewController.h"
+
 @interface PanelsContainerViewController ()
 
 @end
@@ -51,7 +53,7 @@
     PhotoBoxViewController *visibleController, *hiddenController;
     
     PhotoBoxViewController *centerPanel = (PhotoBoxViewController *)((UINavigationController *)self.centerPanel).viewControllers[0];
-    PhotoBoxViewController *leftPanel = (PhotoBoxViewController *)((UITabBarController *)self.leftPanel).selectedViewController;
+    PhotoBoxViewController *leftPanel = (PhotoBoxViewController *)((UITabBarController *)((LeftViewController *)self.leftPanel).rootViewController).selectedViewController;
     
     if (self.state == JASidePanelCenterVisible) {
         visibleController = centerPanel;

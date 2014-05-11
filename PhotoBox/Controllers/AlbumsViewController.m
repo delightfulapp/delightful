@@ -22,6 +22,8 @@
 #import <JASidePanelController.h>
 #import "AppDelegate.h"
 
+#import "UIViewController+Additionals.h"
+
 @interface AlbumsViewController () <UIActionSheetDelegate>
 
 @end
@@ -98,7 +100,7 @@
     void (^configureCell)(AlbumSectionHeaderView*, id,NSIndexPath*) = ^(AlbumSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
         [cell setBackgroundColor:nil];
         [(UIView *)cell.blurView removeFromSuperview];
-        [cell setText:NSLocalizedString(@"All Photos", nil)];
+        [cell setText:NSLocalizedString(@"Gallery", nil)];
         [cell setHideLocation:YES];
         int count = cell.gestureRecognizers.count;
         if (count == 0) {
@@ -138,18 +140,6 @@
     [self loadPhotosInAlbum:album];
 }
 
-- (void)loadPhotosInAlbum:(Album *)album {
-    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
-    [photosViewController setItem:album];
-    [photosViewController setTitle:album.name];
-    [photosViewController setRelationshipKeyPathWithItem:@"albums"];
-    [photosViewController setResourceType:PhotoResource];
-    [photosViewController refresh];
-    
-    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
-    [panelController toggleLeftPanel:nil];
-}
-
 #pragma mark - Tap
 
 - (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
@@ -177,8 +167,7 @@
 #pragma mark - Collection View Flow Layout Delegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
-    return CGSizeMake(collectionViewWidth, 80);
+    return CGSizeZero;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

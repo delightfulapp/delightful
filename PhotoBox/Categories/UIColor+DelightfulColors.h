@@ -12,4 +12,8 @@
 
 + (UIColor *)albumsBackgroundColor;
 
++ (UIColor *)tabBarBackgroundColor;
+
++ (UIColor *)tabBarTintColor;
+
 @end

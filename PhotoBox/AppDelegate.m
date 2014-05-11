@@ -36,6 +36,8 @@
 
 #import <JASidePanelController.h>
 
+#import "LeftViewController.h"
+
 @interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @end
@@ -70,8 +72,8 @@
     TagsViewController *tagsViewController = [[TagsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     AlbumsTagsViewController *albumsTagsViewController = [[AlbumsTagsViewController alloc] init];
     [albumsTagsViewController setViewControllers:@[albumsViewController, tagsViewController]];
-    
-    [rootViewController setLeftPanel:albumsTagsViewController];
+    LeftViewController *left = [[LeftViewController alloc] initWithRootViewController:albumsTagsViewController];
+    [rootViewController setLeftPanel:left];
     [rootViewController setCenterPanel:photosNavigationViewController];
     
     self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
