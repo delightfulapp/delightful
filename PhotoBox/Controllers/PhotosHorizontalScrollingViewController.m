@@ -72,10 +72,14 @@
     self.resourceType = PhotoResource;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [self scrollToFirstShownPhoto];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self scrollToFirstShownPhoto];
+    
     [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:1];
     [self showInfoButton:YES animated:YES];
 }
@@ -101,7 +105,9 @@
 
 - (void)scrollToFirstShownPhoto {
     PBX_LOG(@"");
-    if ([self.dataSource numberOfItems]>self.firstShownPhotoIndex) {
+    NSInteger numberOfItems = [self.dataSource numberOfItems];
+    NSInteger firstPhotoIndex = self.firstShownPhotoIndex;
+    if (numberOfItems>firstPhotoIndex) {
         shouldHideNavigationBar = YES;
         self.previousPage = self.firstShownPhotoIndex-1;
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
@@ -139,6 +145,14 @@
 
 - (NSString *)resourceId {
     return self.item.itemId;
+}
+
+- (NSString *)groupKey {
+    return nil;
+}
+
+- (NSArray *)sortDescriptors {
+    return nil;
 }
 
 - (Class)resourceClass {

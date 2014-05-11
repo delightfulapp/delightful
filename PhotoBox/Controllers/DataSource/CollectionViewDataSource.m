@@ -20,6 +20,8 @@
 
 @property (nonatomic, copy) NSArray *shownItems;
 
+@property (nonatomic, copy) NSArray *internalFlattenedItems;
+
 @end
 
 @implementation CollectionViewDataSource
@@ -64,10 +66,9 @@
 #pragma mark - Items
 
 - (NSInteger)numberOfItems {
-    NSInteger sections = [self numberOfSectionsInCollectionView:self.collectionView];
     NSInteger count = 0;
-    for (NSInteger i=0; i<sections; i++) {
-        count += [self collectionView:self.collectionView numberOfItemsInSection:i];
+    for (NSArray *array in self.shownItems) {
+        count += array.count;
     }
     return count;
 }
@@ -78,16 +79,8 @@
 }
 
 - (NSInteger)positionOfItem:(id)item {
-    NSIndexPath *indexPath = [self indexPathOfItem:item];
-    NSInteger position = 0;
-    for (int i=0; i<indexPath.section+1; i++) {
-        if (i==indexPath.section) {
-            position += indexPath.item;
-        } else {
-            position += [self collectionView:self.collectionView numberOfItemsInSection:i];
-        }
-    }
-    return position;
+    NSInteger index = [self.internalFlattenedItems indexOfObject:item];
+    return index;
 }
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
@@ -101,10 +94,16 @@
     self.shownItems = [self processedItems];
     
     [self.collectionView reloadData];
+    
+    PBX_LOG(@"Number of items %d", self.flattenedItems.count);
 }
 
 - (NSArray *)items {
     return self.shownItems;
+}
+
+- (NSArray *)flattenedItems {
+    return self.internalFlattenedItems;
 }
 
 - (void)removeAllItems {
@@ -128,6 +127,7 @@
             }
         }
     }
+    
     if (self.groupKey) {
         NSArray *groups = [processed valueForKeyPath:[NSString stringWithFormat:@"@distinctUnionOfObjects.%@", self.groupKey]];
         groups = [groups sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:groupKeyAscending]]];
@@ -142,6 +142,14 @@
     } else {
         processed = [NSArray arrayWithObject:processed];
     }
+    
+    NSMutableArray *flat = [NSMutableArray array];
+    for (id section in processed) {
+        for (id item in section) {
+            [flat addObject:item];
+        }
+    }
+    self.internalFlattenedItems = flat;
     
     return processed;
 }

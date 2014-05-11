@@ -73,7 +73,7 @@
     [rootViewController setCenterPanel:photosNavigationViewController];
     
     self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
-    [photosNavigationViewController setDelegate:self.navigationDelegate];
+    //[photosNavigationViewController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
 

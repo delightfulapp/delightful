@@ -90,6 +90,14 @@
     }
 }
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Override
+
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     __weak typeof (self) selfie = self;
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
@@ -117,12 +125,6 @@
         [cell setNumberOfColumns:self.numberOfColumns];
     };
     return configureCell;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (NSString *)cellIdentifier {
@@ -155,9 +157,30 @@
 
 #pragma mark - Do something
 
-- (void)willLoadItemsFromCoreData {
-    DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
-    [layout updateLastIndexPath];
+- (void)backNavigationTapped:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)setupBackNavigationItemTitle {
+    if (self.item) {
+        if ([self.item isKindOfClass:[Album class]]) {
+            [self setBackButtonNavigationItemTitle:((Album *)self.item).name];
+        } else if ([self.item isKindOfClass:[Tag class]]) {
+            [self setBackButtonNavigationItemTitle:((Tag *)self.item).tagId];
+        }
+    } else {
+        [self setBackButtonNavigationItemTitle:nil];
+    }
+}
+
+- (void)setBackButtonNavigationItemTitle:(NSString *)title {
+    if (!title) {
+        title = NSLocalizedString(@"Gallery", nil);
+    }
+    if (!self.navigationItem.backBarButtonItem) {
+        [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backNavigationTapped:)]];
+    }
+    [self.navigationItem.backBarButtonItem setTitle:title];
 }
 
 - (void)showLoadingView:(BOOL)show {
@@ -182,7 +205,6 @@
         [layout setNumberOfColumns:_numberOfColumns];
     }
 }
-
 
 - (void)didFetchItems {
     NSInteger count = [self.dataSource numberOfItems];
@@ -256,6 +278,7 @@
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     [destination setItem:self.item];
+    [destination.dataSource addItems:self.dataSource.flattenedItems];
     [destination setFirstShownPhoto:cell.item];
     [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
     [destination setDelegate:self];
@@ -264,6 +287,8 @@
     
     self.selectedCell = cell;
     [self setSelectedItemRectAtIndexPath:indexPath];
+    
+    [self setupBackNavigationItemTitle];
     
     [self.navigationController pushViewController:destination animated:YES];
 }

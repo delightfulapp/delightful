@@ -36,6 +36,8 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 - (NSArray *)items;
 
+- (NSArray *)flattenedItems;
+
 - (void)removeAllItems;
 
 - (void)addItems:(NSArray *)items;
