@@ -309,8 +309,9 @@ NSString *const galleryContainerType = @"gallery";
 - (void)refresh {
     PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
     self.page = INITIAL_PAGE_NUMBER;
-    //[self loadItemsFromCoreData];
-    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+    [self.dataSource removeAllItems];
+    [self.collectionView reloadData];
+    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
 }
 
 - (void)showLoadingView:(BOOL)show {
