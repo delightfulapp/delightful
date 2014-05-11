@@ -165,15 +165,32 @@
 }
 
 - (void)refresh {
+    if ([self itemIsDownloadHistoryOrFavorites]) {
+        Album *album = (Album *)self.item;
+        [self.dataSource removeAllItems];
+        [self.dataSource addItems:album.photos];
+        [self.refreshControl endRefreshing];
+        return;
+    }
+    [super refresh];
+}
+
+- (BOOL)itemIsDownloadHistoryOrFavorites {
     if ([self.item isKindOfClass:[Album class]]) {
         Album *album = (Album *)self.item;
         if ([album.albumId isEqualToString:PBX_downloadHistoryIdentifier] ||[album.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
-            [self.dataSource removeAllItems];
-            [self.dataSource addItems:album.photos];
-            return;
+            return YES;
         }
     }
-    [super refresh];
+    return NO;
+}
+
+- (void)fetchMore {
+    if ([self itemIsDownloadHistoryOrFavorites]) {
+        return;
+    } else {
+        [super fetchMore];
+    }
 }
 
 #pragma mark - Do something
@@ -266,6 +283,11 @@
 #pragma mark - Setters
 
 - (void)setPhotosCount:(int)count max:(int)max{
+    if ([self itemIsDownloadHistoryOrFavorites]) {
+        Album *album = (Album *)self.item;
+        self.title = album.name;
+        return;
+    }
     NSString *title = NSLocalizedString(@"Photos", nil);
     if ([self.item isKindOfClass:[Album class]]) {
         Album *album = (Album *)self.item;
@@ -314,11 +336,8 @@
     [destination setDelegate:self];
     [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
     [destination setResourceType:self.resourceType];
-    if ([self.item isKindOfClass:[Album class]]) {
-        Album *album = (Album *)self.item;
-        if ([album.albumId isEqualToString:PBX_favoritesAlbumIdentifier] || [album.albumId isEqualToString:PBX_downloadHistoryIdentifier]) {
-            [destination setHideDownloadButton:YES];
-        }
+    if ([self itemIsDownloadHistoryOrFavorites]) {
+        [destination setHideDownloadButton:YES];
     }
     
     self.selectedCell = cell;

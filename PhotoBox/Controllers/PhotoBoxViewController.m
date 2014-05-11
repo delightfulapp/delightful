@@ -251,6 +251,8 @@ NSString *const galleryContainerType = @"gallery";
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
+                                               
+                                               [self.refreshControl endRefreshing];
                                            }
                                            
                                        } failure:^(NSError *error) {
@@ -275,10 +277,6 @@ NSString *const galleryContainerType = @"gallery";
             }
         }
     }
-}
-
-- (void)willLoadItemsFromCoreData {
-    
 }
 
 - (void)processPaginationFromObjects:(id)objects {
@@ -311,7 +309,8 @@ NSString *const galleryContainerType = @"gallery";
     self.page = INITIAL_PAGE_NUMBER;
     [self.dataSource removeAllItems];
     [self.collectionView reloadData];
-    [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
+    self.isFetching = YES;
+    [self fetchResource];
 }
 
 - (void)showLoadingView:(BOOL)show {
