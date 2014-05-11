@@ -73,8 +73,15 @@
     return count;
 }
 
-#warning need to implement this?
 - (NSIndexPath *)indexPathOfItem:(id)item {
+    NSInteger groupIndex = 0;
+    for (NSArray *group in self.shownItems) {
+        NSInteger itemIndex = [group indexOfObject:item];
+        if (itemIndex != NSNotFound) {
+            return [NSIndexPath indexPathForItem:itemIndex inSection:groupIndex];
+        }
+        groupIndex++;
+    }
     return nil;
 }
 

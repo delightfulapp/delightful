@@ -229,7 +229,8 @@
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 //NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:nil];
+                id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             }
             [self insertBackgroundSnapshotView];
         } else {
