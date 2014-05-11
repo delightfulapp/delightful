@@ -31,6 +31,8 @@
 	// Do any additional setup after loading the view.
     
     [self addObserver:self forKeyPath:NSStringFromSelector(@selector(state)) options:0 context:nil];
+    
+    self.shouldResizeLeftPanel = YES;
 }
 
 - (void)didReceiveMemoryWarning
