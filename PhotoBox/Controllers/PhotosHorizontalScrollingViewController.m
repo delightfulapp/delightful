@@ -123,6 +123,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setHideDownloadButton:(BOOL)hideDownloadButton{
+    _hideDownloadButton = hideDownloadButton;
+    
+    [self showLoadingBarButtonItem:NO];
+}
+
 #pragma mark - Orientation
 
 - (NSUInteger)supportedInterfaceOrientations {
@@ -388,7 +394,8 @@
     } else {
         shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
     }
-    [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
+    if (!self.hideDownloadButton) [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
+    else [self.navigationItem setRightBarButtonItems:@[shareButton]];
 }
 
 - (void)showInfoButton:(BOOL)show animated:(BOOL)animated{

@@ -18,6 +18,8 @@
 #define PHOTOBOX_SHARE_SUBJECT @"Checkout PhotoBox, Trovebox client for iPhone"
 
 extern NSString *PBX_allAlbumIdentifier;
+extern NSString *PBX_downloadHistoryIdentifier;
+extern NSString *PBX_favoritesAlbumIdentifier;
 
 #define DLF_DID_SHOW_PINCH_GESTURE_TIP @"delightful.DLF_DID_SHOW_PINCH_GESTURE_TIP"
 #define PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO @"photobox.PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO"

@@ -157,6 +157,18 @@
     return [PhotosDataSource class];
 }
 
+- (void)refresh {
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *album = (Album *)self.item;
+        if ([album.albumId isEqualToString:PBX_downloadHistoryIdentifier] ||[album.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+            [self.dataSource removeAllItems];
+            [self.dataSource addItems:album.photos];
+            return;
+        }
+    }
+    [super refresh];
+}
+
 #pragma mark - Do something
 
 - (void)backNavigationTapped:(id)sender {
@@ -286,6 +298,12 @@
     [destination setDelegate:self];
     [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
     [destination setResourceType:self.resourceType];
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *album = (Album *)self.item;
+        if ([album.albumId isEqualToString:PBX_favoritesAlbumIdentifier] || [album.albumId isEqualToString:PBX_downloadHistoryIdentifier]) {
+            [destination setHideDownloadButton:YES];
+        }
+    }
     
     self.selectedCell = cell;
     [self setSelectedItemRectAtIndexPath:indexPath];

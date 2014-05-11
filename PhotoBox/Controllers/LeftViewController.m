@@ -83,7 +83,7 @@
 }
 
 - (void)didTapDownloadHistory:(id)sender {
-    
+    [self loadPhotosInAlbum:[Album downloadHistoryAlbum]];
 }
 
 
