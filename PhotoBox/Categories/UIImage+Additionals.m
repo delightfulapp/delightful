@@ -35,6 +35,7 @@
     GPUImageGaussianBlurFilter *blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
     [grayFilter addTarget:blurFilter];
     [imagePicture addTarget:grayFilter];
+    [blurFilter useNextFrameForImageCapture];
     [imagePicture processImage];
 
     return [blurFilter imageFromCurrentFramebuffer];
