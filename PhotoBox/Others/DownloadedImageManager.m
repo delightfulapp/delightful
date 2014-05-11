@@ -71,4 +71,10 @@
     return self.data.array;
 }
 
+- (void)clearHistory {
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kDownloadedImageManagerKey];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.data removeAllObjects];
+}
+
 @end

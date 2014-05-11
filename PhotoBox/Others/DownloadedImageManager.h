@@ -20,4 +20,6 @@
 
 - (NSArray *)photos;
 
+- (void)clearHistory;
+
 @end

@@ -483,9 +483,8 @@ NSString *const galleryContainerType = @"gallery";
                 [self fetchResource];
             } else {
                 [self.dataSource removeAllItems];
-                self.dataSource = nil;
                 self.page = INITIAL_PAGE_NUMBER;
-                self.dataSource = nil;
+                [self.collectionView reloadData];
             }
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {
             if ([[ConnectionManager sharedManager] isShowingLoginPage]) {

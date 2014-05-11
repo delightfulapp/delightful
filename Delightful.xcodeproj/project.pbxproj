@@ -147,6 +147,8 @@
 		03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
 		03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
 		03FD4826191FA5E700D4ADF7 /* LeftPanelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */; };
+		03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */; };
+		03FD482B191FD73200D4ADF7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FD482A191FD73200D4ADF7 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -378,6 +380,9 @@
 		03FD4822191FA5CA00D4ADF7 /* LeftPanelHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftPanelHeaderView.h; path = PhotoBox/Views/LeftPanelHeaderView.h; sourceTree = "<group>"; };
 		03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftPanelHeaderView.m; path = PhotoBox/Views/LeftPanelHeaderView.m; sourceTree = "<group>"; };
 		03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftPanelHeaderView.xib; path = PhotoBox/Views/LeftPanelHeaderView.xib; sourceTree = "<group>"; };
+		03FD4827191FCE2000D4ADF7 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsTableViewController.h; path = PhotoBox/Controllers/SettingsTableViewController.h; sourceTree = "<group>"; };
+		03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsTableViewController.m; path = PhotoBox/Controllers/SettingsTableViewController.m; sourceTree = "<group>"; };
+		03FD482A191FD73200D4ADF7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.xcconfig"; path = "Pods/Pods-DelightfulTests.xcconfig"; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -387,6 +392,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03FD482B191FD73200D4ADF7 /* MessageUI.framework in Frameworks */,
 				037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */,
 				03635E181879745D0037851F /* libPods.a in Frameworks */,
 				036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */,
@@ -545,6 +551,7 @@
 		032CBB7C17D0BDF3001205B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03FD482A191FD73200D4ADF7 /* MessageUI.framework */,
 				037EC050189CF76D009C54EE /* Crashlytics.framework */,
 				03635E191879746D0037851F /* libPods-DelightfulTests.a */,
 				03635E171879745D0037851F /* libPods.a */,
@@ -667,6 +674,8 @@
 				0334EBB418417AB8001B262F /* PanelsContainerViewController.m */,
 				03FD481F191FA22B00D4ADF7 /* LeftViewController.h */,
 				03FD4820191FA22B00D4ADF7 /* LeftViewController.m */,
+				03FD4827191FCE2000D4ADF7 /* SettingsTableViewController.h */,
+				03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1096,6 +1105,7 @@
 				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
 				0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */,
+				03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */,
 				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,

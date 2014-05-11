@@ -19,6 +19,7 @@
 #import "PhotoCell.h"
 
 #import "PhotosHorizontalScrollingViewController.h"
+#import "SettingsTableViewController.h"
 
 #import "CollectionViewSelectCellGestureRecognizer.h"
 
@@ -76,6 +77,12 @@
     
     self.resourceType = PhotoResource;
     self.relationshipKeyPathWithItem = @"albums";
+    
+    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
+    [self.navigationItem setRightBarButtonItem:settingBarButtonItem];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -170,6 +177,12 @@
 }
 
 #pragma mark - Do something
+
+- (void)settingButtonTapped:(id)sender {
+    SettingsTableViewController *settings = [[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:settings];
+    [self presentViewController:navCon animated:YES completion:nil];
+}
 
 - (void)backNavigationTapped:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
