@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="u73-KT-5SG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13C1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="u73-KT-5SG">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -17,12 +17,8 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nrr-cA-3go">
-                                <rect key="frame" x="-30" y="-35" width="380" height="638"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="638" id="2dP-jI-WbE"/>
-                                    <constraint firstAttribute="width" constant="380" id="eaL-aY-yzS"/>
-                                </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
                                         <integer key="value" value="-20"/>
@@ -32,22 +28,28 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8u9-Qt-Zwp">
                                 <rect key="frame" x="45" y="259" width="231" height="50"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="23" verticalHuggingPriority="23" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username.trovebox.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ejh-My-8b8">
+                                        <rect key="frame" x="20" y="14" width="191" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="go"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="Yna-jB-3a9" id="CX4-fO-YID"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.83999999999999997" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="23" verticalHuggingPriority="23" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="username.trovebox.com" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ejh-My-8b8">
-                                <rect key="frame" x="65" y="274" width="191" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="9Fg-Ce-WNF"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ejh-My-8b8" secondAttribute="trailing" constant="20" id="FMn-4x-FNL"/>
+                                    <constraint firstAttribute="height" constant="50" id="P7q-4t-YKv"/>
+                                    <constraint firstAttribute="bottom" secondItem="Ejh-My-8b8" secondAttribute="bottom" constant="15" id="n4o-C3-8lA"/>
+                                    <constraint firstItem="Ejh-My-8b8" firstAttribute="top" secondItem="8u9-Qt-Zwp" secondAttribute="top" constant="14" id="nTD-DB-k83"/>
+                                    <constraint firstItem="Ejh-My-8b8" firstAttribute="leading" secondItem="8u9-Qt-Zwp" secondAttribute="leading" constant="20" id="vJ5-xd-uDG"/>
                                 </constraints>
-                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" keyboardType="URL" returnKeyType="go"/>
-                                <connections>
-                                    <outlet property="delegate" destination="Yna-jB-3a9" id="CX4-fO-YID"/>
-                                </connections>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Delightful" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o85-wA-I2t">
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delightful" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o85-wA-I2t">
                                 <rect key="frame" x="45" y="97" width="231" height="69"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="59"/>
@@ -56,8 +58,8 @@
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Trovebox Photo Viewer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpG-xU-tbV">
-                                <rect key="frame" x="45" y="164" width="231" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trovebox Photo Viewer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpG-xU-tbV">
+                                <rect key="frame" x="45" y="164" width="231" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -65,35 +67,58 @@
                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2gu-0v-pEg">
-                                <rect key="frame" x="142" y="360" width="37" height="37"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2gu-0v-pEg">
+                                <rect key="frame" x="142" y="413" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kb1-QM-Jx2">
-                                <rect key="frame" x="45" y="331" width="231" height="50"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trovebox account or self hosted Trovebox server is required to use this app." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="235" translatesAutoresizingMaskIntoConstraints="NO" id="c6f-wu-bDs">
+                                <rect key="frame" x="18" y="529" width="235" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.62" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                <state key="normal" title="Try Delightful">
-                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="tryTapped:" destination="Yna-jB-3a9" eventType="touchUpInside" id="wYJ-ig-1Ip"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trovebox account or self hosted trovebox server URL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="0ps-1Z-HAn">
+                                <rect key="frame" x="45" y="317" width="231" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info.png" translatesAutoresizingMaskIntoConstraints="NO" id="aGY-wW-bqr">
+                                <rect key="frame" x="275" y="531" width="25" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="nrr-cA-3go" secondAttribute="centerX" id="5Im-Fp-1WW"/>
-                            <constraint firstAttribute="centerX" secondItem="Ejh-My-8b8" secondAttribute="centerX" id="KF0-Dt-vQq"/>
-                            <constraint firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" id="Yio-99-npO"/>
-                            <constraint firstItem="8u9-Qt-Zwp" firstAttribute="height" secondItem="Ejh-My-8b8" secondAttribute="height" constant="30" id="ZrJ-Eh-wyc"/>
-                            <constraint firstItem="8u9-Qt-Zwp" firstAttribute="width" secondItem="Ejh-My-8b8" secondAttribute="width" constant="40" id="cMb-I0-gxH"/>
-                            <constraint firstAttribute="centerY" secondItem="8u9-Qt-Zwp" secondAttribute="centerY" id="e5m-Ag-Z3i"/>
-                            <constraint firstAttribute="centerY" secondItem="Ejh-My-8b8" secondAttribute="centerY" id="uX7-U7-488"/>
-                            <constraint firstAttribute="centerY" secondItem="nrr-cA-3go" secondAttribute="centerY" id="wCP-1b-X9W"/>
+                            <constraint firstItem="cpG-xU-tbV" firstAttribute="centerX" secondItem="o85-wA-I2t" secondAttribute="centerX" id="1BC-na-epl"/>
+                            <constraint firstItem="0ps-1Z-HAn" firstAttribute="leading" secondItem="8u9-Qt-Zwp" secondAttribute="leading" id="1qD-es-84q"/>
+                            <constraint firstItem="o85-wA-I2t" firstAttribute="top" secondItem="hp0-Tb-fwb" secondAttribute="bottom" constant="77" id="3Gi-dT-gXC"/>
+                            <constraint firstItem="c6f-wu-bDs" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="18" id="7LS-dh-4mQ"/>
+                            <constraint firstAttribute="centerX" secondItem="o85-wA-I2t" secondAttribute="centerX" constant="-0.5" id="Bku-j0-cR8"/>
+                            <constraint firstItem="nrr-cA-3go" firstAttribute="width" secondItem="nzJ-iX-cbD" secondAttribute="width" id="E5R-Tw-fGV"/>
+                            <constraint firstAttribute="centerY" secondItem="8u9-Qt-Zwp" secondAttribute="centerY" id="GIm-Pc-OeE"/>
+                            <constraint firstItem="2gu-0v-pEg" firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" id="Izo-Uz-DZy"/>
+                            <constraint firstItem="2gu-0v-pEg" firstAttribute="top" secondItem="8u9-Qt-Zwp" secondAttribute="bottom" constant="104" id="Jfg-l2-BXS"/>
+                            <constraint firstAttribute="centerY" secondItem="nrr-cA-3go" secondAttribute="centerY" id="Nlv-J2-830"/>
+                            <constraint firstItem="cpG-xU-tbV" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="45" id="QiN-Cj-pQw"/>
+                            <constraint firstItem="8u9-Qt-Zwp" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="45" id="RYn-Ig-OW1"/>
+                            <constraint firstItem="0ps-1Z-HAn" firstAttribute="top" secondItem="8u9-Qt-Zwp" secondAttribute="bottom" constant="8" id="VwK-pJ-IVI"/>
+                            <constraint firstItem="cpG-xU-tbV" firstAttribute="top" secondItem="o85-wA-I2t" secondAttribute="bottom" constant="-2" id="giv-ai-RPW"/>
+                            <constraint firstAttribute="centerX" secondItem="nrr-cA-3go" secondAttribute="centerX" id="i3K-1G-eDE"/>
+                            <constraint firstItem="0ps-1Z-HAn" firstAttribute="trailing" secondItem="8u9-Qt-Zwp" secondAttribute="trailing" id="k78-Ya-Fn1"/>
+                            <constraint firstItem="aGY-wW-bqr" firstAttribute="centerY" secondItem="c6f-wu-bDs" secondAttribute="centerY" id="kqo-Dg-n6m"/>
+                            <constraint firstAttribute="trailing" secondItem="aGY-wW-bqr" secondAttribute="trailing" constant="20" id="l3S-L4-9Zp"/>
+                            <constraint firstAttribute="trailing" secondItem="o85-wA-I2t" secondAttribute="trailing" constant="44" id="l9Y-dN-biI"/>
+                            <constraint firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" constant="-0.5" id="pcQ-G1-EQK"/>
+                            <constraint firstItem="CKg-v4-fyG" firstAttribute="top" secondItem="c6f-wu-bDs" secondAttribute="bottom" constant="10" id="sXw-y5-RPM"/>
+                            <constraint firstItem="nrr-cA-3go" firstAttribute="height" secondItem="nzJ-iX-cbD" secondAttribute="height" id="vF3-Cu-oDg"/>
+                            <constraint firstAttribute="trailing" secondItem="8u9-Qt-Zwp" secondAttribute="trailing" constant="44" id="vXW-MU-eUK"/>
+                            <constraint firstAttribute="trailing" secondItem="cpG-xU-tbV" secondAttribute="trailing" constant="44" id="ycM-Nk-Oyk"/>
+                            <constraint firstItem="o85-wA-I2t" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="45" id="ydH-e2-PHR"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="64d-Ay-gh1" appends="YES" id="lcU-ej-QGc"/>
@@ -102,6 +127,7 @@
                     <connections>
                         <outlet property="activityView" destination="2gu-0v-pEg" id="uSZ-k6-j6e"/>
                         <outlet property="backgroundImageView" destination="nrr-cA-3go" id="fyc-zM-c4S"/>
+                        <outlet property="infoButton" destination="aGY-wW-bqr" id="8xq-Pj-J4t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IN0-KN-Xt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -357,6 +383,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="info.png" width="25" height="25"/>
         <image name="loginbackground.jpg" width="640" height="1136"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
