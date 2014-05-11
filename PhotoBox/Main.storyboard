@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nrr-cA-3go">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="-25" y="-25" width="370" height="618"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
@@ -99,7 +99,7 @@
                             <constraint firstItem="o85-wA-I2t" firstAttribute="top" secondItem="hp0-Tb-fwb" secondAttribute="bottom" constant="77" id="3Gi-dT-gXC"/>
                             <constraint firstItem="c6f-wu-bDs" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="18" id="7LS-dh-4mQ"/>
                             <constraint firstAttribute="centerX" secondItem="o85-wA-I2t" secondAttribute="centerX" constant="-0.5" id="Bku-j0-cR8"/>
-                            <constraint firstItem="nrr-cA-3go" firstAttribute="width" secondItem="nzJ-iX-cbD" secondAttribute="width" id="E5R-Tw-fGV"/>
+                            <constraint firstItem="nrr-cA-3go" firstAttribute="width" secondItem="nzJ-iX-cbD" secondAttribute="width" constant="50" id="E5R-Tw-fGV"/>
                             <constraint firstAttribute="centerY" secondItem="8u9-Qt-Zwp" secondAttribute="centerY" id="GIm-Pc-OeE"/>
                             <constraint firstItem="2gu-0v-pEg" firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" id="Izo-Uz-DZy"/>
                             <constraint firstItem="2gu-0v-pEg" firstAttribute="top" secondItem="8u9-Qt-Zwp" secondAttribute="bottom" constant="104" id="Jfg-l2-BXS"/>
@@ -115,7 +115,7 @@
                             <constraint firstAttribute="trailing" secondItem="o85-wA-I2t" secondAttribute="trailing" constant="44" id="l9Y-dN-biI"/>
                             <constraint firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" constant="-0.5" id="pcQ-G1-EQK"/>
                             <constraint firstItem="CKg-v4-fyG" firstAttribute="top" secondItem="c6f-wu-bDs" secondAttribute="bottom" constant="10" id="sXw-y5-RPM"/>
-                            <constraint firstItem="nrr-cA-3go" firstAttribute="height" secondItem="nzJ-iX-cbD" secondAttribute="height" id="vF3-Cu-oDg"/>
+                            <constraint firstItem="nrr-cA-3go" firstAttribute="height" secondItem="nzJ-iX-cbD" secondAttribute="height" constant="50" id="vF3-Cu-oDg"/>
                             <constraint firstAttribute="trailing" secondItem="8u9-Qt-Zwp" secondAttribute="trailing" constant="44" id="vXW-MU-eUK"/>
                             <constraint firstAttribute="trailing" secondItem="cpG-xU-tbV" secondAttribute="trailing" constant="44" id="ycM-Nk-Oyk"/>
                             <constraint firstItem="o85-wA-I2t" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="45" id="ydH-e2-PHR"/>
