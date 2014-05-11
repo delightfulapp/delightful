@@ -36,6 +36,8 @@ extern NSString *const NPRImageDownloadDidFinishNotification;
 
 @end
 
+@class Photo;
+
 @interface NPRImageDownloader : NSObject
 
 @property (nonatomic, weak) id<NPRImageDownloaderDelegate> delegate;
@@ -47,6 +49,8 @@ extern NSString *const NPRImageDownloadDidFinishNotification;
 - (void)showDownloads;
 
 - (BOOL)queueImageURL:(NSURL *)URL thumbnail:(UIImage *)image;
+
+- (BOOL)queuePhoto:(Photo *)photo thumbnail:(UIImage *)image;
 
 - (NSInteger)numberOfDownloads;
 

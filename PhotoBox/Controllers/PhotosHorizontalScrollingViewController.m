@@ -18,8 +18,9 @@
 #import "UIView+Additionals.h"
 #import "PhotoSharingManager.h"
 #import "PhotoInfoViewController.h"
+#import "DownloadedImageManager.h"
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate> {
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate> {
     BOOL shouldHideNavigationBar;
 }
 
@@ -331,6 +332,15 @@
 
 - (void)viewOriginalButtonTapped:(id)sender {
     PBX_LOG(@"");
+    if ([[DownloadedImageManager sharedManager] photoHasBeenDownloaded:[self currentPhoto]]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Re-download", nil) message:NSLocalizedString(@"This photo has been downloaded to your phone. Would you like to download it again?", nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"Yes", nil), nil];
+        [alert show];
+    } else {
+        [self continueDownloadOriginalImage];
+    }
+}
+
+- (void)continueDownloadOriginalImage {
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
         [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
             OriginalImageDownloaderViewController *original = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
@@ -339,11 +349,15 @@
         }];
     }
     
-    Photo *currentPhoto = (Photo *)[[self currentCell] item];
+    Photo *currentPhoto = [self currentPhoto];
     
     if (currentPhoto.pathOriginal) {
-        [[NPRImageDownloader sharedDownloader] queueImageURL:currentPhoto.pathOriginal thumbnail:[self currentCell].thisImageview.image];
+        [[NPRImageDownloader sharedDownloader] queuePhoto:currentPhoto thumbnail:[self currentCell].thisImageview.image];
     }
+}
+
+- (Photo *)currentPhoto {
+    return (Photo *)[[self currentCell] item];
 }
 
 - (void)actionButtonTapped:(id)sender {
@@ -461,6 +475,14 @@
 
 - (void)photoInfoViewController:(PhotoInfoViewController *)photoInfo didDragToClose:(CGFloat)progress {
     [[[self currentCell] grayImageView] setAlpha:1-progress];
+}
+
+#pragma mark - Alert 
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 1) {
+        [self continueDownloadOriginalImage];
+    }
 }
 
 @end

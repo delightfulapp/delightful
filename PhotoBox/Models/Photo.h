@@ -58,4 +58,6 @@
 
 @property (nonatomic, copy, readonly) NSArray *fetchedIn;
 
+@property (nonatomic, copy, readonly) NSDate *downloadedDate;
+
 @end

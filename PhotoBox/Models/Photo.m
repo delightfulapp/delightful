@@ -102,4 +102,26 @@
     return dict;
 }
 
+#pragma mark - Equality
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    
+    if (![object isKindOfClass:[Photo class]]) {
+        return NO;
+    }
+    
+    return [self isEqualToPhoto:object];
+}
+
+- (BOOL)isEqualToPhoto:(Photo *)photo {
+    return [self.photoId isEqualToString:photo.photoId];
+}
+
+- (NSUInteger)hash {
+    return [self.photoHash intValue];
+}
+
 @end
