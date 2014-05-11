@@ -67,4 +67,8 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (NSArray *)photos {
+    return self.data.array;
+}
+
 @end

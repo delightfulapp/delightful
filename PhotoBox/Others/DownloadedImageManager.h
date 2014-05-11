@@ -18,4 +18,6 @@
 
 - (BOOL)photoHasBeenDownloaded:(Photo *)photo;
 
+- (NSArray *)photos;
+
 @end

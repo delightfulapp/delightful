@@ -24,7 +24,6 @@
 + (id)panelViewController {
     AppDelegate *delegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     JASidePanelController *rootViewController = (JASidePanelController *)delegate.window.rootViewController;
-    NSAssert(rootViewController, @"wtf?");
     return rootViewController;
 }
 
