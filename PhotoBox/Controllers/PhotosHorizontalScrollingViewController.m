@@ -67,12 +67,11 @@
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
     
-    [self insertBackgroundSnapshotView];
-    
     self.resourceType = PhotoResource;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [self insertBackgroundSnapshotView];
     [self scrollToFirstShownPhoto];
 }
 
@@ -244,7 +243,8 @@
     if (self.backgroundViewControllerView) {
         [self.backgroundViewControllerView removeFromSuperview];
     }
-    self.backgroundViewControllerView = [self.delegate snapshotView];
+    UIView *bgView = [self.delegate snapshotView];
+    self.backgroundViewControllerView = bgView;
     [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
     CGRect frame = ({
         CGRect frame = self.backgroundViewControllerView.frame;
