@@ -12,6 +12,8 @@
 #define ARRAY_SEPARATOR @"\t"
 #define PHOTO_SPACING 20
 
+#define APP_VERSION_KEY @"delightful.appversion"
+
 #define PHOTOBOX_TESTFLIGHT_BETA_URL @"http://tflig.ht/1c3y5YF"
 #define PHOTOBOX_SHARE_TEXT @"Photobox, Trovebox client for iPhone, is looking for beta users. Get your invite here."
 #define PHOTOBOX_SHARE_TWEET @"Photobox, @trovebox client for iPhone, is looking for beta users. Get your invite here. via @nicnocquee"
