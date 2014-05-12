@@ -33,7 +33,7 @@
 - (id)init {
     self = [super init];
     if (self) {
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kDownloadedImageManagerKey];
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self downloadedImageKey]];
         if (data) {
             NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             if (arr) {
@@ -63,7 +63,7 @@
 
 - (void)appWillResignActive:(NSNotification *)notification {
     NSData *archived = [NSKeyedArchiver archivedDataWithRootObject:self.data.array];
-    [[NSUserDefaults standardUserDefaults] setObject:archived forKey:kDownloadedImageManagerKey];
+    [[NSUserDefaults standardUserDefaults] setObject:archived forKey:[self downloadedImageKey]];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
@@ -72,9 +72,13 @@
 }
 
 - (void)clearHistory {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:kDownloadedImageManagerKey];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[self downloadedImageKey]];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [self.data removeAllObjects];
+}
+
+- (NSString *)downloadedImageKey {
+    return kDownloadedImageManagerKey;
 }
 
 @end

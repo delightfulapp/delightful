@@ -15,6 +15,7 @@ pod 'UIImageViewModeScaleAspect'
 pod 'MYBlurIntroductionView', '~> 1.0.0'
 pod 'GPUImage'
 pod 'JASidePanels'
+pod 'SVProgressHUD'
 pod 'QMBParallaxScrollViewController'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'

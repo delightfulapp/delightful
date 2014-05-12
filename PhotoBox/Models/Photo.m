@@ -29,7 +29,10 @@
 }
 
 - (PhotoBoxImage *)thumbnailImage {
-    return self.photo320x320;
+    if (self.photo320x320) return self.photo320x320;
+    else if (self.photo200x200) return self.photo200x200;
+    else if (self.photo100x100) return self.photo100x100;
+    return nil;
 }
 
 - (PhotoBoxImage *)normalImage {
@@ -84,6 +87,14 @@
 }
 
 + (NSValueTransformer *)photo640x640JSONTransformer {
+    return [[self class] photoImageTransformer];
+}
+
++ (NSValueTransformer *)photo100x100JSONTransformer {
+    return [[self class] photoImageTransformer];
+}
+
++ (NSValueTransformer *)photo200x200JSONTransformer {
     return [[self class] photoImageTransformer];
 }
 

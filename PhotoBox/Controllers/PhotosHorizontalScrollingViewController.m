@@ -19,6 +19,8 @@
 #import "PhotoSharingManager.h"
 #import "PhotoInfoViewController.h"
 #import "DownloadedImageManager.h"
+#import "FavoritesManager.h"
+#import <SVProgressHUD.h>
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate> {
     BOOL shouldHideNavigationBar;
@@ -56,13 +58,13 @@
     [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
     [self.collectionView reloadData];
+    
+    [self showLoadingBarButtonItem:NO];
         
     UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
     [self.collectionView addGestureRecognizer:tapOnce];
-    
-    [self showLoadingBarButtonItem:NO];
     
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
@@ -82,6 +84,10 @@
     
     [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:1];
     [self showInfoButton:YES animated:YES];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self showLoadingBarButtonItem:NO];
+    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -237,6 +243,7 @@
                 //NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+                [self showLoadingBarButtonItem:NO];
             }
             [self insertBackgroundSnapshotView];
         } else {
@@ -346,6 +353,17 @@
     }
 }
 
+- (void)favoriteButtonTapped:(id)sender {
+    [sender setEnabled:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[FavoritesManager sharedManager] addPhoto:[self currentPhoto]];
+        
+        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Saved to Favorites", nil)];
+        
+        [self showLoadingBarButtonItem:NO];
+    });
+}
+
 - (void)continueDownloadOriginalImage {
     if (![[NPRImageDownloader sharedDownloader] downloadViewControllerInitBlock]) {
         [[NPRImageDownloader sharedDownloader] setDownloadViewControllerInitBlock:^id{
@@ -384,6 +402,10 @@
 
 - (void)showLoadingBarButtonItem:(BOOL)show {
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
+    UIBarButtonItem *favoriteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(favoriteButtonTapped:)];
+    if ([[FavoritesManager sharedManager] photoHasBeenDownloaded:[self currentPhoto]]) {
+        [favoriteButton setImage:[UIImage imageNamed:@"star-fill.png"]];
+    }
     UIBarButtonItem *shareButton;
     
     if (show) {
@@ -394,8 +416,8 @@
     } else {
         shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
     }
-    if (!self.hideDownloadButton) [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton]];
-    else [self.navigationItem setRightBarButtonItems:@[shareButton]];
+    if (!self.hideDownloadButton) [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton, favoriteButton]];
+    else [self.navigationItem setRightBarButtonItems:@[shareButton, favoriteButton]];
 }
 
 - (void)showInfoButton:(BOOL)show animated:(BOOL)animated{
@@ -433,7 +455,7 @@
 #pragma mark - Custom Animation Transition Delegate
 
 - (PhotoZoomableCell *)currentCell {
-    return [self.collectionView visibleCells][0];
+    return [[self.collectionView visibleCells] firstObject];
 }
 
 - (UIView *)viewToAnimate {

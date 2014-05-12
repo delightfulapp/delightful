@@ -13,6 +13,7 @@
 @interface LeftPanelHeaderView ()
 
 @property (nonatomic, strong) CAShapeLayer *separatorLine;
+@property (nonatomic, strong) CAShapeLayer *separatorLine2;
 
 @end
 
@@ -45,10 +46,11 @@
     
     [self.galleryArrow setImage:[[UIImage imageNamed:@"right.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     [self.downloadedArrow setImage:[[UIImage imageNamed:@"right.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    [self.favoriteArrow setImage:[[UIImage imageNamed:@"right.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 }
 
 - (CGSize)intrinsicContentSize {
-    return CGSizeMake(UIViewNoIntrinsicMetric, CGRectGetMaxY(self.downloadedButton.frame) + 10);
+    return CGSizeMake(UIViewNoIntrinsicMetric, CGRectGetMaxY(self.favoriteButton.frame) + 10);
 }
 
 - (void)layoutSubviews {
@@ -61,11 +63,24 @@
         
         [self.layer addSublayer:self.separatorLine];
     }
+    if (!self.separatorLine2) {
+        self.separatorLine2 = [CAShapeLayer layer];
+        [self.separatorLine2 setLineWidth:0.5];
+        [self.separatorLine2 setStrokeColor:[UIColor albumsBackgroundColor].CGColor];
+        
+        [self.layer addSublayer:self.separatorLine];
+    }
     UIBezierPath *path = [UIBezierPath bezierPath];
     CGFloat yPoint = CGRectGetMaxY(self.galleryButton.frame) + 5;
     [path moveToPoint:CGPointMake(CGRectGetMinX(self.galleryButton.frame), yPoint)];
     [path addLineToPoint:CGPointMake(CGRectGetMaxX(self.galleryButton.frame), yPoint)];
     [self.separatorLine setPath:path.CGPath];
+    
+    path = [UIBezierPath bezierPath];
+    yPoint = CGRectGetMaxY(self.downloadedButton.frame) + 5;
+    [path moveToPoint:CGPointMake(CGRectGetMinX(self.downloadedButton.frame), yPoint)];
+    [path addLineToPoint:CGPointMake(CGRectGetMaxX(self.downloadedButton.frame), yPoint)];
+    [self.separatorLine2 setPath:path.CGPath];
 }
 
 @end

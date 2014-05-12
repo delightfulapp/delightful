@@ -12,6 +12,8 @@
 
 #import "DownloadedImageManager.h"
 
+#import "FavoritesManager.h"
+
 NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 NSString *PBX_downloadHistoryIdentifier = @"PBX_DOWNLOADED_HISTORY_ALBUM";
 NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
@@ -53,7 +55,15 @@ NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
 }
 
 + (Album *)favoritesAlbum {
-    return nil;
+    NSError *error;
+    Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{
+                                                                               @"id": PBX_favoritesAlbumIdentifier,
+                                                                               @"name":NSLocalizedString(@"Favorites", nil),
+                                                                               @"cover":@{@"id": @"COVER_PHOTO_ALL_ALBUM", @"filenameOriginal":@""}
+                                                                               } error:&error];
+    NSArray *downloaded = [[FavoritesManager sharedManager] photos];
+    [a setValue:downloaded forKey:NSStringFromSelector(@selector(photos))];
+    return a;
 }
 
 #pragma mark - Mantle

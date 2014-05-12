@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *downloadedButton;
 @property (weak, nonatomic) IBOutlet UIImageView *galleryArrow;
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedArrow;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIImageView *favoriteArrow;
 
 @end

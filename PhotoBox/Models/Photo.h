@@ -48,6 +48,8 @@
 @property (nonatomic, copy, readonly) NSNumber *height;
 @property (nonatomic, copy, readonly) PhotoBoxImage *photo320x320;
 @property (nonatomic, copy, readonly) PhotoBoxImage *photo640x640;
+@property (nonatomic, copy, readonly) PhotoBoxImage *photo100x100;
+@property (nonatomic, copy, readonly) PhotoBoxImage *photo200x200;
 
 @property (nonatomic, copy, readonly) PhotoBoxImage *thumbnailImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *normalImage;

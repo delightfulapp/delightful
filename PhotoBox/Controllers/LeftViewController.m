@@ -55,6 +55,7 @@
     
     [self.headerView.galleryButton addTarget:self action:@selector(didTapGallery:) forControlEvents:UIControlEventTouchUpInside];
     [self.headerView.downloadedButton addTarget:self action:@selector(didTapDownloadHistory:) forControlEvents:UIControlEventTouchUpInside];
+    [self.headerView.favoriteButton addTarget:self action:@selector(didTapFavorites:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,7 +79,7 @@
 }
 
 - (void)didTapFavorites:(id)sender {
-    
+    [self loadPhotosInAlbum:[Album favoritesAlbum]];
 }
 
 - (void)didTapDownloadHistory:(id)sender {

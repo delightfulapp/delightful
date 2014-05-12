@@ -149,6 +149,11 @@
 		03FD4826191FA5E700D4ADF7 /* LeftPanelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */; };
 		03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */; };
 		03FD482B191FD73200D4ADF7 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FD482A191FD73200D4ADF7 /* MessageUI.framework */; };
+		03FD48301920AA9C00D4ADF7 /* FavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */; };
+		03FD48321920AB8B00D4ADF7 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48311920AB8B00D4ADF7 /* star@2x.png */; };
+		03FD48341920ABE000D4ADF7 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48331920ABE000D4ADF7 /* star.png */; };
+		03FD48371920B27300D4ADF7 /* star-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48351920B27300D4ADF7 /* star-fill.png */; };
+		03FD48381920B27300D4ADF7 /* star-fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48361920B27300D4ADF7 /* star-fill@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -383,6 +388,12 @@
 		03FD4827191FCE2000D4ADF7 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsTableViewController.h; path = PhotoBox/Controllers/SettingsTableViewController.h; sourceTree = "<group>"; };
 		03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsTableViewController.m; path = PhotoBox/Controllers/SettingsTableViewController.m; sourceTree = "<group>"; };
 		03FD482A191FD73200D4ADF7 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		03FD482E1920AA9C00D4ADF7 /* FavoritesManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesManager.h; path = PhotoBox/Others/FavoritesManager.h; sourceTree = "<group>"; };
+		03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesManager.m; path = PhotoBox/Others/FavoritesManager.m; sourceTree = "<group>"; };
+		03FD48311920AB8B00D4ADF7 /* star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star@2x.png"; sourceTree = "<group>"; };
+		03FD48331920ABE000D4ADF7 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
+		03FD48351920B27300D4ADF7 /* star-fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-fill.png"; sourceTree = "<group>"; };
+		03FD48361920B27300D4ADF7 /* star-fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-fill@2x.png"; sourceTree = "<group>"; };
 		2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.xcconfig"; path = "Pods/Pods-DelightfulTests.xcconfig"; sourceTree = "<group>"; };
 		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -642,6 +653,8 @@
 				03CE5102181842F200445084 /* SharerManager.m */,
 				03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */,
 				03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */,
+				03FD482E1920AA9C00D4ADF7 /* FavoritesManager.h */,
+				03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -762,6 +775,10 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				03FD48351920B27300D4ADF7 /* star-fill.png */,
+				03FD48361920B27300D4ADF7 /* star-fill@2x.png */,
+				03FD48331920ABE000D4ADF7 /* star.png */,
+				03FD48311920AB8B00D4ADF7 /* star@2x.png */,
 				0334EBBB1842018D001B262F /* intro0.0.5.jpg */,
 				0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */,
 				036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */,
@@ -936,6 +953,7 @@
 				032222BC1814F2E4004F3830 /* npr_notification_image_close.png in Resources */,
 				032222B61814CBF0004F3830 /* npr_notification_image_warning@2x.png in Resources */,
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
+				03FD48381920B27300D4ADF7 /* star-fill@2x.png in Resources */,
 				03FD4826191FA5E700D4ADF7 /* LeftPanelHeaderView.xib in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
@@ -947,9 +965,12 @@
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,
+				03FD48371920B27300D4ADF7 /* star-fill.png in Resources */,
 				03CE50F7181838B700445084 /* shareicons.ttf in Resources */,
+				03FD48341920ABE000D4ADF7 /* star.png in Resources */,
 				032222B71814CBF0004F3830 /* npr_notification_image_error.png in Resources */,
 				031DD2AF17D9BB8300A80167 /* setting.png in Resources */,
+				03FD48321920AB8B00D4ADF7 /* star@2x.png in Resources */,
 				031DD2AA17D9BB8300A80167 /* camera.png in Resources */,
 				031DD2B117D9BD6B00A80167 /* user@2x.png in Resources */,
 				03CE50E01818136E00445084 /* introbg.jpg in Resources */,
@@ -1117,6 +1138,7 @@
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
 				032222A5181407C3004F3830 /* NPRNotificationManager.m in Sources */,
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
+				03FD48301920AA9C00D4ADF7 /* FavoritesManager.m in Sources */,
 				0358468717D1C19A00E196D7 /* PhotoBoxCell.m in Sources */,
 				035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
 				0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */,
