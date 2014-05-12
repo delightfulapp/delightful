@@ -196,8 +196,11 @@
         [self.dataSource removeAllItems];
         [self.dataSource addItems:album.photos];
         [self.refreshControl endRefreshing];
+        
+        [self addOrRemoveHeaderView];
         return;
     }
+    
     [self addOrRemoveHeaderView];
     
     [super refresh];
@@ -226,15 +229,17 @@
             [self.collectionView setBackgroundColor:[UIColor clearColor]];
             StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
             [layout setTopOffsetAdjustment:headerHeight-CGRectGetHeight(self.navigationController.navigationBar.frame) - 20];
+            
+            return;
         }
         
-    } else {
-        StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
-        [layout setTopOffsetAdjustment:0];
-        
-        [self.headerImageView removeFromSuperview];
-        [self restoreContentInset];
     }
+    
+    StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
+    [layout setTopOffsetAdjustment:0];
+    
+    [self.headerImageView removeFromSuperview];
+    [self restoreContentInset];
 }
 
 - (void)restoreContentInset {
@@ -248,10 +253,10 @@
                 inset.top = headerHeight+64;
                 inset;
             });
+            return;
         }
-    } else {
-        [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
     }
+    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
 }
 
 - (BOOL)itemIsDownloadHistoryOrFavorites {
