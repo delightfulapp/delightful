@@ -68,7 +68,7 @@
         [self.separatorLine2 setLineWidth:0.5];
         [self.separatorLine2 setStrokeColor:[UIColor albumsBackgroundColor].CGColor];
         
-        [self.layer addSublayer:self.separatorLine];
+        [self.layer addSublayer:self.separatorLine2];
     }
     UIBezierPath *path = [UIBezierPath bezierPath];
     CGFloat yPoint = CGRectGetMaxY(self.galleryButton.frame) + 5;
