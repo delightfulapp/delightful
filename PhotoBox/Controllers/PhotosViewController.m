@@ -226,7 +226,7 @@
         [layout setTopOffsetAdjustment:0];
         
         [imageView removeFromSuperview];
-        [self.collectionView setContentInset:UIEdgeInsetsZero];
+        [self restoreContentInset];
     }
     [super refresh];
 }
