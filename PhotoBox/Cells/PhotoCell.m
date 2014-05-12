@@ -58,11 +58,11 @@
     [self.photoTitleBackgroundView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView];
     
     [self.dateTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView withOffset:-10];
-    [self.dateTitle autoCenterInSuperviewAlongAxis:ALAxisVertical];
+    [self.dateTitle autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.dateTitle autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
     
     [self.photoTitle autoPinEdge:ALEdgeBottom toEdge:ALEdgeTop ofView:self.dateTitle withOffset:-5];
-    [self.photoTitle autoCenterInSuperviewAlongAxis:ALAxisVertical];
+    [self.photoTitle autoAlignAxisToSuperviewAxis:ALAxisVertical];
     [self.photoTitle autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView withOffset:-20];
 
     [self.photoTitle setBackgroundColor:[UIColor clearColor]];

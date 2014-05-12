@@ -60,13 +60,13 @@
     [self.cellImageView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.contentView withOffset:-20];
     [self.cellImageView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionHeight ofView:self.cellImageView];
     [self.cellImageView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10];
-    [self.cellImageView autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [self.cellImageView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 }
 
 - (void)setupTextLabelConstrains {
     [self.textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cellImageView withOffset:10];
     [self.textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-10];
-    [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [self.textLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 }
 
 #pragma mark - Layout subviews

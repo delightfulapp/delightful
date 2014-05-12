@@ -27,7 +27,7 @@
         case ShareTypeSMS:{
             if ([MFMessageComposeViewController canSendText]) {
                 MFMessageComposeViewController *messageCompose = [[MFMessageComposeViewController alloc] init];
-                [messageCompose setMessageComposeDelegate:[[UIApplication sharedApplication] delegate]];
+                [messageCompose setMessageComposeDelegate:(id)[[UIApplication sharedApplication] delegate]];
                 [messageCompose setBody:text];
                 [[UIWindow topMostViewController]  presentViewController:messageCompose animated:YES completion:nil];
             }
@@ -42,7 +42,7 @@
             MFMailComposeViewController *mailCompose = [[MFMailComposeViewController alloc] init];
             [mailCompose setSubject:subject];
             [mailCompose setMessageBody:text isHTML:YES];
-            [mailCompose setMailComposeDelegate:[[UIApplication sharedApplication] delegate]];
+            [mailCompose setMailComposeDelegate:(id)[[UIApplication sharedApplication] delegate]];
             [root  presentViewController:mailCompose animated:YES completion:nil];
             break;
         }
@@ -52,7 +52,6 @@
 }
 
 + (void)shareToFacebookWithInitialText:(NSString *)text url:(NSURL *)url{
-    UIViewController *root = [UIWindow topMostViewController];
 #if __has_include("FacebookSDK/FacebookSDK.h")
     if (![FBDialogs presentOSIntegratedShareDialogModallyFrom:root initialText:text image:nil url:url handler:^(FBOSIntegratedShareDialogResult result, NSError *error) {}]) {
         NSMutableDictionary *params =

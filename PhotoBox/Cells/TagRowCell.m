@@ -19,8 +19,8 @@
 
 - (void)setupCellImageViewConstrains {
     [self.cellImageView autoSetDimensionsToSize:CGSizeZero];
-    [self.cellImageView autoPinEdge:ALEdgeLeft toPositionInSuperview:0];
-    [self.cellImageView autoPinEdge:ALEdgeTop toPositionInSuperview:0];
+    [self.cellImageView autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+    [self.cellImageView autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
 }
 
 - (void)setup {

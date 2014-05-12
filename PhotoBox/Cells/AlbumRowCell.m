@@ -77,7 +77,7 @@
 - (void)setupTextLabelConstrains {
     [self.textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.cellImageView withOffset:10];
     [self.textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-80];
-    [self.textLabel autoCenterInSuperviewAlongAxis:ALAxisHorizontal];
+    [self.textLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
 }
 
 - (void)setupSelectedViewConstrains {
