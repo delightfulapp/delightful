@@ -40,6 +40,8 @@
 
 #import "StickyHeaderFlowLayout.h"
 
+#import "UIImageView+Additionals.h"
+
 #define headerHeight 300
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
@@ -219,7 +221,7 @@
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImageViewTapped:)];
                 [self.headerImageView addGestureRecognizer:tap];
             }
-            [self.headerImageView setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
+            [self.headerImageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
             self.collectionView.contentInset = ({
                 UIEdgeInsets inset = self.collectionView.contentInset;
                 inset.top = headerHeight;
