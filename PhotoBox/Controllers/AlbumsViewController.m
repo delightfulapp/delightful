@@ -137,6 +137,8 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
+    AlbumRowCell *cell = (AlbumRowCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [album setAlbumThumbnailImage:cell.cellImageView.image];
     [self loadPhotosInAlbum:album];
 }
 

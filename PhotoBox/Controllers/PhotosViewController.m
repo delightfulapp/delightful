@@ -209,7 +209,7 @@
                 [imageView setContentMode:UIViewContentModeScaleAspectFill];
                 [imageView setTag:12345];
             }
-            [imageView setImageWithURL:a.coverURL];
+            [imageView setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
             self.collectionView.contentInset = ({
                 UIEdgeInsets inset = self.collectionView.contentInset;
                 inset.top = headerHeight;
