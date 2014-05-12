@@ -42,6 +42,8 @@
 
 #import "UIImageView+Additionals.h"
 
+#import "NoPhotosView.h"
+
 #define headerHeight 300
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
@@ -51,6 +53,7 @@
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
 @property (nonatomic, strong) UIImageView *headerImageView;
+@property (nonatomic, weak) NoPhotosView *noPhotosView;
 @end
 
 @implementation PhotosViewController
@@ -200,10 +203,30 @@
         [self.refreshControl endRefreshing];
         
         [self addOrRemoveHeaderView];
+        
+        if ([self.dataSource items].count == 0) {
+            if (!self.noPhotosView) {
+                NoPhotosView *noPhotos = (NoPhotosView *)[[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([NoPhotosView class]) owner:nil options:nil] firstObject];
+                [noPhotos setFrame:self.view.bounds];
+                [self.view addSubview:noPhotos];
+                self.noPhotosView = noPhotos;
+            }
+            NSString *text;
+            if ([album.albumId isEqualToString:PBX_downloadHistoryIdentifier]) {
+                text = NSLocalizedString(@"Photos you have downloaded and saved to Camera Roll will appear here.", nil);
+            } else if ([album.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+                text = NSLocalizedString(@"Favorited photos will appear here. Favorited photos are not saved to Camera Roll and Trovebox server.", nil);
+            }
+            [self.noPhotosView.textLabel setText:text];
+            
+        } else {
+            [self.noPhotosView removeFromSuperview];
+        }
         return;
     }
     
     [self addOrRemoveHeaderView];
+    [self.noPhotosView removeFromSuperview];
     
     [super refresh];
 }

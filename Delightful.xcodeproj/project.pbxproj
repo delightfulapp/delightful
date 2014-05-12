@@ -111,6 +111,8 @@
 		0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
+		0396BDD01920B8B4004B6290 /* NoPhotosView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */; };
+		0396BDD31920B91B004B6290 /* NoPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD21920B91B004B6290 /* NoPhotosView.m */; };
 		0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
 		0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
 		0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
@@ -327,6 +329,9 @@
 		0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxRequestOperationTests.m; sourceTree = "<group>"; };
 		0391824D1800074A0099480C /* NSObject+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Additionals.h"; sourceTree = "<group>"; };
 		0391824E1800074A0099480C /* NSObject+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additionals.m"; sourceTree = "<group>"; };
+		0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoPhotosView.xib; path = PhotoBox/Views/NoPhotosView.xib; sourceTree = "<group>"; };
+		0396BDD11920B91B004B6290 /* NoPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoPhotosView.h; path = PhotoBox/Views/NoPhotosView.h; sourceTree = "<group>"; };
+		0396BDD21920B91B004B6290 /* NoPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoPhotosView.m; path = PhotoBox/Views/NoPhotosView.m; sourceTree = "<group>"; };
 		0398D760180FB88F00FDD83B /* UIImage+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additionals.h"; sourceTree = "<group>"; };
 		0398D761180FB88F00FDD83B /* UIImage+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additionals.m"; sourceTree = "<group>"; };
 		0398D763180FC56700FDD83B /* NPRImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRImageDownloader.h; path = PhotoBox/Others/NPRImageDownloader.h; sourceTree = "<group>"; };
@@ -746,6 +751,9 @@
 				03FD4822191FA5CA00D4ADF7 /* LeftPanelHeaderView.h */,
 				03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */,
 				03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */,
+				0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */,
+				0396BDD11920B91B004B6290 /* NoPhotosView.h */,
+				0396BDD21920B91B004B6290 /* NoPhotosView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -951,6 +959,7 @@
 				032222B41814CBF0004F3830 /* npr_notification_image_success@2x.png in Resources */,
 				032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */,
 				032222BC1814F2E4004F3830 /* npr_notification_image_close.png in Resources */,
+				0396BDD01920B8B4004B6290 /* NoPhotosView.xib in Resources */,
 				032222B61814CBF0004F3830 /* npr_notification_image_warning@2x.png in Resources */,
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
 				03FD48381920B27300D4ADF7 /* star-fill@2x.png in Resources */,
@@ -1169,6 +1178,7 @@
 				0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */,
 				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
 				038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */,
+				0396BDD31920B91B004B6290 /* NoPhotosView.m in Sources */,
 				03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */,
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
