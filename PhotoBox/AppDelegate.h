@@ -14,6 +14,8 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
+@property (nonatomic, assign, getter = isDemoMode) BOOL demoMode;
+
 @property (nonatomic, strong) PhotoBoxNavigationControllerDelegate *navigationDelegate;
 
 /**

@@ -14,6 +14,8 @@
 
 #import "FavoritesManager.h"
 
+#import "AppDelegate.h"
+
 NSString *PBX_allAlbumIdentifier = @"PBX_ALL";
 NSString *PBX_downloadHistoryIdentifier = @"PBX_DOWNLOADED_HISTORY_ALBUM";
 NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
@@ -78,6 +80,8 @@ NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
 + (NSValueTransformer *)albumCoverJSONTransformer {
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[Photo class]];
 }
+
+#pragma mark - Demo
 
 
 @end

@@ -275,7 +275,7 @@
         if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
             self.collectionView.contentInset = ({
                 UIEdgeInsets inset = self.collectionView.contentInset;
-                inset.top = headerHeight+64;
+                inset.top = headerHeight;
                 inset;
             });
             return;
