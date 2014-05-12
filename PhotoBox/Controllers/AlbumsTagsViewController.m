@@ -68,7 +68,7 @@
     [super setViewControllers:viewControllers animated:animated];
     
     NSMutableArray *buttons = [NSMutableArray arrayWithCapacity:viewControllers.count];
-    for (UIViewController *viewController in viewControllers.reverseObjectEnumerator) {
+    for (UIViewController *viewController in viewControllers) {
         [buttons addObject:viewController.tabBarItem];
     }
     
@@ -107,7 +107,6 @@
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    NSLog(@"Selected %d", self.selectedIndex);
     // this is seriously weird, the selected and the shown view controller is reversed!
     NSInteger index = abs(1-self.selectedIndex);
     AlbumsViewController *shownVC = (AlbumsViewController *)[self.viewControllers objectAtIndex:index];

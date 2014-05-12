@@ -124,7 +124,6 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [super scrollViewDidScroll:scrollView];
     if (self.scrollDelegate && [self.scrollDelegate respondsToSelector:@selector(didScroll:)]) {
-        NSLog(@"alb name %@", NSStringFromClass(self.class));
         [self.scrollDelegate didScroll:scrollView];
     }
 }
