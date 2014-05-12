@@ -61,9 +61,13 @@ NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"albumId": @"id",
                                                                             @"coverId":@"cover.id",
-                                                                            @"coverURL":@"cover.path200x200xCR"}];
+                                                                            @"coverURL":@"cover.path200x200xCR",
+                                                                            @"albumCover": @"cover"}];
 }
 
++ (NSValueTransformer *)albumCoverJSONTransformer {
+    return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[Photo class]];
+}
 
 
 @end

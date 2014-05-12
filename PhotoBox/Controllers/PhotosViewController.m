@@ -38,12 +38,19 @@
 
 #import "Photo.h"
 
+#import "StickyHeaderFlowLayout.h"
+
+#import "UIImageView+Additionals.h"
+
+#define headerHeight 300
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
 @property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
+@property (nonatomic, strong) UIImageView *headerImageView;
 @end
 
 @implementation PhotosViewController
@@ -64,6 +71,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
     self.numberOfColumns = 3;
     [self setPhotosCount:0 max:0];
     
@@ -103,6 +113,24 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ScrollView
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [super scrollViewDidScroll:scrollView];
+    
+    if (self.headerImageView) {
+        CGFloat maxOffset = headerHeight + 100;
+        if (scrollView.contentOffset.y < -headerHeight) {
+            CGFloat scale = 1 +(float)(fabsf(scrollView.contentOffset.y) - headerHeight)/(float)(fabsf(maxOffset - headerHeight));
+            
+            self.headerImageView.transform = CGAffineTransformMakeScale(scale, scale);
+        } else if (scrollView.contentOffset.y >= -headerHeight) {
+            CGFloat translate = scrollView.contentOffset.y - (-headerHeight);
+            self.headerImageView.transform = CGAffineTransformMakeTranslation(0, -translate);
+        }
+    }
 }
 
 #pragma mark - Override
@@ -170,9 +198,67 @@
         [self.dataSource removeAllItems];
         [self.dataSource addItems:album.photos];
         [self.refreshControl endRefreshing];
+        
+        [self addOrRemoveHeaderView];
         return;
     }
+    
+    [self addOrRemoveHeaderView];
+    
     [super refresh];
+}
+
+- (void)addOrRemoveHeaderView {
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *a = (Album *)self.item;
+        if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+            if (!self.headerImageView) {
+                self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), headerHeight-64)];
+                [self.headerImageView setClipsToBounds:YES];
+                [self.headerImageView setContentMode:UIViewContentModeScaleAspectFill];
+                [self.headerImageView setUserInteractionEnabled:YES];
+                
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImageViewTapped:)];
+                [self.headerImageView addGestureRecognizer:tap];
+            }
+            [self.headerImageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
+            self.collectionView.contentInset = ({
+                UIEdgeInsets inset = self.collectionView.contentInset;
+                inset.top = headerHeight;
+                inset;
+            });
+            [self.view insertSubview:self.headerImageView aboveSubview:self.collectionView];
+            [self.collectionView setBackgroundColor:[UIColor clearColor]];
+            StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
+            [layout setTopOffsetAdjustment:headerHeight-CGRectGetHeight(self.navigationController.navigationBar.frame) - 20];
+            
+            return;
+        }
+        
+    }
+    
+    StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
+    [layout setTopOffsetAdjustment:0];
+    
+    [self.headerImageView removeFromSuperview];
+    [self restoreContentInset];
+}
+
+- (void)restoreContentInset {
+    PBX_LOG(@"");
+    
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *a = (Album *)self.item;
+        if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+            self.collectionView.contentInset = ({
+                UIEdgeInsets inset = self.collectionView.contentInset;
+                inset.top = headerHeight+64;
+                inset;
+            });
+            return;
+        }
+    }
+    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
 }
 
 - (BOOL)itemIsDownloadHistoryOrFavorites {
@@ -280,6 +366,12 @@
     
 }
 
+- (void)headerImageViewTapped:(id)sender {
+    self.selectedCell = nil;
+    Album *album = (Album *)self.item;
+    [self openPhoto:(id)album.albumCover index:0 items:@[album.albumCover]];
+}
+
 #pragma mark - Setters
 
 - (void)setPhotosCount:(int)count max:(int)max{
@@ -325,23 +417,28 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    NSInteger index = [self.dataSource positionOfItem:cell.item];
+    NSArray *items = self.dataSource.flattenedItems;
+    self.selectedCell = cell;
+    [self setSelectedItemRectAtIndexPath:indexPath];
+    
+    [self openPhoto:cell.item index:index items:items];
+}
+
+- (void)openPhoto:(Photo *)photo index:(NSInteger)index items:(NSArray *)items {
     PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     
-    PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
     [destination setItem:self.item];
-    [destination.dataSource addItems:self.dataSource.flattenedItems];
-    [destination setFirstShownPhoto:cell.item];
-    [destination setFirstShownPhotoIndex:[self.dataSource positionOfItem:cell.item]];
+    [destination.dataSource addItems:items];
+    [destination setFirstShownPhoto:photo];
+    [destination setFirstShownPhotoIndex:index];
     [destination setDelegate:self];
     [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
     [destination setResourceType:self.resourceType];
     if ([self itemIsDownloadHistoryOrFavorites]) {
         [destination setHideDownloadButton:YES];
     }
-    
-    self.selectedCell = cell;
-    [self setSelectedItemRectAtIndexPath:indexPath];
     
     [self setupBackNavigationItemTitle];
     
@@ -351,17 +448,32 @@
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate
 
 - (UIImage *)imageToAnimate {
-    return self.selectedCell.cellImageView.image;
+    if (self.selectedCell) {
+        return self.selectedCell.cellImageView.image;
+    }
+    if (self.headerImageView) {
+        return self.headerImageView.image;
+    }
+    return nil;
 }
 
 - (CGRect)startRectInContainerView:(UIView *)containerView {
-    return [self.selectedCell convertFrameRectToView:containerView];
+    if (self.selectedCell) {
+        return [self.selectedCell convertFrameRectToView:containerView];
+    }
+    return [self.headerImageView convertFrameRectToView:containerView];
 }
 
 - (CGRect)endRectInContainerView:(UIView *)containerView {
-    CGRect originalPosition = CGRectOffset(self.selectedItemRect, 0, self.collectionView.contentInset.top);
-    CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
-    return CGRectOffset(originalPosition, 0, -adjustment);
+    if (self.selectedCell) {
+        CGRect originalPosition = CGRectOffset(self.selectedItemRect, 0, self.collectionView.contentInset.top);
+        CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+        return CGRectOffset(originalPosition, 0, -adjustment);
+    } else {
+        return self.headerImageView.frame;
+    }
+    return CGRectZero;
+    
 }
 
 - (UIView *)viewToAnimate {

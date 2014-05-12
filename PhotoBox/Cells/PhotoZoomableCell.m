@@ -214,9 +214,20 @@
     Photo *photo = (Photo *)item;
     
     if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
-        [self setImageSize:CGSizeMake([photo.normalImage.width floatValue], [photo.normalImage.height floatValue])];
+        CGFloat width, height;
+        NSURL *URL;
+        if (photo.normalImage) {
+            width = [photo.normalImage.width floatValue];
+            height = [photo.normalImage.height floatValue];
+            URL = [NSURL URLWithString:photo.normalImage.urlString];
+        } else {
+            width = [photo.width floatValue];
+            height = [photo.height floatValue];
+            URL = photo.pathOriginal;
+        }
+        [self setImageSize:CGSizeMake(width, height)];
         UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
-        [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.normalImage.urlString] placeholderImage:placeholderImage];
+        [self.thisImageview setImageWithURL:URL placeholderImage:placeholderImage];
         
         self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }
@@ -283,7 +294,7 @@
     if (grayscale) {
         if (self.thisImageview.image) {
             CGFloat maxZoom = [self zoomScaleToFillScreen];
-            UIImage *grayscaleImage = [self.thisImageview.image grayscaledAndBlurredImage];
+            UIImage *grayscaleImage = (self.thisImageview.image.size.width < 1000)?[self.thisImageview.image grayscaledAndBlurredImage]:[self.thisImageview.image grayscaleImage];
             UIImageView *grayImageView = [[UIImageView alloc] initWithImage:grayscaleImage];
             [grayImageView setTag:PBX_GRAY_IMAGE_VIEW];
             [grayImageView setFrame:self.thisImageview.bounds];

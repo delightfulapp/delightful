@@ -133,7 +133,7 @@
          **/
         origin.y = MIN(
                        MAX(
-                           contentOffset.y + cv.contentInset.top,
+                           contentOffset.y + cv.contentInset.top - self.topOffsetAdjustment,
                            (CGRectGetMinY(firstObjectAttrs.frame) - topHeaderHeight)
                         ),
                        (CGRectGetMaxY(lastObjectAttrs.frame) - bottomHeaderHeight)
