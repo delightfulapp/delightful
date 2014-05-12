@@ -38,6 +38,10 @@
 
 #import "Photo.h"
 
+#import "StickyHeaderFlowLayout.h"
+
+#define headerHeight 300
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -64,6 +68,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
     self.numberOfColumns = 3;
     [self setPhotosCount:0 max:0];
     
@@ -103,6 +110,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - ScrollView
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [super scrollViewDidScroll:scrollView];
+    
+    UIView *imageView = [self.view viewWithTag:12345];
+    if (imageView) {
+        CGFloat maxOffset = headerHeight + 100;
+        if (scrollView.contentOffset.y < -headerHeight) {
+            CGFloat scale = 1 +(float)(fabsf(scrollView.contentOffset.y) - headerHeight)/(float)(fabsf(maxOffset - headerHeight));
+            
+            imageView.transform = CGAffineTransformMakeScale(scale, scale);
+        } else if (scrollView.contentOffset.y >= -headerHeight) {
+            CGFloat translate = scrollView.contentOffset.y - (-headerHeight);
+            imageView.transform = CGAffineTransformMakeTranslation(0, -translate);
+        }
+    }
 }
 
 #pragma mark - Override
@@ -172,7 +198,54 @@
         [self.refreshControl endRefreshing];
         return;
     }
+    
+    UIImageView *imageView = (UIImageView *)[self.view viewWithTag:12345];
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *a = (Album *)self.item;
+        if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+            if (!imageView) {
+                imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), headerHeight-64)];
+                [imageView setClipsToBounds:YES];
+                [imageView setContentMode:UIViewContentModeScaleAspectFill];
+                [imageView setTag:12345];
+            }
+            [imageView setImageWithURL:a.coverURL];
+            self.collectionView.contentInset = ({
+                UIEdgeInsets inset = self.collectionView.contentInset;
+                inset.top = headerHeight;
+                inset;
+            });
+            [self.view insertSubview:imageView belowSubview:self.collectionView];
+            [self.collectionView setBackgroundColor:[UIColor clearColor]];
+            StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
+            [layout setTopOffsetAdjustment:headerHeight-CGRectGetHeight(self.navigationController.navigationBar.frame) - 20];
+        }
+        
+    } else {
+        StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
+        [layout setTopOffsetAdjustment:0];
+        
+        [imageView removeFromSuperview];
+        [self.collectionView setContentInset:UIEdgeInsetsZero];
+    }
     [super refresh];
+}
+
+- (void)restoreContentInset {
+    PBX_LOG(@"");
+    
+    if ([self.item isKindOfClass:[Album class]]) {
+        Album *a = (Album *)self.item;
+        if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
+            self.collectionView.contentInset = ({
+                UIEdgeInsets inset = self.collectionView.contentInset;
+                inset.top = headerHeight+64;
+                inset;
+            });
+        }
+    } else {
+        [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    }
 }
 
 - (BOOL)itemIsDownloadHistoryOrFavorites {

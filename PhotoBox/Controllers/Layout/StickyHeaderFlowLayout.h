@@ -12,4 +12,6 @@
 
 - (void)adjustHeaderLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes;
 
+@property (nonatomic, assign) CGFloat topOffsetAdjustment;
+
 @end
