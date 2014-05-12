@@ -54,9 +54,9 @@
     //[[ConnectionManager sharedManager] logout];
     //[[NSUserDefaults standardUserDefaults] removeObjectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
     //[[NSUserDefaults standardUserDefaults] synchronize];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kDownloadedImageManagerKey"];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kFavoritesManagerKey"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kDownloadedImageManagerKey"];
+//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kFavoritesManagerKey"];
+//    [[NSUserDefaults standardUserDefaults] synchronize];
     
     PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
     
