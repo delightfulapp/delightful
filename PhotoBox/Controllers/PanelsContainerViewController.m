@@ -81,4 +81,8 @@
     }
 }
 
+- (void)stylePanel:(UIView *)panel {
+    
+}
+
 @end
