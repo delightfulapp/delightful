@@ -43,6 +43,8 @@
 {
     [super viewDidLoad];
     
+    [self.collectionView setClipsToBounds:NO];
+    
     self.edgesForExtendedLayout=UIRectEdgeNone;
     self.extendedLayoutIncludesOpaqueBars=NO;
     self.automaticallyAdjustsScrollViewInsets=NO;
@@ -117,6 +119,23 @@
     return nil;
 }
 
+#pragma mark - Scroll View
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [super scrollViewDidScroll:scrollView];
+    if (self.scrollDelegate && [self.scrollDelegate respondsToSelector:@selector(didScroll:)]) {
+        NSLog(@"alb name %@", NSStringFromClass(self.class));
+        [self.scrollDelegate didScroll:scrollView];
+    }
+}
+
+- (void)scrollToTheTop {
+    if (self.dataSource.items.count > 0) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        [self scrollViewDidScroll:self.collectionView];
+    }
+}
+
 #pragma mark - Did stuff
 
 - (void)didFetchItems {
@@ -126,7 +145,7 @@
 
 - (void)restoreContentInset {
     PBX_LOG(@"");
-    [self.collectionView setContentInset:UIEdgeInsetsMake(0, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(self.headerViewHeight, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0)];
 }
 
 - (void)setupPinchGesture {

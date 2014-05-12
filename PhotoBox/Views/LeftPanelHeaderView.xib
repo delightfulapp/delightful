@@ -10,32 +10,11 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4q-Kz-wQu">
-                    <rect key="frame" x="10" y="10" width="290" height="30"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqK-VI-tf3">
+                    <rect key="frame" x="0.0" y="85" width="320" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Gallery">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRO-bt-CQu">
-                    <rect key="frame" x="10" y="50" width="290" height="30"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" title="Downloaded">
-                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                </button>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="nH6-Z1-R2A">
-                    <rect key="frame" x="275" y="13" width="25" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-MP-iqA">
-                    <rect key="frame" x="275" y="53" width="25" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </imageView>
+                    <color key="backgroundColor" red="0.15686275064945221" green="0.15686275064945221" blue="0.17647059261798859" alpha="1" colorSpace="deviceRGB"/>
+                </view>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hia-Ol-ucS">
                     <rect key="frame" x="10" y="90" width="290" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -49,31 +28,81 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1qd-HS-1mp">
+                    <rect key="frame" x="0.0" y="45" width="320" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.15686275059999999" green="0.15686275059999999" blue="0.1764705926" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRO-bt-CQu">
+                    <rect key="frame" x="10" y="50" width="290" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Downloaded">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="M9l-MP-iqA">
+                    <rect key="frame" x="275" y="53" width="25" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0u2-ZJ-Hmc">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" red="0.15686275059999999" green="0.15686275059999999" blue="0.1764705926" alpha="1" colorSpace="deviceRGB"/>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4q-Kz-wQu">
+                    <rect key="frame" x="10" y="10" width="290" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Gallery">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="right.png" translatesAutoresizingMaskIntoConstraints="NO" id="nH6-Z1-R2A">
+                    <rect key="frame" x="275" y="13" width="25" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="1qd-HS-1mp" secondAttribute="trailing" id="005-o8-QeF"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" constant="10" id="39K-fw-YKt"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="leading" secondItem="Hia-Ol-ucS" secondAttribute="leading" id="6C6-7x-JvT"/>
+                <constraint firstItem="vqK-VI-tf3" firstAttribute="height" secondItem="Hia-Ol-ucS" secondAttribute="height" constant="10" id="9Kr-gN-9dE"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="centerY" secondItem="M9l-MP-iqA" secondAttribute="centerY" id="Bb9-Zz-ZZ8"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="top" secondItem="ixM-wn-jMC" secondAttribute="top" constant="10" id="C9g-cK-XSa"/>
+                <constraint firstItem="0u2-ZJ-Hmc" firstAttribute="bottom" secondItem="n4q-Kz-wQu" secondAttribute="bottom" constant="5" id="Cwn-yJ-PbU"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="Hia-Ol-ucS" secondAttribute="trailing" id="DVE-Ha-3hi"/>
+                <constraint firstAttribute="trailing" secondItem="0u2-ZJ-Hmc" secondAttribute="trailing" id="MEA-a3-Jhn"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="leading" secondItem="n4q-Kz-wQu" secondAttribute="leading" id="O17-vS-Nng"/>
                 <constraint firstItem="Hia-Ol-ucS" firstAttribute="centerY" secondItem="Jt9-h9-NaT" secondAttribute="centerY" id="Qnm-Ny-OXm"/>
+                <constraint firstItem="1qd-HS-1mp" firstAttribute="height" secondItem="nRO-bt-CQu" secondAttribute="height" constant="10" id="TQg-nX-Xhf"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="top" secondItem="n4q-Kz-wQu" secondAttribute="bottom" constant="10" id="UsS-Yf-dN3"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="n4q-Kz-wQu" secondAttribute="trailing" id="YHy-BS-Yvv"/>
+                <constraint firstItem="vqK-VI-tf3" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" id="aSZ-Gs-QX3"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="centerY" secondItem="nH6-Z1-R2A" secondAttribute="centerY" id="ce6-PX-ghK"/>
                 <constraint firstItem="Hia-Ol-ucS" firstAttribute="top" secondItem="nRO-bt-CQu" secondAttribute="bottom" constant="10" id="ev4-xy-IAr"/>
                 <constraint firstItem="Hia-Ol-ucS" firstAttribute="trailing" secondItem="Jt9-h9-NaT" secondAttribute="trailing" id="fJb-Hc-g0d"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="trailing" secondItem="nH6-Z1-R2A" secondAttribute="trailing" id="iye-Ru-APS"/>
+                <constraint firstAttribute="trailing" secondItem="vqK-VI-tf3" secondAttribute="trailing" id="m81-Vh-BsN"/>
+                <constraint firstItem="0u2-ZJ-Hmc" firstAttribute="top" secondItem="ixM-wn-jMC" secondAttribute="top" id="nDI-Cs-Ln7"/>
+                <constraint firstItem="vqK-VI-tf3" firstAttribute="centerY" secondItem="Hia-Ol-ucS" secondAttribute="centerY" id="oaa-xF-f3B"/>
                 <constraint firstAttribute="trailing" secondItem="n4q-Kz-wQu" secondAttribute="trailing" constant="20" id="ooK-j4-NwI"/>
+                <constraint firstItem="1qd-HS-1mp" firstAttribute="centerY" secondItem="nRO-bt-CQu" secondAttribute="centerY" id="tcN-Cb-FIp"/>
+                <constraint firstItem="0u2-ZJ-Hmc" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" id="u37-Zf-4Bd"/>
+                <constraint firstItem="1qd-HS-1mp" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" id="wz4-gT-aO2"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="M9l-MP-iqA" secondAttribute="trailing" id="xOX-IE-pIE"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="downloadedArrow" destination="M9l-MP-iqA" id="uUx-cA-AWK"/>
                 <outlet property="downloadedButton" destination="nRO-bt-CQu" id="due-ZA-gMi"/>
+                <outlet property="downloadedToGalleryConstraint" destination="UsS-Yf-dN3" id="JjF-TE-cPa"/>
                 <outlet property="favoriteArrow" destination="Jt9-h9-NaT" id="bc0-8J-Kso"/>
                 <outlet property="favoriteButton" destination="Hia-Ol-ucS" id="Ve7-h3-vLK"/>
+                <outlet property="favoriteToDownloadedSpaceConstraint" destination="ev4-xy-IAr" id="vnw-pf-hUr"/>
                 <outlet property="galleryArrow" destination="nH6-Z1-R2A" id="EtA-zb-EHe"/>
                 <outlet property="galleryButton" destination="n4q-Kz-wQu" id="cJn-e2-BUa"/>
             </connections>

@@ -16,7 +16,13 @@
 
 #import "Album.h"
 
-@interface LeftViewController ()
+#import "AlbumsViewController.h"
+
+#import "TagsViewController.h"
+
+#import "AlbumsTagsViewController.h"
+
+@interface LeftViewController () <AlbumsViewControllerScrollDelegate>
 
 @property (nonatomic, strong) id rootViewController;
 
@@ -39,12 +45,21 @@
         UIView *view = ((UIViewController *)viewController).view;
         [view setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.view addSubview:view];
-        [view autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.headerView];
+        [view autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view];
         [view autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
         [view autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
         [view autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
         [viewController didMoveToParentViewController:self];
         _rootViewController = viewController;
+        
+        AlbumsTagsViewController *albumsTags = (AlbumsTagsViewController *)viewController;
+        for (AlbumsViewController *vc in albumsTags.viewControllers) {
+            [vc setScrollDelegate:self];
+            [vc setHeaderViewHeight:self.headerView.intrinsicContentSize.height];
+            [vc restoreContentInset];
+        }
+        
+        [self.view bringSubviewToFront:self.headerView];
     }
     return self;
 }
@@ -52,6 +67,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.view setBackgroundColor:[UIColor albumsBackgroundColor]];
     
     [self.headerView.galleryButton addTarget:self action:@selector(didTapGallery:) forControlEvents:UIControlEventTouchUpInside];
     [self.headerView.downloadedButton addTarget:self action:@selector(didTapDownloadHistory:) forControlEvents:UIControlEventTouchUpInside];
@@ -84,6 +101,20 @@
 
 - (void)didTapDownloadHistory:(id)sender {
     [self loadPhotosInAlbum:[Album downloadHistoryAlbum]];
+}
+
+#pragma mark - AlbumsViewControllerScrollDelegate
+
+- (void)didScroll:(UIScrollView *)scrollView {
+    CGFloat minYToMoveDownloaded = CGRectGetHeight(self.headerView.frame) - CGRectGetHeight(self.headerView.downloadedButton.frame);
+    CGFloat minFavoritesToDownloadSpace = -CGRectGetHeight(self.headerView.favoriteButton.frame)-20;
+    CGFloat minDownloadedToGallerySpace = -CGRectGetHeight(self.headerView.downloadedButton.frame);
+    
+    CGFloat downloadedConstant = MAX(MIN(10, 10-(scrollView.contentOffset.y-minYToMoveDownloaded)), minDownloadedToGallerySpace);
+    CGFloat favoritedConstant = MAX(MIN(10, 10-scrollView.contentOffset.y), minFavoritesToDownloadSpace);
+
+    [self.headerView.downloadedToGalleryConstraint setConstant:downloadedConstant];
+    [self.headerView.favoriteToDownloadedSpaceConstraint setConstant:favoritedConstant];
 }
 
 

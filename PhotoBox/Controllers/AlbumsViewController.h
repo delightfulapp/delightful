@@ -8,8 +8,23 @@
 
 #import "PhotoBoxViewController.h"
 
+@protocol AlbumsViewControllerScrollDelegate <NSObject>
+
+@optional
+- (void)didScroll:(UIScrollView *)scrollView;
+
+@end
+
 @interface AlbumsViewController : PhotoBoxViewController
 
 - (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture;
+
+- (void)restoreContentInset;
+
+@property (nonatomic, weak) id<AlbumsViewControllerScrollDelegate>scrollDelegate;
+
+@property (nonatomic, assign) CGFloat headerViewHeight;
+
+- (void)scrollToTheTop;
 
 @end

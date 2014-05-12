@@ -14,6 +14,8 @@
 
 #import "UIViewController+DelightfulViewControllers.h"
 
+#import "AlbumsViewController.h"
+
 @interface AlbumsTagsViewController ()
 
 @property (nonatomic, weak) DelightfulTabBar *customTabBar;
@@ -39,6 +41,7 @@
     [self.customTabBar setHidden:NO];
     [self.tabBar setHidden:YES];
     
+    [self.customTabBar addObserver:self forKeyPath:NSStringFromSelector(@selector(selectedItem)) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +68,7 @@
     [super setViewControllers:viewControllers animated:animated];
     
     NSMutableArray *buttons = [NSMutableArray arrayWithCapacity:viewControllers.count];
-    for (UIViewController *viewController in viewControllers) {
+    for (UIViewController *viewController in viewControllers.reverseObjectEnumerator) {
         [buttons addObject:viewController.tabBarItem];
     }
     
@@ -101,6 +104,14 @@
     GCV.frame = frame;
     GGCV.frame = frame;
     
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    NSLog(@"Selected %d", self.selectedIndex);
+    // this is seriously weird, the selected and the shown view controller is reversed!
+    NSInteger index = abs(1-self.selectedIndex);
+    AlbumsViewController *shownVC = (AlbumsViewController *)[self.viewControllers objectAtIndex:index];
+    [shownVC scrollViewDidScroll:shownVC.collectionView];
 }
 
 @end

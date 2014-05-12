@@ -15,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *downloadedArrow;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIImageView *favoriteArrow;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *favoriteToDownloadedSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *downloadedToGalleryConstraint;
 
 @end

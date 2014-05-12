@@ -42,7 +42,7 @@
 }
 
 - (void)setup {
-    [self setBackgroundColor:[UIColor tabBarTintColor]];
+    [self setBackgroundColor:[UIColor clearColor]];
     
     [self.galleryArrow setImage:[[UIImage imageNamed:@"right.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     [self.downloadedArrow setImage:[[UIImage imageNamed:@"right.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
