@@ -12,6 +12,8 @@
 
 #import <MessageUI/MessageUI.h>
 
+#import "HintsViewController.h"
+
 @interface SettingsTableViewController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *items;
@@ -46,6 +48,7 @@
                      @{@"title": NSLocalizedString(@"Delightful on Twitter", nil), @"detail": @"@delightfulapp"},
                      @{@"title": NSLocalizedString(@"Created by Nico", nil), @"detail": @"@nicnocquee"},
                      @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @""}],
+                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}],
                    @[@{@"title": NSLocalizedString(@"About Trovebox", nil), @"detail": @""}]
                    ];
 }
@@ -88,8 +91,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
         [self logoutTapped];
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 3) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://trovebox.com"]];
+    } else if (indexPath.section == 2) {
+        HintsViewController *hints = [[HintsViewController alloc] init];
+        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
+        [self presentViewController:navCon animated:YES completion:nil];
     } else if (indexPath.section == 1) {
         if (indexPath.row == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/delightfulapp"]];

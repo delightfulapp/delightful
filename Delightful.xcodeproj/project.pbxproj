@@ -118,6 +118,10 @@
 		0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD91921AC60004B6290 /* HeaderImageView.m */; };
 		0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDDB1921AC79004B6290 /* HeaderImageView.xib */; };
 		0396BDE51922032D004B6290 /* PhotosCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDE41922032D004B6290 /* PhotosCollection.m */; };
+		0396BDE719227461004B6290 /* HintPinch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDE619227461004B6290 /* HintPinch.xib */; };
+		0396BDE91922757E004B6290 /* Hint-Side.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDE81922757E004B6290 /* Hint-Side.xib */; };
+		0396BDEB1922772E004B6290 /* Hint-CloseInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDEA1922772E004B6290 /* Hint-CloseInfo.xib */; };
+		0396BDEE19227804004B6290 /* HintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDED19227804004B6290 /* HintsViewController.m */; };
 		0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
 		0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
 		0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
@@ -344,6 +348,11 @@
 		0396BDDB1921AC79004B6290 /* HeaderImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderImageView.xib; sourceTree = "<group>"; };
 		0396BDE31922032D004B6290 /* PhotosCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosCollection.h; path = PhotoBox/Models/PhotosCollection.h; sourceTree = "<group>"; };
 		0396BDE41922032D004B6290 /* PhotosCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosCollection.m; path = PhotoBox/Models/PhotosCollection.m; sourceTree = "<group>"; };
+		0396BDE619227461004B6290 /* HintPinch.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = HintPinch.xib; path = PhotoBox/Views/HintPinch.xib; sourceTree = "<group>"; };
+		0396BDE81922757E004B6290 /* Hint-Side.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Hint-Side.xib"; path = "PhotoBox/Views/Hint-Side.xib"; sourceTree = "<group>"; };
+		0396BDEA1922772E004B6290 /* Hint-CloseInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "Hint-CloseInfo.xib"; path = "PhotoBox/Views/Hint-CloseInfo.xib"; sourceTree = "<group>"; };
+		0396BDEC19227804004B6290 /* HintsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HintsViewController.h; path = PhotoBox/Controllers/HintsViewController.h; sourceTree = "<group>"; };
+		0396BDED19227804004B6290 /* HintsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HintsViewController.m; path = PhotoBox/Controllers/HintsViewController.m; sourceTree = "<group>"; };
 		0398D760180FB88F00FDD83B /* UIImage+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additionals.h"; sourceTree = "<group>"; };
 		0398D761180FB88F00FDD83B /* UIImage+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additionals.m"; sourceTree = "<group>"; };
 		0398D763180FC56700FDD83B /* NPRImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRImageDownloader.h; path = PhotoBox/Others/NPRImageDownloader.h; sourceTree = "<group>"; };
@@ -708,6 +717,8 @@
 				03FD4820191FA22B00D4ADF7 /* LeftViewController.m */,
 				03FD4827191FCE2000D4ADF7 /* SettingsTableViewController.h */,
 				03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */,
+				0396BDEC19227804004B6290 /* HintsViewController.h */,
+				0396BDED19227804004B6290 /* HintsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -771,6 +782,9 @@
 				0396BDD81921AC60004B6290 /* HeaderImageView.h */,
 				0396BDD91921AC60004B6290 /* HeaderImageView.m */,
 				0396BDDB1921AC79004B6290 /* HeaderImageView.xib */,
+				0396BDE619227461004B6290 /* HintPinch.xib */,
+				0396BDE81922757E004B6290 /* Hint-Side.xib */,
+				0396BDEA1922772E004B6290 /* Hint-CloseInfo.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -962,6 +976,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
+				0396BDEB1922772E004B6290 /* Hint-CloseInfo.xib in Resources */,
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
 				0334EBBD1842018D001B262F /* intro0.0.5.jpg in Resources */,
@@ -973,12 +988,14 @@
 				0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
 				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
+				0396BDE719227461004B6290 /* HintPinch.xib in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
 				031DD2AD17D9BB8300A80167 /* user.png in Resources */,
 				0398D7C618103B6E00FDD83B /* download@2x.png in Resources */,
 				032222B41814CBF0004F3830 /* npr_notification_image_success@2x.png in Resources */,
 				032CBB8817D0BDF3001205B1 /* InfoPlist.strings in Resources */,
 				032222BC1814F2E4004F3830 /* npr_notification_image_close.png in Resources */,
+				0396BDE91922757E004B6290 /* Hint-Side.xib in Resources */,
 				0396BDD01920B8B4004B6290 /* NoPhotosView.xib in Resources */,
 				032222B61814CBF0004F3830 /* npr_notification_image_warning@2x.png in Resources */,
 				036DF36D181FBB9E002E9FCB /* intro0.0.4.jpg in Resources */,
@@ -1167,6 +1184,7 @@
 				03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
 				032222A8181419A8004F3830 /* NPRNotificationView.m in Sources */,
+				0396BDEE19227804004B6290 /* HintsViewController.m in Sources */,
 				032CBB8E17D0BDF3001205B1 /* AppDelegate.m in Sources */,
 				032222A5181407C3004F3830 /* NPRNotificationManager.m in Sources */,
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,

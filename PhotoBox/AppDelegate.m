@@ -38,6 +38,8 @@
 
 #import "LeftViewController.h"
 
+//#import "HintsViewController.h"
+
 @interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
 @end
@@ -84,7 +86,11 @@
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
     
-    [self showUpdateInfoViewIfNeeded];
+    //[self showUpdateInfoViewIfNeeded];
+    
+//    HintsViewController *hints = [[HintsViewController alloc] init];
+//    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
+//    [rootViewController presentViewController:navCon animated:YES completion:nil];
     
     return YES;
 }

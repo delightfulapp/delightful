@@ -11,6 +11,7 @@
 #import "PhotoBoxClient.h"
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
+#import "HintsViewController.h"
 
 NSString *baseURLUserDefaultKey = @"photobox.base.url";
 NSString *consumerTokenIdentifier = @"photobox.consumer.token";
@@ -226,7 +227,11 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     self.isShowingLoginPage = NO;
     [self didChangeValueForKey:@"isShowingLoginPage"];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
-    [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
+    [window.rootViewController dismissViewControllerAnimated:YES completion:^{
+        HintsViewController *hints = [[HintsViewController alloc] init];
+        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
+        [window.rootViewController presentViewController:navCon animated:YES completion:nil];
+    }];
 }
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server {
