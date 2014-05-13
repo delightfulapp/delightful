@@ -46,8 +46,7 @@
 }
 
 - (void)setup {
-    [self.tabBarItem setTitle:NSLocalizedString(@"Tags", nil)];
-    [self.tabBarItem setImage:[[UIImage imageNamed:@"Tags"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+    
 }
 
 - (void)viewDidLoad
@@ -106,6 +105,9 @@
     } else {
         self.title = [NSString stringWithFormat:@"%@ (%d/%d)", NSLocalizedString(@"Tags", nil), count, max];
     }
+    
+    [self.tabBarItem setTitle:self.title];
+    [self.tabBarItem setImage:[[UIImage imageNamed:@"Tags"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 }
 
 #pragma mark - Collection view delegate

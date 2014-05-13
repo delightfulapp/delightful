@@ -269,8 +269,8 @@
     NSInteger totalPhotos = [(id)self.item totalPhotos];
     [self setPhotosCount:count max:totalPhotos];
     
-    self.page = ceil(count/self.pageSize);
-    self.totalPages = ceil(totalPhotos/self.pageSize);
+    self.page = ceil((double)count/(double)self.pageSize);
+    self.totalPages = ceil((double)totalPhotos/(double)self.pageSize);
     self.totalItems = totalPhotos;
     
     [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top)];
