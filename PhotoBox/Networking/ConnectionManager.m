@@ -140,6 +140,9 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [[PhotoBoxClient sharedClient] setAccessToken:nil];
     [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
     [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
+    
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 }
 
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
