@@ -14,6 +14,7 @@
 
 #import "UIImage+Additionals.h"
 #import "UIWindow+Additionals.h"
+#import "UIImageView+Additionals.h"
 
 #define PBX_GRAY_IMAGE_VIEW 12381
 
@@ -226,8 +227,16 @@
             URL = photo.pathOriginal;
         }
         [self setImageSize:CGSizeMake(width, height)];
+        [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+        [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
         UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
-        [self.thisImageview setImageWithURL:URL placeholderImage:placeholderImage];
+        if (!placeholderImage) {
+            placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
+            if (!placeholderImage) {
+                placeholderImage = photo.asAlbumCoverImage;
+            }
+        }
+        [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
         
         self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }

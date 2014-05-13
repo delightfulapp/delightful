@@ -19,4 +19,6 @@ typedef NS_ENUM(NSInteger, NPRImageFilter) {
 
 - (void)npr_setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder;
 
+- (UIActivityIndicatorView *)npr_activityView;
+
 @end

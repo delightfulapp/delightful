@@ -25,8 +25,6 @@
     [self.label.layer setShadowOpacity:0.8];
     [self.label.layer setShadowRadius:1];
     
-    
-    
 }
 
 - (CGSize)intrinsicContentSize {

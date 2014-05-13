@@ -62,4 +62,8 @@
 
 @property (nonatomic, copy, readonly) NSDate *downloadedDate;
 
+@property (nonatomic, strong) UIImage *asAlbumCoverImage;
+
+@property (nonatomic, strong) NSURL *asAlbumCoverURL;
+
 @end

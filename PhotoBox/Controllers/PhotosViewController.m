@@ -292,6 +292,8 @@
             
             [self.headerImageView.imageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
             [self setTitle:a.name];
+            a.albumCover.asAlbumCoverImage = a.albumThumbnailImage;
+            a.albumCover.asAlbumCoverURL = a.coverURL;
             
             CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
             self.collectionView.contentInset = ({
@@ -581,10 +583,11 @@
     if (indexPath) {
         PBX_LOG(@"Index path target section %d row %d", indexPath.section, indexPath.item);
         PBX_LOG(@"Current number of sections %d. Number of items in section = %d", [self.collectionView numberOfSections], [self.collectionView numberOfItemsInSection:indexPath.section]);
-        if (indexPath.section < [self.collectionView numberOfSections]) {
-            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-            
+        
+        if (indexPath.section < [self.collectionView numberOfSections]) {            
             [self setSelectedItemRectAtIndexPath:indexPath];
+            
+            [self.collectionView scrollRectToVisible:self.selectedItemRect animated:NO];
         }
     }
     

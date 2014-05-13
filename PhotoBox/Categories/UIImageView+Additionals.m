@@ -82,11 +82,16 @@ static char operationKey;
         activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [activity setHidesWhenStopped:YES];
         [activity setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
-        [self addSubview:activity];
-        [activity setCenter:CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds))];
+        [activity setColor:[UIColor redColor]];
+        [self.superview addSubview:activity];
+        [activity setCenter:self.center];
         objc_setAssociatedObject(self, activityViewKey, activity, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return activity;
+}
+
+- (void)setActivityIndicatorViewStyle:(UIActivityIndicatorViewStyle)style {
+    [[self npr_activityView] setActivityIndicatorViewStyle:style];
 }
 
 @end
