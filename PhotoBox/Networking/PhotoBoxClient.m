@@ -54,6 +54,9 @@
 }
 
 - (id)initWithBaseURL:(NSURL *)url key:(NSString *)key secret:(NSString *)secret{
+    if (!url) {
+        url = [NSURL URLWithString:@"http://trovebox.com"];
+    }
     self = [super initWithBaseURL:url];
     if (!self) {
         return nil;

@@ -28,6 +28,7 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
         oauthToken:(NSString *)oauthToken
        oauthSecret:(NSString *)oauthSecret;
 
+- (void)setup;
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL;
 - (void)continueOauthAuthorizationWithQuery:(NSString *)query;
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId;

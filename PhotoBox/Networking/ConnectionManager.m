@@ -32,30 +32,34 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 - (id)init {
     self = [super init];
     if (self) {
-        AFOAuth1Token *consumerToken = [AFOAuth1Token retrieveCredentialWithIdentifier:consumerTokenIdentifier];
-        if (consumerToken) {
-            self.consumerToken = consumerToken;
-        } else {
-            self.consumerToken = nil;
-        }
-        AFOAuth1Token *oauthToken = [AFOAuth1Token retrieveCredentialWithIdentifier:oauthTokenIdentifier];
-        if (oauthToken) {
-            self.oauthToken = oauthToken;
-        } else {
-            self.oauthToken = nil;
-        }
-        NSURL *baseURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:baseURLUserDefaultKey]];
-        if (baseURL) {
-            self.baseURL = baseURL;
-        } else {
-            self.baseURL = [NSURL URLWithString:@"http://trovebox.com"];
-            [self deleteTokens];
-        }
+        [self setup];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(accessTokenDidFetchNotification:) name:PhotoBoxAccessTokenDidAcquiredNotification object:nil];
     }
     
     return self;
+}
+
+- (void)setup {
+    AFOAuth1Token *consumerToken = [AFOAuth1Token retrieveCredentialWithIdentifier:consumerTokenIdentifier];
+    if (consumerToken) {
+        self.consumerToken = consumerToken;
+    } else {
+        self.consumerToken = nil;
+    }
+    AFOAuth1Token *oauthToken = [AFOAuth1Token retrieveCredentialWithIdentifier:oauthTokenIdentifier];
+    if (oauthToken) {
+        self.oauthToken = oauthToken;
+    } else {
+        self.oauthToken = nil;
+    }
+    NSURL *baseURL = [NSURL URLWithString:[[NSUserDefaults standardUserDefaults] objectForKey:baseURLUserDefaultKey]];
+    if (baseURL) {
+        self.baseURL = baseURL;
+    } else {
+        self.baseURL = [NSURL URLWithString:@"http://trovebox.com"];
+        [self deleteTokens];
+    }
 }
 
 - (void)connectAsTester {
@@ -137,12 +141,16 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [[DownloadedImageManager sharedManager] clearHistory];
     [[FavoritesManager sharedManager] clearHistory];
     self.baseURL = nil;
+    
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    [self setup];
     [[PhotoBoxClient sharedClient] setAccessToken:nil];
     [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
     [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
     
-    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
 }
 
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
