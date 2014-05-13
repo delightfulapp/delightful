@@ -45,8 +45,8 @@
 
 + (PhotoBoxClient *)sharedClient {
     static PhotoBoxClient *_sharedClient = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    static dispatch_once_t onceTokenn;
+    dispatch_once(&onceTokenn, ^{
         _sharedClient = [[PhotoBoxClient alloc] initWithBaseURL:[[ConnectionManager sharedManager] baseURL] key:[[[ConnectionManager sharedManager] consumerToken] key] secret:[[[ConnectionManager sharedManager] consumerToken] secret]];
     });
     

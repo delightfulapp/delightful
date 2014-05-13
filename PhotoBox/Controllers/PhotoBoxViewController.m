@@ -524,6 +524,7 @@ NSString *const galleryContainerType = @"gallery";
                 PBX_LOG(@"Gonna fetch resource in KVO");
                 [self fetchResource];
             } else {
+                NSLog(@"Logging out, clearing everything");
                 [self.dataSource removeAllItems];
                 self.page = INITIAL_PAGE_NUMBER;
                 [self.collectionView reloadData];

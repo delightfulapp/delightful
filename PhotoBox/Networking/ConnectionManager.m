@@ -61,6 +61,8 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     } else {
         self.baseURL = [NSURL URLWithString:@"http://trovebox.com"];
         [self deleteTokens];
+        self.consumerToken = [[AFOAuth1Token alloc] initWithKey:@"whatever" secret:@"whatever" session:nil expiration:nil renewable:YES];
+        
     }
 }
 
@@ -153,11 +155,10 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     
     [self setup];
+    
     [[PhotoBoxClient sharedClient] setAccessToken:nil];
     [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
     [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
-    
-    
 }
 
 - (BOOL)isUserLoggingIn {
