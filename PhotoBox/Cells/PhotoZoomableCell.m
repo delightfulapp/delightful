@@ -304,7 +304,7 @@
         if (self.thisImageview.image) {
             CGFloat maxZoom = [self zoomScaleToFillScreen];
             UIImage *grayscaleImage = (self.thisImageview.image.size.width < 1000)?[self.thisImageview.image grayscaledAndBlurredImage]:[self.thisImageview.image grayscaleImage];
-            UIImageView *grayImageView = [[UIImageView alloc] initWithImage:grayscaleImage];
+            UIImageView *grayImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:[grayscaleImage CGImage] scale:1 orientation:UIImageOrientationUp]];
             [grayImageView setTag:PBX_GRAY_IMAGE_VIEW];
             [grayImageView setFrame:self.thisImageview.bounds];
             [grayImageView setAlpha:0];
