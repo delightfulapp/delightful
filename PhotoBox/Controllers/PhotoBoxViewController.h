@@ -60,6 +60,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
 - (void)didChangeNumberOfColumns;
 - (void)fetchMore;
+- (void)setAttributedTitle:(NSAttributedString *)title;
+- (void)restoreContentInset;
 
 - (BOOL)isGallery ;
 @end

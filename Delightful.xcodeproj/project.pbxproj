@@ -113,6 +113,10 @@
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
 		0396BDD01920B8B4004B6290 /* NoPhotosView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */; };
 		0396BDD31920B91B004B6290 /* NoPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD21920B91B004B6290 /* NoPhotosView.m */; };
+		0396BDD51921AB76004B6290 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD41921AB76004B6290 /* refresh.png */; };
+		0396BDD71921ABAE004B6290 /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD61921ABAE004B6290 /* refresh@2x.png */; };
+		0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD91921AC60004B6290 /* HeaderImageView.m */; };
+		0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDDB1921AC79004B6290 /* HeaderImageView.xib */; };
 		0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
 		0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
 		0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
@@ -332,6 +336,11 @@
 		0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoPhotosView.xib; path = PhotoBox/Views/NoPhotosView.xib; sourceTree = "<group>"; };
 		0396BDD11920B91B004B6290 /* NoPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoPhotosView.h; path = PhotoBox/Views/NoPhotosView.h; sourceTree = "<group>"; };
 		0396BDD21920B91B004B6290 /* NoPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoPhotosView.m; path = PhotoBox/Views/NoPhotosView.m; sourceTree = "<group>"; };
+		0396BDD41921AB76004B6290 /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
+		0396BDD61921ABAE004B6290 /* refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "refresh@2x.png"; sourceTree = "<group>"; };
+		0396BDD81921AC60004B6290 /* HeaderImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderImageView.h; path = PhotoBox/Views/HeaderImageView.h; sourceTree = "<group>"; };
+		0396BDD91921AC60004B6290 /* HeaderImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderImageView.m; path = PhotoBox/Views/HeaderImageView.m; sourceTree = "<group>"; };
+		0396BDDB1921AC79004B6290 /* HeaderImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderImageView.xib; sourceTree = "<group>"; };
 		0398D760180FB88F00FDD83B /* UIImage+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additionals.h"; sourceTree = "<group>"; };
 		0398D761180FB88F00FDD83B /* UIImage+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additionals.m"; sourceTree = "<group>"; };
 		0398D763180FC56700FDD83B /* NPRImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRImageDownloader.h; path = PhotoBox/Others/NPRImageDownloader.h; sourceTree = "<group>"; };
@@ -754,6 +763,9 @@
 				0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */,
 				0396BDD11920B91B004B6290 /* NoPhotosView.h */,
 				0396BDD21920B91B004B6290 /* NoPhotosView.m */,
+				0396BDD81921AC60004B6290 /* HeaderImageView.h */,
+				0396BDD91921AC60004B6290 /* HeaderImageView.m */,
+				0396BDDB1921AC79004B6290 /* HeaderImageView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -812,6 +824,8 @@
 				031DD2A717D9BB8300A80167 /* user.png */,
 				031DD2A817D9BB8300A80167 /* info.png */,
 				031DD2A917D9BB8300A80167 /* setting.png */,
+				0396BDD41921AB76004B6290 /* refresh.png */,
+				0396BDD61921ABAE004B6290 /* refresh@2x.png */,
 				03AE182817D8B2F5009CD844 /* loginbackground.jpg */,
 			);
 			name = Images;
@@ -949,6 +963,7 @@
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
 				036DF365181AA60B002E9FCB /* info@2x.png in Resources */,
 				036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */,
+				0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */,
 				036DF36E181FBB9E002E9FCB /* intro0.0.4@2x.jpg in Resources */,
 				0334EBBE1842018D001B262F /* intro0.0.5@2x.jpg in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
@@ -973,6 +988,7 @@
 				0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
+				0396BDD71921ABAE004B6290 /* refresh@2x.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,
 				03FD48371920B27300D4ADF7 /* star-fill.png in Resources */,
 				03CE50F7181838B700445084 /* shareicons.ttf in Resources */,
@@ -980,6 +996,7 @@
 				032222B71814CBF0004F3830 /* npr_notification_image_error.png in Resources */,
 				031DD2AF17D9BB8300A80167 /* setting.png in Resources */,
 				03FD48321920AB8B00D4ADF7 /* star@2x.png in Resources */,
+				0396BDD51921AB76004B6290 /* refresh.png in Resources */,
 				031DD2AA17D9BB8300A80167 /* camera.png in Resources */,
 				031DD2B117D9BD6B00A80167 /* user@2x.png in Resources */,
 				03CE50E01818136E00445084 /* introbg.jpg in Resources */,
@@ -1123,6 +1140,7 @@
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				03CE50EC18181D7C00445084 /* PanelFactory.m in Sources */,
+				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,

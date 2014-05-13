@@ -44,7 +44,7 @@
 
 #import "NoPhotosView.h"
 
-#define headerHeight 300
+#import "HeaderImageView.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
@@ -52,7 +52,7 @@
 @property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
-@property (nonatomic, strong) UIImageView *headerImageView;
+@property (nonatomic, weak) HeaderImageView *headerImageView;
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
 @end
 
@@ -96,6 +96,8 @@
     [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
     [self.navigationItem setRightBarButtonItem:settingBarButtonItem];
+    
+    [self setTitle:NSLocalizedString(@"Gallery", nil)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -124,15 +126,17 @@
     [super scrollViewDidScroll:scrollView];
     
     if (self.headerImageView) {
+        CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
         CGFloat maxOffset = headerHeight + 100;
-        if (scrollView.contentOffset.y < -headerHeight) {
-            CGFloat scale = 1 +(float)(fabsf(scrollView.contentOffset.y) - headerHeight)/(float)(fabsf(maxOffset - headerHeight));
+        CGFloat minOffset = -headerHeight;
+        if (scrollView.contentOffset.y <= minOffset) {
+            CGFloat scale = 1 +(float)(fabsf(scrollView.contentOffset.y) + minOffset)/(float)(fabsf(maxOffset + minOffset));
             
-            self.headerImageView.transform = CGAffineTransformMakeScale(scale, scale);
-        } else if (scrollView.contentOffset.y >= -headerHeight) {
-            CGFloat translate = scrollView.contentOffset.y - (-headerHeight);
-            self.headerImageView.transform = CGAffineTransformMakeTranslation(0, -translate);
+            self.headerImageView.imageView.transform = CGAffineTransformMakeScale(scale, scale);
         }
+        CGFloat translate = scrollView.contentOffset.y - (-headerHeight);
+
+        self.headerImageView.transform = CGAffineTransformMakeTranslation(0, MIN(0, -translate));
     }
 }
 
@@ -236,21 +240,25 @@
         Album *a = (Album *)self.item;
         if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
             if (!self.headerImageView) {
-                self.headerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), headerHeight-64)];
-                [self.headerImageView setClipsToBounds:YES];
-                [self.headerImageView setContentMode:UIViewContentModeScaleAspectFill];
-                [self.headerImageView setUserInteractionEnabled:YES];
-                
-                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImageViewTapped:)];
+                HeaderImageView *head = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([HeaderImageView class]) owner:nil options:nil] firstObject];
+                [self.view insertSubview:head aboveSubview:self.collectionView];
+                self.headerImageView = head;
+                CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
+                [self.headerImageView setFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), headerHeight-64)];
+                                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImageViewTapped:)];
                 [self.headerImageView addGestureRecognizer:tap];
             }
-            [self.headerImageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
+            
+            [self.headerImageView.imageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
+            [self setTitle:a.name];
+            
+            CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
             self.collectionView.contentInset = ({
                 UIEdgeInsets inset = self.collectionView.contentInset;
                 inset.top = headerHeight;
                 inset;
             });
-            [self.view insertSubview:self.headerImageView aboveSubview:self.collectionView];
+            
             [self.collectionView setBackgroundColor:[UIColor clearColor]];
             StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
             [layout setTopOffsetAdjustment:headerHeight-CGRectGetHeight(self.navigationController.navigationBar.frame) - 20];
@@ -270,18 +278,19 @@
 - (void)restoreContentInset {
     PBX_LOG(@"");
     
-    if ([self.item isKindOfClass:[Album class]]) {
-        Album *a = (Album *)self.item;
-        if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
-            self.collectionView.contentInset = ({
-                UIEdgeInsets inset = self.collectionView.contentInset;
-                inset.top = headerHeight;
-                inset;
-            });
-            return;
-        }
+    if (self.headerImageView) {
+        CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
+        self.collectionView.contentInset = ({
+            UIEdgeInsets inset = self.collectionView.contentInset;
+            inset.top = headerHeight;
+            inset;
+        });
+        self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
+    } else {
+        NSLog(@"shold be here right");
+        [super restoreContentInset];
     }
-    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    
 }
 
 - (BOOL)itemIsDownloadHistoryOrFavorites {
@@ -475,7 +484,7 @@
         return self.selectedCell.cellImageView.image;
     }
     if (self.headerImageView) {
-        return self.headerImageView.image;
+        return self.headerImageView.imageView.image;
     }
     return nil;
 }
@@ -484,7 +493,7 @@
     if (self.selectedCell) {
         return [self.selectedCell convertFrameRectToView:containerView];
     }
-    return [self.headerImageView convertFrameRectToView:containerView];
+    return [self.headerImageView.imageView convertFrameRectToView:containerView];
 }
 
 - (CGRect)endRectInContainerView:(UIView *)containerView {

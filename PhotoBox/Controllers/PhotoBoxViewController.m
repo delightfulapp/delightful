@@ -221,6 +221,10 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (void)setTitle:(NSString *)title {
+    if (!title) {
+        super.title = nil;
+        return;
+    }
     [self setTitle:title subtitle:nil];
 }
 
@@ -238,6 +242,16 @@ NSString *const galleryContainerType = @"gallery";
                                        success:^(id objects) {
                                            [self showLoadingView:NO];
                                            if (objects) {
+                                               if (self.refreshControl.isRefreshing) {
+                                                   self.collectionView.contentInset = ({
+                                                       UIEdgeInsets inset = self.collectionView.contentInset;
+                                                       inset.top += self.refreshControl.frame.size.height;
+                                                       inset;
+                                                   });
+                                                   [self.refreshControl endRefreshing];
+                                                   [self restoreContentInset];
+                                                   
+                                               }
                                                PBX_LOG(@"Received %lu %@. Total shown = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
                                                [self processPaginationFromObjects:objects];
                                                
@@ -251,8 +265,6 @@ NSString *const galleryContainerType = @"gallery";
                                                if (count==self.totalItems) {
                                                    [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
                                                }
-                                               
-                                               [self.refreshControl endRefreshing];
                                            }
                                            
                                        } failure:^(NSError *error) {
@@ -298,6 +310,7 @@ NSString *const galleryContainerType = @"gallery";
 - (void)restoreContentInset {
     PBX_LOG(@"");
     [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
 }
 
 - (void)didFetchItems {
@@ -306,10 +319,10 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)refresh {
     PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
+    self.isFetching = YES;
     self.page = INITIAL_PAGE_NUMBER;
     [self.dataSource removeAllItems];
     [self.collectionView reloadData];
-    self.isFetching = YES;
     [self fetchResource];
 }
 
