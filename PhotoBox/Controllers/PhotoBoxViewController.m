@@ -97,11 +97,17 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)setupConnectionManager {
     if (![[ConnectionManager sharedManager] isUserLoggedIn]) {
-        [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"http://trovebox.com"]
-                                          consumerKey:@"somerandomconsumerkey"
-                                       consumerSecret:@"consumersecret"
-                                           oauthToken:nil
-                                          oauthSecret:nil];
+        if (![[[ConnectionManager sharedManager] baseURL] isEqual:[NSURL URLWithString:@"http://trovebox.com"]]) {
+            if (![[ConnectionManager sharedManager] isUserLoggingIn]) {
+                [[ConnectionManager sharedManager] setBaseURL:[NSURL URLWithString:@"http://trovebox.com"]
+                                                  consumerKey:@"somerandomconsumerkey"
+                                               consumerSecret:@"consumersecret"
+                                                   oauthToken:nil
+                                                  oauthSecret:nil];
+            }
+        } else {
+            [[ConnectionManager sharedManager] setConsumerToken:[[AFOAuth1Token alloc] initWithKey:@"somerandomconsumerkey" secret:@"consumersecret" session:nil expiration:nil renewable:YES]];
+        }
     }
     [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:NULL];
     [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage)) options:0 context:NULL];

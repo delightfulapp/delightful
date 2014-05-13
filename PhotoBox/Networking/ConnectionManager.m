@@ -17,6 +17,8 @@ NSString *consumerTokenIdentifier = @"photobox.consumer.token";
 NSString *oauthTokenIdentifier = @"photobox.oauth.token";
 NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessTokenDidAcquired";
 
+#define IS_USER_LOGGING_IN_KEY @"IS_USER_LOGGING_IN_KEY"
+
 @implementation ConnectionManager
 
 + (ConnectionManager *)sharedManager {
@@ -114,6 +116,11 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
         [self willChangeValueForKey:NSStringFromSelector(@selector(isUserLoggedIn))];
         _userLoggedIn = _oauthToken?YES:NO;
         [self didChangeValueForKey:NSStringFromSelector(@selector(isUserLoggedIn))];
+        
+        if (_userLoggedIn) {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:IS_USER_LOGGING_IN_KEY];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+        }
     }
 }
 
@@ -153,7 +160,14 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     
 }
 
+- (BOOL)isUserLoggingIn {
+    return [[NSUserDefaults standardUserDefaults] boolForKey:IS_USER_LOGGING_IN_KEY];
+}
+
 - (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_USER_LOGGING_IN_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self setBaseURL:[NSURL URLWithString:serverStringURL]];
     [[PhotoBoxClient sharedClient] setValue:self.baseURL forKey:@"baseURL"];
     NSAssert([[[[PhotoBoxClient sharedClient] baseURL] absoluteString] isEqualToString:self.baseURL.absoluteString], @"Expected base url: %@. Actual: %@", self.baseURL.absoluteString, [[[PhotoBoxClient sharedClient] baseURL] absoluteString]);
@@ -162,7 +176,6 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 
 - (void)continueOauthAuthorizationWithQuery:(NSString *)query {
     // sample: oauth_consumer_key=c12db8b814d71cf56d1e187ecec048&oauth_consumer_secret=371a5a63fa&oauth_token=a5322075c486ea210c075ae3546403&oauth_token_secret=1f47d2e62e&oauth_verifier=aaa32b81ae
-    
     NSString *consumerKey, *consumerSecret;
     NSArray *queryElements = [query componentsSeparatedByString:@"&"];
     for (NSString *element in queryElements) {
@@ -213,7 +226,6 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [self didChangeValueForKey:@"isShowingLoginPage"];
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window.rootViewController dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server {

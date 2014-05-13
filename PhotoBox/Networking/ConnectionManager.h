@@ -34,6 +34,7 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 - (void)openLoginFromStoryboardWithIdentifier:(NSString *)storyboardId;
 - (void)deleteTokens;
 - (void)logout;
+- (BOOL)isUserLoggingIn;
 
 - (void)connectAsTester;
 
