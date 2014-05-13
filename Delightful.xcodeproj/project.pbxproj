@@ -117,6 +117,7 @@
 		0396BDD71921ABAE004B6290 /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD61921ABAE004B6290 /* refresh@2x.png */; };
 		0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD91921AC60004B6290 /* HeaderImageView.m */; };
 		0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDDB1921AC79004B6290 /* HeaderImageView.xib */; };
+		0396BDE51922032D004B6290 /* PhotosCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDE41922032D004B6290 /* PhotosCollection.m */; };
 		0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
 		0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
 		0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
@@ -341,6 +342,8 @@
 		0396BDD81921AC60004B6290 /* HeaderImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HeaderImageView.h; path = PhotoBox/Views/HeaderImageView.h; sourceTree = "<group>"; };
 		0396BDD91921AC60004B6290 /* HeaderImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HeaderImageView.m; path = PhotoBox/Views/HeaderImageView.m; sourceTree = "<group>"; };
 		0396BDDB1921AC79004B6290 /* HeaderImageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderImageView.xib; sourceTree = "<group>"; };
+		0396BDE31922032D004B6290 /* PhotosCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosCollection.h; path = PhotoBox/Models/PhotosCollection.h; sourceTree = "<group>"; };
+		0396BDE41922032D004B6290 /* PhotosCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosCollection.m; path = PhotoBox/Models/PhotosCollection.m; sourceTree = "<group>"; };
 		0398D760180FB88F00FDD83B /* UIImage+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Additionals.h"; sourceTree = "<group>"; };
 		0398D761180FB88F00FDD83B /* UIImage+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Additionals.m"; sourceTree = "<group>"; };
 		0398D763180FC56700FDD83B /* NPRImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NPRImageDownloader.h; path = PhotoBox/Others/NPRImageDownloader.h; sourceTree = "<group>"; };
@@ -468,6 +471,8 @@
 				031DD2A017D99B1300A80167 /* PhotoBoxImage.m */,
 				037BA8BA18A63C830072760C /* FetchedIn.h */,
 				037BA8BB18A63C830072760C /* FetchedIn.m */,
+				0396BDE31922032D004B6290 /* PhotosCollection.h */,
+				0396BDE41922032D004B6290 /* PhotosCollection.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -1197,6 +1202,7 @@
 				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
 				038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */,
 				0396BDD31920B91B004B6290 /* NoPhotosView.m in Sources */,
+				0396BDE51922032D004B6290 /* PhotosCollection.m in Sources */,
 				03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */,
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,

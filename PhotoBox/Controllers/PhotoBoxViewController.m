@@ -13,10 +13,14 @@
 #import "PhotoBoxCell.h"
 #import "PhotoBoxModel.h"
 #import "Photo.h"
+#import "Album.h"
+#import "Tag.h"
 
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
+
+#import <NSDate+Escort.h>
 
 #define INITIAL_PAGE_NUMBER 1
 
@@ -56,7 +60,7 @@ NSString *const galleryContainerType = @"gallery";
     
     if (!self.disableFetchOnLoad) {
         PBX_LOG(@"Gonna fetch resource in view did load");
-        [self performSelector:@selector(fetchResource) withObject:nil afterDelay:1];
+        [self refreshIfNeeded];
     }
     
     [self restoreContentInset];
@@ -324,6 +328,26 @@ NSString *const galleryContainerType = @"gallery";
     [self.dataSource removeAllItems];
     [self.collectionView reloadData];
     [self fetchResource];
+}
+
+- (void)refreshIfNeeded {
+    [self refresh];
+}
+
+- (NSString *)refreshKey {
+    return nil;
+}
+
+- (NSArray *)cachedItems {
+    return nil;
+}
+
+- (void)willLoadDataFromCache {
+    
+}
+
+- (void)didLoadDataFromCache {
+    
 }
 
 - (void)showLoadingView:(BOOL)show {

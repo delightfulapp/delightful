@@ -52,6 +52,9 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 - (Class)dataSourceClass;
 - (void)refresh;
+- (void)refreshIfNeeded;
+- (NSString *)refreshKey;
+- (NSArray *)cachedItems;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock;
@@ -62,6 +65,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)fetchMore;
 - (void)setAttributedTitle:(NSAttributedString *)title;
 - (void)restoreContentInset;
-
 - (BOOL)isGallery ;
+- (void)processPaginationFromObjects:(id)objects;
+- (void)willLoadDataFromCache;
+- (void)didLoadDataFromCache;
 @end

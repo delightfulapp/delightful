@@ -13,6 +13,7 @@
 #import "PhotosViewController.h"
 
 #import "Album.h"
+#import "Tag.h"
 
 #import "UIViewController+DelightfulViewControllers.h"
 
@@ -185,7 +186,19 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [photosViewController setTitle:album.name];
     [photosViewController setRelationshipKeyPathWithItem:@"albums"];
     [photosViewController setResourceType:PhotoResource];
-    [photosViewController refresh];
+    [photosViewController refreshIfNeeded];
+    
+    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
+    [panelController toggleLeftPanel:nil];
+}
+
+- (void)loadPhotosInTag:(Tag *)tag {
+    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
+    [photosViewController setItem:tag];
+    [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
+    [photosViewController setRelationshipKeyPathWithItem:@"tags"];
+    [photosViewController setResourceType:PhotoWithTagsResource];
+    [photosViewController refreshIfNeeded];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];

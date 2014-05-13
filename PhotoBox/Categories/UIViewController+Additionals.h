@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class Album;
+@class Tag;
 
 @interface UIViewController (Additionals)
 
@@ -27,5 +28,7 @@
 - (void)setNavigationBarHidden:(BOOL)hidden animated:(BOOL)animated;
 
 - (void)loadPhotosInAlbum:(Album *)album;
+
+- (void)loadPhotosInTag:(Tag *)tag;
 
 @end

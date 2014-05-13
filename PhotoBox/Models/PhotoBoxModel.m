@@ -14,6 +14,8 @@
 
 #import "NSObject+Additionals.h"
 
+#import <NSDate+Escort.h>
+
 @implementation PhotoBoxModel
 
 + (Class)classForParsingJSONDictionary:(NSDictionary *)JSONDictionary {
@@ -93,6 +95,38 @@
     [mutableDict removeObjectsForKeys:@[@"totalRows", @"totalPages", @"currentPage", @"currentRow"]];
     if (dictionary) [mutableDict addEntriesFromDictionary:dictionary];
     return mutableDict;
+}
+
+#pragma mark - Refresh
+
+- (void)setLastRefresh:(NSDate *)lastRefresh {
+    _lastRefresh = lastRefresh;
+    
+    [[NSUserDefaults standardUserDefaults] setObject:lastRefresh forKey:[self lastRefreshCacheKey]];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (BOOL)needRefresh {
+    NSDate *last = self.lastRefresh;
+    if (!last) {
+        last = [[NSUserDefaults standardUserDefaults] objectForKey:[self lastRefreshCacheKey]];
+        if (!last) {
+            return YES;
+        }
+    }
+    NSInteger hours = [[NSDate date] hoursAfterDate:last];
+    if (hours > 22) {
+        return YES;
+    }
+    return NO;
+}
+
+- (NSString *)lastRefreshCacheKey {
+    return [NSString stringWithFormat:@"LAST_REFRESH_KEY-%@", [self cacheKey]];
+}
+
+- (NSString *)cacheKey {
+    return NSStringFromClass([self class]);
 }
 
 

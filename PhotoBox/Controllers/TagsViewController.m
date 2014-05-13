@@ -20,6 +20,8 @@
 
 #import "AppDelegate.h"
 
+#import "UIViewController+Additionals.h"
+
 @interface TagsViewController ()
 
 @end
@@ -111,18 +113,6 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Tag *tag = (Tag *)[self.dataSource itemAtIndexPath:indexPath];
     [self loadPhotosInTag:tag];
-}
-
-- (void)loadPhotosInTag:(Tag *)tag {    
-    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
-    [photosViewController setItem:tag];
-    [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
-    [photosViewController setRelationshipKeyPathWithItem:@"tags"];
-    [photosViewController setResourceType:PhotoWithTagsResource];
-    [photosViewController refresh];
-    
-    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
-    [panelController toggleLeftPanel:nil];
 }
 
 #pragma mark - Collection View Flow Layout Delegate

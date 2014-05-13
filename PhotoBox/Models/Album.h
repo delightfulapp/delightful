@@ -8,11 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-#import "PhotoBoxModel.h"
+#import "PhotosCollection.h"
 
 @class Photo;
 
-@interface Album : PhotoBoxModel
+@interface Album : PhotosCollection
 
 @property (nonatomic, copy, readonly) NSNumber *count;
 @property (nonatomic, copy, readonly) NSString *albumId;
@@ -22,8 +22,6 @@
 @property (nonatomic, copy, readonly) NSURL *coverURL;
 
 @property (nonatomic, copy, readonly) Photo *albumCover;
-
-@property (nonatomic, copy, readonly) NSArray *photos;
 
 @property (nonatomic, strong) UIImage *albumThumbnailImage;
 

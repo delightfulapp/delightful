@@ -81,7 +81,6 @@ NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
     return [NSValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[Photo class]];
 }
 
-#pragma mark - Demo
 
 
 @end

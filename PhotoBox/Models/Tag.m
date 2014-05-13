@@ -28,5 +28,4 @@
     return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{@"tagId": @"id"}];
 }
 
-
 @end

@@ -38,6 +38,10 @@
 
 #import "Photo.h"
 
+#import "Album.h"
+
+#import "Tag.h"
+
 #import "StickyHeaderFlowLayout.h"
 
 #import "UIImageView+Additionals.h"
@@ -78,7 +82,6 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     self.numberOfColumns = 3;
-    [self setPhotosCount:0 max:0];
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
@@ -97,7 +100,6 @@
     UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
     [self.navigationItem setRightBarButtonItem:settingBarButtonItem];
     
-    [self setTitle:NSLocalizedString(@"Gallery", nil)];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -235,6 +237,45 @@
     [super refresh];
 }
 
+- (void)refreshIfNeeded {
+    if ([self itemIsDownloadHistoryOrFavorites]) {
+        [self refresh];
+        return;
+    }
+    if (![self.item needRefresh]) {
+        NSArray *photos = [(id)self.item photos];
+        if (photos) {
+            [self willLoadDataFromCache];
+            
+            [self.dataSource removeAllItems];
+            [self.dataSource addItems:photos];
+            [self.collectionView reloadData];
+            
+            [self didLoadDataFromCache];
+        } else {
+            [self refresh];
+        }
+    } else {
+        [self refresh];
+    }
+}
+
+- (void)didLoadDataFromCache {
+    [self addOrRemoveHeaderView];
+    [self.noPhotosView removeFromSuperview];
+    [self restoreContentInset];
+    
+    NSInteger count = [self.dataSource numberOfItems];
+    NSInteger totalPhotos = [(id)self.item totalPhotos];
+    [self setPhotosCount:count max:totalPhotos];
+    
+    self.page = ceil(count/self.pageSize);
+    self.totalPages = ceil(totalPhotos/self.pageSize);
+    self.totalItems = totalPhotos;
+    
+    [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top)];
+}
+
 - (void)addOrRemoveHeaderView {
     if ([self.item isKindOfClass:[Album class]]) {
         Album *a = (Album *)self.item;
@@ -272,6 +313,7 @@
     [layout setTopOffsetAdjustment:0];
     
     [self.headerImageView removeFromSuperview];
+    self.headerImageView = nil;
     [self restoreContentInset];
 }
 
@@ -309,6 +351,12 @@
     } else {
         [super fetchMore];
     }
+}
+
+- (void)processPaginationFromObjects:(id)objects {
+    [super processPaginationFromObjects:objects];
+    
+    [(id)self.item setTotalPhotos:self.totalItems];
 }
 
 #pragma mark - Do something
@@ -371,6 +419,13 @@
 - (void)didFetchItems {
     NSInteger count = [self.dataSource numberOfItems];
     [self setPhotosCount:count max:self.totalItems];
+    
+    [self.item setLastRefresh:[NSDate date]];
+    [self.item setValue:self.dataSource.flattenedItems forKey:NSStringFromSelector(@selector(photos))];
+}
+
+- (NSString *)refreshKey {
+    return [NSString stringWithFormat:@"%@-%@", NSStringFromClass([self.item class]), [self.item itemId]];
 }
 
 - (void)didChangeNumberOfColumns {
