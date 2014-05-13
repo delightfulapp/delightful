@@ -123,7 +123,6 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    NSLog(@"huh?");
     NSString *urlScheme = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"][0][@"CFBundleURLSchemes"][0];
     if ([[url scheme] isEqualToString:urlScheme]){
         NSArray *comp1 = [[url absoluteString] componentsSeparatedByString:@"?"];

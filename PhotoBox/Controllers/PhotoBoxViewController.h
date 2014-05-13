@@ -69,4 +69,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)processPaginationFromObjects:(id)objects;
 - (void)willLoadDataFromCache;
 - (void)didLoadDataFromCache;
+
+- (void)userDidLogout;
 @end

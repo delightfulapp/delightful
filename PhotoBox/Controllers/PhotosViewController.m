@@ -359,6 +359,12 @@
     [(id)self.item setTotalPhotos:self.totalItems];
 }
 
+- (void)userDidLogout {
+    self.item = [Album allPhotosAlbum];
+    [self addOrRemoveHeaderView];
+    [self setTitle:NSLocalizedString(@"Gallery", nil)];
+}
+
 #pragma mark - Do something
 
 - (void)settingButtonTapped:(id)sender {

@@ -391,6 +391,10 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
+- (void)userDidLogout {
+    
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
@@ -528,6 +532,7 @@ NSString *const galleryContainerType = @"gallery";
                 [self.dataSource removeAllItems];
                 self.page = INITIAL_PAGE_NUMBER;
                 [self.collectionView reloadData];
+                [self userDidLogout];
             }
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {
             if ([[ConnectionManager sharedManager] isShowingLoginPage]) {
