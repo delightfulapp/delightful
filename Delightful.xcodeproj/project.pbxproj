@@ -1413,7 +1413,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BACC977C-B4AD-4519-9DE8-EE3C852A8B6D";
+				PROVISIONING_PROFILE = "A042EA3A-184A-4B3E-AF08-54763B1348C4";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1425,7 +1425,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -1473,7 +1473,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "BACC977C-B4AD-4519-9DE8-EE3C852A8B6D";
+				PROVISIONING_PROFILE = "E6A2D0D5-104F-4699-B71C-7DE96C89EBBA";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
