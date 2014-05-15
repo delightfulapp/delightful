@@ -16,6 +16,6 @@ extern NSString *const PhotoBoxLocationPlacemarkDidFetchNotification;
 
 + (id)sharedManager;
 
-- (void)nameForLocation:(CLLocation*)location completionHandler:(void(^)(NSArray* placemarks, NSError* error))completionHandler;
+- (void)nameForLocation:(CLLocation*)location completionHandler:(void(^)(NSString* placemark, NSError* error))completionHandler;
 
 @end

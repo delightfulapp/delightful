@@ -151,15 +151,15 @@
         [cell setTitleLabelText:[item localizedDate]];
         CLLocation *location = [selfie locationSampleForSection:indexPath.section];
         if (location) {
-            [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-                if (!error && placemarks && placemarks.count > 0) {
-                    [cell setLocation:placemarks[0]];
+            [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
+                if (placemarks) {
+                    [cell setLocationString:placemarks];
                 } else {
-                    [cell setLocation:nil];
+                    [cell setLocationString:nil];
                 }
             }];
         } else {
-            [cell setLocation:nil];
+            [cell setLocationString:nil];
         }
     };
     return configureCell;

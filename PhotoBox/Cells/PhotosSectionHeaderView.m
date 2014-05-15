@@ -100,6 +100,14 @@
     }
 }
 
+- (void)setLocationString:(NSString *)location {
+    if (location) {
+        [self.titleLabel setAttributedText:[self attributedStringWithTitle:self.titleLabelText location:location]];
+    } else {
+        [self.titleLabel setAttributedText:[self attributedStringWithTitle:self.titleLabelText location:nil]];
+    }
+}
+
 - (NSAttributedString *)attributedStringWithTitle:(NSString *)title location:(NSString *)location {
     NSString *text = title;
     if (location) {

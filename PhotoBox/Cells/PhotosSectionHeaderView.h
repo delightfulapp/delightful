@@ -26,6 +26,8 @@
 
 - (void)setLocation:(CLPlacemark *)placemark;
 
+- (void)setLocationString:(NSString *)location;
+
 - (void)setup;
 
 @end
