@@ -77,6 +77,9 @@
 
 - (void)viewDidLoad
 {
+    self.resourceType = PhotoResource;
+    self.relationshipKeyPathWithItem = @"albums";
+    
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -90,9 +93,6 @@
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
     //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
-    
-    self.resourceType = PhotoResource;
-    self.relationshipKeyPathWithItem = @"albums";
     
     UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
     [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
@@ -331,7 +331,6 @@
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     } else {
-        NSLog(@"shold be here right");
         [super restoreContentInset];
     }
     
