@@ -243,18 +243,25 @@
         return;
     }
     if (![self.item needRefresh]) {
-        NSArray *photos = [(id)self.item photos];
-        if (photos) {
-            [self willLoadDataFromCache];
-            
-            [self.dataSource removeAllItems];
-            [self.dataSource addItems:photos];
-            [self.collectionView reloadData];
-            
-            [self didLoadDataFromCache];
-        } else {
-            [self refresh];
-        }
+        [self showLoadingView:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSArray *photos = [(id)self.item photos];
+            [self showLoadingView:NO];
+            if (photos) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self willLoadDataFromCache];
+                    
+                    [self.dataSource removeAllItems];
+                    [self.dataSource addItems:photos];
+                    [self.collectionView reloadData];
+                    
+                    [self didLoadDataFromCache];
+                });
+                
+            } else {
+                [self refresh];
+            }
+        });
     } else {
         [self refresh];
     }

@@ -4,12 +4,17 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Delightful-TestFlight.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>21</integer>
+		</dict>
 		<key>Delightful.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<true/>
 			<key>orderHint</key>
-			<integer>17</integer>
+			<integer>0</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -25,6 +30,11 @@
 			<true/>
 		</dict>
 		<key>03D972B218123D83008A087B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>03EFD8C919251CD700E80A71</key>
 		<dict>
 			<key>primary</key>
 			<true/>

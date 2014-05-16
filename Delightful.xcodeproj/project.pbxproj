@@ -154,6 +154,144 @@
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
 		03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
+		03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
+		03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
+		03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
+		03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
+		03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
+		03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
+		03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */; };
+		03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
+		03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
+		03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
+		03EFD8D619251CD700E80A71 /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
+		03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
+		03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
+		03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
+		03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50EB18181D7C00445084 /* PanelFactory.m */; };
+		03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD91921AC60004B6290 /* HeaderImageView.m */; };
+		03EFD8DC19251CD700E80A71 /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846AA17D20B8100E196D7 /* PhotoCell.m */; };
+		03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
+		03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
+		03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */; };
+		03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
+		03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F41818364500445084 /* SharePanel.m */; };
+		03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
+		03EFD8E319251CD700E80A71 /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
+		03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
+		03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
+		03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
+		03EFD8E719251CD700E80A71 /* NPRImageDownloaderTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */; };
+		03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */; };
+		03EFD8E919251CD700E80A71 /* PhotoSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A9181188CE008A087B /* PhotoSharingManager.m */; };
+		03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */; };
+		03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
+		03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
+		03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
+		03EFD8EE19251CD700E80A71 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
+		03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B017D2312500E196D7 /* NSArray+Additionals.m */; };
+		03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032222A7181419A8004F3830 /* NPRNotificationView.m */; };
+		03EFD8F119251CD700E80A71 /* HintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDED19227804004B6290 /* HintsViewController.m */; };
+		03EFD8F219251CD700E80A71 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8D17D0BDF3001205B1 /* AppDelegate.m */; };
+		03EFD8F319251CD700E80A71 /* NPRNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032222A4181407C3004F3830 /* NPRNotificationManager.m */; };
+		03EFD8F419251CD700E80A71 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
+		03EFD8F519251CD700E80A71 /* FavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */; };
+		03EFD8F619251CD700E80A71 /* PhotoBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468617D1C19A00E196D7 /* PhotoBoxCell.m */; };
+		03EFD8F719251CD700E80A71 /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
+		03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
+		03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
+		03EFD8FA19251CD700E80A71 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
+		03EFD8FB19251CD700E80A71 /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468917D1C1B100E196D7 /* AlbumCell.m */; };
+		03EFD8FC19251CD700E80A71 /* SharerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE5102181842F200445084 /* SharerManager.m */; };
+		03EFD8FD19251CD700E80A71 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
+		03EFD8FE19251CD700E80A71 /* UIView+NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */; };
+		03EFD8FF19251CD700E80A71 /* UIImageView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */; };
+		03EFD90019251CD700E80A71 /* PhotoBoxModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */; };
+		03EFD90119251CD700E80A71 /* SeeThroughCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F918183A6000445084 /* SeeThroughCircleView.m */; };
+		03EFD90219251CD700E80A71 /* CollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */; };
+		03EFD90319251CD700E80A71 /* UIWindow+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D7711810032A00FDD83B /* UIWindow+Additionals.m */; };
+		03EFD90419251CD700E80A71 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8917D0BDF3001205B1 /* main.m */; };
+		03EFD90519251CD700E80A71 /* PhotoBoxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903A17D103330075F9D8 /* PhotoBoxClient.m */; };
+		03EFD90619251CD700E80A71 /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
+		03EFD90719251CD700E80A71 /* PhotoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */; };
+		03EFD90819251CD700E80A71 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50E31818148800445084 /* IntroViewController.m */; };
+		03EFD90919251CD700E80A71 /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A717D2021100E196D7 /* PhotosViewController.m */; };
+		03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A117D1F91000E196D7 /* AlbumTitleView.m */; };
+		03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
+		03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
+		03EFD90D19251CD700E80A71 /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
+		03EFD90E19251CD700E80A71 /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467617D1BC3D00E196D7 /* TagsViewController.m */; };
+		03EFD90F19251CD700E80A71 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FE917D0FE3A0075F9D8 /* Album.m */; };
+		03EFD91019251CD700E80A71 /* VersionNumberHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50EE181829BF00445084 /* VersionNumberHeaderView.m */; };
+		03EFD91119251CD700E80A71 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467917D1BCC000E196D7 /* AlbumsViewController.m */; };
+		03EFD91219251CD700E80A71 /* UIViewController+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469717D1D42700E196D7 /* UIViewController+Additionals.m */; };
+		03EFD91319251CD700E80A71 /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
+		03EFD91419251CD700E80A71 /* NoPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD21920B91B004B6290 /* NoPhotosView.m */; };
+		03EFD91519251CD700E80A71 /* PhotosCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDE41922032D004B6290 /* PhotosCollection.m */; };
+		03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
+		03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
+		03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
+		03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */; };
+		03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846C217D2598600E196D7 /* PhotoZoomableCell.m */; };
+		03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
+		03EFD91D19251CD700E80A71 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FD482A191FD73200D4ADF7 /* MessageUI.framework */; };
+		03EFD91E19251CD700E80A71 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
+		03EFD91F19251CD700E80A71 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
+		03EFD92019251CD700E80A71 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
+		03EFD92119251CD700E80A71 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */; };
+		03EFD92219251CD700E80A71 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */; };
+		03EFD92319251CD700E80A71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468E17D1CD2A00E196D7 /* QuartzCore.framework */; };
+		03EFD92419251CD700E80A71 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468C17D1CD2500E196D7 /* CFNetwork.framework */; };
+		03EFD92519251CD700E80A71 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */; };
+		03EFD92619251CD700E80A71 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
+		03EFD92719251CD700E80A71 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
+		03EFD92A19251CD700E80A71 /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A517D9BB8300A80167 /* upload.png */; };
+		03EFD92B19251CD700E80A71 /* Hint-CloseInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDEA1922772E004B6290 /* Hint-CloseInfo.xib */; };
+		03EFD92C19251CD700E80A71 /* 0.0.2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50E618181D1B00445084 /* 0.0.2.plist */; };
+		03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B21814CBF0004F3830 /* npr_notification_image_error@2x.png */; };
+		03EFD92E19251CD700E80A71 /* intro0.0.5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBB1842018D001B262F /* intro0.0.5.jpg */; };
+		03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB9517D0BDF3001205B1 /* Images.xcassets */; };
+		03EFD93019251CD700E80A71 /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 036DF364181AA60B002E9FCB /* info@2x.png */; };
+		03EFD93119251CD700E80A71 /* 0.0.4.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF369181FBA67002E9FCB /* 0.0.4.plist */; };
+		03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDDB1921AC79004B6290 /* HeaderImageView.xib */; };
+		03EFD93319251CD700E80A71 /* intro0.0.4@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36C181FBB9E002E9FCB /* intro0.0.4@2x.jpg */; };
+		03EFD93419251CD700E80A71 /* intro0.0.5@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBC1842018D001B262F /* intro0.0.5@2x.jpg */; };
+		03EFD93519251CD700E80A71 /* 0.0.3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF362181A850C002E9FCB /* 0.0.3.plist */; };
+		03EFD93619251CD700E80A71 /* npr_notification_image_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */; };
+		03EFD93719251CD700E80A71 /* HintPinch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDE619227461004B6290 /* HintPinch.xib */; };
+		03EFD93819251CD700E80A71 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A817D9BB8300A80167 /* info.png */; };
+		03EFD93919251CD700E80A71 /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A717D9BB8300A80167 /* user.png */; };
+		03EFD93A19251CD700E80A71 /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C518103B6E00FDD83B /* download@2x.png */; };
+		03EFD93B19251CD700E80A71 /* npr_notification_image_success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AE1814CBF0004F3830 /* npr_notification_image_success@2x.png */; };
+		03EFD93C19251CD700E80A71 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8617D0BDF3001205B1 /* InfoPlist.strings */; };
+		03EFD93D19251CD700E80A71 /* npr_notification_image_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222BA1814F2E4004F3830 /* npr_notification_image_close.png */; };
+		03EFD93E19251CD700E80A71 /* Hint-Side.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDE81922757E004B6290 /* Hint-Side.xib */; };
+		03EFD93F19251CD700E80A71 /* NoPhotosView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */; };
+		03EFD94019251CD700E80A71 /* npr_notification_image_warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B01814CBF0004F3830 /* npr_notification_image_warning@2x.png */; };
+		03EFD94119251CD700E80A71 /* intro0.0.4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 036DF36B181FBB9E002E9FCB /* intro0.0.4.jpg */; };
+		03EFD94219251CD700E80A71 /* star-fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48361920B27300D4ADF7 /* star-fill@2x.png */; };
+		03EFD94319251CD700E80A71 /* LeftPanelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */; };
+		03EFD94419251CD700E80A71 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
+		03EFD94519251CD700E80A71 /* introbg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DF1818136E00445084 /* introbg@2x.jpg */; };
+		03EFD94619251CD700E80A71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
+		03EFD94719251CD700E80A71 /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
+		03EFD94819251CD700E80A71 /* npr_notification_image_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AF1814CBF0004F3830 /* npr_notification_image_warning.png */; };
+		03EFD94919251CD700E80A71 /* npr_notification_image_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AD1814CBF0004F3830 /* npr_notification_image_success.png */; };
+		03EFD94A19251CD700E80A71 /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
+		03EFD94B19251CD700E80A71 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
+		03EFD94C19251CD700E80A71 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A617D9BB8300A80167 /* download.png */; };
+		03EFD94D19251CD700E80A71 /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD61921ABAE004B6290 /* refresh@2x.png */; };
+		03EFD94E19251CD700E80A71 /* Crashlytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0348D22F17DA263500C932BA /* Crashlytics.plist */; };
+		03EFD94F19251CD700E80A71 /* star-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48351920B27300D4ADF7 /* star-fill.png */; };
+		03EFD95019251CD700E80A71 /* shareicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50F6181838B700445084 /* shareicons.ttf */; };
+		03EFD95119251CD700E80A71 /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48331920ABE000D4ADF7 /* star.png */; };
+		03EFD95219251CD700E80A71 /* npr_notification_image_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B11814CBF0004F3830 /* npr_notification_image_error.png */; };
+		03EFD95319251CD700E80A71 /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A917D9BB8300A80167 /* setting.png */; };
+		03EFD95419251CD700E80A71 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48311920AB8B00D4ADF7 /* star@2x.png */; };
+		03EFD95519251CD700E80A71 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD41921AB76004B6290 /* refresh.png */; };
+		03EFD95619251CD700E80A71 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
+		03EFD95719251CD700E80A71 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2B017D9BD6B00A80167 /* user@2x.png */; };
+		03EFD95819251CD700E80A71 /* introbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DE1818136E00445084 /* introbg.jpg */; };
 		03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
 		03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
 		03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
@@ -404,6 +542,8 @@
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
 		03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewSelectCellGestureRecognizer.h; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.h; sourceTree = "<group>"; };
 		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
+		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/PhotoBox/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
 		03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedImageManager.m; path = PhotoBox/Others/DownloadedImageManager.m; sourceTree = "<group>"; };
 		03FD481F191FA22B00D4ADF7 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftViewController.h; path = PhotoBox/Controllers/LeftViewController.h; sourceTree = "<group>"; };
@@ -452,6 +592,24 @@
 				032CBB9D17D0BDF3001205B1 /* XCTest.framework in Frameworks */,
 				032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03EFD91C19251CD700E80A71 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03EFD91D19251CD700E80A71 /* MessageUI.framework in Frameworks */,
+				03EFD91E19251CD700E80A71 /* Crashlytics.framework in Frameworks */,
+				03EFD91F19251CD700E80A71 /* libPods.a in Frameworks */,
+				03EFD92019251CD700E80A71 /* CoreData.framework in Frameworks */,
+				03EFD92119251CD700E80A71 /* MobileCoreServices.framework in Frameworks */,
+				03EFD92219251CD700E80A71 /* SystemConfiguration.framework in Frameworks */,
+				03EFD92319251CD700E80A71 /* QuartzCore.framework in Frameworks */,
+				03EFD92419251CD700E80A71 /* CFNetwork.framework in Frameworks */,
+				03EFD92519251CD700E80A71 /* CoreGraphics.framework in Frameworks */,
+				03EFD92619251CD700E80A71 /* UIKit.framework in Frameworks */,
+				03EFD92719251CD700E80A71 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +733,7 @@
 				032CBB7B17D0BDF3001205B1 /* Products */,
 				2D8562143BB5431496ECF57D /* Pods.xcconfig */,
 				2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */,
+				03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -583,6 +742,7 @@
 			children = (
 				032CBB7A17D0BDF3001205B1 /* Delightful.app */,
 				032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */,
+				03EFD95F19251CD700E80A71 /* Delightful.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -934,6 +1094,28 @@
 			productReference = 032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		03EFD8C919251CD700E80A71 /* Delightful-TestFlight */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 03EFD95C19251CD700E80A71 /* Build configuration list for PBXNativeTarget "Delightful-TestFlight" */;
+			buildPhases = (
+				03EFD8CA19251CD700E80A71 /* Check Pods Manifest.lock */,
+				03EFD8CB19251CD700E80A71 /* Sources */,
+				03EFD91C19251CD700E80A71 /* Frameworks */,
+				03EFD92819251CD700E80A71 /* Copy Crashlytics */,
+				03EFD92919251CD700E80A71 /* Resources */,
+				03EFD95919251CD700E80A71 /* Crashlytics */,
+				03EFD95A19251CD700E80A71 /* Build number increment */,
+				03EFD95B19251CD700E80A71 /* Version number increment */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Delightful-TestFlight";
+			productName = PhotoBox;
+			productReference = 03EFD95F19251CD700E80A71 /* Delightful.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -966,6 +1148,7 @@
 			targets = (
 				032CBB7917D0BDF3001205B1 /* Delightful */,
 				032CBB9A17D0BDF3001205B1 /* DelightfulTests */,
+				03EFD8C919251CD700E80A71 /* Delightful-TestFlight */,
 			);
 		};
 /* End PBXProject section */
@@ -1036,6 +1219,60 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		03EFD92919251CD700E80A71 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03EFD92A19251CD700E80A71 /* upload.png in Resources */,
+				03EFD92B19251CD700E80A71 /* Hint-CloseInfo.xib in Resources */,
+				03EFD92C19251CD700E80A71 /* 0.0.2.plist in Resources */,
+				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
+				03EFD92E19251CD700E80A71 /* intro0.0.5.jpg in Resources */,
+				03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */,
+				03EFD93019251CD700E80A71 /* info@2x.png in Resources */,
+				03EFD93119251CD700E80A71 /* 0.0.4.plist in Resources */,
+				03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */,
+				03EFD93319251CD700E80A71 /* intro0.0.4@2x.jpg in Resources */,
+				03EFD93419251CD700E80A71 /* intro0.0.5@2x.jpg in Resources */,
+				03EFD93519251CD700E80A71 /* 0.0.3.plist in Resources */,
+				03EFD93619251CD700E80A71 /* npr_notification_image_close@2x.png in Resources */,
+				03EFD93719251CD700E80A71 /* HintPinch.xib in Resources */,
+				03EFD93819251CD700E80A71 /* info.png in Resources */,
+				03EFD93919251CD700E80A71 /* user.png in Resources */,
+				03EFD93A19251CD700E80A71 /* download@2x.png in Resources */,
+				03EFD93B19251CD700E80A71 /* npr_notification_image_success@2x.png in Resources */,
+				03EFD93C19251CD700E80A71 /* InfoPlist.strings in Resources */,
+				03EFD93D19251CD700E80A71 /* npr_notification_image_close.png in Resources */,
+				03EFD93E19251CD700E80A71 /* Hint-Side.xib in Resources */,
+				03EFD93F19251CD700E80A71 /* NoPhotosView.xib in Resources */,
+				03EFD94019251CD700E80A71 /* npr_notification_image_warning@2x.png in Resources */,
+				03EFD94119251CD700E80A71 /* intro0.0.4.jpg in Resources */,
+				03EFD94219251CD700E80A71 /* star-fill@2x.png in Resources */,
+				03EFD94319251CD700E80A71 /* LeftPanelHeaderView.xib in Resources */,
+				03EFD94419251CD700E80A71 /* right.png in Resources */,
+				03EFD94519251CD700E80A71 /* introbg@2x.jpg in Resources */,
+				03EFD94619251CD700E80A71 /* Main.storyboard in Resources */,
+				03EFD94719251CD700E80A71 /* right@2x.png in Resources */,
+				03EFD94819251CD700E80A71 /* npr_notification_image_warning.png in Resources */,
+				03EFD94919251CD700E80A71 /* npr_notification_image_success.png in Resources */,
+				03EFD94A19251CD700E80A71 /* 0.0.5.plist in Resources */,
+				03EFD94B19251CD700E80A71 /* loginbackground.jpg in Resources */,
+				03EFD94C19251CD700E80A71 /* download.png in Resources */,
+				03EFD94D19251CD700E80A71 /* refresh@2x.png in Resources */,
+				03EFD94E19251CD700E80A71 /* Crashlytics.plist in Resources */,
+				03EFD94F19251CD700E80A71 /* star-fill.png in Resources */,
+				03EFD95019251CD700E80A71 /* shareicons.ttf in Resources */,
+				03EFD95119251CD700E80A71 /* star.png in Resources */,
+				03EFD95219251CD700E80A71 /* npr_notification_image_error.png in Resources */,
+				03EFD95319251CD700E80A71 /* setting.png in Resources */,
+				03EFD95419251CD700E80A71 /* star@2x.png in Resources */,
+				03EFD95519251CD700E80A71 /* refresh.png in Resources */,
+				03EFD95619251CD700E80A71 /* camera.png in Resources */,
+				03EFD95719251CD700E80A71 /* user@2x.png in Resources */,
+				03EFD95819251CD700E80A71 /* introbg.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1082,6 +1319,77 @@
 			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 		03D972AD18123A69008A087B /* Version number increment */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Version number increment";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "VERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
+		};
+		03EFD8CA19251CD700E80A71 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		03EFD92819251CD700E80A71 /* Copy Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Crashlytics";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
+		};
+		03EFD95919251CD700E80A71 /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytics;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\nfi\n\n";
+		};
+		03EFD95A19251CD700E80A71 /* Build number increment */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Build number increment";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		03EFD95B19251CD700E80A71 /* Version number increment */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
 			files = (
@@ -1245,6 +1553,93 @@
 				03D972A118115705008A087B /* SharingTokenTests.m in Sources */,
 				03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */,
 				034E9F9517FA6C2000E3565E /* XCTestCase+Additionals.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		03EFD8CB19251CD700E80A71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */,
+				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
+				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
+				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
+				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
+				03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */,
+				03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */,
+				03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */,
+				03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */,
+				03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */,
+				03EFD8D619251CD700E80A71 /* PhotosDataSource.m in Sources */,
+				03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */,
+				03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */,
+				03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */,
+				03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */,
+				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
+				03EFD8DC19251CD700E80A71 /* PhotoCell.m in Sources */,
+				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
+				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
+				03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */,
+				03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */,
+				03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */,
+				03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */,
+				03EFD8E319251CD700E80A71 /* PanelsContainerViewController.m in Sources */,
+				03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */,
+				03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */,
+				03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */,
+				03EFD8E719251CD700E80A71 /* NPRImageDownloaderTableViewDataSource.m in Sources */,
+				03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */,
+				03EFD8E919251CD700E80A71 /* PhotoSharingManager.m in Sources */,
+				03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */,
+				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
+				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
+				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
+				03EFD8EE19251CD700E80A71 /* LeftViewController.m in Sources */,
+				03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */,
+				03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */,
+				03EFD8F119251CD700E80A71 /* HintsViewController.m in Sources */,
+				03EFD8F219251CD700E80A71 /* AppDelegate.m in Sources */,
+				03EFD8F319251CD700E80A71 /* NPRNotificationManager.m in Sources */,
+				03EFD8F419251CD700E80A71 /* Photo.m in Sources */,
+				03EFD8F519251CD700E80A71 /* FavoritesManager.m in Sources */,
+				03EFD8F619251CD700E80A71 /* PhotoBoxCell.m in Sources */,
+				03EFD8F719251CD700E80A71 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
+				03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */,
+				03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */,
+				03EFD8FA19251CD700E80A71 /* Tag.m in Sources */,
+				03EFD8FB19251CD700E80A71 /* AlbumCell.m in Sources */,
+				03EFD8FC19251CD700E80A71 /* SharerManager.m in Sources */,
+				03EFD8FD19251CD700E80A71 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
+				03EFD8FE19251CD700E80A71 /* UIView+NGAParallaxMotion.m in Sources */,
+				03EFD8FF19251CD700E80A71 /* UIImageView+Additionals.m in Sources */,
+				03EFD90019251CD700E80A71 /* PhotoBoxModel.m in Sources */,
+				03EFD90119251CD700E80A71 /* SeeThroughCircleView.m in Sources */,
+				03EFD90219251CD700E80A71 /* CollectionViewDataSource.m in Sources */,
+				03EFD90319251CD700E80A71 /* UIWindow+Additionals.m in Sources */,
+				03EFD90419251CD700E80A71 /* main.m in Sources */,
+				03EFD90519251CD700E80A71 /* PhotoBoxClient.m in Sources */,
+				03EFD90619251CD700E80A71 /* UIImage+Additionals.m in Sources */,
+				03EFD90719251CD700E80A71 /* PhotoInfoViewController.m in Sources */,
+				03EFD90819251CD700E80A71 /* IntroViewController.m in Sources */,
+				03EFD90919251CD700E80A71 /* PhotosViewController.m in Sources */,
+				03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */,
+				03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */,
+				03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */,
+				03EFD90D19251CD700E80A71 /* UIViewController+DelightfulViewControllers.m in Sources */,
+				03EFD90E19251CD700E80A71 /* TagsViewController.m in Sources */,
+				03EFD90F19251CD700E80A71 /* Album.m in Sources */,
+				03EFD91019251CD700E80A71 /* VersionNumberHeaderView.m in Sources */,
+				03EFD91119251CD700E80A71 /* AlbumsViewController.m in Sources */,
+				03EFD91219251CD700E80A71 /* UIViewController+Additionals.m in Sources */,
+				03EFD91319251CD700E80A71 /* AlbumSectionHeaderView.m in Sources */,
+				03EFD91419251CD700E80A71 /* NoPhotosView.m in Sources */,
+				03EFD91519251CD700E80A71 /* PhotosCollection.m in Sources */,
+				03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */,
+				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
+				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
+				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
+				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
+				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1554,6 +1949,134 @@
 			};
 			name = Release;
 		};
+		03EFD95D19251CD700E80A71 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/PhotoBox",
+					/Users/nico/Projects/PhotoBox,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/AFOAuth1Client\"",
+					"\"${PODS_ROOT}/Headers/Expecta\"",
+					"\"${PODS_ROOT}/Headers/GPUImage\"",
+					"\"${PODS_ROOT}/Headers/JASidePanels\"",
+					"\"${PODS_ROOT}/Headers/MYBlurIntroductionView\"",
+					"\"${PODS_ROOT}/Headers/Mantle\"",
+					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
+					"\"${PODS_ROOT}/Headers/NSDate-Escort\"",
+					"\"${PODS_ROOT}/Headers/OCMock\"",
+					"\"${PODS_ROOT}/Headers/OGCoreDataStack\"",
+					"\"${PODS_ROOT}/Headers/Overcoat\"",
+					"\"${PODS_ROOT}/Headers/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/UIColor+MLPFlatColors\"",
+					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
+					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
+					"\"${PODS_ROOT}/Headers/iOS-blur\"",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "DelightfulTestFlight-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					Accelerate,
+					"-framework",
+					CFNetwork,
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-weak_framework",
+					CoreTelephony,
+					"-weak_framework",
+					StoreKit,
+					"-weak_framework",
+					Crashlytics,
+				);
+				PRODUCT_NAME = "Delightful";
+				PROVISIONING_PROFILE = "A042EA3A-184A-4B3E-AF08-54763B1348C4";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		03EFD95E19251CD700E80A71 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)",
+					"$(SRCROOT)/PhotoBox",
+					/Users/nico/Projects/PhotoBox,
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"${PODS_ROOT}/Headers\"",
+					"\"${PODS_ROOT}/Headers/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/AFOAuth1Client\"",
+					"\"${PODS_ROOT}/Headers/Expecta\"",
+					"\"${PODS_ROOT}/Headers/GPUImage\"",
+					"\"${PODS_ROOT}/Headers/JASidePanels\"",
+					"\"${PODS_ROOT}/Headers/MYBlurIntroductionView\"",
+					"\"${PODS_ROOT}/Headers/Mantle\"",
+					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
+					"\"${PODS_ROOT}/Headers/NSDate-Escort\"",
+					"\"${PODS_ROOT}/Headers/OCMock\"",
+					"\"${PODS_ROOT}/Headers/OGCoreDataStack\"",
+					"\"${PODS_ROOT}/Headers/Overcoat\"",
+					"\"${PODS_ROOT}/Headers/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/UIColor+MLPFlatColors\"",
+					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
+					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
+					"\"${PODS_ROOT}/Headers/iOS-blur\"",
+					"$(SRCROOT)/**",
+				);
+				INFOPLIST_FILE = "DelightfulTestFlight-Info.plist";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					QuartzCore,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-weak_framework",
+					Crashlytics,
+				);
+				PRODUCT_NAME = "Delightful";
+				PROVISIONING_PROFILE = "4E0E13E0-429E-4BF0-B413-B94A2ECA911B";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1580,6 +2103,15 @@
 			buildConfigurations = (
 				032CBBB017D0BDF3001205B1 /* Debug */,
 				032CBBB117D0BDF3001205B1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		03EFD95C19251CD700E80A71 /* Build configuration list for PBXNativeTarget "Delightful-TestFlight" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03EFD95D19251CD700E80A71 /* Debug */,
+				03EFD95E19251CD700E80A71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

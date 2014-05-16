@@ -126,18 +126,22 @@
     if ([[self resourceClass] needRefreshModelsCollection]) {
         [self refresh];
     } else {
-        NSArray *items = [[self resourceClass] modelsCollection];
-        if (items) {
-            [self willLoadDataFromCache];
-            
-            [self.dataSource removeAllItems];
-            [self.dataSource addItems:items];
-            [self.collectionView reloadData];
-            
-            [self didLoadDataFromCache];
-        } else {
-            [self refresh];
-        }
+        [self showLoadingView:YES atBottomOfScrollView:YES];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            NSArray *items = [[self resourceClass] modelsCollection];
+            [self showLoadingView:NO atBottomOfScrollView:YES];
+            if (items) {
+                [self willLoadDataFromCache];
+                
+                [self.dataSource removeAllItems];
+                [self.dataSource addItems:items];
+                [self.collectionView reloadData];
+                
+                [self didLoadDataFromCache];
+            } else {
+                [self refresh];
+            }
+        });
     }
 }
 
