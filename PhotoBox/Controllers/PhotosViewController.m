@@ -297,9 +297,15 @@
                 [self.headerImageView addGestureRecognizer:tap];
             }
             
-            [self.headerImageView.imageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:a.albumThumbnailImage];
+            UIImage *placeholderImage = a.albumThumbnailImage;
+            if (!placeholderImage) {
+                placeholderImage = a.albumCover.asAlbumCoverImage;
+                if (!placeholderImage) {
+                    placeholderImage = a.albumCover.placeholderImage;
+                }
+            }
+            [self.headerImageView.imageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:placeholderImage];
             [self setTitle:a.name];
-            a.albumCover.asAlbumCoverImage = a.albumThumbnailImage;
             a.albumCover.asAlbumCoverURL = a.coverURL;
             
             CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;

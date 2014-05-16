@@ -234,6 +234,9 @@
             placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
             if (!placeholderImage) {
                 placeholderImage = photo.asAlbumCoverImage;
+                if (!placeholderImage) {
+                    placeholderImage = photo.placeholderImage;
+                }
             }
         }
         [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];

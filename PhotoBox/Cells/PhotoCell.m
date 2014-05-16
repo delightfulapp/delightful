@@ -90,7 +90,9 @@
             URL = photo.pathOriginal;
         }
         [self.cellImageView setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-            
+            if (image) {
+                [photo setPlaceholderImage:image];
+            }
         }];
         [self setText:[self photoCellTitle]];
     }

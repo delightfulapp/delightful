@@ -64,6 +64,8 @@
 
 @property (nonatomic, strong) UIImage *asAlbumCoverImage;
 
+@property (nonatomic, strong) UIImage *placeholderImage;
+
 @property (nonatomic, strong) NSURL *asAlbumCoverURL;
 
 @end
