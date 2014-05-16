@@ -23,6 +23,7 @@
 
 #import <Social/Social.h>
 #import <objc/runtime.h>
+#import <TUSafariActivity.h>
 
 #define kLoadingViewTag 87261
 #define HAVE_SHOWN_NO_FACEBOOK @"HAVE_SHOWN_NO_FACEBOOK"
@@ -87,7 +88,8 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 }
 
 - (void)openActivityPickerForURL:(NSURL *)URL completion:(void (^)())completion {
-    [self openActivityPickerForItem:URL applicationActivities:nil completion:completion activityCompletionHandler:nil];
+    TUSafariActivity *activity = [[TUSafariActivity alloc] init];
+    [self openActivityPickerForItem:URL applicationActivities:@[activity] completion:completion activityCompletionHandler:nil];
 }
 
 - (void)openActivityPickerForItem:(id)item applicationActivities:(NSArray *)activities completion:(void(^)())completion activityCompletionHandler:(void(^)(NSString *, BOOL))activityCompletionHandler{
@@ -95,7 +97,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[item] applicationActivities:activities];
     [activityViewController setTitle:@"Share Photo's URL"];
     [activityViewController setCompletionHandler:activityCompletionHandler];
-    [activityViewController setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeCopyToPasteboard, UIActivityTypeAssignToContact]];
+    [activityViewController setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact]];
     [self presentViewController:activityViewController animated:YES completion:completion];
     
     if(![SLComposeViewController isAvailableForServiceType:SLServiceTypeFacebook]) {

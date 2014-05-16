@@ -17,6 +17,7 @@ pod 'GPUImage'
 pod 'JASidePanels'
 pod 'SVProgressHUD'
 pod 'QMBParallaxScrollViewController'
+pod 'TUSafariActivity'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

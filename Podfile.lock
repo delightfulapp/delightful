@@ -21,6 +21,7 @@ PODS:
     - SDWebImage/Core
   - SDWebImage/Core (3.5)
   - SVProgressHUD (1.0)
+  - TUSafariActivity (1.0.0)
   - UIColor+MLPFlatColors (1.0)
   - UIImageViewModeScaleAspect (1.3)
   - UIView+AutoLayout (1.3.0)
@@ -40,6 +41,7 @@ DEPENDENCIES:
   - QMBParallaxScrollViewController
   - SDWebImage (= 3.5)
   - SVProgressHUD
+  - TUSafariActivity
   - UIColor+MLPFlatColors (~> 1.0)
   - UIImageViewModeScaleAspect
   - UIView+AutoLayout
@@ -60,6 +62,7 @@ SPEC CHECKSUMS:
   QMBParallaxScrollViewController: 46ccfa5438f07de13cc7b19766288c8e5014a83d
   SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
+  TUSafariActivity: bd9da588f5f9136ba445d89f8f86b6dccf4d46ba
   UIColor+MLPFlatColors: 8631d7f050b0e5afd9af178a60319891c5113d0e
   UIImageViewModeScaleAspect: 74f439899d4f28625ea08c947bfad5a3339b0741
   UIView+AutoLayout: 43373a18797954fd8ee3b1423af364f1b80a2af8
