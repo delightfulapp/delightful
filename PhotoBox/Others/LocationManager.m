@@ -9,6 +9,7 @@
 #import <AFNetworking.h>
 #import <AFHTTPRequestOperation.h>
 #import "LocationManager.h"
+#import "DelightfulCache.h"
 
 #define FOURSQUARE_CLIENT_ID @"YE01OOGFTM5L3NDWWWGOVAANYV3QEHVCG421PSNQUBRTXAMS"
 #define FOURSQUARE_CLIENT_SECRET @"XEIWU4SHBATNHZBEW0FRMEMVANJKHSZ4SGYMFAMSMVFQZYQ2"
@@ -17,6 +18,7 @@
 #define GOOGLE_API_KEY @"AIzaSyBNPVTaMXoa5nxY-Ms_cCrDPra8M27BYt8"
 
 #define LOCATION_CACHE_KEY @"com.getdelightfulapp.location.cache.key"
+
 
 NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxLocationPlacemarkDidFetchNotification";
 
@@ -54,7 +56,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
     NSString *locationKey = [NSString stringWithFormat:@"%@,%@", lat,longi];
     
     NSString *cachedName = [self.locationCache objectForKey:locationKey];
-    NSString *cachedNameFromDefaults = [[NSUserDefaults standardUserDefaults] objectForKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
+    NSString *cachedNameFromDefaults = [[DelightfulCache sharedCache] objectForKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
     
     if (cachedName) {
         if (completionHandler) {
@@ -82,7 +84,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
         if (!error) {
             if (completionHandler) {
                 NSArray *results = [dict objectForKey:@"results"];
-                
+                NSLog(@"Results : %@", results);
                 if (results && results.count > 0) {
                     NSDictionary *venue = [results firstObject];
                     NSString *location = [venue objectForKey:@"formatted_address"];
@@ -185,8 +187,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 
 - (void)cacheLocation:(NSString *)locationKey name:(NSString *)name {
     [self.locationCache setObject:name forKey:locationKey];
-    [[NSUserDefaults standardUserDefaults] setObject:name forKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[DelightfulCache sharedCache] setObject:name forKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
 }
 
 @end

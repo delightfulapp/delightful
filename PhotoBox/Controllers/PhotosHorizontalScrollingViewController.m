@@ -331,8 +331,10 @@
     PhotoInfoViewController *photoInfo = [[PhotoInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [photoInfo setPhoto:[[self currentCell] item]];
     [photoInfo setDelegate:self];
+    [photoInfo willMoveToParentViewController:self];
     [self addChildViewController:photoInfo];
     [self.view addSubview:photoInfo.view];
+    [photoInfo didMoveToParentViewController:self];
     [photoInfo.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
     
     [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{

@@ -62,6 +62,8 @@
 
 @property (nonatomic, copy, readonly) NSDate *downloadedDate;
 
+@property (nonatomic, copy, readonly) NSString *latitudeLongitudeString;
+
 @property (nonatomic, strong) UIImage *asAlbumCoverImage;
 
 @property (nonatomic, strong) UIImage *placeholderImage;

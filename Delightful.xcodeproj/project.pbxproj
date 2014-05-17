@@ -14,6 +14,8 @@
 		0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
 		0310904217D1ABED0075F9D8 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
 		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
+		0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
+		0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
 		0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
 		031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
 		031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A217D9A08000A80167 /* PhotoModelTests.m */; };
@@ -323,6 +325,8 @@
 		0310904117D1ABED0075F9D8 /* Photo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Photo.m; path = PhotoBox/Models/Photo.m; sourceTree = "<group>"; };
 		0310904317D1B2840075F9D8 /* Tag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Tag.h; path = PhotoBox/Models/Tag.h; sourceTree = "<group>"; };
 		0310904417D1B2840075F9D8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = PhotoBox/Models/Tag.m; sourceTree = "<group>"; };
+		0312305119278F9A004AFD1E /* DelightfulCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulCache.h; path = PhotoBox/Others/DelightfulCache.h; sourceTree = "<group>"; };
+		0312305219278F9A004AFD1E /* DelightfulCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulCache.m; path = PhotoBox/Others/DelightfulCache.m; sourceTree = "<group>"; };
 		0318FC0B1808087E00C32BC1 /* UIColor+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additionals.h"; sourceTree = "<group>"; };
 		0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additionals.m"; sourceTree = "<group>"; };
 		031DD29F17D99B1300A80167 /* PhotoBoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxImage.h; path = PhotoBox/Models/PhotoBoxImage.h; sourceTree = "<group>"; };
@@ -831,6 +835,8 @@
 				03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */,
 				03FD482E1920AA9C00D4ADF7 /* FavoritesManager.h */,
 				03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */,
+				0312305119278F9A004AFD1E /* DelightfulCache.h */,
+				0312305219278F9A004AFD1E /* DelightfulCache.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -1448,6 +1454,7 @@
 				03CE50EC18181D7C00445084 /* PanelFactory.m in Sources */,
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
+				0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
@@ -1553,6 +1560,7 @@
 				03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */,
 				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
 				03EFD8DC19251CD700E80A71 /* PhotoCell.m in Sources */,
+				0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
 				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
 				03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */,

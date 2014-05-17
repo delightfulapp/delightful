@@ -72,6 +72,13 @@
     return [NSString stringWithFormat:@"%dx%d", [self.width intValue], [self.height intValue]];
 }
 
+- (NSString *)latitudeLongitudeString {
+    if (self.latitude && self.longitude) {
+        return [NSString stringWithFormat:@"%@,%@", self.latitude, self.longitude];
+    }
+    return nil;
+}
+
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {

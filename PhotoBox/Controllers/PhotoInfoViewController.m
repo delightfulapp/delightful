@@ -11,6 +11,8 @@
 #import "Photo.h"
 #import "UIView+Additionals.h"
 
+#import "LocationManager.h"
+
 #define PHOTO_INFO_FONT_SIZE 12
 #define PHOTO_INFO_CLOSE_OFFSET 50
 
@@ -41,6 +43,7 @@
     [self.tableView setBackgroundColor:[UIColor clearColor]];
 
     self.sections = @[NSLocalizedString(@"Camera Data", nil), NSLocalizedString(@"Tags", nil)];
+    
     self.cameraDataSectionRows = @[
                                    @[NSLocalizedString(@"Camera Make", nil), NSStringFromSelector(@selector(exifCameraMake))],
                                    @[NSLocalizedString(@"Camera Model", nil), NSStringFromSelector(@selector(exifCameraModel))],
@@ -51,10 +54,30 @@
                                    @[NSLocalizedString(@"Dimension", nil), NSStringFromSelector(@selector(dimension))],
                                    @[NSLocalizedString(@"File Name", nil), NSStringFromSelector(@selector(filenameOriginal))],
                                    @[NSLocalizedString(@"Date Taken", nil), NSStringFromSelector(@selector(dateTakenString))],
+                                   @[NSLocalizedString(@"Location", nil), NSStringFromSelector(@selector(latitudeLongitudeString))]
                                    ];
     
     CGFloat cellHeight = [self tableView:nil heightForRowAtIndexPath:nil];
     [self.tableView setContentInset:UIEdgeInsetsMake(CGRectGetHeight(self.tableView.frame)-cellHeight*(self.cameraDataSectionRows.count+1), 0, 0, 0)];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    NSNumber *latitude = [self.photo valueForKey:@"latitude"];
+    NSNumber *longitude = [self.photo valueForKey:@"longitude"];
+    if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
+        CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+        if (location) {
+            __weak typeof (self) selfie = self;
+            [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemark, NSError *error) {
+                if (placemark && !error) {
+                    NSMutableArray *cameraDataSectionRowsCopy = [selfie.cameraDataSectionRows mutableCopy];
+                    [cameraDataSectionRowsCopy addObject:@[NSLocalizedString(@"Location Name", nil), placemark]];
+                    selfie.cameraDataSectionRows = cameraDataSectionRowsCopy;
+                    [selfie.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:selfie.cameraDataSectionRows.count-2 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
+                }
+            }];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -104,10 +127,17 @@
 
 - (void)configureCameraDataCell:(UITableViewCell *)cell forIndexPath:(NSIndexPath *)indexPath {
     NSArray *cameraDataRow = self.cameraDataSectionRows[indexPath.row];
-    id value = [self.photo valueForKey:cameraDataRow[1]];
-    if ([value isKindOfClass:[NSNumber class]]) {
-        value = [NSString stringWithFormat:@"%d", [value integerValue]];
+    NSString *key = cameraDataRow[1];
+    id value;
+    if (key && [self.photo respondsToSelector:NSSelectorFromString(key)]) {
+        value = [self.photo valueForKey:key];
+        if ([value isKindOfClass:[NSNumber class]]) {
+            value = [NSString stringWithFormat:@"%d", [value integerValue]];
+        }
+    } else {
+        value = key;
     }
+    
     cell.textLabel.attributedText = [self attributedStringForCameraData:cameraDataRow[0] value:value];
 }
 
