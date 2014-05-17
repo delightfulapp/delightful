@@ -96,13 +96,15 @@
 }
 
 - (void)addItems:(NSArray *)items {
-    [self.uniqueItems addObjectsFromArray:items];
-    
-    self.shownItems = [self processedItems];
-    
-    [self.collectionView reloadData];
-    
-    PBX_LOG(@"Number of items %d", self.flattenedItems.count);
+    if (items && items.count > 0) {
+        [self.uniqueItems addObjectsFromArray:items];
+        
+        self.shownItems = [self processedItems];
+        
+        [self.collectionView reloadData];
+        
+        PBX_LOG(@"Number of items %d", self.flattenedItems.count);
+    }
 }
 
 - (NSArray *)items {

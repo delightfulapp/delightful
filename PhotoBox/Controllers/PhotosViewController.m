@@ -50,6 +50,8 @@
 
 #import "HeaderImageView.h"
 
+#import <TMCache.h>
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -238,6 +240,11 @@
 }
 
 - (void)refreshIfNeeded {
+    if (![[ConnectionManager sharedManager] isUserLoggedIn]) {
+        [[TMCache  sharedCache] removeAllObjects];
+        [self refresh];
+        return;
+    }
     if ([self itemIsDownloadHistoryOrFavorites]) {
         [self refresh];
         return;

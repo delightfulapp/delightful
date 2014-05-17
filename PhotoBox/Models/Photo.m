@@ -13,11 +13,27 @@
 
 #import "NSObject+Additionals.h"
 #import "NSArray+Additionals.h"
+#import "MTLModel+NSCoding.h"
 
 @implementation Photo
 
 @synthesize originalImage = _originalImage;
 
+#pragma mark - NSCoding
+
++ (NSDictionary *)encodingBehaviorsByPropertyKey {
+    NSMutableDictionary *superBehaviour = [[super encodingBehaviorsByPropertyKey] mutableCopy];
+    [self ignorePropertyInBehaviour:superBehaviour propertyKey:NSStringFromSelector(@selector(placeholderImage))];
+    [self ignorePropertyInBehaviour:superBehaviour propertyKey:NSStringFromSelector(@selector(asAlbumCoverImage))];
+    
+    return superBehaviour;
+}
+
++ (void)ignorePropertyInBehaviour:(NSMutableDictionary *)behaviour propertyKey:(NSString *)propertyKey {
+    if ([behaviour objectForKey:NSStringFromSelector(@selector(placeholderImage))]) {
+        [behaviour setObject:@(MTLModelEncodingBehaviorExcluded) forKey:propertyKey];
+    }
+}
 
 #pragma mark - Getters
 

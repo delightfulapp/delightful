@@ -18,6 +18,8 @@
 
 #import <NSDate+Escort.h>
 
+#import <TMCache.h>
+
 @implementation PhotosCollection
 
 @synthesize photos = _photos;
@@ -46,22 +48,23 @@
     if (_photos) {
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_photos];
         if (data) {
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:[self cacheKey]];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [[TMCache sharedCache] setObject:data forKey:[self cacheKey] block:^(TMCache *cache, NSString *key, id object) {
+                PBX_LOG(@"Done caching photos");
+            }];
         }
     } else {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:[self cacheKey]];
+        [[TMCache sharedCache] removeObjectForKey:[self cacheKey] block:^(TMCache *cache, NSString *key, id object) {
+            
+        }];
     }
 }
 
 - (NSArray *)photos {
     if (!_photos) {
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self cacheKey]];
+        NSData *data = [[TMCache sharedCache] objectForKey:[self cacheKey]];
         if (data) {
             NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            if (array) {
-                _photos = array;
-            }
+            _photos = array;
         }
     }
     return _photos;
@@ -77,24 +80,27 @@
 
 + (void)setModelsCollection:(NSArray *)albums {
     if (!albums) {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:[self.class modelsCollectionKey]];
+        [[TMCache sharedCache] removeObjectForKey:[self.class modelsCollectionKey] block:^(TMCache *cache, NSString *key, id object) {
+            
+        }];
     } else {
+        NSString *key = [self.class modelsCollectionKey];
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:albums];
         if (data) {
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:[self.class modelsCollectionKey]];
+            [[TMCache sharedCache] setObject:data forKey:key block:^(TMCache *cache, NSString *key, id object) {
+                PBX_LOG(@"Done caching data %@", key);
+            }];
         }
     }
-    
-    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 + (NSArray *)modelsCollection {
-    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self.class modelsCollectionKey]];
-    if (!data) {
-        return nil;
+    NSData *data =  [[TMCache sharedCache] objectForKey:[self.class modelsCollectionKey]];
+    if (data) {
+        NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        return array;
     }
-    NSArray *array = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    return array;
+    return nil;
 }
 
 + (void)setModelsCollectionLastRefresh:(NSDate *)date {

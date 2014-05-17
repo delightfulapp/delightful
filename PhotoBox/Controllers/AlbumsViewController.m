@@ -25,6 +25,8 @@
 
 #import "UIViewController+Additionals.h"
 
+#import <TMCache.h>
+
 @interface AlbumsViewController () <UIActionSheetDelegate>
 
 @end
@@ -123,6 +125,11 @@
 }
 
 - (void)refreshIfNeeded {
+    if (![[ConnectionManager sharedManager] isUserLoggedIn]) {
+        [[TMCache  sharedCache] removeAllObjects];
+        [self refresh];
+        return;
+    }
     if ([[self resourceClass] needRefreshModelsCollection]) {
         [self refresh];
     } else {
