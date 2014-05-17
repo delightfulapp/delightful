@@ -148,6 +148,10 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 }
 
 - (void)logout {
+    [self logoutWithShowingLoginScreen:YES];
+}
+
+- (void)logoutWithShowingLoginScreen:(BOOL)show {
     [self deleteTokens];
     [[DownloadedImageManager sharedManager] clearHistory];
     [[FavoritesManager sharedManager] clearHistory];
@@ -161,7 +165,10 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     
     [[PhotoBoxClient sharedClient] setAccessToken:nil];
     [[PhotoBoxClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
-    [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
+    
+    if (show) {
+        [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
+    }
 }
 
 - (BOOL)isUserLoggingIn {

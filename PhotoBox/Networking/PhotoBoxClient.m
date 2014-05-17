@@ -212,7 +212,12 @@
         if (!error) {
             successBlock(responseObject);
         } else {
-            failureBlock(error);
+            if (operation.response.statusCode == 401) {
+                [[ConnectionManager sharedManager] logout];
+            } else {
+                failureBlock(error);
+            }
+
         }
     }];
 }
