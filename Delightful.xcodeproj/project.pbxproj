@@ -16,6 +16,10 @@
 		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
 		0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
 		0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
+		031230571927C613004AFD1E /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031230561927C613004AFD1E /* InfoTableViewCell.m */; };
+		031230581927C613004AFD1E /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031230561927C613004AFD1E /* InfoTableViewCell.m */; };
+		0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031230591927C627004AFD1E /* InfoTableViewCell.xib */; };
+		0312305B1927C627004AFD1E /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031230591927C627004AFD1E /* InfoTableViewCell.xib */; };
 		0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
 		031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
 		031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A217D9A08000A80167 /* PhotoModelTests.m */; };
@@ -327,6 +331,9 @@
 		0310904417D1B2840075F9D8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = PhotoBox/Models/Tag.m; sourceTree = "<group>"; };
 		0312305119278F9A004AFD1E /* DelightfulCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulCache.h; path = PhotoBox/Others/DelightfulCache.h; sourceTree = "<group>"; };
 		0312305219278F9A004AFD1E /* DelightfulCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulCache.m; path = PhotoBox/Others/DelightfulCache.m; sourceTree = "<group>"; };
+		031230551927C613004AFD1E /* InfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoTableViewCell.h; path = PhotoBox/Views/InfoTableViewCell.h; sourceTree = "<group>"; };
+		031230561927C613004AFD1E /* InfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoTableViewCell.m; path = PhotoBox/Views/InfoTableViewCell.m; sourceTree = "<group>"; };
+		031230591927C627004AFD1E /* InfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InfoTableViewCell.xib; path = PhotoBox/Views/InfoTableViewCell.xib; sourceTree = "<group>"; };
 		0318FC0B1808087E00C32BC1 /* UIColor+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additionals.h"; sourceTree = "<group>"; };
 		0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additionals.m"; sourceTree = "<group>"; };
 		031DD29F17D99B1300A80167 /* PhotoBoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxImage.h; path = PhotoBox/Models/PhotoBoxImage.h; sourceTree = "<group>"; };
@@ -939,6 +946,9 @@
 				0396BDE619227461004B6290 /* HintPinch.xib */,
 				0396BDE81922757E004B6290 /* Hint-Side.xib */,
 				0396BDEA1922772E004B6290 /* Hint-CloseInfo.xib */,
+				031230551927C613004AFD1E /* InfoTableViewCell.h */,
+				031230561927C613004AFD1E /* InfoTableViewCell.m */,
+				031230591927C627004AFD1E /* InfoTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1149,6 +1159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
+				0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
 				0396BDEB1922772E004B6290 /* Hint-CloseInfo.xib in Resources */,
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
@@ -1210,6 +1221,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03EFD92A19251CD700E80A71 /* upload.png in Resources */,
+				0312305B1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
 				03EFD92B19251CD700E80A71 /* Hint-CloseInfo.xib in Resources */,
 				03EFD92C19251CD700E80A71 /* 0.0.2.plist in Resources */,
 				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
@@ -1458,6 +1470,7 @@
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
+				031230571927C613004AFD1E /* InfoTableViewCell.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
 				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
@@ -1564,6 +1577,7 @@
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
 				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
 				03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */,
+				031230581927C613004AFD1E /* InfoTableViewCell.m in Sources */,
 				03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */,
 				03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */,
 				03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */,

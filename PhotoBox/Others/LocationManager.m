@@ -26,7 +26,6 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) NSOperationQueue *queue;
-@property (nonatomic, strong) NSMutableDictionary *locationCache;
 
 @end
 
@@ -46,8 +45,6 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 - (void)setup {
     _queue = [[NSOperationQueue alloc] init];
     [_queue setMaxConcurrentOperationCount:1];
-    
-    _locationCache = [[NSMutableDictionary alloc] init];
 }
 
 - (void)nameForLocation:(CLLocation*)location completionHandler:(void(^)(NSString* placemark, NSError* error))completionHandler {
@@ -55,15 +52,9 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
     NSString *longi = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
     NSString *locationKey = [NSString stringWithFormat:@"%@,%@", lat,longi];
     
-    NSString *cachedName = [self.locationCache objectForKey:locationKey];
     NSString *cachedNameFromDefaults = [[DelightfulCache sharedCache] objectForKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
     
-    if (cachedName) {
-        if (completionHandler) {
-            completionHandler(cachedName, nil);
-        }
-        return;
-    } else if (cachedNameFromDefaults) {
+    if (cachedNameFromDefaults) {
         if (completionHandler) {
             completionHandler(cachedNameFromDefaults, nil);
         }
@@ -74,7 +65,9 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
     
     //NSString *urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?client_id=%@&client_secret=%@&ll=%@,%@&v=%@&limit=1", FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET, lat, longi, FOURSQUARE_API_VERSION_DATE];
     
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%@&sensor=true&key=%@&result_type=locality", locationKey, GOOGLE_API_KEY];
+    NSString *resultType = @"locality|political";
+    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%@&sensor=true&key=%@&result_type=%@", locationKey, GOOGLE_API_KEY, [resultType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"Seraching location %@", urlString);
     NSURL *URL = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -84,7 +77,6 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
         if (!error) {
             if (completionHandler) {
                 NSArray *results = [dict objectForKey:@"results"];
-                NSLog(@"Results : %@", results);
                 if (results && results.count > 0) {
                     NSDictionary *venue = [results firstObject];
                     NSString *location = [venue objectForKey:@"formatted_address"];
@@ -186,7 +178,6 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 }
 
 - (void)cacheLocation:(NSString *)locationKey name:(NSString *)name {
-    [self.locationCache setObject:name forKey:locationKey];
     [[DelightfulCache sharedCache] setObject:name forKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
 }
 
