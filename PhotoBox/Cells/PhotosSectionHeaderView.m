@@ -62,6 +62,7 @@
 
 - (void)setupConstrains {
     [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
+    [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10 relation:NSLayoutRelationGreaterThanOrEqual];
     NSLayoutConstraint * constraint = [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [constraint setPriority:100];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
