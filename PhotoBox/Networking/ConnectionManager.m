@@ -12,6 +12,7 @@
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
 #import "HintsViewController.h"
+#import <TMCache.h>
 
 NSString *baseURLUserDefaultKey = @"photobox.base.url";
 NSString *consumerTokenIdentifier = @"photobox.consumer.token";
@@ -152,6 +153,7 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [[FavoritesManager sharedManager] clearHistory];
     self.baseURL = nil;
     
+    [[TMCache sharedCache] removeAllObjects:nil];
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
     

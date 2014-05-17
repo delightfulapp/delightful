@@ -208,7 +208,7 @@
 
 - (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     return [self GET:path parameters:parameters resultClass:resultClass resultKeyPath:keyPath completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-        NSLog(@"Fetched responses");
+        PBX_LOG(@"Fetched responses");
         if (!error) {
             successBlock(responseObject);
         } else {

@@ -92,7 +92,7 @@
                                           format:&format
                                           errorDescription:&errorDesc];
     if (!temp) {
-        NSLog(@"Error reading plist: %@, format: %d", errorDesc, format);
+        PBX_LOG(@"Error reading plist: %@, format: %d", errorDesc, format);
     }
     return temp;
 }

@@ -66,23 +66,23 @@
          ^(FBWebDialogResult result, NSURL *resultURL, NSError *error) {
              if (error) {
                  // Error launching the dialog or publishing a story.
-                 NSLog(@"Error publishing story.");
+                 PBX_LOG(@"Error publishing story.");
              } else {
                  if (result == FBWebDialogResultDialogNotCompleted) {
                      // User clicked the "x" icon
-                     NSLog(@"User canceled story publishing.");
+                     PBX_LOG(@"User canceled story publishing.");
                  } else {
                      // Handle the publish feed callback
                      NSDictionary *urlParams = [self parseURLParams:[resultURL query]];
                      if (![urlParams valueForKey:@"post_id"]) {
                          // User clicked the Cancel button
-                         NSLog(@"User canceled story publishing.");
+                         PBX_LOG(@"User canceled story publishing.");
                      } else {
                          // User clicked the Share button
                          NSString *msg = [NSString stringWithFormat:
                                           @"Posted story, id: %@",
                                           [urlParams valueForKey:@"post_id"]];
-                         NSLog(@"%@", msg);
+                         PBX_LOG(@"%@", msg);
                          // Show the result in an alert
                          
                      }

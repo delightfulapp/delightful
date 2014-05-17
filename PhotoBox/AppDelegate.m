@@ -60,6 +60,17 @@
 //    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kFavoritesManagerKey"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
     
+    NSString *previousAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:APP_VERSION_KEY];
+    if (previousAppVersion) {
+        previousAppVersion = [[previousAppVersion componentsSeparatedByString:@" "] firstObject];
+        if ([previousAppVersion isEqualToString:@"1.0.0"]) {
+            [[ConnectionManager sharedManager] logout];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update Note" message:NSLocalizedString(@"There is caching improvement in this update but you need to be logged out of the app. Please login again. Sorry for the inconvenience.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
+            [alert show];
+        }
+    }
+    
+    
     PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -86,12 +97,6 @@
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
     
-    //[self showUpdateInfoViewIfNeeded];
-    
-//    HintsViewController *hints = [[HintsViewController alloc] init];
-//    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
-//    [rootViewController presentViewController:navCon animated:YES completion:nil];
-    
     return YES;
 }
 							
@@ -107,7 +112,7 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     
     NSString *appVersion = [NSString stringWithFormat:@"%@ %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    NSLog(@"App version: %@", appVersion);
+    PBX_LOG(@"App version: %@", appVersion);
     [[NSUserDefaults standardUserDefaults] setObject:appVersion forKey:APP_VERSION_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
@@ -182,7 +187,7 @@ static BOOL isRunningTests(void)
             NSString *apiKey = [dict objectForKey:@"key"];
             if (apiKey && apiKey.length > 0) {
                 if (![Crashlytics startWithAPIKey:apiKey]) {
-                    NSLog(@"No crashlytics");
+                    PBX_LOG(@"No crashlytics");
                 }
             }
         }

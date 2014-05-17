@@ -102,7 +102,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
                 if (sorted) {
                     venues = sorted;
                 } else venues = unsortedVenues;
-                NSLog(@"%@", venues);
+                PBX_LOG(@"%@", venues);
                 if (venues && venues.count > 0) {
                     NSDictionary *venue = [venues firstObject];
                     
@@ -158,7 +158,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
             }
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", error);
+        PBX_LOG(@"Error: %@", error);
     }];
     [[NSOperationQueue mainQueue] addOperation:op];
     

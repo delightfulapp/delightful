@@ -30,7 +30,7 @@
 }
 
 + (void)ignorePropertyInBehaviour:(NSMutableDictionary *)behaviour propertyKey:(NSString *)propertyKey {
-    if ([behaviour objectForKey:NSStringFromSelector(@selector(placeholderImage))]) {
+    if ([behaviour objectForKey:propertyKey]) {
         [behaviour setObject:@(MTLModelEncodingBehaviorExcluded) forKey:propertyKey];
     }
 }
