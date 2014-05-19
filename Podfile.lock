@@ -4,7 +4,7 @@ PODS:
     - AFNetworking (~> 1.3)
   - Expecta (0.2.4)
   - GPUImage (0.1.4)
-  - JASidePanels (1.3.2)
+  - JASidePanels (1.1.1)
   - Mantle (1.4.1):
     - Mantle/extobjc
   - Mantle/extobjc (1.4.1)
@@ -25,29 +25,33 @@ PODS:
   - UIView+AutoLayout (1.3.0)
 
 DEPENDENCIES:
-  - AFOAuth1Client
+  - AFOAuth1Client (= 0.3.3)
   - Expecta (~> 0.2.3)
-  - GPUImage
-  - JASidePanels
+  - GPUImage (= 0.1.4)
+  - JASidePanels (from `https://github.com/nicnocquee/JASidePanels`)
   - Mantle (= 1.4.1)
-  - MYBlurIntroductionView (~> 1.0.0)
-  - NSDate+TimeAgo
-  - NSDate-Escort
+  - MYBlurIntroductionView (= 1.0.3)
+  - NSDate+TimeAgo (= 1.0.3)
+  - NSDate-Escort (= 1.3.0)
   - OCMock (~> 2.2.1)
   - Overcoat (= 1.1)
   - SDWebImage (= 3.5)
-  - SVProgressHUD
-  - TMCache
-  - TUSafariActivity
-  - UIImageViewModeScaleAspect
-  - UIView+AutoLayout
+  - SVProgressHUD (= 1.0)
+  - TMCache (= 1.2.0)
+  - TUSafariActivity (= 1.0.0)
+  - UIImageViewModeScaleAspect (= 1.3)
+  - UIView+AutoLayout (= 1.3.0)
+
+EXTERNAL SOURCES:
+  JASidePanels:
+    :git: https://github.com/nicnocquee/JASidePanels
 
 SPEC CHECKSUMS:
   AFNetworking: e403d4333a4e1956cb3fe42364c3c879f820c9a0
   AFOAuth1Client: 8b06e54087732068e19c4efcd7bed5d74bc9538a
   Expecta: 5c147dedfea5fbcf773995f7e65020abcc936ce5
   GPUImage: f9b32e12350792a630e596ffc7b050bea3662670
-  JASidePanels: c0e642a7311ec9cc9adfa616fa4a795e4e169f20
+  JASidePanels: fa574aef328c8780a49100bdb5ed4f4ba6c5b265
   Mantle: 0714cdb2b8559d9e6c2410d6a8529e3307bff189
   MYBlurIntroductionView: 0ed5699c570ceb1cdfc86dc6cf7dae869950d677
   NSDate+TimeAgo: ca09306750ac2564418042aa10cf8365c36d2cee

@@ -14,6 +14,7 @@
 
 @interface PanelsContainerViewController ()
 
+
 @end
 
 @implementation PanelsContainerViewController
@@ -29,12 +30,16 @@
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    
 	// Do any additional setup after loading the view.
     
     [self addObserver:self forKeyPath:NSStringFromSelector(@selector(state)) options:0 context:nil];
     
     self.shouldResizeLeftPanel = YES;
+    
+    self.leftPanelXOffset = 30;
+    
+    [super viewDidLoad];
 }
 
 - (void)didReceiveMemoryWarning
@@ -71,6 +76,9 @@
         [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     }
 }
+
+
+#pragma mark - Observer
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(state))]) {

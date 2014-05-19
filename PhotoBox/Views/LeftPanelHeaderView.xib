@@ -74,7 +74,6 @@
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="centerY" secondItem="M9l-MP-iqA" secondAttribute="centerY" id="Bb9-Zz-ZZ8"/>
                 <constraint firstItem="n4q-Kz-wQu" firstAttribute="top" secondItem="ixM-wn-jMC" secondAttribute="top" constant="10" id="C9g-cK-XSa"/>
                 <constraint firstItem="0u2-ZJ-Hmc" firstAttribute="bottom" secondItem="n4q-Kz-wQu" secondAttribute="bottom" constant="5" id="Cwn-yJ-PbU"/>
-                <constraint firstItem="nRO-bt-CQu" firstAttribute="trailing" secondItem="Hia-Ol-ucS" secondAttribute="trailing" id="DVE-Ha-3hi"/>
                 <constraint firstAttribute="trailing" secondItem="0u2-ZJ-Hmc" secondAttribute="trailing" id="MEA-a3-Jhn"/>
                 <constraint firstItem="nRO-bt-CQu" firstAttribute="leading" secondItem="n4q-Kz-wQu" secondAttribute="leading" id="O17-vS-Nng"/>
                 <constraint firstItem="Hia-Ol-ucS" firstAttribute="centerY" secondItem="Jt9-h9-NaT" secondAttribute="centerY" id="Qnm-Ny-OXm"/>
@@ -90,6 +89,7 @@
                 <constraint firstItem="0u2-ZJ-Hmc" firstAttribute="top" secondItem="ixM-wn-jMC" secondAttribute="top" id="nDI-Cs-Ln7"/>
                 <constraint firstItem="vqK-VI-tf3" firstAttribute="centerY" secondItem="Hia-Ol-ucS" secondAttribute="centerY" id="oaa-xF-f3B"/>
                 <constraint firstAttribute="trailing" secondItem="n4q-Kz-wQu" secondAttribute="trailing" constant="20" id="ooK-j4-NwI"/>
+                <constraint firstItem="n4q-Kz-wQu" firstAttribute="trailing" secondItem="Hia-Ol-ucS" secondAttribute="trailing" id="tOi-0N-X9b"/>
                 <constraint firstItem="1qd-HS-1mp" firstAttribute="centerY" secondItem="nRO-bt-CQu" secondAttribute="centerY" id="tcN-Cb-FIp"/>
                 <constraint firstItem="0u2-ZJ-Hmc" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" id="u37-Zf-4Bd"/>
                 <constraint firstItem="1qd-HS-1mp" firstAttribute="leading" secondItem="ixM-wn-jMC" secondAttribute="leading" id="wz4-gT-aO2"/>
