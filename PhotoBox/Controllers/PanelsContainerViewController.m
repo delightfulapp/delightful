@@ -37,7 +37,7 @@
     
     self.shouldResizeLeftPanel = YES;
     
-    self.leftPanelXOffset = 30;
+    self.leftPanelXOffset = 0;
     
     [super viewDidLoad];
 }
