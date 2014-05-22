@@ -11,6 +11,7 @@
 #import "ConnectionManager.h"
 #import "NSString+Additionals.h"
 #import "UIView+Additionals.h"
+#import "LoginWebViewViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
@@ -84,7 +85,14 @@
         [textField setEnabled:NO];
         [self.activityView startAnimating];
         [self.view endEditing:YES];
-        [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
+        NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
+        LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
+        [loginWebView setInitialURL:url];
+        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
+        [self presentViewController:navCon animated:YES completion:^{
+            [textField setEnabled:YES];
+            [self.activityView stopAnimating];
+        }];
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
         [alert show];

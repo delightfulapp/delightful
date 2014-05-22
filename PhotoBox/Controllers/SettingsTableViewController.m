@@ -48,8 +48,7 @@
                      @{@"title": NSLocalizedString(@"Delightful on Twitter", nil), @"detail": @"@delightfulapp"},
                      @{@"title": NSLocalizedString(@"Created by Nico", nil), @"detail": @"@nicnocquee"},
                      @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @""}],
-                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}],
-                   @[@{@"title": NSLocalizedString(@"About Trovebox", nil), @"detail": @""}]
+                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}]
                    ];
 }
 

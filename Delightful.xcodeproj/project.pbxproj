@@ -90,6 +90,10 @@
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
+		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
+		0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
+		03651610192DE9E20042C1B6 /* LoginWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */; };
+		03651611192DE9E20042C1B6 /* LoginWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */; };
 		036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF362181A850C002E9FCB /* 0.0.3.plist */; };
 		036DF365181AA60B002E9FCB /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 036DF364181AA60B002E9FCB /* info@2x.png */; };
 		036DF368181F65D8002E9FCB /* PhotoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */; };
@@ -438,6 +442,9 @@
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
+		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
+		0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginWebViewViewController.m; path = PhotoBox/Controllers/LoginWebViewViewController.m; sourceTree = "<group>"; };
+		0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginWebViewViewController.xib; path = PhotoBox/Views/LoginWebViewViewController.xib; sourceTree = "<group>"; };
 		036DF362181A850C002E9FCB /* 0.0.3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.3.plist; path = PhotoBox/IntroFiles/0.0.3.plist; sourceTree = "<group>"; };
 		036DF364181AA60B002E9FCB /* info@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info@2x.png"; sourceTree = "<group>"; };
 		036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoInfoViewController.h; path = PhotoBox/Controllers/PhotoInfoViewController.h; sourceTree = "<group>"; };
@@ -880,6 +887,8 @@
 				03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */,
 				0396BDEC19227804004B6290 /* HintsViewController.h */,
 				0396BDED19227804004B6290 /* HintsViewController.m */,
+				0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */,
+				0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -949,6 +958,7 @@
 				031230551927C613004AFD1E /* InfoTableViewCell.h */,
 				031230561927C613004AFD1E /* InfoTableViewCell.m */,
 				031230591927C627004AFD1E /* InfoTableViewCell.xib */,
+				0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1193,6 +1203,7 @@
 				0396BDD71921ABAE004B6290 /* refresh@2x.png in Resources */,
 				0348D23017DA263500C932BA /* Crashlytics.plist in Resources */,
 				03FD48371920B27300D4ADF7 /* star-fill.png in Resources */,
+				03651610192DE9E20042C1B6 /* LoginWebViewViewController.xib in Resources */,
 				03CE50F7181838B700445084 /* shareicons.ttf in Resources */,
 				03FD48341920ABE000D4ADF7 /* star.png in Resources */,
 				032222B71814CBF0004F3830 /* npr_notification_image_error.png in Resources */,
@@ -1255,6 +1266,7 @@
 				03EFD94D19251CD700E80A71 /* refresh@2x.png in Resources */,
 				03EFD94E19251CD700E80A71 /* Crashlytics.plist in Resources */,
 				03EFD94F19251CD700E80A71 /* star-fill.png in Resources */,
+				03651611192DE9E20042C1B6 /* LoginWebViewViewController.xib in Resources */,
 				03EFD95019251CD700E80A71 /* shareicons.ttf in Resources */,
 				03EFD95119251CD700E80A71 /* star.png in Resources */,
 				03EFD95219251CD700E80A71 /* npr_notification_image_error.png in Resources */,
@@ -1484,6 +1496,7 @@
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
+				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */,
 				03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
@@ -1591,6 +1604,7 @@
 				03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
+				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
 				03EFD8EE19251CD700E80A71 /* LeftViewController.m in Sources */,
 				03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */,

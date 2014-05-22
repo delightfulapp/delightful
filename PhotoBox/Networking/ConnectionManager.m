@@ -175,14 +175,16 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     return [[NSUserDefaults standardUserDefaults] boolForKey:IS_USER_LOGGING_IN_KEY];
 }
 
-- (void)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
+- (NSURL *)startOAuthAuthorizationWithServerURL:(NSString *)serverStringURL {
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:IS_USER_LOGGING_IN_KEY];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [self setBaseURL:[NSURL URLWithString:serverStringURL]];
     [[PhotoBoxClient sharedClient] setValue:self.baseURL forKey:@"baseURL"];
     NSAssert([[[[PhotoBoxClient sharedClient] baseURL] absoluteString] isEqualToString:self.baseURL.absoluteString], @"Expected base url: %@. Actual: %@", self.baseURL.absoluteString, [[[PhotoBoxClient sharedClient] baseURL] absoluteString]);
-    [[UIApplication sharedApplication] openURL:[[self class] oAuthInitialUrlForServer:serverStringURL]];
+    //[[UIApplication sharedApplication] openURL:[[self class] oAuthInitialUrlForServer:serverStringURL]];
+    
+    return [[self class] oAuthInitialUrlForServer:serverStringURL];
 }
 
 - (void)continueOauthAuthorizationWithQuery:(NSString *)query {

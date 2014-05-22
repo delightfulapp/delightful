@@ -26,15 +26,15 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.photobox</string>
+			<string>com.getdelightfulapp</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>photoboxbaby</string>
+				<string>delightful</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2489</string>
+	<string>2498</string>
 	<key>FacebookAppID</key>
 	<string>378582835605137</string>
 	<key>FacebookDisplayName</key>

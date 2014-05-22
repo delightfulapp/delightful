@@ -71,13 +71,6 @@
                                 <rect key="frame" x="142" y="413" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trovebox account or self hosted Trovebox server is required to use this app." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="235" translatesAutoresizingMaskIntoConstraints="NO" id="c6f-wu-bDs">
-                                <rect key="frame" x="18" y="529" width="235" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="italicSystem" pointSize="12"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trovebox account or self hosted trovebox server URL" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="0ps-1Z-HAn">
                                 <rect key="frame" x="45" y="317" width="231" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -85,11 +78,6 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="info.png" translatesAutoresizingMaskIntoConstraints="NO" id="aGY-wW-bqr">
-                                <rect key="frame" x="275" y="531" width="25" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
@@ -97,7 +85,6 @@
                             <constraint firstItem="cpG-xU-tbV" firstAttribute="centerX" secondItem="o85-wA-I2t" secondAttribute="centerX" id="1BC-na-epl"/>
                             <constraint firstItem="0ps-1Z-HAn" firstAttribute="leading" secondItem="8u9-Qt-Zwp" secondAttribute="leading" id="1qD-es-84q"/>
                             <constraint firstItem="o85-wA-I2t" firstAttribute="top" secondItem="hp0-Tb-fwb" secondAttribute="bottom" constant="77" id="3Gi-dT-gXC"/>
-                            <constraint firstItem="c6f-wu-bDs" firstAttribute="leading" secondItem="nzJ-iX-cbD" secondAttribute="leading" constant="18" id="7LS-dh-4mQ"/>
                             <constraint firstAttribute="centerX" secondItem="o85-wA-I2t" secondAttribute="centerX" constant="-0.5" id="Bku-j0-cR8"/>
                             <constraint firstItem="nrr-cA-3go" firstAttribute="width" secondItem="nzJ-iX-cbD" secondAttribute="width" constant="50" id="E5R-Tw-fGV"/>
                             <constraint firstAttribute="centerY" secondItem="8u9-Qt-Zwp" secondAttribute="centerY" id="GIm-Pc-OeE"/>
@@ -110,11 +97,8 @@
                             <constraint firstItem="cpG-xU-tbV" firstAttribute="top" secondItem="o85-wA-I2t" secondAttribute="bottom" constant="-2" id="giv-ai-RPW"/>
                             <constraint firstAttribute="centerX" secondItem="nrr-cA-3go" secondAttribute="centerX" id="i3K-1G-eDE"/>
                             <constraint firstItem="0ps-1Z-HAn" firstAttribute="trailing" secondItem="8u9-Qt-Zwp" secondAttribute="trailing" id="k78-Ya-Fn1"/>
-                            <constraint firstItem="aGY-wW-bqr" firstAttribute="centerY" secondItem="c6f-wu-bDs" secondAttribute="centerY" id="kqo-Dg-n6m"/>
-                            <constraint firstAttribute="trailing" secondItem="aGY-wW-bqr" secondAttribute="trailing" constant="20" id="l3S-L4-9Zp"/>
                             <constraint firstAttribute="trailing" secondItem="o85-wA-I2t" secondAttribute="trailing" constant="44" id="l9Y-dN-biI"/>
                             <constraint firstAttribute="centerX" secondItem="8u9-Qt-Zwp" secondAttribute="centerX" constant="-0.5" id="pcQ-G1-EQK"/>
-                            <constraint firstItem="CKg-v4-fyG" firstAttribute="top" secondItem="c6f-wu-bDs" secondAttribute="bottom" constant="10" id="sXw-y5-RPM"/>
                             <constraint firstItem="nrr-cA-3go" firstAttribute="height" secondItem="nzJ-iX-cbD" secondAttribute="height" constant="50" id="vF3-Cu-oDg"/>
                             <constraint firstAttribute="trailing" secondItem="8u9-Qt-Zwp" secondAttribute="trailing" constant="44" id="vXW-MU-eUK"/>
                             <constraint firstAttribute="trailing" secondItem="cpG-xU-tbV" secondAttribute="trailing" constant="44" id="ycM-Nk-Oyk"/>
@@ -127,7 +111,6 @@
                     <connections>
                         <outlet property="activityView" destination="2gu-0v-pEg" id="uSZ-k6-j6e"/>
                         <outlet property="backgroundImageView" destination="nrr-cA-3go" id="fyc-zM-c4S"/>
-                        <outlet property="infoButton" destination="aGY-wW-bqr" id="8xq-Pj-J4t"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IN0-KN-Xt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -137,7 +120,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="572" y="-849"/>
+            <point key="canvasLocation" x="553" y="-849"/>
         </scene>
         <!--Photo Box View Controller-->
         <scene sceneID="xLT-Np-YI3">
@@ -383,7 +366,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="info.png" width="25" height="25"/>
         <image name="loginbackground.jpg" width="640" height="1136"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
