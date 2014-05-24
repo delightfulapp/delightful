@@ -60,16 +60,16 @@
 //    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kFavoritesManagerKey"];
 //    [[NSUserDefaults standardUserDefaults] synchronize];
     
-    NSString *previousAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:APP_VERSION_KEY];
-    if (previousAppVersion) {
-        previousAppVersion = [[previousAppVersion componentsSeparatedByString:@" "] firstObject];
-        if ([previousAppVersion isEqualToString:@"1.0.0"]) {
-            [[ConnectionManager sharedManager] logoutWithShowingLoginScreen:NO];
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update v1.0.1" message:NSLocalizedString(@"There is caching improvement in this update but you need to be logged out of the app. Please login again. Sorry for the inconvenience.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
-            [alert show];
-        }
-    }
+//    NSString *previousAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:APP_VERSION_KEY];
+//    if (previousAppVersion) {
+//        previousAppVersion = [[previousAppVersion componentsSeparatedByString:@" "] firstObject];
+//        if ([previousAppVersion isEqualToString:@"1.0.0"]) {
+//            [[ConnectionManager sharedManager] logoutWithShowingLoginScreen:NO];
+//            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update v1.0.1" message:NSLocalizedString(@"There is caching improvement in this update but you need to be logged out of the app. Please login again. Sorry for the inconvenience.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
+//            [alert show];
+//        }
+//    }
     
     PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
     
