@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+#import "UIViewControllerModalDelegate.h"
+
 @interface LoginWebViewViewController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 @property (nonatomic, strong) NSURL *initialURL;
+
+@property (nonatomic, weak) id<UIViewControllerModalDelegate>viewControllerDelegate;
 
 @end

@@ -541,6 +541,7 @@
 		03CE5102181842F200445084 /* SharerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharerManager.m; path = PhotoBox/Others/SharerManager.m; sourceTree = "<group>"; };
 		03D311B01930B775003DE5FC /* FallingTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FallingTransitioningDelegate.h; path = PhotoBox/Controllers/FallingTransitioningDelegate.h; sourceTree = "<group>"; };
 		03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FallingTransitioningDelegate.m; path = PhotoBox/Controllers/FallingTransitioningDelegate.m; sourceTree = "<group>"; };
+		03D311B4193204BD003DE5FC /* UIViewControllerModalDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UIViewControllerModalDelegate.h; path = PhotoBox/Controllers/UIViewControllerModalDelegate.h; sourceTree = "<group>"; };
 		03D972A018115705008A087B /* SharingTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharingTokenTests.m; sourceTree = "<group>"; };
 		03D972A51811865A008A087B /* Photo+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Photo+Additionals.h"; sourceTree = "<group>"; };
 		03D972A61811865A008A087B /* Photo+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photo+Additionals.m"; sourceTree = "<group>"; };
@@ -893,6 +894,7 @@
 				0396BDED19227804004B6290 /* HintsViewController.m */,
 				0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */,
 				0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */,
+				03D311B4193204BD003DE5FC /* UIViewControllerModalDelegate.h */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";

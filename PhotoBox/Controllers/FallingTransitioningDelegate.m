@@ -21,13 +21,11 @@
 @implementation FallingTransitioningDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
     self.isPresentingTransition = YES;
     return self;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     self.isPresentingTransition = NO;
     return self;
 }
@@ -43,6 +41,8 @@
     
     UIView *containerView = [transitionContext containerView];
     
+    toVC.view.frame = containerView.bounds;
+    
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:containerView];
     
     [self.animator setDelegate:self];
@@ -50,9 +50,9 @@
     UICollisionBehavior* collisionBehavior;
     
     if (self.isPresentingTransition) {
-        toVC.view.frame = CGRectOffset(containerView.bounds, 0, -CGRectGetHeight(toVC.view.frame)-100);
-        
         [containerView addSubview:toVC.view];
+        
+        toVC.view.frame = CGRectOffset(containerView.bounds, 0, -CGRectGetHeight(toVC.view.frame)-100);
         
         UIGravityBehavior* gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[toVC.view]];
         [gravityBehavior setGravityDirection:CGVectorMake(0, 3)];

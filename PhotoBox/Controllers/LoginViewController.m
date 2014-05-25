@@ -13,10 +13,10 @@
 #import "UIView+Additionals.h"
 #import "LoginWebViewViewController.h"
 #import "FallingTransitioningDelegate.h"
-
+#import "UIViewControllerModalDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface LoginViewController ()
+@interface LoginViewController () <UIViewControllerModalDelegate>
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 
@@ -51,10 +51,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (void)didReceiveMemoryWarning
@@ -98,16 +94,17 @@
         [self.view endEditing:YES];
         NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
         LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
+        [loginWebView setViewControllerDelegate:self];
         [loginWebView setInitialURL:url];
         if (!self.fallingTransitioningDelegate) {
             FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
             self.fallingTransitioningDelegate = falling;
         }
         
-        
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
         [navCon setModalPresentationStyle:UIModalPresentationCustom];
         [navCon setTransitioningDelegate:self.fallingTransitioningDelegate];
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
         [self presentViewController:navCon animated:YES completion:^{
             [textField setEnabled:YES];
             [self.activityView stopAnimating];
@@ -117,6 +114,12 @@
         [alert show];
     }
     return YES;
+}
+
+#pragma mark - UIViewControllerModalDelegate
+
+- (void)viewController:(id)viewController didTapDismissButton:(id)sender {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
 
 @end

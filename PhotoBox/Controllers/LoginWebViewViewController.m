@@ -48,6 +48,9 @@
 }
 
 - (void)cancelButtonTapped:(id)sender {
+    if (self.viewControllerDelegate && [self.viewControllerDelegate respondsToSelector:@selector(viewController:didTapDismissButton:)]) {
+        [self.viewControllerDelegate viewController:self didTapDismissButton:sender];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
