@@ -12,10 +12,13 @@
 #import "NSString+Additionals.h"
 #import "UIView+Additionals.h"
 #import "LoginWebViewViewController.h"
+#import "FallingTransitioningDelegate.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 @interface LoginViewController ()
+
+@property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 
 @end
 
@@ -44,6 +47,14 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infoButtonTapped:)];
     [self.infoButton setUserInteractionEnabled:YES];
     [self.infoButton addGestureRecognizer:tap];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (void)didReceiveMemoryWarning
@@ -88,7 +99,15 @@
         NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
         LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
         [loginWebView setInitialURL:url];
+        if (!self.fallingTransitioningDelegate) {
+            FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
+            self.fallingTransitioningDelegate = falling;
+        }
+        
+        
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
+        [navCon setModalPresentationStyle:UIModalPresentationCustom];
+        [navCon setTransitioningDelegate:self.fallingTransitioningDelegate];
         [self presentViewController:navCon animated:YES completion:^{
             [textField setEnabled:YES];
             [self.activityView stopAnimating];

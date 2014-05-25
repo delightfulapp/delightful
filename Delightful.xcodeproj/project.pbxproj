@@ -153,6 +153,8 @@
 		03CE50F7181838B700445084 /* shareicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50F6181838B700445084 /* shareicons.ttf */; };
 		03CE50FA18183A6000445084 /* SeeThroughCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F918183A6000445084 /* SeeThroughCircleView.m */; };
 		03CE5103181842F200445084 /* SharerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE5102181842F200445084 /* SharerManager.m */; };
+		03D311B21930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */; };
+		03D311B31930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */; };
 		03D972A118115705008A087B /* SharingTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A018115705008A087B /* SharingTokenTests.m */; };
 		03D972A71811865A008A087B /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
 		03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A9181188CE008A087B /* PhotoSharingManager.m */; };
@@ -537,6 +539,8 @@
 		03CE50F918183A6000445084 /* SeeThroughCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SeeThroughCircleView.m; path = PhotoBox/IntroFiles/SeeThroughCircleView.m; sourceTree = "<group>"; };
 		03CE5101181842F200445084 /* SharerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SharerManager.h; path = PhotoBox/Others/SharerManager.h; sourceTree = "<group>"; };
 		03CE5102181842F200445084 /* SharerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SharerManager.m; path = PhotoBox/Others/SharerManager.m; sourceTree = "<group>"; };
+		03D311B01930B775003DE5FC /* FallingTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FallingTransitioningDelegate.h; path = PhotoBox/Controllers/FallingTransitioningDelegate.h; sourceTree = "<group>"; };
+		03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FallingTransitioningDelegate.m; path = PhotoBox/Controllers/FallingTransitioningDelegate.m; sourceTree = "<group>"; };
 		03D972A018115705008A087B /* SharingTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharingTokenTests.m; sourceTree = "<group>"; };
 		03D972A51811865A008A087B /* Photo+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Photo+Additionals.h"; sourceTree = "<group>"; };
 		03D972A61811865A008A087B /* Photo+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Photo+Additionals.m"; sourceTree = "<group>"; };
@@ -981,6 +985,8 @@
 				035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */,
 				035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */,
 				035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */,
+				03D311B01930B775003DE5FC /* FallingTransitioningDelegate.h */,
+				03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -1467,6 +1473,7 @@
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */,
+				03D311B21930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
 				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
@@ -1575,6 +1582,7 @@
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
 				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
 				03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */,
+				03D311B31930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
 				03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */,
 				03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */,
 				03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */,

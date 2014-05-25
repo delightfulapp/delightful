@@ -16,6 +16,7 @@ pod 'SVProgressHUD', '1.0'
 pod 'TUSafariActivity', '1.0.0'
 pod 'TMCache', '1.2.0'
 pod 'MYBlurIntroductionView', '1.0.3'
+pod 'pop', '1.0.2'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

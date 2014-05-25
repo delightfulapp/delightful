@@ -15,6 +15,7 @@ PODS:
   - Overcoat (1.1):
     - AFNetworking (~> 1.3.1)
     - Mantle (~> 1.3)
+  - pop (1.0.2)
   - SDWebImage (3.5):
     - SDWebImage/Core
   - SDWebImage/Core (3.5)
@@ -35,6 +36,7 @@ DEPENDENCIES:
   - NSDate-Escort (= 1.3.0)
   - OCMock (~> 2.2.1)
   - Overcoat (= 1.1)
+  - pop (= 1.0.2)
   - SDWebImage (= 3.5)
   - SVProgressHUD (= 1.0)
   - TMCache (= 1.2.0)
@@ -47,22 +49,23 @@ EXTERNAL SOURCES:
     :git: https://github.com/nicnocquee/JASidePanels
 
 SPEC CHECKSUMS:
-  AFNetworking: e403d4333a4e1956cb3fe42364c3c879f820c9a0
-  AFOAuth1Client: 8b06e54087732068e19c4efcd7bed5d74bc9538a
-  Expecta: 5c147dedfea5fbcf773995f7e65020abcc936ce5
-  GPUImage: f9b32e12350792a630e596ffc7b050bea3662670
+  AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
+  AFOAuth1Client: 53c76d9cadd73142a9f73854456d5d970bdc147a
+  Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
+  GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   JASidePanels: fa574aef328c8780a49100bdb5ed4f4ba6c5b265
-  Mantle: 0714cdb2b8559d9e6c2410d6a8529e3307bff189
-  MYBlurIntroductionView: 0ed5699c570ceb1cdfc86dc6cf7dae869950d677
-  NSDate+TimeAgo: ca09306750ac2564418042aa10cf8365c36d2cee
-  NSDate-Escort: 5ec28190777f3c6042f88bbbb447a3c552e0d540
-  OCMock: 5008fae4b4789b8fc3e48cd7660f2eb5ef8ce89e
-  Overcoat: 4839bdbe2274a9451f6cedaf8c17742d2ab82818
-  SDWebImage: f1a72472f8a2d54445f1fedafe2090593d9caf7f
-  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
-  TMCache: 4b05e1b124d9f7e8d449640e059cff4cda17ed27
-  TUSafariActivity: bd9da588f5f9136ba445d89f8f86b6dccf4d46ba
-  UIImageViewModeScaleAspect: 74f439899d4f28625ea08c947bfad5a3339b0741
-  UIView+AutoLayout: 43373a18797954fd8ee3b1423af364f1b80a2af8
+  Mantle: 1ca9c0fa84d3d3fc98524e7229f30489b6dd44e5
+  MYBlurIntroductionView: 6caf60805eaa555538aba9e2615820fd6f07cd23
+  NSDate+TimeAgo: f3533e0198fab05b716368b19f8c2185d53d6f3b
+  NSDate-Escort: f36b94f19622172f9c9b691102d76dfeb9607012
+  OCMock: 6db79185520e24f9f299548f2b8b07e41d881bd5
+  Overcoat: 557a3494c7a9836917fa1b3ea08db375db7d3c75
+  pop: 4c63d3b36617606008c564173a7c766d9016abdd
+  SDWebImage: c9bc95975144c7dfa93b9df2d1d9d6d4dbe44715
+  SVProgressHUD: 5034c6e22b8c2ca3e09402e48d41ed0340aa1c50
+  TMCache: ea1c509badaf9a1245422aabf3c975b3277ab138
+  TUSafariActivity: afff9b1d2eacf7cbace752c5f2bf56db852714de
+  UIImageViewModeScaleAspect: 61ea5fbcbddab6ff8ae5fe86a657f9208dd19fda
+  UIView+AutoLayout: dc24ec6114498617510af759148a05b957af1b38
 
 COCOAPODS: 0.32.1
