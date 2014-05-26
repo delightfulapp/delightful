@@ -16,6 +16,8 @@
 
 @property (nonatomic, assign) BOOL isPresentingTransition;
 
+@property (nonatomic, assign) CGRect endFrame;
+
 @end
 
 @implementation FallingTransitioningDelegate
@@ -40,7 +42,7 @@
     UIViewController *fromVC = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     
     UIView *containerView = [transitionContext containerView];
-    
+        
     toVC.view.frame = containerView.bounds;
     
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:containerView];
@@ -55,7 +57,7 @@
         toVC.view.frame = CGRectOffset(containerView.bounds, 0, -CGRectGetHeight(toVC.view.frame)-100);
         
         UIGravityBehavior* gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[toVC.view]];
-        [gravityBehavior setGravityDirection:CGVectorMake(0, 3)];
+        [gravityBehavior setGravityDirection:CGVectorMake(0, self.speed)];
         [self.animator addBehavior:gravityBehavior];
         
         collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[toVC.view]];
@@ -70,14 +72,33 @@
         UIDynamicItemBehavior *itemBehaviour = [[UIDynamicItemBehavior alloc] initWithItems:@[fromVC.view]];
         [itemBehaviour addAngularVelocity:-M_PI_2 forItem:fromVC.view];
         [self.animator addBehavior:itemBehaviour];
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([self transitionDuration:nil] * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self.animator removeAllBehaviors];
-        });
     }
+    
+    [self ensureSimulationCompletesWithDesiredEndFrame:containerView.bounds];
 }
 
 - (void)animationEnded:(BOOL)transitionCompleted {
+    UIViewController *toViewController = [self.transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    
+    [self.animator removeAllBehaviors];
+    
+    if (self.isPresentingTransition) {
+        toViewController.view.frame = self.endFrame;
+        
+        // some weird bug where navigation bar changes its origin to 0 that makes it covered by status bar.
+        if (self.speed > 3) {
+            if ([toViewController isKindOfClass:[UINavigationController class]]) {
+                UINavigationController *navCon = (UINavigationController *)toViewController;
+                if (![[UIApplication sharedApplication] isStatusBarHidden]) {
+                    navCon.navigationBar.frame = ({
+                        CGRect frame = navCon.navigationBar.frame;
+                        frame.size.height += CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
+                        frame;
+                    });
+                }
+            }
+        }
+    }
 }
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -85,8 +106,30 @@
 }
 
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator {
-    [animator removeAllBehaviors];
-    [self.transitionContext completeTransition:YES];
+    NSLog(@"context complete");
+}
+
+-(void)ensureSimulationCompletesWithDesiredEndFrame:(CGRect)endFrame {
+    id<UIViewControllerContextTransitioning> transitionContext = self.transitionContext;
+    
+    self.endFrame = endFrame;
+    
+    double delayInSeconds = [self transitionDuration:self.transitionContext];
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        id<UIViewControllerContextTransitioning> blockContext = self.transitionContext;
+        UIDynamicAnimator *blockAnimator = self.animator;
+        if (blockAnimator && blockContext == transitionContext) {
+            [transitionContext completeTransition:YES];
+        }
+    });
+}
+
+- (NSInteger)speed {
+    if (_speed == 0) {
+        _speed = 3;
+    }
+    return _speed;
 }
 
 @end

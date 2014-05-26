@@ -52,6 +52,8 @@
 
 #import <TMCache.h>
 
+#import "FallingTransitioningDelegate.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -60,6 +62,9 @@
 @property (nonatomic, assign) BOOL observing;
 @property (nonatomic, weak) HeaderImageView *headerImageView;
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
+
+@property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
+
 @end
 
 @implementation PhotosViewController
@@ -390,7 +395,14 @@
 
 - (void)settingButtonTapped:(id)sender {
     SettingsTableViewController *settings = [[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    if (!self.fallingTransitioningDelegate) {
+        FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
+        self.fallingTransitioningDelegate = falling;
+        [self.fallingTransitioningDelegate setSpeed:10];
+    }
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:settings];
+    [navCon setModalPresentationStyle:UIModalPresentationCustom];
+    [navCon setTransitioningDelegate:self.fallingTransitioningDelegate];
     [self presentViewController:navCon animated:YES completion:nil];
 }
 
@@ -641,6 +653,5 @@
     }
     return location;
 }
-
 
 @end

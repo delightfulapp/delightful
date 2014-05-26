@@ -10,4 +10,6 @@
 
 @interface FallingTransitioningDelegate : NSObject <UIViewControllerTransitioningDelegate>
 
+@property (nonatomic, assign) NSInteger speed;
+
 @end

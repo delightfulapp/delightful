@@ -34,6 +34,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0);
+    
     self.title = NSLocalizedString(@"Settings", nil);
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
@@ -50,6 +55,7 @@
                      @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @""}],
                    @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}]
                    ];
+    
 }
 
 - (void)didReceiveMemoryWarning
