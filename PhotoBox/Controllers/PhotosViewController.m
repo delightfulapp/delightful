@@ -54,7 +54,9 @@
 
 #import "FallingTransitioningDelegate.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate>
+#import <CTAssetsPickerController.h>
+
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
 @property (nonatomic, assign) CGRect selectedItemRect;
@@ -101,11 +103,7 @@
     
     //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
     
-    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
-    [self.navigationItem setRightBarButtonItem:settingBarButtonItem];
+    [self setupRightBarButtonsWithSettings:YES];
     
 }
 
@@ -127,6 +125,28 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)setupRightBarButtonsWithSettings:(BOOL)showSetting {
+    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
+    [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
+    
+    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [spaceItem setWidth:15];
+    
+    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 18)];
+    [cameraButton setImage:[[UIImage imageNamed:@"camera.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    [cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *cameraBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraButton];
+    
+    
+    if (showSetting) {
+        [self.navigationItem setRightBarButtonItems:@[settingBarButtonItem, spaceItem, cameraBarButtonItem, spaceItem]];
+    } else {
+        [self.navigationItem setRightBarButtonItems:@[cameraBarButtonItem, spaceItem]];
+    }
 }
 
 #pragma mark - ScrollView
@@ -404,6 +424,19 @@
     [navCon setModalPresentationStyle:UIModalPresentationCustom];
     [navCon setTransitioningDelegate:self.fallingTransitioningDelegate];
     [self presentViewController:navCon animated:YES completion:nil];
+}
+
+- (void)cameraButtonTapped:(id)sender {
+    CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+    picker.delegate = self;
+    if (!self.fallingTransitioningDelegate) {
+        FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
+        self.fallingTransitioningDelegate = falling;
+        [self.fallingTransitioningDelegate setSpeed:10];
+    }
+    [picker setTransitioningDelegate:self.fallingTransitioningDelegate];
+    [picker setModalPresentationStyle:UIModalPresentationCustom];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 - (void)backNavigationTapped:(id)sender {

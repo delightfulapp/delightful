@@ -185,6 +185,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 - (void)loadPhotosInAlbum:(Album *)album {
     PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
     [photosViewController setItem:album];
+    [photosViewController setupRightBarButtonsWithSettings:[album.albumId isEqualToString:PBX_allAlbumIdentifier]];
     [photosViewController setTitle:album.name];
     [photosViewController setRelationshipKeyPathWithItem:@"albums"];
     [photosViewController setResourceType:PhotoResource];

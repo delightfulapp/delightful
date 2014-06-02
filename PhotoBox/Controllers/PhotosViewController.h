@@ -12,4 +12,6 @@
 
 @interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
+- (void)setupRightBarButtonsWithSettings:(BOOL)showSetting;
+
 @end
