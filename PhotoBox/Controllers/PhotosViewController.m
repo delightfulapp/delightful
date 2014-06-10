@@ -589,6 +589,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    Photo *photo = (Photo *)cell.item;
+    if (photo.asset) {
+        return;
+    }
     NSInteger index = [self.dataSource positionOfItem:cell.item];
     NSArray *items = self.dataSource.flattenedItems;
     self.selectedCell = cell;
