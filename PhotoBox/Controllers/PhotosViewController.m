@@ -56,6 +56,8 @@
 
 #import "PhotosPickerViewController.h"
 
+#import "DelightfulCache.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -732,6 +734,8 @@
 }
 
 - (void)doneUploadingPhoto:(Photo *)photo {
+    [self logUploadedAsset:photo.asset];
+    
     NSIndexPath *ind = [self.dataSource indexPathOfItem:photo];
     [self.dataSource removeItemAtIndexPath:ind];
     [self.uploadingPhotos removeObject:photo];
@@ -745,6 +749,16 @@
             [self.collectionView reloadData];
         });
     }
+}
+
+- (void)logUploadedAsset:(ALAsset *)asset {
+    NSMutableOrderedSet *uploaded = [[[DelightfulCache sharedCache] objectForKey:DLF_UPLOADED_ASSETS] mutableCopy];
+    if (!uploaded) {
+        uploaded = [NSMutableOrderedSet orderedSet];
+    }
+    NSURL *URL = [asset valueForProperty:ALAssetPropertyAssetURL];
+    [uploaded addObject:URL];
+    [[DelightfulCache sharedCache] setObject:uploaded forKey:DLF_UPLOADED_ASSETS];
 }
 
 @end

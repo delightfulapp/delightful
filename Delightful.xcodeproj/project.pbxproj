@@ -44,6 +44,16 @@
 		0327CC6D1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */; };
 		0327CC6F19470BDA0086C4B8 /* upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC6E19470BDA0086C4B8 /* upload@2x.png */; };
 		0327CC7019470BDA0086C4B8 /* upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC6E19470BDA0086C4B8 /* upload@2x.png */; };
+		0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */; };
+		0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */; };
+		0327CC77194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */; };
+		0327CC78194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */; };
+		0327CC7B194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */; };
+		0327CC7C194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */; };
+		0327CC7F194723B70086C4B8 /* uploaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7D194723B70086C4B8 /* uploaded.png */; };
+		0327CC80194723B70086C4B8 /* uploaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7D194723B70086C4B8 /* uploaded.png */; };
+		0327CC81194723B70086C4B8 /* uploaded@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7E194723B70086C4B8 /* uploaded@2x.png */; };
+		0327CC82194723B70086C4B8 /* uploaded@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7E194723B70086C4B8 /* uploaded@2x.png */; };
 		032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
 		032B0D2817D5B9A800ABFA9F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */; };
 		032B0D2A17D5B9B400ABFA9F /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */; };
@@ -375,6 +385,14 @@
 		0327CC6A1946AC350086C4B8 /* ALAsset+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+Additionals.h"; sourceTree = "<group>"; };
 		0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Additionals.m"; sourceTree = "<group>"; };
 		0327CC6E19470BDA0086C4B8 /* upload@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "upload@2x.png"; sourceTree = "<group>"; };
+		0327CC71194715620086C4B8 /* PhotosPickerGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerGroupViewController.h; path = PhotoBox/Controllers/PhotosPickerGroupViewController.h; sourceTree = "<group>"; };
+		0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosPickerGroupViewController.m; path = PhotoBox/Controllers/PhotosPickerGroupViewController.m; sourceTree = "<group>"; };
+		0327CC75194717890086C4B8 /* PhotosPickerAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerAssetsViewController.h; path = PhotoBox/Controllers/PhotosPickerAssetsViewController.h; sourceTree = "<group>"; };
+		0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosPickerAssetsViewController.m; path = PhotoBox/Controllers/PhotosPickerAssetsViewController.m; sourceTree = "<group>"; };
+		0327CC79194718C60086C4B8 /* DLFAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFAssetsViewCell.h; path = PhotoBox/Cells/DLFAssetsViewCell.h; sourceTree = "<group>"; };
+		0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFAssetsViewCell.m; path = PhotoBox/Cells/DLFAssetsViewCell.m; sourceTree = "<group>"; };
+		0327CC7D194723B70086C4B8 /* uploaded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploaded.png; sourceTree = "<group>"; };
+		0327CC7E194723B70086C4B8 /* uploaded@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploaded@2x.png"; sourceTree = "<group>"; };
 		032B0D1C17D4CF4800ABFA9F /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = PhotoBox/Others/LocationManager.h; sourceTree = "<group>"; };
 		032B0D1D17D4CF4800ABFA9F /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocationManager.m; path = PhotoBox/Others/LocationManager.m; sourceTree = "<group>"; };
 		032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -913,6 +931,10 @@
 				03D311B4193204BD003DE5FC /* UIViewControllerModalDelegate.h */,
 				03B5CCCA193CC20500E0BAD0 /* PhotosPickerViewController.h */,
 				03B5CCCB193CC20500E0BAD0 /* PhotosPickerViewController.m */,
+				0327CC71194715620086C4B8 /* PhotosPickerGroupViewController.h */,
+				0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */,
+				0327CC75194717890086C4B8 /* PhotosPickerAssetsViewController.h */,
+				0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -936,6 +958,8 @@
 		0358468417D1C17000E196D7 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				0327CC79194718C60086C4B8 /* DLFAssetsViewCell.h */,
+				0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */,
 				0358468517D1C19A00E196D7 /* PhotoBoxCell.h */,
 				0358468617D1C19A00E196D7 /* PhotoBoxCell.m */,
 				0358468817D1C1B100E196D7 /* AlbumCell.h */,
@@ -1014,6 +1038,8 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0327CC7D194723B70086C4B8 /* uploaded.png */,
+				0327CC7E194723B70086C4B8 /* uploaded@2x.png */,
 				03FD48351920B27300D4ADF7 /* star-fill.png */,
 				03FD48361920B27300D4ADF7 /* star-fill@2x.png */,
 				03FD48331920ABE000D4ADF7 /* star.png */,
@@ -1207,6 +1233,8 @@
 				0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
 				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
+				0327CC81194723B70086C4B8 /* uploaded@2x.png in Resources */,
+				0327CC7F194723B70086C4B8 /* uploaded.png in Resources */,
 				03B5CCC8193C7AE500E0BAD0 /* camera@2x.png in Resources */,
 				0396BDE719227461004B6290 /* HintPinch.xib in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
@@ -1272,6 +1300,8 @@
 				03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */,
 				03EFD93519251CD700E80A71 /* 0.0.3.plist in Resources */,
 				03EFD93619251CD700E80A71 /* npr_notification_image_close@2x.png in Resources */,
+				0327CC82194723B70086C4B8 /* uploaded@2x.png in Resources */,
+				0327CC80194723B70086C4B8 /* uploaded.png in Resources */,
 				03B5CCC9193C7AE500E0BAD0 /* camera@2x.png in Resources */,
 				03EFD93719251CD700E80A71 /* HintPinch.xib in Resources */,
 				03EFD93819251CD700E80A71 /* info.png in Resources */,
@@ -1528,6 +1558,7 @@
 				03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */,
 				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
+				0327CC7B194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
@@ -1559,6 +1590,7 @@
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,
 				036DF368181F65D8002E9FCB /* PhotoInfoViewController.m in Sources */,
 				03CE50E41818148800445084 /* IntroViewController.m in Sources */,
+				0327CC77194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */,
 				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
 				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
@@ -1576,6 +1608,7 @@
 				03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */,
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
+				0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
@@ -1639,6 +1672,7 @@
 				03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */,
 				03EFD8E919251CD700E80A71 /* PhotoSharingManager.m in Sources */,
 				03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */,
+				0327CC7C194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
@@ -1670,6 +1704,7 @@
 				03EFD90619251CD700E80A71 /* UIImage+Additionals.m in Sources */,
 				03EFD90719251CD700E80A71 /* PhotoInfoViewController.m in Sources */,
 				03EFD90819251CD700E80A71 /* IntroViewController.m in Sources */,
+				0327CC78194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */,
 				03EFD90919251CD700E80A71 /* PhotosViewController.m in Sources */,
 				03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */,
 				03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */,
@@ -1687,6 +1722,7 @@
 				03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */,
 				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
 				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
+				0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,

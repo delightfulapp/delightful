@@ -26,6 +26,7 @@ extern NSString *PBX_favoritesAlbumIdentifier;
 #define DLF_DID_SHOW_PINCH_GESTURE_TIP @"delightful.DLF_DID_SHOW_PINCH_GESTURE_TIP"
 #define PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO @"photobox.PBX_DID_SHOW_SCROLL_UP_AND_DOWN_TO_CLOSE_FULL_SCREEN_PHOTO"
 #define PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY @"photobox.PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY"
+#define DLF_UPLOADED_ASSETS @"delightful.UPLOADED_ASSETS"
 
 #if !defined DEBUG && __has_include("Crashlytics/Crashlytics.h")
 #define PBX_LOG(__FORMAT__, ...) CLS_LOG(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
