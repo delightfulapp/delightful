@@ -443,7 +443,7 @@
     if (!self.fallingTransitioningDelegate) {
         FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
         self.fallingTransitioningDelegate = falling;
-        [self.fallingTransitioningDelegate setSpeed:10];
+        //[self.fallingTransitioningDelegate setSpeed:10];
     }
     [picker setTransitioningDelegate:self.fallingTransitioningDelegate];
     [picker setModalPresentationStyle:UIModalPresentationCustom];
