@@ -20,6 +20,10 @@
 
 @property (nonatomic, strong) UIView *selectedView;
 
+@property (nonatomic, strong) UIView *uploadingView;
+
+@property (nonatomic, assign) float uploadProg;
+
 @end
 
 @implementation PhotoCell
@@ -47,6 +51,10 @@
     [super awakeFromNib];
     
     [self setText:nil];
+}
+
+- (void)prepareForReuse {
+    [self.uploadingView removeFromSuperview];
 }
 
 - (void)setup {
@@ -80,20 +88,35 @@
     [self.photoTitleBackgroundView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    Photo *photo = (Photo *)self.item;
+    if (photo && photo.asset) {
+        [self setUploadProgress:self.uploadProg];
+    }
+}
+
 - (void)setItem:(id)item {
     if (_item != item) {
         _item = item;
         
         Photo *photo = (Photo *)item;
-        NSURL *URL = [NSURL URLWithString:photo.thumbnailImage.urlString];
-        if (!URL) {
-            URL = photo.pathOriginal;
-        }
-        [self.cellImageView setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-            if (image) {
-                [photo setPlaceholderImage:image];
+        if (photo.asset) {
+            [self.cellImageView setImage:photo.placeholderImage];
+            [self setUploadProgress:0];
+        } else {
+            NSURL *URL = [NSURL URLWithString:photo.thumbnailImage.urlString];
+            if (!URL) {
+                URL = photo.pathOriginal;
             }
-        }];
+            [self.cellImageView setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                if (image) {
+                    [photo setPlaceholderImage:image];
+                }
+            }];
+        }
+        
         [self setText:[self photoCellTitle]];
     }
 }
@@ -193,6 +216,31 @@
         
     }
     return _photoTitleBackgroundView;
+}
+
+- (void)setUploadProgress:(float)progress {
+    if (!self.uploadingView) {
+        self.uploadingView = [[UIView alloc] initWithFrame:self.contentView.bounds];
+        [self.uploadingView setBackgroundColor:[UIColor colorWithWhite:1.000 alpha:0.570]];
+        [self.contentView addSubview:self.uploadingView];
+    }
+    
+    [self.contentView bringSubviewToFront:self.uploadingView];
+    
+    _uploadProg = progress;
+    
+    self.uploadingView.frame = ({
+        CGRect frame = self.uploadingView.frame;
+        frame.size.width = self.contentView.frame.size.width;
+        frame.size.height = (1-progress) * self.contentView.frame.size.height;
+        frame.origin.x = 0;
+        frame.origin.y = CGRectGetHeight(self.contentView.frame) - frame.size.height;
+        frame;
+    });
+}
+
+- (void)removeUploadProgress {
+    [self.uploadingView removeFromSuperview];
 }
 
 @end

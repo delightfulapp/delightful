@@ -15,9 +15,20 @@
 #import "NSArray+Additionals.h"
 #import "MTLModel+NSCoding.h"
 
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <NSDate+Escort.h>
+
 @implementation Photo
 
 @synthesize originalImage = _originalImage;
+
+- (id)initWithAsset:(ALAsset *)asset {
+    self = [super init];
+    if (self) {
+        self.asset = asset;
+    }
+    return self;
+}
 
 #pragma mark - NSCoding
 
@@ -32,6 +43,31 @@
 + (void)ignorePropertyInBehaviour:(NSMutableDictionary *)behaviour propertyKey:(NSString *)propertyKey {
     if ([behaviour objectForKey:propertyKey]) {
         [behaviour setObject:@(MTLModelEncodingBehaviorExcluded) forKey:propertyKey];
+    }
+}
+
+#pragma mark - Setters
+
+- (void)setAsset:(ALAsset *)asset {
+    if (_asset != asset) {
+        _asset = asset;
+        
+        if (_asset) {
+            CGImageRef thumbnail = [_asset thumbnail];
+            if (thumbnail) {
+                self.placeholderImage = [UIImage imageWithCGImage:thumbnail];
+            }
+            
+            NSDate *createdDate = [_asset valueForProperty:ALAssetPropertyDate];
+            NSInteger dateTakenDay = [createdDate day];
+            NSInteger dateTakenMonth = [createdDate month];
+            NSInteger dateTakenYear = [createdDate gregorianYear];
+            [self setValue:@(dateTakenDay) forKey:NSStringFromSelector(@selector(dateTakenDay))];
+            [self setValue:@(dateTakenMonth) forKey:NSStringFromSelector(@selector(dateTakenMonth))];
+            [self setValue:@(dateTakenYear) forKey:NSStringFromSelector(@selector(dateTakenYear))];
+            [self setValue:[NSString stringWithFormat:@"%d", [self.placeholderImage hash]] forKey:NSStringFromSelector(@selector(photoHash))];
+            [self setValue:[NSString stringWithFormat:@"%d", self.hash] forKey:NSStringFromSelector(@selector(photoId))];
+        }
     }
 }
 

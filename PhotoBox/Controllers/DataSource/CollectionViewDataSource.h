@@ -42,7 +42,15 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 - (void)addItems:(NSArray *)items;
 
+- (void)addItem:(id)item;
+
+- (void)insertItemAtStart:(id)item newGroup:(BOOL)newGroup;
+
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)removeItem:(id)item;
 
 - (NSIndexPath *)indexPathOfItem:(id)item;
 

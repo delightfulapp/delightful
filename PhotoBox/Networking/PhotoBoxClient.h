@@ -9,6 +9,8 @@
 #import "AFOAuth1Client.h"
 #import <OVCClient.h>
 
+@class ALAsset;
+
 typedef NS_ENUM(NSInteger, ResourceType) {
     AlbumResource,
     PhotoResource,
@@ -52,6 +54,11 @@ typedef NS_ENUM(NSInteger, ActionType) {
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void(^)(NSString *token))completion;
 
 - (void)refreshConnectionParameters;
+
+- (void)uploadPhoto:(ALAsset *)photo
+           progress:(void(^)(float progress))progress
+            success:(void(^)(id object))successBlock
+            failure:(void(^)(NSError*))failureBlock;
 
 #pragma mark - Oauth1Client interfaces
 

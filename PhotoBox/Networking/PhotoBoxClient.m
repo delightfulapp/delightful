@@ -14,8 +14,16 @@
 #import "Album.h"
 #import "Photo.h"
 #import "Tag.h"
+#import "ALAsset+Additionals.h"
 
 #import <objc/runtime.h>
+#import <OVCMultipartPart.h>
+
+@interface AFOAuth1Client ()
+- (NSString *)authorizationHeaderForMethod:(NSString *)method
+                                      path:(NSString *)path
+                                parameters:(NSDictionary *)parameters;
+@end
 
 @interface PhotoBoxClient ()
 
@@ -220,6 +228,53 @@
 
         }
     }];
+}
+
+#pragma mark - Post
+
+- (void)uploadPhoto:(ALAsset *)photo progress:(void (^)(float))progress success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    if (photo.defaultRepresentation.url) {
+        NSString *type = photo.defaultRepresentation.UTI;
+        NSString *fileName = photo.defaultRepresentation.filename;
+        NSData *data = [photo defaultRepresentationData];
+        NSString *latitude = [photo latitudeString];
+        NSString *longitude = [photo longitudeString];
+        NSString *path = @"/photo/upload.json";
+        NSDictionary *params = nil;
+        if (latitude && longitude) {
+            params = @{@"latitude": latitude, @"longitude": longitude};
+        }
+        
+        OVCMultipartPart *part = [OVCMultipartPart partWithData:data name:@"photo" type:type filename:fileName];
+        NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:path parameters:params parts:@[part]];
+        [request setValue:[self.oauthClient authorizationHeaderForMethod:request.HTTPMethod path:path parameters:params] forHTTPHeaderField:@"Authorization"];
+        [request setHTTPShouldHandleCookies:NO];
+        OVCRequestOperation *operation = [self HTTPRequestOperationWithRequest:request resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+            NSLog(@"here?");
+            if (error) {
+                if (failureBlock) {
+                    failureBlock(error);
+                }
+            } else {
+                if (successBlock) {
+                    successBlock(responseObject);
+                }
+            }
+        }];
+        if (progress) {
+            [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                float prog = totalBytesWritten / totalBytesExpectedToWrite;
+                progress(prog);
+            }];
+        }
+        
+        [self enqueueHTTPRequestOperation:operation];
+    } else {
+        if (failureBlock) {
+            NSError *error = [NSError errorWithDomain:@"com.getdelightful" code:-100 userInfo:@{NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Invalid asset", nil)}];
+            failureBlock(error);
+        }
+    }
 }
 
 #pragma mark - Getters

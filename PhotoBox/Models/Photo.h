@@ -10,6 +10,8 @@
 
 #import "PhotoBoxImage.h"
 
+@class ALAsset;
+
 @interface Photo : PhotoBoxModel
 
 @property (nonatomic, copy, readonly) NSNumber *dateTaken;
@@ -69,5 +71,9 @@
 @property (nonatomic, strong) UIImage *placeholderImage;
 
 @property (nonatomic, strong) NSURL *asAlbumCoverURL;
+
+@property (nonatomic, strong) ALAsset *asset;
+
+- (id)initWithAsset:(ALAsset *)asset;
 
 @end

@@ -54,7 +54,7 @@
 
 #import "FallingTransitioningDelegate.h"
 
-#import <CTAssetsPickerController.h>
+#import "PhotosPickerViewController.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -64,6 +64,7 @@
 @property (nonatomic, assign) BOOL observing;
 @property (nonatomic, weak) HeaderImageView *headerImageView;
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
+@property (nonatomic, strong) NSMutableArray *uploadingPhotos;
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 
@@ -175,19 +176,26 @@
     __weak typeof (self) selfie = self;
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
         [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
-        [cell setTitleLabelText:[item localizedDate]];
-        CLLocation *location = [selfie locationSampleForSection:indexPath.section];
-        if (location) {
-            [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
-                if (placemarks) {
-                    [cell setLocationString:placemarks];
-                } else {
-                    [cell setLocationString:nil];
-                }
-            }];
-        } else {
+        Photo *firstObject = [selfie.dataSource itemAtIndexPath:indexPath];
+        if (firstObject.asset) {
+            [cell setTitleLabelText:NSLocalizedString(@"Uploading ...", nil)];
             [cell setLocationString:nil];
+        } else {
+            [cell setTitleLabelText:[item localizedDate]];
+            CLLocation *location = [selfie locationSampleForSection:indexPath.section];
+            if (location) {
+                [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
+                    if (placemarks) {
+                        [cell setLocationString:placemarks];
+                    } else {
+                        [cell setLocationString:nil];
+                    }
+                }];
+            } else {
+                [cell setLocationString:nil];
+            }
         }
+        
     };
     return configureCell;
 }
@@ -427,7 +435,7 @@
 }
 
 - (void)cameraButtonTapped:(id)sender {
-    CTAssetsPickerController *picker = [[CTAssetsPickerController alloc] init];
+    PhotosPickerViewController *picker = [[PhotosPickerViewController alloc] init];
     picker.delegate = self;
     if (!self.fallingTransitioningDelegate) {
         FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
@@ -685,6 +693,60 @@
         }
     }
     return location;
+}
+
+#pragma mark - CTAssetsPickerControllerDelegate
+
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+    NSLog(@"number of assets %d", assets.count);
+    NSArray *ass = assets;
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    NSInteger i = 0;
+    NSMutableArray *photoObjects = [NSMutableArray array];
+    for (ALAsset *asset in ass) {
+        Photo *photo = [[Photo alloc] initWithAsset:asset];
+        [photoObjects addObject:photo];
+        [self.dataSource insertItemAtStart:photo newGroup:(i==0)?YES:NO];
+        i++;
+    }
+    [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
+    
+    self.uploadingPhotos = photoObjects;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __weak typeof (self) selfie = self;
+        for (Photo *photo in photoObjects) {
+            NSIndexPath *indexPath = [self.dataSource indexPathOfItem:photo];
+            [[PhotoBoxClient sharedClient] uploadPhoto:photo.asset progress:^(float progress) {
+                PhotoCell *cell = (PhotoCell *)[selfie.collectionView cellForItemAtIndexPath:indexPath];
+                if (cell) {
+                    [cell setUploadProgress:progress];
+                }
+            } success:^(id object) {
+                [selfie doneUploadingPhoto:photo];
+            } failure:^(NSError *error) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+                [alert show];
+            }];
+        }
+    });
+}
+
+- (void)doneUploadingPhoto:(Photo *)photo {
+    NSIndexPath *ind = [self.dataSource indexPathOfItem:photo];
+    [self.dataSource removeItemAtIndexPath:ind];
+    [self.uploadingPhotos removeObject:photo];
+    if (self.uploadingPhotos.count > 0) {
+        [self.collectionView deleteItemsAtIndexPaths:@[ind]];
+    } else {
+        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:ind.section]];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            PBX_LOG(@"Done downloading all, time to refresh");
+            [self refresh];
+            [self.collectionView reloadData];
+        });
+    }
 }
 
 @end

@@ -16,4 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dateTitle;
 @property (weak, nonatomic) IBOutlet UIView *photoTitleBackgroundView;
 
+- (void)setUploadProgress:(float)progress;
+- (void)removeUploadProgress;
+
 @end

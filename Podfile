@@ -17,7 +17,7 @@ pod 'TUSafariActivity', '1.0.0'
 pod 'TMCache', '1.2.0'
 pod 'MYBlurIntroductionView', '1.0.3'
 pod 'pop', '1.0.2'
-pod 'CTAssetsPickerController',  '~> 2.2.0'
+pod 'CTAssetsPickerController', :git => 'git@github.com:nicnocquee/CTAssetsPickerController.git'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

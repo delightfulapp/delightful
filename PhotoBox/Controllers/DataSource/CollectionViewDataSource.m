@@ -85,6 +85,24 @@
     return nil;
 }
 
+- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSMutableArray *tmp = [self.shownItems mutableCopy];
+    NSMutableArray *groupTmp = [tmp objectAtIndex:indexPath.section];
+    [groupTmp removeObjectAtIndex:indexPath.item];
+    if (groupTmp.count == 0) {
+        [tmp removeObjectAtIndex:indexPath.section];
+    } else {
+        [tmp replaceObjectAtIndex:indexPath.section withObject:groupTmp];
+    }
+    
+    self.shownItems = tmp;
+}
+
+- (void)removeItem:(id)item {
+    NSIndexPath *indexPath = [self indexPathOfItem:item];
+    [self removeItemAtIndexPath:indexPath];
+}
+
 - (NSInteger)positionOfItem:(id)item {
     NSInteger index = [self.internalFlattenedItems indexOfObject:item];
     return index;
@@ -93,6 +111,28 @@
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath
 {
     return self.shownItems[indexPath.section][indexPath.item];
+}
+
+- (void)addItem:(id)item {
+    [self.uniqueItems addObject:item];
+    self.shownItems = [self processedItems];
+}
+
+- (void)insertItemAtStart:(id)item newGroup:(BOOL)newGroup {
+    NSMutableArray *tmp = [self.shownItems mutableCopy];
+    NSMutableArray *firstGroup;
+    if (newGroup) {
+        firstGroup = [NSMutableArray array];
+        [firstGroup insertObject:item atIndex:0];
+        [tmp insertObject:firstGroup atIndex:0];
+    } else {
+        firstGroup = [[tmp firstObject] mutableCopy];
+        [firstGroup insertObject:item atIndex:0];
+        [tmp removeObjectAtIndex:0];
+        [tmp insertObject:firstGroup atIndex:0];
+    }
+    
+    self.shownItems = tmp;
 }
 
 - (void)addItems:(NSArray *)items {
