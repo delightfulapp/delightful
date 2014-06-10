@@ -439,6 +439,7 @@
 - (void)cameraButtonTapped:(id)sender {
     PhotosPickerViewController *picker = [[PhotosPickerViewController alloc] init];
     picker.delegate = self;
+    [picker setAssetsFilter:[ALAssetsFilter allPhotos]];
     if (!self.fallingTransitioningDelegate) {
         FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
         self.fallingTransitioningDelegate = falling;
