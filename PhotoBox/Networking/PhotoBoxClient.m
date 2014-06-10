@@ -250,7 +250,6 @@
         [request setValue:[self.oauthClient authorizationHeaderForMethod:request.HTTPMethod path:path parameters:params] forHTTPHeaderField:@"Authorization"];
         [request setHTTPShouldHandleCookies:NO];
         OVCRequestOperation *operation = [self HTTPRequestOperationWithRequest:request resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-            NSLog(@"here?");
             if (error) {
                 if (failureBlock) {
                     failureBlock(error);
@@ -263,7 +262,7 @@
         }];
         if (progress) {
             [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-                float prog = totalBytesWritten / totalBytesExpectedToWrite;
+                float prog = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
                 progress(prog);
             }];
         }

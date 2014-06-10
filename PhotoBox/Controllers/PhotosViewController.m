@@ -701,37 +701,38 @@
 #pragma mark - CTAssetsPickerControllerDelegate
 
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    NSLog(@"number of assets %d", assets.count);
     NSArray *ass = assets;
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    NSMutableArray *photoObjects = [NSMutableArray array];
-    for (ALAsset *asset in ass) {
-        Photo *photo = [[Photo alloc] initWithAsset:asset];
-        [photoObjects addObject:photo];
-        [self.dataSource addItem:photo];
-    }
-    [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
-    
-    self.uploadingPhotos = photoObjects;
-        
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        __weak typeof (self) selfie = self;
-        for (Photo *photo in photoObjects) {
-            NSIndexPath *indexPath = [self.dataSource indexPathOfItem:photo];
-            [[PhotoBoxClient sharedClient] uploadPhoto:photo.asset progress:^(float progress) {
-                PhotoCell *cell = (PhotoCell *)[selfie.collectionView cellForItemAtIndexPath:indexPath];
-                if (cell) {
-                    [cell setUploadProgress:progress];
-                }
-            } success:^(id object) {
-                [selfie doneUploadingPhoto:photo];
-            } failure:^(NSError *error) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
-                [alert show];
-            }];
+    [self dismissViewControllerAnimated:YES completion:^{
+        NSMutableArray *photoObjects = [NSMutableArray array];
+        for (ALAsset *asset in ass) {
+            Photo *photo = [[Photo alloc] initWithAsset:asset];
+            [photoObjects addObject:photo];
+            [self.dataSource addItem:photo];
         }
-    });
+        [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
+        
+        self.uploadingPhotos = photoObjects;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            __weak typeof (self) selfie = self;
+            for (Photo *photo in photoObjects) {
+                NSIndexPath *indexPath = [self.dataSource indexPathOfItem:photo];
+                [[PhotoBoxClient sharedClient] uploadPhoto:photo.asset progress:^(float progress) {
+                    PhotoCell *cell = (PhotoCell *)[selfie.collectionView cellForItemAtIndexPath:indexPath];
+                    if (cell) {
+                        [cell setUploadProgress:progress];
+                    }
+                } success:^(id object) {
+                    [selfie doneUploadingPhoto:photo];
+                } failure:^(NSError *error) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
+                    [alert show];
+                }];
+            }
+        });
+    }];
+    
+    
 }
 
 - (void)doneUploadingPhoto:(Photo *)photo {

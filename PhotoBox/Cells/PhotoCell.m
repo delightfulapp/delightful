@@ -24,6 +24,8 @@
 
 @property (nonatomic, assign) float uploadProg;
 
+@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
+
 @end
 
 @implementation PhotoCell
@@ -56,6 +58,8 @@
 - (void)prepareForReuse {
     [self.uploadingView removeFromSuperview];
     self.uploadingView = nil;
+    [self.indicatorView removeFromSuperview];
+    self.indicatorView = nil;
 }
 
 - (void)setup {
@@ -222,11 +226,19 @@
 - (void)setUploadProgress:(float)progress {
     if (!self.uploadingView) {
         self.uploadingView = [[UIView alloc] initWithFrame:self.contentView.bounds];
-        [self.uploadingView setBackgroundColor:[UIColor colorWithWhite:1.000 alpha:0.570]];
+        [self.uploadingView setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.780]];
         [self.contentView addSubview:self.uploadingView];
     }
     
+    if (!self.indicatorView) {
+        self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [self.indicatorView setCenter:CGPointMake(CGRectGetWidth(self.contentView.frame)/2, CGRectGetHeight(self.contentView.frame)/2)];
+        [self.contentView addSubview:self.indicatorView];
+        [self.indicatorView startAnimating];
+    }
+    
     [self.contentView bringSubviewToFront:self.uploadingView];
+    [self.contentView bringSubviewToFront:self.indicatorView];
     
     _uploadProg = progress;
     
@@ -242,6 +254,9 @@
 
 - (void)removeUploadProgress {
     [self.uploadingView removeFromSuperview];
+    [self.indicatorView removeFromSuperview];
+    self.uploadingView = nil;
+    self.indicatorView = nil;
 }
 
 @end
