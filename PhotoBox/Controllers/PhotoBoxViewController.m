@@ -287,10 +287,10 @@ NSString *const galleryContainerType = @"gallery";
 - (void)fetchMore {
     if (!self.isFetching) {
         NSInteger count = [self.dataSource numberOfItems];
-        if (count!=0) {
+        if (count>0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
-                self.page = ([self.dataSource numberOfItems]/self.pageSize)+1;
+                self.page = (count/self.pageSize)+1;
                 PBX_LOG(@"Fetch more");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self showLoadingView:YES];

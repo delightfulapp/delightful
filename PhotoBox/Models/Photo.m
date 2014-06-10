@@ -96,6 +96,9 @@
 }
 
 - (NSString *)dateTakenString {
+    if (self.asset) {
+        return @"zUploading";
+    }
     NSString *toReturn = [NSString stringWithFormat:@"%d-%02d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue], [self.dateTakenDay intValue]];
     return toReturn;
 }

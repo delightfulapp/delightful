@@ -55,6 +55,7 @@
 
 - (void)prepareForReuse {
     [self.uploadingView removeFromSuperview];
+    self.uploadingView = nil;
 }
 
 - (void)setup {

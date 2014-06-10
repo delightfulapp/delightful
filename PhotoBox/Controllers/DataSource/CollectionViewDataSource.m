@@ -87,7 +87,7 @@
 
 - (void)removeItemAtIndexPath:(NSIndexPath *)indexPath {
     NSMutableArray *tmp = [self.shownItems mutableCopy];
-    NSMutableArray *groupTmp = [tmp objectAtIndex:indexPath.section];
+    NSMutableArray *groupTmp = [[tmp objectAtIndex:indexPath.section] mutableCopy];
     [groupTmp removeObjectAtIndex:indexPath.item];
     if (groupTmp.count == 0) {
         [tmp removeObjectAtIndex:indexPath.section];
@@ -137,8 +137,9 @@
 
 - (void)addItems:(NSArray *)items {
     if (items && items.count > 0) {
+        NSLog(@"Unique items before count %d", self.uniqueItems.count);
         [self.uniqueItems addObjectsFromArray:items];
-        
+        NSLog(@"Unique items count %d", self.uniqueItems.count);
         self.shownItems = [self processedItems];
         
         [self.collectionView reloadData];
@@ -153,6 +154,11 @@
 
 - (NSArray *)flattenedItems {
     return self.internalFlattenedItems;
+}
+
+- (NSArray *)flattenedItemsWithoutUploadingPhotos {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"dateTakenString != %@", @"zUploading"];
+    return [self.internalFlattenedItems filteredArrayUsingPredicate:predicate];
 }
 
 - (void)removeAllItems {

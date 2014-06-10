@@ -137,8 +137,8 @@
     UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     [spaceItem setWidth:15];
     
-    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 18)];
-    [cameraButton setImage:[[UIImage imageNamed:@"camera.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 23)];
+    [cameraButton setImage:[[UIImage imageNamed:@"upload.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
     [cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *cameraBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraButton];
     
@@ -501,7 +501,7 @@
     [self setPhotosCount:count max:self.totalItems];
     
     [self.item setLastRefresh:[NSDate date]];
-    [self.item setValue:self.dataSource.flattenedItems forKey:NSStringFromSelector(@selector(photos))];
+    [self.item setValue:[self.dataSource flattenedItemsWithoutUploadingPhotos] forKey:NSStringFromSelector(@selector(photos))];
 }
 
 - (NSString *)refreshKey {
@@ -702,18 +702,16 @@
     NSArray *ass = assets;
     [self dismissViewControllerAnimated:YES completion:nil];
     
-    NSInteger i = 0;
     NSMutableArray *photoObjects = [NSMutableArray array];
     for (ALAsset *asset in ass) {
         Photo *photo = [[Photo alloc] initWithAsset:asset];
         [photoObjects addObject:photo];
-        [self.dataSource insertItemAtStart:photo newGroup:(i==0)?YES:NO];
-        i++;
+        [self.dataSource addItem:photo];
     }
     [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
     
     self.uploadingPhotos = photoObjects;
-    
+        
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         __weak typeof (self) selfie = self;
         for (Photo *photo in photoObjects) {
