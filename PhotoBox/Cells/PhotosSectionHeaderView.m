@@ -20,6 +20,8 @@
 
 @property (nonatomic, weak) UIView *gestureView;
 
+@property (nonatomic, strong) NSLayoutConstraint *rightTitleConstraint;
+
 @end
 
 @implementation PhotosSectionHeaderView
@@ -60,16 +62,25 @@
     [self setupGestureViewConstrains];
 }
 
+- (void)prepareForReuse {
+    [self.titleLabel setText:nil];
+    [self.locationLabel setText:nil];
+    
+    [self.rightTitleConstraint setConstant:0];
+}
+
 - (void)setupConstrains {
-    [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
-    [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10 relation:NSLayoutRelationGreaterThanOrEqual];
-    NSLayoutConstraint * constraint = [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    [constraint setPriority:100];
+    self.rightTitleConstraint = [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self];
+    [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+    [UIView autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
+        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+    }];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
     [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
     [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
     [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
     [self.blurView autoCenterInSuperview];
+   
 }
 
 - (void)setupGestureViewConstrains {
@@ -99,6 +110,7 @@
     } else {
         [self.titleLabel setAttributedText:[self attributedStringWithTitle:self.titleLabelText location:nil]];
     }
+    [self adjustTitleLabelRightConstraint];
 }
 
 - (void)setLocationString:(NSString *)location {
@@ -107,6 +119,12 @@
     } else {
         [self.titleLabel setAttributedText:[self attributedStringWithTitle:self.titleLabelText location:nil]];
     }
+    [self adjustTitleLabelRightConstraint];
+}
+
+- (void)adjustTitleLabelRightConstraint {
+    if (self.titleLabel.text.length > 0) [self.rightTitleConstraint setConstant:-10];
+    else [self.rightTitleConstraint setConstant:0];
 }
 
 - (NSAttributedString *)attributedStringWithTitle:(NSString *)title location:(NSString *)location {

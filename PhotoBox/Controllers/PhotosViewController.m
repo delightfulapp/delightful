@@ -178,26 +178,27 @@
     __weak typeof (self) selfie = self;
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
         [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
-        Photo *firstObject = [selfie.dataSource itemAtIndexPath:indexPath];
-        if (firstObject.asset) {
-            [cell setTitleLabelText:NSLocalizedString(@"Uploading ...", nil)];
-            [cell setLocationString:nil];
-        } else {
-            [cell setTitleLabelText:[item localizedDate]];
-            CLLocation *location = [selfie locationSampleForSection:indexPath.section];
-            if (location) {
-                [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
-                    if (placemarks) {
-                        [cell setLocationString:placemarks];
-                    } else {
-                        [cell setLocationString:nil];
-                    }
-                }];
-            } else {
+        if (selfie.numberOfColumns > 1) {
+            Photo *firstObject = [selfie.dataSource itemAtIndexPath:indexPath];
+            if (firstObject.asset) {
+                [cell setTitleLabelText:NSLocalizedString(@"Uploading ...", nil)];
                 [cell setLocationString:nil];
+            } else {
+                [cell setTitleLabelText:[item localizedDate]];
+                CLLocation *location = [selfie locationSampleForSection:indexPath.section];
+                if (location) {
+                    [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
+                        if (placemarks) {
+                            [cell setLocationString:placemarks];
+                        } else {
+                            [cell setLocationString:nil];
+                        }
+                    }];
+                } else {
+                    [cell setLocationString:nil];
+                }
             }
         }
-        
     };
     return configureCell;
 }
@@ -707,6 +708,7 @@
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
     NSArray *ass = assets;
     [self dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         NSMutableArray *photoObjects = [NSMutableArray array];
         for (ALAsset *asset in ass) {
             Photo *photo = [[Photo alloc] initWithAsset:asset];
@@ -748,7 +750,7 @@
     if (self.uploadingPhotos.count > 0) {
         [self.collectionView deleteItemsAtIndexPaths:@[ind]];
     } else {
-        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:ind.section]];
+        if (self.numberOfColumns > 1) [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:ind.section]];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             PBX_LOG(@"Done downloading all, time to refresh");
             [self refresh];
