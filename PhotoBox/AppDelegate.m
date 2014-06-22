@@ -38,7 +38,13 @@
 
 #import "LeftViewController.h"
 
+#import "DLFImageUploader.h"
+
 //#import "HintsViewController.h"
+
+static void * imageDownloadContext = &imageDownloadContext;
+
+static void * imageUploadContext = &imageUploadContext;
 
 @interface AppDelegate () <MFMailComposeViewControllerDelegate, MFMessageComposeViewControllerDelegate>
 
@@ -95,7 +101,9 @@
     
     [self runCrashlytics];
 
-    [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:@"numberOfDownloads" options:0 context:NULL];
+    [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
+    
+    //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
     
     return YES;
 }
@@ -198,20 +206,37 @@ static BOOL isRunningTests(void)
 #pragma mark - Observer
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))]) {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))] && context == imageDownloadContext) {
         if ([[NPRImageDownloader sharedDownloader] numberOfDownloads] > 0) {
             NSString *text = [NSString stringWithFormat:NSLocalizedString(@"Downloading %1$d photo(s)", nil), [[NPRImageDownloader sharedDownloader] numberOfDownloads]];
             NSString *tapToSee = @"Tap to see progress";
             text = [text stringByAppendingString:[NSString stringWithFormat:@"\n%@", tapToSee]];
             NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
             [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:8] range:[text rangeOfString:tapToSee]];
-            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeNone string:attributedString accessoryType:NPRNotificationAccessoryTypeActivityView accessoryView:nil duration:0 onTap:^{
+            [self showNotificationString:attributedString type:NPRNotificationTypeNone accessoryType:NPRNotificationAccessoryTypeActivityView duration:0 onTap:^{
                 [[NPRImageDownloader sharedDownloader] showDownloads];
             }];
         } else {
-            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:3 onTap:nil];
+            [self showNotificationString:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) type:NPRNotificationTypeSuccess accessoryType:NPRNotificationAccessoryTypeNone duration:3 onTap:nil];
+        }
+    } else if (context == imageUploadContext) {
+        if ([[DLFImageUploader sharedUploader] numberOfUploading] > 0) {
+            NSString *text = [NSString stringWithFormat:NSLocalizedString(@"Uploading %1$d photo(s)", nil), [[DLFImageUploader sharedUploader] numberOfUploading]];
+            NSString *tapToSee = @"Tap to see progress";
+            text = [text stringByAppendingString:[NSString stringWithFormat:@"\n%@", tapToSee]];
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:text];
+            [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:8] range:[text rangeOfString:tapToSee]];
+            [self showNotificationString:attributedString type:NPRNotificationTypeNone accessoryType:NPRNotificationAccessoryTypeActivityView duration:0 onTap:^{
+                [[NPRImageDownloader sharedDownloader] showDownloads];
+            }];
+        } else {
+            [self showNotificationString:NSLocalizedString(@"Photos uploaded", nil) type:NPRNotificationTypeSuccess accessoryType:NPRNotificationAccessoryTypeNone duration:3 onTap:nil];
         }
     }
+}
+
+- (void)showNotificationString:(id)attributedString type:(NPRNotificationType)type accessoryType:(NPRNotificationAccessoryType)accessoryType duration:(NSInteger)duration onTap:(void(^)())onTap {
+    [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:type string:attributedString accessoryType:accessoryType accessoryView:nil duration:duration onTap:onTap];
 }
 
 #pragma mark - Message, Mail

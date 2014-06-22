@@ -58,6 +58,10 @@
 
 #import "DelightfulCache.h"
 
+#import "DLFImageUploader.h"
+
+#import "UploadViewController.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -69,6 +73,8 @@
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
+
+@property (nonatomic, strong) UploadViewController *uploadViewController;
 
 @end
 
@@ -103,6 +109,8 @@
     [self.collectionView.viewForBaselineLayout.layer setSpeed:0.4f];
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
     //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
     
@@ -708,65 +716,45 @@
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
     NSArray *ass = assets;
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-        NSMutableArray *photoObjects = [NSMutableArray array];
-        for (ALAsset *asset in ass) {
-            Photo *photo = [[Photo alloc] initWithAsset:asset];
-            [photoObjects addObject:photo];
-            [self.dataSource addItem:photo];
-        }
-        [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:0]];
+        UploadViewController *uploadVC = [[UploadViewController alloc] init];
+        [uploadVC setUploads:ass];
+        [uploadVC.view setFrame:CGRectMake(0, -150, CGRectGetWidth(self.view.frame), 150)];
+        [uploadVC willMoveToParentViewController:self];
+        [self addChildViewController:uploadVC];
+        [self.view addSubview:uploadVC.view];
+        [uploadVC didMoveToParentViewController:self];
         
-        self.uploadingPhotos = photoObjects;
+        self.uploadViewController = uploadVC;
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            __weak typeof (self) selfie = self;
-            for (Photo *photo in photoObjects) {
-                NSIndexPath *indexPath = [self.dataSource indexPathOfItem:photo];
-                [[PhotoBoxClient sharedClient] uploadPhoto:photo.asset progress:^(float progress) {
-                    PhotoCell *cell = (PhotoCell *)[selfie.collectionView cellForItemAtIndexPath:indexPath];
-                    if (cell) {
-                        [cell setUploadProgress:progress];
-                    }
-                } success:^(id object) {
-                    [selfie doneUploadingPhoto:photo];
-                } failure:^(NSError *error) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles:nil];
-                    [alert show];
-                }];
-            }
-        });
+        [UIView animateWithDuration:0.3 animations:^{
+            CGFloat offset = CGRectGetHeight(uploadVC.view.frame) + self.collectionView.contentInset.top;
+            CGFloat offsetWithoutInset = offset - self.collectionView.contentInset.top;
+            uploadVC.view.frame = CGRectOffset(uploadVC.view.frame, 0, offset);
+            self.collectionView.frame = CGRectMake(0, offsetWithoutInset, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame)-offsetWithoutInset);
+        } completion:^(BOOL finished) {
+            [uploadVC startUpload];
+        }];
     }];
-    
-    
 }
 
-- (void)doneUploadingPhoto:(Photo *)photo {
-    [self logUploadedAsset:photo.asset];
-    
-    NSIndexPath *ind = [self.dataSource indexPathOfItem:photo];
-    [self.dataSource removeItemAtIndexPath:ind];
-    [self.uploadingPhotos removeObject:photo];
-    if (self.uploadingPhotos.count > 0) {
-        [self.collectionView deleteItemsAtIndexPaths:@[ind]];
-    } else {
-        if (self.numberOfColumns > 1) [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:ind.section]];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            PBX_LOG(@"Done downloading all, time to refresh");
+- (void)didChangeNumberOfUploads:(NSNotification *)notification {
+    NSInteger uploads = [notification.userInfo[kNumberOfUploadsKey] integerValue];
+    if (uploads == 0) {
+        [UIView animateWithDuration:0.3 animations:^{
+            CGFloat offset = CGRectGetHeight(self.uploadViewController.view.frame) + self.collectionView.contentInset.top;
+            
+            self.uploadViewController.view.frame = CGRectOffset(self.uploadViewController.view.frame, 0, -offset);
+            self.collectionView.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, self.view.frame.size.height);
+        } completion:^(BOOL finished) {
+            [self.uploadViewController willMoveToParentViewController:nil];
+            [self.uploadViewController removeFromParentViewController];
+            [self.uploadViewController.view removeFromSuperview];
+            [self.uploadViewController didMoveToParentViewController:nil];
+            self.uploadViewController = nil;
+            
             [self refresh];
-            [self.collectionView reloadData];
-        });
+        }];
     }
-}
-
-- (void)logUploadedAsset:(ALAsset *)asset {
-    NSMutableOrderedSet *uploaded = [[[DelightfulCache sharedCache] objectForKey:DLF_UPLOADED_ASSETS] mutableCopy];
-    if (!uploaded) {
-        uploaded = [NSMutableOrderedSet orderedSet];
-    }
-    NSURL *URL = [asset valueForProperty:ALAssetPropertyAssetURL];
-    [uploaded addObject:URL];
-    [[DelightfulCache sharedCache] setObject:uploaded forKey:DLF_UPLOADED_ASSETS];
 }
 
 @end

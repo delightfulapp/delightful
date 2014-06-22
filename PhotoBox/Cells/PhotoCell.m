@@ -18,14 +18,6 @@
 
 @interface PhotoCell ()
 
-@property (nonatomic, strong) UIView *selectedView;
-
-@property (nonatomic, strong) UIView *uploadingView;
-
-@property (nonatomic, assign) float uploadProg;
-
-@property (nonatomic, strong) UIActivityIndicatorView *indicatorView;
-
 @end
 
 @implementation PhotoCell
@@ -55,12 +47,7 @@
     [self setText:nil];
 }
 
-- (void)prepareForReuse {
-    [self.uploadingView removeFromSuperview];
-    self.uploadingView = nil;
-    [self.indicatorView removeFromSuperview];
-    self.indicatorView = nil;
-}
+
 
 - (void)setup {
     [super setup];
@@ -93,34 +80,20 @@
     [self.photoTitleBackgroundView setBackgroundColor:[UIColor colorWithWhite:0 alpha:0.5]];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    Photo *photo = (Photo *)self.item;
-    if (photo && photo.asset) {
-        [self setUploadProgress:self.uploadProg];
-    }
-}
-
 - (void)setItem:(id)item {
     if (_item != item) {
         _item = item;
         
         Photo *photo = (Photo *)item;
-        if (photo.asset) {
-            [self.cellImageView setImage:photo.placeholderImage];
-            [self setUploadProgress:0];
-        } else {
-            NSURL *URL = [NSURL URLWithString:photo.thumbnailImage.urlString];
-            if (!URL) {
-                URL = photo.pathOriginal;
-            }
-            [self.cellImageView setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                if (image) {
-                    [photo setPlaceholderImage:image];
-                }
-            }];
+        NSURL *URL = [NSURL URLWithString:photo.thumbnailImage.urlString];
+        if (!URL) {
+            URL = photo.pathOriginal;
         }
+        [self.cellImageView setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+            if (image) {
+                [photo setPlaceholderImage:image];
+            }
+        }];
         
         [self setText:[self photoCellTitle]];
     }
@@ -135,35 +108,12 @@
     }
 }
 
-- (void)setSelected:(BOOL)selected {
-    if (self.isSelected!=selected) {
-        [super setSelected:selected];
-        [self showSelectedView:selected];
-    }
-}
-
 - (void)setText:(id)text {
     [self.photoTitleBackgroundView setHidden:(text)?NO:YES];
     [self.photoTitle setText:text];
     if (text) {
         [self.dateTitle setText:[self dateString]];
     } else [self.dateTitle setText:nil];
-}
-
-- (void)showSelectedView:(BOOL)selected {
-    if (selected) {
-        if (!self.selectedView) {
-            self.selectedView = [[UIView alloc] initWithFrame:self.bounds];
-            [self.selectedView setBackgroundColor:[UIColor whiteColor]];
-            [self.selectedView setAlpha:0.5];
-            [self.contentView addSubview:self.selectedView];
-        }
-    } else {
-        if (self.selectedView) {
-            [self.selectedView removeFromSuperview];
-            self.selectedView = nil;
-        }
-    }
 }
 
 #pragma mark - Getters
@@ -223,40 +173,6 @@
     return _photoTitleBackgroundView;
 }
 
-- (void)setUploadProgress:(float)progress {
-    if (!self.uploadingView) {
-        self.uploadingView = [[UIView alloc] initWithFrame:self.contentView.bounds];
-        [self.uploadingView setBackgroundColor:[UIColor colorWithWhite:0.000 alpha:0.780]];
-        [self.contentView addSubview:self.uploadingView];
-    }
-    
-    if (!self.indicatorView) {
-        self.indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        [self.indicatorView setCenter:CGPointMake(CGRectGetWidth(self.contentView.frame)/2, CGRectGetHeight(self.contentView.frame)/2)];
-        [self.contentView addSubview:self.indicatorView];
-        [self.indicatorView startAnimating];
-    }
-    
-    [self.contentView bringSubviewToFront:self.uploadingView];
-    [self.contentView bringSubviewToFront:self.indicatorView];
-    
-    _uploadProg = progress;
-    
-    self.uploadingView.frame = ({
-        CGRect frame = self.uploadingView.frame;
-        frame.size.width = self.contentView.frame.size.width;
-        frame.size.height = (1-progress) * self.contentView.frame.size.height;
-        frame.origin.x = 0;
-        frame.origin.y = CGRectGetHeight(self.contentView.frame) - frame.size.height;
-        frame;
-    });
-}
 
-- (void)removeUploadProgress {
-    [self.uploadingView removeFromSuperview];
-    [self.indicatorView removeFromSuperview];
-    self.uploadingView = nil;
-    self.indicatorView = nil;
-}
 
 @end

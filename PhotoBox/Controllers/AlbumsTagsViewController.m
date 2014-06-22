@@ -20,6 +20,8 @@
 
 @property (nonatomic, weak) DelightfulTabBar *customTabBar;
 
+@property (nonatomic, assign) BOOL hasLayoutSubviews;
+
 @end
 
 @implementation AlbumsTagsViewController
@@ -90,19 +92,24 @@
 -(void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    static int barHeight = 0;
-    if (barHeight == 0) {
-        barHeight = CGRectGetHeight(self.tabBar.frame);
+    if (!self.hasLayoutSubviews) {
+        self.hasLayoutSubviews = YES;
+        static int barHeight = 0;
+        if (barHeight == 0) {
+            barHeight = CGRectGetHeight(self.tabBar.frame);
+        }
+        UIView* CV = (UIView*)self.view.subviews.firstObject;
+        CV.autoresizesSubviews = YES;
+        UIView* GCV = (UIView*) CV.subviews.firstObject;
+        UIView* GGCV = (UIView*) GCV.subviews.firstObject;
+        CGRect frame = CV.frame;
+        frame.size.height = self.view.frame.size.height - barHeight;
+        CV.frame = frame;
+        GCV.frame = frame;
+        GGCV.frame = frame;
     }
-    UIView* CV = (UIView*)self.view.subviews.firstObject;
-    CV.autoresizesSubviews = YES;
-    UIView* GCV = (UIView*) CV.subviews.firstObject;
-    UIView* GGCV = (UIView*) GCV.subviews.firstObject;
-    CGRect frame = CV.frame;
-    frame.size.height = self.view.frame.size.height - barHeight;
-    CV.frame = frame;
-    GCV.frame = frame;
-    GGCV.frame = frame;
+    
+    
     
 }
 

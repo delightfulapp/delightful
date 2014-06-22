@@ -73,7 +73,12 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (!textField.text || textField.text.length == 0) {
-        [textField setText:@".trovebox.com"];
+#ifdef IS_FEZZ
+        [textField setText:@"http://192.168.0.200"];
+#else
+       [textField setText:@".trovebox.com"];
+#endif
+        
     }
     return YES;
 }

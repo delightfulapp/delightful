@@ -9,7 +9,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.getdelightfulapp.delightful.testflight</string>
+	<string>com.getdelightfulapp.fezz</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2638</string>
+	<string>2678</string>
 	<key>FacebookAppID</key>
 	<string>378582835605137</string>
 	<key>FacebookDisplayName</key>

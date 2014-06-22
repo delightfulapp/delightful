@@ -10,7 +10,14 @@
 
 #import "ShowFullScreenPhotosAnimatedTransitioning.h"
 
+typedef NS_ENUM(NSInteger, PhotosViewControllerState) {
+    PhotosViewControllerStateNormal,
+    PhotosViewControllerStateUploading
+};
+
 @interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
+
+@property (nonatomic, assign) PhotosViewControllerState photosViewControllerState;
 
 - (void)setupRightBarButtonsWithSettings:(BOOL)showSetting;
 
