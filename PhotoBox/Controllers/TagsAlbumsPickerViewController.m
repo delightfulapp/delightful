@@ -16,9 +16,11 @@
 
 #import "Album.h"
 
+#import "Tag.h"
+
 #import "PhotoBoxClient.h"
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 
@@ -47,16 +49,22 @@
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[PermissionPickerTableViewCell class] forCellReuseIdentifier:[PermissionPickerTableViewCell defaultCellReuseIdentifier]];
     
-    self.isFetchingTags = YES;
-    
-    [[PhotoBoxClient sharedClient] getResource:TagResource action:ListAction resourceId:nil page:0 success:^(NSArray *results) {
-        self.isFetchingTags = NO;
-        if (results && [results isKindOfClass:[NSArray class]] ) {
-            self.tags = results;
-        }
-    } failure:^(NSError *error) {
-        self.isFetchingTags = NO;
-    }];
+    [self fetchTags];
+}
+
+- (void)fetchTags {
+    if (!self.isFetchingTags) {
+        self.isFetchingTags = YES;
+        
+        [[PhotoBoxClient sharedClient] getResource:TagResource action:ListAction resourceId:nil page:0 success:^(NSArray *results) {
+            self.isFetchingTags = NO;
+            if (results && [results isKindOfClass:[NSArray class]] ) {
+                self.tags = results;
+            }
+        } failure:^(NSError *error) {
+            self.isFetchingTags = NO;
+        }];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +102,10 @@
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsAlbums) {
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+    }
+    
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {
+        [((TagEntryTableViewCell *)cell).tagField setDelegate:self];
     }
     
     return cell;
@@ -138,6 +150,41 @@
             break;
     }
     return nil;
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString *text = textField.text;
+    NSString *newText = [text stringByReplacingCharactersInRange:range withString:string];
+    
+    NSString *substringAfterCurrentRange = [newText substringFromIndex:range.location];
+    NSString *substringBeforeCurrentRange = [newText substringToIndex:range.location];
+    
+    NSRange commaAfter = [substringAfterCurrentRange rangeOfString:@","];
+    NSRange commaBefore = [substringBeforeCurrentRange rangeOfString:@"," options:NSBackwardsSearch];
+    
+    NSInteger startIndex = (commaBefore.location!=NSNotFound)?commaBefore.location:([string isEqualToString:@","]?range.location:0);
+    NSInteger endIndex = (commaAfter.location!=NSNotFound)?commaAfter.location+range.location:newText.length-1;
+    NSInteger length = endIndex-startIndex+1;
+    
+    NSString *tagToSuggest = (length>0)?[newText substringWithRange:NSMakeRange(startIndex, length)]:nil;
+    if (tagToSuggest) {
+        tagToSuggest = [tagToSuggest stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@", "]];
+    }
+    
+    if (self.tags) {
+        
+    } else {
+        [self fetchTags];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
 }
 
 @end
