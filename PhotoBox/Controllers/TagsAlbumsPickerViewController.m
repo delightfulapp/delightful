@@ -24,7 +24,7 @@
 
 #import "TagsSuggestionTableViewController.h"
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 
@@ -35,6 +35,10 @@
 @property (nonatomic, strong) TagsSuggestionTableViewController *tagsSuggestionViewController;
 
 @property (nonatomic, assign) CGSize keyboardSize;
+
+@property (nonatomic, strong) NSString *currentEditedTag;
+
+@property (nonatomic, assign) NSRange currentEditedTagRange;
 
 @end
 
@@ -175,7 +179,7 @@
     NSString *text = textField.text;
     NSString *newText = [text stringByReplacingCharactersInRange:range withString:string];
     NSString *tagToSuggest = [self tagToSuggestForText:newText replacementRange:range replacementString:string];
-    
+    self.currentEditedTag = tagToSuggest;
     if (self.tags) {
         if (tagToSuggest && tagToSuggest.length > 0) {
             NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Tag *evaluatedObject, NSDictionary *bindings) {
@@ -200,20 +204,32 @@
 }
 
 - (NSString *)tagToSuggestForText:(NSString *)newText replacementRange:(NSRange)range replacementString:(NSString *)string {
+    if ([string isEqualToString:@","]) {
+        return nil;
+    }
+    
     NSString *substringAfterCurrentRange = [newText substringFromIndex:range.location];
     NSString *substringBeforeCurrentRange = [newText substringToIndex:range.location];
     
     NSRange commaAfter = [substringAfterCurrentRange rangeOfString:@","];
     NSRange commaBefore = [substringBeforeCurrentRange rangeOfString:@"," options:NSBackwardsSearch];
     
-    NSInteger startIndex = (commaBefore.location!=NSNotFound)?commaBefore.location:([string isEqualToString:@","]?range.location:0);
-    NSInteger endIndex = (commaAfter.location!=NSNotFound)?commaAfter.location+range.location:newText.length-1;
+    NSInteger startIndex = (commaBefore.location!=NSNotFound)?commaBefore.location+1:([string isEqualToString:@","]?range.location+1:0);
+    NSInteger endIndex = (commaAfter.location!=NSNotFound)?commaAfter.location+range.location-1:newText.length-1;
     NSInteger length = endIndex-startIndex+1;
+    
     
     NSString *tagToSuggest = (length>0)?[newText substringWithRange:NSMakeRange(startIndex, length)]:nil;
     if (tagToSuggest) {
         tagToSuggest = [tagToSuggest stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@", "]];
     }
+    
+    if (length > 0 && tagToSuggest) {
+        self.currentEditedTagRange = NSMakeRange(startIndex, length);
+    } else {
+        self.currentEditedTagRange = NSMakeRange(NSNotFound, 0);
+    }
+    
     return tagToSuggest;
 }
 
@@ -225,6 +241,7 @@
         
         if (!self.tagsSuggestionViewController) {
             self.tagsSuggestionViewController = [[TagsSuggestionTableViewController alloc] initWithStyle:UITableViewStylePlain];
+            [self.tagsSuggestionViewController setPickerDelegate:self];
         }
         [self.tagsSuggestionViewController setSuggestions:[suggestions valueForKeyPath:NSStringFromSelector(@selector(tagId))]];
         
@@ -256,6 +273,17 @@
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
     
+}
+
+#pragma mark - TagsSuggestionTableViewControllerPickerDelegate
+
+- (void)tagsSuggestionViewController:(TagsSuggestionTableViewController *)tagsViewController didSelectTag:(NSString *)tag {
+    if (self.currentEditedTag && self.currentEditedTagRange.location != NSNotFound) {
+        TagEntryTableViewCell *cell = (TagEntryTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TagsAlbumsPickerCollectionViewSectionsTags]];
+        if (cell) {
+            cell.tagField.text = [cell.tagField.text stringByReplacingCharactersInRange:self.currentEditedTagRange withString:tag];
+        }
+    }
 }
 
 @end
