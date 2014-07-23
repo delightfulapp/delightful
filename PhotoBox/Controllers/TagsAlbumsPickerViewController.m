@@ -22,6 +22,8 @@
 
 #import "NSString+Score.h"
 
+#import "TagsSuggestionTableViewController.h"
+
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
@@ -29,6 +31,10 @@
 @property (nonatomic, assign) BOOL isFetchingTags;
 
 @property (nonatomic, strong) Album *selectedAlbum;
+
+@property (nonatomic, strong) TagsSuggestionTableViewController *tagsSuggestionViewController;
+
+@property (nonatomic, assign) CGSize keyboardSize;
 
 @end
 
@@ -46,6 +52,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
     
     [self.tableView registerClass:[TagEntryTableViewCell class] forCellReuseIdentifier:[TagEntryTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
@@ -79,6 +93,7 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self.tableView endEditing:YES];
+    if (self.tagsSuggestionViewController.tableView.superview) [self.tagsSuggestionViewController.tableView removeFromSuperview];
 }
 
 #pragma mark - Table View Data Source
@@ -159,7 +174,32 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = textField.text;
     NSString *newText = [text stringByReplacingCharactersInRange:range withString:string];
+    NSString *tagToSuggest = [self tagToSuggestForText:newText replacementRange:range replacementString:string];
     
+    if (self.tags) {
+        if (tagToSuggest && tagToSuggest.length > 0) {
+            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Tag *evaluatedObject, NSDictionary *bindings) {
+                NSString *tagName = evaluatedObject.tagId;
+                return [[tagName lowercaseString] scoreAgainst:[tagToSuggest lowercaseString]] > 0.5;
+            }];
+            NSArray *suggestions = [self.tags filteredArrayUsingPredicate:predicate];
+            [self showSuggestions:suggestions];
+        } else {
+            [self showSuggestions:nil];
+        }
+    } else {
+        [self fetchTags];
+    }
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return NO;
+}
+
+- (NSString *)tagToSuggestForText:(NSString *)newText replacementRange:(NSRange)range replacementString:(NSString *)string {
     NSString *substringAfterCurrentRange = [newText substringFromIndex:range.location];
     NSString *substringBeforeCurrentRange = [newText substringToIndex:range.location];
     
@@ -174,26 +214,48 @@
     if (tagToSuggest) {
         tagToSuggest = [tagToSuggest stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@", "]];
     }
-    
-    if (self.tags) {
-        if (tagToSuggest && tagToSuggest.length > 0) {
-            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Tag *evaluatedObject, NSDictionary *bindings) {
-                NSString *tagName = evaluatedObject.tagId;
-                return [[tagName lowercaseString] scoreAgainst:[tagToSuggest lowercaseString]] > 0.5;
-            }];
-            NSArray *suggestions = [self.tags filteredArrayUsingPredicate:predicate];
-            
-        }
-    } else {
-        [self fetchTags];
-    }
-    
-    return YES;
+    return tagToSuggest;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
-    return NO;
+- (void)showSuggestions:(NSArray *)suggestions{
+    //NSLog(@"Suggestions: %@", [[suggestions valueForKeyPath:@"tagId"] componentsJoinedByString:@","]);
+    if (suggestions && suggestions.count > 0) {
+        UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TagsAlbumsPickerCollectionViewSectionsTags]];
+        CGRect cellFrameInTableViewSuperview = [self.tableView.superview convertRect:cell.frame fromView:self.tableView];
+        
+        if (!self.tagsSuggestionViewController) {
+            self.tagsSuggestionViewController = [[TagsSuggestionTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        }
+        [self.tagsSuggestionViewController setSuggestions:[suggestions valueForKeyPath:NSStringFromSelector(@selector(tagId))]];
+        
+        self.tagsSuggestionViewController.tableView.frame = ({
+            CGRect frame = self.tagsSuggestionViewController.tableView.frame;
+            frame.origin.y = cellFrameInTableViewSuperview.origin.y + cell.frame.size.height;
+            frame.size.height = CGRectGetHeight(self.view.frame) - self.keyboardSize.height - frame.origin.y;
+            frame;
+        });
+        
+        [self.tagsSuggestionViewController.tableView reloadData];
+        
+        [self.tableView.superview addSubview:self.tagsSuggestionViewController.tableView];
+        
+    } else {
+        [self.tagsSuggestionViewController.tableView removeFromSuperview];
+    }
+}
+
+#pragma mark - Keyboard notifications
+
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    self.keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    
 }
 
 @end

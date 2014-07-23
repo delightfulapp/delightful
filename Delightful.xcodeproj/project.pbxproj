@@ -272,6 +272,9 @@
 		035DACC7197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
 		035DACC8197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
 		035DACC9197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
+		035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
+		035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
+		035DACCE197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -666,6 +669,8 @@
 		035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumPermissionPickerTableViewCell.m; path = PhotoBox/Cells/TagsAlbumPermissionPickerTableViewCell.m; sourceTree = "<group>"; };
 		035DACC5197FAC2B00557547 /* NSString+Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Score.h"; path = "PhotoBox/External/NSString+Score.h"; sourceTree = SOURCE_ROOT; };
 		035DACC6197FAC2B00557547 /* NSString+Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Score.m"; path = "PhotoBox/External/NSString+Score.m"; sourceTree = SOURCE_ROOT; };
+		035DACCA197FAE6D00557547 /* TagsSuggestionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsSuggestionTableViewController.h; path = PhotoBox/Controllers/TagsSuggestionTableViewController.h; sourceTree = "<group>"; };
+		035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsSuggestionTableViewController.m; path = PhotoBox/Controllers/TagsSuggestionTableViewController.m; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1164,6 +1169,8 @@
 				037B089D1955A627001F55D6 /* UploadViewController.m */,
 				035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */,
 				035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */,
+				035DACCA197FAE6D00557547 /* TagsSuggestionTableViewController.h */,
+				035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1974,6 +1981,7 @@
 				0312049919508B29004EA8CB /* UIColor+Additionals.m in Sources */,
 				0312049A19508B29004EA8CB /* PhotoBoxRequestOperation.m in Sources */,
 				0312049B19508B29004EA8CB /* Tag.m in Sources */,
+				035DACCE197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				0312049C19508B29004EA8CB /* AlbumCell.m in Sources */,
 				0312049D19508B29004EA8CB /* SharerManager.m in Sources */,
 				0312049E19508B29004EA8CB /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
@@ -2080,6 +2088,7 @@
 				0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */,
 				0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */,
 				0310904517D1B2840075F9D8 /* Tag.m in Sources */,
+				035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */,
 				03CE5103181842F200445084 /* SharerManager.m in Sources */,
 				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
@@ -2204,6 +2213,7 @@
 				03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */,
 				03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */,
 				03EFD8FA19251CD700E80A71 /* Tag.m in Sources */,
+				035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				03EFD8FB19251CD700E80A71 /* AlbumCell.m in Sources */,
 				03EFD8FC19251CD700E80A71 /* SharerManager.m in Sources */,
 				03EFD8FD19251CD700E80A71 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
