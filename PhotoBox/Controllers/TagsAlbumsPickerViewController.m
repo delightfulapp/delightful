@@ -281,9 +281,17 @@
     if (self.currentEditedTag && self.currentEditedTagRange.location != NSNotFound) {
         TagEntryTableViewCell *cell = (TagEntryTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TagsAlbumsPickerCollectionViewSectionsTags]];
         if (cell) {
-            cell.tagField.text = [cell.tagField.text stringByReplacingCharactersInRange:self.currentEditedTagRange withString:tag];
+            NSString *text = [cell.tagField.text stringByReplacingCharactersInRange:self.currentEditedTagRange withString:tag];
+            NSArray *tagsArray = [text componentsSeparatedByString:@","];
+            NSMutableArray *trimmedTagsArray = [NSMutableArray arrayWithCapacity:tagsArray.count];
+            [tagsArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+                [trimmedTagsArray addObject:[obj stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            }];
+            cell.tagField.text = [trimmedTagsArray componentsJoinedByString:@", "];
         }
     }
+    
+    [self.tagsSuggestionViewController.tableView removeFromSuperview];
 }
 
 @end
