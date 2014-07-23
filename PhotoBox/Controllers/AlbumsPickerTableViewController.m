@@ -48,10 +48,10 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     
     self.title = NSLocalizedString(@"Albums", nil);
     
-    
-    
     if (!self.headerView) {
-        self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 44)];
+        self.headerView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.navigationController.view.frame), self.tableView.contentInset.top, CGRectGetWidth(self.view.frame), 44)];
+        self.headerView.alpha = 0;
+        [self.headerView setBackgroundColor:[UIColor whiteColor]];
         UIButton *newAlbumButton = [[UIButton alloc] initWithFrame:self.headerView.bounds];
         [newAlbumButton setTitle:NSLocalizedString(@"Fetching albums ...", nil) forState:UIControlStateNormal];
         [newAlbumButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
@@ -60,9 +60,47 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
         [self.headerView addSubview:newAlbumButton];
         self.headerViewButton = newAlbumButton;
     }
-    [self.tableView addSubview:self.headerView];
+    [self.navigationController.view insertSubview:self.headerView belowSubview:self.navigationController.navigationBar];
+    
+    self.tableView.contentInset = ({
+        UIEdgeInsets inset = self.tableView.contentInset;
+        inset.top += CGRectGetHeight(self.headerView.frame);
+        inset;
+    });
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
+    
+    self.headerView.frame = ({
+        CGRect frame = self.headerView.frame;
+        frame.origin.y = CGRectGetMaxY(self.navigationController.navigationBar.frame);
+        frame;
+    });
+    
+    [self.headerView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.headerView.layer setShadowOffset:CGSizeMake(0, 1)];
+    [self.headerView.layer setShadowRadius:0];
+    [self.headerView.layer setShadowOpacity:0.1];
+    [self.headerView.layer setShadowPath:[UIBezierPath bezierPathWithRect:self.headerView.bounds].CGPath];
     
     [self fetchAlbums];
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.headerView.frame = ({
+            CGRect frame = self.headerView.frame;
+            frame.origin.x = 0;
+            frame;
+        });
+        [self.headerView setAlpha:1];
+    } completion:^(BOOL finished) {
+        
+    }];
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.headerViewButton removeFromSuperview];
+    self.headerViewButton = nil;
+    [self.headerView removeFromSuperview];
+    self.headerView = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -83,8 +121,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
         self.isFetchingAlbums = YES;
     } else {
         [self.headerViewButton setTitle:NSLocalizedString(@"Create new album", nil) forState:UIControlStateNormal];
-        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAlbumButtonTapped:)];
-        [self.navigationItem setRightBarButtonItem:addButton];
+        [self.navigationItem setRightBarButtonItem:nil];
         self.isFetchingAlbums = NO;
     }
 }
@@ -96,6 +133,14 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
         [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:0 success:^(NSArray *objects) {
             NSLog(@"Objects = %@", objects);
             self.state = AlbumsPickerStateNormal;
+            
+            Album *a = [[Album alloc] init];
+            [a setValue:@"Test album" forKey:@"name"];
+            Album *b = [[Album alloc] init];
+            [b setValue:@"Album album" forKey:@"name"];
+            Album *c = [[Album alloc] init];
+            [c setValue:@"Anon album" forKey:@"name"];
+            objects = @[a, b, c];
             
             if (objects.count > 0) {
                 UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
@@ -114,6 +159,10 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
                 
                 for (Album *theAlbum in objects) {
                     [(NSMutableArray *)[sectionArrays objectAtIndex:theAlbum.sectionNumber] addObject:theAlbum];
+                }
+                
+                if (!self.albums) {
+                    self.albums = [NSMutableArray array];
                 }
                 
                 for (NSMutableArray *sectionArray in sectionArrays) {
