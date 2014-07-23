@@ -101,19 +101,7 @@
 }
 
 - (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath {
-    switch (indexPath.section) {
-        case TagsAlbumsPickerCollectionViewSectionsTags:
-            return [TagEntryTableViewCell defaultCellReuseIdentifier];
-            break;
-        case TagsAlbumsPickerCollectionViewSectionsAlbums:
-            return [AlbumPickerTableViewCell defaultCellReuseIdentifier];
-            break;
-        case TagsAlbumsPickerCollectionViewSectionsPermission:
-            return [PermissionPickerTableViewCell defaultCellReuseIdentifier];
-        default:
-            break;
-    }
-    return nil;
+    return [(id)[self cellClassForIndexPath:indexPath] defaultCellReuseIdentifier];
 }
 
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath {

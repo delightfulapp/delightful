@@ -266,6 +266,9 @@
 		035DACBD197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
 		035DACBE197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
 		035DACBF197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
+		035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
+		035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
+		035DACC4197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -656,6 +659,8 @@
 		035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumPickerTableViewCell.m; path = PhotoBox/Cells/AlbumPickerTableViewCell.m; sourceTree = "<group>"; };
 		035DACBB197F9A8E00557547 /* PermissionPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionPickerTableViewCell.h; path = PhotoBox/Cells/PermissionPickerTableViewCell.h; sourceTree = "<group>"; };
 		035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionPickerTableViewCell.m; path = PhotoBox/Cells/PermissionPickerTableViewCell.m; sourceTree = "<group>"; };
+		035DACC0197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumPermissionPickerTableViewCell.h; path = PhotoBox/Cells/TagsAlbumPermissionPickerTableViewCell.h; sourceTree = "<group>"; };
+		035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumPermissionPickerTableViewCell.m; path = PhotoBox/Cells/TagsAlbumPermissionPickerTableViewCell.m; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1205,6 +1210,8 @@
 				035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */,
 				035DACBB197F9A8E00557547 /* PermissionPickerTableViewCell.h */,
 				035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */,
+				035DACC0197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.h */,
+				035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1995,6 +2002,7 @@
 				031204BD19508B29004EA8CB /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				031204BE19508B29004EA8CB /* PhotoZoomableCell.m in Sources */,
 				035DACB0197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035DACC4197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				031204BF19508B29004EA8CB /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB5197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 			);
@@ -2099,6 +2107,7 @@
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 				035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 			);
@@ -2221,6 +2230,7 @@
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
 				035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 			);

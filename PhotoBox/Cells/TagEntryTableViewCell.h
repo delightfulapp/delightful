@@ -6,13 +6,11 @@
 //  Copyright (c) 2014 Touches. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "TagsAlbumPermissionPickerTableViewCell.h"
 
-@interface TagEntryTableViewCell : UITableViewCell
+@interface TagEntryTableViewCell : TagsAlbumPermissionPickerTableViewCell
 
 @property (nonatomic, strong, readonly) UITextField *tagField;
 @property (nonatomic, strong, readonly) UIButton *tagPickerButton;
-
-+ (NSString *)defaultCellReuseIdentifier;
 
 @end

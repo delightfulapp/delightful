@@ -6,10 +6,8 @@
 //  Copyright (c) 2014 Touches. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "TagsAlbumPermissionPickerTableViewCell.h"
 
-@interface PermissionPickerTableViewCell : UITableViewCell
-
-+ (NSString *)defaultCellReuseIdentifier;
+@interface PermissionPickerTableViewCell : TagsAlbumPermissionPickerTableViewCell
 
 @end
