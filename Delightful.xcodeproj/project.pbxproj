@@ -269,6 +269,9 @@
 		035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
 		035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
 		035DACC4197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
+		035DACC7197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
+		035DACC8197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
+		035DACC9197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -661,6 +664,8 @@
 		035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionPickerTableViewCell.m; path = PhotoBox/Cells/PermissionPickerTableViewCell.m; sourceTree = "<group>"; };
 		035DACC0197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumPermissionPickerTableViewCell.h; path = PhotoBox/Cells/TagsAlbumPermissionPickerTableViewCell.h; sourceTree = "<group>"; };
 		035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumPermissionPickerTableViewCell.m; path = PhotoBox/Cells/TagsAlbumPermissionPickerTableViewCell.m; sourceTree = "<group>"; };
+		035DACC5197FAC2B00557547 /* NSString+Score.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Score.h"; path = "PhotoBox/External/NSString+Score.h"; sourceTree = SOURCE_ROOT; };
+		035DACC6197FAC2B00557547 /* NSString+Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Score.m"; path = "PhotoBox/External/NSString+Score.m"; sourceTree = SOURCE_ROOT; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -876,6 +881,8 @@
 		03108FDB17D0F3FA0075F9D8 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				035DACC5197FAC2B00557547 /* NSString+Score.h */,
+				035DACC6197FAC2B00557547 /* NSString+Score.m */,
 			);
 			path = External;
 			sourceTree = "<group>";
@@ -1943,6 +1950,7 @@
 				0312048319508B29004EA8CB /* FetchedIn.m in Sources */,
 				0312048419508B29004EA8CB /* Photo+Additionals.m in Sources */,
 				0312048519508B29004EA8CB /* NPRImageDownloaderTableViewDataSource.m in Sources */,
+				035DACC9197FAC2B00557547 /* NSString+Score.m in Sources */,
 				0312048619508B29004EA8CB /* SettingsTableViewController.m in Sources */,
 				0312048719508B29004EA8CB /* PhotoSharingManager.m in Sources */,
 				0312048819508B29004EA8CB /* PhotoBoxFetchedResultsController.m in Sources */,
@@ -2048,6 +2056,7 @@
 				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
 				0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */,
+				035DACC7197FAC2B00557547 /* NSString+Score.m in Sources */,
 				03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */,
 				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
@@ -2171,6 +2180,7 @@
 				03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */,
 				03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */,
 				03EFD8E719251CD700E80A71 /* NPRImageDownloaderTableViewDataSource.m in Sources */,
+				035DACC8197FAC2B00557547 /* NSString+Score.m in Sources */,
 				03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */,
 				03EFD8E919251CD700E80A71 /* PhotoSharingManager.m in Sources */,
 				03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */,

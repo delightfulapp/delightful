@@ -20,6 +20,8 @@
 
 #import "PhotoBoxClient.h"
 
+#import "NSString+Score.h"
+
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
@@ -174,7 +176,14 @@
     }
     
     if (self.tags) {
-        
+        if (tagToSuggest && tagToSuggest.length > 0) {
+            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Tag *evaluatedObject, NSDictionary *bindings) {
+                NSString *tagName = evaluatedObject.tagId;
+                return [[tagName lowercaseString] scoreAgainst:[tagToSuggest lowercaseString]] > 0.5;
+            }];
+            NSArray *suggestions = [self.tags filteredArrayUsingPredicate:predicate];
+            
+        }
     } else {
         [self fetchTags];
     }
