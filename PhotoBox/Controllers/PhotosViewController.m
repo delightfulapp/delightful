@@ -713,6 +713,11 @@
 
 #pragma mark - CTAssetsPickerControllerDelegate
 
+- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldShowAssetsGroup:(ALAssetsGroup *)group {
+    return [group numberOfAssets] > 0?YES:NO;
+}
+
+
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
     NSArray *ass = assets;
     [self dismissViewControllerAnimated:YES completion:^{

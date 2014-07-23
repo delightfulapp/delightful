@@ -21,7 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning
@@ -33,5 +32,6 @@
 - (Class)groupViewControllerClass {
     return [PhotosPickerGroupViewController class];
 }
+
 
 @end
