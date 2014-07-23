@@ -14,8 +14,17 @@
 
 #import "PermissionPickerTableViewCell.h"
 
+#import "Album.h"
+
+#import "PhotoBoxClient.h"
+
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) NSArray *tags;
+
+@property (nonatomic, assign) BOOL isFetchingTags;
+
+@property (nonatomic, strong) Album *selectedAlbum;
 
 @end
 
@@ -37,6 +46,17 @@
     [self.tableView registerClass:[TagEntryTableViewCell class] forCellReuseIdentifier:[TagEntryTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[PermissionPickerTableViewCell class] forCellReuseIdentifier:[PermissionPickerTableViewCell defaultCellReuseIdentifier]];
+    
+    self.isFetchingTags = YES;
+    
+    [[PhotoBoxClient sharedClient] getResource:TagResource action:ListAction resourceId:nil page:0 success:^(NSArray *results) {
+        self.isFetchingTags = NO;
+        if (results && [results isKindOfClass:[NSArray class]] ) {
+            self.tags = results;
+        }
+    } failure:^(NSError *error) {
+        self.isFetchingTags = NO;
+    }];
 }
 
 - (void)didReceiveMemoryWarning
