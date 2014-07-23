@@ -42,7 +42,7 @@
     
     [self.uploadingLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setBackgroundColor:[UIColor albumsBackgroundColor]];
 }
 
 - (void)setNumberOfUploads:(NSInteger)numberOfUploads {
@@ -59,13 +59,14 @@
         _uploadingLabel = [self addSubviewClass:[UILabel class]];
         [_uploadingLabel setBackgroundColor:[UIColor clearColor]];
         [_uploadingLabel setFont:[UIFont systemFontOfSize:12]];
+        [_uploadingLabel setTextColor:[UIColor whiteColor]];
     }
     return _uploadingLabel;
 }
 
 - (UIActivityIndicatorView *)indicatorView {
     if (!_indicatorView) {
-        UIActivityIndicatorView *act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIActivityIndicatorView *act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [act setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self addSubview:act];
         _indicatorView = act;

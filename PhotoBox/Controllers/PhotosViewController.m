@@ -723,7 +723,7 @@
     [self dismissViewControllerAnimated:YES completion:^{
         UploadViewController *uploadVC = [[UploadViewController alloc] init];
         [uploadVC setUploads:ass];
-        [uploadVC.view setFrame:CGRectMake(0, -150, CGRectGetWidth(self.view.frame), 150)];
+        [uploadVC.view setFrame:CGRectMake(0, -(UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH), CGRectGetWidth(self.view.frame), (UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH))];
         [uploadVC willMoveToParentViewController:self];
         [self addChildViewController:uploadVC];
         [self.view addSubview:uploadVC.view];

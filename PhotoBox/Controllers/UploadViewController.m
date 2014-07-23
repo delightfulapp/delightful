@@ -20,7 +20,6 @@
 
 #import "DelightfulCache.h"
 
-#define UPLOAD_ITEM_WIDTH 106
 
 @interface UploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -45,7 +44,7 @@
     [self.headerView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
     [self.headerView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
     [self.headerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view];
-    [self.headerView autoSetDimension:ALDimensionHeight toSize:44];
+    [self.headerView autoSetDimension:ALDimensionHeight toSize:UPLOAD_BAR_HEIGHT];
     
     [self.collectionView registerClass:[UploadAssetCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     
@@ -96,6 +95,7 @@
         [_collectionView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [_collectionView setAlwaysBounceVertical:NO];
         [_collectionView setAlwaysBounceHorizontal:YES];
+        [_collectionView setBackgroundColor:[UIColor tabBarTintColor]];
         
         [self.view addSubview:_collectionView];
     }

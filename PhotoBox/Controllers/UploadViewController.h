@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#define UPLOAD_ITEM_WIDTH 53
+
+#define UPLOAD_BAR_HEIGHT 44
+
 @interface UploadViewController : UIViewController
 
 @property (nonatomic, strong, readonly) UICollectionView *collectionView;
