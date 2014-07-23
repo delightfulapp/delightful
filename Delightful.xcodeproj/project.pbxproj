@@ -254,6 +254,18 @@
 		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
+		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
+		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
+		035DACB0197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
+		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
+		035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
+		035DACB5197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
+		035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */; };
+		035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */; };
+		035DACBA197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */; };
+		035DACBD197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
+		035DACBE197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
+		035DACBF197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -636,6 +648,14 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
+		035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumsPickerViewController.h; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.h; sourceTree = "<group>"; };
+		035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumsPickerViewController.m; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.m; sourceTree = "<group>"; };
+		035DACB1197F88B800557547 /* TagEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEntryTableViewCell.h; path = PhotoBox/Cells/TagEntryTableViewCell.h; sourceTree = "<group>"; };
+		035DACB2197F88B800557547 /* TagEntryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagEntryTableViewCell.m; path = PhotoBox/Cells/TagEntryTableViewCell.m; sourceTree = "<group>"; };
+		035DACB6197F92C900557547 /* AlbumPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumPickerTableViewCell.h; path = PhotoBox/Cells/AlbumPickerTableViewCell.h; sourceTree = "<group>"; };
+		035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumPickerTableViewCell.m; path = PhotoBox/Cells/AlbumPickerTableViewCell.m; sourceTree = "<group>"; };
+		035DACBB197F9A8E00557547 /* PermissionPickerTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PermissionPickerTableViewCell.h; path = PhotoBox/Cells/PermissionPickerTableViewCell.h; sourceTree = "<group>"; };
+		035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PermissionPickerTableViewCell.m; path = PhotoBox/Cells/PermissionPickerTableViewCell.m; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1130,6 +1150,8 @@
 				0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */,
 				037B089C1955A627001F55D6 /* UploadViewController.h */,
 				037B089D1955A627001F55D6 /* UploadViewController.m */,
+				035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */,
+				035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1177,6 +1199,12 @@
 				0334EBB71841DF37001B262F /* TagRowCell.m */,
 				037B08A11956B85C001F55D6 /* UploadAssetCell.h */,
 				037B08A21956B85C001F55D6 /* UploadAssetCell.m */,
+				035DACB1197F88B800557547 /* TagEntryTableViewCell.h */,
+				035DACB2197F88B800557547 /* TagEntryTableViewCell.m */,
+				035DACB6197F92C900557547 /* AlbumPickerTableViewCell.h */,
+				035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */,
+				035DACBB197F9A8E00557547 /* PermissionPickerTableViewCell.h */,
+				035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1880,6 +1908,7 @@
 				0312046A19508B29004EA8CB /* OriginalImageDownloaderViewController.m in Sources */,
 				0312046B19508B29004EA8CB /* LeftPanelHeaderView.m in Sources */,
 				0312046C19508B29004EA8CB /* FallingTransitioningDelegate.m in Sources */,
+				035DACBF197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */,
 				0312046D19508B29004EA8CB /* ALAsset+Additionals.m in Sources */,
 				0312046E19508B29004EA8CB /* PhotoBoxViewController.m in Sources */,
 				0312046F19508B29004EA8CB /* UIColor+DelightfulColors.m in Sources */,
@@ -1911,6 +1940,7 @@
 				0312048719508B29004EA8CB /* PhotoSharingManager.m in Sources */,
 				0312048819508B29004EA8CB /* PhotoBoxFetchedResultsController.m in Sources */,
 				0312048919508B29004EA8CB /* DLFAssetsViewCell.m in Sources */,
+				035DACBA197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				0312048A19508B29004EA8CB /* UIView+Additionals.m in Sources */,
 				0312048B19508B29004EA8CB /* PhotosHorizontalScrollingViewController.m in Sources */,
 				0312048C19508B29004EA8CB /* LoginWebViewViewController.m in Sources */,
@@ -1964,7 +1994,9 @@
 				031204BC19508B29004EA8CB /* PhotosPickerGroupViewController.m in Sources */,
 				031204BD19508B29004EA8CB /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				031204BE19508B29004EA8CB /* PhotoZoomableCell.m in Sources */,
+				035DACB0197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
 				031204BF19508B29004EA8CB /* MWInterpollationMotionEffect.m in Sources */,
+				035DACB5197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1980,6 +2012,7 @@
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */,
 				03D311B21930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
+				035DACBD197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */,
 				0327CC6C1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
@@ -2011,6 +2044,7 @@
 				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
 				0327CC7B194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
+				035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
@@ -2064,7 +2098,9 @@
 				0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
+				035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
+				035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2098,6 +2134,7 @@
 				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
 				03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */,
 				03D311B31930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
+				035DACBE197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */,
 				0327CC6D1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
 				03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */,
 				03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */,
@@ -2129,6 +2166,7 @@
 				03EFD8E919251CD700E80A71 /* PhotoSharingManager.m in Sources */,
 				03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */,
 				0327CC7C194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
+				035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
@@ -2182,7 +2220,9 @@
 				0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
+				035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
+				035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
