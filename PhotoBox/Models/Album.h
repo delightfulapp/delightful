@@ -21,6 +21,8 @@
 @property (nonatomic, copy, readonly) NSString *coverId;
 @property (nonatomic, copy, readonly) NSURL *coverURL;
 
+@property (nonatomic, assign) NSInteger sectionNumber;
+
 @property (nonatomic, copy, readonly) Photo *albumCover;
 
 @property (nonatomic, strong) UIImage *albumThumbnailImage;

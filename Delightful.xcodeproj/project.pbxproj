@@ -275,6 +275,9 @@
 		035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
 		035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
 		035DACCE197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
+		035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
+		035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
+		035DACD3197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -671,6 +674,8 @@
 		035DACC6197FAC2B00557547 /* NSString+Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Score.m"; path = "PhotoBox/External/NSString+Score.m"; sourceTree = SOURCE_ROOT; };
 		035DACCA197FAE6D00557547 /* TagsSuggestionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsSuggestionTableViewController.h; path = PhotoBox/Controllers/TagsSuggestionTableViewController.h; sourceTree = "<group>"; };
 		035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsSuggestionTableViewController.m; path = PhotoBox/Controllers/TagsSuggestionTableViewController.m; sourceTree = "<group>"; };
+		035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsPickerTableViewController.h; path = PhotoBox/Controllers/AlbumsPickerTableViewController.h; sourceTree = "<group>"; };
+		035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsPickerTableViewController.m; path = PhotoBox/Controllers/AlbumsPickerTableViewController.m; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1171,6 +1176,8 @@
 				035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */,
 				035DACCA197FAE6D00557547 /* TagsSuggestionTableViewController.h */,
 				035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */,
+				035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */,
+				035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1965,6 +1972,7 @@
 				035DACBA197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				0312048A19508B29004EA8CB /* UIView+Additionals.m in Sources */,
 				0312048B19508B29004EA8CB /* PhotosHorizontalScrollingViewController.m in Sources */,
+				035DACD3197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0312048C19508B29004EA8CB /* LoginWebViewViewController.m in Sources */,
 				0312048D19508B29004EA8CB /* DelightfulLayout.m in Sources */,
 				0312048E19508B29004EA8CB /* LeftViewController.m in Sources */,
@@ -2072,6 +2080,7 @@
 				035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
+				035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */,
 				03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */,
@@ -2197,6 +2206,7 @@
 				035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
+				035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
 				03EFD8EE19251CD700E80A71 /* LeftViewController.m in Sources */,

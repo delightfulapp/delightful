@@ -24,7 +24,9 @@
 
 #import "TagsSuggestionTableViewController.h"
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate>
+#import "AlbumsPickerTableViewController.h"
+
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerTableViewControllerPickerDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 
@@ -114,19 +116,26 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    AlbumsPickerTableViewController *albumsPicker = [[AlbumsPickerTableViewController alloc] initWithStyle:UITableViewStylePlain];
+    [albumsPicker setDelegate:self];
+    [self.navigationController pushViewController:albumsPicker animated:YES];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self cellIdentifierForIndexPath:indexPath]];
     [cell setAccessoryView:nil];
     [cell setAccessoryType:UITableViewCellAccessoryNone];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsAlbums) {
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
     }
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {
         [((TagEntryTableViewCell *)cell).tagField setDelegate:self];
+        
     }
     
     return cell;
@@ -292,6 +301,14 @@
     }
     
     [self.tagsSuggestionViewController.tableView removeFromSuperview];
+}
+
+#pragma mark - AlbumsPickerTableViewControllerPickerDelegate
+
+- (void)albumsPickerViewController:(AlbumsPickerTableViewController *)albumsPicker didSelectAlbum:(Album *)album {
+    self.selectedAlbum = album;
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
