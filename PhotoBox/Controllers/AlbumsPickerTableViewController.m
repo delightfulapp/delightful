@@ -12,6 +12,11 @@
 
 #import "PhotoBoxClient.h"
 
+typedef NS_ENUM(NSInteger, AlbumsPickerState) {
+    AlbumsPickerStateNormal,
+    AlbumsPickerStateFetching
+};
+
 @interface AlbumsPickerTableViewController ()
 
 @property (nonatomic, strong) NSMutableArray *albums;
@@ -19,6 +24,10 @@
 @property (nonatomic, assign) BOOL isFetchingAlbums;
 
 @property (nonatomic, strong) UIView *headerView;
+
+@property (nonatomic, strong) UIButton *headerViewButton;
+
+@property (nonatomic, assign) AlbumsPickerState state;
 
 @end
 
@@ -39,14 +48,17 @@
     
     self.title = NSLocalizedString(@"Albums", nil);
     
+    
+    
     if (!self.headerView) {
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 44)];
         UIButton *newAlbumButton = [[UIButton alloc] initWithFrame:self.headerView.bounds];
-        [newAlbumButton setTitle:NSLocalizedString(@"Create new album", nil) forState:UIControlStateNormal];
+        [newAlbumButton setTitle:NSLocalizedString(@"Fetching albums ...", nil) forState:UIControlStateNormal];
         [newAlbumButton.titleLabel setTextAlignment:NSTextAlignmentLeft];
         [newAlbumButton setTitleColor:[[[[UIApplication sharedApplication] delegate] window] tintColor] forState:UIControlStateNormal];
         [newAlbumButton addTarget:self action:@selector(addAlbumButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.headerView addSubview:newAlbumButton];
+        self.headerViewButton = newAlbumButton;
     }
     [self.tableView addSubview:self.headerView];
     
@@ -59,13 +71,31 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)setState:(AlbumsPickerState)state {
+    _state = state;
+    
+    if (state == AlbumsPickerStateFetching) {
+        [self.headerViewButton setTitle:NSLocalizedString(@"Fetching albums ...", nil) forState:UIControlStateNormal];
+        UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:activityView];
+        [activityView startAnimating];
+        [self.navigationItem setRightBarButtonItem:addButton];
+        self.isFetchingAlbums = YES;
+    } else {
+        [self.headerViewButton setTitle:NSLocalizedString(@"Create new album", nil) forState:UIControlStateNormal];
+        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAlbumButtonTapped:)];
+        [self.navigationItem setRightBarButtonItem:addButton];
+        self.isFetchingAlbums = NO;
+    }
+}
+
 - (void)fetchAlbums {
     if (!self.isFetchingAlbums) {
-        self.isFetchingAlbums = YES;
+        self.state = AlbumsPickerStateFetching;
         
         [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:0 success:^(NSArray *objects) {
             NSLog(@"Objects = %@", objects);
-            self.isFetchingAlbums = NO;
+            self.state = AlbumsPickerStateNormal;
             
             if (objects.count > 0) {
                 UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
@@ -96,7 +126,7 @@
             }
             
         } failure:^(NSError *error) {
-            self.isFetchingAlbums = NO;
+            self.state = AlbumsPickerStateNormal;
         }];
     }
 }
