@@ -82,6 +82,10 @@
     return _selectedAlbumLabel;
 }
 
+- (void)setNoSelectedAlbum {
+    [self.selectedAlbumLabel setText:NSLocalizedString(@"Select album", nil)];
+}
+
 + (NSString *)defaultCellReuseIdentifier {
     return @"albumPickerCell";
 }

@@ -133,6 +133,7 @@
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
         if (self.selectedAlbum) ((AlbumPickerTableViewCell *)cell).selectedAlbumLabel.text = self.selectedAlbum.name;
+        else [((AlbumPickerTableViewCell *)cell) setNoSelectedAlbum];
     }
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {

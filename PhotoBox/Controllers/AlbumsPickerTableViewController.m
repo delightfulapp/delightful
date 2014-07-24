@@ -50,6 +50,30 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     
     self.title = NSLocalizedString(@"Albums", nil);
     
+    [self setupHeaderView];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    if (self.selectedAlbum) {
+        UIBarButtonItem *dontSetAlbumButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Don't set album", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dontSetAlbumButtonTapped:)];
+        [self.navigationItem setRightBarButtonItem:dontSetAlbumButton];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.headerViewButton removeFromSuperview];
+    self.headerViewButton = nil;
+    [self.headerView removeFromSuperview];
+    self.headerView = nil;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)setupHeaderView {
     if (!self.headerView) {
         self.headerView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.navigationController.view.frame), self.tableView.contentInset.top, CGRectGetWidth(self.view.frame), 44)];
         self.headerView.alpha = 0;
@@ -95,20 +119,6 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     } completion:^(BOOL finished) {
         
     }];
-    
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.headerViewButton removeFromSuperview];
-    self.headerViewButton = nil;
-    [self.headerView removeFromSuperview];
-    self.headerView = nil;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setState:(AlbumsPickerState)state {
@@ -237,8 +247,13 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 
 #pragma mark - Button actions
 
+- (void)dontSetAlbumButtonTapped:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(albumsPickerViewController:didSelectAlbum:)]) {
+        [self.delegate albumsPickerViewController:self didSelectAlbum:nil];
+    }
+}
+
 - (void)addAlbumButtonTapped:(id)sender {
-    NSLog(@"add tapped");
     
     if (self.state == AlbumsPickerStateFetching) {
         return;

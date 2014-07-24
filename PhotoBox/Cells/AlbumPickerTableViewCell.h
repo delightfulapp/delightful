@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong, readonly) UILabel *selectedAlbumLabel;
 
+- (void)setNoSelectedAlbum;
+
 @end
