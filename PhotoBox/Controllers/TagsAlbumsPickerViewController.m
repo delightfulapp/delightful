@@ -321,9 +321,9 @@
         [tagsArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
             [trimmedTagsArray addObject:[obj stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         }];
-        NSString *newTags = [trimmedTagsArray componentsJoinedByString:@", "];
+        NSString *newTags = [[trimmedTagsArray componentsJoinedByString:@", "] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@", "]];
         if (cell) {
-            cell.tagField.text = newTags;
+            cell.tagField.text = [newTags stringByAppendingString:@", "];
             
         }
         self.selectedTags = newTags;
