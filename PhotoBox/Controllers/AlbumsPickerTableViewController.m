@@ -52,18 +52,15 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 {
     [super viewDidLoad];
     
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
     self.title = NSLocalizedString(@"Albums", nil);
     
     self.page = 1;
     
     [self setupHeaderView];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    if (self.selectedAlbum) {
-        UIBarButtonItem *dontSetAlbumButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Don't set album", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dontSetAlbumButtonTapped:)];
-        [self.navigationItem setRightBarButtonItem:dontSetAlbumButton];
-    }
+    
+    //[self.tableView setBackgroundColor:[UIColor redColor]];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -96,7 +93,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     
     self.tableView.contentInset = ({
         UIEdgeInsets inset = self.tableView.contentInset;
-        inset.top += CGRectGetHeight(self.headerView.frame);
+        inset.top += (CGRectGetHeight(self.headerView.frame) + CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]));
         inset;
     });
     self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
@@ -143,6 +140,10 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
         [self.headerViewButton setTitleColor:[[[[UIApplication sharedApplication] delegate] window] tintColor] forState:UIControlStateNormal];
         [self.navigationItem setRightBarButtonItem:nil];
         self.isFetchingAlbums = NO;
+        if (self.selectedAlbum) {
+            UIBarButtonItem *dontSetAlbumButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Don't set album", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dontSetAlbumButtonTapped:)];
+            [self.navigationItem setRightBarButtonItem:dontSetAlbumButton];
+        }
     }
 }
 

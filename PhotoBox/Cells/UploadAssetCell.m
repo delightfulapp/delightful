@@ -40,7 +40,7 @@
 }
 
 - (void)prepareForReuse {
-    [self.uploadingView setProgress:0];
+    [self setUploadProgress:0];
 }
 
 
