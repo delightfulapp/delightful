@@ -158,7 +158,7 @@
              mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self GET:[NSString stringWithFormat:@"/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
+    [self GET:[NSString stringWithFormat:@"v1/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInAlbum:(NSString *)albumId

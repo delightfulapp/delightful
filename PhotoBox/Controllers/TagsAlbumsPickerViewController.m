@@ -119,6 +119,7 @@
     
     AlbumsPickerTableViewController *albumsPicker = [[AlbumsPickerTableViewController alloc] initWithStyle:UITableViewStylePlain];
     [albumsPicker setDelegate:self];
+    [albumsPicker setSelectedAlbum:self.selectedAlbum];
     [self.navigationController pushViewController:albumsPicker animated:YES];
 }
 
@@ -131,6 +132,7 @@
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsAlbums) {
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+        if (self.selectedAlbum) ((AlbumPickerTableViewCell *)cell).selectedAlbumLabel.text = self.selectedAlbum.name;
     }
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {
@@ -307,6 +309,8 @@
 
 - (void)albumsPickerViewController:(AlbumsPickerTableViewController *)albumsPicker didSelectAlbum:(Album *)album {
     self.selectedAlbum = album;
+    
+    [self.tableView reloadData];
     
     [self.navigationController popViewControllerAnimated:YES];
 }

@@ -12,12 +12,14 @@
 
 #import "PhotoBoxClient.h"
 
+#import <MBProgressHUD.h>
+
 typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     AlbumsPickerStateNormal,
     AlbumsPickerStateFetching
 };
 
-@interface AlbumsPickerTableViewController ()
+@interface AlbumsPickerTableViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *albums;
 
@@ -114,6 +116,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     
     if (state == AlbumsPickerStateFetching) {
         [self.headerViewButton setTitle:NSLocalizedString(@"Fetching albums ...", nil) forState:UIControlStateNormal];
+        [self.headerViewButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
         UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithCustomView:activityView];
         [activityView startAnimating];
@@ -121,6 +124,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
         self.isFetchingAlbums = YES;
     } else {
         [self.headerViewButton setTitle:NSLocalizedString(@"Create new album", nil) forState:UIControlStateNormal];
+        [self.headerViewButton setTitleColor:[[[[UIApplication sharedApplication] delegate] window] tintColor] forState:UIControlStateNormal];
         [self.navigationItem setRightBarButtonItem:nil];
         self.isFetchingAlbums = NO;
     }
@@ -130,17 +134,8 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     if (!self.isFetchingAlbums) {
         self.state = AlbumsPickerStateFetching;
         
-        [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:0 success:^(NSArray *objects) {
-            NSLog(@"Objects = %@", objects);
+        [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:1 success:^(NSArray *objects) {
             self.state = AlbumsPickerStateNormal;
-            
-            Album *a = [[Album alloc] init];
-            [a setValue:@"Test album" forKey:@"name"];
-            Album *b = [[Album alloc] init];
-            [b setValue:@"Album album" forKey:@"name"];
-            Album *c = [[Album alloc] init];
-            [c setValue:@"Anon album" forKey:@"name"];
-            objects = @[a, b, c];
             
             if (objects.count > 0) {
                 UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
@@ -200,7 +195,14 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"albumCell"];
     }
-    cell.textLabel.text = ((Album *)[(NSArray *)[self.albums objectAtIndex:indexPath.section] objectAtIndex:indexPath.row]).name;
+    Album *album = (Album *)[(NSArray *)[self.albums objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+    cell.textLabel.text = album.name;
+    
+    if (self.selectedAlbum && [self.selectedAlbum.albumId isEqualToString:album.albumId]) {
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    } else {
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+    }
     return cell;
 }
 
@@ -237,6 +239,56 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 
 - (void)addAlbumButtonTapped:(id)sender {
     NSLog(@"add tapped");
+    
+    if (self.state == AlbumsPickerStateFetching) {
+        return;
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"New album", nil) message:nil delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) otherButtonTitles:NSLocalizedString(@"Create", nil), nil];
+    [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+    [alert show];
+}
+
+- (void)saveNewAlbum:(NSString *)albumName {
+    if ([albumName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid album's name", nil) message:NSLocalizedString(@"Album name cannot be empty", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles: nil];
+        [alert show];
+    } else {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [[PhotoBoxClient sharedClient] POST:@"v1/album/create.json" parameters:@{@"name": albumName} resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            if (error) {
+                [self newAlbumDidFailWithError:error];
+            } else {
+                NSLog(@"New album = %@", responseObject);
+                if (self.delegate && [self.delegate respondsToSelector:@selector(albumsPickerViewController:didSelectAlbum:)]) {
+                    [self.delegate albumsPickerViewController:self didSelectAlbum:responseObject];
+                }
+            }
+        }];
+    }
+}
+
+- (void)newAlbumDidFailWithError:(NSError *)error {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cannot make new album", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"Dismiss", nil) otherButtonTitles: nil];
+    [alert show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    NSLog(@"Text = %@", textField.text);
+    switch (buttonIndex) {
+        case 0:
+            
+            break;
+        case 1:
+            [self saveNewAlbum:textField.text];
+            break;
+        default:
+            break;
+    }
 }
 
 @end
