@@ -36,15 +36,19 @@
 - (void)showUploadedView:(BOOL)show {
     if (show) {
         if (!self.uploadedView) {
-            self.uploadedView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"uploaded.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+            self.uploadedView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"uploadedmark.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
             [self.uploadedView setBackgroundColor:[UIColor clearColor]];
-            [self.uploadedView setTintColor:[UIColor crayolaYellowSunshineColor]];
+            [self.uploadedView setTintColor:[UIColor whiteColor]];
+            [self.uploadedView.layer setShadowColor:[[UIColor blackColor] CGColor]];
+            [self.uploadedView.layer setShadowOffset:CGSizeMake(0, 1)];
+            [self.uploadedView.layer setShadowOpacity:0.7];
+            [self.uploadedView.layer setShadowRadius:1];
             [self.contentView addSubview:self.uploadedView];
         }
         self.uploadedView.frame = ({
             CGRect frame = self.uploadedView.frame;
-            frame.origin.x = CGRectGetWidth(self.contentView.frame) - frame.size.width - 5;
-            frame.origin.y = CGRectGetHeight(self.contentView.frame) - frame.size.height - 5;
+            frame.origin.x = CGRectGetWidth(self.contentView.frame) - frame.size.width + 2;
+            frame.origin.y = CGRectGetHeight(self.contentView.frame) - frame.size.height + 4;
             frame;
         });
     } else {

@@ -278,6 +278,12 @@
 		035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
 		035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
 		035DACD3197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
+		035DACDB1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
+		035DACDC1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
+		035DACDD1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
+		035DACDE1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
+		035DACDF1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
+		035DACE01980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -676,6 +682,8 @@
 		035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsSuggestionTableViewController.m; path = PhotoBox/Controllers/TagsSuggestionTableViewController.m; sourceTree = "<group>"; };
 		035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsPickerTableViewController.h; path = PhotoBox/Controllers/AlbumsPickerTableViewController.h; sourceTree = "<group>"; };
 		035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsPickerTableViewController.m; path = PhotoBox/Controllers/AlbumsPickerTableViewController.m; sourceTree = "<group>"; };
+		035DACD91980D99B00557547 /* uploadedmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploadedmark.png; sourceTree = "<group>"; };
+		035DACDA1980D99B00557547 /* uploadedmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploadedmark@2x.png"; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1293,6 +1301,8 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				035DACD91980D99B00557547 /* uploadedmark.png */,
+				035DACDA1980D99B00557547 /* uploadedmark@2x.png */,
 				0327CC7D194723B70086C4B8 /* uploaded.png */,
 				0327CC7E194723B70086C4B8 /* uploaded@2x.png */,
 				03FD48351920B27300D4ADF7 /* star-fill.png */,
@@ -1506,6 +1516,7 @@
 				031204D119508B29004EA8CB /* 0.0.2.plist in Resources */,
 				031204D219508B29004EA8CB /* npr_notification_image_error@2x.png in Resources */,
 				031204D319508B29004EA8CB /* Images.xcassets in Resources */,
+				035DACDD1980D99B00557547 /* uploadedmark.png in Resources */,
 				031204D419508B29004EA8CB /* info@2x.png in Resources */,
 				031204D519508B29004EA8CB /* 0.0.4.plist in Resources */,
 				031204D619508B29004EA8CB /* HeaderImageView.xib in Resources */,
@@ -1526,6 +1537,7 @@
 				031204E519508B29004EA8CB /* npr_notification_image_warning@2x.png in Resources */,
 				031204E619508B29004EA8CB /* star-fill@2x.png in Resources */,
 				031204E719508B29004EA8CB /* LeftPanelHeaderView.xib in Resources */,
+				035DACE01980D99B00557547 /* uploadedmark@2x.png in Resources */,
 				031204E819508B29004EA8CB /* right.png in Resources */,
 				031204E919508B29004EA8CB /* introbg@2x.jpg in Resources */,
 				031204EA19508B29004EA8CB /* Main.storyboard in Resources */,
@@ -1562,6 +1574,7 @@
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
 				032CBB9617D0BDF3001205B1 /* Images.xcassets in Resources */,
+				035DACDB1980D99B00557547 /* uploadedmark.png in Resources */,
 				036DF365181AA60B002E9FCB /* info@2x.png in Resources */,
 				036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */,
 				0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */,
@@ -1582,6 +1595,7 @@
 				032222B61814CBF0004F3830 /* npr_notification_image_warning@2x.png in Resources */,
 				03FD48381920B27300D4ADF7 /* star-fill@2x.png in Resources */,
 				03FD4826191FA5E700D4ADF7 /* LeftPanelHeaderView.xib in Resources */,
+				035DACDE1980D99B00557547 /* uploadedmark@2x.png in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
 				0334EBC01842093A001B262F /* Main.storyboard in Resources */,
@@ -1629,6 +1643,7 @@
 				03EFD92C19251CD700E80A71 /* 0.0.2.plist in Resources */,
 				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
 				03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */,
+				035DACDC1980D99B00557547 /* uploadedmark.png in Resources */,
 				03EFD93019251CD700E80A71 /* info@2x.png in Resources */,
 				03EFD93119251CD700E80A71 /* 0.0.4.plist in Resources */,
 				03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */,
@@ -1649,6 +1664,7 @@
 				03EFD94019251CD700E80A71 /* npr_notification_image_warning@2x.png in Resources */,
 				03EFD94219251CD700E80A71 /* star-fill@2x.png in Resources */,
 				03EFD94319251CD700E80A71 /* LeftPanelHeaderView.xib in Resources */,
+				035DACDF1980D99B00557547 /* uploadedmark@2x.png in Resources */,
 				03EFD94419251CD700E80A71 /* right.png in Resources */,
 				03EFD94519251CD700E80A71 /* introbg@2x.jpg in Resources */,
 				03EFD94619251CD700E80A71 /* Main.storyboard in Resources */,
