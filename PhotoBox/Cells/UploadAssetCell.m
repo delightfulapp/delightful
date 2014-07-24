@@ -36,11 +36,15 @@
         
         ALAsset *asset = (ALAsset *)_item;
         [self.cellImageView setImage:[UIImage imageWithCGImage:[asset thumbnail]]];
+        [self setUploadProgress:0];
     }
 }
 
 - (void)prepareForReuse {
-    [self setUploadProgress:0];
+    if (self.uploadProg == 1) {
+        [self.uploadingView removeFromSuperview];
+        self.uploadingView = nil;
+    }
 }
 
 

@@ -13,4 +13,6 @@
 - (void)setUploadProgress:(float)progress;
 - (void)removeUploadProgress;
 
+@property (nonatomic, assign, readonly) float uploadProg;
+
 @end
