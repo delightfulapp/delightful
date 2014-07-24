@@ -15,6 +15,18 @@ typedef NS_ENUM(NSInteger, TagsAlbumsPickerCollectionViewSections) {
     TagsAlbumsPickerCollectionViewSectionsCount
 };
 
+@class TagsAlbumsPickerViewController;
+@class Album;
+
+@protocol TagsAlbumsPickerViewControllerDelegate <NSObject>
+
+@optional
+- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishWithTags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos;
+
+@end
+
 @interface TagsAlbumsPickerViewController : UITableViewController
+
+@property (nonatomic, weak) id<TagsAlbumsPickerViewControllerDelegate>delegate;
 
 @end

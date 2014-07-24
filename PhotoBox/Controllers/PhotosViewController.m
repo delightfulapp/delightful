@@ -64,7 +64,7 @@
 
 #import "TagsAlbumsPickerViewController.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
 @property (nonatomic, assign) CGRect selectedItemRect;
@@ -73,6 +73,7 @@
 @property (nonatomic, weak) HeaderImageView *headerImageView;
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
+@property (nonatomic, copy) NSArray *assetsToUpload;
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 
@@ -721,27 +722,11 @@
 
 
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    NSArray *ass = assets;
-    [self dismissViewControllerAnimated:YES completion:^{
-        UploadViewController *uploadVC = [[UploadViewController alloc] init];
-        [uploadVC setUploads:ass];
-        [uploadVC.view setFrame:CGRectMake(0, -(UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH), CGRectGetWidth(self.view.frame), (UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH))];
-        [uploadVC willMoveToParentViewController:self];
-        [self addChildViewController:uploadVC];
-        [self.view addSubview:uploadVC.view];
-        [uploadVC didMoveToParentViewController:self];
-        
-        self.uploadViewController = uploadVC;
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            CGFloat offset = CGRectGetHeight(uploadVC.view.frame) + self.collectionView.contentInset.top;
-            CGFloat offsetWithoutInset = offset - self.collectionView.contentInset.top;
-            uploadVC.view.frame = CGRectOffset(uploadVC.view.frame, 0, offset);
-            self.collectionView.frame = CGRectMake(0, offsetWithoutInset, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame)-offsetWithoutInset);
-        } completion:^(BOOL finished) {
-            [uploadVC startUpload];
-        }];
-    }];
+    self.assetsToUpload = assets;
+    
+    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [tagsalbumspicker setDelegate:self];
+    [picker pushViewController:tagsalbumspicker animated:YES];
 }
 
 - (void)didChangeNumberOfUploads:(NSNotification *)notification {
@@ -762,6 +747,35 @@
             [self refresh];
         }];
     }
+}
+
+#pragma mark - Tags Albums Picker View Controller Delegate
+
+- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishWithTags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos {
+    [self dismissViewControllerAnimated:YES completion:^{
+        UploadViewController *uploadVC = [[UploadViewController alloc] init];
+        [uploadVC setUploads:self.assetsToUpload];
+        [uploadVC setTags:tags];
+        [uploadVC setAlbum:album];
+        [uploadVC setPrivatePhotos:privatePhotos];
+        [uploadVC.view setFrame:CGRectMake(0, -(UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH), CGRectGetWidth(self.view.frame), (UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH))];
+        [uploadVC willMoveToParentViewController:self];
+        [self addChildViewController:uploadVC];
+        [self.view addSubview:uploadVC.view];
+        [uploadVC didMoveToParentViewController:self];
+        
+        self.uploadViewController = uploadVC;
+        self.assetsToUpload = nil;
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            CGFloat offset = CGRectGetHeight(uploadVC.view.frame) + self.collectionView.contentInset.top;
+            CGFloat offsetWithoutInset = offset - self.collectionView.contentInset.top;
+            uploadVC.view.frame = CGRectOffset(uploadVC.view.frame, 0, offset);
+            self.collectionView.frame = CGRectMake(0, offsetWithoutInset, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame)-offsetWithoutInset);
+        } completion:^(BOOL finished) {
+            [uploadVC startUpload];
+        }];
+    }];
 }
 
 @end

@@ -232,7 +232,7 @@
 
 #pragma mark - Post
 
-- (void)uploadPhoto:(ALAsset *)photo progress:(void (^)(float))progress success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)uploadPhoto:(ALAsset *)photo tags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos progress:(void (^)(float))progress success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     if (photo.defaultRepresentation.url) {
         NSString *type = photo.defaultRepresentation.UTI;
         NSString *fileName = photo.defaultRepresentation.filename;
@@ -240,10 +240,17 @@
         NSString *latitude = [photo latitudeString];
         NSString *longitude = [photo longitudeString];
         NSString *path = @"/photo/upload.json";
-        NSDictionary *params = nil;
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
         if (latitude && longitude) {
-            params = @{@"latitude": latitude, @"longitude": longitude};
+            [params addEntriesFromDictionary:@{@"latitude": latitude, @"longitude": longitude}];
         }
+        if (tags && tags.length > 0) {
+            [params addEntriesFromDictionary:@{@"tags": tags}];
+        }
+        if (album) {
+            [params addEntriesFromDictionary:@{@"albums": album.albumId}];
+        }
+        [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
         
         OVCMultipartPart *part = [OVCMultipartPart partWithData:data name:@"photo" type:type filename:fileName];
         NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:path parameters:params parts:@[part]];

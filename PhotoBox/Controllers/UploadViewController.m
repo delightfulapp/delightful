@@ -62,7 +62,7 @@
 
 - (void)startUpload {
     for (ALAsset *asset in self.uploads) {
-        [[DLFImageUploader sharedUploader] queueAsset:asset];
+        [[DLFImageUploader sharedUploader] queueAsset:asset tags:self.tags album:self.album private:self.privatePhotos];
     }
 }
 

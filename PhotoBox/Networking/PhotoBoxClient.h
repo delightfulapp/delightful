@@ -11,6 +11,8 @@
 
 @class ALAsset;
 
+@class Album;
+
 typedef NS_ENUM(NSInteger, ResourceType) {
     AlbumResource,
     PhotoResource,
@@ -56,6 +58,9 @@ typedef NS_ENUM(NSInteger, ActionType) {
 - (void)refreshConnectionParameters;
 
 - (void)uploadPhoto:(ALAsset *)photo
+               tags:(NSString *)tags
+              album:(Album *)album
+            private:(BOOL)privatePhotos
            progress:(void(^)(float progress))progress
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock;

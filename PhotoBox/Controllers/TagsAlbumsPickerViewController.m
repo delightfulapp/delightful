@@ -42,6 +42,10 @@
 
 @property (nonatomic, assign) NSRange currentEditedTagRange;
 
+@property (nonatomic, strong) NSString *selectedTags;
+
+@property (nonatomic, assign) BOOL privatePhotos;
+
 @end
 
 @implementation TagsAlbumsPickerViewController
@@ -59,6 +63,8 @@
 {
     [super viewDidLoad];
     
+    self.privatePhotos = YES;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -72,6 +78,9 @@
     [self.tableView registerClass:[PermissionPickerTableViewCell class] forCellReuseIdentifier:[PermissionPickerTableViewCell defaultCellReuseIdentifier]];
     
     [self fetchTags];
+    
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
+    [self.navigationItem setRightBarButtonItem:doneButton];
 }
 
 - (void)fetchTags {
@@ -138,6 +147,11 @@
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {
         [((TagEntryTableViewCell *)cell).tagField setDelegate:self];
+    }
+    
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsPermission) {
+        [((PermissionPickerTableViewCell *)cell).permissionSwitch setOn:self.privatePhotos];
+        [((PermissionPickerTableViewCell *)cell).permissionSwitch addTarget:self action:@selector(permissionSwitchDidChange:) forControlEvents:UIControlEventValueChanged];
         
     }
     
@@ -190,6 +204,9 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
     NSString *text = textField.text;
     NSString *newText = [text stringByReplacingCharactersInRange:range withString:string];
+    
+    self.selectedTags = newText;
+    
     NSString *tagToSuggest = [self tagToSuggestForText:newText replacementRange:range replacementString:string];
     self.currentEditedTag = tagToSuggest;
     if (self.tags) {
@@ -292,15 +309,18 @@
 - (void)tagsSuggestionViewController:(TagsSuggestionTableViewController *)tagsViewController didSelectTag:(NSString *)tag {
     if (self.currentEditedTag && self.currentEditedTagRange.location != NSNotFound) {
         TagEntryTableViewCell *cell = (TagEntryTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TagsAlbumsPickerCollectionViewSectionsTags]];
+        NSString *text = [cell.tagField.text stringByReplacingCharactersInRange:self.currentEditedTagRange withString:tag];
+        NSArray *tagsArray = [text componentsSeparatedByString:@","];
+        NSMutableArray *trimmedTagsArray = [NSMutableArray arrayWithCapacity:tagsArray.count];
+        [tagsArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
+            [trimmedTagsArray addObject:[obj stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        }];
+        NSString *newTags = [trimmedTagsArray componentsJoinedByString:@", "];
         if (cell) {
-            NSString *text = [cell.tagField.text stringByReplacingCharactersInRange:self.currentEditedTagRange withString:tag];
-            NSArray *tagsArray = [text componentsSeparatedByString:@","];
-            NSMutableArray *trimmedTagsArray = [NSMutableArray arrayWithCapacity:tagsArray.count];
-            [tagsArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL *stop) {
-                [trimmedTagsArray addObject:[obj stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
-            }];
-            cell.tagField.text = [trimmedTagsArray componentsJoinedByString:@", "];
+            cell.tagField.text = newTags;
+            
         }
+        self.selectedTags = newTags;
     }
     
     [self.tagsSuggestionViewController.tableView removeFromSuperview];
@@ -314,6 +334,18 @@
     [self.tableView reloadData];
     
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark - Buttons
+
+- (void)permissionSwitchDidChange:(UISwitch *)sender {
+    self.privatePhotos = sender.isOn;
+}
+
+- (void)doneButtonTapped:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tagsAlbumsPickerViewController:didFinishWithTags:album:private:)]) {
+        [self.delegate tagsAlbumsPickerViewController:self didFinishWithTags:self.selectedTags album:self.selectedAlbum private:self.privatePhotos];
+    }
 }
 
 @end

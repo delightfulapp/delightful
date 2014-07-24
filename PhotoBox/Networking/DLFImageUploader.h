@@ -10,6 +10,8 @@
 
 @class ALAsset;
 
+@class Album;
+
 extern NSString *const DLFAssetUploadProgressNotification;
 
 extern NSString *const DLFAssetUploadDidChangeNumberOfUploadsNotification;
@@ -32,6 +34,6 @@ extern NSString *const kNumberOfUploadsKey;
 
 + (instancetype)sharedUploader;
 
-- (BOOL)queueAsset:(ALAsset *)asset;
+- (BOOL)queueAsset:(ALAsset *)asset tags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos;
 
 @end

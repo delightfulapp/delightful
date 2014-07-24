@@ -48,14 +48,14 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
     return _sharedUploader;
 }
 
-- (BOOL)queueAsset:(ALAsset *)asset {
+- (BOOL)queueAsset:(ALAsset *)asset tags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos {
     if ([self isUploadingAsset:asset]) {
         return NO;
     }
     
     [self addAsset:asset];
     __weak typeof (self) selfie = self;
-    [[PhotoBoxClient sharedClient] uploadPhoto:asset progress:^(float progress) {
+    [[PhotoBoxClient sharedClient] uploadPhoto:asset tags:tags album:album private:privatePhotos progress:^(float progress) {
         [selfie uploadProgress:progress asset:asset];
     } success:^(id object) {
         [selfie assetUploadDidSucceed:asset];
