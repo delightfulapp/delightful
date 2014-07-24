@@ -43,6 +43,7 @@
             [self.uploadedView.layer setShadowOffset:CGSizeMake(0, 1)];
             [self.uploadedView.layer setShadowOpacity:0.7];
             [self.uploadedView.layer setShadowRadius:1];
+            [self.uploadedView.layer setShouldRasterize:YES];
             [self.contentView addSubview:self.uploadedView];
         }
         self.uploadedView.frame = ({
