@@ -16,8 +16,6 @@
 
 @property (nonatomic, weak) UILabel *uploadingLabel;
 
-@property (nonatomic, weak) UIActivityIndicatorView *indicatorView;
-
 @end
 
 @implementation UploadHeaderView
@@ -33,23 +31,16 @@
 
 - (void)setup {
     [UIView autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.uploadingLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
-        [self.uploadingLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-        [self.uploadingLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.indicatorView withOffset:-10 relation:NSLayoutRelationLessThanOrEqual];
-        [self.indicatorView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10];
-        [self.indicatorView autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+        [self.uploadingLabel autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
+        [self.uploadingLabel autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
+        [self.uploadingLabel autoCenterInSuperview];
     }];
-    
-    [self.uploadingLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     
     [self setBackgroundColor:[UIColor albumsBackgroundColor]];
 }
 
 - (void)setNumberOfUploads:(NSInteger)numberOfUploads {
     [self.uploadingLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Uploading %1$d %2$@ ...", nil), numberOfUploads, numberOfUploads==1?NSLocalizedString(@"photo", nil):NSLocalizedString(@"photos", nil)]];
-    if (numberOfUploads > 0) {
-        [self.indicatorView startAnimating];
-    }
 }
 
 #pragma mark - Getters
@@ -58,20 +49,12 @@
     if (!_uploadingLabel) {
         _uploadingLabel = [self addSubviewClass:[UILabel class]];
         [_uploadingLabel setBackgroundColor:[UIColor clearColor]];
-        [_uploadingLabel setFont:[UIFont systemFontOfSize:12]];
+        [_uploadingLabel setFont:[UIFont boldSystemFontOfSize:12]];
+        [_uploadingLabel setAdjustsFontSizeToFitWidth:YES];
         [_uploadingLabel setTextColor:[UIColor whiteColor]];
+        [_uploadingLabel setTextAlignment:NSTextAlignmentCenter];
     }
     return _uploadingLabel;
-}
-
-- (UIActivityIndicatorView *)indicatorView {
-    if (!_indicatorView) {
-        UIActivityIndicatorView *act = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
-        [act setTranslatesAutoresizingMaskIntoConstraints:NO];
-        [self addSubview:act];
-        _indicatorView = act;
-    }
-    return _indicatorView;
 }
 
 @end

@@ -40,14 +40,7 @@
 }
 
 - (void)prepareForReuse {
-    [self.uploadingView removeFromSuperview];
-    self.uploadingView = nil;
-}
-
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    [self setUploadProgress:self.uploadProg];
+    [self.uploadingView setProgress:0];
 }
 
 

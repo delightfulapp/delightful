@@ -10,7 +10,7 @@
 
 #define UPLOAD_ITEM_WIDTH 53
 
-#define UPLOAD_BAR_HEIGHT 44
+#define UPLOAD_BAR_HEIGHT 22
 
 @interface UploadViewController : UIViewController
 
