@@ -26,6 +26,10 @@
 
 #import "AlbumsPickerTableViewController.h"
 
+#import "DelightfulCache.h"
+
+#define LAST_SELECTED_ALBUM @"last_selected_album_key"
+
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerTableViewControllerPickerDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
@@ -64,6 +68,8 @@
     [super viewDidLoad];
     
     self.privatePhotos = YES;
+    
+    if ([[DelightfulCache sharedCache] objectForKey:LAST_SELECTED_ALBUM]) self.selectedAlbum = [NSKeyedUnarchiver unarchiveObjectWithData:[[DelightfulCache sharedCache] objectForKey:LAST_SELECTED_ALBUM]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
@@ -330,6 +336,9 @@
 
 - (void)albumsPickerViewController:(AlbumsPickerTableViewController *)albumsPicker didSelectAlbum:(Album *)album {
     self.selectedAlbum = album;
+    
+    if (self.selectedAlbum) [[DelightfulCache sharedCache] setObject:[NSKeyedArchiver archivedDataWithRootObject:album] forKey:LAST_SELECTED_ALBUM];
+    else [[DelightfulCache sharedCache] setObject:nil forKey:LAST_SELECTED_ALBUM];
     
     [self.tableView reloadData];
     

@@ -23,7 +23,11 @@
 }
 
 - (void)setObject:(id)object forKey:(id)aKey {
-    [[TMCache sharedCache] setObject:object forKey:aKey];
+    if (object) {
+        [[TMCache sharedCache] setObject:object forKey:aKey];
+    } else {
+        [[TMCache sharedCache] removeObjectForKey:aKey];
+    }
 }
 
 - (id)objectForKey:(id)aKey {
