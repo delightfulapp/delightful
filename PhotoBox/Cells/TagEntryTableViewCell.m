@@ -37,16 +37,10 @@
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
     
     [self.tagField autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:15];
-    [self.tagField autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.tagPickerButton];
-
-    [self.tagPickerButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.tagField withOffset:10];
-    [self.tagPickerButton autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-15];
-    [self.tagPickerButton autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10];
+    [self.tagField autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-15];
+    [self.tagField autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10];
     
-    [self.tagField setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    [self.tagPickerButton setContentCompressionResistancePriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
-    
-    [self.contentView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.tagPickerButton withOffset:10];
+    [self.contentView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.tagField withOffset:10];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
