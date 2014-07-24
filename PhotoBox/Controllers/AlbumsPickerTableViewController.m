@@ -23,6 +23,8 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 
 @property (nonatomic, strong) NSMutableArray *albums;
 
+@property (nonatomic, strong) NSMutableArray *tempAlbums;
+
 @property (nonatomic, assign) BOOL isFetchingAlbums;
 
 @property (nonatomic, strong) UIView *headerView;
@@ -30,6 +32,8 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 @property (nonatomic, strong) UIButton *headerViewButton;
 
 @property (nonatomic, assign) AlbumsPickerState state;
+
+@property (nonatomic, assign) int page;
 
 @end
 
@@ -49,6 +53,8 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"Albums", nil);
+    
+    self.page = 1;
     
     [self setupHeaderView];
 }
@@ -142,15 +148,25 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 
 - (void)fetchAlbums {
     if (!self.isFetchingAlbums) {
+        self.isFetchingAlbums = YES;
         self.state = AlbumsPickerStateFetching;
         
-        [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:1 success:^(NSArray *objects) {
-            self.state = AlbumsPickerStateNormal;
+        [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:self.page success:^(NSArray *objects) {
             
             if (objects.count > 0) {
+                if (!self.tempAlbums) {
+                    self.tempAlbums = [NSMutableArray array];
+                }
+                [self.tempAlbums addObjectsFromArray:objects];
+                
+                self.page++;
+                self.isFetchingAlbums = NO;
+                [self fetchAlbums];
+            } else {
+                NSLog(@"Done fetching all albums ");
                 UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
                 
-                for (Album *theAlbum in objects) {
+                for (Album *theAlbum in self.tempAlbums) {
                     NSInteger sect = [theCollation sectionForObject:theAlbum collationStringSelector:@selector(name)];
                     theAlbum.sectionNumber = sect;
                 }
@@ -162,7 +178,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
                     [sectionArrays addObject:sectionArray];
                 }
                 
-                for (Album *theAlbum in objects) {
+                for (Album *theAlbum in self.tempAlbums) {
                     [(NSMutableArray *)[sectionArrays objectAtIndex:theAlbum.sectionNumber] addObject:theAlbum];
                 }
                 
@@ -176,11 +192,14 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
                     [self.albums addObject:sortedSection];
                 }
                 
+                self.state = AlbumsPickerStateNormal;
+                self.isFetchingAlbums = NO;
                 [self.tableView reloadData];
             }
             
         } failure:^(NSError *error) {
             self.state = AlbumsPickerStateNormal;
+            self.isFetchingAlbums = NO;
         }];
     }
 }

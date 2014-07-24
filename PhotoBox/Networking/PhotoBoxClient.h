@@ -53,6 +53,13 @@ typedef NS_ENUM(NSInteger, ActionType) {
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock;
 
+- (void)getAlbumsForPage:(int)page
+                pageSize:(int)pageSize
+               fetchedIn:(NSString *)fetchedIn
+             mainContext:(NSManagedObjectContext *)mainContext
+                 success:(void (^)(id))successBlock
+                 failure:(void (^)(NSError *))failureBlock;
+
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void(^)(NSString *token))completion;
 
 - (void)refreshConnectionParameters;
