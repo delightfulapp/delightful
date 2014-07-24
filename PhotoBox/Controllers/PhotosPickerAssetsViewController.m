@@ -35,6 +35,12 @@
     self.uploadedAssets = [[DelightfulCache sharedCache] objectForKey:DLF_UPLOADED_ASSETS];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.navigationItem.rightBarButtonItem.title = NSLocalizedString(@"Next", nil);
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

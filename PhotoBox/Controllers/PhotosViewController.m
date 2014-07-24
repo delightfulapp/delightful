@@ -448,11 +448,6 @@
 }
 
 - (void)cameraButtonTapped:(id)sender {
-//    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-//    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tagsalbumspicker];
-//    [self presentViewController:navigationController animated:YES completion:nil];
-//    
-//    return;
     PhotosPickerViewController *picker = [[PhotosPickerViewController alloc] init];
     picker.delegate = self;
     [picker setAssetsFilter:[ALAssetsFilter allPhotos]];
