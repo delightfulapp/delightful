@@ -26,6 +26,14 @@
 
 @property (nonatomic, assign) BOOL privatePhotos;
 
+@property (nonatomic, weak, readonly) UIButton *reloadButton;
+
+@property (nonatomic, weak, readonly) UIButton *cancelButton;
+
 - (void)startUpload;
+
+- (void)reloadUpload;
+
+- (void)showReloadButtons:(BOOL)show;
 
 @end

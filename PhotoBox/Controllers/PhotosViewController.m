@@ -555,6 +555,35 @@
     [self openPhoto:(id)album.albumCover index:0 items:@[album.albumCover]];
 }
 
+- (void)reloadButtonTapped:(id)sender {
+    NSLog(@"reload upload");
+    
+    [self.uploadViewController showReloadButtons:NO];
+    [self.uploadViewController startUpload];
+}
+
+- (void)cancelButtonTapped:(id)sender {
+    NSLog(@"cancel upload");
+    [self closeUploadView];
+}
+
+- (void)closeUploadView {
+    [UIView animateWithDuration:0.3 animations:^{
+        CGFloat offset = CGRectGetHeight(self.uploadViewController.view.frame) + self.collectionView.contentInset.top;
+        
+        self.uploadViewController.view.frame = CGRectOffset(self.uploadViewController.view.frame, 0, -offset);
+        self.collectionView.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, self.view.frame.size.height);
+    } completion:^(BOOL finished) {
+        [self.uploadViewController willMoveToParentViewController:nil];
+        [self.uploadViewController removeFromParentViewController];
+        [self.uploadViewController.view removeFromSuperview];
+        [self.uploadViewController didMoveToParentViewController:nil];
+        self.uploadViewController = nil;
+        
+        [self refresh];
+    }];
+}
+
 #pragma mark - Setters
 
 - (void)setPhotosCount:(int)count max:(int)max{
@@ -731,21 +760,14 @@
 
 - (void)didChangeNumberOfUploads:(NSNotification *)notification {
     NSInteger uploads = [notification.userInfo[kNumberOfUploadsKey] integerValue];
-    if (uploads == 0) {
-        [UIView animateWithDuration:0.3 animations:^{
-            CGFloat offset = CGRectGetHeight(self.uploadViewController.view.frame) + self.collectionView.contentInset.top;
-            
-            self.uploadViewController.view.frame = CGRectOffset(self.uploadViewController.view.frame, 0, -offset);
-            self.collectionView.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, self.view.frame.size.height);
-        } completion:^(BOOL finished) {
-            [self.uploadViewController willMoveToParentViewController:nil];
-            [self.uploadViewController removeFromParentViewController];
-            [self.uploadViewController.view removeFromSuperview];
-            [self.uploadViewController didMoveToParentViewController:nil];
-            self.uploadViewController = nil;
-            
-            [self refresh];
-        }];
+    NSInteger fails = [[DLFImageUploader sharedUploader] numberOfFailUpload];
+    if (uploads == 0 && fails == 0) {
+        [self closeUploadView];
+    } else {
+        [self refresh];
+        [self.uploadViewController showReloadButtons:YES];
+        [self.uploadViewController.reloadButton addTarget:self action:@selector(reloadButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.uploadViewController.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     }
 }
 

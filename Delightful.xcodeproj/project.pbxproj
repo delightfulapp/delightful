@@ -284,6 +284,9 @@
 		035DACDE1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
 		035DACDF1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
 		035DACE01980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
+		035DACE31983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
+		035DACE41983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
+		035DACE51983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -684,6 +687,8 @@
 		035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsPickerTableViewController.m; path = PhotoBox/Controllers/AlbumsPickerTableViewController.m; sourceTree = "<group>"; };
 		035DACD91980D99B00557547 /* uploadedmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploadedmark.png; sourceTree = "<group>"; };
 		035DACDA1980D99B00557547 /* uploadedmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploadedmark@2x.png"; sourceTree = "<group>"; };
+		035DACE11983490B00557547 /* UploadReloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadReloadView.h; path = PhotoBox/Views/UploadReloadView.h; sourceTree = "<group>"; };
+		035DACE21983490B00557547 /* UploadReloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadReloadView.m; path = PhotoBox/Views/UploadReloadView.m; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1270,6 +1275,8 @@
 				0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */,
 				037B08A61956C0A6001F55D6 /* UploadHeaderView.h */,
 				037B08A71956C0A6001F55D6 /* UploadHeaderView.m */,
+				035DACE11983490B00557547 /* UploadReloadView.h */,
+				035DACE21983490B00557547 /* UploadReloadView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1966,6 +1973,7 @@
 				037B08A51956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				0312047619508B29004EA8CB /* PanelFactory.m in Sources */,
 				0312047719508B29004EA8CB /* HeaderImageView.m in Sources */,
+				035DACE51983490B00557547 /* UploadReloadView.m in Sources */,
 				0312047819508B29004EA8CB /* PhotoCell.m in Sources */,
 				0312047919508B29004EA8CB /* DelightfulCache.m in Sources */,
 				0312047A19508B29004EA8CB /* LoginViewController.m in Sources */,
@@ -2074,6 +2082,7 @@
 				037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03CE50EC18181D7C00445084 /* PanelFactory.m in Sources */,
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
+				035DACE31983490B00557547 /* UploadReloadView.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
 				0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
@@ -2200,6 +2209,7 @@
 				037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */,
 				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
+				035DACE41983490B00557547 /* UploadReloadView.m in Sources */,
 				03EFD8DC19251CD700E80A71 /* PhotoCell.m in Sources */,
 				0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,

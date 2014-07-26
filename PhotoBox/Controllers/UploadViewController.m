@@ -20,6 +20,7 @@
 
 #import "DelightfulCache.h"
 
+#import "UploadReloadView.h"
 
 @interface UploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -28,6 +29,12 @@
 @property (nonatomic, strong) UploadHeaderView *headerView;
 
 @property (nonatomic, strong) NSMutableArray *internalUploads;
+
+@property (nonatomic, weak) UploadReloadView *reloadView;
+
+@property (nonatomic, weak) UIButton *reloadButton;
+
+@property (nonatomic, weak) UIButton *cancelButton;
 
 @end
 
@@ -58,12 +65,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgressNotification:) name:DLFAssetUploadProgressNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDoneNotification:) name:DLFAssetUploadDidSucceedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    
 }
 
 - (void)startUpload {
     for (ALAsset *asset in self.uploads) {
         [[DLFImageUploader sharedUploader] queueAsset:asset tags:self.tags album:self.album private:self.privatePhotos];
     }
+}
+
+- (void)reloadUpload {
+    [[DLFImageUploader sharedUploader] reloadUpload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -77,6 +89,27 @@
         _uploads = uploads;
         
         _internalUploads = [_uploads mutableCopy];
+    }
+}
+
+- (void)showReloadButtons:(BOOL)show {
+    if (show) {
+        [self.headerView setNumberOfUploads:0];
+        
+        UploadReloadView *reloadView = [[UploadReloadView alloc] init];
+        [reloadView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.view addSubview:reloadView];
+        self.reloadView = reloadView;
+        
+        [reloadView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self.view];
+        [reloadView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.view];
+        [reloadView autoCenterInSuperview];
+        
+        self.reloadButton = self.reloadView.reloadButton;
+        self.cancelButton = self.reloadView.cancelButton;
+    } else {
+        [self.reloadView removeFromSuperview];
+        self.reloadView = nil;
     }
 }
 

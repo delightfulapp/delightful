@@ -40,7 +40,11 @@
 }
 
 - (void)setNumberOfUploads:(NSInteger)numberOfUploads {
-    [self.uploadingLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Uploading %1$d %2$@ ...", nil), numberOfUploads, numberOfUploads==1?NSLocalizedString(@"photo", nil):NSLocalizedString(@"photos", nil)]];
+    if (numberOfUploads == 0) {
+        [self.uploadingLabel setHidden:YES];
+    } else {
+        [self.uploadingLabel setText:[NSString stringWithFormat:NSLocalizedString(@"Uploading %1$d %2$@ ...", nil), numberOfUploads, numberOfUploads==1?NSLocalizedString(@"photo", nil):NSLocalizedString(@"photos", nil)]];
+    }
 }
 
 #pragma mark - Getters
