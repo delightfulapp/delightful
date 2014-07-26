@@ -134,10 +134,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    AlbumsPickerTableViewController *albumsPicker = [[AlbumsPickerTableViewController alloc] initWithStyle:UITableViewStylePlain];
-    [albumsPicker setDelegate:self];
-    [albumsPicker setSelectedAlbum:self.selectedAlbum];
-    [self.navigationController pushViewController:albumsPicker animated:YES];
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsAlbums) {
+        AlbumsPickerTableViewController *albumsPicker = [[AlbumsPickerTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        [albumsPicker setDelegate:self];
+        [albumsPicker setSelectedAlbum:self.selectedAlbum];
+        [self.navigationController pushViewController:albumsPicker animated:YES];
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
