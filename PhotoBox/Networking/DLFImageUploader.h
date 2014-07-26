@@ -40,4 +40,6 @@ extern NSString *const kNumberOfUploadsKey;
 
 - (void)reloadUpload;
 
+- (void)clearFailUploads;
+
 @end

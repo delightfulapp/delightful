@@ -85,8 +85,8 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
 }
 
 - (void)assetUploadDidFail:(DLFAsset *)asset error:(NSError *)error {
-    [self removeAsset:asset];
     [self addFailAsset:asset];
+    [self removeAsset:asset];
 }
 
 - (void)addAsset:(DLFAsset *)asset {
@@ -135,6 +135,15 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
     @synchronized(self){
         NSURL *URL = [asset.asset valueForProperty:ALAssetPropertyAssetURL];
         return [self.uploadingAssets containsObject:URL];
+    }
+}
+
+- (void)clearFailUploads {
+    @synchronized(self) {
+        [self.uploadFailAssets removeAllObjects];
+        [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
+        _numberOfFailUpload = 0;
+        [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
     }
 }
 

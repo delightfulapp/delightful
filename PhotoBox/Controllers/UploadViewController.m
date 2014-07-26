@@ -72,6 +72,7 @@
 
 - (void)startUpload {
     for (DLFAsset *asset in self.uploads) {
+        //NSLog(@"Asset URL = %@", [asset.asset valueForProperty:ALAssetPropertyAssetURL]);
         [[DLFImageUploader sharedUploader] queueAsset:asset];
     }
 }

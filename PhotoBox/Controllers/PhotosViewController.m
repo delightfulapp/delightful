@@ -565,6 +565,7 @@
 
 - (void)cancelButtonTapped:(id)sender {
     NSLog(@"cancel upload");
+    [[DLFImageUploader sharedUploader] clearFailUploads];
     [self closeUploadView];
 }
 
