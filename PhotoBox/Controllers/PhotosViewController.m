@@ -64,6 +64,8 @@
 
 #import "TagsAlbumsPickerViewController.h"
 
+#import "DLFAsset.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -73,7 +75,6 @@
 @property (nonatomic, weak) HeaderImageView *headerImageView;
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
-@property (nonatomic, copy) NSArray *assetsToUpload;
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 
@@ -751,35 +752,34 @@
 
 
 - (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    self.assetsToUpload = assets;
-    
     TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [tagsalbumspicker setDelegate:self];
+    [tagsalbumspicker setSelectedAssets:[DLFAsset assetsArrayFromALAssetArray:assets]];
     [picker pushViewController:tagsalbumspicker animated:YES];
 }
 
 - (void)didChangeNumberOfUploads:(NSNotification *)notification {
     NSInteger uploads = [notification.userInfo[kNumberOfUploadsKey] integerValue];
     NSInteger fails = [[DLFImageUploader sharedUploader] numberOfFailUpload];
-    if (uploads == 0 && fails == 0) {
-        [self closeUploadView];
-    } else {
-        [self refresh];
-        [self.uploadViewController showReloadButtons:YES];
-        [self.uploadViewController.reloadButton addTarget:self action:@selector(reloadButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.uploadViewController.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (uploads == 0) {
+        if (fails == 0) {
+            [self closeUploadView];
+        } else {
+            [self refresh];
+            [self.uploadViewController showReloadButtons:YES];
+            [self.uploadViewController.reloadButton addTarget:self action:@selector(reloadButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [self.uploadViewController.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        }
     }
 }
 
 #pragma mark - Tags Albums Picker View Controller Delegate
 
-- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishWithTags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos {
+- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
     [self dismissViewControllerAnimated:YES completion:^{
         UploadViewController *uploadVC = [[UploadViewController alloc] init];
-        [uploadVC setUploads:self.assetsToUpload];
-        [uploadVC setTags:tags];
-        [uploadVC setAlbum:album];
-        [uploadVC setPrivatePhotos:privatePhotos];
+        [uploadVC setUploads:assets];
         [uploadVC.view setFrame:CGRectMake(0, -(UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH), CGRectGetWidth(self.view.frame), (UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH))];
         [uploadVC willMoveToParentViewController:self];
         [self addChildViewController:uploadVC];
@@ -787,7 +787,6 @@
         [uploadVC didMoveToParentViewController:self];
         
         self.uploadViewController = uploadVC;
-        self.assetsToUpload = nil;
         
         [UIView animateWithDuration:0.3 animations:^{
             CGFloat offset = CGRectGetHeight(uploadVC.view.frame) + self.collectionView.contentInset.top;

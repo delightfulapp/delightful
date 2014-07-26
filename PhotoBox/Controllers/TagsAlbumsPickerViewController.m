@@ -28,6 +28,8 @@
 
 #import "DelightfulCache.h"
 
+#import "DLFAsset.h"
+
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
 
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerTableViewControllerPickerDelegate>
@@ -352,8 +354,13 @@
 }
 
 - (void)doneButtonTapped:(id)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(tagsAlbumsPickerViewController:didFinishWithTags:album:private:)]) {
-        [self.delegate tagsAlbumsPickerViewController:self didFinishWithTags:self.selectedTags album:self.selectedAlbum private:self.privatePhotos];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tagsAlbumsPickerViewController:didFinishSelectTagsAndAlbum:)]) {
+        for (DLFAsset *asset in self.selectedAssets) {
+            [asset setTags:self.selectedTags];
+            [asset setAlbum:self.selectedAlbum];
+            [asset setPrivatePhoto:self.privatePhotos];
+        }
+        [self.delegate tagsAlbumsPickerViewController:self didFinishSelectTagsAndAlbum:self.selectedAssets];
     }
 }
 

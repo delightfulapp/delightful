@@ -10,6 +10,8 @@
 
 #import "PhotoBoxClient.h"
 
+#import "DLFAsset.h"
+
 #import <AssetsLibrary/AssetsLibrary.h>
 
 NSString *const DLFAssetUploadProgressNotification = @"com.getdelightfulapp.DLFAssetUploadProgressNotification";
@@ -30,7 +32,7 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
 
 @property (nonatomic, strong) NSMutableArray *uploadingAssets;
 
-@property (nonatomic, strong) NSMutableArray *uploadFailAssets;
+@property (nonatomic, strong) NSMutableOrderedSet *uploadFailAssets;
 
 @end
 
@@ -42,23 +44,30 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
     dispatch_once(&onceToken, ^{
         _sharedUploader = [[DLFImageUploader alloc] init];
         _sharedUploader.uploadingAssets = [[NSMutableArray alloc] init];
-        _sharedUploader.uploadFailAssets = [[NSMutableArray alloc] init];
+        _sharedUploader.uploadFailAssets = [[NSMutableOrderedSet alloc] init];
     });
     
     return _sharedUploader;
 }
 
-- (BOOL)queueAsset:(ALAsset *)asset tags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos {
+- (void)reloadUpload {
+    for (DLFAsset *asset in self.uploadFailAssets) {
+        [self queueAsset:asset];
+    }
+}
+
+- (BOOL)queueAsset:(DLFAsset *)asset {
     if ([self isUploadingAsset:asset]) {
         return NO;
     }
     
     [self addAsset:asset];
     __weak typeof (self) selfie = self;
-    [[PhotoBoxClient sharedClient] uploadPhoto:asset tags:tags album:album private:privatePhotos progress:^(float progress) {
+    [[PhotoBoxClient sharedClient] uploadAsset:asset progress:^(float progress) {
         [selfie uploadProgress:progress asset:asset];
     } success:^(id object) {
         [selfie assetUploadDidSucceed:asset];
+        [selfie removeFailAsset:asset];
     } failure:^(NSError *error) {
         [selfie assetUploadDidFail:asset error:error];
     }];
@@ -66,62 +75,65 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
     return YES;
 }
 
-- (void)uploadProgress:(float)progress asset:(ALAsset *)asset {
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadProgressNotification object:nil userInfo:@{kAssetURLKey: [asset valueForProperty:ALAssetPropertyAssetURL], kProgressKey: @(progress)}];
+- (void)uploadProgress:(float)progress asset:(DLFAsset *)asset {
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadProgressNotification object:nil userInfo:@{kAssetURLKey: [asset.asset valueForProperty:ALAssetPropertyAssetURL], kProgressKey: @(progress)}];
 }
 
-- (void)assetUploadDidSucceed:(ALAsset *)asset {
+- (void)assetUploadDidSucceed:(DLFAsset *)asset {
     [self removeAsset:asset];
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidSucceedNotification object:nil userInfo:@{kAssetURLKey: [asset valueForProperty:ALAssetPropertyAssetURL]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidSucceedNotification object:nil userInfo:@{kAssetURLKey: [asset.asset valueForProperty:ALAssetPropertyAssetURL]}];
 }
 
-- (void)assetUploadDidFail:(ALAsset *)asset error:(NSError *)error {
+- (void)assetUploadDidFail:(DLFAsset *)asset error:(NSError *)error {
     [self removeAsset:asset];
+    [self addFailAsset:asset];
 }
 
-- (void)addAsset:(ALAsset *)asset {
+- (void)addAsset:(DLFAsset *)asset {
     @synchronized(self){
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
-        [self.uploadingAssets addObject:[asset valueForProperty:ALAssetPropertyAssetURL]];
+        [self.uploadingAssets addObject:[asset.asset valueForProperty:ALAssetPropertyAssetURL]];
         _numberOfUploading = self.uploadingAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading)}];
     }
 }
 
-- (void)removeAsset:(ALAsset *)asset {
+- (void)removeAsset:(DLFAsset *)asset {
     @synchronized(self){
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
-        [self.uploadingAssets removeObject:[asset valueForProperty:ALAssetPropertyAssetURL]];
+        [self.uploadingAssets removeObject:[asset.asset valueForProperty:ALAssetPropertyAssetURL]];
         _numberOfUploading = self.uploadingAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading)}];
     }
 }
 
-- (void)addFailAsset:(ALAsset *)asset {
+- (void)addFailAsset:(DLFAsset *)asset {
     @synchronized(self) {
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
-        [self.uploadFailAssets addObject:[asset valueForProperty:ALAssetPropertyAssetURL]];
+        [self.uploadFailAssets addObject:asset];
         _numberOfFailUpload = self.uploadFailAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfFailUpload)}];
     }
 }
 
-- (void)removeFailAsset:(ALAsset *)asset {
+- (void)removeFailAsset:(DLFAsset *)asset {
     @synchronized(self) {
-        [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
-        [self.uploadFailAssets removeObject:[asset valueForProperty:ALAssetPropertyAssetURL]];
-        _numberOfFailUpload = self.uploadFailAssets.count;
-        [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
-        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfFailUpload)}];
+        if ([self.uploadFailAssets containsObject:asset]) {
+            [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
+            [self.uploadFailAssets removeObject:asset];
+            _numberOfFailUpload = self.uploadFailAssets.count;
+            [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfFailUpload)}];
+        }
     }
 }
 
-- (BOOL)isUploadingAsset:(ALAsset *)asset {
+- (BOOL)isUploadingAsset:(DLFAsset *)asset {
     @synchronized(self){
-        NSURL *URL = [asset valueForProperty:ALAssetPropertyAssetURL];
+        NSURL *URL = [asset.asset valueForProperty:ALAssetPropertyAssetURL];
         return [self.uploadingAssets containsObject:URL];
     }
 }

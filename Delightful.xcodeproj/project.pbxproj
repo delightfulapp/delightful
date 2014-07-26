@@ -287,6 +287,9 @@
 		035DACE31983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
 		035DACE41983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
 		035DACE51983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
+		035DACE81983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
+		035DACE91983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
+		035DACEA1983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -689,6 +692,8 @@
 		035DACDA1980D99B00557547 /* uploadedmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploadedmark@2x.png"; sourceTree = "<group>"; };
 		035DACE11983490B00557547 /* UploadReloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadReloadView.h; path = PhotoBox/Views/UploadReloadView.h; sourceTree = "<group>"; };
 		035DACE21983490B00557547 /* UploadReloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadReloadView.m; path = PhotoBox/Views/UploadReloadView.m; sourceTree = "<group>"; };
+		035DACE61983555500557547 /* DLFAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFAsset.h; path = PhotoBox/Models/DLFAsset.h; sourceTree = "<group>"; };
+		035DACE71983555500557547 /* DLFAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFAsset.m; path = PhotoBox/Models/DLFAsset.m; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -927,6 +932,8 @@
 				037BA8BB18A63C830072760C /* FetchedIn.m */,
 				0396BDE31922032D004B6290 /* PhotosCollection.h */,
 				0396BDE41922032D004B6290 /* PhotosCollection.m */,
+				035DACE61983555500557547 /* DLFAsset.h */,
+				035DACE71983555500557547 /* DLFAsset.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -2031,6 +2038,7 @@
 				031204AA19508B29004EA8CB /* PhotosPickerAssetsViewController.m in Sources */,
 				031204AB19508B29004EA8CB /* PhotosViewController.m in Sources */,
 				031204AC19508B29004EA8CB /* AlbumTitleView.m in Sources */,
+				035DACEA1983555500557547 /* DLFAsset.m in Sources */,
 				031204AD19508B29004EA8CB /* UICollectionViewCell+Additionals.m in Sources */,
 				031204AE19508B29004EA8CB /* PhotosPickerViewController.m in Sources */,
 				031204AF19508B29004EA8CB /* NSObject+Additionals.m in Sources */,
@@ -2140,6 +2148,7 @@
 				0327CC77194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */,
 				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
+				035DACE81983555500557547 /* DLFAsset.m in Sources */,
 				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
 				03B5CCCC193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
@@ -2267,6 +2276,7 @@
 				0327CC78194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */,
 				03EFD90919251CD700E80A71 /* PhotosViewController.m in Sources */,
 				03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */,
+				035DACE91983555500557547 /* DLFAsset.m in Sources */,
 				03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */,
 				03B5CCCD193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */,
 				03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */,

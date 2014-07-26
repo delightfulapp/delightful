@@ -22,6 +22,8 @@
 
 #import "UploadReloadView.h"
 
+#import "DLFAsset.h"
+
 @interface UploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -69,8 +71,8 @@
 }
 
 - (void)startUpload {
-    for (ALAsset *asset in self.uploads) {
-        [[DLFImageUploader sharedUploader] queueAsset:asset tags:self.tags album:self.album private:self.privatePhotos];
+    for (DLFAsset *asset in self.uploads) {
+        [[DLFImageUploader sharedUploader] queueAsset:asset];
     }
 }
 
@@ -177,8 +179,8 @@
     NSURL *assetURL = notification.userInfo[kAssetURLKey];
     
     for (UploadAssetCell *cell in self.collectionView.visibleCells) {
-        ALAsset *cellAsset = (ALAsset *)cell.item;
-        if ([[cellAsset valueForProperty:ALAssetPropertyAssetURL] isEqual:assetURL]) {
+        DLFAsset *cellAsset = (DLFAsset *)cell.item;
+        if ([[cellAsset.asset valueForProperty:ALAssetPropertyAssetURL] isEqual:assetURL]) {
             [cell setUploadProgress:[notification.userInfo[kProgressKey] floatValue]];
             break;
         }
@@ -193,8 +195,8 @@
         return;
     }
     
-    NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(ALAsset *obj, NSUInteger idx, BOOL *stop) {
-        if ([[obj valueForProperty:ALAssetPropertyAssetURL] isEqual:assetURL]) {
+    NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
+        if ([[obj.asset valueForProperty:ALAssetPropertyAssetURL] isEqual:assetURL]) {
             *stop = YES;
             return YES;
         }

@@ -15,6 +15,7 @@
 #import "Photo.h"
 #import "Tag.h"
 #import "ALAsset+Additionals.h"
+#import "DLFAsset.h"
 
 #import <objc/runtime.h>
 #import <OVCMultipartPart.h>
@@ -232,8 +233,16 @@
 
 #pragma mark - Post
 
-- (void)uploadPhoto:(ALAsset *)photo tags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos progress:(void (^)(float))progress success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)uploadAsset:(DLFAsset *)asset
+           progress:(void(^)(float progress))progress
+            success:(void(^)(id object))successBlock
+            failure:(void(^)(NSError*))failureBlock {
+    ALAsset *photo = asset.asset;
     if (photo.defaultRepresentation.url) {
+        NSString *tags = asset.tags;
+        Album *album = asset.album;
+        BOOL privatePhotos = asset.privatePhoto;
+        
         NSString *type = photo.defaultRepresentation.UTI;
         NSString *fileName = photo.defaultRepresentation.filename;
         NSData *data = [photo defaultRepresentationData];
