@@ -7,6 +7,7 @@ PODS:
   - Expecta (0.2.4)
   - GPUImage (0.1.4)
   - JASidePanels (1.1.1)
+  - Lookback (0.6.4)
   - Mantle (1.4.1):
     - Mantle/extobjc
   - Mantle/extobjc (1.4.1)
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - Expecta (~> 0.2.3)
   - GPUImage (= 0.1.4)
   - JASidePanels (from `https://github.com/nicnocquee/JASidePanels`)
+  - Lookback
   - Mantle (= 1.4.1)
   - MBProgressHUD (~> 0.5)
   - MYBlurIntroductionView (= 1.0.3)
@@ -66,6 +68,7 @@ SPEC CHECKSUMS:
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   JASidePanels: fa574aef328c8780a49100bdb5ed4f4ba6c5b265
+  Lookback: b95ec58d73b9a706735df6230dc83dbb62831abb
   Mantle: 1ca9c0fa84d3d3fc98524e7229f30489b6dd44e5
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
   MYBlurIntroductionView: 6caf60805eaa555538aba9e2615820fd6f07cd23

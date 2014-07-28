@@ -24,3 +24,6 @@ PhotoBox/Crashlytics.plist
 
 #CocoaPods
 Pods
+
+#Lookback
+PhotoBox/Lookback.plist

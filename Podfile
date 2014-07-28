@@ -21,6 +21,7 @@ pod 'CTAssetsPickerController', :git => 'git@github.com:nicnocquee/CTAssetsPicke
 pod 'UIColor-Crayola', '1.0'
 pod 'MBProgressHUD', '~> 0.5'
 pod 'DAProgressOverlayView'
+pod 'Lookback'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

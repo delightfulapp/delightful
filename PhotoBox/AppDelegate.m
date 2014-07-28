@@ -40,6 +40,8 @@
 
 #import "DLFImageUploader.h"
 
+#import <Lookback/Lookback.h>
+
 //#import "HintsViewController.h"
 
 static void * imageDownloadContext = &imageDownloadContext;
@@ -100,6 +102,8 @@ static void * imageUploadContext = &imageUploadContext;
     [photosNavigationViewController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
+    
+    [self runLookback];
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
@@ -201,6 +205,20 @@ static BOOL isRunningTests(void)
         }
     }
 #endif
+}
+
+- (void)runLookback {
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Lookback" ofType:@"plist"];
+    if (filePath) {
+        NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
+        if (dict) {
+            NSString *apiKey = [dict objectForKey:@"token"];
+            if (apiKey && apiKey.length > 0) {
+                [Lookback_Weak setupWithAppToken:apiKey];
+                [Lookback_Weak lookback].shakeToRecord = YES;
+            }
+        }
+    }
 }
 
 #pragma mark - Observer

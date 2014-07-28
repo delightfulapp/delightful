@@ -290,6 +290,8 @@
 		035DACE81983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
 		035DACE91983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
 		035DACEA1983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
+		035DACF61985EDBD00557547 /* Lookback.plist in Resources */ = {isa = PBXBuildFile; fileRef = 035DACF41985EDBD00557547 /* Lookback.plist */; };
+		035DACF71985EDBD00557547 /* Lookback.plist in Resources */ = {isa = PBXBuildFile; fileRef = 035DACF41985EDBD00557547 /* Lookback.plist */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -694,6 +696,7 @@
 		035DACE21983490B00557547 /* UploadReloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadReloadView.m; path = PhotoBox/Views/UploadReloadView.m; sourceTree = "<group>"; };
 		035DACE61983555500557547 /* DLFAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFAsset.h; path = PhotoBox/Models/DLFAsset.h; sourceTree = "<group>"; };
 		035DACE71983555500557547 /* DLFAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFAsset.m; path = PhotoBox/Models/DLFAsset.m; sourceTree = "<group>"; };
+		035DACF41985EDBD00557547 /* Lookback.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Lookback.plist; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
@@ -1083,6 +1086,7 @@
 		032CBB8417D0BDF3001205B1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				035DACF41985EDBD00557547 /* Lookback.plist */,
 				032CBB8517D0BDF3001205B1 /* Delightful-Info.plist */,
 				032CBB8617D0BDF3001205B1 /* InfoPlist.strings */,
 				032CBB8917D0BDF3001205B1 /* main.m */,
@@ -1534,6 +1538,7 @@
 				031204D419508B29004EA8CB /* info@2x.png in Resources */,
 				031204D519508B29004EA8CB /* 0.0.4.plist in Resources */,
 				031204D619508B29004EA8CB /* HeaderImageView.xib in Resources */,
+				035DACF71985EDBD00557547 /* Lookback.plist in Resources */,
 				031204D719508B29004EA8CB /* 0.0.3.plist in Resources */,
 				031204D819508B29004EA8CB /* npr_notification_image_close@2x.png in Resources */,
 				031204D919508B29004EA8CB /* uploaded@2x.png in Resources */,
@@ -1661,6 +1666,7 @@
 				03EFD93019251CD700E80A71 /* info@2x.png in Resources */,
 				03EFD93119251CD700E80A71 /* 0.0.4.plist in Resources */,
 				03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */,
+				035DACF61985EDBD00557547 /* Lookback.plist in Resources */,
 				03EFD93519251CD700E80A71 /* 0.0.3.plist in Resources */,
 				03EFD93619251CD700E80A71 /* npr_notification_image_close@2x.png in Resources */,
 				0327CC82194723B70086C4B8 /* uploaded@2x.png in Resources */,
