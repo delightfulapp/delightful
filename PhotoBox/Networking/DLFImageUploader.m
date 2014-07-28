@@ -51,7 +51,9 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
 }
 
 - (void)reloadUpload {
-    for (DLFAsset *asset in self.uploadFailAssets) {
+    NSArray *fails = [self.uploadFailAssets mutableCopy];
+    [self clearFailUploads];
+    for (DLFAsset *asset in fails) {
         [self queueAsset:asset];
     }
 }
