@@ -16,156 +16,6 @@
 		0310904517D1B2840075F9D8 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
 		03120461194C1738004EA8CB /* DLFImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 03120460194C1738004EA8CB /* DLFImageUploader.m */; };
 		03120462194C1738004EA8CB /* DLFImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 03120460194C1738004EA8CB /* DLFImageUploader.m */; };
-		0312046619508B29004EA8CB /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
-		0312046719508B29004EA8CB /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
-		0312046819508B29004EA8CB /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
-		0312046919508B29004EA8CB /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032B0D1D17D4CF4800ABFA9F /* LocationManager.m */; };
-		0312046A19508B29004EA8CB /* OriginalImageDownloaderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */; };
-		0312046B19508B29004EA8CB /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
-		0312046C19508B29004EA8CB /* FallingTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */; };
-		0312046D19508B29004EA8CB /* ALAsset+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */; };
-		0312046E19508B29004EA8CB /* PhotoBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */; };
-		0312046F19508B29004EA8CB /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
-		0312047019508B29004EA8CB /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
-		0312047119508B29004EA8CB /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
-		0312047219508B29004EA8CB /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
-		0312047319508B29004EA8CB /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
-		0312047419508B29004EA8CB /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
-		0312047519508B29004EA8CB /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
-		0312047619508B29004EA8CB /* PanelFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50EB18181D7C00445084 /* PanelFactory.m */; };
-		0312047719508B29004EA8CB /* HeaderImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD91921AC60004B6290 /* HeaderImageView.m */; };
-		0312047819508B29004EA8CB /* PhotoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846AA17D20B8100E196D7 /* PhotoCell.m */; };
-		0312047919508B29004EA8CB /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
-		0312047A19508B29004EA8CB /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
-		0312047B19508B29004EA8CB /* ConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903E17D104460075F9D8 /* ConnectionManager.m */; };
-		0312047C19508B29004EA8CB /* DelightfulRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */; };
-		0312047D19508B29004EA8CB /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031230561927C613004AFD1E /* InfoTableViewCell.m */; };
-		0312047E19508B29004EA8CB /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
-		0312047F19508B29004EA8CB /* SharePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F41818364500445084 /* SharePanel.m */; };
-		0312048019508B29004EA8CB /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
-		0312048119508B29004EA8CB /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
-		0312048219508B29004EA8CB /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
-		0312048319508B29004EA8CB /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
-		0312048419508B29004EA8CB /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
-		0312048519508B29004EA8CB /* NPRImageDownloaderTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */; };
-		0312048619508B29004EA8CB /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */; };
-		0312048719508B29004EA8CB /* PhotoSharingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A9181188CE008A087B /* PhotoSharingManager.m */; };
-		0312048819508B29004EA8CB /* PhotoBoxFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */; };
-		0312048919508B29004EA8CB /* DLFAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */; };
-		0312048A19508B29004EA8CB /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
-		0312048B19508B29004EA8CB /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
-		0312048C19508B29004EA8CB /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
-		0312048D19508B29004EA8CB /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
-		0312048E19508B29004EA8CB /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
-		0312048F19508B29004EA8CB /* NSArray+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B017D2312500E196D7 /* NSArray+Additionals.m */; };
-		0312049019508B29004EA8CB /* NPRNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032222A7181419A8004F3830 /* NPRNotificationView.m */; };
-		0312049119508B29004EA8CB /* HintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDED19227804004B6290 /* HintsViewController.m */; };
-		0312049219508B29004EA8CB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8D17D0BDF3001205B1 /* AppDelegate.m */; };
-		0312049319508B29004EA8CB /* NPRNotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 032222A4181407C3004F3830 /* NPRNotificationManager.m */; };
-		0312049419508B29004EA8CB /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
-		0312049519508B29004EA8CB /* FavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */; };
-		0312049619508B29004EA8CB /* PhotoBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468617D1C19A00E196D7 /* PhotoBoxCell.m */; };
-		0312049719508B29004EA8CB /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
-		0312049819508B29004EA8CB /* DLFImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = 03120460194C1738004EA8CB /* DLFImageUploader.m */; };
-		0312049919508B29004EA8CB /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
-		0312049A19508B29004EA8CB /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
-		0312049B19508B29004EA8CB /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
-		0312049C19508B29004EA8CB /* AlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468917D1C1B100E196D7 /* AlbumCell.m */; };
-		0312049D19508B29004EA8CB /* SharerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE5102181842F200445084 /* SharerManager.m */; };
-		0312049E19508B29004EA8CB /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
-		0312049F19508B29004EA8CB /* UIView+NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */; };
-		031204A019508B29004EA8CB /* UIImageView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */; };
-		031204A119508B29004EA8CB /* PhotoBoxModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */; };
-		031204A219508B29004EA8CB /* SeeThroughCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F918183A6000445084 /* SeeThroughCircleView.m */; };
-		031204A319508B29004EA8CB /* CollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468217D1C0E800E196D7 /* CollectionViewDataSource.m */; };
-		031204A419508B29004EA8CB /* UIWindow+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D7711810032A00FDD83B /* UIWindow+Additionals.m */; };
-		031204A519508B29004EA8CB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 032CBB8917D0BDF3001205B1 /* main.m */; };
-		031204A619508B29004EA8CB /* PhotoBoxClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310903A17D103330075F9D8 /* PhotoBoxClient.m */; };
-		031204A719508B29004EA8CB /* UIImage+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D761180FB88F00FDD83B /* UIImage+Additionals.m */; };
-		031204A819508B29004EA8CB /* PhotoInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */; };
-		031204A919508B29004EA8CB /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50E31818148800445084 /* IntroViewController.m */; };
-		031204AA19508B29004EA8CB /* PhotosPickerAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */; };
-		031204AB19508B29004EA8CB /* PhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A717D2021100E196D7 /* PhotosViewController.m */; };
-		031204AC19508B29004EA8CB /* AlbumTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A117D1F91000E196D7 /* AlbumTitleView.m */; };
-		031204AD19508B29004EA8CB /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
-		031204AE19508B29004EA8CB /* PhotosPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B5CCCB193CC20500E0BAD0 /* PhotosPickerViewController.m */; };
-		031204AF19508B29004EA8CB /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
-		031204B019508B29004EA8CB /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
-		031204B119508B29004EA8CB /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467617D1BC3D00E196D7 /* TagsViewController.m */; };
-		031204B219508B29004EA8CB /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FE917D0FE3A0075F9D8 /* Album.m */; };
-		031204B319508B29004EA8CB /* VersionNumberHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50EE181829BF00445084 /* VersionNumberHeaderView.m */; };
-		031204B419508B29004EA8CB /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467917D1BCC000E196D7 /* AlbumsViewController.m */; };
-		031204B519508B29004EA8CB /* UIViewController+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469717D1D42700E196D7 /* UIViewController+Additionals.m */; };
-		031204B619508B29004EA8CB /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
-		031204B719508B29004EA8CB /* NoPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD21920B91B004B6290 /* NoPhotosView.m */; };
-		031204B819508B29004EA8CB /* PhotosCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDE41922032D004B6290 /* PhotosCollection.m */; };
-		031204B919508B29004EA8CB /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
-		031204BA19508B29004EA8CB /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
-		031204BB19508B29004EA8CB /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
-		031204BC19508B29004EA8CB /* PhotosPickerGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */; };
-		031204BD19508B29004EA8CB /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */; };
-		031204BE19508B29004EA8CB /* PhotoZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846C217D2598600E196D7 /* PhotoZoomableCell.m */; };
-		031204BF19508B29004EA8CB /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
-		031204C119508B29004EA8CB /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03FD482A191FD73200D4ADF7 /* MessageUI.framework */; };
-		031204C219508B29004EA8CB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
-		031204C319508B29004EA8CB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
-		031204C419508B29004EA8CB /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
-		031204C519508B29004EA8CB /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */; };
-		031204C619508B29004EA8CB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032B0D2717D5B9A800ABFA9F /* SystemConfiguration.framework */; };
-		031204C719508B29004EA8CB /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468E17D1CD2A00E196D7 /* QuartzCore.framework */; };
-		031204C819508B29004EA8CB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0358468C17D1CD2500E196D7 /* CFNetwork.framework */; };
-		031204C919508B29004EA8CB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7F17D0BDF3001205B1 /* CoreGraphics.framework */; };
-		031204CA19508B29004EA8CB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
-		031204CB19508B29004EA8CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
-		031204CE19508B29004EA8CB /* upload.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A517D9BB8300A80167 /* upload.png */; };
-		031204CF19508B29004EA8CB /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031230591927C627004AFD1E /* InfoTableViewCell.xib */; };
-		031204D019508B29004EA8CB /* Hint-CloseInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDEA1922772E004B6290 /* Hint-CloseInfo.xib */; };
-		031204D119508B29004EA8CB /* 0.0.2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50E618181D1B00445084 /* 0.0.2.plist */; };
-		031204D219508B29004EA8CB /* npr_notification_image_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B21814CBF0004F3830 /* npr_notification_image_error@2x.png */; };
-		031204D319508B29004EA8CB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB9517D0BDF3001205B1 /* Images.xcassets */; };
-		031204D419508B29004EA8CB /* info@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 036DF364181AA60B002E9FCB /* info@2x.png */; };
-		031204D519508B29004EA8CB /* 0.0.4.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF369181FBA67002E9FCB /* 0.0.4.plist */; };
-		031204D619508B29004EA8CB /* HeaderImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDDB1921AC79004B6290 /* HeaderImageView.xib */; };
-		031204D719508B29004EA8CB /* 0.0.3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 036DF362181A850C002E9FCB /* 0.0.3.plist */; };
-		031204D819508B29004EA8CB /* npr_notification_image_close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */; };
-		031204D919508B29004EA8CB /* uploaded@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7E194723B70086C4B8 /* uploaded@2x.png */; };
-		031204DA19508B29004EA8CB /* uploaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7D194723B70086C4B8 /* uploaded.png */; };
-		031204DB19508B29004EA8CB /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
-		031204DC19508B29004EA8CB /* HintPinch.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDE619227461004B6290 /* HintPinch.xib */; };
-		031204DD19508B29004EA8CB /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A817D9BB8300A80167 /* info.png */; };
-		031204DE19508B29004EA8CB /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A717D9BB8300A80167 /* user.png */; };
-		031204DF19508B29004EA8CB /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C518103B6E00FDD83B /* download@2x.png */; };
-		031204E019508B29004EA8CB /* npr_notification_image_success@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AE1814CBF0004F3830 /* npr_notification_image_success@2x.png */; };
-		031204E119508B29004EA8CB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBB8617D0BDF3001205B1 /* InfoPlist.strings */; };
-		031204E219508B29004EA8CB /* npr_notification_image_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222BA1814F2E4004F3830 /* npr_notification_image_close.png */; };
-		031204E319508B29004EA8CB /* Hint-Side.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDE81922757E004B6290 /* Hint-Side.xib */; };
-		031204E419508B29004EA8CB /* NoPhotosView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */; };
-		031204E519508B29004EA8CB /* npr_notification_image_warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B01814CBF0004F3830 /* npr_notification_image_warning@2x.png */; };
-		031204E619508B29004EA8CB /* star-fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48361920B27300D4ADF7 /* star-fill@2x.png */; };
-		031204E719508B29004EA8CB /* LeftPanelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */; };
-		031204E819508B29004EA8CB /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
-		031204E919508B29004EA8CB /* introbg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DF1818136E00445084 /* introbg@2x.jpg */; };
-		031204EA19508B29004EA8CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
-		031204EB19508B29004EA8CB /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
-		031204EC19508B29004EA8CB /* npr_notification_image_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AF1814CBF0004F3830 /* npr_notification_image_warning.png */; };
-		031204ED19508B29004EA8CB /* npr_notification_image_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AD1814CBF0004F3830 /* npr_notification_image_success.png */; };
-		031204EE19508B29004EA8CB /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
-		031204EF19508B29004EA8CB /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
-		031204F019508B29004EA8CB /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A617D9BB8300A80167 /* download.png */; };
-		031204F119508B29004EA8CB /* refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD61921ABAE004B6290 /* refresh@2x.png */; };
-		031204F219508B29004EA8CB /* Crashlytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0348D22F17DA263500C932BA /* Crashlytics.plist */; };
-		031204F319508B29004EA8CB /* star-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48351920B27300D4ADF7 /* star-fill.png */; };
-		031204F419508B29004EA8CB /* LoginWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */; };
-		031204F519508B29004EA8CB /* shareicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50F6181838B700445084 /* shareicons.ttf */; };
-		031204F619508B29004EA8CB /* star.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48331920ABE000D4ADF7 /* star.png */; };
-		031204F719508B29004EA8CB /* npr_notification_image_error.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222B11814CBF0004F3830 /* npr_notification_image_error.png */; };
-		031204F819508B29004EA8CB /* setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A917D9BB8300A80167 /* setting.png */; };
-		031204F919508B29004EA8CB /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48311920AB8B00D4ADF7 /* star@2x.png */; };
-		031204FA19508B29004EA8CB /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD41921AB76004B6290 /* refresh.png */; };
-		031204FB19508B29004EA8CB /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
-		031204FC19508B29004EA8CB /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2B017D9BD6B00A80167 /* user@2x.png */; };
-		031204FD19508B29004EA8CB /* upload@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC6E19470BDA0086C4B8 /* upload@2x.png */; };
-		031204FE19508B29004EA8CB /* introbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DE1818136E00445084 /* introbg.jpg */; };
 		0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
 		0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312305219278F9A004AFD1E /* DelightfulCache.m */; };
 		031230571927C613004AFD1E /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031230561927C613004AFD1E /* InfoTableViewCell.m */; };
@@ -256,42 +106,29 @@
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
-		035DACB0197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
 		035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
-		035DACB5197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
 		035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */; };
 		035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */; };
-		035DACBA197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB7197F92C900557547 /* AlbumPickerTableViewCell.m */; };
 		035DACBD197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
 		035DACBE197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
-		035DACBF197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */; };
 		035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
 		035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
-		035DACC4197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */; };
 		035DACC7197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
 		035DACC8197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
-		035DACC9197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
 		035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
 		035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
-		035DACCE197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
 		035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
 		035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
-		035DACD3197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
 		035DACDB1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
 		035DACDC1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
-		035DACDD1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
 		035DACDE1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
 		035DACDF1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
-		035DACE01980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
 		035DACE31983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
 		035DACE41983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
-		035DACE51983490B00557547 /* UploadReloadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE21983490B00557547 /* UploadReloadView.m */; };
 		035DACE81983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
 		035DACE91983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
-		035DACEA1983555500557547 /* DLFAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACE71983555500557547 /* DLFAsset.m */; };
 		035DACF61985EDBD00557547 /* Lookback.plist in Resources */ = {isa = PBXBuildFile; fileRef = 035DACF41985EDBD00557547 /* Lookback.plist */; };
-		035DACF71985EDBD00557547 /* Lookback.plist in Resources */ = {isa = PBXBuildFile; fileRef = 035DACF41985EDBD00557547 /* Lookback.plist */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
@@ -307,13 +144,10 @@
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		037B089E1955A627001F55D6 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B089D1955A627001F55D6 /* UploadViewController.m */; };
 		037B089F1955A627001F55D6 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B089D1955A627001F55D6 /* UploadViewController.m */; };
-		037B08A01955A627001F55D6 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B089D1955A627001F55D6 /* UploadViewController.m */; };
 		037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A21956B85C001F55D6 /* UploadAssetCell.m */; };
 		037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A21956B85C001F55D6 /* UploadAssetCell.m */; };
-		037B08A51956B85C001F55D6 /* UploadAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A21956B85C001F55D6 /* UploadAssetCell.m */; };
 		037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
-		037B08AA1956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
 		037BA8AB18A355D70072760C /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
 		037BA8BC18A63C830072760C /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
@@ -554,8 +388,6 @@
 		0310904417D1B2840075F9D8 /* Tag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Tag.m; path = PhotoBox/Models/Tag.m; sourceTree = "<group>"; };
 		0312045F194C1738004EA8CB /* DLFImageUploader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFImageUploader.h; path = PhotoBox/Networking/DLFImageUploader.h; sourceTree = "<group>"; };
 		03120460194C1738004EA8CB /* DLFImageUploader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFImageUploader.m; path = PhotoBox/Networking/DLFImageUploader.m; sourceTree = "<group>"; };
-		0312050519508B29004EA8CB /* Fezz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fezz.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0312050619508B29004EA8CB /* Delightful-TestFlight copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Delightful-TestFlight copy-Info.plist"; path = "/Users/nico/Projects/PhotoBox/Delightful-TestFlight copy-Info.plist"; sourceTree = "<absolute>"; };
 		0312305119278F9A004AFD1E /* DelightfulCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulCache.h; path = PhotoBox/Others/DelightfulCache.h; sourceTree = "<group>"; };
 		0312305219278F9A004AFD1E /* DelightfulCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulCache.m; path = PhotoBox/Others/DelightfulCache.m; sourceTree = "<group>"; };
 		031230551927C613004AFD1E /* InfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoTableViewCell.h; path = PhotoBox/Views/InfoTableViewCell.h; sourceTree = "<group>"; };
@@ -818,7 +650,7 @@
 		03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewSelectCellGestureRecognizer.h; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.h; sourceTree = "<group>"; };
 		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/PhotoBox/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
+		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
 		03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedImageManager.m; path = PhotoBox/Others/DownloadedImageManager.m; sourceTree = "<group>"; };
 		03FD481F191FA22B00D4ADF7 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftViewController.h; path = PhotoBox/Controllers/LeftViewController.h; sourceTree = "<group>"; };
@@ -840,24 +672,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		031204C019508B29004EA8CB /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				031204C119508B29004EA8CB /* MessageUI.framework in Frameworks */,
-				031204C219508B29004EA8CB /* Crashlytics.framework in Frameworks */,
-				031204C319508B29004EA8CB /* libPods.a in Frameworks */,
-				031204C419508B29004EA8CB /* CoreData.framework in Frameworks */,
-				031204C519508B29004EA8CB /* MobileCoreServices.framework in Frameworks */,
-				031204C619508B29004EA8CB /* SystemConfiguration.framework in Frameworks */,
-				031204C719508B29004EA8CB /* QuartzCore.framework in Frameworks */,
-				031204C819508B29004EA8CB /* CFNetwork.framework in Frameworks */,
-				031204C919508B29004EA8CB /* CoreGraphics.framework in Frameworks */,
-				031204CA19508B29004EA8CB /* UIKit.framework in Frameworks */,
-				031204CB19508B29004EA8CB /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		032CBB7717D0BDF3001205B1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1035,7 +849,6 @@
 				2D8562143BB5431496ECF57D /* Pods.xcconfig */,
 				2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */,
 				03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */,
-				0312050619508B29004EA8CB /* Delightful-TestFlight copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1045,7 +858,6 @@
 				032CBB7A17D0BDF3001205B1 /* Delightful.app */,
 				032CBB9B17D0BDF3001205B1 /* DelightfulTests.xctest */,
 				03EFD95F19251CD700E80A71 /* Delightful.app */,
-				0312050519508B29004EA8CB /* Fezz.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1399,28 +1211,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		0312046319508B29004EA8CB /* Fezz */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0312050219508B29004EA8CB /* Build configuration list for PBXNativeTarget "Fezz" */;
-			buildPhases = (
-				0312046419508B29004EA8CB /* Check Pods Manifest.lock */,
-				0312046519508B29004EA8CB /* Sources */,
-				031204C019508B29004EA8CB /* Frameworks */,
-				031204CC19508B29004EA8CB /* Copy Crashlytics */,
-				031204CD19508B29004EA8CB /* Resources */,
-				031204FF19508B29004EA8CB /* Crashlytics */,
-				0312050019508B29004EA8CB /* Build number increment */,
-				0312050119508B29004EA8CB /* Version number increment */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = Fezz;
-			productName = PhotoBox;
-			productReference = 0312050519508B29004EA8CB /* Fezz.app */;
-			productType = "com.apple.product-type.application";
-		};
 		032CBB7917D0BDF3001205B1 /* Delightful */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "Delightful" */;
@@ -1518,71 +1308,11 @@
 				032CBB7917D0BDF3001205B1 /* Delightful */,
 				032CBB9A17D0BDF3001205B1 /* DelightfulTests */,
 				03EFD8C919251CD700E80A71 /* Delightful-TestFlight */,
-				0312046319508B29004EA8CB /* Fezz */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		031204CD19508B29004EA8CB /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				031204CE19508B29004EA8CB /* upload.png in Resources */,
-				031204CF19508B29004EA8CB /* InfoTableViewCell.xib in Resources */,
-				031204D019508B29004EA8CB /* Hint-CloseInfo.xib in Resources */,
-				031204D119508B29004EA8CB /* 0.0.2.plist in Resources */,
-				031204D219508B29004EA8CB /* npr_notification_image_error@2x.png in Resources */,
-				031204D319508B29004EA8CB /* Images.xcassets in Resources */,
-				035DACDD1980D99B00557547 /* uploadedmark.png in Resources */,
-				031204D419508B29004EA8CB /* info@2x.png in Resources */,
-				031204D519508B29004EA8CB /* 0.0.4.plist in Resources */,
-				031204D619508B29004EA8CB /* HeaderImageView.xib in Resources */,
-				035DACF71985EDBD00557547 /* Lookback.plist in Resources */,
-				031204D719508B29004EA8CB /* 0.0.3.plist in Resources */,
-				031204D819508B29004EA8CB /* npr_notification_image_close@2x.png in Resources */,
-				031204D919508B29004EA8CB /* uploaded@2x.png in Resources */,
-				031204DA19508B29004EA8CB /* uploaded.png in Resources */,
-				031204DB19508B29004EA8CB /* camera@2x.png in Resources */,
-				031204DC19508B29004EA8CB /* HintPinch.xib in Resources */,
-				031204DD19508B29004EA8CB /* info.png in Resources */,
-				031204DE19508B29004EA8CB /* user.png in Resources */,
-				031204DF19508B29004EA8CB /* download@2x.png in Resources */,
-				031204E019508B29004EA8CB /* npr_notification_image_success@2x.png in Resources */,
-				031204E119508B29004EA8CB /* InfoPlist.strings in Resources */,
-				031204E219508B29004EA8CB /* npr_notification_image_close.png in Resources */,
-				031204E319508B29004EA8CB /* Hint-Side.xib in Resources */,
-				031204E419508B29004EA8CB /* NoPhotosView.xib in Resources */,
-				031204E519508B29004EA8CB /* npr_notification_image_warning@2x.png in Resources */,
-				031204E619508B29004EA8CB /* star-fill@2x.png in Resources */,
-				031204E719508B29004EA8CB /* LeftPanelHeaderView.xib in Resources */,
-				035DACE01980D99B00557547 /* uploadedmark@2x.png in Resources */,
-				031204E819508B29004EA8CB /* right.png in Resources */,
-				031204E919508B29004EA8CB /* introbg@2x.jpg in Resources */,
-				031204EA19508B29004EA8CB /* Main.storyboard in Resources */,
-				031204EB19508B29004EA8CB /* right@2x.png in Resources */,
-				031204EC19508B29004EA8CB /* npr_notification_image_warning.png in Resources */,
-				031204ED19508B29004EA8CB /* npr_notification_image_success.png in Resources */,
-				031204EE19508B29004EA8CB /* 0.0.5.plist in Resources */,
-				031204EF19508B29004EA8CB /* loginbackground.jpg in Resources */,
-				031204F019508B29004EA8CB /* download.png in Resources */,
-				031204F119508B29004EA8CB /* refresh@2x.png in Resources */,
-				031204F219508B29004EA8CB /* Crashlytics.plist in Resources */,
-				031204F319508B29004EA8CB /* star-fill.png in Resources */,
-				031204F419508B29004EA8CB /* LoginWebViewViewController.xib in Resources */,
-				031204F519508B29004EA8CB /* shareicons.ttf in Resources */,
-				031204F619508B29004EA8CB /* star.png in Resources */,
-				031204F719508B29004EA8CB /* npr_notification_image_error.png in Resources */,
-				031204F819508B29004EA8CB /* setting.png in Resources */,
-				031204F919508B29004EA8CB /* star@2x.png in Resources */,
-				031204FA19508B29004EA8CB /* refresh.png in Resources */,
-				031204FB19508B29004EA8CB /* camera.png in Resources */,
-				031204FC19508B29004EA8CB /* user@2x.png in Resources */,
-				031204FD19508B29004EA8CB /* upload@2x.png in Resources */,
-				031204FE19508B29004EA8CB /* introbg.jpg in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		032CBB7817D0BDF3001205B1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1714,77 +1444,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0312046419508B29004EA8CB /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		031204CC19508B29004EA8CB /* Copy Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Crashlytics";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
-		};
-		031204FF19508B29004EA8CB /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Crashlytics;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\nfi\n\n";
-		};
-		0312050019508B29004EA8CB /* Build number increment */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Build number increment";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "buildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
-		};
-		0312050119508B29004EA8CB /* Version number increment */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Version number increment";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "VERSIONNUM=$(/usr/libexec/PlistBuddy -c \"Print CFBundleShortVersionString\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\")\nNEWSUBVERSION=`echo $VERSIONNUM | awk -F \".\" '{print $3}'`\nNEWSUBVERSION=$(($NEWSUBVERSION + 1))\nNEWVERSIONSTRING=`echo $VERSIONNUM | awk -F \".\" '{print $1 \".\" $2 \".'$NEWSUBVERSION'\" }'`\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $NEWVERSIONSTRING\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n";
-		};
 		03635E1B187996290037851F /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1960,116 +1619,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		0312046519508B29004EA8CB /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				037B08A01955A627001F55D6 /* UploadViewController.m in Sources */,
-				0312046619508B29004EA8CB /* OpenInActivity.m in Sources */,
-				0312046719508B29004EA8CB /* StickyHeaderFlowLayout.m in Sources */,
-				0312046819508B29004EA8CB /* TagRowCell.m in Sources */,
-				0312046919508B29004EA8CB /* LocationManager.m in Sources */,
-				0312046A19508B29004EA8CB /* OriginalImageDownloaderViewController.m in Sources */,
-				0312046B19508B29004EA8CB /* LeftPanelHeaderView.m in Sources */,
-				0312046C19508B29004EA8CB /* FallingTransitioningDelegate.m in Sources */,
-				035DACBF197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */,
-				0312046D19508B29004EA8CB /* ALAsset+Additionals.m in Sources */,
-				0312046E19508B29004EA8CB /* PhotoBoxViewController.m in Sources */,
-				0312046F19508B29004EA8CB /* UIColor+DelightfulColors.m in Sources */,
-				0312047019508B29004EA8CB /* AlbumsTagsViewController.m in Sources */,
-				037B08AA1956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
-				0312047119508B29004EA8CB /* PhotosSectionHeaderView.m in Sources */,
-				0312047219508B29004EA8CB /* PhotosDataSource.m in Sources */,
-				0312047319508B29004EA8CB /* NSString+Additionals.m in Sources */,
-				0312047419508B29004EA8CB /* UIScrollView+Additionals.m in Sources */,
-				0312047519508B29004EA8CB /* NPRImageDownloader.m in Sources */,
-				037B08A51956B85C001F55D6 /* UploadAssetCell.m in Sources */,
-				0312047619508B29004EA8CB /* PanelFactory.m in Sources */,
-				0312047719508B29004EA8CB /* HeaderImageView.m in Sources */,
-				035DACE51983490B00557547 /* UploadReloadView.m in Sources */,
-				0312047819508B29004EA8CB /* PhotoCell.m in Sources */,
-				0312047919508B29004EA8CB /* DelightfulCache.m in Sources */,
-				0312047A19508B29004EA8CB /* LoginViewController.m in Sources */,
-				0312047B19508B29004EA8CB /* ConnectionManager.m in Sources */,
-				0312047C19508B29004EA8CB /* DelightfulRowCell.m in Sources */,
-				0312047D19508B29004EA8CB /* InfoTableViewCell.m in Sources */,
-				0312047E19508B29004EA8CB /* PhotoBoxImage.m in Sources */,
-				0312047F19508B29004EA8CB /* SharePanel.m in Sources */,
-				0312048019508B29004EA8CB /* AlbumRowCell.m in Sources */,
-				0312048119508B29004EA8CB /* PanelsContainerViewController.m in Sources */,
-				0312048219508B29004EA8CB /* DownloadCell.m in Sources */,
-				0312048319508B29004EA8CB /* FetchedIn.m in Sources */,
-				0312048419508B29004EA8CB /* Photo+Additionals.m in Sources */,
-				0312048519508B29004EA8CB /* NPRImageDownloaderTableViewDataSource.m in Sources */,
-				035DACC9197FAC2B00557547 /* NSString+Score.m in Sources */,
-				0312048619508B29004EA8CB /* SettingsTableViewController.m in Sources */,
-				0312048719508B29004EA8CB /* PhotoSharingManager.m in Sources */,
-				0312048819508B29004EA8CB /* PhotoBoxFetchedResultsController.m in Sources */,
-				0312048919508B29004EA8CB /* DLFAssetsViewCell.m in Sources */,
-				035DACBA197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
-				0312048A19508B29004EA8CB /* UIView+Additionals.m in Sources */,
-				0312048B19508B29004EA8CB /* PhotosHorizontalScrollingViewController.m in Sources */,
-				035DACD3197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
-				0312048C19508B29004EA8CB /* LoginWebViewViewController.m in Sources */,
-				0312048D19508B29004EA8CB /* DelightfulLayout.m in Sources */,
-				0312048E19508B29004EA8CB /* LeftViewController.m in Sources */,
-				0312048F19508B29004EA8CB /* NSArray+Additionals.m in Sources */,
-				0312049019508B29004EA8CB /* NPRNotificationView.m in Sources */,
-				0312049119508B29004EA8CB /* HintsViewController.m in Sources */,
-				0312049219508B29004EA8CB /* AppDelegate.m in Sources */,
-				0312049319508B29004EA8CB /* NPRNotificationManager.m in Sources */,
-				0312049419508B29004EA8CB /* Photo.m in Sources */,
-				0312049519508B29004EA8CB /* FavoritesManager.m in Sources */,
-				0312049619508B29004EA8CB /* PhotoBoxCell.m in Sources */,
-				0312049719508B29004EA8CB /* PhotoBoxNavigationControllerDelegate.m in Sources */,
-				0312049819508B29004EA8CB /* DLFImageUploader.m in Sources */,
-				0312049919508B29004EA8CB /* UIColor+Additionals.m in Sources */,
-				0312049A19508B29004EA8CB /* PhotoBoxRequestOperation.m in Sources */,
-				0312049B19508B29004EA8CB /* Tag.m in Sources */,
-				035DACCE197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
-				0312049C19508B29004EA8CB /* AlbumCell.m in Sources */,
-				0312049D19508B29004EA8CB /* SharerManager.m in Sources */,
-				0312049E19508B29004EA8CB /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
-				0312049F19508B29004EA8CB /* UIView+NGAParallaxMotion.m in Sources */,
-				031204A019508B29004EA8CB /* UIImageView+Additionals.m in Sources */,
-				031204A119508B29004EA8CB /* PhotoBoxModel.m in Sources */,
-				031204A219508B29004EA8CB /* SeeThroughCircleView.m in Sources */,
-				031204A319508B29004EA8CB /* CollectionViewDataSource.m in Sources */,
-				031204A419508B29004EA8CB /* UIWindow+Additionals.m in Sources */,
-				031204A519508B29004EA8CB /* main.m in Sources */,
-				031204A619508B29004EA8CB /* PhotoBoxClient.m in Sources */,
-				031204A719508B29004EA8CB /* UIImage+Additionals.m in Sources */,
-				031204A819508B29004EA8CB /* PhotoInfoViewController.m in Sources */,
-				031204A919508B29004EA8CB /* IntroViewController.m in Sources */,
-				031204AA19508B29004EA8CB /* PhotosPickerAssetsViewController.m in Sources */,
-				031204AB19508B29004EA8CB /* PhotosViewController.m in Sources */,
-				031204AC19508B29004EA8CB /* AlbumTitleView.m in Sources */,
-				035DACEA1983555500557547 /* DLFAsset.m in Sources */,
-				031204AD19508B29004EA8CB /* UICollectionViewCell+Additionals.m in Sources */,
-				031204AE19508B29004EA8CB /* PhotosPickerViewController.m in Sources */,
-				031204AF19508B29004EA8CB /* NSObject+Additionals.m in Sources */,
-				031204B019508B29004EA8CB /* UIViewController+DelightfulViewControllers.m in Sources */,
-				031204B119508B29004EA8CB /* TagsViewController.m in Sources */,
-				031204B219508B29004EA8CB /* Album.m in Sources */,
-				031204B319508B29004EA8CB /* VersionNumberHeaderView.m in Sources */,
-				031204B419508B29004EA8CB /* AlbumsViewController.m in Sources */,
-				031204B519508B29004EA8CB /* UIViewController+Additionals.m in Sources */,
-				031204B619508B29004EA8CB /* AlbumSectionHeaderView.m in Sources */,
-				031204B719508B29004EA8CB /* NoPhotosView.m in Sources */,
-				031204B819508B29004EA8CB /* PhotosCollection.m in Sources */,
-				031204B919508B29004EA8CB /* DownloadedImageManager.m in Sources */,
-				031204BA19508B29004EA8CB /* DelightfulTabBar.m in Sources */,
-				031204BB19508B29004EA8CB /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
-				031204BC19508B29004EA8CB /* PhotosPickerGroupViewController.m in Sources */,
-				031204BD19508B29004EA8CB /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
-				031204BE19508B29004EA8CB /* PhotoZoomableCell.m in Sources */,
-				035DACB0197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
-				035DACC4197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
-				031204BF19508B29004EA8CB /* MWInterpollationMotionEffect.m in Sources */,
-				035DACB5197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		032CBB7617D0BDF3001205B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2338,138 +1887,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		0312050319508B29004EA8CB /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)",
-					"$(SRCROOT)/PhotoBox",
-					/Users/nico/Projects/PhotoBox,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"IS_FEZZ=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/AFOAuth1Client\"",
-					"\"${PODS_ROOT}/Headers/Expecta\"",
-					"\"${PODS_ROOT}/Headers/GPUImage\"",
-					"\"${PODS_ROOT}/Headers/JASidePanels\"",
-					"\"${PODS_ROOT}/Headers/Mantle\"",
-					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
-					"\"${PODS_ROOT}/Headers/NSDate-Escort\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/OGCoreDataStack\"",
-					"\"${PODS_ROOT}/Headers/Overcoat\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
-					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
-					"$(SRCROOT)/**",
-				);
-				INFOPLIST_FILE = "Delightful-TestFlight copy-Info.plist";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					Accelerate,
-					"-framework",
-					CFNetwork,
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-weak_framework",
-					CoreTelephony,
-					"-weak_framework",
-					StoreKit,
-					"-weak_framework",
-					Crashlytics,
-				);
-				PRODUCT_NAME = Fezz;
-				PROVISIONING_PROFILE = "A042EA3A-184A-4B3E-AF08-54763B1348C4";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		0312050419508B29004EA8CB /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)",
-					"$(SRCROOT)/PhotoBox",
-					/Users/nico/Projects/PhotoBox,
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"COCOAPODS=1",
-					"IS_FEZZ=1",
-				);
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/AFOAuth1Client\"",
-					"\"${PODS_ROOT}/Headers/Expecta\"",
-					"\"${PODS_ROOT}/Headers/GPUImage\"",
-					"\"${PODS_ROOT}/Headers/JASidePanels\"",
-					"\"${PODS_ROOT}/Headers/Mantle\"",
-					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
-					"\"${PODS_ROOT}/Headers/NSDate-Escort\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/OGCoreDataStack\"",
-					"\"${PODS_ROOT}/Headers/Overcoat\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
-					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
-					"$(SRCROOT)/**",
-				);
-				INFOPLIST_FILE = "Delightful-TestFlight copy-Info.plist";
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
-					"-weak_framework",
-					Crashlytics,
-				);
-				PRODUCT_NAME = Fezz;
-				PROVISIONING_PROFILE = "4E0E13E0-429E-4BF0-B413-B94A2ECA911B";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
 		032CBBAA17D0BDF3001205B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2554,7 +1971,6 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/PhotoBox",
-					/Users/nico/Projects/PhotoBox,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -2622,7 +2038,6 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/PhotoBox",
-					/Users/nico/Projects/PhotoBox,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -2758,7 +2173,6 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/PhotoBox",
-					/Users/nico/Projects/PhotoBox,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -2823,7 +2237,6 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/PhotoBox",
-					/Users/nico/Projects/PhotoBox,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -2871,15 +2284,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0312050219508B29004EA8CB /* Build configuration list for PBXNativeTarget "Fezz" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0312050319508B29004EA8CB /* Debug */,
-				0312050419508B29004EA8CB /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "Delightful" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
