@@ -1215,6 +1215,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 032CBBAC17D0BDF3001205B1 /* Build configuration list for PBXNativeTarget "Delightful" */;
 			buildPhases = (
+				03CE49C019C9366800817C28 /* Facebook App Id */,
 				5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
@@ -1258,6 +1259,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03EFD95C19251CD700E80A71 /* Build configuration list for PBXNativeTarget "Delightful-TestFlight" */;
 			buildPhases = (
+				03CE49C119C9391900817C28 /* Facebook App ID */,
 				03EFD8CA19251CD700E80A71 /* Check Pods Manifest.lock */,
 				03EFD8CB19251CD700E80A71 /* Sources */,
 				03EFD91C19251CD700E80A71 /* Frameworks */,
@@ -1501,6 +1503,34 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "FILE=./PhotoBox/Lookback.plist\nSTUB=./PhotoBox/Lookback.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Lookback.plist exists\"\nelse\ncp $STUB $FILE\nfi";
+		};
+		03CE49C019C9366800817C28 /* Facebook App Id */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Facebook App Id";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./PhotoBox/facebook-app-id\nappid=$(cat $FILE)\n/usr/libexec/PlistBuddy -c \"Set :FacebookAppID $appid\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+		};
+		03CE49C119C9391900817C28 /* Facebook App ID */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Facebook App ID";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./PhotoBox/facebook-app-id\nappid=$(cat $FILE)\n/usr/libexec/PlistBuddy -c \"Set :FacebookAppID $appid\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
 		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
