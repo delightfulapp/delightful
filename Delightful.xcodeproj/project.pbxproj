@@ -1218,7 +1218,8 @@
 				5C130350325A429EBCF29C6C /* Check Pods Manifest.lock */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
-				037EC053189D05AF009C54EE /* Copy Crashlytics */,
+				037EC053189D05AF009C54EE /* Copy Crashlytics plist */,
+				03CE49BF19C932A700817C28 /* Copy Lookback plist */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
 				03635E1B187996290037851F /* Crashlytics */,
 				03D972AC18123A20008A087B /* Build number increment */,
@@ -1260,7 +1261,8 @@
 				03EFD8CA19251CD700E80A71 /* Check Pods Manifest.lock */,
 				03EFD8CB19251CD700E80A71 /* Sources */,
 				03EFD91C19251CD700E80A71 /* Frameworks */,
-				03EFD92819251CD700E80A71 /* Copy Crashlytics */,
+				03EFD92819251CD700E80A71 /* Copy Crashlytics plist */,
+				03CE49BE19C9316900817C28 /* Copy Lookback plist */,
 				03EFD92919251CD700E80A71 /* Resources */,
 				03EFD95919251CD700E80A71 /* Crashlytics */,
 				03EFD95A19251CD700E80A71 /* Build number increment */,
@@ -1458,19 +1460,47 @@
 			shellPath = /bin/sh;
 			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\nfi\n\n";
 		};
-		037EC053189D05AF009C54EE /* Copy Crashlytics */ = {
+		037EC053189D05AF009C54EE /* Copy Crashlytics plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Crashlytics";
+			name = "Copy Crashlytics plist";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
+		};
+		03CE49BE19C9316900817C28 /* Copy Lookback plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Lookback plist";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./PhotoBox/Lookback.plist\nSTUB=./PhotoBox/Lookback.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Lookback.plist exists\"\nelse\ncp $STUB $FILE\nfi";
+		};
+		03CE49BF19C932A700817C28 /* Copy Lookback plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Lookback plist";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "FILE=./PhotoBox/Lookback.plist\nSTUB=./PhotoBox/Lookback.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Lookback.plist exists\"\nelse\ncp $STUB $FILE\nfi";
 		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1515,14 +1545,14 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		03EFD92819251CD700E80A71 /* Copy Crashlytics */ = {
+		03EFD92819251CD700E80A71 /* Copy Crashlytics plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Crashlytics";
+			name = "Copy Crashlytics plist";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;

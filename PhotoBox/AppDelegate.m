@@ -197,7 +197,8 @@ static BOOL isRunningTests(void)
         NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
         if (dict) {
             NSString *apiKey = [dict objectForKey:@"key"];
-            if (apiKey && apiKey.length > 0) {
+            if ((apiKey && apiKey.length > 0)  && ![apiKey isEqualToString:@"<YOUR_KEY_HERE>"]) {
+                PBX_LOG(@"Starting Crashlytics");
                 if (![Crashlytics startWithAPIKey:apiKey]) {
                     PBX_LOG(@"No crashlytics");
                 }
@@ -213,7 +214,7 @@ static BOOL isRunningTests(void)
         NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
         if (dict) {
             NSString *apiKey = [dict objectForKey:@"token"];
-            if (apiKey && apiKey.length > 0) {
+            if ((apiKey && apiKey.length > 0) && ![apiKey isEqualToString:@"<YOUR_TOKEN_HERE>"]) {
                 [Lookback_Weak setupWithAppToken:apiKey];
                 [Lookback_Weak lookback].shakeToRecord = YES;
             }
