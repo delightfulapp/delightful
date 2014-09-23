@@ -189,7 +189,6 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [photosViewController setTitle:album.name];
     [photosViewController setRelationshipKeyPathWithItem:@"albums"];
     [photosViewController setResourceType:PhotoResource];
-    [photosViewController refreshIfNeeded];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];
@@ -201,7 +200,6 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
     [photosViewController setRelationshipKeyPathWithItem:@"tags"];
     [photosViewController setResourceType:PhotoWithTagsResource];
-    [photosViewController refreshIfNeeded];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];

@@ -188,6 +188,10 @@
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */; };
+		03B3271719D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */; };
+		03B3271819D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */; };
+		03B3271B19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */; };
+		03B3271C19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */; };
 		03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */; };
 		03B5CCC8193C7AE500E0BAD0 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
 		03B5CCC9193C7AE500E0BAD0 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
@@ -613,6 +617,10 @@
 		03AE182A17D8F266009CD844 /* NSString+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additionals.h"; sourceTree = "<group>"; };
 		03AE182B17D8F267009CD844 /* NSString+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additionals.m"; sourceTree = "<group>"; };
 		03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionalsTests.m"; sourceTree = "<group>"; };
+		03B3271519D0750D00B87347 /* DelightfulCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulCollectionViewController.h; path = PhotoBox/Controllers/DataSource/DelightfulCollectionViewController.h; sourceTree = "<group>"; };
+		03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulCollectionViewController.m; path = PhotoBox/Controllers/DataSource/DelightfulCollectionViewController.m; sourceTree = "<group>"; };
+		03B3271919D16B4C00B87347 /* DLFDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFDatabaseManager.h; path = PhotoBox/Models/DLFDatabaseManager.h; sourceTree = "<group>"; };
+		03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFDatabaseManager.m; path = PhotoBox/Models/DLFDatabaseManager.m; sourceTree = "<group>"; };
 		03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManagerTests.m; sourceTree = "<group>"; };
 		03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
 		03B5CCCA193CC20500E0BAD0 /* PhotosPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerViewController.h; path = PhotoBox/Controllers/PhotosPickerViewController.h; sourceTree = "<group>"; };
@@ -751,6 +759,8 @@
 				0396BDE41922032D004B6290 /* PhotosCollection.m */,
 				035DACE61983555500557547 /* DLFAsset.h */,
 				035DACE71983555500557547 /* DLFAsset.m */,
+				03B3271919D16B4C00B87347 /* DLFDatabaseManager.h */,
+				03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -968,6 +978,8 @@
 		0358467117D1BBE400E196D7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				03B3271519D0750D00B87347 /* DelightfulCollectionViewController.h */,
+				03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */,
 				035846C617D3470A00E196D7 /* Transition */,
 				035846B417D23F9700E196D7 /* Layout */,
 				0358468017D1C0E800E196D7 /* DataSource */,
@@ -1747,8 +1759,10 @@
 				0310904517D1B2840075F9D8 /* Tag.m in Sources */,
 				035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */,
+				03B3271B19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */,
 				03CE5103181842F200445084 /* SharerManager.m in Sources */,
 				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
+				03B3271719D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */,
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
 				038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
@@ -1875,8 +1889,10 @@
 				03EFD8FA19251CD700E80A71 /* Tag.m in Sources */,
 				035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				03EFD8FB19251CD700E80A71 /* AlbumCell.m in Sources */,
+				03B3271C19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */,
 				03EFD8FC19251CD700E80A71 /* SharerManager.m in Sources */,
 				03EFD8FD19251CD700E80A71 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
+				03B3271819D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */,
 				03EFD8FE19251CD700E80A71 /* UIView+NGAParallaxMotion.m in Sources */,
 				03EFD8FF19251CD700E80A71 /* UIImageView+Additionals.m in Sources */,
 				03EFD90019251CD700E80A71 /* PhotoBoxModel.m in Sources */,

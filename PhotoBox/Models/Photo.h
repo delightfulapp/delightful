@@ -56,9 +56,14 @@
 @property (nonatomic, copy, readonly) PhotoBoxImage *thumbnailImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *normalImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *originalImage;
-@property (nonatomic, copy, readonly) NSString *dateTakenString;
+
 @property (nonatomic, copy, readonly) NSString *dateMonthYearTakenString;
 @property (nonatomic, copy, readonly) NSString *dimension;
+
+@property (nonatomic, copy, readonly) NSDate *dateUploadedDate;
+@property (nonatomic, copy, readonly) NSDate *dateTakenDate;
+@property (nonatomic, copy, readonly) NSString *dateTakenString;
+@property (nonatomic, copy, readonly) NSString *dateUploadedString;
 
 @property (nonatomic, copy, readonly) NSArray *fetchedIn;
 

@@ -20,7 +20,7 @@
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
 
-#import <NSDate+Escort.h>
+#import "DLFDatabaseManager.h"
 
 #define INITIAL_PAGE_NUMBER 1
 
@@ -45,6 +45,8 @@ NSString *const galleryContainerType = @"gallery";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.dataSource setDebugName:NSStringFromClass([self class])];
     
     self.page = INITIAL_PAGE_NUMBER;
     self.numberOfColumns = 2;
@@ -156,11 +158,6 @@ NSString *const galleryContainerType = @"gallery";
         [_dataSource setCellIdentifier:self.cellIdentifier];
         [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
         [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
-        [_dataSource setPredicate:[self predicate]];
-        [_dataSource setGroupKey:[self groupKey]];
-        [_dataSource setSortDescriptors:[self sortDescriptors]];
-        
-        [_dataSource setDebugName:NSStringFromClass([self class])];
     }
     return _dataSource;
 }
@@ -183,10 +180,6 @@ NSString *const galleryContainerType = @"gallery";
 - (NSString *)displayedItemIdKey {
     NSString *itemClassName = [NSStringFromClass([self resourceClass]) lowercaseString];
     return [NSString stringWithFormat:@"%@Id", itemClassName];
-}
-
-- (NSArray *)items {
-    return self.dataSource.items;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -241,6 +234,7 @@ NSString *const galleryContainerType = @"gallery";
 #pragma mark - Connection
 
 - (void)fetchResource {
+    return;
     [self showLoadingView:YES];
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
@@ -290,7 +284,7 @@ NSString *const galleryContainerType = @"gallery";
         if (count>0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
-                self.page = (count/self.pageSize)+1;
+                self.page = ((int)count/(int)self.pageSize)+1;
                 PBX_LOG(@"Fetch more");
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self showLoadingView:YES];
@@ -310,7 +304,7 @@ NSString *const galleryContainerType = @"gallery";
         self.currentPage = [firstObject.currentPage intValue];
         self.currentRow = [firstObject.currentRow intValue];
     } else {
-        self.totalItems = ((NSArray *)objects).count;
+        self.totalItems = (int)((NSArray *)objects).count;
         self.totalPages = 1;
         self.currentPage = 1;
         self.currentRow = 0;
@@ -331,7 +325,6 @@ NSString *const galleryContainerType = @"gallery";
     PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
     self.isFetching = YES;
     self.page = INITIAL_PAGE_NUMBER;
-    [self.dataSource removeAllItems];
     [self.collectionView reloadData];
     [self fetchResource];
 }
@@ -529,7 +522,7 @@ NSString *const galleryContainerType = @"gallery";
                 [self fetchResource];
             } else {
                 NSLog(@"Logging out, clearing everything");
-                [self.dataSource removeAllItems];
+                [[DLFDatabaseManager manager] removeAllItems];
                 self.page = INITIAL_PAGE_NUMBER;
                 [self.collectionView reloadData];
                 [self userDidLogout];

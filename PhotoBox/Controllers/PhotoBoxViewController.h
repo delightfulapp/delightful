@@ -52,7 +52,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 - (Class)dataSourceClass;
 - (void)refresh;
-- (void)refreshIfNeeded;
 - (NSString *)refreshKey;
 - (NSArray *)cachedItems;
 - (void)showError:(NSError *)error;

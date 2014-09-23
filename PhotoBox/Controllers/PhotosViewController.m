@@ -196,7 +196,7 @@
                 [cell setTitleLabelText:NSLocalizedString(@"Uploading ...", nil)];
                 [cell setLocationString:nil];
             } else {
-                [cell setTitleLabelText:[item localizedDate]];
+                [cell setTitleLabelText:[item localizedDate]?:@""];
                 CLLocation *location = [selfie locationSampleForSection:indexPath.section];
                 if (location) {
                     [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
@@ -251,6 +251,7 @@
     return [PhotosDataSource class];
 }
 
+/*
 - (void)refresh {
     if ([self itemIsDownloadHistoryOrFavorites]) {
         Album *album = (Album *)self.item;
@@ -286,41 +287,8 @@
     
     [super refresh];
 }
+ */
 
-- (void)refreshIfNeeded {
-    if (![[ConnectionManager sharedManager] isUserLoggedIn]) {
-        [[TMCache  sharedCache] removeAllObjects];
-        [self refresh];
-        return;
-    }
-    if ([self itemIsDownloadHistoryOrFavorites]) {
-        [self refresh];
-        return;
-    }
-    if (![self.item needRefresh]) {
-        [self showLoadingView:YES];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSArray *photos = [(id)self.item photos];
-            [self showLoadingView:NO];
-            if (photos) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self willLoadDataFromCache];
-                    
-                    [self.dataSource removeAllItems];
-                    [self.dataSource addItems:photos];
-                    [self.collectionView reloadData];
-                    
-                    [self didLoadDataFromCache];
-                });
-                
-            } else {
-                [self refresh];
-            }
-        });
-    } else {
-        [self refresh];
-    }
-}
 
 - (void)didLoadDataFromCache {
     [self addOrRemoveHeaderView];
@@ -514,10 +482,7 @@
 
 - (void)didFetchItems {
     NSInteger count = [self.dataSource numberOfItems];
-    [self setPhotosCount:count max:self.totalItems];
-    
-    [self.item setLastRefresh:[NSDate date]];
-    [self.item setValue:[self.dataSource flattenedItemsWithoutUploadingPhotos] forKey:NSStringFromSelector(@selector(photos))];
+    [self setPhotosCount:(int)count max:self.totalItems];
 }
 
 - (NSString *)refreshKey {
@@ -553,7 +518,7 @@
 - (void)headerImageViewTapped:(id)sender {
     self.selectedCell = nil;
     Album *album = (Album *)self.item;
-    [self openPhoto:(id)album.albumCover index:0 items:@[album.albumCover]];
+    [self openPhoto:(id)album.albumCover index:0];
 }
 
 - (void)reloadButtonTapped:(id)sender {
@@ -636,19 +601,17 @@
     if (photo.asset) {
         return;
     }
-    NSInteger index = [self.dataSource positionOfItem:cell.item];
-    NSArray *items = self.dataSource.flattenedItems;
+    NSInteger index = [self.dataSource positionOfItemInIndexPath:indexPath];
     self.selectedCell = cell;
     [self setSelectedItemRectAtIndexPath:indexPath];
     
-    [self openPhoto:cell.item index:index items:items];
+    [self openPhoto:cell.item index:index];
 }
 
-- (void)openPhoto:(Photo *)photo index:(NSInteger)index items:(NSArray *)items {
+- (void)openPhoto:(Photo *)photo index:(NSInteger)index {
     PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
     
     [destination setItem:self.item];
-    [destination.dataSource addItems:items];
     [destination setFirstShownPhoto:photo];
     [destination setFirstShownPhotoIndex:index];
     [destination setDelegate:self];
@@ -731,17 +694,18 @@
 #pragma mark - Location
 
 - (CLLocation *)locationSampleForSection:(NSInteger)sectionIndex {
-    CLLocation *location;
-    NSArray *photos = [self.dataSource items][sectionIndex];
-    for (Photo *photo in photos) {
+    __block CLLocation *location;
+    
+    [self.dataSource enumerateKeysAndObjectsInSection:sectionIndex usingBlock:^(NSString *collection, NSString *key, Photo *photo, NSUInteger index, BOOL *stop) {
         NSNumber *latitude = [photo valueForKey:@"latitude"];
         NSNumber *longitude = [photo valueForKey:@"longitude"];
         if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
             location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
             
-            break;
+            *stop = YES;
         }
-    }
+    }];
+    
     return location;
 }
 
