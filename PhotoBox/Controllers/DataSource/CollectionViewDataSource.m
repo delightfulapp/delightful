@@ -172,7 +172,7 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     
     [self.mainConnection beginLongLivedReadTransaction];
     
-    [self setSelectedMappings:self.dateUploadedFirstViewMappings];
+    [self setSelectedMappings:self.dateTakenLastViewMappings];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(yapDatabaseModified:)

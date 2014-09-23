@@ -29,7 +29,7 @@
 @implementation TagsViewController
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
-    self = [super initWithCollectionViewLayout:layout];
+    //self = [super initWithCollectionViewLayout:layout];
     if (self) {
         [self setup];
     }

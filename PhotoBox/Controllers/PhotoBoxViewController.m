@@ -19,6 +19,7 @@
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
+#import "StickyHeaderFlowLayout.h"
 
 #import "DLFDatabaseManager.h"
 
@@ -83,6 +84,46 @@ NSString *const galleryContainerType = @"gallery";
 
 #pragma mark - Orientation
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+//    NSLog(@"Current offset = %f", self.collectionView.contentOffset.y);
+//    NSLog(@"Content size height = %f", self.collectionView.contentSize.height);
+//    NSLog(@"Size = %@", NSStringFromCGSize(size));
+    //self.numberOfColumns = (size.width < size.height)?3:6;
+    CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
+    NSIndexPath *indexPath;
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        NSIndexPath *ind = [self.collectionView indexPathForCell:cell];
+        
+        UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:ind];
+        if (attr.frame.origin.y > originYRectToExamine) {
+            if (!indexPath) {
+                indexPath = ind;
+            } else {
+                if ([indexPath compare:ind] == NSOrderedDescending) {
+                    indexPath = ind;
+                }
+            }
+        }
+    }
+    [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] lastObject]]];
+    [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetOffset:fabs(size.width-size.height)-CGRectGetHeight(self.navigationController.navigationBar.frame)];
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self restoreContentInsetForSize:size];
+        
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        //UICollectionViewCell *lastCell = [self.collectionView.visibleCells firstObject];
+        //((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) layou
+        //[((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetProposedContentOffset:lastCell.center];
+        //[self.collectionView.collectionViewLayout invalidateLayout];
+        
+        NSLog(@"after rotation offset = %f", self.collectionView.contentOffset.y);
+        NSLog(@"after Content size height  = %f", self.collectionView.contentSize.height);
+        [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 1) animated:YES];
+        
+    }];
+}
+
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
 }
@@ -118,7 +159,7 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)setupCollectionView {
     [self.collectionView setDelegate:self];
-    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
 }
@@ -311,9 +352,9 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
-- (void)restoreContentInset {
-    PBX_LOG(@"");
-    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+- (void)restoreContentInsetForSize:(CGSize)size {
+    PBX_LOG(@"top layout guide: %f", self.topLayoutGuide.length);
+    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
 }
 

@@ -14,4 +14,8 @@
 
 @property (nonatomic, assign) CGFloat topOffsetAdjustment;
 
+@property (nonatomic, strong) NSIndexPath *targetIndexPath;
+
+@property (nonatomic, assign) CGFloat targetOffset;
+
 @end

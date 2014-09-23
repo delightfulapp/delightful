@@ -367,7 +367,7 @@
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     } else {
-        [super restoreContentInset];
+        [super restoreContentInsetForSize:self.view.frame.size];
     }
     
 }
@@ -596,6 +596,8 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"index path: %@", indexPath);
+    return;
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
     if (photo.asset) {
@@ -609,21 +611,21 @@
 }
 
 - (void)openPhoto:(Photo *)photo index:(NSInteger)index {
-    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    
-    [destination setItem:self.item];
-    [destination setFirstShownPhoto:photo];
-    [destination setFirstShownPhotoIndex:index];
-    [destination setDelegate:self];
-    [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
-    [destination setResourceType:self.resourceType];
-    if ([self itemIsDownloadHistoryOrFavorites]) {
-        [destination setHideDownloadButton:YES];
-    }
-    
-    [self setupBackNavigationItemTitle];
-    
-    [self.navigationController pushViewController:destination animated:YES];
+//    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+//    
+//    [destination setItem:self.item];
+//    [destination setFirstShownPhoto:photo];
+//    [destination setFirstShownPhotoIndex:index];
+//    [destination setDelegate:self];
+//    [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
+//    [destination setResourceType:self.resourceType];
+//    if ([self itemIsDownloadHistoryOrFavorites]) {
+//        [destination setHideDownloadButton:YES];
+//    }
+//    
+//    [self setupBackNavigationItemTitle];
+//    
+//    [self.navigationController pushViewController:destination animated:YES];
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

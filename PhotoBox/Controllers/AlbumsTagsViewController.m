@@ -113,11 +113,6 @@
     
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    // this is seriously weird, the selected and the shown view controller is reversed!
-    NSInteger index = abs(1-self.selectedIndex);
-    AlbumsViewController *shownVC = (AlbumsViewController *)[self.viewControllers objectAtIndex:index];
-    [shownVC scrollViewDidScroll:shownVC.collectionView];
-}
+
 
 @end

@@ -170,4 +170,10 @@
     self.insertIndexPaths = nil;
 }
 
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
+    UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
+    NSLog(@"changing proposed offset %f %f", attr.frame.origin.y, self.targetOffset);
+    return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-self.targetOffset);
+}
+
 @end

@@ -79,29 +79,6 @@ static void * imageUploadContext = &imageUploadContext;
 //        }
 //    }
     
-    PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:rootViewController];
-    [self.window setTintColor:[UIColor redColor]];
-    [self.window makeKeyAndVisible];
-    
-    PhotosViewController *photosViewController = [[PhotosViewController alloc] initWithCollectionViewLayout:[[StickyHeaderFlowLayout alloc] init]];
-    UINavigationController *photosNavigationViewController = [[UINavigationController alloc] initWithRootViewController:photosViewController];
-    [photosViewController setItem:[Album allPhotosAlbum]];
-    
-    /*
-    AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    TagsViewController *tagsViewController = [[TagsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    AlbumsTagsViewController *albumsTagsViewController = [[AlbumsTagsViewController alloc] init];
-    [albumsTagsViewController setViewControllers:@[albumsViewController, tagsViewController]];
-    LeftViewController *left = [[LeftViewController alloc] initWithRootViewController:albumsTagsViewController];
-    [rootViewController setLeftPanel:left];
-     */
-    [rootViewController setCenterPanel:photosNavigationViewController];
-    
-    self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
-    [photosNavigationViewController setDelegate:self.navigationDelegate];
     
     [self runCrashlytics];
     
