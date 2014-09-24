@@ -42,6 +42,8 @@
 
 #import <Lookback/Lookback.h>
 
+#import "PhotosViewController.h"
+
 //#import "HintsViewController.h"
 
 static void * imageDownloadContext = &imageDownloadContext;
@@ -78,7 +80,9 @@ static void * imageUploadContext = &imageUploadContext;
 //            [alert show];
 //        }
 //    }
-    
+    UINavigationController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    PhotosViewController *photosVC = (PhotosViewController *)([rootController.viewControllers firstObject]);
+    [photosVC setItem:[Album allPhotosAlbum]];
     
     [self runCrashlytics];
     

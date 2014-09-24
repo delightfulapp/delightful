@@ -110,7 +110,7 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
-    [self.collectionView.viewForBaselineLayout.layer setSpeed:0.4f];
+    //[self.collectionView.viewForBaselineLayout.layer setSpeed:0.8f];
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
@@ -455,20 +455,6 @@
         [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backNavigationTapped:)]];
     }
     [self.navigationItem.backBarButtonItem setTitle:title];
-}
-
-- (void)showLoadingView:(BOOL)show {
-    DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
-    [layout updateLastIndexPath];
-    [layout setShowLoadingView:show];
-    
-    CGFloat centerY = LOADING_VIEW_HEIGHT/2;
-    if (layout.lastIndexPath && layout.lastIndexPath.section != NSIntegerMin && layout.lastIndexPath.item != NSIntegerMin) {
-        centerY += CGRectGetMaxY([layout layoutAttributesForItemAtIndexPath:layout.lastIndexPath].frame);
-    }
-    
-    [self showLoadingView:show atCenterY:centerY];
-    [layout invalidateLayout];
 }
 
 - (void)setNumberOfColumns:(int)numberOfColumns {

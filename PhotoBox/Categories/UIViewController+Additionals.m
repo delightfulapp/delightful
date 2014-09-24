@@ -35,8 +35,8 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 @implementation UIViewController (Additionals)
 
 - (void)showLoadingView:(BOOL)show atCenterY:(CGFloat)centerY {
-    if ([self isKindOfClass:[UICollectionViewController class]]) {
-        UICollectionViewController *cv = (UICollectionViewController *)self;
+    if ([self isKindOfClass:[PhotoBoxViewController class]]) {
+        PhotoBoxViewController *cv = (PhotoBoxViewController *)self;
         if (show) {
             UIActivityIndicatorView *activity = (UIActivityIndicatorView *)[cv.collectionView viewWithTag:kLoadingViewTag];
             if (!activity) {

@@ -1306,6 +1306,9 @@
 					032CBB9A17D0BDF3001205B1 = {
 						TestTargetID = 032CBB7917D0BDF3001205B1;
 					};
+					03EFD8C919251CD700E80A71 = {
+						DevelopmentTeam = NNTV3ZQR3E;
+					};
 				};
 			};
 			buildConfigurationList = 032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "Delightful" */;
@@ -2299,7 +2302,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "A042EA3A-184A-4B3E-AF08-54763B1348C4";
+				PROVISIONING_PROFILE = "d9533600-f432-40cb-b232-102affa2ed8e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2310,7 +2313,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

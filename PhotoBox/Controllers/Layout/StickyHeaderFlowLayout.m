@@ -16,16 +16,16 @@
 
 @implementation StickyHeaderFlowLayout
 
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
-    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
-        attr.alpha = 0;
-        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
-        attr.center = CGPointMake(attr.center.x, centerY);
-    }
-    
-    return attr;
-}
+//- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+//    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+//    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
+//        attr.alpha = 0;
+//        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
+//        attr.center = CGPointMake(attr.center.x, centerY);
+//    }
+//    
+//    return attr;
+//}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
@@ -139,7 +139,7 @@
                        (CGRectGetMaxY(lastObjectAttrs.frame) - bottomHeaderHeight)
                     );
         
-        layoutAttributes.zIndex = 10000;
+        layoutAttributes.zIndex = 100000;
         layoutAttributes.frame = (CGRect){
             .origin = origin,
             .size = layoutAttributes.frame.size
@@ -171,9 +171,13 @@
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
-    UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
-    NSLog(@"changing proposed offset %f %f", attr.frame.origin.y, self.targetOffset);
-    return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-self.targetOffset);
+    NSLog(@"target index path = %@", self.targetIndexPath);
+    if (self.targetIndexPath && ![self.targetIndexPath isEqual:[NSIndexPath indexPathForItem:0 inSection:0]]) {
+        NSLog(@"here");
+        UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
+        return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-self.targetOffset);
+    }
+    return proposedContentOffset;
 }
 
 @end

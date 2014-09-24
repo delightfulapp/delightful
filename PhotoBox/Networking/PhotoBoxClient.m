@@ -169,7 +169,7 @@
              mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:Album.class resourceId:albumId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
+    [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
@@ -185,7 +185,10 @@
         resource = @"";
         sort = [self sortByQueryString:@"dateUploaded,DESC"];
     }
-    NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@%@", page, pageSize, sort, [self photoSizesString], resource];
+    NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@", page, pageSize, sort, [self photoSizesString]];
+    if (resource) {
+        path = [path stringByAppendingString:resource];
+    }
     
     [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
 }
