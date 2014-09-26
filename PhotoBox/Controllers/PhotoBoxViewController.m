@@ -96,7 +96,7 @@ NSString *const galleryContainerType = @"gallery";
         NSIndexPath *ind = [self.collectionView indexPathForCell:cell];
         
         UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:ind];
-        if (attr.frame.origin.y > originYRectToExamine) {
+        if (attr.frame.origin.y > originYRectToExamine-5) {
             if (!indexPath) {
                 indexPath = ind;
             } else {
@@ -106,22 +106,12 @@ NSString *const galleryContainerType = @"gallery";
             }
         }
     }
-    
-    [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] lastObject]]];
-    [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetOffset:fabs(size.width-size.height)-CGRectGetHeight(self.navigationController.navigationBar.frame)];
+    [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] firstObject]]];
     
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self restoreContentInsetForSize:size];
-        //[self.collectionView.collectionViewLayout invalidateLayout];
+        [self.collectionView.collectionViewLayout invalidateLayout];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.collectionView performBatchUpdates:^{
-            
-        } completion:^(BOOL finished) {
-            
-        }];
-        [self.collectionView setContentOffset:CGPointMake(self.collectionView.contentOffset.x, self.collectionView.contentOffset.y + 1) animated:YES];
-        
-        
     }];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }

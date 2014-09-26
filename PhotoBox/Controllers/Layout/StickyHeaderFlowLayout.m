@@ -171,11 +171,9 @@
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
-    NSLog(@"target index path = %@", self.targetIndexPath);
-    if (self.targetIndexPath && ![self.targetIndexPath isEqual:[NSIndexPath indexPathForItem:0 inSection:0]]) {
-        NSLog(@"here");
+    if (self.targetIndexPath) {
         UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
-        return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-self.targetOffset);
+        return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-44-self.collectionView.contentInset.top);
     }
     return proposedContentOffset;
 }

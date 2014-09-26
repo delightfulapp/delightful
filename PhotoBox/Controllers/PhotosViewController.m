@@ -582,7 +582,8 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"index path: %@", indexPath);
+    UICollectionViewLayoutAttributes *attr = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    NSLog(@"attr frame = %@", NSStringFromCGRect(attr.frame));
     return;
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
