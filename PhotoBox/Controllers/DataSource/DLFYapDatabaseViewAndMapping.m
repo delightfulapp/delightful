@@ -12,9 +12,9 @@
 
 + (DLFYapDatabaseViewAndMapping *)databaseViewAndMappingForKeyToCompare:(NSString *)keyToCompare database:(YapDatabase *)database viewName:(NSString *)viewName asc:(BOOL)ascending grouped:(BOOL)grouped {
     YapDatabaseViewBlockType groupingBlockType = YapDatabaseViewBlockTypeWithObject;
-    YapDatabaseViewGroupingWithObjectBlock groupingBlock = (grouped)? ^NSString *(NSString *collection, NSString *key, id object) {
-        return [[object valueForKey:keyToCompare] description];
-    }:nil;
+    YapDatabaseViewGroupingWithObjectBlock groupingBlock = ^NSString *(NSString *collection, NSString *key, id object) {
+        return (grouped)?[[object valueForKey:keyToCompare] description]:@"";
+    };
     YapDatabaseViewBlockType sortingBlockType = YapDatabaseViewBlockTypeWithObject;
     YapDatabaseViewSortingWithObjectBlock sortingBlock = ^NSComparisonResult(NSString *group,
                                                                              NSString *collection1, NSString *key1, id obj1,

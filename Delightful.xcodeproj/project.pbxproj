@@ -87,6 +87,8 @@
 		0357967019D8435600A28334 /* YapDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966E19D8435600A28334 /* YapDataSource.m */; };
 		0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */; };
 		0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */; };
+		0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */; };
+		0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */; };
 		0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */; };
 		0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467617D1BC3D00E196D7 /* TagsViewController.m */; };
 		0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467917D1BCC000E196D7 /* AlbumsViewController.m */; };
@@ -478,6 +480,8 @@
 		0357966E19D8435600A28334 /* YapDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDataSource.m; sourceTree = "<group>"; };
 		0357967119D85E1600A28334 /* DLFYapDatabaseViewAndMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFYapDatabaseViewAndMapping.h; sourceTree = "<group>"; };
 		0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFYapDatabaseViewAndMapping.m; sourceTree = "<group>"; };
+		0357967519D860F100A28334 /* FlattenedPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlattenedPhotosDataSource.h; sourceTree = "<group>"; };
+		0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlattenedPhotosDataSource.m; sourceTree = "<group>"; };
 		0358467217D1BC1D00E196D7 /* PhotoBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxViewController.h; path = PhotoBox/Controllers/PhotoBoxViewController.h; sourceTree = "<group>"; };
 		0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxViewController.m; path = PhotoBox/Controllers/PhotoBoxViewController.m; sourceTree = "<group>"; };
 		0358467517D1BC3D00E196D7 /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsViewController.h; path = PhotoBox/Controllers/TagsViewController.h; sourceTree = "<group>"; };
@@ -1053,6 +1057,8 @@
 				0357966E19D8435600A28334 /* YapDataSource.m */,
 				0357967119D85E1600A28334 /* DLFYapDatabaseViewAndMapping.h */,
 				0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */,
+				0357967519D860F100A28334 /* FlattenedPhotosDataSource.h */,
+				0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1711,6 +1717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
@@ -1843,6 +1850,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,
 				03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */,
 				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
