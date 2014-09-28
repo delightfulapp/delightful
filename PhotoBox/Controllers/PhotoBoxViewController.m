@@ -64,6 +64,8 @@ NSString *const galleryContainerType = @"gallery";
     [self setupPinchGesture];
     [self setupNavigationItemTitle];
     
+    [self.collectionView reloadData];
+    
     if (!self.disableFetchOnLoad) {
         PBX_LOG(@"Gonna fetch resource in view did load");
         [self refreshIfNeeded];

@@ -81,6 +81,10 @@
 		0348D23017DA263500C932BA /* Crashlytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0348D22F17DA263500C932BA /* Crashlytics.plist */; };
 		034E9F9217FA6BC200E3565E /* photo.json in Resources */ = {isa = PBXBuildFile; fileRef = 034E9F9117FA6BC200E3565E /* photo.json */; };
 		034E9F9517FA6C2000E3565E /* XCTestCase+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */; };
+		0357966B19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */; };
+		0357966C19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */; };
+		0357966F19D8435600A28334 /* YapDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966E19D8435600A28334 /* YapDataSource.m */; };
+		0357967019D8435600A28334 /* YapDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966E19D8435600A28334 /* YapDataSource.m */; };
 		0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */; };
 		0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467617D1BC3D00E196D7 /* TagsViewController.m */; };
 		0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467917D1BCC000E196D7 /* AlbumsViewController.m */; };
@@ -149,7 +153,6 @@
 		037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
-		037BA8AB18A355D70072760C /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
 		037BA8BC18A63C830072760C /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
 		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
@@ -227,7 +230,6 @@
 		03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
 		03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
 		03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
-		03EFD8D619251CD700E80A71 /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
 		03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
 		03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
@@ -468,6 +470,10 @@
 		034E9F9117FA6BC200E3565E /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photo.json; sourceTree = "<group>"; };
 		034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Additionals.h"; sourceTree = "<group>"; };
 		034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Additionals.m"; sourceTree = "<group>"; };
+		0357966919D842D200A28334 /* GroupedPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupedPhotosDataSource.h; sourceTree = "<group>"; };
+		0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupedPhotosDataSource.m; sourceTree = "<group>"; };
+		0357966D19D8435600A28334 /* YapDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDataSource.h; sourceTree = "<group>"; };
+		0357966E19D8435600A28334 /* YapDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDataSource.m; sourceTree = "<group>"; };
 		0358467217D1BC1D00E196D7 /* PhotoBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxViewController.h; path = PhotoBox/Controllers/PhotoBoxViewController.h; sourceTree = "<group>"; };
 		0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxViewController.m; path = PhotoBox/Controllers/PhotoBoxViewController.m; sourceTree = "<group>"; };
 		0358467517D1BC3D00E196D7 /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsViewController.h; path = PhotoBox/Controllers/TagsViewController.h; sourceTree = "<group>"; };
@@ -553,8 +559,6 @@
 		037B08A71956C0A6001F55D6 /* UploadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadHeaderView.m; path = PhotoBox/Views/UploadHeaderView.m; sourceTree = "<group>"; };
 		037BA89618A0EB470072760C /* DelightfulLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelightfulLayout.h; sourceTree = "<group>"; };
 		037BA89718A0EB470072760C /* DelightfulLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelightfulLayout.m; sourceTree = "<group>"; };
-		037BA8A918A355D70072760C /* PhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosDataSource.h; sourceTree = "<group>"; };
-		037BA8AA18A355D70072760C /* PhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosDataSource.m; sourceTree = "<group>"; };
 		037BA8BA18A63C830072760C /* FetchedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedIn.h; sourceTree = "<group>"; };
 		037BA8BB18A63C830072760C /* FetchedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedIn.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -1039,8 +1043,10 @@
 				03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */,
 				0398D769180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.h */,
 				0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */,
-				037BA8A918A355D70072760C /* PhotosDataSource.h */,
-				037BA8AA18A355D70072760C /* PhotosDataSource.m */,
+				0357966919D842D200A28334 /* GroupedPhotosDataSource.h */,
+				0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */,
+				0357966D19D8435600A28334 /* YapDataSource.h */,
+				0357966E19D8435600A28334 /* YapDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1703,6 +1709,7 @@
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
+				0357966F19D8435600A28334 /* YapDataSource.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */,
 				03D311B21930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
@@ -1713,7 +1720,6 @@
 				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
 				037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
-				037BA8AB18A355D70072760C /* PhotosDataSource.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
@@ -1726,6 +1732,7 @@
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
+				0357966B19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */,
 				031230571927C613004AFD1E /* InfoTableViewCell.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
@@ -1833,6 +1840,7 @@
 				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
 				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
+				0357967019D8435600A28334 /* YapDataSource.m in Sources */,
 				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
 				03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */,
 				03D311B31930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
@@ -1843,7 +1851,6 @@
 				03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */,
 				037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */,
-				03EFD8D619251CD700E80A71 /* PhotosDataSource.m in Sources */,
 				03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */,
 				03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */,
 				03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */,
@@ -1856,6 +1863,7 @@
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
 				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
 				03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */,
+				0357966C19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */,
 				031230581927C613004AFD1E /* InfoTableViewCell.m in Sources */,
 				03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */,
 				03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */,

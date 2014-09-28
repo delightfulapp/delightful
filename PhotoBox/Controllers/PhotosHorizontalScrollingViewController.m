@@ -36,13 +36,12 @@
 @end
 
 @implementation PhotosHorizontalScrollingViewController
+/*
 
 - (void)viewDidLoad
 {
-    self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
-    self.numberOfColumns = 0;
     self.previousPage = 0;
     self.justOpened = YES;
     
@@ -54,9 +53,7 @@
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     [self adjustCollectionViewWidthToHavePhotosSpacing];
-    
-    [self.dataSource setCellIdentifier:[self cellIdentifier]];
-    
+        
     [self.collectionView reloadData];
     
     [self showLoadingBarButtonItem:NO];
@@ -69,8 +66,6 @@
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
-    
-    self.resourceType = PhotoResource;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -110,16 +105,7 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    PBX_LOG(@"");
-    NSInteger numberOfItems = [self.dataSource numberOfItems];
-    NSInteger firstPhotoIndex = self.firstShownPhotoIndex;
-    if (numberOfItems>firstPhotoIndex) {
-        shouldHideNavigationBar = YES;
-        self.previousPage = self.firstShownPhotoIndex-1;
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
-    } else {
-        PBX_LOG(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
-    }
+    
     
 }
 
@@ -135,54 +121,7 @@
     [self showLoadingBarButtonItem:NO];
 }
 
-#pragma mark - Orientation
 
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-#pragma mark - Override setup
-
-- (NSString *)cellIdentifier {
-    return @"photoZoomableCell";
-}
-
-- (void)setupPinchGesture {
-    // pinch not needed
-}
-
-- (void)setupRefreshControl {
-    // refresh control not needed
-}
-
-- (NSString *)resourceId {
-    return self.item.itemId;
-}
-
-- (NSString *)groupKey {
-    return nil;
-}
-
-- (NSArray *)sortDescriptors {
-    return nil;
-}
-
-- (Class)resourceClass {
-    return [Photo class];
-}
-
-- (int)pageSize {
-    return 0;
-}
-
-- (CollectionViewCellConfigureBlock)cellConfigureBlock {
-    void (^configureCell)(PhotoZoomableCell*, id) = ^(PhotoZoomableCell* cell, id item) {
-        [cell setItem:item];
-        [cell setDelegate:self];
-        [cell setGrayscaleAndZoom:NO animated:NO];
-    };
-    return configureCell;
-}
 
 #pragma mark - Interactive Gesture Recognizer Delegate
 
@@ -515,5 +454,6 @@
         [self continueDownloadOriginalImage];
     }
 }
+ */
 
 @end

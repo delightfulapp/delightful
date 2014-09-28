@@ -46,7 +46,12 @@
     }
     
     return answer;
-    
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attr = [super layoutAttributesForItemAtIndexPath:indexPath];
+    attr.zIndex = 0;
+    return attr;
 }
 
 - (BOOL) shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {

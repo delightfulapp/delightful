@@ -34,7 +34,7 @@
 
 #import "DelightfulLayout.h"
 
-#import "PhotosDataSource.h"
+#import "GroupedPhotosDataSource.h"
 
 #import "Photo.h"
 
@@ -248,7 +248,7 @@
 }
 
 - (Class)dataSourceClass {
-    return [PhotosDataSource class];
+    return [GroupedPhotosDataSource class];
 }
 
 /*
@@ -582,8 +582,8 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewLayoutAttributes *attr = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-    NSLog(@"attr frame = %@", NSStringFromCGRect(attr.frame));
+    NSInteger position = [self.dataSource positionOfItemInIndexPath:indexPath];
+    NSLog(@"Position = %d", (int)position+indexPath.section);
     return;
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;

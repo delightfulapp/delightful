@@ -34,6 +34,8 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 
+- (NSString *)titleForSection:(NSInteger)section;
+
 - (NSIndexPath *)indexPathOfItem:(id)item;
 
 - (NSInteger)numberOfItems;
