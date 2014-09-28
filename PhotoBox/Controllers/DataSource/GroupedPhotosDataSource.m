@@ -10,6 +10,8 @@
 
 #import "Photo.h"
 
+#import "DLFYapDatabaseViewAndMapping.h"
+
 NSString *dateUploadedLastViewName = @"date-uploaded-last-photos";
 NSString *dateTakenLastViewName = @"date-taken-last-photos";
 NSString *dateUploadedFirstViewName = @"date-uploaded-first-photos";
@@ -20,46 +22,27 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
 - (void)setupDatabase {
     [super setupDatabase];
     
-    self.dateUploadedLastView = [self databaseViewForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) name:dateUploadedLastViewName asc:NO];
-    self.dateUploadedLastViewMappings = [self databaseViewMappingsWithViewName:dateUploadedLastViewName asc:NO];
-    self.dateUploadedFirstView = [self databaseViewForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) name:dateUploadedFirstViewName asc:YES];
-    self.dateUploadedFirstViewMappings = [self databaseViewMappingsWithViewName:dateUploadedFirstViewName asc:YES];
+    // last uploaded -> first uploaded view and mappings grouped
+    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) database:self.database viewName:dateUploadedLastViewName asc:NO grouped:YES];
+    self.dateUploadedLastView = viewMapping.view;
+    self.dateUploadedLastViewMappings = viewMapping.mapping;
     
-    self.dateTakenFirstView = [self databaseViewForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) name:dateTakenFirstViewName asc:YES];
-    self.dateTakenFirstViewMappings = [self databaseViewMappingsWithViewName:dateTakenFirstViewName asc:YES];
-    self.dateTakenLastView = [self databaseViewForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) name:dateTakenLastViewName asc:NO];
-    self.dateTakenLastViewMappings = [self databaseViewMappingsWithViewName:dateTakenLastViewName asc:NO];
+    viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) database:self.database viewName:dateUploadedFirstViewName asc:YES grouped:YES];
+    // first uploaded -> last uploaded view and mappings grouped
+    self.dateUploadedFirstView = viewMapping.view;
+    self.dateUploadedFirstViewMappings = viewMapping.mapping;
+    
+    // first taken -> last taken view and mappings grouped
+    viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) database:self.database viewName:dateTakenFirstViewName asc:YES grouped:YES];
+    self.dateTakenFirstView = viewMapping.view;
+    self.dateTakenFirstViewMappings = viewMapping.mapping;
+    
+    // last taken -> first taken view and mappings grouped
+    viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) database:self.database viewName:dateTakenLastViewName asc:NO grouped:YES];
+    self.dateTakenLastView = viewMapping.view;
+    self.dateTakenLastViewMappings = viewMapping.mapping;
 
     [self setSelectedMappings:self.dateTakenLastViewMappings];
-}
-
-- (YapDatabaseView *)databaseViewForKeyToCompare:(NSString *)keyToCompare name:(NSString *)viewName asc:(BOOL)ascending {
-    YapDatabaseViewBlockType groupingBlockType = YapDatabaseViewBlockTypeWithObject;
-    YapDatabaseViewGroupingWithObjectBlock groupingBlock = ^NSString *(NSString *collection, NSString *key, id object) {
-        Photo *photo = (Photo *)object;
-        return [[photo valueForKey:keyToCompare] description];
-    };
-    YapDatabaseViewBlockType sortingBlockType = YapDatabaseViewBlockTypeWithObject;
-    YapDatabaseViewSortingWithObjectBlock sortingBlock = ^NSComparisonResult(NSString *group,
-                                                                             NSString *collection1, NSString *key1, id obj1,
-                                                                             NSString *collection2, NSString *key2, id obj2){
-        return (ascending)?[[obj1 valueForKey:keyToCompare] compare:[obj2 valueForKey:keyToCompare]]:[[obj2 valueForKey:keyToCompare] compare:[obj1 valueForKey:keyToCompare]];
-    };
-    YapDatabaseView *view = [[YapDatabaseView alloc] initWithGroupingBlock:groupingBlock
-                                                         groupingBlockType:groupingBlockType
-                                                              sortingBlock:sortingBlock
-                                                          sortingBlockType:sortingBlockType];
-    [self.database registerExtension:view withName:viewName];
-    return view;
-}
-
-- (YapDatabaseViewMappings *)databaseViewMappingsWithViewName:(NSString *)viewName asc:(BOOL)ascending {
-    YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
-        return YES;
-    } sortBlock:^NSComparisonResult(NSString *group1, NSString *group2, YapDatabaseReadTransaction *transaction) {
-        return (ascending)?[group1 compare:group2]:[group2 compare:group1];
-    } view:viewName];
-    return mappings;
 }
 
 @end
