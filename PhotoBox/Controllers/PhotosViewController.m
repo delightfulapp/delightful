@@ -504,7 +504,7 @@
 - (void)headerImageViewTapped:(id)sender {
     self.selectedCell = nil;
     Album *album = (Album *)self.item;
-    [self openPhoto:(id)album.albumCover index:0];
+    [self openPhoto:(id)album.albumCover];
 }
 
 - (void)reloadButtonTapped:(id)sender {
@@ -582,37 +582,24 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSInteger position = [self.dataSource positionOfItemInIndexPath:indexPath];
-    NSLog(@"Position = %d", (int)position+indexPath.section);
-    return;
+    
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
     if (photo.asset) {
         return;
     }
-    NSInteger index = [self.dataSource positionOfItemInIndexPath:indexPath];
     self.selectedCell = cell;
     [self setSelectedItemRectAtIndexPath:indexPath];
     
-    [self openPhoto:cell.item index:index];
+    [self openPhoto:cell.item];
 }
 
-- (void)openPhoto:(Photo *)photo index:(NSInteger)index {
-//    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-//    
-//    [destination setItem:self.item];
-//    [destination setFirstShownPhoto:photo];
-//    [destination setFirstShownPhotoIndex:index];
-//    [destination setDelegate:self];
-//    [destination setRelationshipKeyPathWithItem:self.relationshipKeyPathWithItem];
-//    [destination setResourceType:self.resourceType];
-//    if ([self itemIsDownloadHistoryOrFavorites]) {
-//        [destination setHideDownloadButton:YES];
-//    }
-//    
-//    [self setupBackNavigationItemTitle];
-//    
-//    [self.navigationController pushViewController:destination animated:YES];
+- (void)openPhoto:(Photo *)photo{
+    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    [destination setFirstShownPhoto:photo];
+    [destination setDelegate:self];
+    [self setupBackNavigationItemTitle];
+    [self.navigationController pushViewController:destination animated:YES];
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

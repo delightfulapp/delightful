@@ -20,6 +20,7 @@
 #import "PhotoInfoViewController.h"
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
+#import "FlattenedPhotosDataSource.h"
 #import <SVProgressHUD.h>
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate> {
@@ -32,11 +33,11 @@
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
 @property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
 @property (nonatomic, strong) UIButton *infoButton;
-
+@property (nonatomic, strong) FlattenedPhotosDataSource *dataSource;
+@property (nonatomic, assign) NSInteger firstShownPhotoIndex;
 @end
 
 @implementation PhotosHorizontalScrollingViewController
-/*
 
 - (void)viewDidLoad
 {
@@ -45,9 +46,13 @@
     self.previousPage = 0;
     self.justOpened = YES;
     
+    self.dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView];
+    [self.dataSource setCellIdentifier:[self cellIdentifier]];
+    [self.dataSource setConfigureCellBlock:^(PhotoZoomableCell *cell, id item){
+        [cell setItem:item];
+    }];
     ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [self.collectionView registerClass:[PhotoZoomableCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
-	
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
@@ -90,6 +95,10 @@
     [self showInfoButton:NO animated:YES];
 }
 
+- (NSString *)cellIdentifier {
+    return @"horizontal-photos-cell";
+}
+
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
     self.collectionView.frame = ({
         CGRect frame = self.collectionView.frame;
@@ -105,8 +114,10 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    
-    
+    NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.firstShownPhoto];
+    shouldHideNavigationBar = YES;
+    self.previousPage = self.firstShownPhotoIndex-1;
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -120,8 +131,6 @@
     
     [self showLoadingBarButtonItem:NO];
 }
-
-
 
 #pragma mark - Interactive Gesture Recognizer Delegate
 
@@ -167,29 +176,7 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSInteger page = [self currentCollectionViewPage:scrollView];
-    if (self.previousPage != page) {
-        if (!shouldHideNavigationBar) {
-            [self hideNavigationBar];
-            [self darkenBackground];
-        } else {
-            shouldHideNavigationBar = NO;
-        }
-        
-        self.previousPage = page;
-        if (!self.justOpened) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-                //NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
-                [self showLoadingBarButtonItem:NO];
-            }
-            [self insertBackgroundSnapshotView];
-        } else {
-            self.justOpened = NO;
-            [self showHintIfNeeded];
-        }
-    }
+    
 }
 
 - (void)insertBackgroundSnapshotView {
@@ -454,6 +441,5 @@
         [self continueDownloadOriginalImage];
     }
 }
- */
 
 @end

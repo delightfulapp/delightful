@@ -18,4 +18,5 @@
 
 + (DLFYapDatabaseViewAndMapping *)databaseViewAndMappingForKeyToCompare:(NSString *)keyToCompare database:(YapDatabase *)database viewName:(NSString *)viewName asc:(BOOL)ascending grouped:(BOOL)grouped;
 
+
 @end

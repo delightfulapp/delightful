@@ -60,6 +60,15 @@
     return item;
 }
 
+- (NSIndexPath *)indexPathOfItem:(Photo *)item {
+    __block NSIndexPath *indexPath;
+    
+    [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        indexPath = [[transaction ext:self.selectedMappings.view] indexPathForKey:item.photoId inCollection:photosCollectionName withMappings:self.selectedMappings];
+    }];
+    return indexPath;
+}
+
 - (void)addItems:(NSArray *)items {
     if (items && items.count > 0) {
         [self.bgConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {

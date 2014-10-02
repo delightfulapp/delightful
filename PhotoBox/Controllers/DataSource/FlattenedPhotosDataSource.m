@@ -12,14 +12,14 @@
 
 #import "Photo.h"
 
-NSString *dateUploadedLastFlatViewName = @"date-uploaded-last-photos-flat";
+NSString *dateTakenLastFlatViewName = @"date-taken-last-photos-flat";
 
 @implementation FlattenedPhotosDataSource
 
 - (void)setupDatabase {
     [super setupDatabase];
     
-    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) database:self.database viewName:dateUploadedLastFlatViewName asc:NO grouped:NO];
+    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) database:self.database viewName:dateTakenLastFlatViewName asc:NO grouped:YES];
     
     [self setSelectedMappings:viewMapping.mapping];
 }

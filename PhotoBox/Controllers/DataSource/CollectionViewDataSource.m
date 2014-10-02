@@ -69,7 +69,6 @@
 }
 
 - (NSIndexPath *)indexPathOfItem:(id)item {
-    
     return nil;
 }
 
