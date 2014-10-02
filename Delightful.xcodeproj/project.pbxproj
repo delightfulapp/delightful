@@ -108,7 +108,7 @@
 		035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
 		035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
 		035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846C217D2598600E196D7 /* PhotoZoomableCell.m */; };
-		035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
+		035846CC17D348DB00E196D7 /* DLFNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */; };
 		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
@@ -268,7 +268,7 @@
 		03EFD8F419251CD700E80A71 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
 		03EFD8F519251CD700E80A71 /* FavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */; };
 		03EFD8F619251CD700E80A71 /* PhotoBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468617D1C19A00E196D7 /* PhotoBoxCell.m */; };
-		03EFD8F719251CD700E80A71 /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
+		03EFD8F719251CD700E80A71 /* DLFNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */; };
 		03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
 		03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		03EFD8FA19251CD700E80A71 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
@@ -519,8 +519,8 @@
 		035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingViewController.m; sourceTree = "<group>"; };
 		035846C117D2598600E196D7 /* PhotoZoomableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoZoomableCell.h; path = PhotoBox/Cells/PhotoZoomableCell.h; sourceTree = "<group>"; };
 		035846C217D2598600E196D7 /* PhotoZoomableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoZoomableCell.m; path = PhotoBox/Cells/PhotoZoomableCell.m; sourceTree = "<group>"; };
-		035846CA17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxNavigationControllerDelegate.h; path = PhotoBox/Controllers/Delegates/PhotoBoxNavigationControllerDelegate.h; sourceTree = "<group>"; };
-		035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxNavigationControllerDelegate.m; path = PhotoBox/Controllers/Delegates/PhotoBoxNavigationControllerDelegate.m; sourceTree = "<group>"; };
+		035846CA17D348DB00E196D7 /* DLFNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFNavigationControllerDelegate.h; path = PhotoBox/Controllers/Delegates/DLFNavigationControllerDelegate.h; sourceTree = "<group>"; };
+		035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFNavigationControllerDelegate.m; path = PhotoBox/Controllers/Delegates/DLFNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFullScreenPhotosAnimatedTransitioning.h; path = PhotoBox/Controllers/Delegates/ShowFullScreenPhotosAnimatedTransitioning.h; sourceTree = "<group>"; };
 		035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowFullScreenPhotosAnimatedTransitioning.m; path = PhotoBox/Controllers/Delegates/ShowFullScreenPhotosAnimatedTransitioning.m; sourceTree = "<group>"; };
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
@@ -1154,8 +1154,8 @@
 		035846C617D3470A00E196D7 /* Transition */ = {
 			isa = PBXGroup;
 			children = (
-				035846CA17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.h */,
-				035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */,
+				035846CA17D348DB00E196D7 /* DLFNavigationControllerDelegate.h */,
+				035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */,
 				035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */,
 				035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */,
 				03D311B01930B775003DE5FC /* FallingTransitioningDelegate.h */,
@@ -1783,7 +1783,7 @@
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
 				03FD48301920AA9C00D4ADF7 /* FavoritesManager.m in Sources */,
 				0358468717D1C19A00E196D7 /* PhotoBoxCell.m in Sources */,
-				035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
+				035846CC17D348DB00E196D7 /* DLFNavigationControllerDelegate.m in Sources */,
 				03120461194C1738004EA8CB /* DLFImageUploader.m in Sources */,
 				0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */,
 				0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */,
@@ -1917,7 +1917,7 @@
 				03EFD8F419251CD700E80A71 /* Photo.m in Sources */,
 				03EFD8F519251CD700E80A71 /* FavoritesManager.m in Sources */,
 				03EFD8F619251CD700E80A71 /* PhotoBoxCell.m in Sources */,
-				03EFD8F719251CD700E80A71 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
+				03EFD8F719251CD700E80A71 /* DLFNavigationControllerDelegate.m in Sources */,
 				03120462194C1738004EA8CB /* DLFImageUploader.m in Sources */,
 				03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */,
 				03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */,

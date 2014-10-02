@@ -66,6 +66,8 @@
 
 #import "DLFAsset.h"
 
+#import "DLFNavigationControllerDelegate.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -77,6 +79,7 @@
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
+@property (nonatomic, strong) DLFNavigationControllerDelegate *transitionDelegate;
 
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 
@@ -599,7 +602,12 @@
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
     [self setupBackNavigationItemTitle];
-    [self.navigationController pushViewController:destination animated:YES];
+    UINavigationController *navCon = self.navigationController;
+    if (!self.transitionDelegate) {
+        self.transitionDelegate = [[DLFNavigationControllerDelegate alloc] init];
+    }
+    [navCon setDelegate:self.transitionDelegate];
+    [navCon pushViewController:destination animated:YES];
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

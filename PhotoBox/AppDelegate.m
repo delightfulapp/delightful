@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "PhotoBoxNavigationControllerDelegate.h"
-
 #import "ConnectionManager.h"
 
 #import "NPRImageDownloader.h"

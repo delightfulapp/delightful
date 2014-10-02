@@ -8,15 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class PhotoBoxNavigationControllerDelegate;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (nonatomic, assign, getter = isDemoMode) BOOL demoMode;
-
-@property (nonatomic, strong) PhotoBoxNavigationControllerDelegate *navigationDelegate;
 
 /**
  *  Call this method to show the Update Info if needed.

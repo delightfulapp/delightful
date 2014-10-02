@@ -6,14 +6,14 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "PhotoBoxNavigationControllerDelegate.h"
+#import "DLFNavigationControllerDelegate.h"
 
 #import "PhotosHorizontalScrollingViewController.h"
 #import "PhotosViewController.h"
 
 #import "ShowFullScreenPhotosAnimatedTransitioning.h"
 
-@implementation PhotoBoxNavigationControllerDelegate
+@implementation DLFNavigationControllerDelegate
 
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC {
     ShowFullScreenPhotosAnimatedTransitioning *transitioning = [[ShowFullScreenPhotosAnimatedTransitioning alloc] init];
