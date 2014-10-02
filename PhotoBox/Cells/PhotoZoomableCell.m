@@ -38,6 +38,15 @@
 
 @implementation PhotoZoomableCell
 
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setup];
+    }
+    return self;
+}
+
 - (void)setup {
     NSLog(@"Setup zoomable cell %p", self);
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
@@ -195,38 +204,42 @@
 }
 
 - (void)setItem:(id)item {
-    [super setItem:item];
-    Photo *photo = (Photo *)item;
-    
-    if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
-        CGFloat width, height;
-        NSURL *URL;
-        if (photo.normalImage) {
-            width = [photo.normalImage.width floatValue];
-            height = [photo.normalImage.height floatValue];
-            URL = [NSURL URLWithString:photo.normalImage.urlString];
-        } else {
-            width = [photo.width floatValue];
-            height = [photo.height floatValue];
-            URL = photo.pathOriginal;
-        }
-        [self setImageSize:CGSizeMake(width, height)];
-        [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-        [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
-        UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
-        if (!placeholderImage) {
-            placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
+    if (_item != item) {
+        _item = item;
+        
+        Photo *photo = (Photo *)item;
+        
+        if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
+            CGFloat width, height;
+            NSURL *URL;
+            if (photo.normalImage) {
+                width = [photo.normalImage.width floatValue];
+                height = [photo.normalImage.height floatValue];
+                URL = [NSURL URLWithString:photo.normalImage.urlString];
+            } else {
+                width = [photo.width floatValue];
+                height = [photo.height floatValue];
+                URL = photo.pathOriginal;
+            }
+            [self setImageSize:CGSizeMake(width, height)];
+            [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+            [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
+            UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
             if (!placeholderImage) {
-                placeholderImage = photo.asAlbumCoverImage;
+                placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
                 if (!placeholderImage) {
-                    placeholderImage = photo.placeholderImage;
+                    placeholderImage = photo.asAlbumCoverImage;
+                    if (!placeholderImage) {
+                        placeholderImage = photo.placeholderImage;
+                    }
                 }
             }
+            [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
+            
+            self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
         }
-        [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
-        
-        self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }
+   
 }
 
 - (void)loadOriginalImage {

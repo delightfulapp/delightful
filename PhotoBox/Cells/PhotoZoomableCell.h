@@ -17,12 +17,13 @@
 
 @end
 
-@interface PhotoZoomableCell : PhotoCell <UIScrollViewDelegate>
+@interface PhotoZoomableCell : UICollectionViewCell <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *thisImageview;
 @property (nonatomic, weak) id<PhotoZoomableCellDelegate> delegate;
 @property (nonatomic, assign, getter = isClosingViewController) BOOL closingViewController;
+@property (nonatomic, strong) id item;
 
 - (void)loadOriginalImage;
 - (BOOL)hasDownloadedOriginalImage;

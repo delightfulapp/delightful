@@ -42,11 +42,14 @@
 {
     [super viewDidLoad];
     
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
+    
     self.previousPage = 0;
     self.justOpened = YES;
     
     [self setupDataSource];
     
+    [self.collectionView setDelegate:self];
     ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [self.collectionView registerClass:[PhotoZoomableCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView setAlwaysBounceVertical:NO];
@@ -54,7 +57,7 @@
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     [self adjustCollectionViewWidthToHavePhotosSpacing];
-        
+    
     [self.collectionView reloadData];
     
     [self showLoadingBarButtonItem:NO];
@@ -159,15 +162,12 @@
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return PHOTO_SPACING;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    NSLog(@"returning %d for spacing", PHOTO_SPACING);
     return PHOTO_SPACING;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = collectionView.frame.size.width-PHOTO_SPACING;
+    CGFloat width = collectionView.frame.size.width - PHOTO_SPACING;
     CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
     return CGSizeMake(width, height);
 }
@@ -321,7 +321,7 @@
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image tokenFetchedBlock:^(id token) {
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.thisImageview.image tokenFetchedBlock:^(id token) {
         [weakSelf showLoadingBarButtonItem:NO];
         if (token) {
             [[NPRNotificationManager sharedManager] hideNotification];

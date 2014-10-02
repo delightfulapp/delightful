@@ -57,7 +57,7 @@
 }
 
 + (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database{
-    return [DLFYapDatabaseViewAndMapping viewMappingWithViewName:viewMappingSource.mapping.view database:database sortKey:viewMappingSource.sortKey sortKeyAsc:viewMappingSource.sortKeyAscending];
+    return [DLFYapDatabaseViewAndMapping viewMappingWithViewName:[NSString stringWithFormat:@"%@-flattened", viewMappingSource.mapping.view] database:database sortKey:viewMappingSource.sortKey sortKeyAsc:viewMappingSource.sortKeyAscending];
 }
 
 @end
