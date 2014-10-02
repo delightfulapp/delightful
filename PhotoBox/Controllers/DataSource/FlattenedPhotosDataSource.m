@@ -12,16 +12,27 @@
 
 #import "Photo.h"
 
-NSString *dateTakenLastFlatViewName = @"date-taken-last-photos-flat";
+@interface FlattenedPhotosDataSource ()
+
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *groupedViewMapping;
+
+@end
 
 @implementation FlattenedPhotosDataSource
 
-- (void)setupDatabase {
-    [super setupDatabase];
+- (id)initWithCollectionView:(id)collectionView groupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping {
+    self = [super initWithCollectionView:collectionView];
+    if (self) {
+        self.groupedViewMapping = groupedViewMapping;
+        [self setupMapping];
+    }
+    return self;
+}
+
+- (void)setupMapping {
+    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:self.groupedViewMapping database:self.database];
     
-    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) database:self.database viewName:dateTakenLastFlatViewName asc:NO grouped:YES];
-    
-    [self setSelectedMappings:viewMapping.mapping];
+    [self setSelectedViewMapping:viewMapping];
 }
 
 @end

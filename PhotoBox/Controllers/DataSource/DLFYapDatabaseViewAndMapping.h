@@ -15,8 +15,23 @@
 
 @property (nonatomic, strong) YapDatabaseViewMappings *mapping;
 @property (nonatomic, strong) YapDatabaseView *view;
+@property (nonatomic, strong) NSString *sortKey;
+@property (nonatomic, strong) NSString *groupKey;
+@property (nonatomic, assign) BOOL sortKeyAscending;
+@property (nonatomic, assign) BOOL groupSortAscending;
 
-+ (DLFYapDatabaseViewAndMapping *)databaseViewAndMappingForKeyToCompare:(NSString *)keyToCompare database:(YapDatabase *)database viewName:(NSString *)viewName asc:(BOOL)ascending grouped:(BOOL)grouped;
++ (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                                 database:(YapDatabase *)database
+                                                  sortKey:(NSString *)sortKey
+                                               sortKeyAsc:(BOOL)ascending;
 
++ (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                                 database:(YapDatabase *)database
+                                                  sortKey:(NSString *)sortKey
+                                               sortKeyAsc:(BOOL)ascending
+                                                 groupKey:(NSString *)groupKey
+                                             groupSortAsc:(BOOL)ascending;
+
++ (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database;
 
 @end

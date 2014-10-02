@@ -26,5 +26,9 @@
 @property (nonatomic, strong) Photo *firstShownPhoto;
 @property (nonatomic, weak) id<PhotosHorizontalScrollingViewControllerDelegate>delegate;
 @property (nonatomic, assign) BOOL hideDownloadButton;
+@property (nonatomic, strong) CollectionViewDataSource *dataSource;
+
+- (void)setupDataSource;
+- (NSString *)cellIdentifier;
 
 @end

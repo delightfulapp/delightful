@@ -12,6 +12,8 @@
 
 #import "Photo.h"
 
+#import "DLFYapDatabaseViewAndMapping.h"
+
 @interface YapDataSource ()
 
 @end
@@ -31,16 +33,16 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
-    NSInteger items = [self.selectedMappings numberOfItemsInSection:sectionIndex];
+    NSInteger items = [self.selectedViewMapping.mapping numberOfItemsInSection:sectionIndex];
     return items;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return self.selectedMappings.numberOfSections;
+    return self.selectedViewMapping.mapping.numberOfSections;
 }
 
 - (NSString *)titleForSection:(NSInteger)section {
-    return [self.selectedMappings groupForSection:section];
+    return [self.selectedViewMapping.mapping groupForSection:section];
 }
 
 - (NSInteger)numberOfItems {
@@ -55,7 +57,7 @@
 {
     __block id item = nil;
     [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        item = [[transaction ext:self.selectedMappings.view] objectAtIndexPath:indexPath withMappings:self.selectedMappings];
+        item = [[transaction ext:self.selectedViewMapping.mapping.view] objectAtIndexPath:indexPath withMappings:self.selectedViewMapping.mapping];
     }];
     return item;
 }
@@ -64,7 +66,7 @@
     __block NSIndexPath *indexPath;
     
     [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        indexPath = [[transaction ext:self.selectedMappings.view] indexPathForKey:item.photoId inCollection:photosCollectionName withMappings:self.selectedMappings];
+        indexPath = [[transaction ext:self.selectedViewMapping.mapping.view] indexPathForKey:item.photoId inCollection:photosCollectionName withMappings:self.selectedViewMapping.mapping];
     }];
     return indexPath;
 }
@@ -82,22 +84,22 @@
 }
 
 - (NSInteger)positionOfItemInIndexPath:(NSIndexPath *)indexPath {
-    return [self.selectedMappings indexForRow:indexPath.row inSection:indexPath.section];
+    return [self.selectedViewMapping.mapping indexForRow:indexPath.row inSection:indexPath.section];
 }
 
 - (void)enumerateKeysAndObjectsInSection:(NSInteger)section usingBlock:(void (^)(NSString *, NSString *, id, NSUInteger, BOOL *))block {
-    NSString *group = [self.selectedMappings groupForSection:section];
+    NSString *group = [self.selectedViewMapping.mapping groupForSection:section];
     [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        [[transaction ext:self.selectedMappings.view] enumerateKeysAndObjectsInGroup:group usingBlock:block];
+        [[transaction ext:self.selectedViewMapping.mapping.view] enumerateKeysAndObjectsInGroup:group usingBlock:block];
     }];
 }
 
-- (void)setSelectedMappings:(YapDatabaseViewMappings *)selectedMappings {
-    if (_selectedMappings != selectedMappings) {
-        _selectedMappings = selectedMappings;
+- (void)setSelectedViewMapping:(DLFYapDatabaseViewAndMapping *)selectedViewMapping {
+    if (_selectedViewMapping != selectedViewMapping) {
+        _selectedViewMapping = selectedViewMapping;
         [self.mainConnection beginLongLivedReadTransaction];
         [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-            [_selectedMappings updateWithTransaction:transaction];
+            [_selectedViewMapping.mapping updateWithTransaction:transaction];
         }];
         [self.collectionView reloadData];
     }
@@ -120,9 +122,9 @@
 - (void)yapDatabaseModified:(NSNotification *)notification {
     NSArray *notifications = [self.mainConnection beginLongLivedReadTransaction];
     
-    if (![[self.mainConnection ext:self.selectedMappings.view] hasChangesForNotifications:notifications]) {
+    if (![[self.mainConnection ext:self.selectedViewMapping.mapping.view] hasChangesForNotifications:notifications]) {
         [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-            [self.selectedMappings updateWithTransaction:transaction];
+            [self.selectedViewMapping.mapping updateWithTransaction:transaction];
         }];
         return;
     }
@@ -130,10 +132,10 @@
     NSArray *sectionChanges = nil;
     NSArray *rowChanges = nil;
     
-    [[self.mainConnection ext:self.selectedMappings.view] getSectionChanges:&sectionChanges
+    [[self.mainConnection ext:self.selectedViewMapping.mapping.view] getSectionChanges:&sectionChanges
                                                                  rowChanges:&rowChanges
                                                            forNotifications:notifications
-                                                               withMappings:self.selectedMappings];
+                                                               withMappings:self.selectedViewMapping.mapping];
     if (sectionChanges.count == 0 && rowChanges.count == 0) {
         return;
     }

@@ -224,6 +224,8 @@
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
 		03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
+		03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */; };
+		03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */; };
 		03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
 		03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
@@ -669,6 +671,8 @@
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
 		03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewSelectCellGestureRecognizer.h; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.h; sourceTree = "<group>"; };
 		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
+		03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosHorizontalScrollingYapBackedViewController.h; path = PhotoBox/Controllers/PhotosHorizontalScrollingYapBackedViewController.h; sourceTree = "<group>"; };
+		03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingYapBackedViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingYapBackedViewController.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
@@ -1038,6 +1042,8 @@
 				035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */,
 				035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */,
 				035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */,
+				03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */,
+				03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1738,6 +1744,7 @@
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */,
+				03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
 				03CE50EC18181D7C00445084 /* PanelFactory.m in Sources */,
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035DACE31983490B00557547 /* UploadReloadView.m in Sources */,
@@ -1871,6 +1878,7 @@
 				03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */,
 				03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */,
 				037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */,
+				03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
 				03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */,
 				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
 				035DACE41983490B00557547 /* UploadReloadView.m in Sources */,

@@ -18,7 +18,7 @@
 #import "PhotosSectionHeaderView.h"
 #import "PhotoCell.h"
 
-#import "PhotosHorizontalScrollingViewController.h"
+#import "PhotosHorizontalScrollingYapBackedViewController.h"
 #import "SettingsTableViewController.h"
 
 #import "CollectionViewSelectCellGestureRecognizer.h"
@@ -595,7 +595,7 @@
 }
 
 - (void)openPhoto:(Photo *)photo{
-    PhotosHorizontalScrollingViewController *destination = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+    PhotosHorizontalScrollingYapBackedViewController *destination = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init] groupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
     [self setupBackNavigationItemTitle];

@@ -8,15 +8,13 @@
 
 #import "YapDataSource.h"
 
+@class DLFYapDatabaseViewAndMapping;
+
 @interface GroupedPhotosDataSource : YapDataSource
 
-@property (nonatomic, strong) YapDatabaseView *dateUploadedLastView;
-@property (nonatomic, strong) YapDatabaseViewMappings *dateUploadedLastViewMappings;
-@property (nonatomic, strong) YapDatabaseView *dateUploadedFirstView;
-@property (nonatomic, strong) YapDatabaseViewMappings *dateUploadedFirstViewMappings;
-@property (nonatomic, strong) YapDatabaseView *dateTakenLastView;
-@property (nonatomic, strong) YapDatabaseViewMappings *dateTakenLastViewMappings;
-@property (nonatomic, strong) YapDatabaseView *dateTakenFirstView;
-@property (nonatomic, strong) YapDatabaseViewMappings *dateTakenFirstViewMappings;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateUploadedLastViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateUploadedFirstViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateTakenLastViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateTakenFirstViewMapping;
 
 @end

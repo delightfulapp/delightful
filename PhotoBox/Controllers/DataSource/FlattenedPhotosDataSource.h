@@ -8,6 +8,10 @@
 
 #import "YapDataSource.h"
 
+@class DLFYapDatabaseViewAndMapping;
+
 @interface FlattenedPhotosDataSource : YapDataSource
+
+- (id)initWithCollectionView:(id)collectionView groupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping;
 
 @end

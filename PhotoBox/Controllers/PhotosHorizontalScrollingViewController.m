@@ -20,7 +20,6 @@
 #import "PhotoInfoViewController.h"
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
-#import "FlattenedPhotosDataSource.h"
 #import <SVProgressHUD.h>
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate> {
@@ -33,8 +32,8 @@
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
 @property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
 @property (nonatomic, strong) UIButton *infoButton;
-@property (nonatomic, strong) FlattenedPhotosDataSource *dataSource;
 @property (nonatomic, assign) NSInteger firstShownPhotoIndex;
+
 @end
 
 @implementation PhotosHorizontalScrollingViewController
@@ -46,11 +45,8 @@
     self.previousPage = 0;
     self.justOpened = YES;
     
-    self.dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView];
-    [self.dataSource setCellIdentifier:[self cellIdentifier]];
-    [self.dataSource setConfigureCellBlock:^(PhotoZoomableCell *cell, id item){
-        [cell setItem:item];
-    }];
+    [self setupDataSource];
+    
     ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [self.collectionView registerClass:[PhotoZoomableCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView setAlwaysBounceVertical:NO];
@@ -93,6 +89,10 @@
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self showInfoButton:NO animated:YES];
+}
+
+- (void)setupDataSource {
+    
 }
 
 - (NSString *)cellIdentifier {

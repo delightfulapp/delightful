@@ -11,9 +11,11 @@
 #import <YapDatabase.h>
 #import <YapDatabaseView.h>
 
+@class DLFYapDatabaseViewAndMapping;
+
 @interface YapDataSource : CollectionViewDataSource
 
-@property (nonatomic, strong) YapDatabaseViewMappings *selectedMappings;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *selectedViewMapping;
 @property (nonatomic, strong) YapDatabaseConnection *mainConnection;
 @property (nonatomic, strong) YapDatabaseConnection *bgConnection;
 @property (nonatomic, strong) YapDatabase *database;

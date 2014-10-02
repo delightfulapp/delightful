@@ -23,26 +23,18 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     [super setupDatabase];
     
     // last uploaded -> first uploaded view and mappings grouped
-    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) database:self.database viewName:dateUploadedLastViewName asc:NO grouped:YES];
-    self.dateUploadedLastView = viewMapping.view;
-    self.dateUploadedLastViewMappings = viewMapping.mapping;
+    self.dateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateUploadedLastViewName database:self.database sortKey:NSStringFromSelector(@selector(dateUploadedString)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateUploadedString)) groupSortAsc:NO];
     
-    viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateUploadedString)) database:self.database viewName:dateUploadedFirstViewName asc:YES grouped:YES];
     // first uploaded -> last uploaded view and mappings grouped
-    self.dateUploadedFirstView = viewMapping.view;
-    self.dateUploadedFirstViewMappings = viewMapping.mapping;
+    self.dateUploadedFirstViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateUploadedFirstViewName database:self.database sortKey:NSStringFromSelector(@selector(dateUploadedString)) sortKeyAsc:YES groupKey:NSStringFromSelector(@selector(dateUploadedString)) groupSortAsc:YES];
     
     // first taken -> last taken view and mappings grouped
-    viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) database:self.database viewName:dateTakenFirstViewName asc:YES grouped:YES];
-    self.dateTakenFirstView = viewMapping.view;
-    self.dateTakenFirstViewMappings = viewMapping.mapping;
+    self.dateTakenFirstViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateTakenFirstViewName database:self.database sortKey:NSStringFromSelector(@selector(dateTakenString)) sortKeyAsc:YES groupKey:NSStringFromSelector(@selector(dateTakenString)) groupSortAsc:YES];
     
     // last taken -> first taken view and mappings grouped
-    viewMapping = [DLFYapDatabaseViewAndMapping databaseViewAndMappingForKeyToCompare:NSStringFromSelector(@selector(dateTakenString)) database:self.database viewName:dateTakenLastViewName asc:NO grouped:YES];
-    self.dateTakenLastView = viewMapping.view;
-    self.dateTakenLastViewMappings = viewMapping.mapping;
+    self.dateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateTakenLastViewName database:self.database sortKey:NSStringFromSelector(@selector(dateTakenString)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateTakenString)) groupSortAsc:NO];
 
-    [self setSelectedMappings:self.dateTakenLastViewMappings];
+    [self setSelectedViewMapping:self.dateTakenLastViewMapping];
 }
 
 @end
