@@ -38,24 +38,8 @@
 
 @implementation PhotoZoomableCell
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
 - (void)setup {
+    NSLog(@"Setup zoomable cell %p", self);
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
     [self.scrollView setBackgroundColor:[UIColor clearColor]];
     [self.scrollView setAlwaysBounceHorizontal:NO];
