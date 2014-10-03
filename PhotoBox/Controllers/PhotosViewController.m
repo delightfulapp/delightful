@@ -72,7 +72,6 @@
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
-@property (nonatomic, strong) PhotoBoxCell *selectedCell;
 @property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -644,7 +643,7 @@
 
 - (UIImage *)imageToAnimate {
     if (self.selectedCell) {
-        return self.selectedCell.cellImageView.image;
+        return ((PhotoBoxCell *)self.selectedCell).cellImageView.image;
     }
     if (self.headerImageView) {
         return self.headerImageView.imageView.image;
@@ -718,6 +717,7 @@
         for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
             [cell setAlpha:1];
         }
+        self.selectedCell = nil;
     }];
 }
 

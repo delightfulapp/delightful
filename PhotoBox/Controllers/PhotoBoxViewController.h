@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) BOOL disableFetchOnLoad;
 @property (nonatomic, assign) int numberOfColumns;
 @property (nonatomic, strong) NSString *fetchedInIdentifier;
+@property (nonatomic, strong) UICollectionViewCell *selectedCell;
 
 @property (nonatomic, assign) int totalPages;
 @property (nonatomic, assign) int totalItems;
