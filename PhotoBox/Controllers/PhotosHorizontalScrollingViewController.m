@@ -27,7 +27,6 @@
 }
 
 @property (nonatomic, assign) NSInteger previousPage;
-@property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
 @property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
@@ -51,7 +50,6 @@
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
     self.previousPage = 0;
-    self.justOpened = YES;
     
     [self setupDataSource];
     
@@ -124,7 +122,7 @@
 
 - (void)scrollToFirstShownPhoto {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.firstShownPhoto];
-    self.previousPage = indexPath.item - 1;
+    self.previousPage = indexPath.item;
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
@@ -210,16 +208,11 @@
         }
         
         self.previousPage = page;
-        if (!self.justOpened) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-                id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                
-                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
-                [self showLoadingBarButtonItem:NO];
-            }
-        } else {
-            self.justOpened = NO;
-            //[self showHintIfNeeded];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
+            id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+            
+            [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+            [self showLoadingBarButtonItem:NO];
         }
     }
 }
