@@ -232,6 +232,8 @@
 		03EB627F19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */; };
 		03EB628219DE3A0600E65248 /* CustomBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628119DE3A0600E65248 /* CustomBackButton.m */; };
 		03EB628319DE3A0600E65248 /* CustomBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628119DE3A0600E65248 /* CustomBackButton.m */; };
+		03EB628619DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */; };
+		03EB628719DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */; };
 		03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
 		03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
@@ -684,6 +686,8 @@
 		03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+DelighftulFonts.m"; sourceTree = "<group>"; };
 		03EB628019DE3A0600E65248 /* CustomBackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBackButton.h; path = PhotoBox/Views/CustomBackButton.h; sourceTree = "<group>"; };
 		03EB628119DE3A0600E65248 /* CustomBackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBackButton.m; path = PhotoBox/Views/CustomBackButton.m; sourceTree = "<group>"; };
+		03EB628419DE43A000E65248 /* ShowFullScreenTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFullScreenTransitioningDelegate.h; path = PhotoBox/Controllers/Delegates/ShowFullScreenTransitioningDelegate.h; sourceTree = "<group>"; };
+		03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowFullScreenTransitioningDelegate.m; path = PhotoBox/Controllers/Delegates/ShowFullScreenTransitioningDelegate.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
@@ -1176,6 +1180,8 @@
 				035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */,
 				03D311B01930B775003DE5FC /* FallingTransitioningDelegate.h */,
 				03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */,
+				03EB628419DE43A000E65248 /* ShowFullScreenTransitioningDelegate.h */,
+				03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -1764,6 +1770,7 @@
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
+				03EB628619DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */,
 				03CE50EC18181D7C00445084 /* PanelFactory.m in Sources */,
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035DACE31983490B00557547 /* UploadReloadView.m in Sources */,
@@ -1900,6 +1907,7 @@
 				03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */,
 				037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
+				03EB628719DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */,
 				03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */,
 				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
 				035DACE41983490B00557547 /* UploadReloadView.m in Sources */,

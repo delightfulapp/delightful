@@ -52,7 +52,13 @@
     
     [self removeHelperViews];
     
-    PhotosViewController *fromVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIViewController *fromVCContainer = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    PhotosViewController *fromVC;
+    if ([fromVCContainer isKindOfClass:[UINavigationController class]]) {
+        fromVC = (PhotosViewController *)((UINavigationController *)fromVCContainer).topViewController;
+    } else {
+        fromVC = (PhotosViewController *)fromVCContainer;
+    }
     PhotosHorizontalScrollingViewController *toVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     
     UIView *containerView = transitionContext.containerView;
@@ -84,8 +90,20 @@
 - (void)animateTransitionForPopOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
     PBX_LOG(@"Animate pop transition");
     
-    PhotosHorizontalScrollingViewController *fromVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    PhotosViewController *toVC = (PhotosViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    UIViewController *fromVCContainer = (UIViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
+    PhotosHorizontalScrollingViewController *fromVC;
+    if ([fromVCContainer isKindOfClass:[UINavigationController class]]) {
+        fromVC = (PhotosHorizontalScrollingViewController *)(((UINavigationController *)fromVCContainer).topViewController);
+    } else {
+        fromVC = (PhotosHorizontalScrollingViewController *)fromVCContainer;
+    }
+    UIViewController *toVCContainer = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    PhotosViewController *toVC;
+    if ([toVCContainer isKindOfClass:[UINavigationController class]]) {
+        toVC = (PhotosViewController *)(((UINavigationController *)toVCContainer).topViewController);
+    } else {
+        toVC = (PhotosViewController *)toVCContainer;
+    }
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
     // get the container view where the animation will happen
@@ -96,7 +114,7 @@
     [animatedImageViewOnPush removeFromSuperview];
     
     // put the destination view controller's view under the starting view controller's view
-    [containerView insertSubview:toVC.view belowSubview:fromVC.view];
+    [containerView insertSubview:toVCContainer.view belowSubview:fromVC.view];
     
     // the rect of the image view in photos view controller
     CGRect endRect = [toVC endRectInContainerView:containerView];
@@ -133,6 +151,7 @@
         [whiteView removeFromSuperview];
         [viewToAnimate removeFromSuperview];
         [fromVC.view removeFromSuperview];
+        [toVCContainer.view removeFromSuperview];
         [transitionContext completeTransition:YES];
     }];
     

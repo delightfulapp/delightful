@@ -66,7 +66,7 @@
 
 #import "DLFAsset.h"
 
-#import "DLFNavigationControllerDelegate.h"
+#import "ShowFullScreenTransitioningDelegate.h"
 
 #import "NSAttributedString+DelighftulFonts.h"
 
@@ -81,7 +81,7 @@
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
-@property (nonatomic, strong) DLFNavigationControllerDelegate *transitionDelegate;
+@property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 
@@ -603,8 +603,13 @@
     PhotosHorizontalScrollingYapBackedViewController *destination = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init] groupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
+    [destination setModalPresentationStyle:UIModalPresentationCustom];
     [self setupBackNavigationItemTitle];
+    if (!self.transitionDelegate) {
+        self.transitionDelegate = [[ShowFullScreenTransitioningDelegate alloc] init];
+    }
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:destination];
+    [navCon setTransitioningDelegate:self.transitionDelegate];
     
     {
         UIButton *label = [[UIButton alloc] init];
