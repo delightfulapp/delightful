@@ -73,7 +73,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self insertBackgroundSnapshotView];
+    //[self insertBackgroundSnapshotView];
     [self scrollToFirstShownPhoto];
 }
 

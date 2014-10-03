@@ -59,11 +59,19 @@
     } else {
         fromVC = (PhotosViewController *)fromVCContainer;
     }
-    PhotosHorizontalScrollingViewController *toVC = (PhotosHorizontalScrollingViewController *)[transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    
+    UIViewController *toVCContainer = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
+    PhotosHorizontalScrollingViewController *toVC;
+    if ([toVCContainer isKindOfClass:[UINavigationController class]]) {
+        toVC = (PhotosHorizontalScrollingViewController *)(((UINavigationController *)toVCContainer).topViewController);
+    } else {
+        toVC = (PhotosHorizontalScrollingViewController *)toVCContainer;
+    }
+    
     
     UIView *containerView = transitionContext.containerView;
     UIImage *image = [fromVC imageToAnimate];
-    CGRect startRect = [fromVC startRectInContainerView:containerView];
+    CGRect startRect = [fromVC startRectInContainerView:fromVCContainer.view];
     
     self.whiteView = [[UIView alloc] initWithFrame:containerView.bounds];
     [self.whiteView setBackgroundColor:[UIColor whiteColor]];
@@ -78,11 +86,17 @@
     
     [containerView addSubview:self.imageViewToAnimate];
     
+    [toVCContainer.view setAlpha:0];
+    [toVC.view setAlpha:0];
+    [containerView insertSubview:toVCContainer.view aboveSubview:self.whiteView];
+    
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [self.imageViewToAnimate animaticToScaleAspectFit];
+        [toVCContainer.view setAlpha:1];
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
-        [containerView insertSubview:toVC.view belowSubview:self.whiteView];
+        [toVC.view setAlpha:1];
+        [containerView insertSubview:toVCContainer.view belowSubview:self.whiteView];
         [transitionContext completeTransition:YES];
     }];
 }
@@ -114,7 +128,7 @@
     [animatedImageViewOnPush removeFromSuperview];
     
     // put the destination view controller's view under the starting view controller's view
-    [containerView insertSubview:toVCContainer.view belowSubview:fromVC.view];
+    [containerView insertSubview:toVCContainer.view belowSubview:fromVCContainer.view];
     
     // the rect of the image view in photos view controller
     CGRect endRect = [toVC endRectInContainerView:containerView];
@@ -146,11 +160,11 @@
     // start the animation. numbers are selected after trial and error.
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [viewToAnimate setFrame:endRect];
-        [fromVC.view setAlpha:0];
+        [fromVCContainer.view setAlpha:0];
     } completion:^(BOOL finished) {
         [whiteView removeFromSuperview];
         [viewToAnimate removeFromSuperview];
-        [fromVC.view removeFromSuperview];
+        [fromVCContainer.view removeFromSuperview];
         [toVCContainer.view removeFromSuperview];
         [transitionContext completeTransition:YES];
     }];

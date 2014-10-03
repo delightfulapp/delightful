@@ -12,9 +12,13 @@
 
 @interface ShowFullScreenPresentationController : UIPresentationController
 
+@property (nonatomic, assign) BOOL isPresenting;
+
 @end
 
 @interface ShowFullScreenTransitioningDelegate () <UIAdaptivePresentationControllerDelegate>
+
+@property (nonatomic, strong) ShowFullScreenPresentationController *presentationController;
 
 @end
 
@@ -22,19 +26,21 @@
 
 - (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source
 {
-    ShowFullScreenPresentationController *presentationController = [[ShowFullScreenPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
-    return presentationController;
+    self.presentationController = [[ShowFullScreenPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
+    return self.presentationController;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
     ShowFullScreenPhotosAnimatedTransitioning *showFullScreenAnimated = [[ShowFullScreenPhotosAnimatedTransitioning alloc] init];
     [showFullScreenAnimated setOperation:UINavigationControllerOperationPush];
+    [self.presentationController setIsPresenting:YES];
     return showFullScreenAnimated;
 }
 
 - (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
     ShowFullScreenPhotosAnimatedTransitioning *showFullScreenAnimated = [[ShowFullScreenPhotosAnimatedTransitioning alloc] init];
     [showFullScreenAnimated setOperation:UINavigationControllerOperationPop];
+    [self.presentationController setIsPresenting:NO];
     return showFullScreenAnimated;
 }
 
@@ -43,8 +49,7 @@
 @implementation ShowFullScreenPresentationController
 
 - (BOOL)shouldRemovePresentersView {
-    NSLog(@"should remove presenter view");
-    return NO;
+    return !self.isPresenting;
 }
 
 @end

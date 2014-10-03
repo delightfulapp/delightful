@@ -603,13 +603,14 @@
     PhotosHorizontalScrollingYapBackedViewController *destination = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init] groupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
-    [destination setModalPresentationStyle:UIModalPresentationCustom];
+    //[destination setModalPresentationStyle:UIModalPresentationCustom];
     [self setupBackNavigationItemTitle];
     if (!self.transitionDelegate) {
         self.transitionDelegate = [[ShowFullScreenTransitioningDelegate alloc] init];
     }
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:destination];
     [navCon setTransitioningDelegate:self.transitionDelegate];
+    [navCon setModalPresentationStyle:UIModalPresentationCustom];
     
     {
         UIButton *label = [[UIButton alloc] init];
