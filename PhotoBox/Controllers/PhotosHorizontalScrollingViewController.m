@@ -195,31 +195,11 @@
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
                 [self showLoadingBarButtonItem:NO];
             }
-            //[self insertBackgroundSnapshotView];
         } else {
             self.justOpened = NO;
             //[self showHintIfNeeded];
         }
     }
-}
-
-- (void)insertBackgroundSnapshotView {
-    if (self.backgroundViewControllerView) {
-        [self.backgroundViewControllerView removeFromSuperview];
-    }
-    UIView *bgView = [self.delegate snapshotView];
-    self.backgroundViewControllerView = bgView;
-    [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
-    CGRect frame = ({
-        CGRect frame = self.backgroundViewControllerView.frame;
-        frame.origin = self.collectionView.frame.origin;
-        frame;
-    });
-    [self.backgroundViewControllerView setFrame:frame];
-    UIView *whiteView = [[UIView alloc] initWithFrame:[self.delegate selectedItemRectInSnapshot]];
-    [whiteView setBackgroundColor:[UIColor whiteColor]];
-    [self.backgroundViewControllerView addSubview:whiteView];
-    [self.collectionView.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView];
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
