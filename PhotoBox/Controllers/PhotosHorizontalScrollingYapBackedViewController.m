@@ -43,8 +43,10 @@
 - (void)setupDataSource {
     FlattenedPhotosDataSource *dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView groupedViewMapping:self.groupedViewMapping];
     [dataSource setCellIdentifier:[self cellIdentifier]];
+    __weak typeof (self) selfie = self;
     [dataSource setConfigureCellBlock:^(PhotoZoomableCell *cell, id item){
         [cell setItem:item];
+        [cell setDelegate:selfie];
     }];
     self.dataSource = dataSource;
 }

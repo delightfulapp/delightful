@@ -603,7 +603,6 @@
     PhotosHorizontalScrollingYapBackedViewController *destination = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init] groupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
-    //[destination setModalPresentationStyle:UIModalPresentationCustom];
     [self setupBackNavigationItemTitle];
     if (!self.transitionDelegate) {
         self.transitionDelegate = [[ShowFullScreenTransitioningDelegate alloc] init];
@@ -674,6 +673,13 @@
     
 }
 
+- (UIView *)destinationViewOnDismiss {
+    if (self.selectedCell) {
+        return self.selectedCell;
+    }
+    return self.headerImageView;
+}
+
 - (UIView *)viewToAnimate {
     return nil;
 }
@@ -683,10 +689,10 @@
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
     if (indexPath) {        
-        if (indexPath.section < [self.collectionView numberOfSections]) {            
+        if (indexPath.section < [self.collectionView numberOfSections]) {
             [self setSelectedItemRectAtIndexPath:indexPath];
-            
-            [self.collectionView scrollRectToVisible:self.selectedItemRect animated:NO];
+            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+            self.selectedCell = (PhotoBoxViewController *)[self.collectionView cellForItemAtIndexPath:indexPath];
         }
     }
     

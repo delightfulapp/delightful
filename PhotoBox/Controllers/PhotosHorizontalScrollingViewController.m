@@ -257,11 +257,11 @@
     PBX_LOG(@"Popping from horizontal view controller");
     [[self currentCell] setClosingViewController:YES];
     [self.delegate photosHorizontalWillClose];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    [self.darkBackgroundView setAlpha:MIN(1-progress+0.3, 1)];
+    [self.darkBackgroundView setAlpha:MIN(1-progress+0.2, 1)];
 }
 
 #pragma mark - Button
