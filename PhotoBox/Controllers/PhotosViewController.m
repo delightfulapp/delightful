@@ -692,7 +692,7 @@
         if (indexPath.section < [self.collectionView numberOfSections]) {
             [self setSelectedItemRectAtIndexPath:indexPath];
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-            self.selectedCell = (PhotoBoxViewController *)[self.collectionView cellForItemAtIndexPath:indexPath];
+            self.selectedCell = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         }
     }
     
@@ -706,8 +706,20 @@
     return [self endRectInContainerView:nil];
 }
 
-- (void)photosHorizontalWillClose {
+- (void)shouldClosePhotosHorizontalViewController:(PhotosHorizontalScrollingViewController *)controller {
     [self setNavigationBarHidden:NO animated:YES];
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.selectedCell setAlpha:1];
+    }];
+}
+
+- (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
+    [self.selectedCell setAlpha:0];
+}
+
+- (void)cancelDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
+    [self.selectedCell setAlpha:1];
 }
 
 #pragma mark - Location

@@ -17,7 +17,9 @@
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(NSManagedObject *)item;
 - (UIView *)snapshotView;
 - (CGRect)selectedItemRectInSnapshot;
-- (void)photosHorizontalWillClose;
+- (void)shouldClosePhotosHorizontalViewController:(PhotosHorizontalScrollingViewController *)controller;
+- (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller;
+- (void)cancelDismissViewController:(PhotosHorizontalScrollingViewController *)controller;
 
 @end
 

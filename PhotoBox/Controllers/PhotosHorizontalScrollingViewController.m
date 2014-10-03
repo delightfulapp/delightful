@@ -230,17 +230,23 @@
 #pragma mark - Zoomable Cell delegate
 
 - (void)didCancelClosingPhotosHorizontalViewController {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cancelDismissViewController:)]) {
+        [self.delegate cancelDismissViewController:self];
+    }
 }
 
-- (void)didClosePhotosHorizontalViewController{
+- (void)didReachPercentageToClosePhotosHorizontalViewController {
     PBX_LOG(@"Popping from horizontal view controller");
     [[self currentCell] setClosingViewController:YES];
-    [self.delegate photosHorizontalWillClose];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(shouldClosePhotosHorizontalViewController:)]) {
+        [self.delegate shouldClosePhotosHorizontalViewController:self];
+    }
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(willDismissViewController:)]) {
+        [self.delegate willDismissViewController:self];
+    }
     [self.darkBackgroundView setAlpha:MIN(1-progress+0.2, 1)];
 }
 

@@ -191,8 +191,8 @@
 
 - (void)notifyDelegateToCloseHorizontalScrollingViewController {
     [self setHaveShownGestureTeasing];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
-        [self.delegate didClosePhotosHorizontalViewController];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReachPercentageToClosePhotosHorizontalViewController)]) {
+        [self.delegate didReachPercentageToClosePhotosHorizontalViewController];
         
         // remove delegate so that didDragDownWithPercentage will not be called anymore. it gives an annoying white flash.
         self.delegate = nil;
