@@ -606,27 +606,30 @@
     [self setupBackNavigationItemTitle];
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:destination];
     
-    UIButton *label = [[UIButton alloc] init];
-    NSMutableAttributedString *leftArrow = [[NSAttributedString symbol:dlf_icon_arrow_left3 size:25] mutableCopy];
-    [leftArrow addAttribute:NSBaselineOffsetAttributeName value:@(-4) range:NSMakeRange(0, leftArrow.string.length)];
-    [leftArrow addAttribute:NSForegroundColorAttributeName value:self.view.tintColor range:NSMakeRange(0, leftArrow.string.length)];
-    NSAttributedString *titleAttr = [[NSAttributedString alloc] initWithString:self.title?:NSLocalizedString(@"Back", nil) attributes:@{NSForegroundColorAttributeName: self.view.tintColor, NSBaselineOffsetAttributeName: @(1)}];
-    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithAttributedString:leftArrow];
-    [attr appendAttributedString:titleAttr];
-    [label setAttributedTitle:attr forState:UIControlStateNormal];
+    {
+        UIButton *label = [[UIButton alloc] init];
+        NSMutableAttributedString *leftArrow = [[NSAttributedString symbol:dlf_icon_arrow_left3 size:25] mutableCopy];
+        [leftArrow addAttribute:NSBaselineOffsetAttributeName value:@(-4) range:NSMakeRange(0, leftArrow.string.length)];
+        [leftArrow addAttribute:NSForegroundColorAttributeName value:self.view.tintColor range:NSMakeRange(0, leftArrow.string.length)];
+        NSAttributedString *titleAttr = [[NSAttributedString alloc] initWithString:self.title?:NSLocalizedString(@"Back", nil) attributes:@{NSForegroundColorAttributeName: self.view.tintColor, NSBaselineOffsetAttributeName: @(1)}];
+        NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithAttributedString:leftArrow];
+        [attr appendAttributedString:titleAttr];
+        [label setAttributedTitle:attr forState:UIControlStateNormal];
+        
+        NSMutableAttributedString *selectedAttr = [[NSMutableAttributedString alloc] initWithAttributedString:attr];
+        [selectedAttr addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, selectedAttr.string.length)];
+        [label setAttributedTitle:selectedAttr forState:UIControlStateHighlighted];
+        
+        [label sizeToFit];
+        [label addTarget:self action:@selector(didTapHorizontalBackButton:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+        UIBarButtonItem *leftSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+        [leftSpaceItem setWidth:-10];
+        
+        [destination.navigationItem setLeftBarButtonItems:@[leftSpaceItem, leftItem]];
+    }
     
-    NSMutableAttributedString *selectedAttr = [[NSMutableAttributedString alloc] initWithAttributedString:attr];
-    [selectedAttr addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, selectedAttr.string.length)];
-    [label setAttributedTitle:selectedAttr forState:UIControlStateHighlighted];
-    
-    [label sizeToFit];
-    [label addTarget:self action:@selector(didTapHorizontalBackButton:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:label];
-    UIBarButtonItem *leftSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    [leftSpaceItem setWidth:-10];
-    
-    [destination.navigationItem setLeftBarButtonItems:@[leftSpaceItem, leftItem]];
     [self presentViewController:navCon animated:YES completion:nil];
 }
 
