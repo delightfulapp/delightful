@@ -146,11 +146,6 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 }
 
 - (void)setNavigationBarHidden:(BOOL)hide animated:(BOOL)animated {
-    if (hide) {
-        PBX_LOG(@"Hiding navigation bar");
-    } else {
-        PBX_LOG(@"Showing navigaiton bar");
-    }
     if (animated) {
         [[UIApplication sharedApplication] setStatusBarHidden:hide
                                                 withAnimation:UIStatusBarAnimationFade];

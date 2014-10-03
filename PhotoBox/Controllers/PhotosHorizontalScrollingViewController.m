@@ -162,7 +162,6 @@
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    NSLog(@"returning %d for spacing", PHOTO_SPACING);
     return PHOTO_SPACING;
 }
 
@@ -244,10 +243,13 @@
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(willDismissViewController:)]) {
-        [self.delegate willDismissViewController:self];
+    CGFloat alpha = MIN(1-progress+0.2, 1);
+    [self.darkBackgroundView setAlpha:alpha];
+    if (alpha < 1) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(willDismissViewController:)]) {
+            [self.delegate willDismissViewController:self];
+        }
     }
-    [self.darkBackgroundView setAlpha:MIN(1-progress+0.2, 1)];
 }
 
 #pragma mark - Button

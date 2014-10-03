@@ -513,14 +513,11 @@
 }
 
 - (void)reloadButtonTapped:(id)sender {
-    NSLog(@"reload upload");
-    
     [self.uploadViewController showReloadButtons:NO];
     [self.uploadViewController startUpload];
 }
 
 - (void)cancelButtonTapped:(id)sender {
-    NSLog(@"cancel upload");
     [[DLFImageUploader sharedUploader] clearFailUploads];
     [self closeUploadView];
 }
