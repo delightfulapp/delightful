@@ -22,6 +22,12 @@
 
 @implementation PhotosHorizontalScrollingYapBackedViewController
 
++ (PhotosHorizontalScrollingYapBackedViewController *)defaultControllerWithGroupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping {
+    PhotosHorizontalLayout *layout = [[PhotosHorizontalLayout alloc] init];
+    PhotosHorizontalScrollingYapBackedViewController *vc = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:layout groupedViewMapping:groupedViewMapping];
+    return vc;
+}
+
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout groupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping {
     self = [super initWithCollectionViewLayout:layout];
     if (self) {

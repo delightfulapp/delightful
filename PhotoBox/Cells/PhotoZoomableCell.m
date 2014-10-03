@@ -58,6 +58,7 @@
     self.thisImageview = [[UIImageView alloc] initWithFrame:CGRectZero];
     [self.thisImageview setContentMode:UIViewContentModeScaleAspectFit];
     [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.thisImageview setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.scrollView addSubview:self.thisImageview];
     [self.contentView addSubview:self.scrollView];
@@ -147,6 +148,12 @@
     } else {
         [self.scrollView setDirectionalLockEnabled:NO];
     }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    [self setImageSize:self.thisImageview.image.size];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -245,7 +252,7 @@
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
     [self setImageSize:CGSizeMake([photo.width floatValue], [photo.height floatValue])];
-    [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
+    [self.thisImageview sd_setImageWithURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
 }
 
 - (BOOL)hasDownloadedOriginalImage {

@@ -12,6 +12,6 @@
 
 @interface PhotosHorizontalScrollingYapBackedViewController : PhotosHorizontalScrollingViewController
 
-- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout groupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping;
++ (PhotosHorizontalScrollingYapBackedViewController *)defaultControllerWithGroupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping;
 
 @end

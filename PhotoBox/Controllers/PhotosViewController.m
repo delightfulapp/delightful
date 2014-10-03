@@ -597,7 +597,7 @@
 }
 
 - (void)openPhoto:(Photo *)photo{
-    PhotosHorizontalScrollingYapBackedViewController *destination = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init] groupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
+    PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithGroupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
     [self setupBackNavigationItemTitle];

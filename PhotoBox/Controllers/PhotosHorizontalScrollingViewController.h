@@ -12,6 +12,12 @@
 @class Photo;
 @class PhotosHorizontalScrollingViewController;
 
+@interface PhotosHorizontalLayout : UICollectionViewFlowLayout
+
+@property (nonatomic, strong) NSIndexPath *targetIndexPath;
+
+@end
+
 @protocol PhotosHorizontalScrollingViewControllerDelegate <NSObject>
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(NSManagedObject *)item;
@@ -30,6 +36,7 @@
 @property (nonatomic, assign) BOOL hideDownloadButton;
 @property (nonatomic, strong) CollectionViewDataSource *dataSource;
 
++ (PhotosHorizontalScrollingViewController *)defaultController;
 - (void)setupDataSource;
 - (NSString *)cellIdentifier;
 

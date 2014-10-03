@@ -38,6 +38,12 @@
 
 @implementation PhotosHorizontalScrollingViewController
 
++ (PhotosHorizontalScrollingViewController *)defaultController {
+    PhotosHorizontalLayout *layout = [[PhotosHorizontalLayout alloc] init];
+    PhotosHorizontalScrollingViewController *controller = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:layout];
+    return controller;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -134,6 +140,23 @@
     
     [self showLoadingBarButtonItem:NO];
 }
+
+#pragma mark - Orientation
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    NSLog(@"will transition to size");
+    NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:[self currentCollectionViewPage:self.collectionView] inSection:0];
+    [((PhotosHorizontalLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:currentIndexPath];
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:currentIndexPath];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
+    }];
+}
+
 
 #pragma mark - Interactive Gesture Recognizer Delegate
 
@@ -452,6 +475,18 @@
     if (buttonIndex == 1) {
         [self continueDownloadOriginalImage];
     }
+}
+
+@end
+
+@implementation PhotosHorizontalLayout
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
+    if (self.targetIndexPath) {
+        UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
+        return CGPointMake(attr.frame.origin.x, 0);
+    }
+    return proposedContentOffset;
 }
 
 @end
