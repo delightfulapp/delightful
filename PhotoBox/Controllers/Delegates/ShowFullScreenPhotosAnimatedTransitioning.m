@@ -84,11 +84,11 @@
     [self.imageViewToAnimate setImage:image];
     [self.imageViewToAnimate initToScaleAspectFitToFrame:CGRectMake(0, 0, CGRectGetWidth(containerView.frame), CGRectGetHeight(containerView.frame))];
     
-    [containerView addSubview:self.imageViewToAnimate];
-    
     [toVCContainer.view setAlpha:0];
     [toVC.view setAlpha:0];
     [containerView insertSubview:toVCContainer.view aboveSubview:self.whiteView];
+    
+    [containerView insertSubview:self.imageViewToAnimate belowSubview:toVCContainer.view];
     
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [self.imageViewToAnimate animaticToScaleAspectFit];
@@ -123,10 +123,6 @@
     // get the container view where the animation will happen
     UIView *containerView = transitionContext.containerView;
     
-    // when push and pop quickly, there still the image view from push
-    UIView *animatedImageViewOnPush = [containerView viewWithTag:ANIMATED_IMAGE_VIEW_ON_PUSH_TAG];
-    [animatedImageViewOnPush removeFromSuperview];
-    
     // put the destination view controller's view under the starting view controller's view
     [containerView insertSubview:toVCContainer.view belowSubview:fromVCContainer.view];
     
@@ -153,11 +149,13 @@
     
     // remove the image view from scroll view then move it to containerView
     [viewToAnimate removeFromSuperview];
-    [containerView addSubview:viewToAnimate];
+    [containerView insertSubview:viewToAnimate belowSubview:fromVCContainer.view];
+    
+    [fromVC.view setAlpha:0];
     
     // set the frame of the image view in container's view coordinate
     [viewToAnimate setFrame:inContainerViewRect];
-    
+        
     // start the animation. numbers are selected after trial and error.
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [viewToAnimate setFrame:endRect];
