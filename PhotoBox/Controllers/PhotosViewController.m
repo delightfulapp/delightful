@@ -68,6 +68,8 @@
 
 #import "DLFNavigationControllerDelegate.h"
 
+#import "NSAttributedString+DelighftulFonts.h"
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
 @property (nonatomic, strong) PhotoBoxCell *selectedCell;
@@ -602,12 +604,34 @@
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
     [self setupBackNavigationItemTitle];
-    UINavigationController *navCon = self.navigationController;
-    if (!self.transitionDelegate) {
-        self.transitionDelegate = [[DLFNavigationControllerDelegate alloc] init];
-    }
-    [navCon setDelegate:self.transitionDelegate];
-    [navCon pushViewController:destination animated:YES];
+    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:destination];
+    
+    UIButton *label = [[UIButton alloc] init];
+    NSMutableAttributedString *leftArrow = [[NSAttributedString symbol:dlf_icon_arrow_left3 size:25] mutableCopy];
+    [leftArrow addAttribute:NSBaselineOffsetAttributeName value:@(-4) range:NSMakeRange(0, leftArrow.string.length)];
+    [leftArrow addAttribute:NSForegroundColorAttributeName value:self.view.tintColor range:NSMakeRange(0, leftArrow.string.length)];
+    NSAttributedString *titleAttr = [[NSAttributedString alloc] initWithString:self.title?:NSLocalizedString(@"Back", nil) attributes:@{NSForegroundColorAttributeName: self.view.tintColor, NSBaselineOffsetAttributeName: @(1)}];
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithAttributedString:leftArrow];
+    [attr appendAttributedString:titleAttr];
+    [label setAttributedTitle:attr forState:UIControlStateNormal];
+    
+    NSMutableAttributedString *selectedAttr = [[NSMutableAttributedString alloc] initWithAttributedString:attr];
+    [selectedAttr addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, selectedAttr.string.length)];
+    [label setAttributedTitle:selectedAttr forState:UIControlStateHighlighted];
+    
+    [label sizeToFit];
+    [label addTarget:self action:@selector(didTapHorizontalBackButton:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:label];
+    UIBarButtonItem *leftSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [leftSpaceItem setWidth:-10];
+    
+    [destination.navigationItem setLeftBarButtonItems:@[leftSpaceItem, leftItem]];
+    [self presentViewController:navCon animated:YES completion:nil];
+}
+
+- (void)didTapHorizontalBackButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

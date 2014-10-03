@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2961</string>
+	<string>2988</string>
 	<key>FacebookAppID</key>
 	<string></string>
 	<key>FacebookDisplayName</key>
@@ -44,6 +44,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>shareicons.ttf</string>
+		<string>delightful.ttf</string>
 	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>

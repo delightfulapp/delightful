@@ -226,6 +226,12 @@
 		03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
 		03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */; };
 		03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */; };
+		03EB627A19DE2EF000E65248 /* delightful.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03EB627919DE2EF000E65248 /* delightful.ttf */; };
+		03EB627B19DE2EF000E65248 /* delightful.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03EB627919DE2EF000E65248 /* delightful.ttf */; };
+		03EB627E19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */; };
+		03EB627F19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */; };
+		03EB628219DE3A0600E65248 /* CustomBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628119DE3A0600E65248 /* CustomBackButton.m */; };
+		03EB628319DE3A0600E65248 /* CustomBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628119DE3A0600E65248 /* CustomBackButton.m */; };
 		03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
 		03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
@@ -673,6 +679,11 @@
 		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
 		03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosHorizontalScrollingYapBackedViewController.h; path = PhotoBox/Controllers/PhotosHorizontalScrollingYapBackedViewController.h; sourceTree = "<group>"; };
 		03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingYapBackedViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingYapBackedViewController.m; sourceTree = "<group>"; };
+		03EB627919DE2EF000E65248 /* delightful.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = delightful.ttf; sourceTree = "<group>"; };
+		03EB627C19DE304100E65248 /* NSAttributedString+DelighftulFonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+DelighftulFonts.h"; sourceTree = "<group>"; };
+		03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+DelighftulFonts.m"; sourceTree = "<group>"; };
+		03EB628019DE3A0600E65248 /* CustomBackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBackButton.h; path = PhotoBox/Views/CustomBackButton.h; sourceTree = "<group>"; };
+		03EB628119DE3A0600E65248 /* CustomBackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBackButton.m; path = PhotoBox/Views/CustomBackButton.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
@@ -820,6 +831,8 @@
 				038663281840C57C006C76DE /* UIColor+DelightfulColors.m */,
 				0327CC6A1946AC350086C4B8 /* ALAsset+Additionals.h */,
 				0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */,
+				03EB627C19DE304100E65248 /* NSAttributedString+DelighftulFonts.h */,
+				03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -924,6 +937,7 @@
 		032CBB8417D0BDF3001205B1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03EB627919DE2EF000E65248 /* delightful.ttf */,
 				035DACF41985EDBD00557547 /* Lookback.plist */,
 				032CBB8517D0BDF3001205B1 /* Delightful-Info.plist */,
 				032CBB8617D0BDF3001205B1 /* InfoPlist.strings */,
@@ -1136,6 +1150,8 @@
 				037B08A71956C0A6001F55D6 /* UploadHeaderView.m */,
 				035DACE11983490B00557547 /* UploadReloadView.h */,
 				035DACE21983490B00557547 /* UploadReloadView.m */,
+				03EB628019DE3A0600E65248 /* CustomBackButton.h */,
+				03EB628119DE3A0600E65248 /* CustomBackButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1362,6 +1378,7 @@
 			files = (
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
+				03EB627A19DE2EF000E65248 /* delightful.ttf in Resources */,
 				0396BDEB1922772E004B6290 /* Hint-CloseInfo.xib in Resources */,
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
@@ -1433,6 +1450,7 @@
 				0312305B1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
 				03EFD92B19251CD700E80A71 /* Hint-CloseInfo.xib in Resources */,
 				03EFD92C19251CD700E80A71 /* 0.0.2.plist in Resources */,
+				03EB627B19DE2EF000E65248 /* delightful.ttf in Resources */,
 				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
 				03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */,
 				035DACDC1980D99B00557547 /* uploadedmark.png in Resources */,
@@ -1742,6 +1760,7 @@
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
+				03EB627E19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */,
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
@@ -1794,6 +1813,7 @@
 				03CE5103181842F200445084 /* SharerManager.m in Sources */,
 				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
 				03B3271719D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */,
+				03EB628219DE3A0600E65248 /* CustomBackButton.m in Sources */,
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
 				038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
@@ -1876,6 +1896,7 @@
 				03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */,
 				03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */,
 				03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */,
+				03EB627F19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */,
 				03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */,
 				037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
@@ -1928,6 +1949,7 @@
 				03EFD8FC19251CD700E80A71 /* SharerManager.m in Sources */,
 				03EFD8FD19251CD700E80A71 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
 				03B3271819D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */,
+				03EB628319DE3A0600E65248 /* CustomBackButton.m in Sources */,
 				03EFD8FE19251CD700E80A71 /* UIView+NGAParallaxMotion.m in Sources */,
 				03EFD8FF19251CD700E80A71 /* UIImageView+Additionals.m in Sources */,
 				03EFD90019251CD700E80A71 /* PhotoBoxModel.m in Sources */,
