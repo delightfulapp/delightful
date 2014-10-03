@@ -245,7 +245,7 @@
 - (void)didDragDownWithPercentage:(float)progress {
     CGFloat alpha = MIN(1-progress+0.2, 1);
     [self.darkBackgroundView setAlpha:alpha];
-    if (alpha < 1) {
+    if (alpha < 0.9) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(willDismissViewController:)]) {
             [self.delegate willDismissViewController:self];
         }

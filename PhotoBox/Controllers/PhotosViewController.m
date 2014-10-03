@@ -712,6 +712,7 @@
 }
 
 - (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
+    NSLog(@"setting alpha 0 to seleced cell");
     [self.selectedCell setAlpha:0];
 }
 
