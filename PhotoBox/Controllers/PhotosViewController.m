@@ -72,7 +72,6 @@
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
-@property (nonatomic, assign) CGRect selectedItemRect;
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
 @property (nonatomic, weak) HeaderImageView *headerImageView;
@@ -566,12 +565,6 @@
     }
 }
 
-- (void)setSelectedItemRectAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-    NSLog(@"selected cell rect = %@", NSStringFromCGRect(attributes.frame));
-    self.selectedItemRect = attributes.frame;
-}
-
 #pragma mark - Collection view flow layout delegate
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
@@ -591,7 +584,6 @@
         return;
     }
     self.selectedCell = cell;
-    [self setSelectedItemRectAtIndexPath:indexPath];
     
     [self openPhoto:cell.item];
 }
@@ -660,7 +652,9 @@
 
 - (CGRect)endRectInContainerView:(UIView *)containerView {
     if (self.selectedCell) {
-        CGRect originalPosition = CGRectOffset(self.selectedItemRect, 0, self.collectionView.contentInset.top);
+        NSIndexPath *indexPath = [self.collectionView indexPathForCell:self.selectedCell];
+        UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+        CGRect originalPosition = CGRectOffset(attributes.frame, 0, self.collectionView.contentInset.top);
         CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
         NSLog(@"destination rect = %@", NSStringFromCGRect(CGRectOffset(originalPosition, 0, -adjustment)));
         return CGRectOffset(originalPosition, 0, -adjustment);
@@ -689,7 +683,6 @@
     NSLog(@"Change page to item at index path : %@", indexPath);
     if (indexPath) {        
         if (indexPath.section < [self.collectionView numberOfSections]) {
-            [self setSelectedItemRectAtIndexPath:indexPath];
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
             self.selectedCell = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         }
@@ -711,7 +704,6 @@
             [cell setAlpha:1];
         }
     }
-    [self setNavigationBarHidden:NO animated:YES];
     
     [self dismissViewControllerAnimated:YES completion:^{
         for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
