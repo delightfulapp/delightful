@@ -20,7 +20,7 @@
 
 @protocol PhotosHorizontalScrollingViewControllerDelegate <NSObject>
 
-- (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(NSManagedObject *)item;
+- (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(id)item;
 - (void)shouldClosePhotosHorizontalViewController:(PhotosHorizontalScrollingViewController *)controller;
 - (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller;
 - (void)cancelDismissViewController:(PhotosHorizontalScrollingViewController *)controller;
