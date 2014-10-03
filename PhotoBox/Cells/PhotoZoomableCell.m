@@ -221,6 +221,10 @@
     if (_item != item) {
         _item = item;
         
+        self.scrollView.minimumZoomScale = 1;
+        self.scrollView.maximumZoomScale = 1;
+        self.scrollView.zoomScale = 1;
+        
         Photo *photo = (Photo *)item;
         
         if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {

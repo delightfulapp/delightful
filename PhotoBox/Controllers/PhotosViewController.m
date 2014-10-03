@@ -714,6 +714,11 @@
 - (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
     NSLog(@"will dismiss");
     [self.selectedCell setAlpha:0];
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        if (cell != self.selectedCell) {
+            [cell setAlpha:1];
+        }
+    }
 }
 
 - (void)cancelDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
