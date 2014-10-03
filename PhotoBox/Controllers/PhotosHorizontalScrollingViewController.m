@@ -179,7 +179,28 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
+    NSInteger page = [self currentCollectionViewPage:scrollView];
+    if (self.previousPage != page) {
+        if (!shouldHideNavigationBar) {
+            //[self hideNavigationBar];
+            [self darkenBackground];
+        } else {
+            shouldHideNavigationBar = NO;
+        }
+        
+        self.previousPage = page;
+        if (!self.justOpened) {
+            if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
+                id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+                [self showLoadingBarButtonItem:NO];
+            }
+            //[self insertBackgroundSnapshotView];
+        } else {
+            self.justOpened = NO;
+            //[self showHintIfNeeded];
+        }
+    }
 }
 
 - (void)insertBackgroundSnapshotView {

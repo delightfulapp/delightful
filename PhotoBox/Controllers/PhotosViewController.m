@@ -681,12 +681,8 @@
 #pragma mark - PhotosHorizontalScrollingViewControllerDelegate
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
-    PBX_LOG(@"Change page %d of %d", page, [self.dataSource numberOfItems]);
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
-    if (indexPath) {
-        PBX_LOG(@"Index path target section %d row %d", indexPath.section, indexPath.item);
-        PBX_LOG(@"Current number of sections %d. Number of items in section = %d", [self.collectionView numberOfSections], [self.collectionView numberOfItemsInSection:indexPath.section]);
-        
+    if (indexPath) {        
         if (indexPath.section < [self.collectionView numberOfSections]) {            
             [self setSelectedItemRectAtIndexPath:indexPath];
             
