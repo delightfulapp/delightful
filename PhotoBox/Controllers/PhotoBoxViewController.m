@@ -118,18 +118,6 @@ NSString *const galleryContainerType = @"gallery";
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
-- (BOOL)shouldAutorotate {
-    return NO;
-}
-
 #pragma mark - Setup
 
 - (void)setupConnectionManager {

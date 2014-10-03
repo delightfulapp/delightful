@@ -569,6 +569,7 @@
 
 - (void)setSelectedItemRectAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+    NSLog(@"selected cell rect = %@", NSStringFromCGRect(attributes.frame));
     self.selectedItemRect = attributes.frame;
 }
 
@@ -662,6 +663,7 @@
     if (self.selectedCell) {
         CGRect originalPosition = CGRectOffset(self.selectedItemRect, 0, self.collectionView.contentInset.top);
         CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+        NSLog(@"destination rect = %@", NSStringFromCGRect(CGRectOffset(originalPosition, 0, -adjustment)));
         return CGRectOffset(originalPosition, 0, -adjustment);
     } else {
         return self.headerImageView.frame;
@@ -685,6 +687,7 @@
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
+    NSLog(@"Change page to item at index path : %@", indexPath);
     if (indexPath) {        
         if (indexPath.section < [self.collectionView numberOfSections]) {
             [self setSelectedItemRectAtIndexPath:indexPath];

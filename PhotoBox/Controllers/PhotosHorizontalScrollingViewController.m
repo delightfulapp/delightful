@@ -146,6 +146,7 @@
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     NSLog(@"will transition to size");
     NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:[self currentCollectionViewPage:self.collectionView] inSection:0];
+    NSLog(@"Current index Path = %@", currentIndexPath);
     [((PhotosHorizontalLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:currentIndexPath];
     [self.collectionView.collectionViewLayout invalidateLayout];
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:currentIndexPath];
@@ -153,8 +154,9 @@
         [cell setNeedsLayout];
         [cell layoutIfNeeded];
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        
+        [self toggleNavigationBarHidden];
     }];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 
@@ -214,6 +216,7 @@
         if (!self.justOpened) {
             if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
                 id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+                
                 [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
                 [self showLoadingBarButtonItem:NO];
             }
@@ -225,9 +228,6 @@
 }
 
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
-    if (self.justOpened) {
-        return self.firstShownPhotoIndex;
-    }
     CGFloat pageWidth = scrollView.frame.size.width;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
