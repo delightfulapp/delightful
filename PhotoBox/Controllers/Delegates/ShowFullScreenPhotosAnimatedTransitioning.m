@@ -155,7 +155,7 @@
     
     // set the frame of the image view in container's view coordinate
     [viewToAnimate setFrame:inContainerViewRect];
-        
+    
     // start the animation. numbers are selected after trial and error.
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveEaseIn animations:^{
         [viewToAnimate setFrame:endRect];

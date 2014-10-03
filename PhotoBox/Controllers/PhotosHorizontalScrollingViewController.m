@@ -182,7 +182,7 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
-            //[self hideNavigationBar];
+            [self hideNavigationBar];
             [self darkenBackground];
         } else {
             shouldHideNavigationBar = NO;
