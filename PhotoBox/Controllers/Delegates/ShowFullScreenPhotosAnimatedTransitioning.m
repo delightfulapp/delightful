@@ -70,6 +70,8 @@
     
     
     UIView *containerView = transitionContext.containerView;
+    
+    NSLog(@"container view %@", containerView);
     UIImage *image = [fromVC imageToAnimate];
     CGRect startRect = [fromVC startRectInContainerView:fromVCContainer.view];
     
@@ -96,7 +98,6 @@
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
         [toVC.view setAlpha:1];
-        [containerView insertSubview:toVCContainer.view belowSubview:self.whiteView];
         [transitionContext completeTransition:YES];
     }];
 }
@@ -122,15 +123,19 @@
     
     // get the container view where the animation will happen
     UIView *containerView = transitionContext.containerView;
-    
+    NSLog(@"container view %p", containerView);
+    //NSLog(@"%@", [containerView valueForKey:@"recursiveDescription"]);
     // put the destination view controller's view under the starting view controller's view
-    [containerView insertSubview:toVCContainer.view belowSubview:fromVCContainer.view];
+    //[containerView insertSubview:toVCContainer.view belowSubview:fromVCContainer.view];
     
     // the rect of the image view in photos view controller
     CGRect endRect = [toVC endRectInContainerView:containerView];
+    NSLog(@"Destination rect in animation = %@", NSStringFromCGRect(endRect));
     
     // white view to hide the image in photos view controller
     UIView *destinationView = [toVC destinationViewOnDismiss];
+    NSLog(@"destination view frame = %@", NSStringFromCGRect(destinationView.frame));
+    NSLog(@"destinationview frame in container = %@", NSStringFromCGRect([destinationView convertRect:destinationView.bounds toView:containerView]));
     UIView *whiteView = [[UIView alloc] initWithFrame:destinationView.bounds];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
     [destinationView addSubview:whiteView];
@@ -143,6 +148,22 @@
     // get the rect of the image view in containerView's coordinate
     CGRect inContainerViewRect = [viewToAnimate convertRect:viewToAnimate.bounds toView:containerView];
     
+    /*
+     2014-10-03 21:20:58.412 Delightful[38976:1010774] cell frame = {{0, 344}, {106, 106}}
+     2014-10-03 21:20:58.412 Delightful[38976:1010774] collectionview inset = 64.000000
+     2014-10-03 21:20:58.412 Delightful[38976:1010774] collection offset = -64.000000
+     2014-10-03 21:20:58.412 Delightful[38976:1010774] destination rect = {{0, 408}, {106, 106}}
+     2014-10-03 21:20:58.412 Delightful[38976:1010774] Destination rect in animation = {{0, 408}, {106, 106}}
+     2014-10-03 21:20:58.413 Delightful[38976:1010774] destination view frame = {{0, 344}, {106, 106}}
+     2014-10-03 21:20:58.413 Delightful[38976:1010774] destinationview frame in container = {{0, 408}, {106, 106}}
+     2014-10-03 21:20:58.413 Delightful[38976:1010774] view to animate frame  = {{0, 177.5}, {320, 213}}
+     2014-10-03 21:20:58.413 Delightful[38976:1010774] container view frame = {{0, 0}, {320, 568}}
+     2014-10-03 21:20:58.413 Delightful[38976:1010774] in container view end rect = {{0, 177.5}, {320, 213}}
+     2014-10-03 21:20:58.413 Delightful[38976:1010774] tovccontainer view frame = {{0, 0}, {320, 568}}
+     2014-10-03 21:20:58.414 Delightful[38976:1010774] fromvccontainer view frame = {{0, 0}, {320, 568}}
+     2014-10-03 21:20:58.414 Delightful[38976:1010774] end rect inside animation = {{0, 408}, {106, 106}}
+     */
+    
     // set zoom scale to 1 to get the original frame/bounds of image view
     UIScrollView *scrollView = (UIScrollView *)[viewToAnimate superview];
     [scrollView setZoomScale:1];
@@ -151,20 +172,24 @@
     [viewToAnimate removeFromSuperview];
     [containerView insertSubview:viewToAnimate belowSubview:fromVCContainer.view];
     
+    
     [fromVC.view setAlpha:0];
     
     // set the frame of the image view in container's view coordinate
     [viewToAnimate setFrame:inContainerViewRect];
+    NSLog(@"viewtoanimate superview = %p", viewToAnimate.superview);
+    NSLog(@"start rect view to animate = %@",  NSStringFromCGRect(viewToAnimate.frame));
     
     // start the animation. numbers are selected after trial and error.
     [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.9 options:UIViewAnimationOptionCurveEaseIn animations:^{
+        NSLog(@"end rect inside animation = %@", NSStringFromCGRect(endRect));
+        NSLog(@"container frame = %@", NSStringFromCGRect(containerView.frame));
         [viewToAnimate setFrame:endRect];
         [fromVCContainer.view setAlpha:0];
     } completion:^(BOOL finished) {
+        NSLog(@"viewtoanimate superview = %p", viewToAnimate.superview);
+        NSLog(@"view to animate rect finish = %@", NSStringFromCGRect(viewToAnimate.frame));
         [whiteView removeFromSuperview];
-        [viewToAnimate removeFromSuperview];
-        [fromVCContainer.view removeFromSuperview];
-        [toVCContainer.view removeFromSuperview];
         [transitionContext completeTransition:YES];
     }];
     

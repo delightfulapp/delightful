@@ -124,8 +124,7 @@
 
 - (void)scrollToFirstShownPhoto {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.firstShownPhoto];
-    shouldHideNavigationBar = YES;
-    self.previousPage = self.firstShownPhotoIndex-1;
+    self.previousPage = indexPath.item - 1;
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
@@ -206,9 +205,11 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
+            NSLog(@"here?");
             [self hideNavigationBar];
             [self darkenBackground];
         } else {
+            NSLog(@"here it");
             shouldHideNavigationBar = NO;
         }
         
@@ -268,11 +269,12 @@
 - (void)didDragDownWithPercentage:(float)progress {
     CGFloat alpha = MIN(1-progress+0.2, 1);
     [self.darkBackgroundView setAlpha:alpha];
-    if (alpha < 0.8) {
+    if (progress > 0) {
         if (self.delegate && [self.delegate respondsToSelector:@selector(willDismissViewController:)]) {
             [self.delegate willDismissViewController:self];
         }
     }
+    
 }
 
 #pragma mark - Button

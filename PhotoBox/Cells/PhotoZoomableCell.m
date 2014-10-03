@@ -72,6 +72,7 @@
 }
 
 - (void)setImageSize:(CGSize)size {
+    NSLog(@"est image size");
     self.scrollView.zoomScale = 1;
     
     self.thisImageview.frame = ({
@@ -105,7 +106,7 @@
     });
     self.scrollView.maximumZoomScale = MAX(maxScale, maxZoomScaleFillScreen);
     
-    self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
+    self.scrollView.zoomScale = MIN(self.scrollView.minimumZoomScale, 1);
     [self centerScrollViewContents];
 }
 
@@ -127,6 +128,10 @@
 }
 
 - (void)centerScrollViewContents {
+    NSLog(@"center scroll view contents");
+    if (self.isClosingViewController) {
+        return;
+    }
     CGSize boundsSize = self.scrollView.bounds.size;
     CGRect contentsFrame = self.thisImageview.frame;
     
@@ -153,6 +158,7 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    NSLog(@"are we here?");
     [self setImageSize:self.thisImageview.image.size];
 }
 
@@ -187,6 +193,7 @@
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
         float deltaY = fabsf(self.scrollView.contentOffset.y - draggingPoint.y);
         if (deltaY > 50) {
+            self.closingViewController = YES;
             [self notifyDelegateToCloseHorizontalScrollingViewController];
         } else {
             if (self.delegate && [self.delegate respondsToSelector:@selector(didCancelClosingPhotosHorizontalViewController)]) {

@@ -147,8 +147,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 
 - (void)setNavigationBarHidden:(BOOL)hide animated:(BOOL)animated {
     if (animated) {
-        [[UIApplication sharedApplication] setStatusBarHidden:hide
-                                                withAnimation:UIStatusBarAnimationFade];
+        //[[UIApplication sharedApplication] setStatusBarHidden:hide withAnimation:UIStatusBarAnimationFade];
         
         //Fade navigation bar
         [UINavigationBar beginAnimations:nil context:nil];
@@ -160,7 +159,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
         
         objc_setAssociatedObject(self, isNavigationBarHidden, @(hide), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     } else {
-        [[UIApplication sharedApplication] setStatusBarHidden:hide];
+        //[[UIApplication sharedApplication] setStatusBarHidden:hide];
         self.navigationController.navigationBar.alpha = (hide)?0:1;
         self.navigationController.navigationBarHidden = NO;
     }

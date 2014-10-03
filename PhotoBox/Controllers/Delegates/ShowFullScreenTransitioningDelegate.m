@@ -16,7 +16,7 @@
 
 @end
 
-@interface ShowFullScreenTransitioningDelegate () <UIAdaptivePresentationControllerDelegate>
+@interface ShowFullScreenTransitioningDelegate () 
 
 @property (nonatomic, strong) ShowFullScreenPresentationController *presentationController;
 
@@ -26,6 +26,7 @@
 
 - (UIPresentationController *)presentationControllerForPresentedViewController:(UIViewController *)presented presentingViewController:(UIViewController *)presenting sourceViewController:(UIViewController *)source
 {
+    
     self.presentationController = [[ShowFullScreenPresentationController alloc] initWithPresentedViewController:presented presentingViewController:presenting];
     return self.presentationController;
 }
