@@ -704,15 +704,21 @@
 }
 
 - (void)shouldClosePhotosHorizontalViewController:(PhotosHorizontalScrollingViewController *)controller {
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        if (cell != self.selectedCell) {
+            [cell setAlpha:1];
+        }
+    }
     [self setNavigationBarHidden:NO animated:YES];
     
     [self dismissViewControllerAnimated:YES completion:^{
-        [self.selectedCell setAlpha:1];
+        for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+            [cell setAlpha:1];
+        }
     }];
 }
 
 - (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
-    NSLog(@"setting alpha 0 to seleced cell");
     [self.selectedCell setAlpha:0];
 }
 
