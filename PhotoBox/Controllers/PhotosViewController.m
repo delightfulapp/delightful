@@ -594,7 +594,6 @@
     [destination setDelegate:self];
     [self setupBackNavigationItemTitle];
     if (!self.transitionDelegate) {
-        NSLog(@"No transition delegate");
         self.transitionDelegate = [[ShowFullScreenTransitioningDelegate alloc] init];
     }
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:destination];
@@ -655,18 +654,12 @@
     if (self.selectedCell) {
         NSIndexPath *indexPath = [self.collectionView indexPathForCell:self.selectedCell];
         UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-        NSLog(@"cell frame = %@", NSStringFromCGRect(attributes.frame));
-        NSLog(@"collectionview inset = %f", self.collectionView.contentInset.top);
-        NSLog(@"collection offset = %f", self.collectionView.contentOffset.y);
         CGRect originalPosition = CGRectOffset(attributes.frame, 0, self.collectionView.contentInset.top);
         CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
-        NSLog(@"destination rect = %@", NSStringFromCGRect(CGRectOffset(originalPosition, 0, -adjustment)));
         return CGRectOffset(originalPosition, 0, -adjustment);
     } else {
-        NSLog(@"or here");
         return self.headerImageView.frame;
     }
-    NSLog(@"couldn tbe here right?");
     return CGRectZero;
     
 }
@@ -686,8 +679,7 @@
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
-    NSLog(@"Change page to item at index path : %@", indexPath);
-    if (indexPath) {        
+    if (indexPath) {
         if (indexPath.section < [self.collectionView numberOfSections]) {
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
             self.selectedCell = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -712,7 +704,6 @@
 }
 
 - (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
-    NSLog(@"will dismiss");
     [self.selectedCell setAlpha:0];
     for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
         if (cell != self.selectedCell) {
@@ -722,7 +713,6 @@
 }
 
 - (void)cancelDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
-    NSLog(@"cancel dismiss");
     [self.selectedCell setAlpha:1];
 }
 

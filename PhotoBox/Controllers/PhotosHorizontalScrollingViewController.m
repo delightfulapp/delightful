@@ -143,9 +143,7 @@
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    NSLog(@"will transition to size");
     NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:[self currentCollectionViewPage:self.collectionView] inSection:0];
-    NSLog(@"Current index Path = %@", currentIndexPath);
     [((PhotosHorizontalLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:currentIndexPath];
     [self.collectionView.collectionViewLayout invalidateLayout];
     UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:currentIndexPath];
@@ -205,11 +203,9 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
-            NSLog(@"here?");
             [self hideNavigationBar];
             [self darkenBackground];
         } else {
-            NSLog(@"here it");
             shouldHideNavigationBar = NO;
         }
         

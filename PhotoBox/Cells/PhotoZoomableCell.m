@@ -48,7 +48,6 @@
 }
 
 - (void)setup {
-    NSLog(@"Setup zoomable cell %p", self);
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
     [self.scrollView setBackgroundColor:[UIColor clearColor]];
     [self.scrollView setAlwaysBounceHorizontal:NO];
@@ -72,7 +71,6 @@
 }
 
 - (void)setImageSize:(CGSize)size {
-    NSLog(@"est image size");
     self.scrollView.zoomScale = 1;
     
     self.thisImageview.frame = ({
@@ -106,7 +104,8 @@
     });
     self.scrollView.maximumZoomScale = MAX(maxScale, maxZoomScaleFillScreen);
     
-    self.scrollView.zoomScale = MIN(self.scrollView.minimumZoomScale, 1);
+    CGFloat min = self.scrollView.minimumZoomScale;
+    self.scrollView.zoomScale = MIN(min, 1);
     [self centerScrollViewContents];
 }
 
@@ -128,7 +127,6 @@
 }
 
 - (void)centerScrollViewContents {
-    NSLog(@"center scroll view contents");
     if (self.isClosingViewController) {
         return;
     }
@@ -158,8 +156,10 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    NSLog(@"are we here?");
-    [self setImageSize:self.thisImageview.image.size];
+    if (self.thisImageview.image && self.thisImageview.image.size.width > 0) {
+        [self setImageSize:self.thisImageview.image.size];
+    }
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
