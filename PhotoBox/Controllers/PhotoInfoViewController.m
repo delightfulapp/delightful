@@ -43,7 +43,7 @@
     [super viewDidLoad];
     
     [self.tableView setBackgroundColor:[UIColor clearColor]];
-
+    
     self.sections = @[NSLocalizedString(@"Camera Data", nil), NSLocalizedString(@"Tags", nil)];
     
     self.cameraDataSectionRows = @[

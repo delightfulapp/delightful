@@ -20,18 +20,21 @@
 #import "PhotoInfoViewController.h"
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
+#import "TransitionToInfoDelegate.h"
+#import "TransitionToInfoPresentationController.h"
+
 #import <SVProgressHUD.h>
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate, UICollectionViewDelegateFlowLayout> {
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, TransitionToInfoPresentationControllerPresentingDelegate> {
     BOOL shouldHideNavigationBar;
 }
 
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, strong) UIView *darkBackgroundView;
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
-@property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
 @property (nonatomic, strong) UIButton *infoButton;
 @property (nonatomic, assign) NSInteger firstShownPhotoIndex;
+@property (nonatomic, strong) id<UIViewControllerTransitioningDelegate> transitionToInfoDelegate;
 
 @end
 
@@ -272,28 +275,18 @@
     [sender setEnabled:NO];
     [self showInfoButton:NO animated:YES];
     
-    BOOL isGrayscaled = [[self currentCell] isGrayscaled];
-    [self setNavigationBarHidden:!isGrayscaled animated:YES];
-    [[self currentCell] setGrayscaleAndZoom:!isGrayscaled];
-    
-    UIView *gradientView = [[self currentCell] addTransparentGradientWithStartColor:[UIColor blackColor] fromStartPoint:CGPointMake(0, 1) endPoint:CGPointMake(0.7, 0.5)];
-    self.photoInfoBackgroundGradientView = gradientView;
-    [gradientView setAlpha:0];
-    
     PhotoInfoViewController *photoInfo = [[PhotoInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [photoInfo setPhoto:[[self currentCell] item]];
     [photoInfo setDelegate:self];
-    [photoInfo willMoveToParentViewController:self];
-    [self addChildViewController:photoInfo];
-    [self.view addSubview:photoInfo.view];
-    [photoInfo didMoveToParentViewController:self];
-    [photoInfo.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
+    [photoInfo setModalPresentationStyle:UIModalPresentationCustom];
+    if (!self.transitionToInfoDelegate) {
+        self.transitionToInfoDelegate = [[TransitionToInfoDelegate alloc] init];
+    }
+    [photoInfo setTransitioningDelegate:self.transitionToInfoDelegate];
     
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        [gradientView setAlpha:1];
-        [photoInfo.view setOriginY:0];
-    } completion:^(BOOL finished) {
-        [sender setEnabled:YES];
+    [self presentViewController:photoInfo animated:YES completion:^{
+        //[sender setEnabled:YES];
+        //[self showInfoButton:YES animated:YES];
     }];
 }
 
@@ -443,21 +436,33 @@
 #pragma mark - Photo Info View Controller
 
 - (void)photoInfoViewControllerDidClose:(PhotoInfoViewController *)photoInfo {
-    UIViewController *childVC = [self childViewControllers][0];
-    [childVC removeFromParentViewController];
-    [UIView animateWithDuration:0.5 animations:^{
-        [childVC.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
-        [self.photoInfoBackgroundGradientView setAlpha:0];
-    } completion:^(BOOL finished) {
-        [childVC.view removeFromSuperview];
-        [self.photoInfoBackgroundGradientView removeFromSuperview];
-        [[self currentCell] setGrayscaleAndZoom:NO animated:YES];
+    [photoInfo dismissViewControllerAnimated:YES completion:^{
         [self showInfoButton:YES animated:YES];
     }];
 }
 
 - (void)photoInfoViewController:(PhotoInfoViewController *)photoInfo didDragToClose:(CGFloat)progress {
     [[[self currentCell] grayImageView] setAlpha:1-progress];
+}
+
+#pragma mark - TransitionToInfoPresentationControllerPresentingDelegate
+
+- (void)willAnimateAlongTransitionToPresentInfoController:(id)presentationController {
+    [[self currentCell] setGrayscale:YES];
+}
+
+- (void)animateAlongTransitionToPresentInfoController:(id)presentationController{
+    [self setNavigationBarHidden:YES animated:YES];
+    [[self currentCell] setZoomToFillScreen:YES];
+}
+
+- (void)dismissAlongTransitionToInfoController:(id)presentationController {
+    [[self currentCell] setGrayscale:NO];
+    [[self currentCell] setZoomToFillScreen:NO];
+}
+
+- (void)didFinishDismissAnimationFromInfoControllerPresentationController:(id)presentationController {
+    [self.infoButton setEnabled:YES];
 }
 
 #pragma mark - Alert 

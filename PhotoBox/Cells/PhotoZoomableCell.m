@@ -317,52 +317,31 @@
 
 #pragma mark - Photo Detail
 
-- (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated {
+- (void)setZoomToFillScreen:(BOOL)zoomToFillScreen {
+    if (zoomToFillScreen) {
+        [self setZoomScale:[self zoomScaleToFillScreen]];
+    } else {
+        [self setZoomScale:self.scrollView.minimumZoomScale];
+    }
+    [self centerScrollViewContents];
+}
+
+- (void)setGrayscale:(BOOL)grayscale {
     if (grayscale) {
         if (self.thisImageview.image) {
-            CGFloat maxZoom = [self zoomScaleToFillScreen];
             UIImage *grayscaleImage = (self.thisImageview.image.size.width < 1000)?[self.thisImageview.image grayscaledAndBlurredImage]:[self.thisImageview.image grayscaleImage];
             UIImageView *grayImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:[grayscaleImage CGImage] scale:1 orientation:UIImageOrientationUp]];
             [grayImageView setTag:PBX_GRAY_IMAGE_VIEW];
             [grayImageView setFrame:self.thisImageview.bounds];
-            [grayImageView setAlpha:0];
+            [grayImageView setAlpha:1];
             [self.thisImageview addSubview:grayImageView];
-            
-            if (animated) {
-                maxZoomScale = self.scrollView.maximumZoomScale;
-                self.scrollView.maximumZoomScale = maxZoom;
-                [self.scrollView setZoomScale:maxZoom animated:YES];
-                [UIView animateWithDuration:0.5 animations:^{
-                    [grayImageView setAlpha:1];
-                }];
-            } else {
-                [grayImageView setAlpha:1];
-            }
         }
     } else {
         UIImageView *grayImageView = (UIImageView *)[self.thisImageview viewWithTag:PBX_GRAY_IMAGE_VIEW];
         if (grayImageView) {
-            if (animated) {
-                [self.scrollView setMaximumZoomScale:maxZoomScale];
-                [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
-                [UIView animateWithDuration:0.5 animations:^{
-                    [grayImageView setAlpha:0];
-                    
-                } completion:^(BOOL finished) {
-                    if (finished) {
-                        [grayImageView removeFromSuperview];
-                    }
-                }];
-            } else {
-                [grayImageView removeFromSuperview];
-                [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
-            }
+            [grayImageView removeFromSuperview];
         }
     }
-}
-
-- (void)setGrayscaleAndZoom:(BOOL)grayscale {
-    [self setGrayscaleAndZoom:grayscale animated:YES];
 }
 
 - (void)setZoomScale:(CGFloat)zoomScale {

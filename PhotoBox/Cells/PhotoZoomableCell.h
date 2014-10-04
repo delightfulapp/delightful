@@ -31,9 +31,9 @@
 - (UIImage *)originalImage;
 - (void)doTeasingGesture;
 
+- (void)setGrayscale:(BOOL)grayscale;
 - (void)setZoomScale:(CGFloat)zoomScale;
-- (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated;
-- (void)setGrayscaleAndZoom:(BOOL)grayscale;
+- (void)setZoomToFillScreen:(BOOL)zoomToFillScreen;
 - (BOOL)isGrayscaled;
 - (CGFloat)zoomScaleToFillScreen;
 - (UIImageView *)grayImageView;
