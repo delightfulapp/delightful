@@ -57,7 +57,7 @@
     
     [self setUserInteractionEnabled:YES];
     
-    [self setBackgroundColor:[UIColor clearColor]];
+    [self setBackgroundColor:[UIColor colorWithWhite:1 alpha:0.8]];
     
     [self setupGestureViewConstrains];
 }
@@ -180,9 +180,12 @@
 
 - (UIView *)blurView {
     if (!_blurView) {
-        _blurView = [self addSubviewClass:[UIView class]];
-        [_blurView setBackgroundColor:[UIColor colorWithWhite:1.000 alpha:0.880]];
-        [_blurView setUserInteractionEnabled:YES];
+        UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+        UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+        [effectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self addSubview:effectView];
+        //[effectView setAlpha:0];
+        _blurView = effectView;
     }
     return _blurView;
 }
