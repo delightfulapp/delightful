@@ -78,8 +78,9 @@ static void * imageUploadContext = &imageUploadContext;
 //            [alert show];
 //        }
 //    }
-    UINavigationController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
-    PhotosViewController *photosVC = (PhotosViewController *)([rootController.viewControllers firstObject]);
+    UITabBarController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    UINavigationController *navCOn = [rootController.viewControllers firstObject];
+    PhotosViewController *photosVC = (PhotosViewController *)([navCOn.viewControllers firstObject]);
     [photosVC setItem:[Album allPhotosAlbum]];
     
     [self runCrashlytics];

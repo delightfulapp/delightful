@@ -54,10 +54,13 @@
     
     UIViewController *fromVCContainer = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosViewController *fromVC;
-    if ([fromVCContainer isKindOfClass:[UINavigationController class]]) {
-        fromVC = (PhotosViewController *)((UINavigationController *)fromVCContainer).topViewController;
+    if ([fromVCContainer isKindOfClass:[UITabBarController class]]) {
+        fromVC = (id)((UITabBarController *)fromVCContainer).selectedViewController;
     } else {
         fromVC = (PhotosViewController *)fromVCContainer;
+    }
+    if ([fromVC isKindOfClass:[UINavigationController class]]) {
+        fromVC = (PhotosViewController *)((UINavigationController *)fromVC).topViewController;
     }
     
     UIViewController *toVCContainer = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
@@ -113,10 +116,15 @@
     }
     UIViewController *toVCContainer = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     PhotosViewController *toVC;
-    if ([toVCContainer isKindOfClass:[UINavigationController class]]) {
-        toVC = (PhotosViewController *)(((UINavigationController *)toVCContainer).topViewController);
+    if ([toVCContainer isKindOfClass:[UITabBarController class]]) {
+        toVC = (id)(((UITabBarController *)toVCContainer).selectedViewController);
     } else {
         toVC = (PhotosViewController *)toVCContainer;
+    }
+    if ([toVC isKindOfClass:[UINavigationController class]]) {
+        toVC = (PhotosViewController *)(((UINavigationController *)toVC).topViewController);
+    } else {
+        toVC = (PhotosViewController *)toVC;
     }
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
