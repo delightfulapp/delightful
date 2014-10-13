@@ -42,6 +42,8 @@
 
 #import "PhotosViewController.h"
 
+#import "SyncEngine.h"
+
 //#import "HintsViewController.h"
 
 static void * imageDownloadContext = &imageDownloadContext;
@@ -90,6 +92,8 @@ static void * imageUploadContext = &imageUploadContext;
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
     //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
+    
+    [[SyncEngine sharedEngine] startSyncing];
     
     return YES;
 }

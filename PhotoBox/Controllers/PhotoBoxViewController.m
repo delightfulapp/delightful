@@ -271,8 +271,10 @@ NSString *const galleryContainerType = @"gallery";
 #pragma mark - Connection
 
 - (void)fetchResource {
+    return;
     [self showLoadingView:YES];
     PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
+    /*
     [[PhotoBoxClient sharedClient] getResource:self.resourceType
                                         action:ListAction
                                     resourceId:self.resourceId
@@ -312,6 +314,7 @@ NSString *const galleryContainerType = @"gallery";
                                            [self showError:error];
                                            [self showLoadingView:NO];
                                        }];
+     */
 }
 
 - (void)fetchMore {

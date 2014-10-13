@@ -38,33 +38,40 @@ typedef NS_ENUM(NSInteger, ActionType) {
 
 + (PhotoBoxClient *)sharedClient;
 
-- (void)getResource:(ResourceType)type
-             action:(ActionType)action
-         resourceId:(NSString *)resourceId
-               page:(int)page
-            success:(void(^)(id object))successBlock
-            failure:(void(^)(NSError*))failureBlock;
+#pragma mark - Resource Fetch
 
-- (void)getResource:(ResourceType)type
-             action:(ActionType)action
-         resourceId:(NSString *)resourceId
-          fetchedIn:(NSString *)fetchedIn
-               page:(int)page
-           pageSize:(int)pageSize
-        mainContext:(NSManagedObjectContext *)context
-            success:(void(^)(id object))successBlock
-            failure:(void(^)(NSError*))failureBlock;
-
+- (void)getPhotosForPage:(int)page
+                pageSize:(int)pageSize
+                 success:(void(^)(id object))successBlock
+                 failure:(void(^)(NSError*))failureBlock;
 - (void)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
-               fetchedIn:(NSString *)fetchedIn
-             mainContext:(NSManagedObjectContext *)mainContext
-                 success:(void (^)(id))successBlock
-                 failure:(void (^)(NSError *))failureBlock;
+                 success:(void(^)(id object))successBlock
+                 failure:(void(^)(NSError*))failureBlock;
+- (void)getTagsForPage:(int)page pageSize:(int)pageSize
+               success:(void(^)(id object))successBlock
+               failure:(void(^)(NSError*))failureBlock;
+- (void)getPhotosInAlbum:(NSString *)albumId
+                    page:(int)page
+                pageSize:(int)pageSize
+                 success:(void(^)(id object))successBlock
+                 failure:(void(^)(NSError*))failureBlock;
+- (void)getPhotosInTag:(NSString *)tagId
+                  page:(int)page
+              pageSize:(int)pageSize
+               success:(void(^)(id object))successBlock
+               failure:(void(^)(NSError*))failureBlock;
+
+
+#pragma mark - Sharing
 
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void(^)(NSString *token))completion;
 
+#pragma mark - Refresh
+
 - (void)refreshConnectionParameters;
+
+#pragma mark - Upload
 
 - (void)uploadAsset:(DLFAsset *)photo
            progress:(void(^)(float progress))progress

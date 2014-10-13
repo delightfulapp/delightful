@@ -371,6 +371,8 @@
 		03EFD95619251CD700E80A71 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
 		03EFD95719251CD700E80A71 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2B017D9BD6B00A80167 /* user@2x.png */; };
 		03EFD95819251CD700E80A71 /* introbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DE1818136E00445084 /* introbg.jpg */; };
+		03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6C9F619EAD92E000F524B /* SyncEngine.m */; };
+		03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6C9F619EAD92E000F524B /* SyncEngine.m */; };
 		03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
 		03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
 		03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
@@ -698,6 +700,8 @@
 		03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionToInfoPresentationController.m; path = PhotoBox/Controllers/Delegates/TransitionToInfoPresentationController.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
+		03F6C9F519EAD92E000F524B /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncEngine.h; path = PhotoBox/Networking/SyncEngine.h; sourceTree = "<group>"; };
+		03F6C9F619EAD92E000F524B /* SyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncEngine.m; path = PhotoBox/Networking/SyncEngine.m; sourceTree = "<group>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
 		03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedImageManager.m; path = PhotoBox/Others/DownloadedImageManager.m; sourceTree = "<group>"; };
 		03FD481F191FA22B00D4ADF7 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftViewController.h; path = PhotoBox/Controllers/LeftViewController.h; sourceTree = "<group>"; };
@@ -853,6 +857,8 @@
 		0310903817D1031A0075F9D8 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				03F6C9F519EAD92E000F524B /* SyncEngine.h */,
+				03F6C9F619EAD92E000F524B /* SyncEngine.m */,
 				0310903917D103330075F9D8 /* PhotoBoxClient.h */,
 				0310903A17D103330075F9D8 /* PhotoBoxClient.m */,
 				0310903D17D104460075F9D8 /* ConnectionManager.h */,
@@ -1865,6 +1871,7 @@
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
+				03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 				035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
@@ -2004,6 +2011,7 @@
 				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
 				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
+				03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */,
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
 				035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
