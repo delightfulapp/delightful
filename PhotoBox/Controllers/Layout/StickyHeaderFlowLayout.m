@@ -16,16 +16,16 @@
 
 @implementation StickyHeaderFlowLayout
 
-- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
-    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
-        attr.alpha = 0;
-        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
-        attr.center = CGPointMake(attr.center.x, centerY);
-    }
-    
-    return attr;
-}
+//- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+//    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+//    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
+//        attr.alpha = 0;
+//        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
+//        attr.center = CGPointMake(attr.center.x, centerY);
+//    }
+//    
+//    return attr;
+//}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
@@ -46,7 +46,18 @@
     }
     
     return answer;
-    
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attr = [super layoutAttributesForSupplementaryViewOfKind:elementKind atIndexPath:indexPath];
+    [self adjustHeaderLayoutAttributes:attr];
+    return attr;
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attr = [super layoutAttributesForItemAtIndexPath:indexPath];
+    attr.zIndex = 0;
+    return attr;
 }
 
 - (BOOL) shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {
@@ -139,7 +150,7 @@
                        (CGRectGetMaxY(lastObjectAttrs.frame) - bottomHeaderHeight)
                     );
         
-        layoutAttributes.zIndex = 10000;
+        layoutAttributes.zIndex = 100000;
         layoutAttributes.frame = (CGRect){
             .origin = origin,
             .size = layoutAttributes.frame.size
@@ -168,6 +179,14 @@
     [super finalizeCollectionViewUpdates];
     // release the insert and delete index paths
     self.insertIndexPaths = nil;
+}
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
+    if (self.targetIndexPath) {
+        UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
+        return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-44-self.collectionView.contentInset.top);
+    }
+    return proposedContentOffset;
 }
 
 @end

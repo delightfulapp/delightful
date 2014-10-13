@@ -103,6 +103,19 @@
     return toReturn;
 }
 
+- (NSString *)dateUploadedString {
+    NSString *toReturn = [NSString stringWithFormat:@"%d-%02d-%02d", [self.dateUploadedYear intValue], [self.dateUploadedMonth intValue], [self.dateUploadedDay intValue]];
+    return toReturn;
+}
+
+- (NSDate *)dateUploadedDate {
+    return [NSDate dateWithTimeIntervalSince1970:self.dateUploaded.intValue];
+}
+
+- (NSDate *)dateTakenDate {
+    return [NSDate dateWithTimeIntervalSince1970:self.dateTaken.intValue];
+}
+
 - (NSString *)dateMonthYearTakenString {
     return [NSString stringWithFormat:@"%d-%02d", [self.dateTakenYear intValue], [self.dateTakenMonth intValue]];
 }

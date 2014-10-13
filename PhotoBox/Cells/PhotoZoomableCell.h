@@ -10,19 +10,20 @@
 
 @protocol PhotoZoomableCellDelegate <NSObject>
 
-- (void)didClosePhotosHorizontalViewController;
+- (void)didReachPercentageToClosePhotosHorizontalViewController;
 - (void)didCancelClosingPhotosHorizontalViewController;
 - (void)didDragDownWithPercentage:(float)progress;
 
 
 @end
 
-@interface PhotoZoomableCell : PhotoCell <UIScrollViewDelegate>
+@interface PhotoZoomableCell : UICollectionViewCell <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *thisImageview;
 @property (nonatomic, weak) id<PhotoZoomableCellDelegate> delegate;
 @property (nonatomic, assign, getter = isClosingViewController) BOOL closingViewController;
+@property (nonatomic, strong) id item;
 
 - (void)loadOriginalImage;
 - (BOOL)hasDownloadedOriginalImage;
@@ -30,9 +31,9 @@
 - (UIImage *)originalImage;
 - (void)doTeasingGesture;
 
+- (void)setGrayscale:(BOOL)grayscale;
 - (void)setZoomScale:(CGFloat)zoomScale;
-- (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated;
-- (void)setGrayscaleAndZoom:(BOOL)grayscale;
+- (void)setZoomToFillScreen:(BOOL)zoomToFillScreen;
 - (BOOL)isGrayscaled;
 - (CGFloat)zoomScaleToFillScreen;
 - (UIImageView *)grayImageView;

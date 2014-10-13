@@ -16,7 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 
-@property (weak, nonatomic) IBOutlet UIView *blurView;
+@property (weak, nonatomic) IBOutlet UIVisualEffectView *blurView;
 
 @property (nonatomic, assign) NSInteger section;
 

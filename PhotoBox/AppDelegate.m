@@ -8,8 +8,6 @@
 
 #import "AppDelegate.h"
 
-#import "PhotoBoxNavigationControllerDelegate.h"
-
 #import "ConnectionManager.h"
 
 #import "NPRImageDownloader.h"
@@ -41,6 +39,8 @@
 #import "DLFImageUploader.h"
 
 #import <Lookback/Lookback.h>
+
+#import "PhotosViewController.h"
 
 //#import "HintsViewController.h"
 
@@ -78,28 +78,10 @@ static void * imageUploadContext = &imageUploadContext;
 //            [alert show];
 //        }
 //    }
-    
-    PanelsContainerViewController *rootViewController = [[PanelsContainerViewController alloc] init];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    [self.window setRootViewController:rootViewController];
-    [self.window setTintColor:[UIColor redColor]];
-    [self.window makeKeyAndVisible];
-    
-    PhotosViewController *photosViewController = [[PhotosViewController alloc] initWithCollectionViewLayout:[[StickyHeaderFlowLayout alloc] init]];
-    UINavigationController *photosNavigationViewController = [[UINavigationController alloc] initWithRootViewController:photosViewController];
-    [photosViewController setItem:[Album allPhotosAlbum]];
-    
-    AlbumsViewController *albumsViewController = [[AlbumsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    TagsViewController *tagsViewController = [[TagsViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
-    AlbumsTagsViewController *albumsTagsViewController = [[AlbumsTagsViewController alloc] init];
-    [albumsTagsViewController setViewControllers:@[albumsViewController, tagsViewController]];
-    LeftViewController *left = [[LeftViewController alloc] initWithRootViewController:albumsTagsViewController];
-    [rootViewController setLeftPanel:left];
-    [rootViewController setCenterPanel:photosNavigationViewController];
-    
-    self.navigationDelegate = [[PhotoBoxNavigationControllerDelegate alloc] init];
-    [photosNavigationViewController setDelegate:self.navigationDelegate];
+    UITabBarController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+    UINavigationController *navCOn = [rootController.viewControllers firstObject];
+    PhotosViewController *photosVC = (PhotosViewController *)([navCOn.viewControllers firstObject]);
+    [photosVC setItem:[Album allPhotosAlbum]];
     
     [self runCrashlytics];
     

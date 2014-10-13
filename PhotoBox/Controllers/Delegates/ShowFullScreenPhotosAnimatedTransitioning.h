@@ -13,6 +13,7 @@
 - (UIImage *)imageToAnimate;
 - (CGRect)startRectInContainerView:(UIView *)view;
 - (CGRect)endRectInContainerView:(UIView *)view;
+- (UIView *)destinationViewOnDismiss;
 - (UIView *)viewToAnimate;
 
 @end

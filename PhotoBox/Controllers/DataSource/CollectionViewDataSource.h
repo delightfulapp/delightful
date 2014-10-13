@@ -28,38 +28,23 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 @property (nonatomic, strong, readonly) id collectionView;
 
-@property (nonatomic, strong) NSPredicate *predicate;
-
-@property (nonatomic, strong) NSString *groupKey;
-
-@property (nonatomic, strong) NSArray *sortDescriptors;
-
-- (NSArray *)items;
-
-- (NSArray *)flattenedItems;
-
-- (NSArray *)flattenedItemsWithoutUploadingPhotos;
-
-- (void)removeAllItems;
-
 - (void)addItems:(NSArray *)items;
 
 - (void)addItem:(id)item;
 
-- (void)insertItemAtStart:(id)item newGroup:(BOOL)newGroup;
-
 - (id)itemAtIndexPath:(NSIndexPath *)indexPath;
 
-- (void)removeItemAtIndexPath:(NSIndexPath *)indexPath;
-
-- (void)removeItem:(id)item;
+- (NSString *)titleForSection:(NSInteger)section;
 
 - (NSIndexPath *)indexPathOfItem:(id)item;
-
-- (NSInteger)positionOfItem:(id)item;
 
 - (NSInteger)numberOfItems;
 
 - (id)initWithCollectionView:(id)collectionView;
+
+- (NSInteger)positionOfItemInIndexPath:(NSIndexPath *)indexPath;
+
+- (void)enumerateKeysAndObjectsInSection:(NSInteger)section
+                              usingBlock:(void (^)(NSString *collection, NSString *key, id object, NSUInteger index, BOOL *stop))block;
 
 @end

@@ -19,8 +19,9 @@
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
+#import "StickyHeaderFlowLayout.h"
 
-#import <NSDate+Escort.h>
+#import "DLFDatabaseManager.h"
 
 #define INITIAL_PAGE_NUMBER 1
 
@@ -35,6 +36,7 @@ NSString *const galleryContainerType = @"gallery";
 
 @property (nonatomic, assign, getter = isShowingAlert) BOOL showingAlert;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingView;
+@property (nonatomic, assign) CGSize currentSize;
 
 @end
 
@@ -46,8 +48,12 @@ NSString *const galleryContainerType = @"gallery";
 {
     [super viewDidLoad];
     
+    self.currentSize = self.view.frame.size;
+    
+    [self.dataSource setDebugName:NSStringFromClass([self class])];
+    
     self.page = INITIAL_PAGE_NUMBER;
-    self.numberOfColumns = 2;
+    self.numberOfColumns = 3;
     _pageSize = BATCH_SIZE;
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
@@ -57,6 +63,8 @@ NSString *const galleryContainerType = @"gallery";
     [self setupRefreshControl];
     [self setupPinchGesture];
     [self setupNavigationItemTitle];
+    
+    [self.collectionView reloadData];
     
     if (!self.disableFetchOnLoad) {
         PBX_LOG(@"Gonna fetch resource in view did load");
@@ -81,16 +89,40 @@ NSString *const galleryContainerType = @"gallery";
 
 #pragma mark - Orientation
 
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
-- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
-    return UIInterfaceOrientationPortrait;
-}
-
-- (BOOL)shouldAutorotate {
-    return NO;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    NSLog(@"**** will transition in photobox");
+    self.currentSize = size;
+    
+    CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
+    NSIndexPath *indexPath;
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        NSIndexPath *ind = [self.collectionView indexPathForCell:cell];
+        
+        UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:ind];
+        if (attr.frame.origin.y > originYRectToExamine-5) {
+            if (!indexPath) {
+                indexPath = ind;
+            } else {
+                if ([indexPath compare:ind] == NSOrderedDescending) {
+                    indexPath = ind;
+                }
+            }
+        }
+    }
+    
+    if (self.selectedCell) {
+        [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:[self.collectionView indexPathForCell:self.selectedCell]];
+    } else {
+        [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] firstObject]]];
+    }
+    
+    
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self restoreContentInsetForSize:size];
+        [self.collectionView.collectionViewLayout invalidateLayout];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+    }];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - Setup
@@ -116,7 +148,7 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)setupCollectionView {
     [self.collectionView setDelegate:self];
-    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
+    [self.collectionView setContentInset:UIEdgeInsetsMake(self.topLayoutGuide.length, 0, 0, 0)];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
 }
@@ -149,6 +181,13 @@ NSString *const galleryContainerType = @"gallery";
 
 #pragma mark - Getter
 
+- (NSInteger)numberOfColumnsForCurrentSize {
+    if (self.currentSize.width < self.currentSize.height) {
+        return self.numberOfColumns;
+    }
+    return MAX(self.numberOfColumns * 2 - 1, 1);
+}
+
 - (CollectionViewDataSource *)dataSource {
     if (!_dataSource) {
         _dataSource = [[[self dataSourceClass] alloc] initWithCollectionView:self.collectionView];
@@ -156,11 +195,6 @@ NSString *const galleryContainerType = @"gallery";
         [_dataSource setCellIdentifier:self.cellIdentifier];
         [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
         [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
-        [_dataSource setPredicate:[self predicate]];
-        [_dataSource setGroupKey:[self groupKey]];
-        [_dataSource setSortDescriptors:[self sortDescriptors]];
-        
-        [_dataSource setDebugName:NSStringFromClass([self class])];
     }
     return _dataSource;
 }
@@ -183,10 +217,6 @@ NSString *const galleryContainerType = @"gallery";
 - (NSString *)displayedItemIdKey {
     NSString *itemClassName = [NSStringFromClass([self resourceClass]) lowercaseString];
     return [NSString stringWithFormat:@"%@Id", itemClassName];
-}
-
-- (NSArray *)items {
-    return self.dataSource.items;
 }
 
 - (UIActivityIndicatorView *)loadingView {
@@ -290,8 +320,8 @@ NSString *const galleryContainerType = @"gallery";
         if (count>0) {
             if (self.page!=self.totalPages) {
                 self.isFetching = YES;
-                self.page = (count/self.pageSize)+1;
-                PBX_LOG(@"Fetch more");
+                self.page = ((int)count/(int)self.pageSize)+1;
+                PBX_LOG(@"Fetch more %d", self.page);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self showLoadingView:YES];
                 });
@@ -310,16 +340,15 @@ NSString *const galleryContainerType = @"gallery";
         self.currentPage = [firstObject.currentPage intValue];
         self.currentRow = [firstObject.currentRow intValue];
     } else {
-        self.totalItems = ((NSArray *)objects).count;
+        self.totalItems = (int)((NSArray *)objects).count;
         self.totalPages = 1;
         self.currentPage = 1;
         self.currentRow = 0;
     }
 }
 
-- (void)restoreContentInset {
-    PBX_LOG(@"");
-    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+- (void)restoreContentInsetForSize:(CGSize)size {
+    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
 }
 
@@ -331,7 +360,6 @@ NSString *const galleryContainerType = @"gallery";
     PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
     self.isFetching = YES;
     self.page = INITIAL_PAGE_NUMBER;
-    [self.dataSource removeAllItems];
     [self.collectionView reloadData];
     [self fetchResource];
 }
@@ -373,12 +401,10 @@ NSString *const galleryContainerType = @"gallery";
                 PBX_LOG(@"End refresh control");
             }
         }
-        [self showLoadingView:show atBottomOfScrollView:YES];
+        
         PBX_LOG(@"Showing bottom loading view");
-    } else {
-        [self showLoadingView:show atBottomOfScrollView:YES];
-        PBX_LOG(@"Closing bottom loading view");
-    }
+    } 
+    [self showLoadingView:show atBottomOfScrollView:YES];
 }
 
 -(void)showError:(NSError *)error {
@@ -501,14 +527,15 @@ NSString *const galleryContainerType = @"gallery";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
-    CGFloat width = floorf((collectionViewWidth/(float)self.numberOfColumns));
+    CGFloat width = floorf((collectionViewWidth/(float)[self numberOfColumnsForCurrentSize]));
     return CGSizeMake(width, width);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    if ((int)CGRectGetWidth(self.collectionView.frame)%self.numberOfColumns == 0 && self.numberOfColumns != 1) {
+    NSInteger columns = [self numberOfColumnsForCurrentSize];
+    if ((int)CGRectGetWidth(self.collectionView.frame)%columns == 0 && columns != 1) {
         return 0;
-    } else if (self.numberOfColumns == 1) {
+    } else if (columns == 1) {
         return 5;
     }
     return 1;
@@ -529,7 +556,7 @@ NSString *const galleryContainerType = @"gallery";
                 [self fetchResource];
             } else {
                 NSLog(@"Logging out, clearing everything");
-                [self.dataSource removeAllItems];
+                [[DLFDatabaseManager manager] removeAllItems];
                 self.page = INITIAL_PAGE_NUMBER;
                 [self.collectionView reloadData];
                 [self userDidLogout];

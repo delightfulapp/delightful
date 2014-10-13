@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface PhotoBoxNavigationControllerDelegate : NSObject <UINavigationControllerDelegate>
+@interface DLFNavigationControllerDelegate : NSObject <UINavigationControllerDelegate>
 
 @end

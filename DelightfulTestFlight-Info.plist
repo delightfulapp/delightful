@@ -34,9 +34,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2654</string>
+	<string>3350</string>
 	<key>FacebookAppID</key>
-	<string>378582835605137</string>
+	<string></string>
 	<key>FacebookDisplayName</key>
 	<string>Delightful</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -44,7 +44,10 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>shareicons.ttf</string>
+		<string>delightful.ttf</string>
 	</array>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
@@ -54,6 +57,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

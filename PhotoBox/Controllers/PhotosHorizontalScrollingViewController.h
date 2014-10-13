@@ -12,20 +12,30 @@
 @class Photo;
 @class PhotosHorizontalScrollingViewController;
 
-@protocol PhotosHorizontalScrollingViewControllerDelegate <NSObject>
+@interface PhotosHorizontalLayout : UICollectionViewFlowLayout
 
-- (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(NSManagedObject *)item;
-- (UIView *)snapshotView;
-- (CGRect)selectedItemRectInSnapshot;
-- (void)photosHorizontalWillClose;
+@property (nonatomic, strong) NSIndexPath *targetIndexPath;
 
 @end
 
-@interface PhotosHorizontalScrollingViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
+@protocol PhotosHorizontalScrollingViewControllerDelegate <NSObject>
+
+- (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(id)item;
+- (void)shouldClosePhotosHorizontalViewController:(PhotosHorizontalScrollingViewController *)controller;
+- (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller;
+- (void)cancelDismissViewController:(PhotosHorizontalScrollingViewController *)controller;
+
+@end
+
+@interface PhotosHorizontalScrollingViewController : UICollectionViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
 @property (nonatomic, strong) Photo *firstShownPhoto;
-@property (nonatomic, assign) NSInteger firstShownPhotoIndex;
 @property (nonatomic, weak) id<PhotosHorizontalScrollingViewControllerDelegate>delegate;
 @property (nonatomic, assign) BOOL hideDownloadButton;
+@property (nonatomic, strong) CollectionViewDataSource *dataSource;
+
++ (PhotosHorizontalScrollingViewController *)defaultController;
+- (void)setupDataSource;
+- (NSString *)cellIdentifier;
 
 @end

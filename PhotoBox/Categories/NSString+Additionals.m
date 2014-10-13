@@ -53,7 +53,8 @@
 }
 
 - (NSString *)localizedDate {
-    return [NSDateFormatter localizedStringFromDate:[self date] dateStyle:NSDateFormatterLongStyle timeStyle:NSDateFormatterNoStyle];
+    NSDate *date = [self date];
+    return [NSDateFormatter localizedStringFromDate:date dateStyle:NSDateFormatterLongStyle timeStyle:NSDateFormatterNoStyle];
 }
 
 - (NSString *)htmlLinkString {

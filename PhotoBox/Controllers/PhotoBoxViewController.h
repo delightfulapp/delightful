@@ -22,8 +22,9 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 @class PhotoBoxModel;
 
-@interface PhotoBoxViewController : UICollectionViewController
+@interface PhotoBoxViewController : UIViewController <UIScrollViewDelegate>
 
+@property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, strong) PhotoBoxModel *item;
 @property (nonatomic, assign) ResourceType resourceType;
 @property (nonatomic, strong) Class resourceClass;
@@ -39,6 +40,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) BOOL disableFetchOnLoad;
 @property (nonatomic, assign) int numberOfColumns;
 @property (nonatomic, strong) NSString *fetchedInIdentifier;
+@property (nonatomic, strong) UICollectionViewCell *selectedCell;
 
 @property (nonatomic, assign) int totalPages;
 @property (nonatomic, assign) int totalItems;
@@ -52,7 +54,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 - (Class)dataSourceClass;
 - (void)refresh;
-- (void)refreshIfNeeded;
 - (NSString *)refreshKey;
 - (NSArray *)cachedItems;
 - (void)showError:(NSError *)error;
@@ -65,6 +66,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)fetchMore;
 - (void)setAttributedTitle:(NSAttributedString *)title;
 - (void)restoreContentInset;
+- (void)restoreContentInsetForSize:(CGSize)size;
 - (BOOL)isGallery ;
 - (void)processPaginationFromObjects:(id)objects;
 - (void)willLoadDataFromCache;

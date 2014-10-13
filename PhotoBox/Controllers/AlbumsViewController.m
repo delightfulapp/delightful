@@ -124,34 +124,6 @@
     return nil;
 }
 
-- (void)refreshIfNeeded {
-    if (![[ConnectionManager sharedManager] isUserLoggedIn]) {
-        [[TMCache  sharedCache] removeAllObjects];
-        [self refresh];
-        return;
-    }
-    if ([[self resourceClass] needRefreshModelsCollection]) {
-        [self refresh];
-    } else {
-        [self showLoadingView:YES atBottomOfScrollView:YES];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSArray *items = [[self resourceClass] modelsCollection];
-            [self showLoadingView:NO atBottomOfScrollView:YES];
-            if (items) {
-                [self willLoadDataFromCache];
-                
-                [self.dataSource removeAllItems];
-                [self.dataSource addItems:items];
-                [self.collectionView reloadData];
-                
-                [self didLoadDataFromCache];
-            } else {
-                [self refresh];
-            }
-        });
-    }
-}
-
 - (void)didLoadDataFromCache {
     NSInteger count = [self.dataSource numberOfItems];
     NSInteger totalPhotos = [[self resourceClass] totalCountCollection];
@@ -185,7 +157,7 @@
 }
 
 - (void)scrollToTheTop {
-    if (self.dataSource.items.count > 0) {
+    if ([self.dataSource numberOfItems] > 0) {
         [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         [self scrollViewDidScroll:self.collectionView];
     }
@@ -196,9 +168,6 @@
 - (void)didFetchItems {
     NSInteger count = [self.dataSource numberOfItems];
     [self setAlbumsCount:count max:self.totalItems];
-    
-    [[self resourceClass] setModelsCollection:[self.dataSource flattenedItems]];
-    [[self resourceClass] setModelsCollectionLastRefresh:[NSDate date]];
 }
 
 - (void)restoreContentInset {

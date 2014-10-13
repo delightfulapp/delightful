@@ -38,17 +38,9 @@
 
 @implementation PhotoZoomableCell
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
     if (self) {
         [self setup];
     }
@@ -65,6 +57,7 @@
     self.thisImageview = [[UIImageView alloc] initWithFrame:CGRectZero];
     [self.thisImageview setContentMode:UIViewContentModeScaleAspectFit];
     [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.thisImageview setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.scrollView addSubview:self.thisImageview];
     [self.contentView addSubview:self.scrollView];
@@ -111,7 +104,8 @@
     });
     self.scrollView.maximumZoomScale = MAX(maxScale, maxZoomScaleFillScreen);
     
-    self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
+    CGFloat min = self.scrollView.minimumZoomScale;
+    self.scrollView.zoomScale = MIN(min, 1);
     [self centerScrollViewContents];
 }
 
@@ -133,6 +127,9 @@
 }
 
 - (void)centerScrollViewContents {
+    if (self.isClosingViewController) {
+        return;
+    }
     CGSize boundsSize = self.scrollView.bounds.size;
     CGRect contentsFrame = self.thisImageview.frame;
     
@@ -154,6 +151,15 @@
     } else {
         [self.scrollView setDirectionalLockEnabled:NO];
     }
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (self.thisImageview.image && self.thisImageview.image.size.width > 0) {
+        [self setImageSize:self.thisImageview.image.size];
+    }
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -187,6 +193,7 @@
     if (scrollView.zoomScale == self.scrollView.minimumZoomScale) {
         float deltaY = fabsf(self.scrollView.contentOffset.y - draggingPoint.y);
         if (deltaY > 50) {
+            self.closingViewController = YES;
             [self notifyDelegateToCloseHorizontalScrollingViewController];
         } else {
             if (self.delegate && [self.delegate respondsToSelector:@selector(didCancelClosingPhotosHorizontalViewController)]) {
@@ -198,8 +205,8 @@
 
 - (void)notifyDelegateToCloseHorizontalScrollingViewController {
     [self setHaveShownGestureTeasing];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didClosePhotosHorizontalViewController)]) {
-        [self.delegate didClosePhotosHorizontalViewController];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didReachPercentageToClosePhotosHorizontalViewController)]) {
+        [self.delegate didReachPercentageToClosePhotosHorizontalViewController];
         
         // remove delegate so that didDragDownWithPercentage will not be called anymore. it gives an annoying white flash.
         self.delegate = nil;
@@ -211,44 +218,52 @@
 }
 
 - (void)setItem:(id)item {
-    [super setItem:item];
-    Photo *photo = (Photo *)item;
-    
-    if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
-        CGFloat width, height;
-        NSURL *URL;
-        if (photo.normalImage) {
-            width = [photo.normalImage.width floatValue];
-            height = [photo.normalImage.height floatValue];
-            URL = [NSURL URLWithString:photo.normalImage.urlString];
-        } else {
-            width = [photo.width floatValue];
-            height = [photo.height floatValue];
-            URL = photo.pathOriginal;
-        }
-        [self setImageSize:CGSizeMake(width, height)];
-        [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-        [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
-        UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
-        if (!placeholderImage) {
-            placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
+    if (_item != item) {
+        _item = item;
+        
+        self.scrollView.minimumZoomScale = 1;
+        self.scrollView.maximumZoomScale = 1;
+        self.scrollView.zoomScale = 1;
+        
+        Photo *photo = (Photo *)item;
+        
+        if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
+            CGFloat width, height;
+            NSURL *URL;
+            if (photo.normalImage) {
+                width = [photo.normalImage.width floatValue];
+                height = [photo.normalImage.height floatValue];
+                URL = [NSURL URLWithString:photo.normalImage.urlString];
+            } else {
+                width = [photo.width floatValue];
+                height = [photo.height floatValue];
+                URL = photo.pathOriginal;
+            }
+            [self setImageSize:CGSizeMake(width, height)];
+            [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+            [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
+            UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
             if (!placeholderImage) {
-                placeholderImage = photo.asAlbumCoverImage;
+                placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
                 if (!placeholderImage) {
-                    placeholderImage = photo.placeholderImage;
+                    placeholderImage = photo.asAlbumCoverImage;
+                    if (!placeholderImage) {
+                        placeholderImage = photo.placeholderImage;
+                    }
                 }
             }
+            [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
+            
+            self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
         }
-        [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
-        
-        self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
     }
+   
 }
 
 - (void)loadOriginalImage {
     Photo *photo = (Photo *)self.item;
     [self setImageSize:CGSizeMake([photo.width floatValue], [photo.height floatValue])];
-    [self.thisImageview setImageWithURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
+    [self.thisImageview sd_setImageWithURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
 }
 
 - (BOOL)hasDownloadedOriginalImage {
@@ -302,52 +317,31 @@
 
 #pragma mark - Photo Detail
 
-- (void)setGrayscaleAndZoom:(BOOL)grayscale animated:(BOOL)animated {
+- (void)setZoomToFillScreen:(BOOL)zoomToFillScreen {
+    if (zoomToFillScreen) {
+        [self setZoomScale:[self zoomScaleToFillScreen]];
+    } else {
+        [self setZoomScale:self.scrollView.minimumZoomScale];
+    }
+    [self centerScrollViewContents];
+}
+
+- (void)setGrayscale:(BOOL)grayscale {
     if (grayscale) {
         if (self.thisImageview.image) {
-            CGFloat maxZoom = [self zoomScaleToFillScreen];
             UIImage *grayscaleImage = (self.thisImageview.image.size.width < 1000)?[self.thisImageview.image grayscaledAndBlurredImage]:[self.thisImageview.image grayscaleImage];
             UIImageView *grayImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithCGImage:[grayscaleImage CGImage] scale:1 orientation:UIImageOrientationUp]];
             [grayImageView setTag:PBX_GRAY_IMAGE_VIEW];
             [grayImageView setFrame:self.thisImageview.bounds];
-            [grayImageView setAlpha:0];
+            [grayImageView setAlpha:1];
             [self.thisImageview addSubview:grayImageView];
-            
-            if (animated) {
-                maxZoomScale = self.scrollView.maximumZoomScale;
-                self.scrollView.maximumZoomScale = maxZoom;
-                [self.scrollView setZoomScale:maxZoom animated:YES];
-                [UIView animateWithDuration:0.5 animations:^{
-                    [grayImageView setAlpha:1];
-                }];
-            } else {
-                [grayImageView setAlpha:1];
-            }
         }
     } else {
         UIImageView *grayImageView = (UIImageView *)[self.thisImageview viewWithTag:PBX_GRAY_IMAGE_VIEW];
         if (grayImageView) {
-            if (animated) {
-                [self.scrollView setMaximumZoomScale:maxZoomScale];
-                [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
-                [UIView animateWithDuration:0.5 animations:^{
-                    [grayImageView setAlpha:0];
-                    
-                } completion:^(BOOL finished) {
-                    if (finished) {
-                        [grayImageView removeFromSuperview];
-                    }
-                }];
-            } else {
-                [grayImageView removeFromSuperview];
-                [self.scrollView setZoomScale:self.scrollView.minimumZoomScale];
-            }
+            [grayImageView removeFromSuperview];
         }
     }
-}
-
-- (void)setGrayscaleAndZoom:(BOOL)grayscale {
-    [self setGrayscaleAndZoom:grayscale animated:YES];
 }
 
 - (void)setZoomScale:(CGFloat)zoomScale {

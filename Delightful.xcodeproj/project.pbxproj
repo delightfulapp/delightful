@@ -81,6 +81,14 @@
 		0348D23017DA263500C932BA /* Crashlytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0348D22F17DA263500C932BA /* Crashlytics.plist */; };
 		034E9F9217FA6BC200E3565E /* photo.json in Resources */ = {isa = PBXBuildFile; fileRef = 034E9F9117FA6BC200E3565E /* photo.json */; };
 		034E9F9517FA6C2000E3565E /* XCTestCase+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */; };
+		0357966B19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */; };
+		0357966C19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */; };
+		0357966F19D8435600A28334 /* YapDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966E19D8435600A28334 /* YapDataSource.m */; };
+		0357967019D8435600A28334 /* YapDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966E19D8435600A28334 /* YapDataSource.m */; };
+		0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */; };
+		0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */; };
+		0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */; };
+		0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */; };
 		0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */; };
 		0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467617D1BC3D00E196D7 /* TagsViewController.m */; };
 		0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467917D1BCC000E196D7 /* AlbumsViewController.m */; };
@@ -100,7 +108,7 @@
 		035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
 		035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
 		035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846C217D2598600E196D7 /* PhotoZoomableCell.m */; };
-		035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
+		035846CC17D348DB00E196D7 /* DLFNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */; };
 		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
@@ -149,7 +157,6 @@
 		037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
-		037BA8AB18A355D70072760C /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
 		037BA8BC18A63C830072760C /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
 		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
@@ -188,6 +195,10 @@
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03AE182E17D8F2C3009CD844 /* NSString+AdditionalsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */; };
+		03B3271719D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */; };
+		03B3271819D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */; };
+		03B3271B19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */; };
+		03B3271C19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */; };
 		03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */; };
 		03B5CCC8193C7AE500E0BAD0 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
 		03B5CCC9193C7AE500E0BAD0 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
@@ -213,6 +224,20 @@
 		03DD04E117F9C58B001FB8A5 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E017F9C58B001FB8A5 /* albums.json */; };
 		03DD04E317F9C709001FB8A5 /* album.json in Resources */ = {isa = PBXBuildFile; fileRef = 03DD04E217F9C709001FB8A5 /* album.json */; };
 		03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */; };
+		03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */; };
+		03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */; };
+		03EB627A19DE2EF000E65248 /* delightful.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03EB627919DE2EF000E65248 /* delightful.ttf */; };
+		03EB627B19DE2EF000E65248 /* delightful.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 03EB627919DE2EF000E65248 /* delightful.ttf */; };
+		03EB627E19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */; };
+		03EB627F19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */; };
+		03EB628219DE3A0600E65248 /* CustomBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628119DE3A0600E65248 /* CustomBackButton.m */; };
+		03EB628319DE3A0600E65248 /* CustomBackButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628119DE3A0600E65248 /* CustomBackButton.m */; };
+		03EB628619DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */; };
+		03EB628719DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */; };
+		03EB629219DF065700E65248 /* TransitionToInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB629119DF065700E65248 /* TransitionToInfoDelegate.m */; };
+		03EB629319DF065700E65248 /* TransitionToInfoDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB629119DF065700E65248 /* TransitionToInfoDelegate.m */; };
+		03EB629619DF06BF00E65248 /* TransitionToInfoPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */; };
+		03EB629719DF06BF00E65248 /* TransitionToInfoPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */; };
 		03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */; };
 		03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
@@ -223,7 +248,6 @@
 		03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
 		03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
 		03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
-		03EFD8D619251CD700E80A71 /* PhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8AA18A355D70072760C /* PhotosDataSource.m */; };
 		03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
 		03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D764180FC56700FDD83B /* NPRImageDownloader.m */; };
@@ -256,7 +280,7 @@
 		03EFD8F419251CD700E80A71 /* Photo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904117D1ABED0075F9D8 /* Photo.m */; };
 		03EFD8F519251CD700E80A71 /* FavoritesManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */; };
 		03EFD8F619251CD700E80A71 /* PhotoBoxCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358468617D1C19A00E196D7 /* PhotoBoxCell.m */; };
-		03EFD8F719251CD700E80A71 /* PhotoBoxNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */; };
+		03EFD8F719251CD700E80A71 /* DLFNavigationControllerDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */; };
 		03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
 		03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		03EFD8FA19251CD700E80A71 /* Tag.m in Sources */ = {isa = PBXBuildFile; fileRef = 0310904417D1B2840075F9D8 /* Tag.m */; };
@@ -464,6 +488,14 @@
 		034E9F9117FA6BC200E3565E /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photo.json; sourceTree = "<group>"; };
 		034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Additionals.h"; sourceTree = "<group>"; };
 		034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Additionals.m"; sourceTree = "<group>"; };
+		0357966919D842D200A28334 /* GroupedPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupedPhotosDataSource.h; sourceTree = "<group>"; };
+		0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupedPhotosDataSource.m; sourceTree = "<group>"; };
+		0357966D19D8435600A28334 /* YapDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDataSource.h; sourceTree = "<group>"; };
+		0357966E19D8435600A28334 /* YapDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDataSource.m; sourceTree = "<group>"; };
+		0357967119D85E1600A28334 /* DLFYapDatabaseViewAndMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLFYapDatabaseViewAndMapping.h; sourceTree = "<group>"; };
+		0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLFYapDatabaseViewAndMapping.m; sourceTree = "<group>"; };
+		0357967519D860F100A28334 /* FlattenedPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlattenedPhotosDataSource.h; sourceTree = "<group>"; };
+		0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlattenedPhotosDataSource.m; sourceTree = "<group>"; };
 		0358467217D1BC1D00E196D7 /* PhotoBoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxViewController.h; path = PhotoBox/Controllers/PhotoBoxViewController.h; sourceTree = "<group>"; };
 		0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxViewController.m; path = PhotoBox/Controllers/PhotoBoxViewController.m; sourceTree = "<group>"; };
 		0358467517D1BC3D00E196D7 /* TagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsViewController.h; path = PhotoBox/Controllers/TagsViewController.h; sourceTree = "<group>"; };
@@ -499,8 +531,8 @@
 		035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingViewController.m; sourceTree = "<group>"; };
 		035846C117D2598600E196D7 /* PhotoZoomableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoZoomableCell.h; path = PhotoBox/Cells/PhotoZoomableCell.h; sourceTree = "<group>"; };
 		035846C217D2598600E196D7 /* PhotoZoomableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoZoomableCell.m; path = PhotoBox/Cells/PhotoZoomableCell.m; sourceTree = "<group>"; };
-		035846CA17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxNavigationControllerDelegate.h; path = PhotoBox/Controllers/Delegates/PhotoBoxNavigationControllerDelegate.h; sourceTree = "<group>"; };
-		035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxNavigationControllerDelegate.m; path = PhotoBox/Controllers/Delegates/PhotoBoxNavigationControllerDelegate.m; sourceTree = "<group>"; };
+		035846CA17D348DB00E196D7 /* DLFNavigationControllerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFNavigationControllerDelegate.h; path = PhotoBox/Controllers/Delegates/DLFNavigationControllerDelegate.h; sourceTree = "<group>"; };
+		035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFNavigationControllerDelegate.m; path = PhotoBox/Controllers/Delegates/DLFNavigationControllerDelegate.m; sourceTree = "<group>"; };
 		035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFullScreenPhotosAnimatedTransitioning.h; path = PhotoBox/Controllers/Delegates/ShowFullScreenPhotosAnimatedTransitioning.h; sourceTree = "<group>"; };
 		035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowFullScreenPhotosAnimatedTransitioning.m; path = PhotoBox/Controllers/Delegates/ShowFullScreenPhotosAnimatedTransitioning.m; sourceTree = "<group>"; };
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
@@ -549,8 +581,6 @@
 		037B08A71956C0A6001F55D6 /* UploadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadHeaderView.m; path = PhotoBox/Views/UploadHeaderView.m; sourceTree = "<group>"; };
 		037BA89618A0EB470072760C /* DelightfulLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelightfulLayout.h; sourceTree = "<group>"; };
 		037BA89718A0EB470072760C /* DelightfulLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelightfulLayout.m; sourceTree = "<group>"; };
-		037BA8A918A355D70072760C /* PhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosDataSource.h; sourceTree = "<group>"; };
-		037BA8AA18A355D70072760C /* PhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosDataSource.m; sourceTree = "<group>"; };
 		037BA8BA18A63C830072760C /* FetchedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedIn.h; sourceTree = "<group>"; };
 		037BA8BB18A63C830072760C /* FetchedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedIn.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -613,6 +643,10 @@
 		03AE182A17D8F266009CD844 /* NSString+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Additionals.h"; sourceTree = "<group>"; };
 		03AE182B17D8F267009CD844 /* NSString+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Additionals.m"; sourceTree = "<group>"; };
 		03AE182D17D8F2C3009CD844 /* NSString+AdditionalsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+AdditionalsTests.m"; sourceTree = "<group>"; };
+		03B3271519D0750D00B87347 /* DelightfulCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulCollectionViewController.h; path = PhotoBox/Controllers/DataSource/DelightfulCollectionViewController.h; sourceTree = "<group>"; };
+		03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulCollectionViewController.m; path = PhotoBox/Controllers/DataSource/DelightfulCollectionViewController.m; sourceTree = "<group>"; };
+		03B3271919D16B4C00B87347 /* DLFDatabaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFDatabaseManager.h; path = PhotoBox/Models/DLFDatabaseManager.h; sourceTree = "<group>"; };
+		03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFDatabaseManager.m; path = PhotoBox/Models/DLFDatabaseManager.m; sourceTree = "<group>"; };
 		03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManagerTests.m; sourceTree = "<group>"; };
 		03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
 		03B5CCCA193CC20500E0BAD0 /* PhotosPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerViewController.h; path = PhotoBox/Controllers/PhotosPickerViewController.h; sourceTree = "<group>"; };
@@ -649,6 +683,19 @@
 		03DD04E217F9C709001FB8A5 /* album.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = album.json; sourceTree = "<group>"; };
 		03E738E81824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewSelectCellGestureRecognizer.h; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.h; sourceTree = "<group>"; };
 		03E738E91824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewSelectCellGestureRecognizer.m; path = PhotoBox/Others/CollectionViewSelectCellGestureRecognizer.m; sourceTree = "<group>"; };
+		03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosHorizontalScrollingYapBackedViewController.h; path = PhotoBox/Controllers/PhotosHorizontalScrollingYapBackedViewController.h; sourceTree = "<group>"; };
+		03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosHorizontalScrollingYapBackedViewController.m; path = PhotoBox/Controllers/PhotosHorizontalScrollingYapBackedViewController.m; sourceTree = "<group>"; };
+		03EB627919DE2EF000E65248 /* delightful.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = delightful.ttf; sourceTree = "<group>"; };
+		03EB627C19DE304100E65248 /* NSAttributedString+DelighftulFonts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+DelighftulFonts.h"; sourceTree = "<group>"; };
+		03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+DelighftulFonts.m"; sourceTree = "<group>"; };
+		03EB628019DE3A0600E65248 /* CustomBackButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomBackButton.h; path = PhotoBox/Views/CustomBackButton.h; sourceTree = "<group>"; };
+		03EB628119DE3A0600E65248 /* CustomBackButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomBackButton.m; path = PhotoBox/Views/CustomBackButton.m; sourceTree = "<group>"; };
+		03EB628419DE43A000E65248 /* ShowFullScreenTransitioningDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShowFullScreenTransitioningDelegate.h; path = PhotoBox/Controllers/Delegates/ShowFullScreenTransitioningDelegate.h; sourceTree = "<group>"; };
+		03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShowFullScreenTransitioningDelegate.m; path = PhotoBox/Controllers/Delegates/ShowFullScreenTransitioningDelegate.m; sourceTree = "<group>"; };
+		03EB629019DF065700E65248 /* TransitionToInfoDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionToInfoDelegate.h; path = PhotoBox/Controllers/Delegates/TransitionToInfoDelegate.h; sourceTree = "<group>"; };
+		03EB629119DF065700E65248 /* TransitionToInfoDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionToInfoDelegate.m; path = PhotoBox/Controllers/Delegates/TransitionToInfoDelegate.m; sourceTree = "<group>"; };
+		03EB629419DF06BF00E65248 /* TransitionToInfoPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransitionToInfoPresentationController.h; path = PhotoBox/Controllers/Delegates/TransitionToInfoPresentationController.h; sourceTree = "<group>"; };
+		03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionToInfoPresentationController.m; path = PhotoBox/Controllers/Delegates/TransitionToInfoPresentationController.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
@@ -751,6 +798,8 @@
 				0396BDE41922032D004B6290 /* PhotosCollection.m */,
 				035DACE61983555500557547 /* DLFAsset.h */,
 				035DACE71983555500557547 /* DLFAsset.m */,
+				03B3271919D16B4C00B87347 /* DLFDatabaseManager.h */,
+				03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -794,6 +843,8 @@
 				038663281840C57C006C76DE /* UIColor+DelightfulColors.m */,
 				0327CC6A1946AC350086C4B8 /* ALAsset+Additionals.h */,
 				0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */,
+				03EB627C19DE304100E65248 /* NSAttributedString+DelighftulFonts.h */,
+				03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -898,6 +949,7 @@
 		032CBB8417D0BDF3001205B1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				03EB627919DE2EF000E65248 /* delightful.ttf */,
 				035DACF41985EDBD00557547 /* Lookback.plist */,
 				032CBB8517D0BDF3001205B1 /* Delightful-Info.plist */,
 				032CBB8617D0BDF3001205B1 /* InfoPlist.strings */,
@@ -968,6 +1020,8 @@
 		0358467117D1BBE400E196D7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				03B3271519D0750D00B87347 /* DelightfulCollectionViewController.h */,
+				03B3271619D0750D00B87347 /* DelightfulCollectionViewController.m */,
 				035846C617D3470A00E196D7 /* Transition */,
 				035846B417D23F9700E196D7 /* Layout */,
 				0358468017D1C0E800E196D7 /* DataSource */,
@@ -1014,6 +1068,8 @@
 				035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */,
 				035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */,
 				035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */,
+				03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */,
+				03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1027,8 +1083,14 @@
 				03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */,
 				0398D769180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.h */,
 				0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */,
-				037BA8A918A355D70072760C /* PhotosDataSource.h */,
-				037BA8AA18A355D70072760C /* PhotosDataSource.m */,
+				0357966919D842D200A28334 /* GroupedPhotosDataSource.h */,
+				0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */,
+				0357966D19D8435600A28334 /* YapDataSource.h */,
+				0357966E19D8435600A28334 /* YapDataSource.m */,
+				0357967119D85E1600A28334 /* DLFYapDatabaseViewAndMapping.h */,
+				0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */,
+				0357967519D860F100A28334 /* FlattenedPhotosDataSource.h */,
+				0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1100,6 +1162,8 @@
 				037B08A71956C0A6001F55D6 /* UploadHeaderView.m */,
 				035DACE11983490B00557547 /* UploadReloadView.h */,
 				035DACE21983490B00557547 /* UploadReloadView.m */,
+				03EB628019DE3A0600E65248 /* CustomBackButton.h */,
+				03EB628119DE3A0600E65248 /* CustomBackButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1118,12 +1182,18 @@
 		035846C617D3470A00E196D7 /* Transition */ = {
 			isa = PBXGroup;
 			children = (
-				035846CA17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.h */,
-				035846CB17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m */,
+				035846CA17D348DB00E196D7 /* DLFNavigationControllerDelegate.h */,
+				035846CB17D348DB00E196D7 /* DLFNavigationControllerDelegate.m */,
 				035846CD17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.h */,
 				035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */,
 				03D311B01930B775003DE5FC /* FallingTransitioningDelegate.h */,
 				03D311B11930B775003DE5FC /* FallingTransitioningDelegate.m */,
+				03EB628419DE43A000E65248 /* ShowFullScreenTransitioningDelegate.h */,
+				03EB628519DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m */,
+				03EB629019DF065700E65248 /* TransitionToInfoDelegate.h */,
+				03EB629119DF065700E65248 /* TransitionToInfoDelegate.m */,
+				03EB629419DF06BF00E65248 /* TransitionToInfoPresentationController.h */,
+				03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -1294,6 +1364,9 @@
 					032CBB9A17D0BDF3001205B1 = {
 						TestTargetID = 032CBB7917D0BDF3001205B1;
 					};
+					03EFD8C919251CD700E80A71 = {
+						DevelopmentTeam = NNTV3ZQR3E;
+					};
 				};
 			};
 			buildConfigurationList = 032CBB7517D0BDF3001205B1 /* Build configuration list for PBXProject "Delightful" */;
@@ -1323,6 +1396,7 @@
 			files = (
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
+				03EB627A19DE2EF000E65248 /* delightful.ttf in Resources */,
 				0396BDEB1922772E004B6290 /* Hint-CloseInfo.xib in Resources */,
 				03CE50E718181D1B00445084 /* 0.0.2.plist in Resources */,
 				032222B81814CBF0004F3830 /* npr_notification_image_error@2x.png in Resources */,
@@ -1394,6 +1468,7 @@
 				0312305B1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
 				03EFD92B19251CD700E80A71 /* Hint-CloseInfo.xib in Resources */,
 				03EFD92C19251CD700E80A71 /* 0.0.2.plist in Resources */,
+				03EB627B19DE2EF000E65248 /* delightful.ttf in Resources */,
 				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
 				03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */,
 				035DACDC1980D99B00557547 /* uploadedmark.png in Resources */,
@@ -1683,11 +1758,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
+				0357966F19D8435600A28334 /* YapDataSource.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */,
 				03D311B21930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
@@ -1698,11 +1776,13 @@
 				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
 				037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
-				037BA8AB18A355D70072760C /* PhotosDataSource.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
 				0358469B17D1D72000E196D7 /* UIScrollView+Additionals.m in Sources */,
+				03EB627E19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */,
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */,
+				03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
+				03EB628619DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */,
 				03CE50EC18181D7C00445084 /* PanelFactory.m in Sources */,
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035DACE31983490B00557547 /* UploadReloadView.m in Sources */,
@@ -1711,6 +1791,7 @@
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
+				0357966B19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */,
 				031230571927C613004AFD1E /* InfoTableViewCell.m in Sources */,
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
@@ -1719,6 +1800,7 @@
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
 				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
+				03EB629219DF065700E65248 /* TransitionToInfoDelegate.m in Sources */,
 				0398D76B180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m in Sources */,
 				035DACC7197FAC2B00557547 /* NSString+Score.m in Sources */,
 				03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */,
@@ -1740,15 +1822,18 @@
 				0310904217D1ABED0075F9D8 /* Photo.m in Sources */,
 				03FD48301920AA9C00D4ADF7 /* FavoritesManager.m in Sources */,
 				0358468717D1C19A00E196D7 /* PhotoBoxCell.m in Sources */,
-				035846CC17D348DB00E196D7 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
+				035846CC17D348DB00E196D7 /* DLFNavigationControllerDelegate.m in Sources */,
 				03120461194C1738004EA8CB /* DLFImageUploader.m in Sources */,
 				0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */,
 				0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */,
 				0310904517D1B2840075F9D8 /* Tag.m in Sources */,
 				035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */,
+				03B3271B19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */,
 				03CE5103181842F200445084 /* SharerManager.m in Sources */,
 				035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
+				03B3271719D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */,
+				03EB628219DE3A0600E65248 /* CustomBackButton.m in Sources */,
 				0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */,
 				038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */,
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
@@ -1786,6 +1871,7 @@
 				035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
+				03EB629619DF06BF00E65248 /* TransitionToInfoPresentationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1811,11 +1897,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,
 				03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */,
 				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
 				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
+				0357967019D8435600A28334 /* YapDataSource.m in Sources */,
 				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
 				03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */,
 				03D311B31930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
@@ -1826,11 +1915,13 @@
 				03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */,
 				037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */,
-				03EFD8D619251CD700E80A71 /* PhotosDataSource.m in Sources */,
 				03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */,
 				03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */,
+				03EB627F19DE304100E65248 /* NSAttributedString+DelighftulFonts.m in Sources */,
 				03EFD8D919251CD700E80A71 /* NPRImageDownloader.m in Sources */,
 				037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */,
+				03EB624319DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
+				03EB628719DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */,
 				03EFD8DA19251CD700E80A71 /* PanelFactory.m in Sources */,
 				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
 				035DACE41983490B00557547 /* UploadReloadView.m in Sources */,
@@ -1839,6 +1930,7 @@
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
 				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
 				03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */,
+				0357966C19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */,
 				031230581927C613004AFD1E /* InfoTableViewCell.m in Sources */,
 				03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */,
 				03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */,
@@ -1847,6 +1939,7 @@
 				03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */,
 				03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */,
 				03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */,
+				03EB629319DF065700E65248 /* TransitionToInfoDelegate.m in Sources */,
 				03EFD8E719251CD700E80A71 /* NPRImageDownloaderTableViewDataSource.m in Sources */,
 				035DACC8197FAC2B00557547 /* NSString+Score.m in Sources */,
 				03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */,
@@ -1868,15 +1961,18 @@
 				03EFD8F419251CD700E80A71 /* Photo.m in Sources */,
 				03EFD8F519251CD700E80A71 /* FavoritesManager.m in Sources */,
 				03EFD8F619251CD700E80A71 /* PhotoBoxCell.m in Sources */,
-				03EFD8F719251CD700E80A71 /* PhotoBoxNavigationControllerDelegate.m in Sources */,
+				03EFD8F719251CD700E80A71 /* DLFNavigationControllerDelegate.m in Sources */,
 				03120462194C1738004EA8CB /* DLFImageUploader.m in Sources */,
 				03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */,
 				03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */,
 				03EFD8FA19251CD700E80A71 /* Tag.m in Sources */,
 				035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				03EFD8FB19251CD700E80A71 /* AlbumCell.m in Sources */,
+				03B3271C19D16B4C00B87347 /* DLFDatabaseManager.m in Sources */,
 				03EFD8FC19251CD700E80A71 /* SharerManager.m in Sources */,
 				03EFD8FD19251CD700E80A71 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */,
+				03B3271819D0750D00B87347 /* DelightfulCollectionViewController.m in Sources */,
+				03EB628319DE3A0600E65248 /* CustomBackButton.m in Sources */,
 				03EFD8FE19251CD700E80A71 /* UIView+NGAParallaxMotion.m in Sources */,
 				03EFD8FF19251CD700E80A71 /* UIImageView+Additionals.m in Sources */,
 				03EFD90019251CD700E80A71 /* PhotoBoxModel.m in Sources */,
@@ -1914,6 +2010,7 @@
 				035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
+				03EB629719DF06BF00E65248 /* TransitionToInfoPresentationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2056,6 +2153,7 @@
 					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2123,6 +2221,7 @@
 					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2255,6 +2354,7 @@
 					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = "DelightfulTestFlight-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -2280,7 +2380,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "A042EA3A-184A-4B3E-AF08-54763B1348C4";
+				PROVISIONING_PROFILE = "d9533600-f432-40cb-b232-102affa2ed8e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2291,7 +2391,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2319,6 +2419,7 @@
 					"$(SRCROOT)/**",
 				);
 				INFOPLIST_FILE = "DelightfulTestFlight-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

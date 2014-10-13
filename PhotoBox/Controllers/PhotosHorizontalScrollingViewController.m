@@ -20,42 +20,50 @@
 #import "PhotoInfoViewController.h"
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
+#import "TransitionToInfoDelegate.h"
+#import "TransitionToInfoPresentationController.h"
+
 #import <SVProgressHUD.h>
 
-@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate> {
+@interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, TransitionToInfoPresentationControllerPresentingDelegate> {
     BOOL shouldHideNavigationBar;
 }
 
 @property (nonatomic, assign) NSInteger previousPage;
-@property (nonatomic, assign) BOOL justOpened;
 @property (nonatomic, strong) UIView *darkBackgroundView;
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
-@property (nonatomic, strong) UIView *photoInfoBackgroundGradientView;
 @property (nonatomic, strong) UIButton *infoButton;
+@property (nonatomic, assign) NSInteger firstShownPhotoIndex;
+@property (nonatomic, strong) id<UIViewControllerTransitioningDelegate> transitionToInfoDelegate;
 
 @end
 
 @implementation PhotosHorizontalScrollingViewController
 
++ (PhotosHorizontalScrollingViewController *)defaultController {
+    PhotosHorizontalLayout *layout = [[PhotosHorizontalLayout alloc] init];
+    PhotosHorizontalScrollingViewController *controller = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:layout];
+    return controller;
+}
+
 - (void)viewDidLoad
 {
-    self.disableFetchOnLoad = YES;
     [super viewDidLoad];
     
-    self.numberOfColumns = 0;
-    self.previousPage = 0;
-    self.justOpened = YES;
+    [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
+    self.previousPage = 0;
+    
+    [self setupDataSource];
+    
+    [self.collectionView setDelegate:self];
     ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).scrollDirection = UICollectionViewScrollDirectionHorizontal;
     [self.collectionView registerClass:[PhotoZoomableCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
-	
     [self.collectionView setAlwaysBounceVertical:NO];
     [self.collectionView setAlwaysBounceHorizontal:YES];
     [self.collectionView setPagingEnabled:YES];
     [self.collectionView setBackgroundColor:[UIColor clearColor]];
     [self adjustCollectionViewWidthToHavePhotosSpacing];
-    
-    [self.dataSource setCellIdentifier:[self cellIdentifier]];
     
     [self.collectionView reloadData];
     
@@ -69,12 +77,10 @@
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
-    
-    self.resourceType = PhotoResource;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [self insertBackgroundSnapshotView];
+    //[self insertBackgroundSnapshotView];
     [self scrollToFirstShownPhoto];
 }
 
@@ -95,6 +101,14 @@
     [self showInfoButton:NO animated:YES];
 }
 
+- (void)setupDataSource {
+    
+}
+
+- (NSString *)cellIdentifier {
+    return @"horizontal-photos-cell";
+}
+
 - (void)adjustCollectionViewWidthToHavePhotosSpacing {
     self.collectionView.frame = ({
         CGRect frame = self.collectionView.frame;
@@ -110,17 +124,9 @@
 }
 
 - (void)scrollToFirstShownPhoto {
-    PBX_LOG(@"");
-    NSInteger numberOfItems = [self.dataSource numberOfItems];
-    NSInteger firstPhotoIndex = self.firstShownPhotoIndex;
-    if (numberOfItems>firstPhotoIndex) {
-        shouldHideNavigationBar = YES;
-        self.previousPage = self.firstShownPhotoIndex-1;
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.firstShownPhotoIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
-    } else {
-        PBX_LOG(@"Error scroll to first shown photo. Number of items = %d. First shown index = %d.", [self.dataSource numberOfItems], self.firstShownPhotoIndex);
-    }
-    
+    NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.firstShownPhoto];
+    self.previousPage = indexPath.item;
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,52 +143,20 @@
 
 #pragma mark - Orientation
 
-- (NSUInteger)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    NSIndexPath *currentIndexPath = [NSIndexPath indexPathForItem:[self currentCollectionViewPage:self.collectionView] inSection:0];
+    [((PhotosHorizontalLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:currentIndexPath];
+    [self.collectionView.collectionViewLayout invalidateLayout];
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:currentIndexPath];
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [cell setNeedsLayout];
+        [cell layoutIfNeeded];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self toggleNavigationBarHidden];
+    }];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
-#pragma mark - Override setup
-
-- (NSString *)cellIdentifier {
-    return @"photoZoomableCell";
-}
-
-- (void)setupPinchGesture {
-    // pinch not needed
-}
-
-- (void)setupRefreshControl {
-    // refresh control not needed
-}
-
-- (NSString *)resourceId {
-    return self.item.itemId;
-}
-
-- (NSString *)groupKey {
-    return nil;
-}
-
-- (NSArray *)sortDescriptors {
-    return nil;
-}
-
-- (Class)resourceClass {
-    return [Photo class];
-}
-
-- (int)pageSize {
-    return 0;
-}
-
-- (CollectionViewCellConfigureBlock)cellConfigureBlock {
-    void (^configureCell)(PhotoZoomableCell*, id) = ^(PhotoZoomableCell* cell, id item) {
-        [cell setItem:item];
-        [cell setDelegate:self];
-        [cell setGrayscaleAndZoom:NO animated:NO];
-    };
-    return configureCell;
-}
 
 #pragma mark - Interactive Gesture Recognizer Delegate
 
@@ -214,9 +188,8 @@
     return PHOTO_SPACING;
 }
 
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = collectionView.frame.size.width-PHOTO_SPACING;
+    CGFloat width = collectionView.frame.size.width - PHOTO_SPACING;
     CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
     return CGSizeMake(width, height);
 }
@@ -238,44 +211,16 @@
         }
         
         self.previousPage = page;
-        if (!self.justOpened) {
-            if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-                //NSManagedObject *photo = [self.dataSource managedObjectItemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-                [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
-                [self showLoadingBarButtonItem:NO];
-            }
-            [self insertBackgroundSnapshotView];
-        } else {
-            self.justOpened = NO;
-            [self showHintIfNeeded];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
+            id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+            
+            [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
+            [self showLoadingBarButtonItem:NO];
         }
     }
 }
 
-- (void)insertBackgroundSnapshotView {
-    if (self.backgroundViewControllerView) {
-        [self.backgroundViewControllerView removeFromSuperview];
-    }
-    UIView *bgView = [self.delegate snapshotView];
-    self.backgroundViewControllerView = bgView;
-    [self.backgroundViewControllerView setBackgroundColor:[UIColor whiteColor]];
-    CGRect frame = ({
-        CGRect frame = self.backgroundViewControllerView.frame;
-        frame.origin = self.collectionView.frame.origin;
-        frame;
-    });
-    [self.backgroundViewControllerView setFrame:frame];
-    UIView *whiteView = [[UIView alloc] initWithFrame:[self.delegate selectedItemRectInSnapshot]];
-    [whiteView setBackgroundColor:[UIColor whiteColor]];
-    [self.backgroundViewControllerView addSubview:whiteView];
-    [self.collectionView.superview insertSubview:self.backgroundViewControllerView belowSubview:self.collectionView];
-}
-
 - (NSInteger)currentCollectionViewPage:(UIScrollView *)scrollView{
-    if (self.justOpened) {
-        return self.firstShownPhotoIndex;
-    }
     CGFloat pageWidth = scrollView.frame.size.width;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
@@ -300,18 +245,28 @@
 #pragma mark - Zoomable Cell delegate
 
 - (void)didCancelClosingPhotosHorizontalViewController {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cancelDismissViewController:)]) {
+        [self.delegate cancelDismissViewController:self];
+    }
 }
 
-- (void)didClosePhotosHorizontalViewController{
+- (void)didReachPercentageToClosePhotosHorizontalViewController {
     PBX_LOG(@"Popping from horizontal view controller");
     [[self currentCell] setClosingViewController:YES];
-    [self.delegate photosHorizontalWillClose];
-    [self.navigationController popViewControllerAnimated:YES];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(shouldClosePhotosHorizontalViewController:)]) {
+        [self.delegate shouldClosePhotosHorizontalViewController:self];
+    }
 }
 
 - (void)didDragDownWithPercentage:(float)progress {
-    [self.darkBackgroundView setAlpha:MIN(1-progress+0.3, 1)];
+    CGFloat alpha = MIN(1-progress+0.2, 1);
+    [self.darkBackgroundView setAlpha:alpha];
+    if (progress > 0) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(willDismissViewController:)]) {
+            [self.delegate willDismissViewController:self];
+        }
+    }
+    
 }
 
 #pragma mark - Button
@@ -320,28 +275,18 @@
     [sender setEnabled:NO];
     [self showInfoButton:NO animated:YES];
     
-    BOOL isGrayscaled = [[self currentCell] isGrayscaled];
-    [self setNavigationBarHidden:!isGrayscaled animated:YES];
-    [[self currentCell] setGrayscaleAndZoom:!isGrayscaled];
-    
-    UIView *gradientView = [[self currentCell] addTransparentGradientWithStartColor:[UIColor blackColor] fromStartPoint:CGPointMake(0, 1) endPoint:CGPointMake(0.7, 0.5)];
-    self.photoInfoBackgroundGradientView = gradientView;
-    [gradientView setAlpha:0];
-    
     PhotoInfoViewController *photoInfo = [[PhotoInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [photoInfo setPhoto:[[self currentCell] item]];
     [photoInfo setDelegate:self];
-    [photoInfo willMoveToParentViewController:self];
-    [self addChildViewController:photoInfo];
-    [self.view addSubview:photoInfo.view];
-    [photoInfo didMoveToParentViewController:self];
-    [photoInfo.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
+    [photoInfo setModalPresentationStyle:UIModalPresentationCustom];
+    if (!self.transitionToInfoDelegate) {
+        self.transitionToInfoDelegate = [[TransitionToInfoDelegate alloc] init];
+    }
+    [photoInfo setTransitioningDelegate:self.transitionToInfoDelegate];
     
-    [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
-        [gradientView setAlpha:1];
-        [photoInfo.view setOriginY:0];
-    } completion:^(BOOL finished) {
-        [sender setEnabled:YES];
+    [self presentViewController:photoInfo animated:YES completion:^{
+        //[sender setEnabled:YES];
+        //[self showInfoButton:YES animated:YES];
     }];
 }
 
@@ -392,7 +337,7 @@
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.cellImageView.image tokenFetchedBlock:^(id token) {
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.thisImageview.image tokenFetchedBlock:^(id token) {
         [weakSelf showLoadingBarButtonItem:NO];
         if (token) {
             [[NPRNotificationManager sharedManager] hideNotification];
@@ -491,15 +436,7 @@
 #pragma mark - Photo Info View Controller
 
 - (void)photoInfoViewControllerDidClose:(PhotoInfoViewController *)photoInfo {
-    UIViewController *childVC = [self childViewControllers][0];
-    [childVC removeFromParentViewController];
-    [UIView animateWithDuration:0.5 animations:^{
-        [childVC.view setOriginY:CGRectGetHeight(self.collectionView.frame)];
-        [self.photoInfoBackgroundGradientView setAlpha:0];
-    } completion:^(BOOL finished) {
-        [childVC.view removeFromSuperview];
-        [self.photoInfoBackgroundGradientView removeFromSuperview];
-        [[self currentCell] setGrayscaleAndZoom:NO animated:YES];
+    [photoInfo dismissViewControllerAnimated:YES completion:^{
         [self showInfoButton:YES animated:YES];
     }];
 }
@@ -508,12 +445,44 @@
     [[[self currentCell] grayImageView] setAlpha:1-progress];
 }
 
+#pragma mark - TransitionToInfoPresentationControllerPresentingDelegate
+
+- (void)willAnimateAlongTransitionToPresentInfoController:(id)presentationController {
+    [[self currentCell] setGrayscale:YES];
+}
+
+- (void)animateAlongTransitionToPresentInfoController:(id)presentationController{
+    [self setNavigationBarHidden:YES animated:YES];
+    [[self currentCell] setZoomToFillScreen:YES];
+}
+
+- (void)dismissAlongTransitionToInfoController:(id)presentationController {
+    [[self currentCell] setGrayscale:NO];
+    [[self currentCell] setZoomToFillScreen:NO];
+}
+
+- (void)didFinishDismissAnimationFromInfoControllerPresentationController:(id)presentationController {
+    [self.infoButton setEnabled:YES];
+}
+
 #pragma mark - Alert 
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         [self continueDownloadOriginalImage];
     }
+}
+
+@end
+
+@implementation PhotosHorizontalLayout
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
+    if (self.targetIndexPath) {
+        UICollectionViewLayoutAttributes *attr = [self layoutAttributesForItemAtIndexPath:self.targetIndexPath];
+        return CGPointMake(attr.frame.origin.x, 0);
+    }
+    return proposedContentOffset;
 }
 
 @end

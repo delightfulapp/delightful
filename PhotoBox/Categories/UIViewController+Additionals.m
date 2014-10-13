@@ -35,8 +35,8 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 @implementation UIViewController (Additionals)
 
 - (void)showLoadingView:(BOOL)show atCenterY:(CGFloat)centerY {
-    if ([self isKindOfClass:[UICollectionViewController class]]) {
-        UICollectionViewController *cv = (UICollectionViewController *)self;
+    if ([self isKindOfClass:[PhotoBoxViewController class]]) {
+        PhotoBoxViewController *cv = (PhotoBoxViewController *)self;
         if (show) {
             UIActivityIndicatorView *activity = (UIActivityIndicatorView *)[cv.collectionView viewWithTag:kLoadingViewTag];
             if (!activity) {
@@ -146,14 +146,8 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 }
 
 - (void)setNavigationBarHidden:(BOOL)hide animated:(BOOL)animated {
-    if (hide) {
-        PBX_LOG(@"Hiding navigation bar");
-    } else {
-        PBX_LOG(@"Showing navigaiton bar");
-    }
     if (animated) {
-        [[UIApplication sharedApplication] setStatusBarHidden:hide
-                                                withAnimation:UIStatusBarAnimationFade];
+        //[[UIApplication sharedApplication] setStatusBarHidden:hide withAnimation:UIStatusBarAnimationFade];
         
         //Fade navigation bar
         [UINavigationBar beginAnimations:nil context:nil];
@@ -165,7 +159,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
         
         objc_setAssociatedObject(self, isNavigationBarHidden, @(hide), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     } else {
-        [[UIApplication sharedApplication] setStatusBarHidden:hide];
+        //[[UIApplication sharedApplication] setStatusBarHidden:hide];
         self.navigationController.navigationBar.alpha = (hide)?0:1;
         self.navigationController.navigationBarHidden = NO;
     }
@@ -189,7 +183,6 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [photosViewController setTitle:album.name];
     [photosViewController setRelationshipKeyPathWithItem:@"albums"];
     [photosViewController setResourceType:PhotoResource];
-    [photosViewController refreshIfNeeded];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];
@@ -201,7 +194,6 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
     [photosViewController setRelationshipKeyPathWithItem:@"tags"];
     [photosViewController setResourceType:PhotoWithTagsResource];
-    [photosViewController refreshIfNeeded];
     
     JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
     [panelController toggleLeftPanel:nil];
