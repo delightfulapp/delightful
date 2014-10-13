@@ -11,6 +11,8 @@
 #import <YapDatabase.h>
 
 NSString *photosCollectionName = @"photos";
+NSString *albumsCollectionName = @"albums";
+NSString *tagsCollectionName = @"tags";
 
 @interface DLFDatabaseManager ()
 

@@ -16,7 +16,5 @@
 @property (nonatomic, copy, readonly) NSString *tagId;
 @property (nonatomic, copy, readonly) NSString *owner;
 
-@property (nonatomic, copy, readonly) NSArray *photos;
-
 
 @end

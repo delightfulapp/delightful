@@ -93,7 +93,9 @@ static void * imageUploadContext = &imageUploadContext;
     
     //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
     
-    [[SyncEngine sharedEngine] startSyncing];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[SyncEngine sharedEngine] startSyncing];
+    });
     
     return YES;
 }

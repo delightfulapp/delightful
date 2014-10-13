@@ -14,6 +14,10 @@
 
 #import "Photo.h"
 
+#import "Album.h"
+
+#import "Tag.h"
+
 #import <YapDatabase.h>
 
 #define FETCHING_PAGE_SIZE 100
@@ -52,13 +56,47 @@
 }
 
 - (void)startSyncing {
-    [self syncAlbum];
+    [self fetchAlbumsForPage:1];
     [self fetchPhotosForPage:0];
-    [self syncTags];
+    [self fetchTagsForPage:1];
 }
 
-- (void)syncAlbum {
-    
+- (void)fetchTagsForPage:(int)page {
+    NSLog(@"Fetching tags page %d", page);
+    [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
+        NSLog(@"Did finish fetching %d tags page %d", (int)tags.count, page);
+        if (tags.count > 0) {
+            [self.bgConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                for (Tag *tag in tags) {
+                    [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName];
+                }
+            } completionBlock:^{
+                NSLog(@"Done inserting tags to db");
+            }];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"Error fetching tags page %d: %@", page, error);
+    }];
+}
+
+- (void)fetchAlbumsForPage:(int)page {
+    NSLog(@"Fetching albums page %d", page);
+    [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
+        NSLog(@"Did finish fetching %d albums page %d", (int)albums.count, page);
+        if (albums.count > 0) {
+            [self.bgConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                for (Album *album in albums) {
+                    [transaction setObject:album forKey:album.albumId inCollection:albumsCollectionName];
+                }
+            } completionBlock:^{
+                NSLog(@"Done inserting albums to db");
+            }];
+            
+            [self fetchAlbumsForPage:page+1];
+        }
+    } failure:^(NSError *error) {
+        NSLog(@"Error fetching albums page %d: %@", page, error);
+    }];
 }
 
 - (void)syncTags {
@@ -75,7 +113,7 @@
                     [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
                 }
             } completionBlock:^{
-                NSLog(@"Done inserting to db");
+                NSLog(@"Done inserting photos to db");
             }];
             
             [self fetchPhotosForPage:page+1];

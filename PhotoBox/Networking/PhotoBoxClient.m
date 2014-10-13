@@ -131,7 +131,7 @@
 
 - (void)getTagsForPage:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     [self loginIfNecessaryToConnect:^{
-        [self GET:[NSString stringWithFormat:@"v1/tags/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Tag class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+        [self GET:[NSString stringWithFormat:@"v1/tags/list.json?page=%d&pageSize=%d",page, pageSize] parameters:nil resultClass:[Tag class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
     }];
 }
 
@@ -188,7 +188,7 @@
             successBlock(responseObject);
         } else {
             if (operation.response.statusCode == 401) {
-                [[ConnectionManager sharedManager] logout];
+               // [[ConnectionManager sharedManager] logout];
             } else {
                 failureBlock(error);
             }
