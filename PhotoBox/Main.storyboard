@@ -170,7 +170,7 @@
         <scene sceneID="XMg-bq-2vX">
             <objects>
                 <navigationController title="Photos" automaticallyAdjustsScrollViewInsets="NO" id="fRH-fZ-8Pp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Photos" id="bnj-gL-gYa"/>
+                    <tabBarItem key="tabBarItem" title="Photos" image="photos" id="bnj-gL-gYa"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="jt5-Ze-zDa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -258,7 +258,7 @@
         <scene sceneID="soX-9v-69B">
             <objects>
                 <navigationController title="Albums" automaticallyAdjustsScrollViewInsets="NO" id="bWy-DQ-TZW" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Albums" id="qIg-5W-7yy"/>
+                    <tabBarItem key="tabBarItem" title="Albums" image="albums" id="qIg-5W-7yy"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="abV-L7-LuX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -275,6 +275,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="albums" width="25" height="25"/>
         <image name="loginbackground.jpg" width="640" height="1136"/>
+        <image name="photos" width="25" height="25"/>
     </resources>
 </document>
