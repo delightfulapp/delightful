@@ -141,53 +141,62 @@
     }
     
     NSLog(@"begin updates");
+    //NSLog(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
+    
     [self.mainConnection beginLongLivedReadTransaction];
     
-    [self.collectionView performBatchUpdates:^{
-        for (YapDatabaseViewSectionChange *sectionChange in sectionChanges) {
-            switch (sectionChange.type) {
-                case YapDatabaseViewChangeDelete:{
-                    [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
-                    break;
+    void (^performBatchUpdates)() = ^void() {
+        [self.collectionView performBatchUpdates:^{
+            for (YapDatabaseViewSectionChange *sectionChange in sectionChanges) {
+                switch (sectionChange.type) {
+                    case YapDatabaseViewChangeDelete:{
+                        [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
+                        break;
+                    }
+                    case YapDatabaseViewChangeInsert:{
+                        [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                case YapDatabaseViewChangeInsert:{
-                    [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
-                    break;
-                }
-                default:
-                    break;
             }
-        }
-        
-        
-        for (YapDatabaseViewRowChange *rowChange in rowChanges) {
-            switch (rowChange.type) {
-                case YapDatabaseViewChangeDelete:{
-                    [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
-                    break;
+            
+            
+            for (YapDatabaseViewRowChange *rowChange in rowChanges) {
+                switch (rowChange.type) {
+                    case YapDatabaseViewChangeDelete:{
+                        [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
+                        break;
+                    }
+                    case YapDatabaseViewChangeInsert:{
+                        [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                        break;
+                    }
+                    case YapDatabaseViewChangeMove:{
+                        [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
+                        [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                        break;
+                    }
+                    case YapDatabaseViewChangeUpdate:{
+                        [self.collectionView  reloadItemsAtIndexPaths:@[rowChange.indexPath]];
+                        break;
+                    }
+                    default:
+                        break;
                 }
-                case YapDatabaseViewChangeInsert:{
-                    [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
-                    break;
-                }
-                case YapDatabaseViewChangeMove:{
-                    [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
-                    [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
-                    break;
-                }
-                case YapDatabaseViewChangeUpdate:{
-                    [self.collectionView  reloadItemsAtIndexPaths:@[rowChange.indexPath]];
-                    break;
-                }
-                default:
-                    break;
             }
-        }
-    } completion:^(BOOL finished) {
-        
-    }];
+        } completion:^(BOOL finished) {
+            
+        }];
+    };
+
     
-    
+    if ([self.collectionView isDragging] || [self.collectionView isDecelerating] || [self.collectionView isTracking]) {
+        [self.collectionView reloadData];
+    } else {
+        performBatchUpdates();
+    }
 }
 
 @end

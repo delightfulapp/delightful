@@ -57,8 +57,8 @@
 
 - (void)startSyncing {
     [self fetchAlbumsForPage:1];
-    //[self fetchPhotosForPage:0];
-    //[self fetchTagsForPage:1];
+    [self fetchPhotosForPage:0];
+    [self fetchTagsForPage:1];
 }
 
 - (void)fetchTagsForPage:(int)page {
