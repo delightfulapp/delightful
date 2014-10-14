@@ -87,6 +87,10 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
+- (void)restoreContentInset {
+    
+}
+
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {

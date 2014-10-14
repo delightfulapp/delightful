@@ -112,6 +112,8 @@
 		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
+		035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
+		035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
 		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
@@ -540,6 +542,8 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
+		035B034B19ECAD4400153F24 /* AlbumsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsDataSource.h; sourceTree = "<group>"; };
+		035B034C19ECAD4400153F24 /* AlbumsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsDataSource.m; sourceTree = "<group>"; };
 		035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumsPickerViewController.h; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.h; sourceTree = "<group>"; };
 		035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumsPickerViewController.m; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.m; sourceTree = "<group>"; };
 		035DACB1197F88B800557547 /* TagEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEntryTableViewCell.h; path = PhotoBox/Cells/TagEntryTableViewCell.h; sourceTree = "<group>"; };
@@ -1097,6 +1101,8 @@
 				0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */,
 				0357967519D860F100A28334 /* FlattenedPhotosDataSource.h */,
 				0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */,
+				035B034B19ECAD4400153F24 /* AlbumsDataSource.h */,
+				035B034C19ECAD4400153F24 /* AlbumsDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1768,6 +1774,7 @@
 				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
+				035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
@@ -1908,6 +1915,7 @@
 				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,
 				03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */,
+				035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
 				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
 				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,

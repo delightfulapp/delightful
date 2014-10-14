@@ -123,6 +123,8 @@
     
     [self setupRightBarButtonsWithSettings:YES];
     
+    self.title = NSLocalizedString(@"Photos", nil);
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
