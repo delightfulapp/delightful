@@ -16,4 +16,6 @@
 
 @property (nonatomic, assign, readonly) BOOL isSyncing;
 
+@property (nonatomic, assign) BOOL pauseSync;
+
 @end

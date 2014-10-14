@@ -128,17 +128,12 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (!self.observing) {
-        self.observing = YES;
-        JASidePanelController *panel = [UIViewController panelViewController];
-        if (panel) {
-            [panel addObserver:self forKeyPath:@"state" options:0 context:nil];
-        }
-    }
-    
-    if (![((AppDelegate *)[[UIApplication sharedApplication] delegate]) showUpdateInfoViewIfNeeded]) {
-        [self showPinchGestureTipIfNeeded];
-    }
+    [((YapDataSource *)self.dataSource) setPause:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"view will disappear");
+    [((YapDataSource *)self.dataSource) setPause:YES];
 }
 
 - (void)didReceiveMemoryWarning

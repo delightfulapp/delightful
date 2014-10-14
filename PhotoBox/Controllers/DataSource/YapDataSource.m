@@ -140,10 +140,15 @@
         return;
     }
     
-    NSLog(@"begin updates");
+    NSLog(@"begin updates %@", NSStringFromClass(self.class));
     //NSLog(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
     
     [self.mainConnection beginLongLivedReadTransaction];
+    
+    if (self.pause) {
+        [self.collectionView reloadData];
+        return;
+    }
     
     void (^performBatchUpdates)() = ^void() {
         [self.collectionView performBatchUpdates:^{
@@ -193,7 +198,7 @@
 
     
     if ([self.collectionView isDragging] || [self.collectionView isDecelerating] || [self.collectionView isTracking]) {
-        [self.collectionView reloadData];
+        
     } else {
         performBatchUpdates();
     }

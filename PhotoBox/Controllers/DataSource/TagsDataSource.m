@@ -21,10 +21,14 @@ NSString *tagsAlphabeticalFirstViewName = @"alphabetical-first-tags";
 - (void)setupDatabase {
     [super setupDatabase];
     
-    self.alphabeticalFirstTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:YES];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        self.alphabeticalFirstTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:YES];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
+        });
+    });
     
-    
-    [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
 }
 
 @end

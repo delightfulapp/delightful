@@ -116,6 +116,8 @@
 		035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
 		035B035119ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
 		035B035219ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
+		035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035419ECDC3E00153F24 /* MainTabBarController.m */; };
+		035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035419ECDC3E00153F24 /* MainTabBarController.m */; };
 		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
@@ -548,6 +550,8 @@
 		035B034C19ECAD4400153F24 /* AlbumsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsDataSource.m; sourceTree = "<group>"; };
 		035B034F19ECC72800153F24 /* TagsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsDataSource.h; sourceTree = "<group>"; };
 		035B035019ECC72800153F24 /* TagsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsDataSource.m; sourceTree = "<group>"; };
+		035B035319ECDC3E00153F24 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabBarController.h; path = PhotoBox/Controllers/MainTabBarController.h; sourceTree = "<group>"; };
+		035B035419ECDC3E00153F24 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabBarController.m; path = PhotoBox/Controllers/MainTabBarController.m; sourceTree = "<group>"; };
 		035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumsPickerViewController.h; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.h; sourceTree = "<group>"; };
 		035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumsPickerViewController.m; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.m; sourceTree = "<group>"; };
 		035DACB1197F88B800557547 /* TagEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEntryTableViewCell.h; path = PhotoBox/Cells/TagEntryTableViewCell.h; sourceTree = "<group>"; };
@@ -1084,6 +1088,8 @@
 				035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */,
 				03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */,
 				03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */,
+				035B035319ECDC3E00153F24 /* MainTabBarController.h */,
+				035B035419ECDC3E00153F24 /* MainTabBarController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1778,6 +1784,7 @@
 			files = (
 				0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
 				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
+				035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
 				035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
@@ -1920,6 +1927,7 @@
 			files = (
 				0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
 				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
+				035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,
 				03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */,
 				035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,

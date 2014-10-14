@@ -28,6 +28,10 @@
 
 @property (nonatomic, strong) YapDatabaseConnection *bgConnection;
 
+@property (nonatomic, assign) int albumsFetchingPage;
+
+@property (nonatomic, assign) int photosFetchingPage;
+
 @end
 
 @implementation SyncEngine
@@ -61,6 +65,15 @@
     [self fetchTagsForPage:1];
 }
 
+- (void)setPauseSync:(BOOL)pauseSync {
+    _pauseSync = pauseSync;
+    
+    if (!_pauseSync) {
+        [self fetchPhotosForPage:self.photosFetchingPage];
+        [self fetchAlbumsForPage:self.albumsFetchingPage];
+    }
+}
+
 - (void)fetchTagsForPage:(int)page {
     NSLog(@"Fetching tags page %d", page);
     [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
@@ -92,15 +105,18 @@
                 NSLog(@"Done inserting albums to db");
             }];
             
-            [self fetchAlbumsForPage:page+1];
+            if (self.pauseSync) {
+                self.albumsFetchingPage = page;
+            } else {
+                [self fetchAlbumsForPage:page+1];
+            }
+        } else {
+            self.albumsFetchingPage = 0;
         }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching albums page %d: %@", page, error);
+        self.albumsFetchingPage = page;
     }];
-}
-
-- (void)syncTags {
-    
 }
 
 - (void)fetchPhotosForPage:(int)page {
@@ -116,10 +132,17 @@
                 NSLog(@"Done inserting photos to db");
             }];
             
-            [self fetchPhotosForPage:page+1];
+            if (self.pauseSync) {
+                self.photosFetchingPage = page;
+            } else {
+                [self fetchPhotosForPage:page+1];
+            }
+        } else {
+            self.photosFetchingPage = 0;
         }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching photos page %d: %@", page, error);
+        self.photosFetchingPage = page;
     }];
 }
 
