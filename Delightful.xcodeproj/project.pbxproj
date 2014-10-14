@@ -114,6 +114,8 @@
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
 		035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
+		035B035119ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
+		035B035219ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
 		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
@@ -544,6 +546,8 @@
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
 		035B034B19ECAD4400153F24 /* AlbumsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsDataSource.h; sourceTree = "<group>"; };
 		035B034C19ECAD4400153F24 /* AlbumsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsDataSource.m; sourceTree = "<group>"; };
+		035B034F19ECC72800153F24 /* TagsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsDataSource.h; sourceTree = "<group>"; };
+		035B035019ECC72800153F24 /* TagsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsDataSource.m; sourceTree = "<group>"; };
 		035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumsPickerViewController.h; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.h; sourceTree = "<group>"; };
 		035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumsPickerViewController.m; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.m; sourceTree = "<group>"; };
 		035DACB1197F88B800557547 /* TagEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEntryTableViewCell.h; path = PhotoBox/Cells/TagEntryTableViewCell.h; sourceTree = "<group>"; };
@@ -1103,6 +1107,8 @@
 				0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */,
 				035B034B19ECAD4400153F24 /* AlbumsDataSource.h */,
 				035B034C19ECAD4400153F24 /* AlbumsDataSource.m */,
+				035B034F19ECC72800153F24 /* TagsDataSource.h */,
+				035B035019ECC72800153F24 /* TagsDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1882,6 +1888,7 @@
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 				035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035B035119ECC72800153F24 /* TagsDataSource.m in Sources */,
 				035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
@@ -2023,6 +2030,7 @@
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
 				035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035B035219ECC72800153F24 /* TagsDataSource.m in Sources */,
 				035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */,

@@ -22,6 +22,8 @@
 
 #import "UIViewController+Additionals.h"
 
+#import "TagsDataSource.h"
+
 @interface TagsViewController ()
 
 @end
@@ -56,6 +58,8 @@
     
     [self setup];
     [self.collectionView registerClass:[TagRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
+    
+    [self setTitle:NSLocalizedString(@"Tags", nil)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +70,10 @@
 
 #pragma mark - Getters
 
+- (Class)dataSourceClass {
+    return TagsDataSource.class;
+}
+
 - (ResourceType)resourceType {
     return TagResource;
 }
@@ -74,20 +82,8 @@
     return [Tag class];
 }
 
-- (NSString *)sectionHeaderIdentifier {
-    return @"tagSection";
-}
-
 - (NSString *)cellIdentifier {
     return @"tagCell";
-}
-
-- (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(tagId)) ascending:YES]];
-}
-
-- (int)pageSize {
-    return 0;
 }
 
 #pragma mark - Do stuff
