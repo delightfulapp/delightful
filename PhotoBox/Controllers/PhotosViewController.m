@@ -113,16 +113,11 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
-    //[self.collectionView.viewForBaselineLayout.layer setSpeed:0.8f];
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
-    
-    //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
-    
-    [self setupRightBarButtonsWithSettings:YES];
-    
+        
     self.title = NSLocalizedString(@"Photos", nil);
     
 }
@@ -140,28 +135,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (void)setupRightBarButtonsWithSettings:(BOOL)showSetting {
-    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
-    
-    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    [spaceItem setWidth:15];
-    
-    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 23)];
-    [cameraButton setImage:[[UIImage imageNamed:@"upload.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *cameraBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraButton];
-    
-    
-    if (showSetting) {
-        [self.navigationItem setRightBarButtonItems:@[settingBarButtonItem, spaceItem, cameraBarButtonItem, spaceItem]];
-    } else {
-        [self.navigationItem setRightBarButtonItems:@[cameraBarButtonItem, spaceItem]];
-    }
 }
 
 #pragma mark - ScrollView
