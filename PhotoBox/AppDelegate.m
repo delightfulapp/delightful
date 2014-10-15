@@ -24,23 +24,13 @@
 
 #import "TagsViewController.h"
 
-#import "AlbumsTagsViewController.h"
-
 #import "StickyHeaderFlowLayout.h"
 
-#import "PanelsContainerViewController.h"
-
 #import "Album.h"
-
-#import <JASidePanelController.h>
-
-#import "LeftViewController.h"
 
 #import "DLFImageUploader.h"
 
 #import <Lookback/Lookback.h>
-
-#import "PhotosViewController.h"
 
 #import "SyncEngine.h"
 
@@ -80,10 +70,6 @@ static void * imageUploadContext = &imageUploadContext;
 //            [alert show];
 //        }
 //    }
-    UITabBarController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
-    UINavigationController *navCOn = [rootController.viewControllers firstObject];
-    PhotosViewController *photosVC = (PhotosViewController *)([navCOn.viewControllers firstObject]);
-    [photosVC setItem:[Album allPhotosAlbum]];
     
     [self runCrashlytics];
     
@@ -143,28 +129,6 @@ static void * imageUploadContext = &imageUploadContext;
     
     return YES;
 }
-
-#pragma mark - Navigation
-
-- (void)showAllPhotosWithStoryboard:(UIStoryboard *)storyBoard rootViewController:(UINavigationController *)rootNavigationController {
-    PhotosViewController *photos = [storyBoard instantiateViewControllerWithIdentifier:@"photosViewController"];
-    [photos setItem:[Album allPhotosAlbum]];
-    [rootNavigationController pushViewController:photos animated:NO];
-}
-
-#pragma mark - Orientation
-//
-//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-//    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
-//    
-//    if(self.window.rootViewController){
-//        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
-//        orientations = [presentedViewController supportedInterfaceOrientations];
-//    }
-//    
-//    return orientations;
-//}
-
 
 #pragma mark - Unit Test
 

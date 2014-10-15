@@ -15,10 +15,6 @@
 #import "Album.h"
 #import "Tag.h"
 
-#import "UIViewController+DelightfulViewControllers.h"
-
-#import <JASidePanelController.h>
-
 #import "AppDelegate.h"
 
 #import <Social/Social.h>
@@ -176,27 +172,5 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [self setNavigationBarHidden:hide animated:YES];
 }
 
-- (void)loadPhotosInAlbum:(Album *)album {
-    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
-    [photosViewController setItem:album];
-    [photosViewController setupRightBarButtonsWithSettings:[album.albumId isEqualToString:PBX_allAlbumIdentifier]];
-    [photosViewController setTitle:album.name];
-    [photosViewController setRelationshipKeyPathWithItem:@"albums"];
-    [photosViewController setResourceType:PhotoResource];
-    
-    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
-    [panelController toggleLeftPanel:nil];
-}
-
-- (void)loadPhotosInTag:(Tag *)tag {
-    PhotosViewController *photosViewController = [UIViewController mainPhotosViewController];
-    [photosViewController setItem:tag];
-    [photosViewController setTitle:[NSString stringWithFormat:@"#%@",tag.tagId]];
-    [photosViewController setRelationshipKeyPathWithItem:@"tags"];
-    [photosViewController setResourceType:PhotoWithTagsResource];
-    
-    JASidePanelController *panelController = (JASidePanelController *)[[((AppDelegate *)[[UIApplication sharedApplication] delegate]) window] rootViewController];
-    [panelController toggleLeftPanel:nil];
-}
 
 @end

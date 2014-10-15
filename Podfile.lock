@@ -11,7 +11,6 @@ PODS:
   - DAProgressOverlayView (1.0.2)
   - Expecta (0.2.4)
   - GPUImage (0.1.4)
-  - JASidePanels (1.1.1)
   - Lookback (0.6.4)
   - Mantle (1.4.1):
     - Mantle/extobjc
@@ -46,7 +45,6 @@ DEPENDENCIES:
   - DAProgressOverlayView
   - Expecta (~> 0.2.3)
   - GPUImage (= 0.1.4)
-  - JASidePanels (from `https://github.com/nicnocquee/JASidePanels`)
   - Lookback
   - Mantle (= 1.4.1)
   - MBProgressHUD (~> 0.5)
@@ -67,8 +65,6 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   CTAssetsPickerController:
     :git: git@github.com:nicnocquee/CTAssetsPickerController.git
-  JASidePanels:
-    :git: https://github.com/nicnocquee/JASidePanels
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
@@ -78,7 +74,6 @@ SPEC CHECKSUMS:
   DAProgressOverlayView: 66f743e4bbbb0b5fe241670b9156d948cc228fc1
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
-  JASidePanels: fa574aef328c8780a49100bdb5ed4f4ba6c5b265
   Lookback: b95ec58d73b9a706735df6230dc83dbb62831abb
   Mantle: 1ca9c0fa84d3d3fc98524e7229f30489b6dd44e5
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be

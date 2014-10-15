@@ -25,28 +25,16 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @interface PhotoBoxViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
-@property (nonatomic, strong) PhotoBoxModel *item;
 @property (nonatomic, assign) ResourceType resourceType;
 @property (nonatomic, strong) Class resourceClass;
 @property (nonatomic, strong) NSString *resourceId;
-@property (nonatomic, strong) NSString *displayedItemIdKey;
 @property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
 @property (nonatomic, strong, readonly) NSString *cellIdentifier;
 @property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
-@property (nonatomic, assign) int page;
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, assign) BOOL isRefreshing;
-@property (nonatomic, assign) BOOL isFetching;
-@property (nonatomic, assign) BOOL disableFetchOnLoad;
-@property (nonatomic, assign) int numberOfColumns;
-@property (nonatomic, strong) NSString *fetchedInIdentifier;
-@property (nonatomic, strong) UICollectionViewCell *selectedCell;
 
-@property (nonatomic, assign) int totalPages;
-@property (nonatomic, assign) int totalItems;
-@property (nonatomic, assign) int currentPage;
-@property (nonatomic, assign) int currentRow;
-@property (nonatomic, assign, readonly) int pageSize;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, assign) int numberOfColumns;
+@property (nonatomic, strong) UICollectionViewCell *selectedCell;
 
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
@@ -54,23 +42,15 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 - (Class)dataSourceClass;
 - (void)refresh;
-- (NSString *)refreshKey;
-- (NSArray *)cachedItems;
 - (void)showError:(NSError *)error;
 - (CollectionViewCellConfigureBlock)cellConfigureBlock;
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock;
-- (void)didFetchItems;
 - (void)setupDataSourceConfigureBlock;
 - (void)setTitle:(NSString *)title subtitle:(NSString *)sub;
 - (void)didChangeNumberOfColumns;
-- (void)fetchMore;
 - (void)setAttributedTitle:(NSAttributedString *)title;
 - (void)restoreContentInset;
 - (void)restoreContentInsetForSize:(CGSize)size;
-- (BOOL)isGallery ;
-- (void)processPaginationFromObjects:(id)objects;
-- (void)willLoadDataFromCache;
-- (void)didLoadDataFromCache;
 
 - (void)userDidLogout;
 @end

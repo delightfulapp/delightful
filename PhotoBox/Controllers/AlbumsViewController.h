@@ -25,6 +25,4 @@
 
 @property (nonatomic, assign) CGFloat headerViewHeight;
 
-- (void)scrollToTheTop;
-
 @end

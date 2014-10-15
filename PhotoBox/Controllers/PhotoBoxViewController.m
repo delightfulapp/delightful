@@ -36,14 +36,11 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 @property (nonatomic, assign, getter = isShowingAlert) BOOL showingAlert;
-@property (nonatomic, strong) UIActivityIndicatorView *loadingView;
 @property (nonatomic, assign) CGSize currentSize;
 
 @end
 
 @implementation PhotoBoxViewController
-
-@synthesize pageSize = _pageSize;
 
 - (void)viewDidLoad
 {
@@ -53,9 +50,7 @@ NSString *const galleryContainerType = @"gallery";
     
     [self.dataSource setDebugName:NSStringFromClass([self class])];
     
-    self.page = INITIAL_PAGE_NUMBER;
     self.numberOfColumns = 3;
-    _pageSize = BATCH_SIZE;
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
@@ -66,11 +61,6 @@ NSString *const galleryContainerType = @"gallery";
     [self setupNavigationItemTitle];
     
     [self.collectionView reloadData];
-    
-    if (!self.disableFetchOnLoad) {
-        PBX_LOG(@"Gonna fetch resource in view did load");
-        [self refreshIfNeeded];
-    }
     
     [self restoreContentInset];
     
@@ -223,34 +213,6 @@ NSString *const galleryContainerType = @"gallery";
     return nil;
 }
 
-- (NSString *)displayedItemIdKey {
-    NSString *itemClassName = [NSStringFromClass([self resourceClass]) lowercaseString];
-    return [NSString stringWithFormat:@"%@Id", itemClassName];
-}
-
-- (UIActivityIndicatorView *)loadingView {
-    if (!_loadingView) {
-        _loadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [_loadingView setHidesWhenStopped:YES];
-    }
-    return _loadingView;
-}
-
-- (NSString *)fetchedInIdentifier {
-    if ([self isGallery]) {
-        return galleryContainerType;
-    }
-    return [[self relationshipKeyPathWithItem] stringByAppendingFormat:@"-%@", [self.item itemId]];
-}
-
-- (NSString *)groupKey {
-    return nil;
-}
-
-- (NSPredicate *)predicate {
-    return nil;
-}
-
 #pragma mark - Setter
 
 - (void)setAttributedTitle:(NSAttributedString *)title {
@@ -277,150 +239,17 @@ NSString *const galleryContainerType = @"gallery";
     [self setTitle:title subtitle:nil];
 }
 
-#pragma mark - Connection
-
-- (void)fetchResource {
-    return;
-    [self showLoadingView:YES];
-    PBX_LOG(@"Fetching resource: %@", NSStringFromClass(self.resourceClass));
-    /*
-    [[PhotoBoxClient sharedClient] getResource:self.resourceType
-                                        action:ListAction
-                                    resourceId:self.resourceId
-                                     fetchedIn:[self fetchedInIdentifier]
-                                          page:self.page
-                                      pageSize:self.pageSize mainContext:nil
-                                       success:^(id objects) {
-                                           [self showLoadingView:NO];
-                                           if (objects) {
-                                               if (self.refreshControl.isRefreshing) {
-                                                   self.collectionView.contentInset = ({
-                                                       UIEdgeInsets inset = self.collectionView.contentInset;
-                                                       inset.top += self.refreshControl.frame.size.height;
-                                                       inset;
-                                                   });
-                                                   [self.refreshControl endRefreshing];
-                                                   [self restoreContentInset];
-                                                   
-                                               }
-                                               PBX_LOG(@"Received %lu %@. Total shown = %ld", (unsigned long)((NSArray *)objects).count, NSStringFromClass(self.resourceClass), (long)[self.dataSource numberOfItems]);
-                                               [self processPaginationFromObjects:objects];
-                                               
-                                               self.isFetching = NO;
-                                               
-                                               [self.dataSource addItems:objects];
-                                               
-                                               [self didFetchItems];
-                                                                                              
-                                               NSInteger count = [self.dataSource numberOfItems];
-                                               if (count==self.totalItems) {
-                                                   [self performSelector:@selector(restoreContentInset) withObject:nil afterDelay:0.3];
-                                               }
-                                           }
-                                           
-                                       } failure:^(NSError *error) {
-                                           PBX_LOG(@"Error: %@", error);
-                                           [self showError:error];
-                                           [self showLoadingView:NO];
-                                       }];
-     */
-}
-
-- (void)fetchMore {
-    if (!self.isFetching) {
-        NSInteger count = [self.dataSource numberOfItems];
-        if (count>0) {
-            if (self.page!=self.totalPages) {
-                self.isFetching = YES;
-                self.page = ((int)count/(int)self.pageSize)+1;
-                PBX_LOG(@"Fetch more %d", self.page);
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self showLoadingView:YES];
-                });
-                [self performSelector:@selector(fetchResource) withObject:nil afterDelay:0.5];
-            }
-        }
-    }
-}
-
-- (void)processPaginationFromObjects:(id)objects {
-    NSArray *filtered = [objects filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"totalRows > 0"]];
-    if (filtered.count == 1) {
-        PhotoBoxModel *firstObject = (PhotoBoxModel *)[filtered firstObject];
-        self.totalItems = [firstObject.totalRows intValue];
-        self.totalPages = [firstObject.totalPages intValue];
-        self.currentPage = [firstObject.currentPage intValue];
-        self.currentRow = [firstObject.currentRow intValue];
-    } else {
-        self.totalItems = (int)((NSArray *)objects).count;
-        self.totalPages = 1;
-        self.currentPage = 1;
-        self.currentRow = 0;
-    }
-}
-
 - (void)restoreContentInsetForSize:(CGSize)size {
     [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
     self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
 }
 
-- (void)didFetchItems {
-    
-}
-
 - (void)refresh {
     PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
-    self.isFetching = YES;
-    self.page = INITIAL_PAGE_NUMBER;
-    [self.collectionView reloadData];
-    [self fetchResource];
-}
-
-- (void)refreshIfNeeded {
-    [self refresh];
-}
-
-- (NSString *)refreshKey {
-    return nil;
-}
-
-- (NSArray *)cachedItems {
-    return nil;
-}
-
-- (void)willLoadDataFromCache {
-    
-}
-
-- (void)didLoadDataFromCache {
-    
-}
-
-- (void)showLoadingView:(BOOL)show {
-    if (self.page==INITIAL_PAGE_NUMBER) {
-        if (show) {
-            if (!self.navigationItem.rightBarButtonItem) {
-                UIBarButtonItem *loadingItem = [[UIBarButtonItem alloc] initWithCustomView:self.loadingView];
-                [self.navigationItem setRightBarButtonItem:loadingItem];
-            }
-            [self.loadingView startAnimating];
-            PBX_LOG(@"Showing right loading view");
-        } else {
-            [self.loadingView stopAnimating];
-            PBX_LOG(@"Stopping right loading view");
-            if ([self.refreshControl isRefreshing]) {
-                [self.refreshControl endRefreshing];
-                PBX_LOG(@"End refresh control");
-            }
-        }
-        
-        PBX_LOG(@"Showing bottom loading view");
-    } 
-    [self showLoadingView:show atBottomOfScrollView:YES];
+    [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
 }
 
 -(void)showError:(NSError *)error {
-    self.isFetching = NO;
     if (!self.showingAlert) {
         self.showingAlert = YES;
         PBX_LOG(@"Showing error: %@", error);
@@ -439,18 +268,6 @@ NSString *const galleryContainerType = @"gallery";
     self.showingAlert = NO;
 }
 
-#pragma mark - Scroll View
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    BOOL isScrollDown = NO;
-    if (lastOffset < scrollView.contentOffset.y) {
-        isScrollDown = YES;
-    }
-    lastOffset = scrollView.contentOffset.y;
-    if ([scrollView hasReachedBottom] && !self.isFetching && isScrollDown) {
-        [self fetchMore];
-    }
-}
 
 #pragma mark - Gesture
 
@@ -505,29 +322,6 @@ NSString *const galleryContainerType = @"gallery";
     
 }
 
-#pragma mark - Photos page stuff
-
-- (BOOL)isGallery {
-    return ([self.item.itemId isEqualToString:PBX_allAlbumIdentifier])?YES:NO;
-}
-
-- (NSArray *)sortDescriptors {
-    NSMutableArray *sorts = [NSMutableArray array];
-    
-    if ([self isGallery]) {
-        NSSortDescriptor *uploadedSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateUploaded)) ascending:NO];
-        [sorts addObject:uploadedSort];
-    }
-    
-    NSSortDescriptor *dateTakenStringSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTakenString)) ascending:NO];
-    [sorts addObject:dateTakenStringSort];
-    
-    NSSortDescriptor *dateTakenSort = [NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(dateTaken)) ascending:YES];
-    [sorts addObject:dateTakenSort];
-    
-    return sorts;
-}
-
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
@@ -565,17 +359,15 @@ NSString *const galleryContainerType = @"gallery";
             BOOL userLoggedIn = [[ConnectionManager sharedManager] isUserLoggedIn];
             if (userLoggedIn) {
                 PBX_LOG(@"Gonna fetch resource in KVO");
-                [self fetchResource];
+                [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
             } else {
                 NSLog(@"Logging out, clearing everything");
                 [[DLFDatabaseManager manager] removeAllItems];
-                self.page = INITIAL_PAGE_NUMBER;
                 [self.collectionView reloadData];
                 [self userDidLogout];
             }
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {
             if ([[ConnectionManager sharedManager] isShowingLoginPage]) {
-                self.isFetching = NO;
             }
         }
     }

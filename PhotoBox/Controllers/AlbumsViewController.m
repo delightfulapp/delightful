@@ -13,14 +13,10 @@
 #import "AlbumRowCell.h"
 
 #import "PhotosViewController.h"
-#import "AlbumSectionHeaderView.h"
 #import "DelightfulRowCell.h"
 
 #import "ConnectionManager.h"
 
-#import "UIViewController+DelightfulViewControllers.h"
-
-#import <JASidePanelController.h>
 #import "AppDelegate.h"
 
 #import "UIViewController+Additionals.h"
@@ -90,22 +86,12 @@
     return @"albumCell";
 }
 
-- (void)processPaginationFromObjects:(id)objects {
-    [super processPaginationFromObjects:objects];
-    
-    [[self resourceClass] setTotalCountCollection:self.totalItems];
-}
-
 - (Class)dataSourceClass {
     return AlbumsDataSource.class;
 }
 
 #pragma mark - Did stuff
 
-- (void)didFetchItems {
-    NSInteger count = [self.dataSource numberOfItems];
-    [self setAlbumsCount:count max:self.totalItems];
-}
 
 - (void)setupPinchGesture {
     // override with empty implementation because we don't need the albums pinchable.
@@ -117,31 +103,6 @@
     Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
     AlbumRowCell *cell = (AlbumRowCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [album setAlbumThumbnailImage:cell.cellImageView.image];
-    [self loadPhotosInAlbum:album];
-}
-
-#pragma mark - Tap
-
-- (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
-    [self loadPhotosInAlbum:[Album allPhotosAlbum]];
-}
-
-- (void)userTapped:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to logout?", Nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Log out", nil), nil];
-    [actionSheet showInView:self.navigationController.view];
-}
-
-#pragma mark - Action Sheet
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:{
-            [[ConnectionManager sharedManager] logout];
-            break;
-        }
-        default:
-            break;
-    }
 }
 
 #pragma mark - Collection View Flow Layout Delegate

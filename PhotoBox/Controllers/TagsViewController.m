@@ -14,10 +14,6 @@
 
 #import "PhotosViewController.h"
 
-#import "UIViewController+DelightfulViewControllers.h"
-
-#import <JASidePanelController.h>
-
 #import "AppDelegate.h"
 
 #import "UIViewController+Additionals.h"
@@ -110,7 +106,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Tag *tag = (Tag *)[self.dataSource itemAtIndexPath:indexPath];
-    [self loadPhotosInTag:tag];
 }
 
 #pragma mark - Collection View Flow Layout Delegate

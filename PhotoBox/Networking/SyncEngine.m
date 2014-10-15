@@ -45,6 +45,16 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 
 @property (nonatomic, assign) int photosFetchingPage;
 
+@property (nonatomic, assign) BOOL tagsRefreshRequested;
+
+@property (nonatomic, assign) BOOL albumsRefreshRequested;
+
+@property (nonatomic, assign) BOOL photosRefreshRequested;
+
+@property (nonatomic, assign) BOOL isSyncingPhotos;
+@property (nonatomic, assign) BOOL isSyncingAlbums;
+@property (nonatomic, assign) BOOL isSyncingTags;
+
 @end
 
 @implementation SyncEngine
@@ -81,9 +91,35 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 }
 
 - (void)startSyncing {
-    [self fetchAlbumsForPage:1];
-    [self fetchPhotosForPage:0];
-    [self fetchTagsForPage:1];
+    if (!self.isSyncingAlbums) {
+        [self fetchAlbumsForPage:1];
+    } else {
+        [self refreshResource:NSStringFromClass([Album class])];
+    }
+    
+    if (!self.isSyncingPhotos) {
+        [self fetchPhotosForPage:0];
+    } else {
+        [self refreshResource:NSStringFromClass([Photo class])];
+    }
+    
+    if (!self.isSyncingTags) {
+        [self fetchTagsForPage:1];
+    } else {
+        [self refreshResource:NSStringFromClass([Tag class])];
+    }
+    
+    
+}
+
+- (void)refreshResource:(NSString *)resource {
+    if ([resource isEqualToString:NSStringFromClass([Tag class])]) {
+        self.tagsRefreshRequested = (!self.isSyncingTags)?YES:NO;
+    } else if ([resource isEqualToString:NSStringFromClass([Album class])]) {
+        self.albumsRefreshRequested = (!self.isSyncingAlbums)?YES:NO;
+    } else if ([resource isEqualToString:NSStringFromClass([Photo class])]) {
+        self.photosRefreshRequested = !(self.isSyncingPhotos)?YES:NO;
+    }
 }
 
 - (void)setPauseSync:(BOOL)pauseSync {
@@ -98,6 +134,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 - (void)fetchTagsForPage:(int)page {
     NSLog(@"Fetching tags page %d", page);
     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
+    self.isSyncingTags = YES;
     
     [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
         NSLog(@"Did finish fetching %d tags page %d", (int)tags.count, page);
@@ -111,14 +148,22 @@ NSString *const SyncEngineNotificationCountKey = @"count";
             }];
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
+        self.isSyncingTags = NO;
+        
+        if (self.tagsRefreshRequested) {
+            self.tagsRefreshRequested = NO;
+            [self fetchTagsForPage:0];
+        }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching tags page %d: %@", page, error);
+        self.isSyncingTags = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
 - (void)fetchAlbumsForPage:(int)page {
     NSLog(@"Fetching albums page %d", page);
+    self.isSyncingAlbums = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
     
     [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
@@ -135,16 +180,23 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 NSLog(@"Done inserting albums to db");
             }];
             
-            if (self.pauseSync) {
-                self.albumsFetchingPage = page;
+            if (self.albumsRefreshRequested) {
+                self.albumsRefreshRequested = NO;
+                [self fetchAlbumsForPage:1];
             } else {
-                [self fetchAlbumsForPage:page+1];
+                if (self.pauseSync) {
+                    self.albumsFetchingPage = page;
+                } else {
+                    [self fetchAlbumsForPage:page+1];
+                }
             }
         } else {
+            self.isSyncingAlbums = NO;
             self.albumsFetchingPage = 0;
         }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching albums page %d: %@", page, error);
+        self.isSyncingAlbums = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
         self.albumsFetchingPage = page;
     }];
@@ -152,6 +204,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 
 - (void)fetchPhotosForPage:(int)page {
     NSLog(@"Fetching photos for page %d", page);
+    self.isSyncingPhotos = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
     
     [[PhotoBoxClient sharedClient] getPhotosForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
@@ -168,16 +221,23 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 NSLog(@"Done inserting photos to db");
             }];
             
-            if (self.pauseSync) {
-                self.photosFetchingPage = page;
+            if (self.photosRefreshRequested) {
+                self.photosRefreshRequested = NO;
+                [self fetchPhotosForPage:0];
             } else {
-                [self fetchPhotosForPage:page+1];
+                if (self.pauseSync) {
+                    self.photosFetchingPage = page;
+                } else {
+                    [self fetchPhotosForPage:page+1];
+                }
             }
         } else {
+            self.isSyncingPhotos = NO;
             self.photosFetchingPage = 0;
         }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching photos page %d: %@", page, error);
+        self.isSyncingPhotos = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
         self.photosFetchingPage = page;
     }];
