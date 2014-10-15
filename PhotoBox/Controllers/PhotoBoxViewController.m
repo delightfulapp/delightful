@@ -22,6 +22,7 @@
 #import "StickyHeaderFlowLayout.h"
 
 #import "DLFDatabaseManager.h"
+#import "SyncEngine.h"
 
 #define INITIAL_PAGE_NUMBER 1
 
@@ -72,6 +73,10 @@ NSString *const galleryContainerType = @"gallery";
     }
     
     [self restoreContentInset];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willStartSyncingNotification:) name:SyncEngineWillStartFetchingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishSyncingNotification:) name:SyncEngineDidFinishFetchingNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailSyncingNotification:) name:SyncEngineDidFailFetchingNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -573,6 +578,40 @@ NSString *const galleryContainerType = @"gallery";
                 self.isFetching = NO;
             }
         }
+    }
+}
+
+#pragma mark - Sync Engine Notification
+
+- (void)willStartSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+        if (!self.navigationItem.rightBarButtonItem) {
+            UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            UIBarButtonItem *loadingButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+            [self.navigationItem setRightBarButtonItem:loadingButton];
+            [indicatorView startAnimating];
+        }
+    }
+}
+
+- (void)didFinishSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+        NSNumber *count = userInfo[SyncEngineNotificationCountKey];
+        if (count.intValue == 0) {
+            [self.navigationItem setRightBarButtonItem:nil];
+        }
+    }
+}
+
+- (void)didFailSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+        [self.navigationItem setRightBarButtonItem:nil];
     }
 }
 

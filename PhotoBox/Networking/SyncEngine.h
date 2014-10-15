@@ -12,6 +12,11 @@ extern NSString *const SyncEngineWillStartFetchingNotification;
 extern NSString *const SyncEngineDidFinishFetchingNotification;
 extern NSString *const SyncEngineDidFailFetchingNotification;
 
+extern NSString *const SyncEngineNotificationResourceKey;
+extern NSString *const SyncEngineNotificationPageKey;
+extern NSString *const SyncEngineNotificationErrorKey;
+extern NSString *const SyncEngineNotificationCountKey;
+
 @interface SyncEngine : NSObject
 
 + (instancetype)sharedEngine;

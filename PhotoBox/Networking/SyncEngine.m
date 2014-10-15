@@ -26,6 +26,11 @@ NSString *const SyncEngineWillStartFetchingNotification = @"com.getdelightfulapp
 NSString *const SyncEngineDidFinishFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFinishFetchingNotification";
 NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFailFetchingNotification";
 
+NSString *const SyncEngineNotificationResourceKey = @"resource";
+NSString *const SyncEngineNotificationPageKey = @"page";
+NSString *const SyncEngineNotificationErrorKey = @"error";
+NSString *const SyncEngineNotificationCountKey = @"count";
+
 @interface SyncEngine ()
 
 @property (nonatomic, strong) YapDatabase *database;
@@ -92,7 +97,7 @@ NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.S
 
 - (void)fetchTagsForPage:(int)page {
     NSLog(@"Fetching tags page %d", page);
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{@"resource": NSStringFromClass([Tag class]), @"page": @(page)}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     
     [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
         NSLog(@"Did finish fetching %d tags page %d", (int)tags.count, page);
@@ -105,21 +110,21 @@ NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.S
                 NSLog(@"Done inserting tags to db");
             }];
         }
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{@"resource": NSStringFromClass([Tag class]), @"page": @(page), @"count": @(tags.count)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
     } failure:^(NSError *error) {
         NSLog(@"Error fetching tags page %d: %@", page, error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{@"error": error, @"resource": NSStringFromClass([Tag class]), @"page": @(page)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
 - (void)fetchAlbumsForPage:(int)page {
     NSLog(@"Fetching albums page %d", page);
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{@"resource": NSStringFromClass([Album class]), @"page": @(page)}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
     
     [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
         NSLog(@"Did finish fetching %d albums page %d", (int)albums.count, page);
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{@"resource": NSStringFromClass([Album class]), @"page": @(page), @"count": @(albums.count)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
         
         if (albums.count > 0) {
             [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
@@ -140,19 +145,19 @@ NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.S
         }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching albums page %d: %@", page, error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{@"error": error, @"resource": NSStringFromClass([Album class]), @"page": @(page)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
         self.albumsFetchingPage = page;
     }];
 }
 
 - (void)fetchPhotosForPage:(int)page {
     NSLog(@"Fetching photos for page %d", page);
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{@"resource": NSStringFromClass([Photo class]), @"page": @(page)}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
     
     [[PhotoBoxClient sharedClient] getPhotosForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         NSLog(@"Did finish fetching %d photos page %d", (int)photos.count, page);
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{@"resource": NSStringFromClass([Photo class]), @"page": @(page), @"count": @(photos.count)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count)}];
         
         if (photos.count > 0) {
             [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
@@ -173,7 +178,7 @@ NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.S
         }
     } failure:^(NSError *error) {
         NSLog(@"Error fetching photos page %d: %@", page, error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{@"error": error, @"resource": NSStringFromClass([Photo class]), @"page": @(page)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
         self.photosFetchingPage = page;
     }];
 }
