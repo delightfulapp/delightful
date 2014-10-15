@@ -20,6 +20,8 @@
 @property (nonatomic, strong) YapDatabaseConnection *bgConnection;
 @property (nonatomic, strong) YapDatabase *database;
 
+@property (nonatomic, assign) BOOL pause;
+
 - (void)setupDatabase;
 
 @end

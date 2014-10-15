@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 
 extern NSString *photosCollectionName;
+extern NSString *albumsCollectionName;
+extern NSString *tagsCollectionName;
 
 @class YapDatabase;
 

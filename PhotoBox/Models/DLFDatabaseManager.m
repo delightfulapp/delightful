@@ -11,6 +11,8 @@
 #import <YapDatabase.h>
 
 NSString *photosCollectionName = @"photos";
+NSString *albumsCollectionName = @"albums";
+NSString *tagsCollectionName = @"tags";
 
 @interface DLFDatabaseManager ()
 
@@ -56,6 +58,7 @@ NSString *photosCollectionName = @"photos";
 }
 
 - (void)removeAllItems {
+    NSLog(@"Removing all items");
     [self.connection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         [transaction removeAllObjectsInAllCollections];
     }];

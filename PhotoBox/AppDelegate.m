@@ -24,23 +24,15 @@
 
 #import "TagsViewController.h"
 
-#import "AlbumsTagsViewController.h"
-
 #import "StickyHeaderFlowLayout.h"
 
-#import "PanelsContainerViewController.h"
-
 #import "Album.h"
-
-#import <JASidePanelController.h>
-
-#import "LeftViewController.h"
 
 #import "DLFImageUploader.h"
 
 #import <Lookback/Lookback.h>
 
-#import "PhotosViewController.h"
+#import "SyncEngine.h"
 
 //#import "HintsViewController.h"
 
@@ -78,10 +70,6 @@ static void * imageUploadContext = &imageUploadContext;
 //            [alert show];
 //        }
 //    }
-    UITabBarController *rootController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
-    UINavigationController *navCOn = [rootController.viewControllers firstObject];
-    PhotosViewController *photosVC = (PhotosViewController *)([navCOn.viewControllers firstObject]);
-    [photosVC setItem:[Album allPhotosAlbum]];
     
     [self runCrashlytics];
     
@@ -90,6 +78,10 @@ static void * imageUploadContext = &imageUploadContext;
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
     //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[SyncEngine sharedEngine] startSyncing];
+    });
     
     return YES;
 }
@@ -137,28 +129,6 @@ static void * imageUploadContext = &imageUploadContext;
     
     return YES;
 }
-
-#pragma mark - Navigation
-
-- (void)showAllPhotosWithStoryboard:(UIStoryboard *)storyBoard rootViewController:(UINavigationController *)rootNavigationController {
-    PhotosViewController *photos = [storyBoard instantiateViewControllerWithIdentifier:@"photosViewController"];
-    [photos setItem:[Album allPhotosAlbum]];
-    [rootNavigationController pushViewController:photos animated:NO];
-}
-
-#pragma mark - Orientation
-//
-//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{
-//    NSUInteger orientations = UIInterfaceOrientationMaskAllButUpsideDown;
-//    
-//    if(self.window.rootViewController){
-//        UIViewController *presentedViewController = [[(UINavigationController *)self.window.rootViewController viewControllers] lastObject];
-//        orientations = [presentedViewController supportedInterfaceOrientations];
-//    }
-//    
-//    return orientations;
-//}
-
 
 #pragma mark - Unit Test
 

@@ -13,6 +13,7 @@
 
 @interface DLFYapDatabaseViewAndMapping : NSObject
 
+@property (nonatomic, strong) NSString *collection;
 @property (nonatomic, strong) YapDatabaseViewMappings *mapping;
 @property (nonatomic, strong) YapDatabaseView *view;
 @property (nonatomic, strong) NSString *sortKey;
@@ -21,11 +22,13 @@
 @property (nonatomic, assign) BOOL groupSortAscending;
 
 + (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                               collection:(NSString *)collection
                                                  database:(YapDatabase *)database
                                                   sortKey:(NSString *)sortKey
                                                sortKeyAsc:(BOOL)ascending;
 
 + (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                               collection:(NSString *)collection
                                                  database:(YapDatabase *)database
                                                   sortKey:(NSString *)sortKey
                                                sortKeyAsc:(BOOL)ascending

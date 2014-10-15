@@ -109,9 +109,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     [self.headerView.layer setShadowRadius:0];
     [self.headerView.layer setShadowOpacity:0.1];
     [self.headerView.layer setShadowPath:[UIBezierPath bezierPathWithRect:self.headerView.bounds].CGPath];
-    
-    [self fetchAlbums];
-    
+        
     [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.9 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.headerView.frame = ({
             CGRect frame = self.headerView.frame;
@@ -144,64 +142,6 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
             UIBarButtonItem *dontSetAlbumButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Don't set album", nil) style:UIBarButtonItemStylePlain target:self action:@selector(dontSetAlbumButtonTapped:)];
             [self.navigationItem setRightBarButtonItem:dontSetAlbumButton];
         }
-    }
-}
-
-- (void)fetchAlbums {
-    if (!self.isFetchingAlbums) {
-        self.isFetchingAlbums = YES;
-        self.state = AlbumsPickerStateFetching;
-        
-        [[PhotoBoxClient sharedClient] getResource:AlbumResource action:ListAction resourceId:nil page:self.page success:^(NSArray *objects) {
-            
-            if (objects.count > 0) {
-                if (!self.tempAlbums) {
-                    self.tempAlbums = [NSMutableArray array];
-                }
-                [self.tempAlbums addObjectsFromArray:objects];
-                
-                self.page++;
-                self.isFetchingAlbums = NO;
-                [self fetchAlbums];
-            } else {
-                NSLog(@"Done fetching all albums ");
-                UILocalizedIndexedCollation *theCollation = [UILocalizedIndexedCollation currentCollation];
-                
-                for (Album *theAlbum in self.tempAlbums) {
-                    NSInteger sect = [theCollation sectionForObject:theAlbum collationStringSelector:@selector(name)];
-                    theAlbum.sectionNumber = sect;
-                }
-                
-                NSInteger highSection = [[theCollation sectionTitles] count];
-                NSMutableArray *sectionArrays = [NSMutableArray arrayWithCapacity:highSection];
-                for (int i = 0; i < highSection; i++) {
-                    NSMutableArray *sectionArray = [NSMutableArray arrayWithCapacity:1];
-                    [sectionArrays addObject:sectionArray];
-                }
-                
-                for (Album *theAlbum in self.tempAlbums) {
-                    [(NSMutableArray *)[sectionArrays objectAtIndex:theAlbum.sectionNumber] addObject:theAlbum];
-                }
-                
-                if (!self.albums) {
-                    self.albums = [NSMutableArray array];
-                }
-                
-                for (NSMutableArray *sectionArray in sectionArrays) {
-                    NSArray *sortedSection = [theCollation sortedArrayFromArray:sectionArray
-                                                        collationStringSelector:@selector(name)];
-                    [self.albums addObject:sortedSection];
-                }
-                
-                self.state = AlbumsPickerStateNormal;
-                self.isFetchingAlbums = NO;
-                [self.tableView reloadData];
-            }
-            
-        } failure:^(NSError *error) {
-            self.state = AlbumsPickerStateNormal;
-            self.isFetchingAlbums = NO;
-        }];
     }
 }
 

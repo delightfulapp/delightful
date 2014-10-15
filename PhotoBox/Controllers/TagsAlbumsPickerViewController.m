@@ -85,26 +85,10 @@
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[PermissionPickerTableViewCell class] forCellReuseIdentifier:[PermissionPickerTableViewCell defaultCellReuseIdentifier]];
     
-    [self fetchTags];
-    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
     [self.navigationItem setRightBarButtonItem:doneButton];
 }
 
-- (void)fetchTags {
-    if (!self.isFetchingTags) {
-        self.isFetchingTags = YES;
-        
-        [[PhotoBoxClient sharedClient] getResource:TagResource action:ListAction resourceId:nil page:0 success:^(NSArray *results) {
-            self.isFetchingTags = NO;
-            if (results && [results isKindOfClass:[NSArray class]] ) {
-                self.tags = results;
-            }
-        } failure:^(NSError *error) {
-            self.isFetchingTags = NO;
-        }];
-    }
-}
 
 - (void)didReceiveMemoryWarning
 {
@@ -232,7 +216,7 @@
             [self showSuggestions:nil];
         }
     } else {
-        [self fetchTags];
+       
     }
     
     return YES;

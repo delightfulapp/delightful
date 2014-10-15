@@ -13,17 +13,15 @@
 #import "AlbumRowCell.h"
 
 #import "PhotosViewController.h"
-#import "AlbumSectionHeaderView.h"
 #import "DelightfulRowCell.h"
 
 #import "ConnectionManager.h"
 
-#import "UIViewController+DelightfulViewControllers.h"
-
-#import <JASidePanelController.h>
 #import "AppDelegate.h"
 
 #import "UIViewController+Additionals.h"
+
+#import "AlbumsDataSource.h"
 
 #import <TMCache.h>
 
@@ -33,35 +31,19 @@
 
 @implementation AlbumsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [self setAlbumsCount:0 max:0];
     
     [super viewDidLoad];
-    
-    [self.collectionView setClipsToBounds:NO];
-    
-    self.edgesForExtendedLayout=UIRectEdgeNone;
-    self.extendedLayoutIncludesOpaqueBars=NO;
-    self.automaticallyAdjustsScrollViewInsets=NO;
-    
+        
     [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
-    [self.collectionView registerClass:[AlbumSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:self.sectionHeaderIdentifier];
     
-    [self restoreContentInset];
-    
-    [self.collectionView setBackgroundColor:[UIColor albumsBackgroundColor]];
-    
-    
+    self.title = NSLocalizedString(@"Albums", nil);
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self.collectionView reloadData];
 }
 
 - (void)setAlbumsCount:(int)count max:(int)max{
@@ -81,6 +63,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)restoreContentInset {
+    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
+}
+
 #pragma mark - Getters
 
 - (NSArray *)sortDescriptors {
@@ -95,85 +82,16 @@
     return [Album class];
 }
 
-- (NSString *)sectionHeaderIdentifier {
-    return @"albumSection";
-}
-
 - (NSString *)cellIdentifier {
     return @"albumCell";
 }
 
-- (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
-    void (^configureCell)(AlbumSectionHeaderView*, id,NSIndexPath*) = ^(AlbumSectionHeaderView* cell, id item,NSIndexPath *indexPath) {
-        [cell setBackgroundColor:nil];
-        [(UIView *)cell.blurView removeFromSuperview];
-        [cell setText:NSLocalizedString(@"Gallery", nil)];
-        [cell setHideLocation:YES];
-        int count = cell.gestureRecognizers.count;
-        if (count == 0) {
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnAllAlbum:)];
-            [tap setNumberOfTapsRequired:1];
-            [tap setNumberOfTouchesRequired:1];
-            [cell addGestureRecognizer:tap];
-        }
-    };
-    return configureCell;
-}
-
-- (NSString *)fetchedInIdentifier {
-    return nil;
-}
-
-- (void)didLoadDataFromCache {
-    NSInteger count = [self.dataSource numberOfItems];
-    NSInteger totalPhotos = [[self resourceClass] totalCountCollection];
-    [self setAlbumsCount:count max:totalPhotos];
-    
-    if (self.pageSize > 0) {
-        self.page = ceil((double)count/(double)self.pageSize);
-        self.totalPages = ceil((double)totalPhotos/(double)self.pageSize);
-    } else {
-        self.page = 1;
-        self.totalPages = 1;
-    }
-    self.totalItems = totalPhotos;
-    
-    [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top)];
-}
-
-- (void)processPaginationFromObjects:(id)objects {
-    [super processPaginationFromObjects:objects];
-    
-    [[self resourceClass] setTotalCountCollection:self.totalItems];
-}
-
-#pragma mark - Scroll View
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [super scrollViewDidScroll:scrollView];
-    if (self.scrollDelegate && [self.scrollDelegate respondsToSelector:@selector(didScroll:)]) {
-        [self.scrollDelegate didScroll:scrollView];
-    }
-}
-
-- (void)scrollToTheTop {
-    if ([self.dataSource numberOfItems] > 0) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
-        [self scrollViewDidScroll:self.collectionView];
-    }
+- (Class)dataSourceClass {
+    return AlbumsDataSource.class;
 }
 
 #pragma mark - Did stuff
 
-- (void)didFetchItems {
-    NSInteger count = [self.dataSource numberOfItems];
-    [self setAlbumsCount:count max:self.totalItems];
-}
-
-- (void)restoreContentInset {
-    PBX_LOG(@"");
-    [self.collectionView setContentInset:UIEdgeInsetsMake(self.headerViewHeight, 0, CGRectGetHeight(self.tabBarController.tabBar.frame), 0)];
-}
 
 - (void)setupPinchGesture {
     // override with empty implementation because we don't need the albums pinchable.
@@ -185,31 +103,6 @@
     Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
     AlbumRowCell *cell = (AlbumRowCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [album setAlbumThumbnailImage:cell.cellImageView.image];
-    [self loadPhotosInAlbum:album];
-}
-
-#pragma mark - Tap
-
-- (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture {
-    [self loadPhotosInAlbum:[Album allPhotosAlbum]];
-}
-
-- (void)userTapped:(id)sender {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Are you sure you want to logout?", Nil) delegate:self cancelButtonTitle:NSLocalizedString(@"Cancel", nil) destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Log out", nil), nil];
-    [actionSheet showInView:self.navigationController.view];
-}
-
-#pragma mark - Action Sheet
-
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
-    switch (buttonIndex) {
-        case 0:{
-            [[ConnectionManager sharedManager] logout];
-            break;
-        }
-        default:
-            break;
-    }
 }
 
 #pragma mark - Collection View Flow Layout Delegate

@@ -70,7 +70,6 @@
 		032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
-		0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
 		0334EBB81841DF37001B262F /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
 		0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
 		0334EBC01842093A001B262F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
@@ -112,6 +111,12 @@
 		035846CF17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846CE17D34A0D00E196D7 /* ShowFullScreenPhotosAnimatedTransitioning.m */; };
 		035846D117D34C4800E196D7 /* PhotosViewControllerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */; };
 		035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
+		035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
+		035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B034C19ECAD4400153F24 /* AlbumsDataSource.m */; };
+		035B035119ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
+		035B035219ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
+		035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035419ECDC3E00153F24 /* MainTabBarController.m */; };
+		035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035419ECDC3E00153F24 /* MainTabBarController.m */; };
 		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
@@ -159,14 +164,11 @@
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
 		037BA8BC18A63C830072760C /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
-		03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
 		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
 		038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
 		038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */; };
 		038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
 		038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
-		038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
-		038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
 		038EC5A9183DFD8C00AFEA53 /* UIImageView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */; };
 		0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
@@ -246,7 +248,6 @@
 		03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
 		03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467317D1BC1D00E196D7 /* PhotoBoxViewController.m */; };
 		03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
-		03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866322184072BA006C76DE /* AlbumsTagsViewController.m */; };
 		03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B917D2403500E196D7 /* PhotosSectionHeaderView.m */; };
 		03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
 		03EFD8D819251CD700E80A71 /* UIScrollView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469A17D1D72000E196D7 /* UIScrollView+Additionals.m */; };
@@ -260,7 +261,6 @@
 		03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
 		03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F41818364500445084 /* SharePanel.m */; };
 		03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
-		03EFD8E319251CD700E80A71 /* PanelsContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB418417AB8001B262F /* PanelsContainerViewController.m */; };
 		03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
 		03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
@@ -271,7 +271,6 @@
 		03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
 		03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
-		03EFD8EE19251CD700E80A71 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
 		03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B017D2312500E196D7 /* NSArray+Additionals.m */; };
 		03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032222A7181419A8004F3830 /* NPRNotificationView.m */; };
 		03EFD8F119251CD700E80A71 /* HintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDED19227804004B6290 /* HintsViewController.m */; };
@@ -302,13 +301,11 @@
 		03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846A117D1F91000E196D7 /* AlbumTitleView.m */; };
 		03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */; };
 		03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
-		03EFD90D19251CD700E80A71 /* UIViewController+DelightfulViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */; };
 		03EFD90E19251CD700E80A71 /* TagsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467617D1BC3D00E196D7 /* TagsViewController.m */; };
 		03EFD90F19251CD700E80A71 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FE917D0FE3A0075F9D8 /* Album.m */; };
 		03EFD91019251CD700E80A71 /* VersionNumberHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50EE181829BF00445084 /* VersionNumberHeaderView.m */; };
 		03EFD91119251CD700E80A71 /* AlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358467917D1BCC000E196D7 /* AlbumsViewController.m */; };
 		03EFD91219251CD700E80A71 /* UIViewController+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0358469717D1D42700E196D7 /* UIViewController+Additionals.m */; };
-		03EFD91319251CD700E80A71 /* AlbumSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */; };
 		03EFD91419251CD700E80A71 /* NoPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD21920B91B004B6290 /* NoPhotosView.m */; };
 		03EFD91519251CD700E80A71 /* PhotosCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDE41922032D004B6290 /* PhotosCollection.m */; };
 		03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
@@ -371,8 +368,9 @@
 		03EFD95619251CD700E80A71 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
 		03EFD95719251CD700E80A71 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2B017D9BD6B00A80167 /* user@2x.png */; };
 		03EFD95819251CD700E80A71 /* introbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DE1818136E00445084 /* introbg.jpg */; };
+		03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6C9F619EAD92E000F524B /* SyncEngine.m */; };
+		03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6C9F619EAD92E000F524B /* SyncEngine.m */; };
 		03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
-		03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4820191FA22B00D4ADF7 /* LeftViewController.m */; };
 		03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */; };
 		03FD4826191FA5E700D4ADF7 /* LeftPanelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */; };
 		03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */; };
@@ -471,8 +469,6 @@
 		032CBB9C17D0BDF3001205B1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		032CBBA417D0BDF3001205B1 /* DelightfulTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DelightfulTests-Info.plist"; sourceTree = "<group>"; };
 		032CBBA617D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		0334EBB318417AB8001B262F /* PanelsContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PanelsContainerViewController.h; path = PhotoBox/Controllers/PanelsContainerViewController.h; sourceTree = "<group>"; };
-		0334EBB418417AB8001B262F /* PanelsContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PanelsContainerViewController.m; path = PhotoBox/Controllers/PanelsContainerViewController.m; sourceTree = "<group>"; };
 		0334EBB61841DF37001B262F /* TagRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagRowCell.h; path = PhotoBox/Cells/TagRowCell.h; sourceTree = "<group>"; };
 		0334EBB71841DF37001B262F /* TagRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagRowCell.m; path = PhotoBox/Cells/TagRowCell.m; sourceTree = "<group>"; };
 		0334EBB91841FDC8001B262F /* 0.0.5.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 0.0.5.plist; path = PhotoBox/IntroFiles/0.0.5.plist; sourceTree = "<group>"; };
@@ -538,6 +534,12 @@
 		035846D017D34C4800E196D7 /* PhotosViewControllerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosViewControllerTest.m; sourceTree = "<group>"; };
 		035846D717D364FE00E196D7 /* UIView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additionals.h"; sourceTree = "<group>"; };
 		035846D817D364FE00E196D7 /* UIView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additionals.m"; sourceTree = "<group>"; };
+		035B034B19ECAD4400153F24 /* AlbumsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlbumsDataSource.h; sourceTree = "<group>"; };
+		035B034C19ECAD4400153F24 /* AlbumsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlbumsDataSource.m; sourceTree = "<group>"; };
+		035B034F19ECC72800153F24 /* TagsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagsDataSource.h; sourceTree = "<group>"; };
+		035B035019ECC72800153F24 /* TagsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsDataSource.m; sourceTree = "<group>"; };
+		035B035319ECDC3E00153F24 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabBarController.h; path = PhotoBox/Controllers/MainTabBarController.h; sourceTree = "<group>"; };
+		035B035419ECDC3E00153F24 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabBarController.m; path = PhotoBox/Controllers/MainTabBarController.m; sourceTree = "<group>"; };
 		035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumsPickerViewController.h; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.h; sourceTree = "<group>"; };
 		035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumsPickerViewController.m; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.m; sourceTree = "<group>"; };
 		035DACB1197F88B800557547 /* TagEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEntryTableViewCell.h; path = PhotoBox/Cells/TagEntryTableViewCell.h; sourceTree = "<group>"; };
@@ -584,8 +586,6 @@
 		037BA8BA18A63C830072760C /* FetchedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedIn.h; sourceTree = "<group>"; };
 		037BA8BB18A63C830072760C /* FetchedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedIn.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		03866321184072BA006C76DE /* AlbumsTagsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsTagsViewController.h; path = PhotoBox/Controllers/AlbumsTagsViewController.h; sourceTree = "<group>"; };
-		03866322184072BA006C76DE /* AlbumsTagsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsTagsViewController.m; path = PhotoBox/Controllers/AlbumsTagsViewController.m; sourceTree = "<group>"; };
 		03866324184073D7006C76DE /* DelightfulTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulTabBar.h; path = PhotoBox/Views/DelightfulTabBar.h; sourceTree = "<group>"; };
 		03866325184073D7006C76DE /* DelightfulTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulTabBar.m; path = PhotoBox/Views/DelightfulTabBar.m; sourceTree = "<group>"; };
 		038663271840C57C006C76DE /* UIColor+DelightfulColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+DelightfulColors.h"; sourceTree = "<group>"; };
@@ -596,10 +596,6 @@
 		038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionViewCell+Additionals.m"; sourceTree = "<group>"; };
 		038EC59E183D806B00AFEA53 /* AlbumRowCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumRowCell.h; path = PhotoBox/Cells/AlbumRowCell.h; sourceTree = "<group>"; };
 		038EC59F183D806B00AFEA53 /* AlbumRowCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumRowCell.m; path = PhotoBox/Cells/AlbumRowCell.m; sourceTree = "<group>"; };
-		038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumSectionHeaderView.h; path = PhotoBox/Cells/AlbumSectionHeaderView.h; sourceTree = "<group>"; };
-		038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumSectionHeaderView.m; path = PhotoBox/Cells/AlbumSectionHeaderView.m; sourceTree = "<group>"; };
-		038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+DelightfulViewControllers.h"; sourceTree = "<group>"; };
-		038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+DelightfulViewControllers.m"; sourceTree = "<group>"; };
 		038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Additionals.h"; sourceTree = "<group>"; };
 		038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Additionals.m"; sourceTree = "<group>"; };
 		0391824817FEDC960099480C /* PhotoBoxRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxRequestOperation.h; path = PhotoBox/Networking/PhotoBoxRequestOperation.h; sourceTree = "<group>"; };
@@ -698,10 +694,10 @@
 		03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TransitionToInfoPresentationController.m; path = PhotoBox/Controllers/Delegates/TransitionToInfoPresentationController.m; sourceTree = "<group>"; };
 		03EFD95F19251CD700E80A71 /* Delightful.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Delightful.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DelightfulTestFlight-Info.plist"; path = "/Users/nico/Projects/Delightful/DelightfulTestFlight-Info.plist"; sourceTree = "<absolute>"; };
+		03F6C9F519EAD92E000F524B /* SyncEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SyncEngine.h; path = PhotoBox/Networking/SyncEngine.h; sourceTree = "<group>"; };
+		03F6C9F619EAD92E000F524B /* SyncEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SyncEngine.m; path = PhotoBox/Networking/SyncEngine.m; sourceTree = "<group>"; };
 		03FD481C191F553200D4ADF7 /* DownloadedImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedImageManager.h; path = PhotoBox/Others/DownloadedImageManager.h; sourceTree = "<group>"; };
 		03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedImageManager.m; path = PhotoBox/Others/DownloadedImageManager.m; sourceTree = "<group>"; };
-		03FD481F191FA22B00D4ADF7 /* LeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftViewController.h; path = PhotoBox/Controllers/LeftViewController.h; sourceTree = "<group>"; };
-		03FD4820191FA22B00D4ADF7 /* LeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftViewController.m; path = PhotoBox/Controllers/LeftViewController.m; sourceTree = "<group>"; };
 		03FD4822191FA5CA00D4ADF7 /* LeftPanelHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LeftPanelHeaderView.h; path = PhotoBox/Views/LeftPanelHeaderView.h; sourceTree = "<group>"; };
 		03FD4823191FA5CA00D4ADF7 /* LeftPanelHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LeftPanelHeaderView.m; path = PhotoBox/Views/LeftPanelHeaderView.m; sourceTree = "<group>"; };
 		03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LeftPanelHeaderView.xib; path = PhotoBox/Views/LeftPanelHeaderView.xib; sourceTree = "<group>"; };
@@ -835,8 +831,6 @@
 				03D972A61811865A008A087B /* Photo+Additionals.m */,
 				038EC59B183D742E00AFEA53 /* UICollectionViewCell+Additionals.h */,
 				038EC59C183D742E00AFEA53 /* UICollectionViewCell+Additionals.m */,
-				038EC5A4183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.h */,
-				038EC5A5183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m */,
 				038EC5A7183DFD8C00AFEA53 /* UIImageView+Additionals.h */,
 				038EC5A8183DFD8C00AFEA53 /* UIImageView+Additionals.m */,
 				038663271840C57C006C76DE /* UIColor+DelightfulColors.h */,
@@ -853,6 +847,8 @@
 		0310903817D1031A0075F9D8 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				03F6C9F519EAD92E000F524B /* SyncEngine.h */,
+				03F6C9F619EAD92E000F524B /* SyncEngine.m */,
 				0310903917D103330075F9D8 /* PhotoBoxClient.h */,
 				0310903A17D103330075F9D8 /* PhotoBoxClient.m */,
 				0310903D17D104460075F9D8 /* ConnectionManager.h */,
@@ -1041,12 +1037,6 @@
 				0398D767180FC5F500FDD83B /* OriginalImageDownloaderViewController.m */,
 				036DF366181F65D8002E9FCB /* PhotoInfoViewController.h */,
 				036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */,
-				03866321184072BA006C76DE /* AlbumsTagsViewController.h */,
-				03866322184072BA006C76DE /* AlbumsTagsViewController.m */,
-				0334EBB318417AB8001B262F /* PanelsContainerViewController.h */,
-				0334EBB418417AB8001B262F /* PanelsContainerViewController.m */,
-				03FD481F191FA22B00D4ADF7 /* LeftViewController.h */,
-				03FD4820191FA22B00D4ADF7 /* LeftViewController.m */,
 				03FD4827191FCE2000D4ADF7 /* SettingsTableViewController.h */,
 				03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */,
 				0396BDEC19227804004B6290 /* HintsViewController.h */,
@@ -1070,6 +1060,8 @@
 				035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */,
 				03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */,
 				03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */,
+				035B035319ECDC3E00153F24 /* MainTabBarController.h */,
+				035B035419ECDC3E00153F24 /* MainTabBarController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1091,6 +1083,10 @@
 				0357967219D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m */,
 				0357967519D860F100A28334 /* FlattenedPhotosDataSource.h */,
 				0357967619D860F100A28334 /* FlattenedPhotosDataSource.m */,
+				035B034B19ECAD4400153F24 /* AlbumsDataSource.h */,
+				035B034C19ECAD4400153F24 /* AlbumsDataSource.m */,
+				035B034F19ECC72800153F24 /* TagsDataSource.h */,
+				035B035019ECC72800153F24 /* TagsDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1117,8 +1113,6 @@
 				038EC594183D5FB100AFEA53 /* DelightfulRowCell.m */,
 				038EC59E183D806B00AFEA53 /* AlbumRowCell.h */,
 				038EC59F183D806B00AFEA53 /* AlbumRowCell.m */,
-				038EC5A1183D899D00AFEA53 /* AlbumSectionHeaderView.h */,
-				038EC5A2183D899D00AFEA53 /* AlbumSectionHeaderView.m */,
 				0334EBB61841DF37001B262F /* TagRowCell.h */,
 				0334EBB71841DF37001B262F /* TagRowCell.m */,
 				037B08A11956B85C001F55D6 /* UploadAssetCell.h */,
@@ -1760,8 +1754,10 @@
 			files = (
 				0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
 				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
+				035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
 				0337524717D3953100928409 /* OpenInActivity.m in Sources */,
+				035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
@@ -1773,7 +1769,6 @@
 				0327CC6C1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
-				03866323184072BA006C76DE /* AlbumsTagsViewController.m in Sources */,
 				037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
 				03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */,
@@ -1796,7 +1791,6 @@
 				031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */,
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
 				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
-				0334EBB518417AB8001B262F /* PanelsContainerViewController.m in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
 				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
@@ -1813,7 +1807,6 @@
 				035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */,
-				03FD4821191FA22B00D4ADF7 /* LeftViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
 				032222A8181419A8004F3830 /* NPRNotificationView.m in Sources */,
 				0396BDEE19227804004B6290 /* HintsViewController.m in Sources */,
@@ -1852,22 +1845,22 @@
 				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
 				03B5CCCC193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
-				038EC5A6183D8E8B00AFEA53 /* UIViewController+DelightfulViewControllers.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
 				03CE50EF181829BF00445084 /* VersionNumberHeaderView.m in Sources */,
 				0358467A17D1BCC000E196D7 /* AlbumsViewController.m in Sources */,
 				0358469817D1D42700E196D7 /* UIViewController+Additionals.m in Sources */,
-				038EC5A3183D899D00AFEA53 /* AlbumSectionHeaderView.m in Sources */,
 				0396BDD31920B91B004B6290 /* NoPhotosView.m in Sources */,
 				0396BDE51922032D004B6290 /* PhotosCollection.m in Sources */,
 				03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */,
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
+				03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
 				035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035B035119ECC72800153F24 /* TagsDataSource.m in Sources */,
 				035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
@@ -1899,8 +1892,10 @@
 			files = (
 				0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
 				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
+				035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,
 				03EFD8CC19251CD700E80A71 /* OpenInActivity.m in Sources */,
+				035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
 				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
 				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
@@ -1912,7 +1907,6 @@
 				0327CC6D1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
 				03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */,
 				03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */,
-				03EFD8D419251CD700E80A71 /* AlbumsTagsViewController.m in Sources */,
 				037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */,
 				03EFD8D719251CD700E80A71 /* NSString+Additionals.m in Sources */,
@@ -1935,7 +1929,6 @@
 				03EFD8E019251CD700E80A71 /* PhotoBoxImage.m in Sources */,
 				03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */,
 				03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */,
-				03EFD8E319251CD700E80A71 /* PanelsContainerViewController.m in Sources */,
 				03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */,
 				03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */,
 				03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */,
@@ -1952,7 +1945,6 @@
 				035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
-				03EFD8EE19251CD700E80A71 /* LeftViewController.m in Sources */,
 				03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */,
 				03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */,
 				03EFD8F119251CD700E80A71 /* HintsViewController.m in Sources */,
@@ -1991,22 +1983,22 @@
 				03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */,
 				03B5CCCD193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */,
 				03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */,
-				03EFD90D19251CD700E80A71 /* UIViewController+DelightfulViewControllers.m in Sources */,
 				03EFD90E19251CD700E80A71 /* TagsViewController.m in Sources */,
 				03EFD90F19251CD700E80A71 /* Album.m in Sources */,
 				03EFD91019251CD700E80A71 /* VersionNumberHeaderView.m in Sources */,
 				03EFD91119251CD700E80A71 /* AlbumsViewController.m in Sources */,
 				03EFD91219251CD700E80A71 /* UIViewController+Additionals.m in Sources */,
-				03EFD91319251CD700E80A71 /* AlbumSectionHeaderView.m in Sources */,
 				03EFD91419251CD700E80A71 /* NoPhotosView.m in Sources */,
 				03EFD91519251CD700E80A71 /* PhotosCollection.m in Sources */,
 				03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */,
 				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
 				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
+				03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */,
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
 				035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
+				035B035219ECC72800153F24 /* TagsDataSource.m in Sources */,
 				035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
@@ -2437,7 +2429,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "4E0E13E0-429E-4BF0-B413-B94A2ECA911B";
+				PROVISIONING_PROFILE = "d9533600-f432-40cb-b232-102affa2ed8e";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -30,23 +30,6 @@
 
 @property (nonatomic, strong) AFOAuth1Client *oauthClient;
 
-- (void)getAlbumsForPage:(int)page
-                pageSize:(int)pageSize
-               fetchedIn:(NSString *)fetchedIn
-             mainContext:(NSManagedObjectContext *)mainContext
-                 success:(void(^)(id object))successBlock
-                 failure:(void(^)(NSError*))failureBlock;
-- (void)getPhotosInAlbum:(NSString *)albumId
-                    page:(int)page
-                pageSize:(int)pageSize
-               fetchedIn:(NSString *)fetchedIn
-             mainContext:(NSManagedObjectContext *)mainContext
-                 success:(void(^)(id object))successBlock
-                 failure:(void(^)(NSError*))failureBlock;
-- (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext
-                     fetchedIn:(NSString *)fetchedIn
-                       success:(void(^)(id object))successBlock
-                   failure:(void(^)(NSError*))failureBlock;
 
 @end
 
@@ -89,6 +72,14 @@
     [self setAccessToken:[[ConnectionManager sharedManager] oauthToken]];
 }
 
+- (void)loginIfNecessaryToConnect:(void(^)())connectionBlock{
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        connectionBlock();
+    } else {
+        [[ConnectionManager sharedManager] openLoginFromStoryboardWithIdentifier:@"loginViewController"];
+    }
+}
+
 #pragma mark - Setter
 
 - (void)setValue:(id)value forKey:(NSString *)key {
@@ -96,7 +87,7 @@
     [self.oauthClient setValue:value forKey:key];
 }
 
-#pragma mark - Resource Fetch
+#pragma mark - Share
 
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void (^)(NSString *))completion {
     PBX_LOG(@"Fetching sharing token");
@@ -117,62 +108,50 @@
     }];
 }
 
-- (void)getResource:(ResourceType)type
-             action:(ActionType)action
-         resourceId:(NSString *)resourceId
-               page:(int)page
-            success:(void (^)(id))successBlock
-            failure:(void (^)(NSError *))failureBlock {
-    [self getResource:type action:action resourceId:resourceId fetchedIn:nil page:page pageSize:20 mainContext:nil success:successBlock failure:failureBlock];
-}
+#pragma mark - Resource Fetch
 
-- (void)getResource:(ResourceType)type
-             action:(ActionType)action
-         resourceId:(NSString *)resourceId
-          fetchedIn:(NSString *)fetchedIn
-               page:(int)page
-           pageSize:(int)pageSize
-        mainContext:(NSManagedObjectContext *)context
-            success:(void (^)(id))successBlock
-            failure:(void (^)(NSError *))failureBlock {
-    if (pageSize==0) pageSize = 30;
-    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
-        switch (action) {
-            case ListAction:{
-                if (type == AlbumResource) [self getAlbumsForPage:page pageSize:pageSize fetchedIn:fetchedIn mainContext:context success:successBlock failure:failureBlock];
-                else if (type == PhotoResource) [self getPhotosInAlbum:resourceId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:context success:successBlock failure:failureBlock];
-                else if (type == TagResource) [self getTagsWithMainContext:context fetchedIn:fetchedIn success:successBlock failure:failureBlock];
-                else if (type == PhotoWithTagsResource) [self getPhotosInTag:resourceId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:context success:successBlock failure:failureBlock];
-                break;
-            }
-            default:
-                break;
-        }
-    } else {
-        [[ConnectionManager sharedManager] openLoginFromStoryboardWithIdentifier:@"loginViewController"];
-    }
+- (void)getPhotosForPage:(int)page
+                pageSize:(int)pageSize
+                 success:(void(^)(id object))successBlock
+                 failure:(void(^)(NSError*))failureBlock {
+    [self getPhotosInAlbum:nil page:page
+                  pageSize:(int)pageSize
+                   success:successBlock
+                   failure:failureBlock];
 }
 
 - (void)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
-               fetchedIn:(NSString *)fetchedIn
-             mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self GET:[NSString stringWithFormat:@"v1/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
+    [self loginIfNecessaryToConnect:^{
+        [self GET:[NSString stringWithFormat:@"v1/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+    }];
+}
+
+- (void)getTagsForPage:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    [self loginIfNecessaryToConnect:^{
+        [self GET:[NSString stringWithFormat:@"v1/tags/list.json?page=%d&pageSize=%d",page, pageSize] parameters:nil resultClass:[Tag class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+    }];
 }
 
 - (void)getPhotosInAlbum:(NSString *)albumId
                     page:(int)page
                 pageSize:(int)pageSize
-               fetchedIn:(NSString *)fetchedIn
-             mainContext:(NSManagedObjectContext *)mainContext
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
+    [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
-- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)getPhotosInTag:(NSString *)tagId
+                  page:(int)page
+              pageSize:(int)pageSize
+               success:(void(^)(id object))successBlock
+               failure:(void(^)(NSError*))failureBlock {
+    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+}
+
+- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     NSString *resource = nil;
     if ([resourceClass isSubclassOfClass:Album.class]) {
         resource = [NSString stringWithFormat:@"&%@", [self albumsQueryString:resourceId]];
@@ -190,26 +169,10 @@
         path = [path stringByAppendingString:resource];
     }
     
-    [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
-}
-
-- (void)getPhotosInTag:(NSString *)tagId
-                    page:(int)page
-              pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn
-           mainContext:(NSManagedObjectContext *)mainContext
-                 success:(void (^)(id))successBlock
-                 failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
-}
-
-- (void)getTagsWithMainContext:(NSManagedObjectContext *)mainContext fetchedIn:(NSString *)fetchedIn success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self GET:@"/tags/list.json" parameters:nil resultClass:[Tag class] resultKeyPath:@"result" fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
-}
-
-- (void)getAllPhotosOnPage:(int)page
-                  pageSize:(int)pageSize fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInAlbum:nil page:page
-                  pageSize:(int)pageSize fetchedIn:fetchedIn mainContext:mainContext success:successBlock failure:failureBlock];
+    [self loginIfNecessaryToConnect:^{
+        [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+    }];
+    
 }
 
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
@@ -218,14 +181,14 @@
     return [transformer transformedValue:result];
 }
 
-- (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath fetchedIn:(NSString *)fetchedIn mainContext:(NSManagedObjectContext *)mainContext success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     return [self GET:path parameters:parameters resultClass:resultClass resultKeyPath:keyPath completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         PBX_LOG(@"Fetched responses");
         if (!error) {
             successBlock(responseObject);
         } else {
             if (operation.response.statusCode == 401) {
-                [[ConnectionManager sharedManager] logout];
+               // [[ConnectionManager sharedManager] logout];
             } else {
                 failureBlock(error);
             }

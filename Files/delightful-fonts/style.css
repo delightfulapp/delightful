@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'delightful';
-	src:url('fonts/delightful.eot?-j703cb');
-	src:url('fonts/delightful.eot?#iefix-j703cb') format('embedded-opentype'),
-		url('fonts/delightful.woff?-j703cb') format('woff'),
-		url('fonts/delightful.ttf?-j703cb') format('truetype'),
-		url('fonts/delightful.svg?-j703cb#delightful') format('svg');
+	src:url('fonts/delightful.eot?-fmwx29');
+	src:url('fonts/delightful.eot?#iefix-fmwx29') format('embedded-opentype'),
+		url('fonts/delightful.woff?-fmwx29') format('woff'),
+		url('fonts/delightful.ttf?-fmwx29') format('truetype'),
+		url('fonts/delightful.svg?-fmwx29#delightful') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -184,4 +184,10 @@
 }
 .dlf-uniE635:before {
 	content: "\e635";
+}
+.dlf-folder-open2:before {
+	content: "\f123";
+}
+.dlf-folder-open-o:before {
+	content: "\f1a6";
 }

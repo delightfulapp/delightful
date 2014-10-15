@@ -14,13 +14,11 @@
 
 #import "PhotosViewController.h"
 
-#import "UIViewController+DelightfulViewControllers.h"
-
-#import <JASidePanelController.h>
-
 #import "AppDelegate.h"
 
 #import "UIViewController+Additionals.h"
+
+#import "TagsDataSource.h"
 
 @interface TagsViewController ()
 
@@ -56,6 +54,8 @@
     
     [self setup];
     [self.collectionView registerClass:[TagRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
+    
+    [self setTitle:NSLocalizedString(@"Tags", nil)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -66,6 +66,10 @@
 
 #pragma mark - Getters
 
+- (Class)dataSourceClass {
+    return TagsDataSource.class;
+}
+
 - (ResourceType)resourceType {
     return TagResource;
 }
@@ -74,20 +78,8 @@
     return [Tag class];
 }
 
-- (NSString *)sectionHeaderIdentifier {
-    return @"tagSection";
-}
-
 - (NSString *)cellIdentifier {
     return @"tagCell";
-}
-
-- (NSArray *)sortDescriptors {
-    return @[[NSSortDescriptor sortDescriptorWithKey:NSStringFromSelector(@selector(tagId)) ascending:YES]];
-}
-
-- (int)pageSize {
-    return 0;
 }
 
 #pragma mark - Do stuff
@@ -114,7 +106,6 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Tag *tag = (Tag *)[self.dataSource itemAtIndexPath:indexPath];
-    [self loadPhotosInTag:tag];
 }
 
 #pragma mark - Collection View Flow Layout Delegate

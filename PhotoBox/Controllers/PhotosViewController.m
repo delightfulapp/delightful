@@ -27,9 +27,6 @@
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
 
-#import <JASidePanelController.h>
-#import "UIViewController+DelightfulViewControllers.h"
-
 #import "AppDelegate.h"
 
 #import "DelightfulLayout.h"
@@ -87,8 +84,6 @@
 
 @implementation PhotosViewController
 
-@synthesize item = _item;
-
 @synthesize numberOfColumns = _numberOfColumns;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -113,30 +108,22 @@
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
-    //[self.collectionView.viewForBaselineLayout.layer setSpeed:0.8f];
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
-    //self.selectGesture = [[CollectionViewSelectCellGestureRecognizer alloc] initWithCollectionView:self.collectionView];
-    
-    [self setupRightBarButtonsWithSettings:YES];
+    self.title = NSLocalizedString(@"Photos", nil);
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    if (!self.observing) {
-        self.observing = YES;
-        JASidePanelController *panel = [UIViewController panelViewController];
-        if (panel) {
-            [panel addObserver:self forKeyPath:@"state" options:0 context:nil];
-        }
-    }
-    
-    if (![((AppDelegate *)[[UIApplication sharedApplication] delegate]) showUpdateInfoViewIfNeeded]) {
-        [self showPinchGestureTipIfNeeded];
-    }
+    [((YapDataSource *)self.dataSource) setPause:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    NSLog(@"view will disappear");
+    [((YapDataSource *)self.dataSource) setPause:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,32 +132,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setupRightBarButtonsWithSettings:(BOOL)showSetting {
-    UIButton *settingButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 24, 24)];
-    [settingButton setImage:[[UIImage imageNamed:@"setting.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [settingButton addTarget:self action:@selector(settingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *settingBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:settingButton];
-    
-    UIBarButtonItem *spaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    [spaceItem setWidth:15];
-    
-    UIButton *cameraButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 23)];
-    [cameraButton setImage:[[UIImage imageNamed:@"upload.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-    [cameraButton addTarget:self action:@selector(cameraButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *cameraBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:cameraButton];
-    
-    
-    if (showSetting) {
-        [self.navigationItem setRightBarButtonItems:@[settingBarButtonItem, spaceItem, cameraBarButtonItem, spaceItem]];
-    } else {
-        [self.navigationItem setRightBarButtonItems:@[cameraBarButtonItem, spaceItem]];
-    }
-}
-
 #pragma mark - ScrollView
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [super scrollViewDidScroll:scrollView];
     
     if (self.headerImageView) {
         CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
@@ -246,116 +210,8 @@
     return [Photo class];
 }
 
-- (NSString *)resourceId {
-    return self.item.itemId;
-}
-
 - (Class)dataSourceClass {
     return [GroupedPhotosDataSource class];
-}
-
-/*
-- (void)refresh {
-    if ([self itemIsDownloadHistoryOrFavorites]) {
-        Album *album = (Album *)self.item;
-        [self.dataSource removeAllItems];
-        [self.dataSource addItems:album.photos];
-        [self.refreshControl endRefreshing];
-        
-        [self addOrRemoveHeaderView];
-        
-        if ([self.dataSource items].count == 0) {
-            if (!self.noPhotosView) {
-                NoPhotosView *noPhotos = (NoPhotosView *)[[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([NoPhotosView class]) owner:nil options:nil] firstObject];
-                [noPhotos setFrame:self.view.bounds];
-                [self.view addSubview:noPhotos];
-                self.noPhotosView = noPhotos;
-            }
-            NSString *text;
-            if ([album.albumId isEqualToString:PBX_downloadHistoryIdentifier]) {
-                text = NSLocalizedString(@"Photos you have downloaded and saved to Camera Roll will appear here.", nil);
-            } else if ([album.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
-                text = NSLocalizedString(@"Favorited photos will appear here. Favorited photos are not saved to Camera Roll and Trovebox server.", nil);
-            }
-            [self.noPhotosView.textLabel setText:text];
-            
-        } else {
-            [self.noPhotosView removeFromSuperview];
-        }
-        return;
-    }
-    
-    [self addOrRemoveHeaderView];
-    [self.noPhotosView removeFromSuperview];
-    
-    [super refresh];
-}
- */
-
-
-- (void)didLoadDataFromCache {
-    [self addOrRemoveHeaderView];
-    [self.noPhotosView removeFromSuperview];
-    [self restoreContentInset];
-    
-    NSInteger count = [self.dataSource numberOfItems];
-    NSInteger totalPhotos = [(id)self.item totalPhotos];
-    [self setPhotosCount:count max:totalPhotos];
-    
-    self.page = ceil((double)count/(double)self.pageSize);
-    self.totalPages = ceil((double)totalPhotos/(double)self.pageSize);
-    self.totalItems = totalPhotos;
-    
-    [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top)];
-}
-
-- (void)addOrRemoveHeaderView {
-    if ([self.item isKindOfClass:[Album class]]) {
-        Album *a = (Album *)self.item;
-        if (![a.albumId isEqualToString:PBX_allAlbumIdentifier] && ![a.albumId isEqualToString:PBX_downloadHistoryIdentifier] && ![a.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
-            if (!self.headerImageView) {
-                HeaderImageView *head = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([HeaderImageView class]) owner:nil options:nil] firstObject];
-                [self.view insertSubview:head aboveSubview:self.collectionView];
-                self.headerImageView = head;
-                CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
-                [self.headerImageView setFrame:CGRectMake(0, 64, CGRectGetWidth(self.view.frame), headerHeight-64)];
-                                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(headerImageViewTapped:)];
-                [self.headerImageView addGestureRecognizer:tap];
-            }
-            
-            UIImage *placeholderImage = a.albumThumbnailImage;
-            if (!placeholderImage) {
-                placeholderImage = a.albumCover.asAlbumCoverImage;
-                if (!placeholderImage) {
-                    placeholderImage = a.albumCover.placeholderImage;
-                }
-            }
-            [self.headerImageView.imageView npr_setImageWithURL:a.albumCover.pathOriginal placeholderImage:placeholderImage];
-            [self setTitle:a.name];
-            a.albumCover.asAlbumCoverURL = a.coverURL;
-            
-            CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
-            self.collectionView.contentInset = ({
-                UIEdgeInsets inset = self.collectionView.contentInset;
-                inset.top = headerHeight;
-                inset;
-            });
-            
-            [self.collectionView setBackgroundColor:[UIColor clearColor]];
-            StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
-            [layout setTopOffsetAdjustment:headerHeight-CGRectGetHeight(self.navigationController.navigationBar.frame) - 20];
-            
-            return;
-        }
-        
-    }
-    
-    StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
-    [layout setTopOffsetAdjustment:0];
-    
-    [self.headerImageView removeFromSuperview];
-    self.headerImageView = nil;
-    [self restoreContentInset];
 }
 
 - (void)restoreContentInset {
@@ -375,79 +231,10 @@
     
 }
 
-- (BOOL)itemIsDownloadHistoryOrFavorites {
-    if ([self.item isKindOfClass:[Album class]]) {
-        Album *album = (Album *)self.item;
-        if ([album.albumId isEqualToString:PBX_downloadHistoryIdentifier] ||[album.albumId isEqualToString:PBX_favoritesAlbumIdentifier]) {
-            return YES;
-        }
-    }
-    return NO;
-}
-
-- (void)fetchMore {
-    if ([self itemIsDownloadHistoryOrFavorites]) {
-        return;
-    } else {
-        [super fetchMore];
-    }
-}
-
-- (void)processPaginationFromObjects:(id)objects {
-    [super processPaginationFromObjects:objects];
-    
-    [(id)self.item setTotalPhotos:self.totalItems];
-}
-
-- (void)userDidLogout {
-    self.item = [Album allPhotosAlbum];
-    [self addOrRemoveHeaderView];
-    [self setTitle:NSLocalizedString(@"Gallery", nil)];
-}
-
 #pragma mark - Do something
-
-- (void)settingButtonTapped:(id)sender {
-    SettingsTableViewController *settings = [[SettingsTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    if (!self.fallingTransitioningDelegate) {
-        FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
-        self.fallingTransitioningDelegate = falling;
-        [self.fallingTransitioningDelegate setSpeed:10];
-    }
-    UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:settings];
-    [navCon setModalPresentationStyle:UIModalPresentationCustom];
-    [navCon setTransitioningDelegate:self.fallingTransitioningDelegate];
-    [self presentViewController:navCon animated:YES completion:nil];
-}
-
-- (void)cameraButtonTapped:(id)sender {
-    PhotosPickerViewController *picker = [[PhotosPickerViewController alloc] init];
-    picker.delegate = self;
-    [picker setAssetsFilter:[ALAssetsFilter allPhotos]];
-    if (!self.fallingTransitioningDelegate) {
-        FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
-        self.fallingTransitioningDelegate = falling;
-        //[self.fallingTransitioningDelegate setSpeed:10];
-    }
-    [picker setTransitioningDelegate:self.fallingTransitioningDelegate];
-    [picker setModalPresentationStyle:UIModalPresentationCustom];
-    [self presentViewController:picker animated:YES completion:nil];
-}
 
 - (void)backNavigationTapped:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)setupBackNavigationItemTitle {
-    if (self.item) {
-        if ([self.item isKindOfClass:[Album class]]) {
-            [self setBackButtonNavigationItemTitle:((Album *)self.item).name];
-        } else if ([self.item isKindOfClass:[Tag class]]) {
-            [self setBackButtonNavigationItemTitle:((Tag *)self.item).tagId];
-        }
-    } else {
-        [self setBackButtonNavigationItemTitle:nil];
-    }
 }
 
 - (void)setBackButtonNavigationItemTitle:(NSString *)title {
@@ -467,15 +254,6 @@
         DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
         [layout setNumberOfColumns:_numberOfColumns];
     }
-}
-
-- (void)didFetchItems {
-    NSInteger count = [self.dataSource numberOfItems];
-    [self setPhotosCount:(int)count max:self.totalItems];
-}
-
-- (NSString *)refreshKey {
-    return [NSString stringWithFormat:@"%@-%@", NSStringFromClass([self.item class]), [self.item itemId]];
 }
 
 - (void)didChangeNumberOfColumns {
@@ -502,67 +280,6 @@
         }
     });
     
-}
-
-- (void)headerImageViewTapped:(id)sender {
-    self.selectedCell = nil;
-    Album *album = (Album *)self.item;
-    [self openPhoto:(id)album.albumCover];
-}
-
-- (void)reloadButtonTapped:(id)sender {
-    [self.uploadViewController showReloadButtons:NO];
-    [self.uploadViewController startUpload];
-}
-
-- (void)cancelButtonTapped:(id)sender {
-    [[DLFImageUploader sharedUploader] clearFailUploads];
-    [self closeUploadView];
-}
-
-- (void)closeUploadView {
-    [UIView animateWithDuration:0.3 animations:^{
-        CGFloat offset = CGRectGetHeight(self.uploadViewController.view.frame) + self.collectionView.contentInset.top;
-        
-        self.uploadViewController.view.frame = CGRectOffset(self.uploadViewController.view.frame, 0, -offset);
-        self.collectionView.frame = CGRectMake(0, 0, self.collectionView.frame.size.width, self.view.frame.size.height);
-    } completion:^(BOOL finished) {
-        [self.uploadViewController willMoveToParentViewController:nil];
-        [self.uploadViewController removeFromParentViewController];
-        [self.uploadViewController.view removeFromSuperview];
-        [self.uploadViewController didMoveToParentViewController:nil];
-        self.uploadViewController = nil;
-        
-        [self refresh];
-    }];
-}
-
-#pragma mark - Setters
-
-- (void)setPhotosCount:(int)count max:(int)max{
-    if ([self itemIsDownloadHistoryOrFavorites]) {
-        Album *album = (Album *)self.item;
-        self.title = album.name;
-        return;
-    }
-    NSString *title = NSLocalizedString(@"Photos", nil);
-    if ([self.item isKindOfClass:[Album class]]) {
-        Album *album = (Album *)self.item;
-        if (album) {
-            title = album.name;
-        }
-    } else if ([self.item isKindOfClass:[Tag class]]) {
-        Tag *tag = (Tag *)self.item;
-        if (tag) {
-            title = [NSString stringWithFormat:@"#%@", tag.tagId];
-        }
-    }
-    if (count == 0) {
-        self.title = title;
-    } else {
-        if (count != max) [self setTitle:title subtitle:[NSString stringWithFormat:NSLocalizedString(@"%1$d of %2$d", nil), count, max]];
-        else [self setTitle:title subtitle:[NSString stringWithFormat:@"%d photos", count]];
-    }
 }
 
 #pragma mark - Collection view flow layout delegate
@@ -592,7 +309,6 @@
     PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithGroupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
-    [self setupBackNavigationItemTitle];
     if (!self.transitionDelegate) {
         self.transitionDelegate = [[ShowFullScreenTransitioningDelegate alloc] init];
     }
@@ -732,61 +448,6 @@
     }];
     
     return location;
-}
-
-#pragma mark - CTAssetsPickerControllerDelegate
-
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldShowAssetsGroup:(ALAssetsGroup *)group {
-    return [group numberOfAssets] > 0?YES:NO;
-}
-
-
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [tagsalbumspicker setDelegate:self];
-    [tagsalbumspicker setSelectedAssets:[DLFAsset assetsArrayFromALAssetArray:assets]];
-    [picker pushViewController:tagsalbumspicker animated:YES];
-}
-
-- (void)didChangeNumberOfUploads:(NSNotification *)notification {
-    NSInteger uploads = [notification.userInfo[kNumberOfUploadsKey] integerValue];
-    NSInteger fails = [[DLFImageUploader sharedUploader] numberOfFailUpload];
-    
-    if (uploads == 0) {
-        if (fails == 0) {
-            [self closeUploadView];
-        } else {
-            [self refresh];
-            [self.uploadViewController showReloadButtons:YES];
-            [self.uploadViewController.reloadButton addTarget:self action:@selector(reloadButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [self.uploadViewController.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        }
-    }
-}
-
-#pragma mark - Tags Albums Picker View Controller Delegate
-
-- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
-    [self dismissViewControllerAnimated:YES completion:^{
-        UploadViewController *uploadVC = [[UploadViewController alloc] init];
-        [uploadVC setUploads:assets];
-        [uploadVC.view setFrame:CGRectMake(0, -(UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH), CGRectGetWidth(self.view.frame), (UPLOAD_BAR_HEIGHT+UPLOAD_ITEM_WIDTH))];
-        [uploadVC willMoveToParentViewController:self];
-        [self addChildViewController:uploadVC];
-        [self.view addSubview:uploadVC.view];
-        [uploadVC didMoveToParentViewController:self];
-        
-        self.uploadViewController = uploadVC;
-        
-        [UIView animateWithDuration:0.3 animations:^{
-            CGFloat offset = CGRectGetHeight(uploadVC.view.frame) + self.collectionView.contentInset.top;
-            CGFloat offsetWithoutInset = offset - self.collectionView.contentInset.top;
-            uploadVC.view.frame = CGRectOffset(uploadVC.view.frame, 0, offset);
-            self.collectionView.frame = CGRectMake(0, offsetWithoutInset, self.collectionView.frame.size.width, CGRectGetHeight(self.collectionView.frame)-offsetWithoutInset);
-        } completion:^(BOOL finished) {
-            [uploadVC startUpload];
-        }];
-    }];
 }
 
 @end

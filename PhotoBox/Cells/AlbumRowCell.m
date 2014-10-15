@@ -38,6 +38,7 @@
     [self.textLabel setNumberOfLines:4];
     [self.cellImageView setContentMode:UIViewContentModeScaleAspectFill];
     
+    [self.lineLayer setStrokeColor:[UIColor lightGrayColor].CGColor];
 }
 
 - (void)layoutSubviews {
@@ -59,8 +60,7 @@
         Album *album = (Album *)item;
         NSURL *imageURL = [album coverURL];
         
-        [self.cellImageView setImageWithURL:imageURL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-        }];
+        [self.cellImageView sd_setImageWithURL:imageURL completed:nil];
         
         [self.textLabel setAttributedText:[self attributedTextForAlbumName:album.name count:album.count.intValue]];
     }
@@ -99,28 +99,25 @@
 }
 
 - (NSAttributedString *)attributedTextForAlbumName:(NSString *)name count:(NSInteger)count {
-    NSString *photos = [NSString stringWithFormat:@"%d %@", count, NSLocalizedString(@"photos", nil)];
+    NSString *photos = [NSString stringWithFormat:@"%d %@", (int)count, NSLocalizedString(@"photos", nil)];
     NSString *string = [NSString stringWithFormat:@"%@\n%@", name, photos];
     
     UIFont* font = [UIFont boldSystemFontOfSize:12];
     
-    UIColor* textColor = [UIColor colorWithRed:0.596 green:0.565 blue:0.676 alpha:1.000];
-    
-    NSShadow *shadow = [[NSShadow alloc] init];
-    [shadow setShadowColor:[UIColor blackColor]];
-    [shadow setShadowOffset:CGSizeMake(0, -1)];
-    [shadow setShadowBlurRadius:0];
+    UIColor* textColor = [UIColor blackColor];
     
     NSDictionary *attrs = @{ NSForegroundColorAttributeName : textColor,
-                             NSFontAttributeName : font,
-                             NSShadowAttributeName : shadow};
+                             NSFontAttributeName : font};
     
     NSMutableAttributedString* attrString = [[NSMutableAttributedString alloc]
-                                      initWithString:string
-                                      attributes:attrs];
+                                      initWithString:string attributes:attrs];
     
     [attrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:[string rangeOfString:photos]];
     return attrString;
+}
+
+- (CAShapeLayer *)lineShadowLayer {
+    return nil;
 }
 
 @end
