@@ -26,14 +26,12 @@
                                                  groupKey:(NSString *)groupKey
                                              groupSortAsc:(BOOL)groupSortAscending {
     
-    YapDatabaseViewBlockType groupingBlockType = YapDatabaseViewBlockTypeWithObject;
     YapDatabaseViewGroupingWithObjectBlock groupingBlock = ^NSString *(NSString *collection, NSString *key, id object) {
         if (![collection isEqualToString:aCollection]) {
             return nil;
         }
         return (groupKey && [aCollection isEqualToString:collection])?[[object valueForKey:groupKey] description]:@"";
     };
-    YapDatabaseViewBlockType sortingBlockType = YapDatabaseViewBlockTypeWithObject;
     YapDatabaseViewSortingWithObjectBlock sortingBlock = ^NSComparisonResult(NSString *group,
                                                                              NSString *collection1, NSString *key1, id obj1,
                                                                              NSString *collection2, NSString *key2, id obj2){
@@ -42,10 +40,17 @@
         }
         return (sortKeyAscending)?[[obj1 valueForKey:sortKey] compare:[obj2 valueForKey:sortKey]]:[[obj2 valueForKey:sortKey] compare:[obj1 valueForKey:sortKey]];
     };
-    YapDatabaseView *view = [[YapDatabaseView alloc] initWithGroupingBlock:groupingBlock
-                                                         groupingBlockType:groupingBlockType
-                                                              sortingBlock:sortingBlock
-                                                          sortingBlockType:sortingBlockType];
+    
+    YapDatabaseViewGrouping *grouping = [YapDatabaseViewGrouping withObjectBlock:groupingBlock];
+    YapDatabaseViewSorting *sorting = [YapDatabaseViewSorting withObjectBlock:sortingBlock];
+    
+    YapDatabaseViewOptions *options = [[YapDatabaseViewOptions alloc] init];
+    [options setIsPersistent:YES];
+    YapWhitelistBlacklist *whitelist = [[YapWhitelistBlacklist alloc] initWithWhitelist:[NSSet setWithObject:aCollection]];
+    [options setAllowedCollections:whitelist];
+    
+    YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1" options:options];
+    
     [database registerExtension:view withName:viewName];
     
     YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {

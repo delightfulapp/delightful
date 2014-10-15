@@ -13,5 +13,6 @@
 @interface TagsDataSource : YapDataSource
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalFirstTagsViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalLastTagsViewMapping;
 
 @end

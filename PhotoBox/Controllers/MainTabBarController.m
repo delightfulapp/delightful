@@ -26,16 +26,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)setSelectedIndex:(NSUInteger)selectedIndex {
-    [super setSelectedIndex:selectedIndex];
-    
-    NSLog(@"Change index");
-}
-
-- (void)setSelectedViewController:(UIViewController *)selectedViewController {
-    [[SyncEngine sharedEngine] setPauseSync:YES];
-    [super setSelectedViewController:selectedViewController];
-    [[SyncEngine sharedEngine] setPauseSync:NO];
-}
-
 @end

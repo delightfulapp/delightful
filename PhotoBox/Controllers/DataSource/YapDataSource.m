@@ -129,6 +129,10 @@
         return;
     }
     
+    if (![self.mainConnection hasChangeForCollection:self.selectedViewMapping.collection inNotifications:notifications]) {
+        return;
+    }
+    
     NSArray *sectionChanges = nil;
     NSArray *rowChanges = nil;
     

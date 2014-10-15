@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const SyncEngineWillStartFetchingNotification;
+extern NSString *const SyncEngineDidFinishFetchingNotification;
+extern NSString *const SyncEngineDidFailFetchingNotification;
+
 @interface SyncEngine : NSObject
 
 + (instancetype)sharedEngine;

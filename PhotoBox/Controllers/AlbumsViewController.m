@@ -46,6 +46,10 @@
     self.title = NSLocalizedString(@"Albums", nil);
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [self.collectionView reloadData];
+}
+
 - (void)setAlbumsCount:(int)count max:(int)max{
     if (count == 0) {
         self.title = NSLocalizedString(@"Albums", nil);
