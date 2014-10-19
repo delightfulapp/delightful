@@ -21,9 +21,15 @@ extern NSString *const SyncEngineNotificationCountKey;
 
 + (instancetype)sharedEngine;
 
-- (void)startSyncing;
+- (void)startSyncingPhotos;
+
+- (void)startSyncingAlbums;
+
+- (void)startSyncingTags;
 
 - (void)refreshResource:(NSString *)resource;
+
+- (void)fetchPhotosWithSort:(NSString *)sort;
 
 @property (nonatomic, assign, readonly) BOOL isSyncingPhotos;
 @property (nonatomic, assign, readonly) BOOL isSyncingAlbums;

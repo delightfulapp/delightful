@@ -22,6 +22,8 @@
 
 #define FETCHING_PAGE_SIZE 100
 
+#define DEFAULT_PHOTOS_SORT @"dateUploaded,desc"
+
 NSString *const SyncEngineWillStartFetchingNotification = @"com.getdelightfulapp.SyncEngineWillStartFetchingNotification";
 NSString *const SyncEngineDidFinishFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFinishFetchingNotification";
 NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFailFetchingNotification";
@@ -90,26 +92,28 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     return self;
 }
 
-- (void)startSyncing {
+- (void)startSyncingPhotos {
+    if (!self.isSyncingPhotos) {
+        [self fetchPhotosForPage:0 sort:DEFAULT_PHOTOS_SORT];
+    } else {
+        [self refreshResource:NSStringFromClass([Photo class])];
+    }
+}
+
+- (void)startSyncingAlbums {
     if (!self.isSyncingAlbums) {
         [self fetchAlbumsForPage:1];
     } else {
         [self refreshResource:NSStringFromClass([Album class])];
     }
-    
-    if (!self.isSyncingPhotos) {
-        [self fetchPhotosForPage:0];
-    } else {
-        [self refreshResource:NSStringFromClass([Photo class])];
-    }
-    
+}
+
+- (void)startSyncingTags {
     if (!self.isSyncingTags) {
         [self fetchTagsForPage:1];
     } else {
         [self refreshResource:NSStringFromClass([Tag class])];
     }
-    
-    
 }
 
 - (void)refreshResource:(NSString *)resource {
@@ -126,9 +130,17 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     _pauseSync = pauseSync;
     
     if (!_pauseSync) {
-        [self fetchPhotosForPage:self.photosFetchingPage];
+        [self fetchPhotosForPage:self.photosFetchingPage sort:DEFAULT_PHOTOS_SORT];
         [self fetchAlbumsForPage:self.albumsFetchingPage];
     }
+}
+
+- (void)fetchPhotosWithSort:(NSString *)sort {
+    if (!self.isSyncingPhotos) {
+        self.pauseSync = YES;
+        [self fetchPhotosForPage:self.photosFetchingPage+1 sort:sort];
+    }
+    
 }
 
 - (void)fetchTagsForPage:(int)page {
@@ -202,12 +214,12 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     }];
 }
 
-- (void)fetchPhotosForPage:(int)page {
+- (void)fetchPhotosForPage:(int)page sort:(NSString *)sort{
     NSLog(@"Fetching photos for page %d", page);
     self.isSyncingPhotos = YES;
     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
     
-    [[PhotoBoxClient sharedClient] getPhotosForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    [[PhotoBoxClient sharedClient] getPhotosForPage:page sort:sort pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         NSLog(@"Did finish fetching %d photos page %d", (int)photos.count, page);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count)}];
@@ -223,12 +235,13 @@ NSString *const SyncEngineNotificationCountKey = @"count";
             
             if (self.photosRefreshRequested) {
                 self.photosRefreshRequested = NO;
-                [self fetchPhotosForPage:0];
+                [self fetchPhotosForPage:0 sort:sort];
             } else {
                 if (self.pauseSync) {
                     self.photosFetchingPage = page;
+                    self.isSyncingPhotos = NO;
                 } else {
-                    [self fetchPhotosForPage:page+1];
+                    [self fetchPhotosForPage:page+1 sort:sort];
                 }
             }
         } else {
