@@ -57,6 +57,8 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 @property (nonatomic, assign) BOOL isSyncingAlbums;
 @property (nonatomic, assign) BOOL isSyncingTags;
 
+@property (nonatomic, strong) NSString *photosSyncSort;
+
 @end
 
 @implementation SyncEngine
@@ -126,21 +128,12 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     }
 }
 
-- (void)setPauseSync:(BOOL)pauseSync {
-    _pauseSync = pauseSync;
+- (void)setPausePhotosSync:(BOOL)pausePhotosSync {
+    _pausePhotosSync = pausePhotosSync;
     
-    if (!_pauseSync) {
-        [self fetchPhotosForPage:self.photosFetchingPage sort:DEFAULT_PHOTOS_SORT];
-        [self fetchAlbumsForPage:self.albumsFetchingPage];
+    if (!_pausePhotosSync) {
+        [self fetchPhotosForPage:self.photosFetchingPage sort:(self.photosSyncSort)?:DEFAULT_PHOTOS_SORT];
     }
-}
-
-- (void)fetchPhotosWithSort:(NSString *)sort {
-    if (!self.isSyncingPhotos) {
-        self.pauseSync = YES;
-        [self fetchPhotosForPage:self.photosFetchingPage+1 sort:sort];
-    }
-    
 }
 
 - (void)fetchTagsForPage:(int)page {
@@ -196,7 +189,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 self.albumsRefreshRequested = NO;
                 [self fetchAlbumsForPage:1];
             } else {
-                if (self.pauseSync) {
+                if (self.pauseAlbumsSync) {
                     self.albumsFetchingPage = page;
                 } else {
                     [self fetchAlbumsForPage:page+1];
@@ -237,7 +230,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 self.photosRefreshRequested = NO;
                 [self fetchPhotosForPage:0 sort:sort];
             } else {
-                if (self.pauseSync) {
+                if (self.pausePhotosSync) {
                     self.photosFetchingPage = page;
                     self.isSyncingPhotos = NO;
                 } else {

@@ -170,6 +170,8 @@
             resource = @"";
             sort = [self sortByQueryString:@"dateUploaded,DESC"];
         }
+    } else {
+        sort = [self sortByQueryString:sort];
     }
     
     NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@", page, pageSize, sort, [self photoSizesString]];

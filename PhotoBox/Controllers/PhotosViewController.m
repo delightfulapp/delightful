@@ -47,8 +47,6 @@
 
 #import "HeaderImageView.h"
 
-#import <TMCache.h>
-
 #import "FallingTransitioningDelegate.h"
 
 #import "PhotosPickerViewController.h"
@@ -66,6 +64,8 @@
 #import "ShowFullScreenTransitioningDelegate.h"
 
 #import "NSAttributedString+DelighftulFonts.h"
+
+#import "SyncEngine.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
 
@@ -111,19 +111,23 @@
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
     self.title = NSLocalizedString(@"Photos", nil);
+    
+    [[SyncEngine sharedEngine] startSyncingPhotos];
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [((YapDataSource *)self.dataSource) setPause:NO];
+    [[SyncEngine sharedEngine] setPausePhotosSync:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     NSLog(@"view will disappear");
     [((YapDataSource *)self.dataSource) setPause:YES];
+    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,6 +153,24 @@
 
         self.headerImageView.transform = CGAffineTransformMakeTranslation(0, MIN(0, -translate));
     }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    NSLog(@"will begin dragging");
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        NSLog(@"end dragging");
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    NSLog(@"did end scrolling animation");
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"did end decelerating");
 }
 
 #pragma mark - Override
@@ -222,11 +244,18 @@
         self.collectionView.contentInset = ({
             UIEdgeInsets inset = self.collectionView.contentInset;
             inset.top = headerHeight;
+            inset.bottom = 44;
             inset;
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     } else {
         [super restoreContentInsetForSize:self.view.frame.size];
+        self.collectionView.contentInset = ({
+            UIEdgeInsets inset = self.collectionView.contentInset;
+            inset.bottom = 44;
+            inset;
+        });
+        self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     }
     
 }
