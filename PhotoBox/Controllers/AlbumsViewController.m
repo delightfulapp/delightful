@@ -11,19 +11,13 @@
 #import "PhotosCollection.h"
 #import "Album.h"
 #import "AlbumRowCell.h"
-
 #import "PhotosViewController.h"
 #import "DelightfulRowCell.h"
-
 #import "ConnectionManager.h"
-
 #import "AppDelegate.h"
-
 #import "UIViewController+Additionals.h"
-
 #import "AlbumsDataSource.h"
-
-#import <TMCache.h>
+#import "SyncEngine.h"
 
 @interface AlbumsViewController () <UIActionSheetDelegate>
 
@@ -40,6 +34,8 @@
     [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     
     self.title = NSLocalizedString(@"Albums", nil);
+    
+    [[SyncEngine sharedEngine] startSyncingAlbums];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

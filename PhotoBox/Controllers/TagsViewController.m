@@ -20,6 +20,8 @@
 
 #import "TagsDataSource.h"
 
+#import "SyncEngine.h"
+
 @interface TagsViewController ()
 
 @end
@@ -56,6 +58,8 @@
     [self.collectionView registerClass:[TagRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     
     [self setTitle:NSLocalizedString(@"Tags", nil)];
+    
+    [[SyncEngine sharedEngine] startSyncingTags];
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,6 +117,16 @@
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
     return CGSizeMake(collectionViewWidth, 44);
+}
+
+#pragma mark - Syncing Notification
+
+- (void)didFinishSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
 }
 
 @end
