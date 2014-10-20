@@ -67,7 +67,9 @@
 
 #import "SyncEngine.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
+#import "SortTableViewController.h"
+
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -79,6 +81,8 @@
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 
 @property (nonatomic, strong) UploadViewController *uploadViewController;
+
+@property (nonatomic, strong) NSString *currentSort;
 
 @end
 
@@ -115,6 +119,10 @@
     
     self.title = NSLocalizedString(@"Photos", nil);
     
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Sort", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
+    [self.navigationItem setLeftBarButtonItem:leftItem];
+    
+    self.currentSort = @"dateUploaded,desc";
     [[SyncEngine sharedEngine] startSyncingPhotos];
     
 }
@@ -134,6 +142,38 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Buttons
+
+- (void)didTapSortButton:(id)sender {
+    SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [sort setSortingDelegate:self];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - SortingDelegate
+
+- (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
+    if (![self.currentSort isEqualToString:sort]) {
+        self.currentSort = sort;
+        PhotosSortKey selectedSortKey;
+        NSArray *sortArray = [sort componentsSeparatedByString:@","];
+        if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(dateTaken))]) {
+            selectedSortKey = PhotosSortKeyDateTaken;
+        } else {
+            selectedSortKey = PhotosSortKeyDateUploaded;
+        }
+        BOOL ascending = YES;
+        if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
+            ascending = NO;
+        }
+        [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending];
+        [[SyncEngine sharedEngine] setPhotosSyncSort:sort];
+        [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
+        [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - ScrollView
@@ -323,6 +363,8 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [((YapDataSource *)self.dataSource) setPause:YES];
+    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;

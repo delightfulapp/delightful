@@ -1,10 +1,10 @@
 @font-face {
 	font-family: 'delightful';
-	src:url('fonts/delightful.eot?-fmwx29');
-	src:url('fonts/delightful.eot?#iefix-fmwx29') format('embedded-opentype'),
-		url('fonts/delightful.woff?-fmwx29') format('woff'),
-		url('fonts/delightful.ttf?-fmwx29') format('truetype'),
-		url('fonts/delightful.svg?-fmwx29#delightful') format('svg');
+	src:url('fonts/delightful.eot?-2u04pu');
+	src:url('fonts/delightful.eot?#iefix-2u04pu') format('embedded-opentype'),
+		url('fonts/delightful.woff?-2u04pu') format('woff'),
+		url('fonts/delightful.ttf?-2u04pu') format('truetype'),
+		url('fonts/delightful.svg?-2u04pu#delightful') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }
@@ -173,6 +173,9 @@
 .dlf-twitter:before {
 	content: "\e61b";
 }
+.dlf-menu2:before {
+	content: "\e636";
+}
 .dlf-arrow-left3:before {
 	content: "\e632";
 }
@@ -190,4 +193,43 @@
 }
 .dlf-folder-open-o:before {
 	content: "\f1a6";
+}
+.dlf-star14:before {
+	content: "\f01c";
+}
+.dlf-star-o:before {
+	content: "\f01d";
+}
+.dlf-th-large2:before {
+	content: "\f022";
+}
+.dlf-chain:before {
+	content: "\f157";
+}
+.dlf-unsorted:before {
+	content: "\f171";
+}
+.dlf-angle-left:before {
+	content: "\f196";
+}
+.dlf-angle-right:before {
+	content: "\f197";
+}
+.dlf-angle-up:before {
+	content: "\f198";
+}
+.dlf-angle-down:before {
+	content: "\f199";
+}
+.dlf-sort-alpha-asc:before {
+	content: "\f1e8";
+}
+.dlf-sort-alpha-desc:before {
+	content: "\f1e9";
+}
+.dlf-sort-numeric-asc:before {
+	content: "\f1ec";
+}
+.dlf-sort-numeric-desc:before {
+	content: "\f1ed";
 }

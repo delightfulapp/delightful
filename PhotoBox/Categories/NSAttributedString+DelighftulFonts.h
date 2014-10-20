@@ -62,7 +62,12 @@ extern NSString * const dlf_icon_arrow_left3;
 extern NSString * const dlf_icon_arrow_down3;
 extern NSString * const dlf_icon_arrow_up3;
 extern NSString * const dlf_icon_uniE635;
-
+extern NSString * const dlf_icon_sort_numeric_desc;
+extern NSString * const dlf_icon_sort_numeric_asc;
+extern NSString * const dlf_icon_sort_alpha_desc;
+extern NSString * const dlf_icon_sort_alpha_asc;
+extern NSString * const dlf_icon_unsorted;
+extern NSString * const dlf_icon_squares;
 
 @interface NSAttributedString (DelightfulFonts)
 

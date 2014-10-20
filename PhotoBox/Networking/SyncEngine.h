@@ -37,5 +37,6 @@ extern NSString *const SyncEngineNotificationCountKey;
 @property (nonatomic, assign) BOOL pauseAlbumsSync;
 @property (nonatomic, assign) BOOL pauseTagsSync;
 
+@property (nonatomic, strong) NSString *photosSyncSort;
 
 @end

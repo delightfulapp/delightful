@@ -117,6 +117,8 @@
 		035B035219ECC72800153F24 /* TagsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035019ECC72800153F24 /* TagsDataSource.m */; };
 		035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035419ECDC3E00153F24 /* MainTabBarController.m */; };
 		035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B035419ECDC3E00153F24 /* MainTabBarController.m */; };
+		035B5E5619F3BEBF00C657B0 /* SortTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B5E5519F3BEBF00C657B0 /* SortTableViewController.m */; };
+		035B5E5719F3BEBF00C657B0 /* SortTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035B5E5519F3BEBF00C657B0 /* SortTableViewController.m */; };
 		035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */; };
 		035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACB2197F88B800557547 /* TagEntryTableViewCell.m */; };
@@ -540,6 +542,8 @@
 		035B035019ECC72800153F24 /* TagsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagsDataSource.m; sourceTree = "<group>"; };
 		035B035319ECDC3E00153F24 /* MainTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainTabBarController.h; path = PhotoBox/Controllers/MainTabBarController.h; sourceTree = "<group>"; };
 		035B035419ECDC3E00153F24 /* MainTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainTabBarController.m; path = PhotoBox/Controllers/MainTabBarController.m; sourceTree = "<group>"; };
+		035B5E5419F3BEBF00C657B0 /* SortTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SortTableViewController.h; path = PhotoBox/Controllers/SortTableViewController.h; sourceTree = "<group>"; };
+		035B5E5519F3BEBF00C657B0 /* SortTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SortTableViewController.m; path = PhotoBox/Controllers/SortTableViewController.m; sourceTree = "<group>"; };
 		035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsAlbumsPickerViewController.h; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.h; sourceTree = "<group>"; };
 		035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsAlbumsPickerViewController.m; path = PhotoBox/Controllers/TagsAlbumsPickerViewController.m; sourceTree = "<group>"; };
 		035DACB1197F88B800557547 /* TagEntryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagEntryTableViewCell.h; path = PhotoBox/Cells/TagEntryTableViewCell.h; sourceTree = "<group>"; };
@@ -1062,6 +1066,8 @@
 				03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */,
 				035B035319ECDC3E00153F24 /* MainTabBarController.h */,
 				035B035419ECDC3E00153F24 /* MainTabBarController.m */,
+				035B5E5419F3BEBF00C657B0 /* SortTableViewController.h */,
+				035B5E5519F3BEBF00C657B0 /* SortTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1803,6 +1809,7 @@
 				0327CC7B194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
 				035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
+				035B5E5619F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
@@ -1941,6 +1948,7 @@
 				0327CC7C194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
 				035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
+				035B5E5719F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,

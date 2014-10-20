@@ -36,7 +36,15 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     // last taken -> first taken view and mappings grouped
     self.dateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateTakenLastViewName collection:photosCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateTaken)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateTakenString)) groupSortAsc:NO];
 
-    [self setSelectedViewMapping:self.dateTakenLastViewMapping];
+    [self setSelectedViewMapping:self.dateUploadedLastViewMapping];
+}
+
+- (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending {
+    if (sortBy == PhotosSortKeyDateUploaded) {
+        [self setSelectedViewMapping:(ascending)?self.dateUploadedFirstViewMapping:self.dateUploadedLastViewMapping];
+    } else if (sortBy == PhotosSortKeyDateTaken) {
+        [self setSelectedViewMapping:(ascending)?self.dateTakenFirstViewMapping:self.dateTakenLastViewMapping];
+    }
 }
 
 @end
