@@ -37,4 +37,24 @@
 
 + (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database;
 
++ (void)asyncViewMappingWithViewName:(NSString *)viewName
+                          collection:(NSString *)collection
+                            database:(YapDatabase *)database
+                             sortKey:(NSString *)sortKey
+                          sortKeyAsc:(BOOL)ascending
+                          completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
+
++ (void)asyncViewMappingWithViewName:(NSString *)viewName
+                          collection:(NSString *)collection
+                            database:(YapDatabase *)database
+                             sortKey:(NSString *)sortKey
+                          sortKeyAsc:(BOOL)ascending
+                            groupKey:(NSString *)groupKey
+                        groupSortAsc:(BOOL)ascending
+                          completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
+
++ (void)asyncUngroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource
+                                        database:(YapDatabase *)database
+                                      completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
+
 @end
