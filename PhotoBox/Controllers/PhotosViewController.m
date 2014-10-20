@@ -164,6 +164,7 @@
 
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
+        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         self.currentSort = sort;
         PhotosSortKey selectedSortKey;
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
