@@ -379,10 +379,10 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        if (!self.navigationItem.rightBarButtonItem) {
+        if (!self.navigationItem.leftBarButtonItem) {
             UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             UIBarButtonItem *loadingButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-            [self.navigationItem setRightBarButtonItem:loadingButton];
+            [self.navigationItem setLeftBarButtonItem:loadingButton];
             [indicatorView startAnimating];
         }
     }
@@ -394,7 +394,7 @@ NSString *const galleryContainerType = @"gallery";
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
-            [self.navigationItem setRightBarButtonItem:nil];
+            [self.navigationItem setLeftBarButtonItem:nil];
         }
     }
 }
@@ -403,7 +403,7 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        [self.navigationItem setRightBarButtonItem:nil];
+        [self.navigationItem setLeftBarButtonItem:nil];
     }
 }
 

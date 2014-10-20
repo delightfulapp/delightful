@@ -68,7 +68,7 @@ NSString * const dlf_icon_sort_alpha_desc = @"\uf1e9";
 NSString * const dlf_icon_sort_alpha_asc = @"\uf1e8";
 NSString * const dlf_icon_unsorted = @"\uf171";
 NSString * const dlf_icon_squares = @"\uf022";
-
+NSString * const dlf_icon_menu_sort = @"\ue636";
 
 @implementation NSAttributedString (DelightfulFonts)
 

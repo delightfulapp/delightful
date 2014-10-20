@@ -68,6 +68,7 @@ extern NSString * const dlf_icon_sort_alpha_desc;
 extern NSString * const dlf_icon_sort_alpha_asc;
 extern NSString * const dlf_icon_unsorted;
 extern NSString * const dlf_icon_squares;
+extern NSString * const dlf_icon_menu_sort;
 
 @interface NSAttributedString (DelightfulFonts)
 

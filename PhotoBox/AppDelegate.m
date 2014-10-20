@@ -77,6 +77,7 @@ static void * imageUploadContext = &imageUploadContext;
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
+    [self.window setTintColor:[UIColor redColor]];
     //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
     
     return YES;
