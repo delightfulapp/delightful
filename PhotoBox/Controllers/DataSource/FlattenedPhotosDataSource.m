@@ -30,9 +30,9 @@
 }
 
 - (void)setupMapping {
-    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.groupedViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-        [self setSelectedViewMapping:viewMapping];
-    }];
+    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:self.groupedViewMapping database:self.database];
+    
+    [self setSelectedViewMapping:viewMapping];
 }
 
 @end

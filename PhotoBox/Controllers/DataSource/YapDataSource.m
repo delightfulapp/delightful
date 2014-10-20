@@ -27,9 +27,13 @@
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(yapDatabaseModified:)
                                                      name:YapDatabaseModifiedNotification
-                                                   object:self.database];
+                                                   object:nil];
     }
     return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
@@ -102,6 +106,19 @@
             [_selectedViewMapping.mapping updateWithTransaction:transaction];
         }];
         [self.collectionView reloadData];
+    }
+}
+
+- (void)setPause:(BOOL)pause {
+    _pause = pause;
+    
+    if (_pause) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self];
+    } else {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(yapDatabaseModified:)
+                                                     name:YapDatabaseModifiedNotification
+                                                   object:nil];
     }
 }
 

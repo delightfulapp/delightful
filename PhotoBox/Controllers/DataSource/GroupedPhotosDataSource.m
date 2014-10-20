@@ -37,6 +37,19 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     self.dateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateTakenLastViewName collection:photosCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateTaken)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateTakenString)) groupSortAsc:NO];
 
     [self setSelectedViewMapping:self.dateUploadedLastViewMapping];
+    
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        NSLog(@"%@ created", viewMapping.mapping.view);
+    }];
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedFirstViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        NSLog(@"%@ created", viewMapping.mapping.view);
+    }];
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateTakenFirstViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        NSLog(@"%@ created", viewMapping.mapping.view);
+    }];
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateTakenLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        NSLog(@"%@ created", viewMapping.mapping.view);
+    }];
 }
 
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending {
