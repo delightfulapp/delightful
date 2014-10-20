@@ -92,7 +92,6 @@
 
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         self.currentSort = sort;
         AlbumsSortKey selectedSortKey;
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
@@ -107,7 +106,9 @@
         }
         [((AlbumsDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending];
         [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Album class])];
-        [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+        [sortTableViewController dismissViewControllerAnimated:YES completion:^{
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }];
     } else {
         [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
     }

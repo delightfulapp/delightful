@@ -164,7 +164,6 @@
 
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
-        [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         self.currentSort = sort;
         PhotosSortKey selectedSortKey;
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
@@ -180,7 +179,9 @@
         [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending];
         [[SyncEngine sharedEngine] setPhotosSyncSort:sort];
         [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
-        [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+        [sortTableViewController dismissViewControllerAnimated:YES completion:^{
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }];
     } else {
         [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
     }
