@@ -26,13 +26,21 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.updatedLastAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsUpdatedLastViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateLastPhotoAdded)) sortKeyAsc:NO];
-        self.updatedFirstAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsUpdatedLastViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateLastPhotoAdded)) sortKeyAsc:YES];
+        self.updatedFirstAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsUpdatedFirstViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateLastPhotoAdded)) sortKeyAsc:YES];
         self.alphabetAscAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsAlphabeticalAscendingViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(name)) sortKeyAsc:YES];
         self.alphabetDescAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsAlphabeticalDescendingViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(name)) sortKeyAsc:NO];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self setSelectedViewMapping:self.updatedLastAlbumsViewMapping];
         });
     });
+}
+
+- (void)sortBy:(AlbumsSortKey)sortBy ascending:(BOOL)ascending {
+    if (sortBy == AlbumsSortKeyName) {
+        [self setSelectedViewMapping:(ascending)?self.alphabetAscAlbumsViewMapping:self.alphabetDescAlbumsViewMapping];
+    } else if (sortBy == AlbumsSortKeyDateLastUpdated) {
+        [self setSelectedViewMapping:(ascending)?self.updatedFirstAlbumsViewMapping:self.updatedLastAlbumsViewMapping];
+    }
 }
 
 @end

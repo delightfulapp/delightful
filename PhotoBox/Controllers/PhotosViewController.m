@@ -181,6 +181,8 @@
         [[SyncEngine sharedEngine] setPhotosSyncSort:sort];
         [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
         [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

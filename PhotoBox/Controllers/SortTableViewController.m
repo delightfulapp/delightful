@@ -8,9 +8,13 @@
 
 #import "SortTableViewController.h"
 
+#import "Photo.h"
+#import "Album.h"
+#import "Tag.h"
+
 @interface SortTableViewController ()
 
-@property (nonatomic, strong) NSArray *rows;
+@property (nonatomic, copy) NSArray *rows;
 
 @end
 
@@ -19,12 +23,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.rows = @[
+    if (!self.resourceClass || self.resourceClass == Photo.class) {
+        _rows = @[
                   @[NSLocalizedString(@"Date uploaded", nil), NSLocalizedString(@"9->1", nil), @"dateUploaded,desc"],
                   @[NSLocalizedString(@"Date uploaded", nil), NSLocalizedString(@"1->9", nil), @"dateUploaded,asc"],
                   @[NSLocalizedString(@"Date taken", nil), NSLocalizedString(@"9->1", nil), @"dateTaken,desc"],
                   @[NSLocalizedString(@"Date taken", nil), NSLocalizedString(@"1->9", nil), @"dateTaken,asc"],
                   ];
+    } else if (self.resourceClass == Album.class) {
+        _rows = @[
+                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Z->A", nil), @"name,desc"],
+                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"A->Z", nil), @"name,asc"],
+                  @[NSLocalizedString(@"Last updated", nil), NSLocalizedString(@"9->1", nil), @"dateLastPhotoAdded,desc"],
+                  @[NSLocalizedString(@"Last updated", nil), NSLocalizedString(@"1->9", nil), @"dateLastPhotoAdded,asc"],
+                  ];
+    }
+    
     
     self.title = NSLocalizedString(@"Sort", nil);
     
@@ -39,6 +53,14 @@
 
 - (void)didTapCancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setRows:(NSArray *)rows {
+    if (_rows != rows) {
+        _rows = rows;
+        
+        [self.tableView reloadData];
+    }
 }
 
 #pragma mark - Table view data source

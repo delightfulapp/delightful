@@ -19,4 +19,6 @@
 
 @property (nonatomic, weak) id<SortingDelegate>sortingDelegate;
 
+@property (nonatomic) Class resourceClass;
+
 @end
