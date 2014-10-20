@@ -39,16 +39,16 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     [self setSelectedViewMapping:self.dateUploadedLastViewMapping];
     
     [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-        NSLog(@"%@ created", viewMapping.mapping.view);
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
     }];
     [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedFirstViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-        NSLog(@"%@ created", viewMapping.mapping.view);
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
     }];
     [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateTakenFirstViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-        NSLog(@"%@ created", viewMapping.mapping.view);
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
     }];
     [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateTakenLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-        NSLog(@"%@ created", viewMapping.mapping.view);
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
     }];
 }
 

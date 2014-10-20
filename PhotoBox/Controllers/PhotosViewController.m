@@ -122,9 +122,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Sort", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
     [self.navigationItem setLeftBarButtonItem:leftItem];
     
-    self.currentSort = @"dateUploaded,desc";
-    [[SyncEngine sharedEngine] startSyncingPhotos];
-    
+    self.currentSort = @"dateUploaded,desc";    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -133,7 +131,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"view will disappear");
+    CLS_LOG(@"view will disappear");
     [((YapDataSource *)self.dataSource) setPause:YES];
     [[SyncEngine sharedEngine] setPausePhotosSync:YES];
 }
@@ -142,6 +140,8 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+    CLS_LOG(@"did receive memory warning");
 }
 
 #pragma mark - Buttons
@@ -196,21 +196,21 @@
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    NSLog(@"will begin dragging");
+    CLS_LOG(@"will begin dragging");
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
-        NSLog(@"end dragging");
+        CLS_LOG(@"end dragging");
     }
 }
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    NSLog(@"did end scrolling animation");
+    CLS_LOG(@"did end scrolling animation");
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSLog(@"did end decelerating");
+    CLS_LOG(@"did end decelerating");
 }
 
 #pragma mark - Override

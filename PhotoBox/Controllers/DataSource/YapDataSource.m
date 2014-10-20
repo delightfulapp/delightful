@@ -82,7 +82,7 @@
                 [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
             }
         } completionBlock:^{
-            NSLog(@"Done inserting to db");
+            CLS_LOG(@"Done inserting to db");
         }];
     }
 }
@@ -161,8 +161,8 @@
         return;
     }
     
-    NSLog(@"begin updates %@", NSStringFromClass(self.class));
-    //NSLog(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
+    CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), sectionChanges.count, rowChanges.count);
+    //CLS_LOG(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
     
     [self.mainConnection beginLongLivedReadTransaction];
     
@@ -176,10 +176,12 @@
             for (YapDatabaseViewSectionChange *sectionChange in sectionChanges) {
                 switch (sectionChange.type) {
                     case YapDatabaseViewChangeDelete:{
+                        CLS_LOG(@"section deleted: %ld", sectionChange.index);
                         [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
                         break;
                     }
                     case YapDatabaseViewChangeInsert:{
+                        CLS_LOG(@"section inserted: %ld", sectionChange.index);
                         [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
                         break;
                     }
@@ -192,20 +194,27 @@
             for (YapDatabaseViewRowChange *rowChange in rowChanges) {
                 switch (rowChange.type) {
                     case YapDatabaseViewChangeDelete:{
-                        [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
+                        CLS_LOG(@"row deleted at index path %@", rowChange.indexPath);
+                        if (rowChange.indexPath) [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
                         break;
                     }
                     case YapDatabaseViewChangeInsert:{
-                        [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                        CLS_LOG(@"row inserted at index path %@", rowChange.newIndexPath);
+                        if (rowChange.newIndexPath) [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
                         break;
                     }
                     case YapDatabaseViewChangeMove:{
-                        [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
-                        [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                        CLS_LOG(@"row moved from index path %@ to %@", rowChange.indexPath, rowChange.newIndexPath);
+                        if (rowChange.indexPath && rowChange.newIndexPath) {
+                            [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
+                            [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
+                        }
+                        
                         break;
                     }
                     case YapDatabaseViewChangeUpdate:{
-                        [self.collectionView  reloadItemsAtIndexPaths:@[rowChange.indexPath]];
+                        CLS_LOG(@"row updated %@", rowChange.indexPath);
+                        //if (rowChange.indexPath) [self.collectionView  reloadItemsAtIndexPaths:@[rowChange.indexPath]];
                         break;
                     }
                     default:
@@ -216,10 +225,10 @@
             
         }];
     };
-
     
     if ([self.collectionView isDragging] || [self.collectionView isDecelerating] || [self.collectionView isTracking]) {
-        
+        CLS_LOG(@"is dragging reloading data");
+        [self.collectionView reloadData];
     } else {
         performBatchUpdates();
     }

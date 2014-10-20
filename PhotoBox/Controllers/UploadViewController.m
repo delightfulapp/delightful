@@ -72,7 +72,7 @@
 
 - (void)startUpload {
     for (DLFAsset *asset in self.uploads) {
-        //NSLog(@"Asset URL = %@", [asset.asset valueForProperty:ALAssetPropertyAssetURL]);
+        //CLS_LOG(@"Asset URL = %@", [asset.asset valueForProperty:ALAssetPropertyAssetURL]);
         [[DLFImageUploader sharedUploader] queueAsset:asset];
     }
 }
@@ -156,7 +156,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UploadAssetCell *cell = (UploadAssetCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    NSLog(@"Cell progress = %f", cell.uploadProg);
+    CLS_LOG(@"Cell progress = %f", cell.uploadProg);
 }
 
 #pragma mark - Collection View Data Source

@@ -1676,7 +1676,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\nfi\n\n";
+			shellScript = "echo \"Gonna Running crashlytics framework\"\nFILE=./Crashlytics.framework/run\nAPI_KEY_PLIST=./PhotoBox/Crashlytics.plist\nBUILD_SECRET_FILE=./crashlytics-code\n\nAPI_KEY=$(/usr/libexec/PlistBuddy -c \"Print :key\" \"$API_KEY_PLIST\")\n\nif [ -f $BUILD_SECRET_FILE ];\nthen\nBUILD_SECRET=`head -1 $BUILD_SECRET_FILE`\necho $BUILD_SECRET\nif [ -f $FILE ];\nthen\necho \"Running crashlytics framework\"\n./Crashlytics.framework/run $API_KEY $BUILD_SECRET\nelse\necho \"No Crashlytics\"\nfi\nelse\necho \"No crashlytics-code\"\nfi\n\n";
 		};
 		03EFD95A19251CD700E80A71 /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2437,7 +2437,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "d9533600-f432-40cb-b232-102affa2ed8e";
+				PROVISIONING_PROFILE = "073c9b0c-c591-4b6a-9167-b07948ce9a2b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -89,7 +89,7 @@ NSString *const galleryContainerType = @"gallery";
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    NSLog(@"**** will transition in photobox");
+    CLS_LOG(@"**** will transition in photobox");
     self.currentSize = size;
     
     CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
@@ -361,7 +361,7 @@ NSString *const galleryContainerType = @"gallery";
                 PBX_LOG(@"Gonna fetch resource in KVO");
                 [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
             } else {
-                NSLog(@"Logging out, clearing everything");
+                CLS_LOG(@"Logging out, clearing everything");
                 [[DLFDatabaseManager manager] removeAllItems];
                 [self.collectionView reloadData];
                 [self userDidLogout];

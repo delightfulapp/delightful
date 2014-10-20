@@ -31,7 +31,7 @@ extern NSString *PBX_favoritesAlbumIdentifier;
 #if !defined DEBUG && __has_include("Crashlytics/Crashlytics.h")
 #define PBX_LOG(__FORMAT__, ...) CLS_LOG(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
 #else
-#define PBX_LOG(__FORMAT__, ...) NSLog(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
+#define PBX_LOG(__FORMAT__, ...) CLS_LOG(@"[%@]$ " __FORMAT__, NSStringFromClass([self class]), ##__VA_ARGS__)
 #endif
 
 

@@ -67,7 +67,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
     
     NSString *resultType = @"locality|political";
     NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%@&sensor=true&key=%@&result_type=%@", locationKey, GOOGLE_API_KEY, [resultType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    NSLog(@"Seraching location %@", urlString);
+    CLS_LOG(@"Seraching location %@", urlString);
     NSURL *URL = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];

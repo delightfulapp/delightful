@@ -235,7 +235,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
             if (error) {
                 [self newAlbumDidFailWithError:error];
             } else {
-                NSLog(@"New album = %@", responseObject);
+                CLS_LOG(@"New album = %@", responseObject);
                 if (self.delegate && [self.delegate respondsToSelector:@selector(albumsPickerViewController:didSelectAlbum:)]) {
                     [self.delegate albumsPickerViewController:self didSelectAlbum:responseObject];
                 }
@@ -253,7 +253,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     UITextField *textField = [alertView textFieldAtIndex:0];
-    NSLog(@"Text = %@", textField.text);
+    CLS_LOG(@"Text = %@", textField.text);
     switch (buttonIndex) {
         case 0:
             
