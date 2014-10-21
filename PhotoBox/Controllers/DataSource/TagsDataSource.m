@@ -26,7 +26,7 @@ NSString *tagsAlphabeticalLastViewName = @"alphabetical-last-tags";
         self.alphabeticalFirstTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:YES];
         self.alphabeticalLastTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:NO];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self setSelectedViewMapping:self.alphabeticalLastTagsViewMapping];
+            [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
         });
     });
 }

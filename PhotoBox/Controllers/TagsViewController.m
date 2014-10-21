@@ -45,6 +45,8 @@
     
     [self setTitle:NSLocalizedString(@"Tags", nil)];
     
+    self.currentSort = @"name,asc";
+    
     UIButton *sortingButton = [[UIButton alloc] init];
     NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
     [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
@@ -71,6 +73,7 @@
     SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [sort setResourceClass:Tag.class];
     [sort setSortingDelegate:self];
+    [sort setSelectedSort:self.currentSort];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
     [self presentViewController:nav animated:YES completion:nil];
 }

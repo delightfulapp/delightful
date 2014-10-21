@@ -156,6 +156,7 @@
 - (void)didTapSortButton:(id)sender {
     SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [sort setSortingDelegate:self];
+    [sort setSelectedSort:self.currentSort];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
     [self presentViewController:nav animated:YES completion:nil];
 }

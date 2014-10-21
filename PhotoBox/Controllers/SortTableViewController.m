@@ -12,6 +12,8 @@
 #import "Album.h"
 #import "Tag.h"
 
+#import "NSAttributedString+DelighftulFonts.h"
+
 @interface SortTableViewController ()
 
 @property (nonatomic, copy) NSArray *rows;
@@ -25,22 +27,22 @@
     
     if (!self.resourceClass || self.resourceClass == Photo.class) {
         _rows = @[
-                  @[NSLocalizedString(@"Date uploaded", nil), NSLocalizedString(@"9->1", nil), @"dateUploaded,desc"],
-                  @[NSLocalizedString(@"Date uploaded", nil), NSLocalizedString(@"1->9", nil), @"dateUploaded,asc"],
-                  @[NSLocalizedString(@"Date taken", nil), NSLocalizedString(@"9->1", nil), @"dateTaken,desc"],
-                  @[NSLocalizedString(@"Date taken", nil), NSLocalizedString(@"1->9", nil), @"dateTaken,asc"],
+                  @[NSLocalizedString(@"Date uploaded", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"dateUploaded,desc"],
+                  @[NSLocalizedString(@"Date uploaded", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"dateUploaded,asc"],
+                  @[NSLocalizedString(@"Date taken", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"dateTaken,desc"],
+                  @[NSLocalizedString(@"Date taken", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"dateTaken,asc"],
                   ];
     } else if (self.resourceClass == Album.class) {
         _rows = @[
-                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Z->A", nil), @"name,desc"],
-                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"A->Z", nil), @"name,asc"],
-                  @[NSLocalizedString(@"Last updated", nil), NSLocalizedString(@"9->1", nil), @"dateLastPhotoAdded,desc"],
-                  @[NSLocalizedString(@"Last updated", nil), NSLocalizedString(@"1->9", nil), @"dateLastPhotoAdded,asc"],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], @"name,desc"],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], @"name,asc"],
+                  @[NSLocalizedString(@"Last updated", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"dateLastPhotoAdded,desc"],
+                  @[NSLocalizedString(@"Last updated", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"dateLastPhotoAdded,asc"],
                   ];
     } else if (self.resourceClass == Tag.class) {
         _rows = @[
-                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Z->A", nil), @"name,desc"],
-                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"A->Z", nil), @"name,asc"]
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], @"name,desc"],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], @"name,asc"]
                   ];
     }
     
@@ -85,8 +87,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
     }
     NSArray *text = self.rows[indexPath.row];
-    [cell.textLabel setText:text[0]];
-    [cell.detailTextLabel setText:text[1]];
+    NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", text[0]]];
+    NSMutableAttributedString *sortAttr = [text[1] mutableCopy];
+    [sortAttr addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:NSMakeRange(0, sortAttr.string.length)];
+    [attr appendAttributedString:sortAttr];
+    [cell.textLabel setAttributedText:attr];
     NSString *sort = text[2];
     if ([self.selectedSort isEqualToString:sort]) {
         [cell setAccessoryType:UITableViewCellAccessoryCheckmark];

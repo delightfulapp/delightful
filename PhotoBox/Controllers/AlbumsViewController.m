@@ -42,7 +42,7 @@
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
     [self.navigationItem setRightBarButtonItem:leftItem];
     
-    self.currentSort = @"dateUploaded,desc";
+    self.currentSort = @"dateLastPhotoAdded,desc";
         
     [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView setDelegate:self];
@@ -67,6 +67,7 @@
     SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [sort setResourceClass:Album.class];
     [sort setSortingDelegate:self];
+    [sort setSelectedSort:self.currentSort];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
     [self presentViewController:nav animated:YES completion:nil];
 }
