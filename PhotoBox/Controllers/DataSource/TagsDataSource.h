@@ -15,4 +15,6 @@
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalFirstTagsViewMapping;
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalLastTagsViewMapping;
 
+- (void)setSortByNameAscending:(BOOL)ascending;
+
 @end

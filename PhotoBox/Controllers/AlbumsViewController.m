@@ -21,7 +21,7 @@
 #import "SyncEngine.h"
 #import "SortTableViewController.h"
 
-@interface AlbumsViewController () <UIActionSheetDelegate, SortingDelegate>
+@interface AlbumsViewController () <UIActionSheetDelegate, SortingDelegate, UICollectionViewDelegate>
 
 @property (nonatomic, strong) NSString *currentSort;
 
@@ -30,9 +30,7 @@
 @implementation AlbumsViewController
 
 - (void)viewDidLoad
-{
-    [self setAlbumsCount:0 max:0];
-    
+{    
     [super viewDidLoad];
     
     UIButton *sortingButton = [[UIButton alloc] init];
@@ -52,21 +50,6 @@
     self.title = NSLocalizedString(@"Albums", nil);
     
     [[SyncEngine sharedEngine] startSyncingAlbums];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [self.collectionView reloadData];
-}
-
-- (void)setAlbumsCount:(int)count max:(int)max{
-    if (count == 0) {
-        self.title = NSLocalizedString(@"Albums", nil);
-    } else {
-        self.title = [NSString stringWithFormat:@"%@ (%d/%d)", NSLocalizedString(@"Albums", nil), count, max];
-    }
-    
-    [self.tabBarItem setTitle:self.title];
-    [self.tabBarItem setImage:[[UIImage imageNamed:@"Albums"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -115,10 +98,6 @@
 }
 
 #pragma mark - Getters
-
-- (NSArray *)sortDescriptors {
-    return nil;
-}
 
 - (ResourceType)resourceType {
     return AlbumResource;

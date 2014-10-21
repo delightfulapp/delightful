@@ -21,4 +21,6 @@
 
 @property (nonatomic) Class resourceClass;
 
+@property (nonatomic, strong) NSString *selectedSort;
+
 @end

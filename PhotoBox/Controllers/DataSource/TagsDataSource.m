@@ -29,7 +29,14 @@ NSString *tagsAlphabeticalLastViewName = @"alphabetical-last-tags";
             [self setSelectedViewMapping:self.alphabeticalLastTagsViewMapping];
         });
     });
-    
+}
+
+- (void)setSortByNameAscending:(BOOL)ascending {
+    if (ascending) {
+        [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
+    } else {
+        [self setSelectedViewMapping:self.alphabeticalLastTagsViewMapping];
+    }
 }
 
 @end

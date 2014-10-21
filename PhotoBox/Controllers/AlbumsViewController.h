@@ -17,8 +17,6 @@
 
 @interface AlbumsViewController : PhotoBoxViewController
 
-- (void)tapOnAllAlbum:(UITapGestureRecognizer *)gesture;
-
 - (void)restoreContentInset;
 
 @property (nonatomic, weak) id<AlbumsViewControllerScrollDelegate>scrollDelegate;

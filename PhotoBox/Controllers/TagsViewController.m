@@ -18,54 +18,85 @@
 
 #import "UIViewController+Additionals.h"
 
+#import "NSAttributedString+DelighftulFonts.h"
+
 #import "TagsDataSource.h"
 
 #import "SyncEngine.h"
 
-@interface TagsViewController ()
+#import "SortTableViewController.h"
+
+@interface TagsViewController () <UICollectionViewDelegate, SortingDelegate>
+
+@property (nonatomic, strong) NSString *currentSort;
 
 @end
 
 @implementation TagsViewController
 
-- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout {
-    //self = [super initWithCollectionViewLayout:layout];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self setup];
-    }
-    return self;
-}
-
-- (void)setup {
-    
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    [self setup];
     [self.collectionView registerClass:[TagRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
+    [self.collectionView setDelegate:self];
     
     [self setTitle:NSLocalizedString(@"Tags", nil)];
     
-    [[SyncEngine sharedEngine] startSyncingTags];
+    UIButton *sortingButton = [[UIButton alloc] init];
+    NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
+    [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
+    [sortingButton sizeToFit];
+    [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+    [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
+    [self.navigationItem setRightBarButtonItem:leftItem];
+    
+    [self.collectionView reloadData];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [[SyncEngine sharedEngine] startSyncingTags];
+    });
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)didTapSortButton:(id)sender {
+    SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [sort setResourceClass:Tag.class];
+    [sort setSortingDelegate:self];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)restoreContentInset {
+    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
+    [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
+}
+
+#pragma mark - SortingDelegate
+
+- (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
+    if (![self.currentSort isEqualToString:sort]) {
+        self.currentSort = sort;
+        NSArray *sortArray = [sort componentsSeparatedByString:@","];
+        BOOL ascending = YES;
+        if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
+            ascending = NO;
+        }
+        [((TagsDataSource *)self.dataSource) setSortByNameAscending:ascending];
+        [sortTableViewController dismissViewControllerAnimated:YES completion:^{
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }];
+    } else {
+        [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Getters
@@ -86,26 +117,6 @@
     return @"tagCell";
 }
 
-#pragma mark - Do stuff
-
-/**
- *  We're subclassing AlbumsViewController so let's just override this method to set the title of this view controller.
- *
- *  @param count Number of tags.
- *  @param max   Total number of tags.
- */
-
-- (void)setAlbumsCount:(int)count max:(int)max{
-    if (count == 0) {
-        self.title = NSLocalizedString(@"Tags", nil);
-    } else {
-        self.title = [NSString stringWithFormat:@"%@ (%d/%d)", NSLocalizedString(@"Tags", nil), count, max];
-    }
-    
-    [self.tabBarItem setTitle:self.title];
-    [self.tabBarItem setImage:[[UIImage imageNamed:@"Tags"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
-}
-
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,13 +130,17 @@
     return CGSizeMake(collectionViewWidth, 44);
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeZero;
+}
+
 #pragma mark - Syncing Notification
 
 - (void)didFinishSyncingNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        [self.navigationItem setRightBarButtonItem:nil];
+        [self.navigationItem setLeftBarButtonItem:nil];
     }
 }
 

@@ -37,6 +37,11 @@
                   @[NSLocalizedString(@"Last updated", nil), NSLocalizedString(@"9->1", nil), @"dateLastPhotoAdded,desc"],
                   @[NSLocalizedString(@"Last updated", nil), NSLocalizedString(@"1->9", nil), @"dateLastPhotoAdded,asc"],
                   ];
+    } else if (self.resourceClass == Tag.class) {
+        _rows = @[
+                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"Z->A", nil), @"name,desc"],
+                  @[NSLocalizedString(@"Name", nil), NSLocalizedString(@"A->Z", nil), @"name,asc"]
+                  ];
     }
     
     
@@ -82,6 +87,12 @@
     NSArray *text = self.rows[indexPath.row];
     [cell.textLabel setText:text[0]];
     [cell.detailTextLabel setText:text[1]];
+    NSString *sort = text[2];
+    if ([self.selectedSort isEqualToString:sort]) {
+        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
+    } else {
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
+    }
     return cell;
 }
 
