@@ -161,7 +161,7 @@
         return;
     }
     
-    CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), sectionChanges.count, rowChanges.count);
+    CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), (int)sectionChanges.count, (int)rowChanges.count);
     //CLS_LOG(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
     
     [self.mainConnection beginLongLivedReadTransaction];

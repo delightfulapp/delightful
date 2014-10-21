@@ -17,11 +17,8 @@ typedef NS_ENUM(NSInteger, PhotosSortKey) {
 
 @interface GroupedPhotosDataSource : YapDataSource
 
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateUploadedLastViewMapping;
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateUploadedFirstViewMapping;
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateTakenLastViewMapping;
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateTakenFirstViewMapping;
-
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending;
+
+- (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping;
 
 @end

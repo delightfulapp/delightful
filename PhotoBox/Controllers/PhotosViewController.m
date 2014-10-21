@@ -389,7 +389,7 @@
 }
 
 - (void)openPhoto:(Photo *)photo{
-    PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithGroupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
+    PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithViewMapping:[((GroupedPhotosDataSource *)self.dataSource) selectedFlattenedViewMapping]];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
     if (!self.transitionDelegate) {

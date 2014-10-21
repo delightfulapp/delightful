@@ -14,4 +14,6 @@
 
 + (PhotosHorizontalScrollingYapBackedViewController *)defaultControllerWithGroupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping;
 
++ (PhotosHorizontalScrollingYapBackedViewController *)defaultControllerWithViewMapping:(DLFYapDatabaseViewAndMapping *)viewMapping;
+
 @end
