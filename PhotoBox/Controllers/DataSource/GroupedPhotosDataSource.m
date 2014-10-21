@@ -19,6 +19,20 @@ NSString *dateTakenLastViewName = @"date-taken-last-photos";
 NSString *dateUploadedFirstViewName = @"date-uploaded-first-photos";
 NSString *dateTakenFirstViewName = @"date-taken-first-photos";
 
+@interface GroupedPhotosDataSource ()
+
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateUploadedLastViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateUploadedFirstViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateTakenLastViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *dateTakenFirstViewMapping;
+
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *flattenedDateUploadedLastViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *flattenedDateUploadedFirstViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *flattenedDateTakenLastViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *flattenedDateTakenFirstViewMapping;
+
+@end
+
 @implementation GroupedPhotosDataSource
 
 - (void)setupDatabase {
@@ -36,7 +50,45 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     // last taken -> first taken view and mappings grouped
     self.dateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateTakenLastViewName collection:photosCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateTaken)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateTakenString)) groupSortAsc:NO];
 
-    [self setSelectedViewMapping:self.dateTakenLastViewMapping];
+    [self setSelectedViewMapping:self.dateUploadedLastViewMapping];
+    
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
+        self.flattenedDateUploadedLastViewMapping = viewMapping;
+    }];
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedFirstViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
+        self.flattenedDateUploadedFirstViewMapping = viewMapping;
+    }];
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateTakenFirstViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
+        self.flattenedDateTakenFirstViewMapping = viewMapping;
+    }];
+    [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateTakenLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        CLS_LOG(@"%@ created", viewMapping.mapping.view);
+        self.flattenedDateTakenLastViewMapping = viewMapping;
+    }];
+}
+
+- (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending {
+    if (sortBy == PhotosSortKeyDateUploaded) {
+        [self setSelectedViewMapping:(ascending)?self.dateUploadedFirstViewMapping:self.dateUploadedLastViewMapping];
+    } else if (sortBy == PhotosSortKeyDateTaken) {
+        [self setSelectedViewMapping:(ascending)?self.dateTakenFirstViewMapping:self.dateTakenLastViewMapping];
+    }
+}
+
+- (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {
+    if (self.selectedViewMapping == self.dateTakenFirstViewMapping) {
+        return self.flattenedDateTakenFirstViewMapping;
+    } else if (self.selectedViewMapping == self.dateTakenLastViewMapping) {
+        return self.flattenedDateTakenLastViewMapping;
+    } else if (self.selectedViewMapping == self.dateUploadedFirstViewMapping) {
+        return self.flattenedDateUploadedFirstViewMapping;
+    } else if (self.selectedViewMapping == self.dateUploadedLastViewMapping) {
+        return self.flattenedDateUploadedLastViewMapping;
+    }
+    return nil;
 }
 
 @end

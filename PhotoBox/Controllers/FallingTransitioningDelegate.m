@@ -106,7 +106,7 @@
 }
 
 - (void)dynamicAnimatorDidPause:(UIDynamicAnimator *)animator {
-    NSLog(@"context complete");
+    CLS_LOG(@"context complete");
 }
 
 -(void)ensureSimulationCompletesWithDesiredEndFrame:(CGRect)endFrame {

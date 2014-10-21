@@ -62,7 +62,13 @@ NSString * const dlf_icon_arrow_left3 = @"\ue632";
 NSString * const dlf_icon_arrow_down3 = @"\ue633";
 NSString * const dlf_icon_arrow_up3 = @"\ue634";
 NSString * const dlf_icon_uniE635 = @"\ue635";
-
+NSString * const dlf_icon_sort_numeric_desc = @"\uf1ed";
+NSString * const dlf_icon_sort_numeric_asc = @"\uf1ec";
+NSString * const dlf_icon_sort_alpha_desc = @"\uf1e9";
+NSString * const dlf_icon_sort_alpha_asc = @"\uf1e8";
+NSString * const dlf_icon_unsorted = @"\uf171";
+NSString * const dlf_icon_squares = @"\uf022";
+NSString * const dlf_icon_menu_sort = @"\ue636";
 
 @implementation NSAttributedString (DelightfulFonts)
 

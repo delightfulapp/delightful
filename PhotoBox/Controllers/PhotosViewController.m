@@ -25,6 +25,7 @@
 
 #import "UIView+Additionals.h"
 #import "NSString+Additionals.h"
+#import "NSAttributedString+DelighftulFonts.h"
 #import "UIViewController+Additionals.h"
 
 #import "AppDelegate.h"
@@ -47,8 +48,6 @@
 
 #import "HeaderImageView.h"
 
-#import <TMCache.h>
-
 #import "FallingTransitioningDelegate.h"
 
 #import "PhotosPickerViewController.h"
@@ -67,7 +66,11 @@
 
 #import "NSAttributedString+DelighftulFonts.h"
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate>
+#import "SyncEngine.h"
+
+#import "SortTableViewController.h"
+
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -79,6 +82,8 @@
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 
 @property (nonatomic, strong) UploadViewController *uploadViewController;
+
+@property (nonatomic, strong) NSString *currentSort;
 
 @end
 
@@ -111,25 +116,76 @@
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
     self.title = NSLocalizedString(@"Photos", nil);
     
+    UIButton *sortingButton = [[UIButton alloc] init];
+    NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
+    [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
+    [sortingButton sizeToFit];
+    [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+    [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
+    [self.navigationItem setRightBarButtonItem:leftItem];
+    
+    self.currentSort = @"dateUploaded,desc";    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [((YapDataSource *)self.dataSource) setPause:NO];
+    [[SyncEngine sharedEngine] setPausePhotosSync:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-    NSLog(@"view will disappear");
+    CLS_LOG(@"view will disappear");
     [((YapDataSource *)self.dataSource) setPause:YES];
+    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    
+    CLS_LOG(@"did receive memory warning");
+}
+
+#pragma mark - Buttons
+
+- (void)didTapSortButton:(id)sender {
+    SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [sort setSortingDelegate:self];
+    [sort setSelectedSort:self.currentSort];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - SortingDelegate
+
+- (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
+    if (![self.currentSort isEqualToString:sort]) {
+        self.currentSort = sort;
+        PhotosSortKey selectedSortKey;
+        NSArray *sortArray = [sort componentsSeparatedByString:@","];
+        if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(dateTaken))]) {
+            selectedSortKey = PhotosSortKeyDateTaken;
+        } else {
+            selectedSortKey = PhotosSortKeyDateUploaded;
+        }
+        BOOL ascending = YES;
+        if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
+            ascending = NO;
+        }
+        [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending];
+        [[SyncEngine sharedEngine] setPhotosSyncSort:sort];
+        [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
+        [sortTableViewController dismissViewControllerAnimated:YES completion:^{
+            [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
+        }];
+    } else {
+        [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - ScrollView
@@ -149,6 +205,24 @@
 
         self.headerImageView.transform = CGAffineTransformMakeTranslation(0, MIN(0, -translate));
     }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    CLS_LOG(@"will begin dragging");
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    if (!decelerate) {
+        CLS_LOG(@"end dragging");
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    CLS_LOG(@"did end scrolling animation");
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    CLS_LOG(@"did end decelerating");
 }
 
 #pragma mark - Override
@@ -222,11 +296,18 @@
         self.collectionView.contentInset = ({
             UIEdgeInsets inset = self.collectionView.contentInset;
             inset.top = headerHeight;
+            inset.bottom = 44;
             inset;
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     } else {
         [super restoreContentInsetForSize:self.view.frame.size];
+        self.collectionView.contentInset = ({
+            UIEdgeInsets inset = self.collectionView.contentInset;
+            inset.bottom = 44;
+            inset;
+        });
+        self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     }
     
 }
@@ -294,6 +375,8 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [((YapDataSource *)self.dataSource) setPause:YES];
+    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
@@ -306,7 +389,7 @@
 }
 
 - (void)openPhoto:(Photo *)photo{
-    PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithGroupedViewMapping:((YapDataSource *)self.dataSource).selectedViewMapping];
+    PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithViewMapping:[((GroupedPhotosDataSource *)self.dataSource) selectedFlattenedViewMapping]];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
     if (!self.transitionDelegate) {

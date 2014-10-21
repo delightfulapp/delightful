@@ -14,8 +14,17 @@
                                                collection:(NSString *)collection
                                                  database:(YapDatabase *)database
                                                   sortKey:(NSString *)sortKey
+                                               sortKeyAsc:(BOOL)ascending
+                                               completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
+    return [self.class viewMappingWithViewName:viewName collection:collection database:database sortKey:sortKey sortKeyAsc:ascending groupKey:nil groupSortAsc:NO completion:completionBlock];
+}
+
++ (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                               collection:(NSString *)collection
+                                                 database:(YapDatabase *)database
+                                                  sortKey:(NSString *)sortKey
                                                sortKeyAsc:(BOOL)ascending {
-    return [self.class viewMappingWithViewName:viewName collection:collection database:database sortKey:sortKey sortKeyAsc:ascending groupKey:nil groupSortAsc:NO];
+    return [DLFYapDatabaseViewAndMapping viewMappingWithViewName:viewName collection:collection database:database sortKey:sortKey sortKeyAsc:ascending completion:nil];
 }
 
 + (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
@@ -25,6 +34,17 @@
                                                sortKeyAsc:(BOOL)sortKeyAscending
                                                  groupKey:(NSString *)groupKey
                                              groupSortAsc:(BOOL)groupSortAscending {
+    return [DLFYapDatabaseViewAndMapping viewMappingWithViewName:viewName collection:aCollection database:database sortKey:sortKey sortKeyAsc:sortKeyAscending groupKey:groupKey groupSortAsc:groupSortAscending completion:nil];
+}
+
++ (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                               collection:(NSString *)aCollection
+                                                 database:(YapDatabase *)database
+                                                  sortKey:(NSString *)sortKey
+                                               sortKeyAsc:(BOOL)sortKeyAscending
+                                                 groupKey:(NSString *)groupKey
+                                             groupSortAsc:(BOOL)groupSortAscending
+                                               completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock{
     
     YapDatabaseViewGroupingWithObjectBlock groupingBlock = ^NSString *(NSString *collection, NSString *key, id object) {
         if (![collection isEqualToString:aCollection]) {
@@ -51,28 +71,72 @@
     
     YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1" options:options];
     
-    [database registerExtension:view withName:viewName];
+    DLFYapDatabaseViewAndMapping * (^viewMappingInit)() = ^DLFYapDatabaseViewAndMapping*() {
+        YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
+            return (group)?YES:NO;
+        } sortBlock:^NSComparisonResult(NSString *group1, NSString *group2, YapDatabaseReadTransaction *transaction) {
+            return (groupSortAscending)?[group1 compare:group2]:[group2 compare:group1];
+        } view:viewName];
+        
+        DLFYapDatabaseViewAndMapping *returnObject = [[DLFYapDatabaseViewAndMapping alloc] init];
+        returnObject.view = view;
+        returnObject.mapping = mappings;
+        returnObject.sortKey = sortKey;
+        returnObject.sortKeyAscending = sortKeyAscending;
+        returnObject.groupSortAscending = groupSortAscending;
+        returnObject.groupKey = groupKey;
+        returnObject.collection = aCollection;
+        
+        return returnObject;
+    };
+
     
-    YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
-        return (group)?YES:NO;
-    } sortBlock:^NSComparisonResult(NSString *group1, NSString *group2, YapDatabaseReadTransaction *transaction) {
-        return (groupSortAscending)?[group1 compare:group2]:[group2 compare:group1];
-    } view:viewName];
-    
-    DLFYapDatabaseViewAndMapping *returnObject = [[DLFYapDatabaseViewAndMapping alloc] init];
-    returnObject.view = view;
-    returnObject.mapping = mappings;
-    returnObject.sortKey = sortKey;
-    returnObject.sortKeyAscending = sortKeyAscending;
-    returnObject.groupSortAscending = groupSortAscending;
-    returnObject.groupKey = groupKey;
-    returnObject.collection = aCollection;
-    
-    return returnObject;
+    if (!completionBlock) {
+        [database registerExtension:view withName:viewName];
+        return viewMappingInit();
+    } else {
+        [database asyncRegisterExtension:view withName:viewName completionBlock:^(BOOL ready) {
+            if (ready) {
+                DLFYapDatabaseViewAndMapping *returnObject = viewMappingInit();
+                completionBlock(returnObject);
+            }
+        }];
+    }
+    return nil;
 }
 
-+ (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database{
-    return [DLFYapDatabaseViewAndMapping viewMappingWithViewName:[NSString stringWithFormat:@"%@-flattened", viewMappingSource.mapping.view] collection:viewMappingSource.collection database:database sortKey:viewMappingSource.sortKey sortKeyAsc:viewMappingSource.sortKeyAscending];
++ (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database {
+    return [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:viewMappingSource database:database completion:nil];
+}
+
++ (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
+    return [DLFYapDatabaseViewAndMapping viewMappingWithViewName:[NSString stringWithFormat:@"%@-flattened", viewMappingSource.mapping.view] collection:viewMappingSource.collection database:database sortKey:viewMappingSource.sortKey sortKeyAsc:viewMappingSource.sortKeyAscending completion:completionBlock];
+}
+
++ (void)asyncViewMappingWithViewName:(NSString *)viewName
+                          collection:(NSString *)collection
+                            database:(YapDatabase *)database
+                             sortKey:(NSString *)sortKey
+                          sortKeyAsc:(BOOL)ascending
+                          completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
+    [DLFYapDatabaseViewAndMapping viewMappingWithViewName:viewName collection:collection database:database sortKey:sortKey sortKeyAsc:ascending groupKey:nil groupSortAsc:NO completion:completionBlock];
+}
+
++ (void)asyncViewMappingWithViewName:(NSString *)viewName
+                          collection:(NSString *)collection
+                            database:(YapDatabase *)database
+                             sortKey:(NSString *)sortKey
+                          sortKeyAsc:(BOOL)sortKeyAsc
+                            groupKey:(NSString *)groupKey
+                        groupSortAsc:(BOOL)groupSortAsc
+                          completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
+    [DLFYapDatabaseViewAndMapping viewMappingWithViewName:viewName collection:collection database:database sortKey:sortKey sortKeyAsc:sortKeyAsc groupKey:groupKey groupSortAsc:groupSortAsc completion:completionBlock];
+}
+
++ (void)asyncUngroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource
+                                        database:(YapDatabase *)database
+                                      completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
+    [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:viewMappingSource database:database completion:completionBlock];
 }
 
 @end

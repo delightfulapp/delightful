@@ -29,6 +29,14 @@
     return self;
 }
 
+- (id)initWithCollectionView:(id)collectionView viewMapping:(DLFYapDatabaseViewAndMapping *)viewMapping {
+    self = [super initWithCollectionView:collectionView];
+    if (self) {
+        [self setSelectedViewMapping:viewMapping];
+    }
+    return self;
+}
+
 - (void)setupMapping {
     DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:self.groupedViewMapping database:self.database];
     

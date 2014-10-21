@@ -89,7 +89,7 @@ NSString *const galleryContainerType = @"gallery";
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    NSLog(@"**** will transition in photobox");
+    CLS_LOG(@"**** will transition in photobox");
     self.currentSize = size;
     
     CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
@@ -361,7 +361,7 @@ NSString *const galleryContainerType = @"gallery";
                 PBX_LOG(@"Gonna fetch resource in KVO");
                 [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
             } else {
-                NSLog(@"Logging out, clearing everything");
+                CLS_LOG(@"Logging out, clearing everything");
                 [[DLFDatabaseManager manager] removeAllItems];
                 [self.collectionView reloadData];
                 [self userDidLogout];
@@ -379,10 +379,10 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        if (!self.navigationItem.rightBarButtonItem) {
+        if (!self.navigationItem.leftBarButtonItem) {
             UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
             UIBarButtonItem *loadingButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-            [self.navigationItem setRightBarButtonItem:loadingButton];
+            [self.navigationItem setLeftBarButtonItem:loadingButton];
             [indicatorView startAnimating];
         }
     }
@@ -394,7 +394,7 @@ NSString *const galleryContainerType = @"gallery";
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
-            [self.navigationItem setRightBarButtonItem:nil];
+            [self.navigationItem setLeftBarButtonItem:nil];
         }
     }
 }
@@ -403,7 +403,7 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        [self.navigationItem setRightBarButtonItem:nil];
+        [self.navigationItem setLeftBarButtonItem:nil];
     }
 }
 

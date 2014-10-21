@@ -14,9 +14,11 @@
 
 #import "PhotoZoomableCell.h"
 
-@interface PhotosHorizontalScrollingYapBackedViewController ()
+@interface PhotosHorizontalScrollingYapBackedViewController () <PhotoZoomableCellDelegate>
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *groupedViewMapping;
+
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *viewMapping;
 
 @end
 
@@ -28,10 +30,24 @@
     return vc;
 }
 
++ (PhotosHorizontalScrollingYapBackedViewController *)defaultControllerWithViewMapping:(DLFYapDatabaseViewAndMapping *)viewMapping {
+    PhotosHorizontalLayout *layout = [[PhotosHorizontalLayout alloc] init];
+    PhotosHorizontalScrollingYapBackedViewController *vc = [[PhotosHorizontalScrollingYapBackedViewController alloc] initWithCollectionViewLayout:layout viewMapping:viewMapping];
+    return vc;
+}
+
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout groupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping {
     self = [super initWithCollectionViewLayout:layout];
     if (self) {
         self.groupedViewMapping = groupedViewMapping;
+    }
+    return self;
+}
+
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout viewMapping:(DLFYapDatabaseViewAndMapping *)viewMapping {
+    self = [super initWithCollectionViewLayout:layout];
+    if (self) {
+        self.viewMapping = viewMapping;
     }
     return self;
 }
@@ -47,7 +63,13 @@
 }
 
 - (void)setupDataSource {
-    FlattenedPhotosDataSource *dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView groupedViewMapping:self.groupedViewMapping];
+    FlattenedPhotosDataSource *dataSource;
+    if (self.viewMapping) {
+        dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView viewMapping:self.viewMapping];
+    } else {
+        dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView groupedViewMapping:self.groupedViewMapping];
+    }
+    
     [dataSource setCellIdentifier:[self cellIdentifier]];
     __weak typeof (self) selfie = self;
     [dataSource setConfigureCellBlock:^(PhotoZoomableCell *cell, id item){

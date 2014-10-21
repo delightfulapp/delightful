@@ -58,7 +58,7 @@ NSString *tagsCollectionName = @"tags";
 }
 
 - (void)removeAllItems {
-    NSLog(@"Removing all items");
+    CLS_LOG(@"Removing all items");
     [self.connection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         [transaction removeAllObjectsInAllCollections];
     }];

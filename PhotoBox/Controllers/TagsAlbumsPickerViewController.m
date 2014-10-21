@@ -258,7 +258,7 @@
 }
 
 - (void)showSuggestions:(NSArray *)suggestions{
-    //NSLog(@"Suggestions: %@", [[suggestions valueForKeyPath:@"tagId"] componentsJoinedByString:@","]);
+    //CLS_LOG(@"Suggestions: %@", [[suggestions valueForKeyPath:@"tagId"] componentsJoinedByString:@","]);
     if (suggestions && suggestions.count > 0) {
         UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:TagsAlbumsPickerCollectionViewSectionsTags]];
         CGRect cellFrameInTableViewSuperview = [self.tableView.superview convertRect:cell.frame fromView:self.tableView];

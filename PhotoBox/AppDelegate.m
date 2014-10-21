@@ -77,11 +77,8 @@ static void * imageUploadContext = &imageUploadContext;
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
+    [self.window setTintColor:[UIColor redColor]];
     //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[SyncEngine sharedEngine] startSyncing];
-    });
     
     return YES;
 }

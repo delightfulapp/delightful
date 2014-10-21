@@ -14,4 +14,6 @@
 
 - (id)initWithCollectionView:(id)collectionView groupedViewMapping:(DLFYapDatabaseViewAndMapping *)groupedViewMapping;
 
+- (id)initWithCollectionView:(id)collectionView viewMapping:(DLFYapDatabaseViewAndMapping *)viewMapping;
+
 @end

@@ -111,10 +111,13 @@
 #pragma mark - Resource Fetch
 
 - (void)getPhotosForPage:(int)page
+                    sort:(NSString *)sort
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock {
-    [self getPhotosInAlbum:nil page:page
+    [self getPhotosInAlbum:nil
+                      sort:sort
+                      page:page
                   pageSize:(int)pageSize
                    success:successBlock
                    failure:failureBlock];
@@ -136,22 +139,24 @@
 }
 
 - (void)getPhotosInAlbum:(NSString *)albumId
+                    sort:(NSString *)sort
                     page:(int)page
                 pageSize:(int)pageSize
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId sort:sort page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInTag:(NSString *)tagId
+                  sort:(NSString *)sort
                   page:(int)page
               pageSize:(int)pageSize
                success:(void(^)(id object))successBlock
                failure:(void(^)(NSError*))failureBlock {
-    [self getPhotosInResource:Tag.class resourceId:tagId page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    [self getPhotosInResource:Tag.class resourceId:tagId sort:nil page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
-- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId sort:(NSString *)sort page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     NSString *resource = nil;
     if ([resourceClass isSubclassOfClass:Album.class]) {
         resource = [NSString stringWithFormat:@"&%@", [self albumsQueryString:resourceId]];
@@ -159,11 +164,16 @@
         resource = [NSString stringWithFormat:@"&%@", [self tagsQueryString:resourceId]];
     }
     
-    NSString *sort = [self sortByQueryString:@"dateTaken,DESC"];
-    if ([resourceId isEqualToString:PBX_allAlbumIdentifier]){
-        resource = @"";
-        sort = [self sortByQueryString:@"dateUploaded,DESC"];
+    if (!sort) {
+        sort = [self sortByQueryString:@"dateTaken,DESC"];
+        if ([resourceId isEqualToString:PBX_allAlbumIdentifier]){
+            resource = @"";
+            sort = [self sortByQueryString:@"dateUploaded,DESC"];
+        }
+    } else {
+        sort = [self sortByQueryString:sort];
     }
+    
     NSString *path = [NSString stringWithFormat:@"/v2/photos/list.json?page=%d&pageSize=%d&%@&%@", page, pageSize, sort, [self photoSizesString]];
     if (resource) {
         path = [path stringByAppendingString:resource];
