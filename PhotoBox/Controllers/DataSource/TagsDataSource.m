@@ -16,6 +16,17 @@
 
 NSString *tagsAlphabeticalFirstViewName = @"alphabetical-first-tags";
 NSString *tagsAlphabeticalLastViewName = @"alphabetical-last-tags";
+NSString *numbersFirstViewName = @"numbers-first-tags";
+NSString *numbersLastViewName = @"numbers-last-tags";
+
+@interface TagsDataSource ()
+
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalFirstTagsViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalLastTagsViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *numberFirstTagsViewMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *numbersLastTagsViewMapping;
+
+@end
 
 @implementation TagsDataSource
 
@@ -28,14 +39,24 @@ NSString *tagsAlphabeticalLastViewName = @"alphabetical-last-tags";
         dispatch_async(dispatch_get_main_queue(), ^{
             [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
         });
+        self.numberFirstTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:YES];
+        self.numbersLastTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:NO];
     });
 }
 
-- (void)setSortByNameAscending:(BOOL)ascending {
-    if (ascending) {
-        [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
-    } else {
-        [self setSelectedViewMapping:self.alphabeticalLastTagsViewMapping];
+- (void)sortBy:(TagsSortKey)sortBy ascending:(BOOL)ascending {
+    if (sortBy == TagsSortKeyName) {
+        if (ascending) {
+            [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
+        } else {
+            [self setSelectedViewMapping:self.alphabeticalLastTagsViewMapping];
+        }
+    } else if (sortBy == TagsSortKeyNumberOfPhotos) {
+        if (ascending) {
+            [self setSelectedViewMapping:self.numberFirstTagsViewMapping];
+        } else {
+            [self setSelectedViewMapping:self.numbersLastTagsViewMapping];
+        }
     }
 }
 

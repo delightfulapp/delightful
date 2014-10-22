@@ -90,10 +90,16 @@
         self.currentSort = sort;
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
         BOOL ascending = YES;
+        TagsSortKey selectedSortKey;
+        if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(name))]) {
+            selectedSortKey = TagsSortKeyName;
+        } else {
+            selectedSortKey = TagsSortKeyNumberOfPhotos;
+        }
         if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
             ascending = NO;
         }
-        [((TagsDataSource *)self.dataSource) setSortByNameAscending:ascending];
+        [((TagsDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending];
         [sortTableViewController dismissViewControllerAnimated:YES completion:^{
             [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
         }];

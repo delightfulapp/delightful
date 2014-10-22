@@ -42,7 +42,9 @@
     } else if (self.resourceClass == Tag.class) {
         _rows = @[
                   @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], @"name,desc"],
-                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], @"name,asc"]
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], @"name,asc"],
+                  @[NSLocalizedString(@"Number of photos", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"count,desc"],
+                  @[NSLocalizedString(@"Number of photos", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"count,asc"],
                   ];
     }
     

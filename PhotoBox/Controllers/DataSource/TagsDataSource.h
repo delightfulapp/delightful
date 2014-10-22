@@ -10,11 +10,13 @@
 
 @class DLFYapDatabaseViewAndMapping;
 
+typedef NS_ENUM(NSInteger, TagsSortKey) {
+    TagsSortKeyName,
+    TagsSortKeyNumberOfPhotos
+};
+
 @interface TagsDataSource : YapDataSource
 
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalFirstTagsViewMapping;
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabeticalLastTagsViewMapping;
-
-- (void)setSortByNameAscending:(BOOL)ascending;
+- (void)sortBy:(TagsSortKey)sortBy ascending:(BOOL)ascending;
 
 @end
