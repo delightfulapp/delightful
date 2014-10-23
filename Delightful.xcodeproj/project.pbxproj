@@ -1617,7 +1617,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=./PhotoBox/facebook-app-id\nappid=$(cat $FILE)\n/usr/libexec/PlistBuddy -c \"Set :FacebookAppID $appid\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"";
+			shellScript = "FILE=./PhotoBox/facebook-app-id\nif [ -f $FILE ];\nthen\necho \"Have facebook-app-id\"\nappid=$(cat $FILE)\n/usr/libexec/PlistBuddy -c \"Set :FacebookAppID $appid\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi";
 		};
 		03D972AC18123A20008A087B /* Build number increment */ = {
 			isa = PBXShellScriptBuildPhase;
