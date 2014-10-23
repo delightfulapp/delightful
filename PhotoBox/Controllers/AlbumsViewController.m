@@ -10,6 +10,7 @@
 
 #import "PhotosCollection.h"
 #import "Album.h"
+#import "Photo.h"
 #import "AlbumRowCell.h"
 #import "PhotosViewController.h"
 #import "DelightfulRowCell.h"
@@ -20,6 +21,7 @@
 #import "AlbumsDataSource.h"
 #import "SyncEngine.h"
 #import "SortTableViewController.h"
+#import "PhotosSubsetViewController.h"
 
 @interface AlbumsViewController () <UIActionSheetDelegate, SortingDelegate, UICollectionViewDelegate>
 
@@ -127,8 +129,23 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Album *album = (Album *)[self.dataSource itemAtIndexPath:indexPath];
-    AlbumRowCell *cell = (AlbumRowCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    [album setAlbumThumbnailImage:cell.cellImageView.image];
+    NSString *albumId = [album.albumId copy];
+    
+    PhotosSubsetViewController *subsetController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"photosSubsetViewController"];
+    [subsetController setFilterName:[NSString stringWithFormat:@"album-%@", albumId]];
+    [subsetController setFilterBlock:^BOOL(NSString *collection, NSString *key, id object) {
+        if (![object isKindOfClass:[Photo class]]) {
+            return NO;
+        }
+        for (NSString *a in ((Photo *)object).albums) {
+            if ([a isEqualToString:albumId]) {
+                return YES;
+            }
+        }
+        return NO;
+    }];
+    
+    [self.navigationController pushViewController:subsetController animated:YES];
 }
 
 #pragma mark - Collection View Flow Layout Delegate

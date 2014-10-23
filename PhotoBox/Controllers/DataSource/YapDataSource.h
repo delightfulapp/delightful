@@ -24,4 +24,10 @@
 
 - (void)setupDatabase;
 
+- (void)setupMapping;
+
+- (void)setDefaultMapping;
+
+- (void)removeObservers;
+
 @end

@@ -20,6 +20,10 @@
 @property (nonatomic, strong) NSString *groupKey;
 @property (nonatomic, assign) BOOL sortKeyAscending;
 @property (nonatomic, assign) BOOL groupSortAscending;
+@property (nonatomic, copy) BOOL (^filterBlock)(NSString *collection, NSString *key, id object);
+@property (nonatomic, assign) BOOL isPersistent;
+
++ (NSString *)flattenedViewName:(NSString *)viewName;
 
 + (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
                                                collection:(NSString *)collection
@@ -35,7 +39,35 @@
                                                  groupKey:(NSString *)groupKey
                                              groupSortAsc:(BOOL)ascending;
 
-+ (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource database:(YapDatabase *)database;
++ (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                               collection:(NSString *)collection
+                                                 database:(YapDatabase *)database
+                                                  sortKey:(NSString *)sortKey
+                                               sortKeyAsc:(BOOL)ascending
+                                             isPersistent:(BOOL)isPersistent
+                                              filterBlock:(BOOL(^)(NSString *collection, NSString *key, id object))filterBlock;
+
++ (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
+                                               collection:(NSString *)collection
+                                                 database:(YapDatabase *)database
+                                                  sortKey:(NSString *)sortKey
+                                               sortKeyAsc:(BOOL)sortKeyAsc
+                                                 groupKey:(NSString *)groupKey
+                                             groupSortAsc:(BOOL)groupSortAsc
+                                             isPersistent:(BOOL)isPersistent
+                                              filterBlock:(BOOL(^)(NSString *collection, NSString *key, id object))filterBlock;
+
+
++ (DLFYapDatabaseViewAndMapping *)filteredViewMappingFromViewName:(NSString *)fromViewName
+                                                         database:(YapDatabase *)database
+                                                     isPersistent:(BOOL)isPersistent
+                                                       filterName:(NSString *)filterName
+                                                     groupSortAsc:(BOOL)groupSortAscending
+                                                      filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock;
+
+
++ (DLFYapDatabaseViewAndMapping *)ungroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource
+                                                             database:(YapDatabase *)database;
 
 + (void)asyncViewMappingWithViewName:(NSString *)viewName
                           collection:(NSString *)collection
@@ -52,6 +84,34 @@
                             groupKey:(NSString *)groupKey
                         groupSortAsc:(BOOL)ascending
                           completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
+
++ (void)asyncViewMappingWithViewName:(NSString *)viewName
+                     collection:(NSString *)collection
+                       database:(YapDatabase *)database
+                        sortKey:(NSString *)sortKey
+                     sortKeyAsc:(BOOL)ascending
+                   isPersistent:(BOOL)isPersistent
+                    filterBlock:(BOOL(^)(NSString *collection, NSString *key, id object))filterBlock
+                     completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
+
++ (void)asyncViewMappingWithViewName:(NSString *)viewName
+                     collection:(NSString *)collection
+                       database:(YapDatabase *)database
+                        sortKey:(NSString *)sortKey
+                     sortKeyAsc:(BOOL)sortKeyAsc
+                       groupKey:(NSString *)groupKey
+                   groupSortAsc:(BOOL)groupSortAsc
+                   isPersistent:(BOOL)isPersistent
+                    filterBlock:(BOOL(^)(NSString *collection, NSString *key, id object))filterBlock
+                     completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
+
++ (void)asyncFilteredViewMappingFromViewName:(NSString *)fromViewName
+                                    database:(YapDatabase *)database
+                                isPersistent:(BOOL)isPersistent
+                                  filterName:(NSString *)filterName
+                                groupSortAsc:(BOOL)groupSortAscending
+                                 filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock
+                                  completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
 
 + (void)asyncUngroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource
                                         database:(YapDatabase *)database

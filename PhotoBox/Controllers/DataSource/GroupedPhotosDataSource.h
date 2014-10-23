@@ -15,10 +15,19 @@ typedef NS_ENUM(NSInteger, PhotosSortKey) {
     PhotosSortKeyDateTaken
 };
 
-@interface GroupedPhotosDataSource : YapDataSource
+extern NSString *const dateUploadedLastViewName;
+extern NSString *const dateTakenLastViewName;
+extern NSString *const dateUploadedFirstViewName;
+extern NSString *const dateTakenFirstViewName;
+
+@protocol PhotosDataSourceViewMappingDelegate <NSObject>
 
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending;
 
 - (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping;
+
+@end
+
+@interface GroupedPhotosDataSource : YapDataSource <PhotosDataSourceViewMappingDelegate>
 
 @end

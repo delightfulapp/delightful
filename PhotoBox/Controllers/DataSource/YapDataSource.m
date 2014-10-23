@@ -24,6 +24,8 @@
     self = [super initWithCollectionView:collectionView];
     if (self) {
         [self setupDatabase];
+        [self setupMapping];
+        [self setDefaultMapping];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(yapDatabaseModified:)
                                                      name:YapDatabaseModifiedNotification
@@ -33,6 +35,10 @@
 }
 
 - (void)dealloc {
+    [self removeObservers];
+}
+
+- (void)removeObservers {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -134,6 +140,14 @@
     self.bgConnection.metadataCacheEnabled = NO;
         
     [self.mainConnection beginLongLivedReadTransaction];
+}
+
+- (void)setupMapping {
+    
+}
+
+- (void)setDefaultMapping {
+    
 }
 
 - (void)yapDatabaseModified:(NSNotification *)notification {

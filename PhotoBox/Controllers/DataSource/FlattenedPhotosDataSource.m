@@ -38,9 +38,11 @@
 }
 
 - (void)setupMapping {
-    DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:self.groupedViewMapping database:self.database];
-    
-    [self setSelectedViewMapping:viewMapping];
+    if (self.groupedViewMapping) {
+        DLFYapDatabaseViewAndMapping *viewMapping = [DLFYapDatabaseViewAndMapping ungroupedViewMappingFromViewMapping:self.groupedViewMapping database:self.database];
+        
+        [self setSelectedViewMapping:viewMapping];
+    }
 }
 
 @end

@@ -213,6 +213,7 @@ NSString *const galleryContainerType = @"gallery";
     return nil;
 }
 
+
 #pragma mark - Setter
 
 - (void)setAttributedTitle:(NSAttributedString *)title {

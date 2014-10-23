@@ -14,10 +14,10 @@
 
 #import "DLFYapDatabaseViewAndMapping.h"
 
-NSString *dateUploadedLastViewName = @"date-uploaded-last-photos";
-NSString *dateTakenLastViewName = @"date-taken-last-photos";
-NSString *dateUploadedFirstViewName = @"date-uploaded-first-photos";
-NSString *dateTakenFirstViewName = @"date-taken-first-photos";
+NSString *const dateUploadedLastViewName = @"date-uploaded-last-photos";
+NSString *const dateTakenLastViewName = @"date-taken-last-photos";
+NSString *const dateUploadedFirstViewName = @"date-uploaded-first-photos";
+NSString *const dateTakenFirstViewName = @"date-taken-first-photos";
 
 @interface GroupedPhotosDataSource ()
 
@@ -35,9 +35,7 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
 
 @implementation GroupedPhotosDataSource
 
-- (void)setupDatabase {
-    [super setupDatabase];
-    
+- (void)setupMapping {
     // last uploaded -> first uploaded view and mappings grouped
     self.dateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateUploadedLastViewName collection:photosCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateUploaded)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateUploadedString)) groupSortAsc:NO];
     
@@ -49,8 +47,6 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
     
     // last taken -> first taken view and mappings grouped
     self.dateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:dateTakenLastViewName collection:photosCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateTaken)) sortKeyAsc:NO groupKey:NSStringFromSelector(@selector(dateTakenString)) groupSortAsc:NO];
-
-    [self setSelectedViewMapping:self.dateUploadedLastViewMapping];
     
     [DLFYapDatabaseViewAndMapping asyncUngroupedViewMappingFromViewMapping:self.dateUploadedLastViewMapping database:self.database completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
         CLS_LOG(@"%@ created", viewMapping.mapping.view);
@@ -68,6 +64,10 @@ NSString *dateTakenFirstViewName = @"date-taken-first-photos";
         CLS_LOG(@"%@ created", viewMapping.mapping.view);
         self.flattenedDateTakenLastViewMapping = viewMapping;
     }];
+}
+
+- (void)setDefaultMapping {
+    [self setSelectedViewMapping:self.dateUploadedLastViewMapping];
 }
 
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending {

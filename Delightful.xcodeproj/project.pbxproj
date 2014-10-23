@@ -146,6 +146,10 @@
 		035DACF61985EDBD00557547 /* Lookback.plist in Resources */ = {isa = PBXBuildFile; fileRef = 035DACF41985EDBD00557547 /* Lookback.plist */; };
 		03635E181879745D0037851F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E171879745D0037851F /* libPods.a */; };
 		03635E1A1879746D0037851F /* libPods-DelightfulTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03635E191879746D0037851F /* libPods-DelightfulTests.a */; };
+		03643BCA19F76A11003E4025 /* PhotosSubsetDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 03643BC919F76A11003E4025 /* PhotosSubsetDataSource.m */; };
+		03643BCB19F76A11003E4025 /* PhotosSubsetDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 03643BC919F76A11003E4025 /* PhotosSubsetDataSource.m */; };
+		03643BD619F77F14003E4025 /* PhotosSubsetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03643BD519F77F14003E4025 /* PhotosSubsetViewController.m */; };
+		03643BD719F77F14003E4025 /* PhotosSubsetViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03643BD519F77F14003E4025 /* PhotosSubsetViewController.m */; };
 		0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
 		0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */; };
 		03651610192DE9E20042C1B6 /* LoginWebViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */; };
@@ -569,6 +573,10 @@
 		035DACF41985EDBD00557547 /* Lookback.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Lookback.plist; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
+		03643BC819F76A11003E4025 /* PhotosSubsetDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosSubsetDataSource.h; sourceTree = "<group>"; };
+		03643BC919F76A11003E4025 /* PhotosSubsetDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosSubsetDataSource.m; sourceTree = "<group>"; };
+		03643BD419F77F14003E4025 /* PhotosSubsetViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosSubsetViewController.h; path = PhotoBox/Controllers/PhotosSubsetViewController.h; sourceTree = "<group>"; };
+		03643BD519F77F14003E4025 /* PhotosSubsetViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosSubsetViewController.m; path = PhotoBox/Controllers/PhotosSubsetViewController.m; sourceTree = "<group>"; };
 		0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginWebViewViewController.h; path = PhotoBox/Controllers/LoginWebViewViewController.h; sourceTree = "<group>"; };
 		0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginWebViewViewController.m; path = PhotoBox/Controllers/LoginWebViewViewController.m; sourceTree = "<group>"; };
 		0365160F192DE9E20042C1B6 /* LoginWebViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LoginWebViewViewController.xib; path = PhotoBox/Views/LoginWebViewViewController.xib; sourceTree = "<group>"; };
@@ -1068,6 +1076,8 @@
 				035B035419ECDC3E00153F24 /* MainTabBarController.m */,
 				035B5E5419F3BEBF00C657B0 /* SortTableViewController.h */,
 				035B5E5519F3BEBF00C657B0 /* SortTableViewController.m */,
+				03643BD419F77F14003E4025 /* PhotosSubsetViewController.h */,
+				03643BD519F77F14003E4025 /* PhotosSubsetViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1093,6 +1103,8 @@
 				035B034C19ECAD4400153F24 /* AlbumsDataSource.m */,
 				035B034F19ECC72800153F24 /* TagsDataSource.h */,
 				035B035019ECC72800153F24 /* TagsDataSource.m */,
+				03643BC819F76A11003E4025 /* PhotosSubsetDataSource.h */,
+				03643BC919F76A11003E4025 /* PhotosSubsetDataSource.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1766,6 +1778,7 @@
 				035B034D19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
 				035846B717D23FB800E196D7 /* StickyHeaderFlowLayout.m in Sources */,
 				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
+				03643BCA19F76A11003E4025 /* PhotosSubsetDataSource.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
 				0357966F19D8435600A28334 /* YapDataSource.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
@@ -1810,6 +1823,7 @@
 				035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035B5E5619F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
+				03643BD619F77F14003E4025 /* PhotosSubsetViewController.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
@@ -1905,6 +1919,7 @@
 				035B034E19ECAD4400153F24 /* AlbumsDataSource.m in Sources */,
 				03EFD8CD19251CD700E80A71 /* StickyHeaderFlowLayout.m in Sources */,
 				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
+				03643BCB19F76A11003E4025 /* PhotosSubsetDataSource.m in Sources */,
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
 				0357967019D8435600A28334 /* YapDataSource.m in Sources */,
 				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
@@ -1949,6 +1964,7 @@
 				035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
 				035B5E5719F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
+				03643BD719F77F14003E4025 /* PhotosSubsetViewController.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
