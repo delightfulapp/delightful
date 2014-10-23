@@ -137,7 +137,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         if (collectionType == Album.class) {
             [self fetchPhotosInAlbum:collection page:0 sort:sort];
         } else if (collectionType == Tag.class) {
-            
+            [self fetchPhotosInTag:collection page:0 sort:sort];
         }
     }
 }
@@ -276,6 +276,43 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     }];
 }
 
+- (void)fetchPhotosInTag:(NSString *)tag page:(int)page sort:(NSString *)sort {
+    [self setIsSyncing:YES photosInCollection:tag collectionType:Tag.class page:page sort:sort];
+    
+    [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:tag}];
+        
+        if (photos.count > 0) {
+            [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                for (Photo *photo in photos) {
+                    [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
+                }
+            } completionBlock:^{
+                CLS_LOG(@"Done inserting photos to db page %d in tag %@", page, tag);
+                
+                if ([self isRefreshRequestedForCollection:tag]) {
+                    [self setRefreshRequested:NO collection:tag];
+                    SyncPhotosParam *param = [self.syncingJobs objectForKey:tag];
+                    [self fetchPhotosInTag:tag page:0 sort:param.sort];
+                } else {
+                    if ([self isPausedForCollection:tag]) {
+                        CLS_LOG(@"Pausing photos sync");
+                        SyncPhotosParam *param = [self.syncingJobs objectForKey:tag];
+                        param.isSyncing = NO;
+                        param.photosFetchingPage = page;
+                        [self.syncingJobs setObject:param forKey:tag];
+                    } else {
+                        [self fetchPhotosInTag:tag page:page+1 sort:sort];
+                    }
+                }
+            }];
+        }
+    } failure:^(NSError *error) {
+        [self setIsSyncing:NO photosInCollection:tag collectionType:Tag.class page:page sort:sort];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationIdentifierKey:tag, SyncEngineNotificationPageKey: @(page)}];
+    }];
+}
+
 - (void)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
     [self setIsSyncing:YES photosInCollection:album collectionType:Album.class page:page sort:sort];
     
@@ -406,11 +443,14 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     
     if (!pause) {
         SyncPhotosParam *param = [self.syncingJobs objectForKey:collection];
-        if (param.collectionType == Album.class) {
-            if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
+        if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
+            if (param.collectionType == Album.class) {
                 [self fetchPhotosInAlbum:param.identifier page:param.photosFetchingPage sort:param.sort];
+            } else if (param.collectionType == Tag.class) {
+                [self fetchPhotosInTag:param.identifier page:param.photosFetchingPage sort:param.sort];
             }
         }
+        
     }
 }
 
@@ -421,7 +461,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         if (collectionType == Album.class) {
             [self fetchPhotosInAlbum:collection page:0 sort:sort];
         } else if (collectionType == Tag.class) {
-            
+            [self fetchPhotosInTag:collection page:0 sort:sort];
         }
     }
 }

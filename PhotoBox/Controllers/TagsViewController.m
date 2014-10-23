@@ -26,6 +26,10 @@
 
 #import "SortTableViewController.h"
 
+#import "PhotosSubsetViewController.h"
+
+#import "PHoto.h"
+
 @interface TagsViewController () <UICollectionViewDelegate, SortingDelegate>
 
 @property (nonatomic, strong) NSString *currentSort;
@@ -130,6 +134,25 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     Tag *tag = (Tag *)[self.dataSource itemAtIndexPath:indexPath];
+    
+    NSString *tagId = [tag.tagId copy];
+    
+    PhotosSubsetViewController *subsetController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"photosSubsetViewController"];
+    [subsetController setItem:tag];
+    [subsetController setFilterName:[NSString stringWithFormat:@"tag-%@", tagId]];
+    [subsetController setFilterBlock:^BOOL(NSString *collection, NSString *key, id object) {
+        if (![object isKindOfClass:[Photo class]]) {
+            return NO;
+        }
+        for (NSString *a in ((Photo *)object).tags) {
+            if ([a isEqualToString:tagId]) {
+                return YES;
+            }
+        }
+        return NO;
+    }];
+    
+    [self.navigationController pushViewController:subsetController animated:YES];
 }
 
 #pragma mark - Collection View Flow Layout Delegate
