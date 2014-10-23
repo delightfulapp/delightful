@@ -16,4 +16,6 @@
 
 @property (nonatomic, copy) NSString *filterName;
 
+@property (nonatomic, strong) PhotoBoxModel *item;
+
 @end

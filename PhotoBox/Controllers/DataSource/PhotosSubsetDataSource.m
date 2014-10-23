@@ -53,21 +53,21 @@ NSString *inCollectionDateTakenFirstViewName = @"date-taken-first-photos-subset"
     [super setupMapping];
     
     if (self.filterBlock) {
-        self.inCollectionDateTakenFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenFirstViewName database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
-        self.inCollectionDateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenLastViewName database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
-        self.inCollectionDateUploadedFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedFirstViewName database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
-        self.inCollectionDateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
+        self.inCollectionDateTakenFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenFirstViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
+        self.inCollectionDateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
+        self.inCollectionDateUploadedFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedFirstViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
+        self.inCollectionDateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
         
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenFirstViewName] database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenFirstViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
             self.inCollectionFlattenedDateTakenFirstViewMapping = viewMapping;
         }];
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenLastViewName] database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
             self.inCollectionFlattenedDateTakenLastViewMapping = viewMapping;
         }];
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedFirstViewName] database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedFirstViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
             self.inCollectionFlattenedDateUploadedFirstViewMapping = viewMapping;
         }];
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName] database:self.database isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
             self.inCollectionFlattenedDateUploadedLastViewMapping = viewMapping;
         }];
         

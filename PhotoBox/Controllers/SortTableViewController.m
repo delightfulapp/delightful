@@ -14,6 +14,17 @@
 
 #import "NSAttributedString+DelighftulFonts.h"
 
+NSString *const dateUploadedDescSortKey = @"dateUploaded,desc";
+NSString *const dateUploadedAscSortKey = @"dateUploaded,asc";
+NSString *const dateTakenDescSortKey = @"dateTaken,desc";
+NSString *const dateTakenAscSortKey = @"dateTaken,asc";
+NSString *const nameDescSortKey = @"name,desc";
+NSString *const nameAscSortKey = @"name,asc";
+NSString *const countDescSortKey = @"count,desc";
+NSString *const countAscSortKey = @"count,asc";
+NSString *const dateLastPhotoAddedDescSortKey = @"dateLastPhotoAdded,desc";
+NSString *const dateLastPhotoAddedAscSortKey = @"dateLastPhotoAdded,asc";
+
 @interface SortTableViewController ()
 
 @property (nonatomic, copy) NSArray *rows;
@@ -27,24 +38,24 @@
     
     if (!self.resourceClass || self.resourceClass == Photo.class) {
         _rows = @[
-                  @[NSLocalizedString(@"Date uploaded", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"dateUploaded,desc"],
-                  @[NSLocalizedString(@"Date uploaded", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"dateUploaded,asc"],
-                  @[NSLocalizedString(@"Date taken", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"dateTaken,desc"],
-                  @[NSLocalizedString(@"Date taken", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"dateTaken,asc"],
+                  @[NSLocalizedString(@"Date uploaded", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], dateUploadedDescSortKey],
+                  @[NSLocalizedString(@"Date uploaded", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], dateUploadedAscSortKey],
+                  @[NSLocalizedString(@"Date taken", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], dateTakenDescSortKey],
+                  @[NSLocalizedString(@"Date taken", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], dateTakenAscSortKey],
                   ];
     } else if (self.resourceClass == Album.class) {
         _rows = @[
-                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], @"name,desc"],
-                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], @"name,asc"],
-                  @[NSLocalizedString(@"Last updated", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"dateLastPhotoAdded,desc"],
-                  @[NSLocalizedString(@"Last updated", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"dateLastPhotoAdded,asc"],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], nameDescSortKey],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], nameAscSortKey],
+                  @[NSLocalizedString(@"Last updated", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], dateLastPhotoAddedDescSortKey],
+                  @[NSLocalizedString(@"Last updated", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], dateLastPhotoAddedAscSortKey],
                   ];
     } else if (self.resourceClass == Tag.class) {
         _rows = @[
-                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], @"name,desc"],
-                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], @"name,asc"],
-                  @[NSLocalizedString(@"Number of photos", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], @"count,desc"],
-                  @[NSLocalizedString(@"Number of photos", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], @"count,asc"],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_desc size:17], nameDescSortKey],
+                  @[NSLocalizedString(@"Name", nil), [NSAttributedString symbol:dlf_icon_sort_alpha_asc size:17], nameAscSortKey],
+                  @[NSLocalizedString(@"Number of photos", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_desc size:17], countDescSortKey],
+                  @[NSLocalizedString(@"Number of photos", nil), [NSAttributedString symbol:dlf_icon_sort_numeric_asc size:17], countAscSortKey],
                   ];
     }
     

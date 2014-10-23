@@ -8,6 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString *const dateUploadedDescSortKey;
+extern NSString *const dateUploadedAscSortKey;
+extern NSString *const dateTakenDescSortKey;
+extern NSString *const dateTakenAscSortKey;
+extern NSString *const nameDescSortKey;
+extern NSString *const nameAscSortKey;
+extern NSString *const countDescSortKey;
+extern NSString *const countAscSortKey;
+extern NSString *const dateLastPhotoAddedDescSortKey;
+extern NSString *const dateLastPhotoAddedAscSortKey;
+
+
 @protocol SortingDelegate <NSObject>
 
 @optional

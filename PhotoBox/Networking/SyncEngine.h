@@ -13,6 +13,7 @@ extern NSString *const SyncEngineDidFinishFetchingNotification;
 extern NSString *const SyncEngineDidFailFetchingNotification;
 
 extern NSString *const SyncEngineNotificationResourceKey;
+extern NSString *const SyncEngineNotificationIdentifierKey;
 extern NSString *const SyncEngineNotificationPageKey;
 extern NSString *const SyncEngineNotificationErrorKey;
 extern NSString *const SyncEngineNotificationCountKey;
@@ -22,6 +23,12 @@ extern NSString *const SyncEngineNotificationCountKey;
 + (instancetype)sharedEngine;
 
 - (void)startSyncingPhotos;
+
+- (void)startSyncingPhotosInCollection:(NSString *)albumId collectionType:(Class)collectionType sort:(NSString *)sort;
+
+- (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection;
+
+- (void)refreshPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort;
 
 - (void)startSyncingAlbums;
 

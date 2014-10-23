@@ -10,7 +10,15 @@
 
 #import "PhotosSubsetDataSource.h"
 
+#import "SyncEngine.h"
+
+#import "PhotoBoxModel.h"
+
+#import "SortTableViewController.h"
+
 @interface PhotosSubsetViewController ()
+
+@property (nonatomic, assign) BOOL viewJustDidLoad;
 
 @end
 
@@ -25,14 +33,26 @@
     return self;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.viewJustDidLoad = YES;
+}
+
 - (void)viewDidAppear:(BOOL)animated {
-    [((PhotosSubsetDataSource *)self.dataSource) setFilterBlock:self.filterBlock name:self.filterName];
+    if (self.viewJustDidLoad) {
+        self.viewJustDidLoad = NO;
+        [((PhotosSubsetDataSource *)self.dataSource) setFilterBlock:self.filterBlock name:self.filterName];
+        [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:self.item.class sort:dateUploadedDescSortKey];
+    }
     [((YapDataSource *)self.dataSource) setPause:NO];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:self.item.itemId];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     CLS_LOG(@"view will disappear");
     [((YapDataSource *)self.dataSource) setPause:YES];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:self.item.itemId];
 }
 
 - (void)didReceiveMemoryWarning {

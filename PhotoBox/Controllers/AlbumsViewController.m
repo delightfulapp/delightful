@@ -132,6 +132,7 @@
     NSString *albumId = [album.albumId copy];
     
     PhotosSubsetViewController *subsetController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"photosSubsetViewController"];
+    [subsetController setItem:album];
     [subsetController setFilterName:[NSString stringWithFormat:@"album-%@", albumId]];
     [subsetController setFilterBlock:^BOOL(NSString *collection, NSString *key, id object) {
         if (![object isKindOfClass:[Photo class]]) {

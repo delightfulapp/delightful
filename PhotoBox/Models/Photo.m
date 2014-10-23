@@ -65,8 +65,8 @@
             [self setValue:@(dateTakenDay) forKey:NSStringFromSelector(@selector(dateTakenDay))];
             [self setValue:@(dateTakenMonth) forKey:NSStringFromSelector(@selector(dateTakenMonth))];
             [self setValue:@(dateTakenYear) forKey:NSStringFromSelector(@selector(dateTakenYear))];
-            [self setValue:[NSString stringWithFormat:@"%d", [self.placeholderImage hash]] forKey:NSStringFromSelector(@selector(photoHash))];
-            [self setValue:[NSString stringWithFormat:@"%d", self.hash] forKey:NSStringFromSelector(@selector(photoId))];
+            [self setValue:[NSString stringWithFormat:@"%d", (int)[self.placeholderImage hash]] forKey:NSStringFromSelector(@selector(photoHash))];
+            [self setValue:[NSString stringWithFormat:@"%d", (int)self.hash] forKey:NSStringFromSelector(@selector(photoId))];
         }
     }
 }

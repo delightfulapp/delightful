@@ -142,15 +142,17 @@
 
 + (DLFYapDatabaseViewAndMapping *)filteredViewMappingFromViewName:(NSString *)fromViewName
                                                          database:(YapDatabase *)database
+                                                       collection:(NSString *)collection
                                                      isPersistent:(BOOL)isPersistent
                                                        filterName:(NSString *)filterName
                                                      groupSortAsc:(BOOL)groupSortAscending
                                                       filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock {
-    return [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database isPersistent:isPersistent groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:nil];
+    return [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database collection:collection isPersistent:isPersistent groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:nil];
 }
 
 + (DLFYapDatabaseViewAndMapping *)filteredViewMappingFromViewName:(NSString *)fromViewName
                                                          database:(YapDatabase *)database
+                                                       collection:(NSString *)collection
                                                      isPersistent:(BOOL)isPersistent
                                                      groupSortAsc:(BOOL)groupSortAscending
                                                        filterName:(NSString *)filterName
@@ -178,6 +180,7 @@
         returnObject.mapping = mappings;
         returnObject.isPersistent = isPersistent;
         returnObject.filterBlock = filterBlock;
+        returnObject.collection = collection;
         
         return returnObject;
     };
@@ -260,11 +263,12 @@
 
 + (void)asyncFilteredViewMappingFromViewName:(NSString *)fromViewName
                                     database:(YapDatabase *)database
+                                  collection:(NSString *)collection
                                 isPersistent:(BOOL)isPersistent
                                   filterName:(NSString *)filterName
                                 groupSortAsc:(BOOL)groupSortAscending
                                  filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
-    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database isPersistent:isPersistent groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:completionBlock];
+    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database collection:collection isPersistent:isPersistent groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:completionBlock];
 }
 
 @end

@@ -29,9 +29,25 @@ NSString *const SyncEngineDidFinishFetchingNotification = @"com.getdelightfulapp
 NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFailFetchingNotification";
 
 NSString *const SyncEngineNotificationResourceKey = @"resource";
+NSString *const SyncEngineNotificationIdentifierKey = @"identifier";
 NSString *const SyncEngineNotificationPageKey = @"page";
 NSString *const SyncEngineNotificationErrorKey = @"error";
 NSString *const SyncEngineNotificationCountKey = @"count";
+
+@interface SyncPhotosParam : NSObject
+
+@property (nonatomic, assign) BOOL isSyncing;
+@property (nonatomic, assign) BOOL isPaused;
+@property (nonatomic, assign) int photosFetchingPage;
+@property (nonatomic, strong) NSString *identifier;
+@property (nonatomic, assign) BOOL refreshRequested;
+@property (nonatomic, strong) NSString *sort;
+@property (nonatomic) Class collectionType;
+
+@end
+
+@implementation SyncPhotosParam
+@end
 
 @interface SyncEngine ()
 
@@ -56,6 +72,8 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 @property (nonatomic, assign) BOOL isSyncingPhotos;
 @property (nonatomic, assign) BOOL isSyncingAlbums;
 @property (nonatomic, assign) BOOL isSyncingTags;
+
+@property (nonatomic, strong) NSMutableDictionary *syncingJobs;
 
 @end
 
@@ -86,8 +104,10 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         self.albumsConnection.metadataCacheEnabled = NO;
         
         self.tagsConnection = [self.database newConnection];
-        self.tagsConnection.objectCacheEnabled = NO; // don't need cache for write-only connection
+        self.tagsConnection.objectCacheEnabled = NO; // don't needpa cache for write-only connection
         self.tagsConnection.metadataCacheEnabled = NO;
+        
+        self.syncingJobs = [NSMutableDictionary dictionary];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
     }
@@ -109,6 +129,16 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 - (void)startSyncingTags {
     if (!self.isSyncingTags) {
         [self fetchTagsForPage:1];
+    }
+}
+
+- (void)startSyncingPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort {
+    if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
+        if (collectionType == Album.class) {
+            [self fetchPhotosInAlbum:collection page:0 sort:sort];
+        } else if (collectionType == Tag.class) {
+            
+        }
     }
 }
 
@@ -244,6 +274,156 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
         self.photosFetchingPage = page;
     }];
+}
+
+- (void)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
+    [self setIsSyncing:YES photosInCollection:album collectionType:Album.class page:page sort:sort];
+    
+    [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+        CLS_LOG(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:album}];
+        if (photos.count > 0) {
+            [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                for (Photo *photo in photos) {
+                    [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
+                }
+            } completionBlock:^{
+                CLS_LOG(@"Done inserting photos to db page %d in album %@", page, album);
+                
+                if ([self isRefreshRequestedForCollection:album]) {
+                    [self setRefreshRequested:NO collection:album];
+                    SyncPhotosParam *param = [self.syncingJobs objectForKey:album];
+                    [self fetchPhotosInAlbum:album page:0 sort:param.sort];
+                } else {
+                    if ([self isPausedForCollection:album]) {
+                        CLS_LOG(@"Pausing photos sync");
+                        SyncPhotosParam *param = [self.syncingJobs objectForKey:album];
+                        param.isSyncing = NO;
+                        param.photosFetchingPage = page;
+                        [self.syncingJobs setObject:param forKey:album];
+                    } else {
+                        [self fetchPhotosInAlbum:album page:page+1 sort:sort];
+                    }
+                }
+            }];
+            
+            
+        } else {
+            [self setIsSyncing:NO photosInCollection:album collectionType:Album.class page:page sort:sort];
+            [self setPhotosFetchingPage:0 photosInCollection:album];
+        }
+    } failure:^(NSError *error) {
+        [self setIsSyncing:NO photosInCollection:album collectionType:Album.class page:page sort:sort];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationIdentifierKey:album, SyncEngineNotificationPageKey: @(page)}];
+    }];
+}
+
+- (void)setRefreshRequested:(BOOL)refreshRequested collection:(NSString *)collectionIdentifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+    if (!param) {
+        param = [[SyncPhotosParam alloc] init];
+        [param setIdentifier:collectionIdentifier];
+    }
+    [param setRefreshRequested:refreshRequested];
+    [self.syncingJobs setObject:param forKey:collectionIdentifier];
+}
+
+- (BOOL)isRefreshRequestedForCollection:(NSString *)collectionIdentifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+    if (!param) {
+        return NO;
+    }
+    return param.refreshRequested;
+}
+
+- (void)setIsPaused:(BOOL)pause collection:(NSString *)collectionIdentifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+    if (!param) {
+        param = [[SyncPhotosParam alloc] init];
+        [param setIdentifier:collectionIdentifier];
+    }
+    [param setIsPaused:pause];
+    [self.syncingJobs setObject:param forKey:collectionIdentifier];
+}
+
+- (BOOL)isPausedForCollection:(NSString *)collectionIdentifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+    if (!param) {
+        return NO;
+    }
+    return param.isPaused;
+}
+
+- (void)setIsSyncing:(BOOL)isSyncing photosInCollection:(NSString *)collectionIdentifier collectionType:(Class)collectionType page:(int)page sort:(NSString *)sort {
+    if (isSyncing) {
+        SyncPhotosParam *param = [[SyncPhotosParam alloc] init];
+        [param setIdentifier:collectionIdentifier];
+        [param setIsSyncing:YES];
+        [param setCollectionType:collectionType];
+        [param setSort:sort];
+        [param setPhotosFetchingPage:page];
+        [self.syncingJobs setObject:param forKey:collectionIdentifier];
+    } else {
+        SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+        if (param) {
+            [param setIsSyncing:NO];
+            [param setPhotosFetchingPage:page];
+            [self.syncingJobs setObject:param forKey:collectionIdentifier];
+        }
+    }
+}
+
+- (BOOL)isSyncingPhotosInCollectionWithIdentifier:(NSString *)identifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:identifier];
+    if (!param) {
+        return NO;
+    }
+    
+    return param.isSyncing;
+}
+
+- (void)setPhotosFetchingPage:(int)photosFetchingPage photosInCollection:(NSString *)collectionIdentifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+    if (!param) {
+        param = [[SyncPhotosParam alloc] init];
+    }
+    param.photosFetchingPage = photosFetchingPage;
+    [self.syncingJobs setObject:param forKey:collectionIdentifier];
+}
+
+- (int)photosFetchingPageForIdentifier:(NSString *)collectionIdentifier {
+    SyncPhotosParam *param = [self.syncingJobs objectForKey:collectionIdentifier];
+    if (!param) {
+        return 0;
+    }
+    
+    return param.photosFetchingPage;
+}
+
+- (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection {
+    [self setIsPaused:pause collection:collection];
+    
+    if (!pause) {
+        SyncPhotosParam *param = [self.syncingJobs objectForKey:collection];
+        if (param.collectionType == Album.class) {
+            if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
+                [self fetchPhotosInAlbum:param.identifier page:param.photosFetchingPage sort:param.sort];
+            }
+        }
+    }
+}
+
+- (void)refreshPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort {
+    [self setRefreshRequested:YES collection:collection];
+    
+    if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
+        if (collectionType == Album.class) {
+            [self fetchPhotosInAlbum:collection page:0 sort:sort];
+        } else if (collectionType == Tag.class) {
+            
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning:(NSNotification *)notification {

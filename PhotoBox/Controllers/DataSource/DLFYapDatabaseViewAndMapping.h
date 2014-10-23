@@ -60,6 +60,7 @@
 
 + (DLFYapDatabaseViewAndMapping *)filteredViewMappingFromViewName:(NSString *)fromViewName
                                                          database:(YapDatabase *)database
+                                                       collection:(NSString *)collection
                                                      isPersistent:(BOOL)isPersistent
                                                        filterName:(NSString *)filterName
                                                      groupSortAsc:(BOOL)groupSortAscending
@@ -107,6 +108,7 @@
 
 + (void)asyncFilteredViewMappingFromViewName:(NSString *)fromViewName
                                     database:(YapDatabase *)database
+                                  collection:(NSString *)collection
                                 isPersistent:(BOOL)isPersistent
                                   filterName:(NSString *)filterName
                                 groupSortAsc:(BOOL)groupSortAscending

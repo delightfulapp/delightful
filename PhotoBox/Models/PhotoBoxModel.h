@@ -17,17 +17,11 @@
 @property (nonatomic, strong) NSNumber *currentRow;
 @property (nonatomic, copy) NSString *itemId;
 
-@property (nonatomic, strong) NSDate *lastRefresh;
-
 - (id)initWithItemId:(NSString *)itemId;
 
 + (NSDictionary *)photoBoxJSONKeyPathsByPropertyKeyWithDictionary:(NSDictionary *)dictionary;
 
 + (NSValueTransformer *)toStringTransformer;
 + (NSValueTransformer *)toNumberTransformer;
-
-- (BOOL)needRefresh;
-- (NSString *)lastRefreshCacheKey;
-- (NSString *)cacheKey;
 
 @end
