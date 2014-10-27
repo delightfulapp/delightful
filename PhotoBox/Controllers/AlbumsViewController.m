@@ -138,11 +138,7 @@
         if (![object isKindOfClass:[Photo class]]) {
             return NO;
         }
-        for (NSString *a in ((Photo *)object).albums) {
-            if ([a isEqualToString:albumId]) {
-                return YES;
-            }
-        }
+        return [((Photo *)object).albums containsObject:albumId];
         return NO;
     }];
     
