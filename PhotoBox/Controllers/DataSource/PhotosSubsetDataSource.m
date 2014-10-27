@@ -50,40 +50,65 @@ NSString *inCollectionDateTakenFirstViewName = @"date-taken-first-photos-subset"
 }
 
 - (void)setupMapping {
-    [super setupMapping];
-    
-    if (self.filterBlock) {
-        self.inCollectionDateTakenFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenFirstViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
-        self.inCollectionDateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
-        self.inCollectionDateUploadedFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedFirstViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
-        self.inCollectionDateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
-        
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenFirstViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-            self.inCollectionFlattenedDateTakenFirstViewMapping = viewMapping;
-        }];
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-            self.inCollectionFlattenedDateTakenLastViewMapping = viewMapping;
-        }];
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedFirstViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-            self.inCollectionFlattenedDateUploadedFirstViewMapping = viewMapping;
-        }];
-        [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
-            self.inCollectionFlattenedDateUploadedLastViewMapping = viewMapping;
-        }];
-        
-    }
 }
 
 - (void)setDefaultMapping {
-    if (self.inCollectionDateUploadedLastViewMapping) {
+    if (self.filterBlock) {
+        if (!self.inCollectionDateUploadedLastViewMapping) {
+            self.inCollectionDateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
+        }
+        if (!self.inCollectionFlattenedDateUploadedLastViewMapping) {
+            [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+                self.inCollectionFlattenedDateUploadedLastViewMapping = viewMapping;
+            }];
+        }
         [self setSelectedViewMapping:self.inCollectionDateUploadedLastViewMapping];
     }
+    
 }
 
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending {
     if (sortBy == PhotosSortKeyDateUploaded) {
+        if (ascending) {
+            if (!self.inCollectionDateUploadedFirstViewMapping) {
+                self.inCollectionDateUploadedFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedFirstViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
+            }
+            if (!self.inCollectionFlattenedDateUploadedFirstViewMapping) {
+                [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedFirstViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+                    self.inCollectionFlattenedDateUploadedFirstViewMapping = viewMapping;
+                }];
+            }
+        } else {
+            if (!self.inCollectionFlattenedDateUploadedLastViewMapping) {
+                self.inCollectionDateUploadedLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
+            }
+            if (!self.inCollectionFlattenedDateUploadedLastViewMapping) {
+                [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+                    self.inCollectionFlattenedDateUploadedLastViewMapping = viewMapping;
+                }];
+            }
+        }
         [self setSelectedViewMapping:(ascending)?self.inCollectionDateUploadedFirstViewMapping:self.inCollectionDateUploadedLastViewMapping];
     } else if (sortBy == PhotosSortKeyDateTaken) {
+        if (ascending) {
+            if (!self.inCollectionDateTakenFirstViewMapping) {
+                self.inCollectionDateTakenFirstViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenFirstViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:YES filterBlock:self.filterBlock];
+            }
+            if (!self.inCollectionFlattenedDateTakenFirstViewMapping) {
+                [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenFirstViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+                    self.inCollectionFlattenedDateTakenFirstViewMapping = viewMapping;
+                }];
+            }
+        } else {
+            if (!self.inCollectionDateTakenLastViewMapping) {
+                self.inCollectionDateTakenLastViewMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateTakenLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock];
+            }
+            if (!self.inCollectionFlattenedDateTakenLastViewMapping) {
+                [DLFYapDatabaseViewAndMapping asyncFilteredViewMappingFromViewName:[DLFYapDatabaseViewAndMapping flattenedViewName:dateTakenLastViewName] database:self.database collection:photosCollectionName isPersistent:YES filterName:self.filterName groupSortAsc:NO filterBlock:self.filterBlock completion:^(DLFYapDatabaseViewAndMapping *viewMapping) {
+                    self.inCollectionFlattenedDateTakenLastViewMapping = viewMapping;
+                }];
+            }
+        }
         [self setSelectedViewMapping:(ascending)?self.inCollectionDateTakenFirstViewMapping:self.inCollectionDateTakenLastViewMapping];
     }
 }

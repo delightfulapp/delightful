@@ -108,8 +108,9 @@
     if (_selectedViewMapping != selectedViewMapping) {
         _selectedViewMapping = selectedViewMapping;
         [self.mainConnection beginLongLivedReadTransaction];
+        __weak typeof (self) selfie = self;
         [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-            [_selectedViewMapping.mapping updateWithTransaction:transaction];
+            [selfie.selectedViewMapping.mapping updateWithTransaction:transaction];
         }];
         [self.collectionView reloadData];
     }
@@ -208,17 +209,14 @@
             for (YapDatabaseViewRowChange *rowChange in rowChanges) {
                 switch (rowChange.type) {
                     case YapDatabaseViewChangeDelete:{
-                        CLS_LOG(@"row deleted at index path %@", rowChange.indexPath);
                         if (rowChange.indexPath) [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
                         break;
                     }
                     case YapDatabaseViewChangeInsert:{
-                        CLS_LOG(@"row inserted at index path %@", rowChange.newIndexPath);
                         if (rowChange.newIndexPath) [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
                         break;
                     }
                     case YapDatabaseViewChangeMove:{
-                        CLS_LOG(@"row moved from index path %@ to %@", rowChange.indexPath, rowChange.newIndexPath);
                         if (rowChange.indexPath && rowChange.newIndexPath) {
                             [self.collectionView deleteItemsAtIndexPaths:@[rowChange.indexPath]];
                             [self.collectionView insertItemsAtIndexPaths:@[rowChange.newIndexPath]];
@@ -227,7 +225,6 @@
                         break;
                     }
                     case YapDatabaseViewChangeUpdate:{
-                        CLS_LOG(@"row updated %@", rowChange.indexPath);
                         //if (rowChange.indexPath) [self.collectionView  reloadItemsAtIndexPaths:@[rowChange.indexPath]];
                         break;
                     }

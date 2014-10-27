@@ -242,11 +242,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count)}];
         
         if (photos.count > 0) {
-            [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                for (Photo *photo in photos) {
-                    [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
-                }
-            } completionBlock:^{
+            [self insertPhotos:photos completion:^{
                 CLS_LOG(@"Done inserting photos to db page %d", page);
                 
                 if (self.photosRefreshRequested) {
@@ -262,8 +258,6 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                     }
                 }
             }];
-            
-            
         } else {
             self.isSyncingPhotos = NO;
             self.photosFetchingPage = 0;
@@ -283,11 +277,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:tag}];
         
         if (photos.count > 0) {
-            [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                for (Photo *photo in photos) {
-                    [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
-                }
-            } completionBlock:^{
+            [self insertPhotos:photos completion:^{
                 CLS_LOG(@"Done inserting photos to db page %d in tag %@", page, tag);
                 
                 if ([self isRefreshRequestedForCollection:tag]) {
@@ -321,11 +311,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:album}];
         if (photos.count > 0) {
-            [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                for (Photo *photo in photos) {
-                    [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
-                }
-            } completionBlock:^{
+            [self insertPhotos:photos completion:^{
                 CLS_LOG(@"Done inserting photos to db page %d in album %@", page, album);
                 
                 if ([self isRefreshRequestedForCollection:album]) {
@@ -344,8 +330,6 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                     }
                 }
             }];
-            
-            
         } else {
             [self setIsSyncing:NO photosInCollection:album collectionType:Album.class page:page sort:sort];
             [self setPhotosFetchingPage:0 photosInCollection:album];
@@ -469,6 +453,15 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 - (void)didReceiveMemoryWarning:(NSNotification *)notification {
     CLS_LOG(@"did receive memory warning");
     self.pausePhotosSync = YES;
+}
+
+- (void)insertPhotos:(NSArray *)photos completion:(void(^)())completionBlock {
+    [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        for (Photo *photo in photos) {
+            [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
+            
+        }
+    } completionBlock:completionBlock];
 }
 
 @end
