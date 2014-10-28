@@ -15,6 +15,11 @@ typedef NS_ENUM(NSInteger, AlbumsSortKey) {
     AlbumsSortKeyDateLastUpdated
 };
 
+extern NSString *albumsUpdatedLastViewName;
+extern NSString *albumsUpdatedFirstViewName;
+extern NSString *albumsAlphabeticalAscendingViewName;
+extern NSString *albumsAlphabeticalDescendingViewName;
+
 @interface AlbumsDataSource : YapDataSource
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *updatedLastAlbumsViewMapping;

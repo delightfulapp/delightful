@@ -8,6 +8,11 @@
 
 #import "YapDataSource.h"
 
+extern NSString *tagsAlphabeticalFirstViewName;
+extern NSString *tagsAlphabeticalLastViewName;
+extern NSString *numbersFirstViewName;
+extern NSString *numbersLastViewName;
+
 @class DLFYapDatabaseViewAndMapping;
 
 typedef NS_ENUM(NSInteger, TagsSortKey) {

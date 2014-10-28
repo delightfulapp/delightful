@@ -104,6 +104,8 @@
     
     YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1" options:options];
     
+    
+    
     DLFYapDatabaseViewAndMapping * (^viewMappingInit)() = ^DLFYapDatabaseViewAndMapping*() {
         YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
             return (group)?YES:NO;
@@ -125,8 +127,17 @@
         return returnObject;
     };
 
+    if ([database registeredExtension:viewName]) {
+        if (!completionBlock) {
+            return viewMappingInit();
+        } else {
+            completionBlock(viewMappingInit());
+            return nil;
+        }
+    }
     
     if (!completionBlock) {
+        NSLog(@"registering extension %@", viewName);
         [database registerExtension:view withName:viewName];
         return viewMappingInit();
     } else {

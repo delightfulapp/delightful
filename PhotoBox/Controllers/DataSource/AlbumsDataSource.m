@@ -21,9 +21,7 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
 
 @implementation AlbumsDataSource
 
-- (void)setupDatabase {
-    [super setupDatabase];
-    
+- (void)setupMapping {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         self.updatedLastAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsUpdatedLastViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateLastPhotoAdded)) sortKeyAsc:NO];
         self.updatedFirstAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsUpdatedFirstViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(dateLastPhotoAdded)) sortKeyAsc:YES];
@@ -34,6 +32,8 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
         });
     });
 }
+
+- (void)setDefaultMapping {}
 
 - (void)sortBy:(AlbumsSortKey)sortBy ascending:(BOOL)ascending {
     if (sortBy == AlbumsSortKeyName) {
