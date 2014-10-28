@@ -71,11 +71,16 @@ NSString *const dateTakenFirstViewName = @"date-taken-first-photos";
 }
 
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending {
+    [self sortBy:sortBy ascending:ascending completion:nil];
+}
+
+- (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending completion:(void (^)())completion {
     if (sortBy == PhotosSortKeyDateUploaded) {
         [self setSelectedViewMapping:(ascending)?self.dateUploadedFirstViewMapping:self.dateUploadedLastViewMapping];
     } else if (sortBy == PhotosSortKeyDateTaken) {
         [self setSelectedViewMapping:(ascending)?self.dateTakenFirstViewMapping:self.dateTakenLastViewMapping];
     }
+    completion();
 }
 
 - (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {

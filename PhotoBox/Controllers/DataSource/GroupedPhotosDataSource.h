@@ -24,6 +24,8 @@ extern NSString *const dateTakenFirstViewName;
 
 - (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending;
 
+- (void)sortBy:(PhotosSortKey)sortBy ascending:(BOOL)ascending completion:(void(^)())completion;
+
 - (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping;
 
 @end
