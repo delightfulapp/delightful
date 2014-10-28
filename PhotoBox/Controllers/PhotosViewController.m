@@ -70,6 +70,8 @@
 
 #import "SortTableViewController.h"
 
+#import <MBProgressHUD.h>
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
@@ -165,6 +167,7 @@
 
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         self.currentSort = sort;
         PhotosSortKey selectedSortKey;
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
@@ -182,6 +185,7 @@
         [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
         [sortTableViewController dismissViewControllerAnimated:YES completion:^{
             [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:^{
+                [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
             }];
         }];
