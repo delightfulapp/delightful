@@ -34,6 +34,10 @@ NSString *PBX_favoritesAlbumIdentifier = @"PBX_FAVORITES_ALBUM";
     return self.albumId;
 }
 
+- (NSString *)titleName {
+    return self.name;
+}
+
 + (Album *)allPhotosAlbum {
     NSError *error;
     Album *a = [MTLJSONAdapter modelOfClass:[Album class] fromJSONDictionary:@{

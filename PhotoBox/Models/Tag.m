@@ -22,6 +22,10 @@
     return self;
 }
 
+- (NSString *)titleName {
+    return self.tagId;
+}
+
 #pragma mark - Mantle
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {

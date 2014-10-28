@@ -12,7 +12,7 @@
 
 #import "SyncEngine.h"
 
-#import "PhotoBoxModel.h"
+#import "PhotosCollection.h"
 
 #import "SortTableViewController.h"
 
@@ -37,6 +37,8 @@
     [super viewDidLoad];
     
     self.viewJustDidLoad = YES;
+    
+    self.title = self.item.titleName;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

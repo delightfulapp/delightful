@@ -8,6 +8,8 @@
 
 #import "PhotosViewController.h"
 
+@class PhotosCollection;
+
 @interface PhotosSubsetViewController : PhotosViewController
 
 - (id)initWithFilterBlock:(BOOL(^)(NSString *collection, NSString *key, id object))filterBlock name:(NSString *)filterName;
@@ -16,6 +18,6 @@
 
 @property (nonatomic, copy) NSString *filterName;
 
-@property (nonatomic, strong) PhotoBoxModel *item;
+@property (nonatomic, strong) PhotosCollection *item;
 
 @end

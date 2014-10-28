@@ -10,20 +10,6 @@
 
 @interface PhotosCollection : PhotoBoxModel
 
-@property (nonatomic, copy, readonly) NSArray *photos;
-
-@property (nonatomic, assign) NSInteger totalPhotos;
-
-+ (void)setModelsCollection:(NSArray *)albums;
-
-+ (NSArray *)modelsCollection;
-
-+ (void)setModelsCollectionLastRefresh:(NSDate *)date;
-
-+ (BOOL)needRefreshModelsCollection;
-
-+ (void)setTotalCountCollection:(NSInteger)totalCount;
-
-+ (NSInteger)totalCountCollection;
+- (NSString *)titleName;
 
 @end
