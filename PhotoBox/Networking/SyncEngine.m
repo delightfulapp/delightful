@@ -477,6 +477,16 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                         }];
                     }
                 }
+                
+                for (NSString *tag in photo.tags) {
+                    NSString *viewName = [NSString stringWithFormat:@"tag-%@-%@", tag, dateUploadedLastViewName];
+                    if (![self.database registeredExtension:viewName]) {
+                        NSLog(@"Creating YDBView for tag %@", tag);
+                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:[NSString stringWithFormat:@"tag-%@", tag] groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+                            return [object.tags containsObject:tag];
+                        }];
+                    }
+                }
             }
             completionBlock();
         });
