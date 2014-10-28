@@ -122,15 +122,6 @@
     
     self.title = NSLocalizedString(@"Photos", nil);
     
-    UIButton *sortingButton = [[UIButton alloc] init];
-    NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
-    [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
-    [sortingButton sizeToFit];
-    [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
-    [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
-    [self.navigationItem setRightBarButtonItem:leftItem];
-    
     self.currentSort = @"dateUploaded,desc";    
 }
 
@@ -151,6 +142,21 @@
     // Dispose of any resources that can be recreated.
     
     CLS_LOG(@"did receive memory warning");
+}
+
+- (void)showRightBarButtonItem:(BOOL)show {
+    if (show) {
+        UIButton *sortingButton = [[UIButton alloc] init];
+        NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
+        [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
+        [sortingButton sizeToFit];
+        [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+        [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
+        [self.navigationItem setRightBarButtonItem:leftItem];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
 }
 
 #pragma mark - Buttons

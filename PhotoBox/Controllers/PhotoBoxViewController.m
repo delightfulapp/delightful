@@ -106,6 +106,10 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
+- (void)showRightBarButtonItem:(BOOL)show {
+    
+}
+
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
@@ -394,8 +398,10 @@ NSString *const galleryContainerType = @"gallery";
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentSize))]) {
         if ([self.dataSource numberOfItems] > 0) {
             [self showEmptyLoading:NO];
+            [self showRightBarButtonItem:YES];
         } else {
             [self showEmptyLoading:YES];
+            [self showRightBarButtonItem:NO];
         }
     }
 }

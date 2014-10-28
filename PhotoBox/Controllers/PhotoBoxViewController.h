@@ -55,4 +55,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)userDidLogout;
 
 - (void)showEmptyLoading:(BOOL)show;
+- (void)showRightBarButtonItem:(BOOL)show;
+
 @end

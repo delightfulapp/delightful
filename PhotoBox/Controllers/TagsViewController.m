@@ -51,15 +51,6 @@
     
     self.currentSort = @"name,asc";
     
-    UIButton *sortingButton = [[UIButton alloc] init];
-    NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
-    [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
-    [sortingButton sizeToFit];
-    [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
-    [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
-    [self.navigationItem setRightBarButtonItem:leftItem];
-    
     [self.collectionView reloadData];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -85,6 +76,21 @@
 - (void)restoreContentInset {
     [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
     [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
+}
+
+- (void)showRightBarButtonItem:(BOOL)show {
+    if (show) {
+        UIButton *sortingButton = [[UIButton alloc] init];
+        NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
+        [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
+        [sortingButton sizeToFit];
+        [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+        [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
+        [self.navigationItem setRightBarButtonItem:leftItem];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
 }
 
 #pragma mark - SortingDelegate
