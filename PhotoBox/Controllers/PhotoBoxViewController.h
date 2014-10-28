@@ -53,4 +53,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)restoreContentInsetForSize:(CGSize)size;
 
 - (void)userDidLogout;
+
+- (void)showEmptyLoading:(BOOL)show;
 @end

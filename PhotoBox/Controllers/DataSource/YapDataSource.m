@@ -58,7 +58,7 @@
 - (NSInteger)numberOfItems {
     __block NSInteger totalPhotosFetched;
     [self.mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        totalPhotosFetched = [transaction numberOfKeysInCollection:photosCollectionName];
+        totalPhotosFetched = [[transaction ext:self.selectedViewMapping.mapping.view] numberOfItemsInAllGroups];
     }];
     return totalPhotosFetched;
 }

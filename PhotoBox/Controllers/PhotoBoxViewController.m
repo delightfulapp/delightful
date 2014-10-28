@@ -30,6 +30,7 @@
 
 NSString *const galleryContainerType = @"gallery";
 
+
 @interface PhotoBoxViewController () <UICollectionViewDelegateFlowLayout, UIAlertViewDelegate> {
     CGFloat lastOffset;
     BOOL isObservingLoggedInUser;
@@ -45,6 +46,10 @@ NSString *const galleryContainerType = @"gallery";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self showEmptyLoading:YES];
+    
+    [self.collectionView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:NULL];
     
     self.currentSize = self.view.frame.size;
     
@@ -84,6 +89,21 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)restoreContentInset {
     
+}
+
+- (void)showEmptyLoading:(BOOL)show {
+    if (show) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
+        [view setBackgroundColor:[UIColor whiteColor]];
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [indicator setCenter:CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame)/2)];
+        [view addSubview:indicator];
+        [indicator startAnimating];
+        [indicator setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
+        [self.collectionView setBackgroundView:view];
+    } else {
+        [self.collectionView setBackgroundView:nil];
+    }
 }
 
 #pragma mark - Orientation
@@ -370,6 +390,12 @@ NSString *const galleryContainerType = @"gallery";
         } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(isShowingLoginPage))]) {
             if ([[ConnectionManager sharedManager] isShowingLoginPage]) {
             }
+        }
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentSize))]) {
+        if ([self.dataSource numberOfItems] > 0) {
+            [self showEmptyLoading:NO];
+        } else {
+            [self showEmptyLoading:YES];
         }
     }
 }
