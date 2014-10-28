@@ -22,4 +22,6 @@ extern NSString *tagsCollectionName;
 
 - (void)removeAllItems;
 
++ (void)removeDatabase;
+
 @end

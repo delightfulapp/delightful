@@ -18,6 +18,10 @@
 
 #import "Tag.h"
 
+#import "GroupedPhotosDataSource.h"
+
+#import "DLFYapDatabaseViewAndMapping.h"
+
 #import <YapDatabase.h>
 
 #define FETCHING_PAGE_SIZE 100
@@ -456,12 +460,27 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 }
 
 - (void)insertPhotos:(NSArray *)photos completion:(void(^)())completionBlock {
+    NSLog(@"inserting %d photos to db", (int)photos.count);
     [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         for (Photo *photo in photos) {
             [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
-            
         }
-    } completionBlock:completionBlock];
+    } completionBlock:^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            for (Photo *photo in photos) {
+                for (NSString *album in photo.albums) {
+                    NSString *viewName = [NSString stringWithFormat:@"album-%@-%@", album, dateUploadedLastViewName];
+                    if (![self.database registeredExtension:viewName]) {
+                        NSLog(@"Creating YDBView for album %@", album);
+                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:[NSString stringWithFormat:@"album-%@", album] groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+                            return [object.albums containsObject:album];
+                        }];
+                    }
+                }
+            }
+            completionBlock();
+        });
+    }];
 }
 
 @end

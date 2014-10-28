@@ -64,4 +64,15 @@ NSString *tagsCollectionName = @"tags";
     }];
 }
 
++ (void)removeDatabase {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();
+    
+    NSString *databaseName = @"database.sqlite";
+    
+    NSString *path = [baseDir stringByAppendingPathComponent:databaseName];
+    NSError *error;
+    [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+}
+
 @end
