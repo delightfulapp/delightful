@@ -139,7 +139,6 @@
             return NO;
         }
         return [((Photo *)object).albums containsObject:albumId];
-        return NO;
     }];
     
     [self.navigationController pushViewController:subsetController animated:YES];

@@ -24,6 +24,7 @@
 
 @property (nonatomic, strong) NSArray *sections;
 @property (nonatomic, strong) NSArray *cameraDataSectionRows;
+@property (nonatomic, copy) NSArray *tags;
 
 @end
 
@@ -135,7 +136,10 @@
     if (indexPath.section == 0) {
         [self configureCameraDataCell:cell forIndexPath:indexPath];
     } else {
-        NSString *tag = self.photo.tags[indexPath.row];
+        if (!self.tags) {
+            self.tags = [self.photo.tags sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"self" ascending:YES]]];
+        }
+        NSString *tag = self.tags[indexPath.row];
         [cell setText:tag detail:nil];
     }
 }
