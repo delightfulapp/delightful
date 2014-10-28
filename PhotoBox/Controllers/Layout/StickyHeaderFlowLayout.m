@@ -50,7 +50,10 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewLayoutAttributes *attr = [super layoutAttributesForSupplementaryViewOfKind:elementKind atIndexPath:indexPath];
-    [self adjustHeaderLayoutAttributes:attr];
+    if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
+        [self adjustHeaderLayoutAttributes:attr];
+    }
+    
     return attr;
 }
 

@@ -54,12 +54,18 @@
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
-    if (self.configureCellHeaderBlock) {
-        NSString *title = [self titleForSection:indexPath.section];
-        self.configureCellHeaderBlock(supplementaryView, title, indexPath);
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.sectionHeaderIdentifier forIndexPath:indexPath];
+        if (self.configureCellHeaderBlock) {
+            NSString *title = [self titleForSection:indexPath.section];
+            self.configureCellHeaderBlock(supplementaryView, title, indexPath);
+        }
+        return supplementaryView;
+    } else {
+        UICollectionReusableView *supplementaryView = (UICollectionReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:self.loadingFooterIdentifier forIndexPath:indexPath];
+        return supplementaryView;
     }
-    return supplementaryView;
+    return nil;
 }
 
 #pragma mark - Items

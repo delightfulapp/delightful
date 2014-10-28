@@ -67,4 +67,36 @@
 }
 
 
+- (void)willStartSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
+        NSLog(@"will start syncing");
+        [self setIsFetching:YES];
+    }
+}
+
+- (void)didFinishSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
+        NSLog(@"did finish syncing");
+        NSNumber *count = userInfo[SyncEngineNotificationCountKey];
+        if (count.intValue == 0) {
+            [self setIsFetching:NO];
+        }
+    }
+}
+
+- (void)didFailSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
+        [self setIsFetching:NO];
+    }
+}
+
 @end

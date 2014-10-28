@@ -217,6 +217,7 @@ NSString *const galleryContainerType = @"gallery";
         [self setupDataSourceConfigureBlock];
         [_dataSource setCellIdentifier:self.cellIdentifier];
         [_dataSource setSectionHeaderIdentifier:[self sectionHeaderIdentifier]];
+        [_dataSource setLoadingFooterIdentifier:[self footerIdentifier]];
         [_dataSource setConfigureCellHeaderBlock:[self headerCellConfigureBlock]];
     }
     return _dataSource;
@@ -408,16 +409,19 @@ NSString *const galleryContainerType = @"gallery";
 
 #pragma mark - Sync Engine Notification
 
+- (void)setIsFetching:(BOOL)isFetching {
+    _isFetching = isFetching;
+    if (!isFetching) {
+        [self.collectionView reloadData];
+    }
+}
+
 - (void)willStartSyncingNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        if (!self.navigationItem.leftBarButtonItem) {
-            UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-            UIBarButtonItem *loadingButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-            [self.navigationItem setLeftBarButtonItem:loadingButton];
-            [indicatorView startAnimating];
-        }
+        NSLog(@"will start syncing");
+        [self setIsFetching:YES];
     }
 }
 
@@ -425,9 +429,10 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+        NSLog(@"did finish syncing");
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
-            [self.navigationItem setLeftBarButtonItem:nil];
+            [self setIsFetching:NO];
         }
     }
 }
@@ -436,7 +441,7 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        [self.navigationItem setLeftBarButtonItem:nil];
+        [self setIsFetching:NO];
     }
 }
 

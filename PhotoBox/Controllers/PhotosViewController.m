@@ -16,6 +16,7 @@
 #import "ConnectionManager.h"
 
 #import "PhotosSectionHeaderView.h"
+#import "FooterLoadingReusableView.h"
 #import "PhotoCell.h"
 
 #import "PhotosHorizontalScrollingYapBackedViewController.h"
@@ -117,6 +118,7 @@
     
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
+    [self.collectionView registerClass:[FooterLoadingReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[self footerIdentifier]];
     
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
@@ -292,6 +294,10 @@
     return @"photoSection";
 }
 
+- (NSString *)footerIdentifier {
+    return @"loadingFooter";
+}
+
 - (Class)resourceClass {
     return [Photo class];
 }
@@ -308,7 +314,6 @@
         self.collectionView.contentInset = ({
             UIEdgeInsets inset = self.collectionView.contentInset;
             inset.top = headerHeight;
-            inset.bottom = 44;
             inset;
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
@@ -316,7 +321,6 @@
         [super restoreContentInsetForSize:self.view.frame.size];
         self.collectionView.contentInset = ({
             UIEdgeInsets inset = self.collectionView.contentInset;
-            inset.bottom = 44;
             inset;
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
@@ -382,6 +386,15 @@
         return UIEdgeInsetsMake(5, 0, 0, 0);
     }
     return UIEdgeInsetsZero;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    if (section == [((GroupedPhotosDataSource *)self.dataSource) numberOfSectionsInCollectionView:collectionView]-1) {
+        if (self.isFetching) {
+            return CGSizeMake(CGRectGetWidth(collectionView.frame), 54);
+        }
+    }
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 0);
 }
 
 #pragma mark - Collection view delegate

@@ -19,6 +19,8 @@ typedef void (^CollectionViewHeaderCellConfigureBlock)(id cell, id item, NSIndex
 
 @property (nonatomic, strong) NSString *sectionHeaderIdentifier;
 
+@property (nonatomic, strong) NSString *loadingFooterIdentifier;
+
 @property (nonatomic, copy) CollectionViewHeaderCellConfigureBlock configureCellHeaderBlock;
 
 //for debugging purposes

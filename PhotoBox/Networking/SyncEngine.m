@@ -277,6 +277,8 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 - (void)fetchPhotosInTag:(NSString *)tag page:(int)page sort:(NSString *)sort {
     [self setIsSyncing:YES photosInCollection:tag collectionType:Tag.class page:page sort:sort];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:tag}];
+    
     [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:tag}];
         
@@ -309,6 +311,8 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 
 - (void)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
     [self setIsSyncing:YES photosInCollection:album collectionType:Album.class page:page sort:sort];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:album}];
     
     [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         CLS_LOG(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);

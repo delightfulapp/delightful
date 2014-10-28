@@ -31,6 +31,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
 @property (nonatomic, strong, readonly) NSString *cellIdentifier;
 @property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
+@property (nonatomic, strong, readonly) NSString *footerIdentifier;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, assign) int numberOfColumns;
@@ -39,6 +40,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
+
+@property (nonatomic, assign) BOOL isFetching;
 
 - (Class)dataSourceClass;
 - (void)refresh;
