@@ -24,14 +24,6 @@
 
 @implementation PhotosSubsetViewController
 
-- (id)initWithFilterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock name:(NSString *)filterName{
-    self = [super init];
-    if (self) {
-        self.filterName = filterName;
-        self.filterBlock = filterBlock;
-    }
-    return self;
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,7 +36,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     if (self.viewJustDidLoad) {
         self.viewJustDidLoad = NO;
-        [((PhotosSubsetDataSource *)self.dataSource) setFilterBlock:self.filterBlock name:self.filterName];
+        [((PhotosSubsetDataSource *)self.dataSource) setFilterName:self.filterName objectKey:self.objectKey filterKey:self.item.itemId];
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:self.item.class sort:dateUploadedDescSortKey];
     }
     [((YapDataSource *)self.dataSource) setPause:NO];

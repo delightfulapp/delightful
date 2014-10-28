@@ -8,6 +8,8 @@
 
 #import "DLFYapDatabaseViewAndMapping.h"
 
+#import "DLFDatabaseManager.h"
+
 #import "YapDatabaseFilteredView.h"
 
 @implementation DLFYapDatabaseViewAndMapping
@@ -116,6 +118,7 @@
         DLFYapDatabaseViewAndMapping *returnObject = [[DLFYapDatabaseViewAndMapping alloc] init];
         returnObject.view = view;
         returnObject.mapping = mappings;
+        returnObject.viewName = viewName;
         returnObject.sortKey = sortKey;
         returnObject.sortKeyAscending = sortKeyAscending;
         returnObject.groupSortAscending = groupSortAscending;
@@ -177,7 +180,7 @@
     [options setIsPersistent:isPersistent];
     YapDatabaseFilteredView *filteredView = [[YapDatabaseFilteredView alloc] initWithParentViewName:fromViewName filtering:filtering versionTag:filterName options:options];
     
-    NSString *viewName = [NSString stringWithFormat:@"%@-%@", filterName, fromViewName];
+    NSString *viewName = [self.class filteredViewNameFromParentViewName:fromViewName filterName:filterName];
     
     DLFYapDatabaseViewAndMapping * (^viewMappingInit)() = ^DLFYapDatabaseViewAndMapping*() {
         YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
@@ -188,6 +191,7 @@
         
         DLFYapDatabaseViewAndMapping *returnObject = [[DLFYapDatabaseViewAndMapping alloc] init];
         returnObject.view = filteredView;
+        returnObject.viewName = viewName;
         returnObject.mapping = mappings;
         returnObject.isPersistent = isPersistent;
         returnObject.filterBlock = filterBlock;
@@ -195,6 +199,16 @@
         
         return returnObject;
     };
+    
+    if ([database registeredExtension:viewName]) {
+        if (!completionBlock) {
+            return viewMappingInit();
+        } else {
+            DLFYapDatabaseViewAndMapping *returnObject = viewMappingInit();
+            completionBlock(returnObject);
+            return nil;
+        }
+    }
     
     if (!completionBlock) {
         [database registerExtension:filteredView withName:viewName];
@@ -270,6 +284,10 @@
 
 + (NSString *)flattenedViewName:(NSString *)viewName {
     return [NSString stringWithFormat:@"%@-flattened", viewName];
+}
+
++ (NSString *)filteredViewNameFromParentViewName:(NSString *)parentViewName filterName:(NSString *)filterName{
+    return [NSString stringWithFormat:@"%@-%@", filterName, parentViewName];
 }
 
 + (void)asyncFilteredViewMappingFromViewName:(NSString *)fromViewName

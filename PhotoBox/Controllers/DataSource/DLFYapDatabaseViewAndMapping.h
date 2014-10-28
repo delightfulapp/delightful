@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString *collection;
 @property (nonatomic, strong) YapDatabaseViewMappings *mapping;
 @property (nonatomic, strong) YapDatabaseView *view;
+@property (nonatomic, strong) NSString *viewName;
 @property (nonatomic, strong) NSString *sortKey;
 @property (nonatomic, strong) NSString *groupKey;
 @property (nonatomic, assign) BOOL sortKeyAscending;
@@ -24,6 +25,8 @@
 @property (nonatomic, assign) BOOL isPersistent;
 
 + (NSString *)flattenedViewName:(NSString *)viewName;
+
++ (NSString *)filteredViewNameFromParentViewName:(NSString *)parentViewName filterName:(NSString *)filterName;
 
 + (DLFYapDatabaseViewAndMapping *)viewMappingWithViewName:(NSString *)viewName
                                                collection:(NSString *)collection

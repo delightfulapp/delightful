@@ -139,13 +139,8 @@
     
     PhotosSubsetViewController *subsetController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"photosSubsetViewController"];
     [subsetController setItem:album];
+    [subsetController setObjectKey:NSStringFromSelector(@selector(albums))];
     [subsetController setFilterName:[NSString stringWithFormat:@"album-%@", albumId]];
-    [subsetController setFilterBlock:^BOOL(NSString *collection, NSString *key, id object) {
-        if (![object isKindOfClass:[Photo class]]) {
-            return NO;
-        }
-        return [((Photo *)object).albums containsObject:albumId];
-    }];
     
     [self.navigationController pushViewController:subsetController animated:YES];
 }

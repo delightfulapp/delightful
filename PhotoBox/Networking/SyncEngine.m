@@ -465,36 +465,42 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 
 - (void)insertPhotos:(NSArray *)photos completion:(void(^)())completionBlock {
     NSLog(@"inserting %d photos to db", (int)photos.count);
-    [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         for (Photo *photo in photos) {
-            [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
-        }
-    } completionBlock:^{
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            for (Photo *photo in photos) {
-                for (NSString *album in photo.albums) {
-                    NSString *viewName = [NSString stringWithFormat:@"album-%@-%@", album, dateUploadedLastViewName];
-                    if (![self.database registeredExtension:viewName]) {
-                        NSLog(@"Creating YDBView for album %@", album);
-                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:[NSString stringWithFormat:@"album-%@", album] groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
-                            return [object.albums containsObject:album];
-                        }];
-                    }
-                }
-                
-                for (NSString *tag in photo.tags) {
-                    NSString *viewName = [NSString stringWithFormat:@"tag-%@-%@", tag, dateUploadedLastViewName];
-                    if (![self.database registeredExtension:viewName]) {
-                        NSLog(@"Creating YDBView for tag %@", tag);
-                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:[NSString stringWithFormat:@"tag-%@", tag] groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
-                            return [object.tags containsObject:tag];
-                        }];
-                    }
+            for (NSString *album in photo.albums) {
+                NSString *filterName = [NSString stringWithFormat:@"album-%@", album];
+                NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
+                if (![self.database registeredExtension:viewName]) {
+                    NSLog(@"Creating YDBView for album %@", album);
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+                        return [object.albums containsObject:album];
+                    }];
+                    
+                    [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:dateUploadedLastViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:album];
                 }
             }
-            completionBlock();
-        });
-    }];
+            
+            for (NSString *tag in photo.tags) {
+                NSString *filterName = [NSString stringWithFormat:@"tag-%@", tag];
+                NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
+                if (![self.database registeredExtension:viewName]) {
+                    NSLog(@"Creating YDBView for tag %@", tag);
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+                        return [object.tags containsObject:tag];
+                    }];
+                    
+                    [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:dateUploadedLastViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:tag];
+                }
+            }
+        }
+        
+        [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            for (Photo *photo in photos) {
+                [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
+            }
+        } completionBlock:completionBlock];
+    });
+    
 }
 
 @end

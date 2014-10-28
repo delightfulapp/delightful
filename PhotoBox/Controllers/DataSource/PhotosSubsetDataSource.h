@@ -10,6 +10,6 @@
 
 @interface PhotosSubsetDataSource : YapDataSource <PhotosDataSourceViewMappingDelegate>
 
-- (void)setFilterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock name:(NSString *)filterName;
+- (void)setFilterName:(NSString *)filterName objectKey:(NSString *)objectKey filterKey:(NSString *)filterKey;
 
 @end

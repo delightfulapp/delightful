@@ -145,18 +145,8 @@
     
     PhotosSubsetViewController *subsetController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"photosSubsetViewController"];
     [subsetController setItem:tag];
+    [subsetController setObjectKey:NSStringFromSelector(@selector(tags))];
     [subsetController setFilterName:[NSString stringWithFormat:@"tag-%@", tagId]];
-    [subsetController setFilterBlock:^BOOL(NSString *collection, NSString *key, id object) {
-        if (![object isKindOfClass:[Photo class]]) {
-            return NO;
-        }
-        for (NSString *a in ((Photo *)object).tags) {
-            if ([a isEqualToString:tagId]) {
-                return YES;
-            }
-        }
-        return NO;
-    }];
     
     [self.navigationController pushViewController:subsetController animated:YES];
 }

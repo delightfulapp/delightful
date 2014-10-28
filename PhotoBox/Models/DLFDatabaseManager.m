@@ -27,11 +27,14 @@
 NSString *photosCollectionName = @"photos";
 NSString *albumsCollectionName = @"albums";
 NSString *tagsCollectionName = @"tags";
+NSString *createdViewsCollectionName = @"createdViews";
 
 @interface DLFDatabaseManager ()
 
 @property (nonatomic, strong) YapDatabase *database;
-@property (nonatomic, strong) YapDatabaseConnection *connection;
+@property (nonatomic, strong) YapDatabaseConnection *writeConnection;
+@property (nonatomic, strong) YapDatabaseConnection *readConnection;
+
 
 @end
 
@@ -42,6 +45,7 @@ NSString *tagsCollectionName = @"tags";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _currentDatabase = [[DLFDatabaseManager alloc] init];
+        [_currentDatabase setupConnections];
         [_currentDatabase setupViewExtensions];
     });
     
@@ -59,12 +63,17 @@ NSString *tagsCollectionName = @"tags";
     return _database;
 }
 
-- (YapDatabaseConnection *)connection {
-    if (!_connection) {
-        _connection = [self.database newConnection];
-    }
-    return _connection;
+- (void)setupConnections {
+    self.writeConnection = [self.database newConnection];
+    self.readConnection = [self.database newConnection];
+    
+    self.readConnection.objectCacheLimit = 500; // increase object cache size
+    self.readConnection.metadataCacheEnabled = NO; // not using metadata on this connection
+    
+    self.writeConnection.objectCacheEnabled = NO; // don't need cache for write-only connection
+    self.writeConnection.metadataCacheEnabled = NO;
 }
+
 
 - (NSString *)databasePath
 {
@@ -78,7 +87,7 @@ NSString *tagsCollectionName = @"tags";
 
 - (void)removeAllItems {
     CLS_LOG(@"Removing all items");
-    [self.connection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+    [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         [transaction removeAllObjectsInAllCollections];
     }];
 }
@@ -120,6 +129,31 @@ NSString *tagsCollectionName = @"tags";
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:NO];
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:YES];
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:NO];
+    
+    __block NSMutableSet *createdViews = [NSMutableSet set];
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+       [transaction enumerateKeysAndObjectsInCollection:createdViewsCollectionName usingBlock:^(NSString *key, id object, BOOL *stop) {
+           [createdViews addObject:object];
+       }];
+    }];
+    
+    for (NSDictionary *dict in createdViews) {
+        NSString *filterName = dict[@"filterName"];
+        BOOL groupSortAsc = [dict[@"groupSortAsc"] boolValue];
+        NSString *objectKey = dict[@"objectKey"];
+        NSString *filterKey = dict[@"filterKey"];
+        NSString *fromViewName = dict[@"fromViewName"];
+        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:groupSortAsc  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+            return [[object valueForKey:objectKey] containsObject:filterKey];
+        }];
+    }
+}
+
+- (void)saveFilteredViewName:(NSString *)viewName fromViewName:(NSString *)fromViewName filterName:(NSString *)filterName groupSortAsc:(BOOL)groupSortAsc objectKey:(NSString *)objectKey filterKey:(NSString *)filterKey {
+    NSDictionary *dict = @{@"viewName": viewName, @"fromViewName": fromViewName, @"filterName": filterName, @"groupSortAsc": @(groupSortAsc), @"objectKey": objectKey, @"filterKey": filterKey};
+    [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction setObject:dict forKey:viewName inCollection:createdViewsCollectionName];
+    }];
 }
 
 @end

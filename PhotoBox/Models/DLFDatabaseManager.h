@@ -25,4 +25,6 @@ extern NSString *tagsCollectionName;
 
 + (void)removeDatabase;
 
+- (void)saveFilteredViewName:(NSString *)viewName fromViewName:(NSString *)fromViewName filterName:(NSString *)filterName groupSortAsc:(BOOL)groupSortAsc objectKey:(NSString *)objectKey filterKey:(NSString *)filterKey;
+
 @end
