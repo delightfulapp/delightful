@@ -53,23 +53,6 @@ static void * imageUploadContext = &imageUploadContext;
         return YES;
     }
     
-    //[[ConnectionManager sharedManager] logout];
-    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
-    //[[NSUserDefaults standardUserDefaults] synchronize];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kDownloadedImageManagerKey"];
-//    [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"com.delightful.kFavoritesManagerKey"];
-//    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-//    NSString *previousAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:APP_VERSION_KEY];
-//    if (previousAppVersion) {
-//        previousAppVersion = [[previousAppVersion componentsSeparatedByString:@" "] firstObject];
-//        if ([previousAppVersion isEqualToString:@"1.0.0"]) {
-//            [[ConnectionManager sharedManager] logoutWithShowingLoginScreen:NO];
-//            
-//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Update v1.0.1" message:NSLocalizedString(@"There is caching improvement in this update but you need to be logged out of the app. Please login again. Sorry for the inconvenience.", nil) delegate:nil cancelButtonTitle:nil otherButtonTitles:NSLocalizedString(@"Dismiss", nil), nil];
-//            [alert show];
-//        }
-//    }
     
     [self runCrashlytics];
     
@@ -78,7 +61,10 @@ static void * imageUploadContext = &imageUploadContext;
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
     [self.window setTintColor:[UIColor redColor]];
-    //[[DLFImageUploader sharedUploader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfUploading)) options:0 context:imageUploadContext];
+    
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        [[SyncEngine sharedEngine] initialize];
+    }
     
     return YES;
 }

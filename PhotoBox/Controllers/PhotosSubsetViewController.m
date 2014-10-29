@@ -34,6 +34,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [self setRegisterSyncingNotification:YES];
     if (self.viewJustDidLoad) {
         self.viewJustDidLoad = NO;
         [((PhotosSubsetDataSource *)self.dataSource) setFilterName:self.filterName objectKey:self.objectKey filterKey:self.item.itemId];
@@ -45,6 +46,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated {
     CLS_LOG(@"view will disappear");
+    [self setRegisterSyncingNotification:NO];
     [((YapDataSource *)self.dataSource) setPause:YES];
     [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:self.item.itemId];
 }

@@ -41,6 +41,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
 
+@property (nonatomic, assign) BOOL registerSyncingNotification;
+
 @property (nonatomic, assign) BOOL isFetching;
 
 - (Class)dataSourceClass;

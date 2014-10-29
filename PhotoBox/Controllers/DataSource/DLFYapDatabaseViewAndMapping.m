@@ -210,6 +210,7 @@
         }
     }
     
+    CLS_LOG(@"Registering new view %@", viewName);
     if (!completionBlock) {
         [database registerExtension:filteredView withName:viewName];
         return viewMappingInit();

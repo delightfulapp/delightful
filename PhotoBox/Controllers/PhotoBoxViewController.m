@@ -68,10 +68,31 @@ NSString *const galleryContainerType = @"gallery";
     [self.collectionView reloadData];
     
     [self restoreContentInset];
+}
+
+- (void)setRegisterSyncingNotification:(BOOL)registerSyncingNotification {
+    if (_registerSyncingNotification != registerSyncingNotification) {
+        _registerSyncingNotification = registerSyncingNotification;
+        
+        if (registerSyncingNotification) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willStartSyncingNotification:) name:SyncEngineWillStartFetchingNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishSyncingNotification:) name:SyncEngineDidFinishFetchingNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailSyncingNotification:) name:SyncEngineDidFailFetchingNotification object:nil];
+        } else {
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:SyncEngineWillStartFetchingNotification object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:SyncEngineDidFinishFetchingNotification object:nil];
+            [[NSNotificationCenter defaultCenter] removeObserver:self name:SyncEngineDidFailFetchingNotification object:nil];
+        }
+    }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willStartSyncingNotification:) name:SyncEngineWillStartFetchingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishSyncingNotification:) name:SyncEngineDidFinishFetchingNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFailSyncingNotification:) name:SyncEngineDidFailFetchingNotification object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [self setRegisterSyncingNotification:NO];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [self setRegisterSyncingNotification:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -385,7 +406,7 @@ NSString *const galleryContainerType = @"gallery";
             BOOL userLoggedIn = [[ConnectionManager sharedManager] isUserLoggedIn];
             if (userLoggedIn) {
                 PBX_LOG(@"Gonna fetch resource in KVO");
-                [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
+                [[SyncEngine sharedEngine] initialize];
             } else {
                 CLS_LOG(@"Logging out, clearing everything");
                 [[DLFDatabaseManager manager] removeAllItems];

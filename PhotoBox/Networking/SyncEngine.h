@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString *const SyncEngineWillStartInitializingNotification;
+extern NSString *const SyncEngineDidFinishInitializingNotification;
+
 extern NSString *const SyncEngineWillStartFetchingNotification;
 extern NSString *const SyncEngineDidFinishFetchingNotification;
 extern NSString *const SyncEngineDidFailFetchingNotification;
@@ -36,9 +39,12 @@ extern NSString *const SyncEngineNotificationCountKey;
 
 - (void)refreshResource:(NSString *)resource;
 
+- (void)initialize;
+
 @property (nonatomic, assign, readonly) BOOL isSyncingPhotos;
 @property (nonatomic, assign, readonly) BOOL isSyncingAlbums;
 @property (nonatomic, assign, readonly) BOOL isSyncingTags;
+@property (nonatomic, assign, readonly) BOOL isInitializing;
 
 @property (nonatomic, assign) BOOL pausePhotosSync;
 @property (nonatomic, assign) BOOL pauseAlbumsSync;

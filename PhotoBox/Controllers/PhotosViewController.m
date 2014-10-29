@@ -128,12 +128,14 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [self setRegisterSyncingNotification:YES];
     [((YapDataSource *)self.dataSource) setPause:NO];
     [[SyncEngine sharedEngine] setPausePhotosSync:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     CLS_LOG(@"view will disappear");
+    [self setRegisterSyncingNotification:NO];
     [((YapDataSource *)self.dataSource) setPause:YES];
     [[SyncEngine sharedEngine] setPausePhotosSync:YES];
 }
