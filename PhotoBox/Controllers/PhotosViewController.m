@@ -429,11 +429,9 @@
     {
         UIButton *label = [[UIButton alloc] init];
         NSMutableAttributedString *leftArrow = [[NSAttributedString symbol:dlf_icon_arrow_left3 size:25] mutableCopy];
-        [leftArrow addAttribute:NSBaselineOffsetAttributeName value:@(-4) range:NSMakeRange(0, leftArrow.string.length)];
+        //[leftArrow addAttribute:NSBaselineOffsetAttributeName value:@(-4) range:NSMakeRange(0, leftArrow.string.length)];
         [leftArrow addAttribute:NSForegroundColorAttributeName value:self.view.tintColor range:NSMakeRange(0, leftArrow.string.length)];
-        NSAttributedString *titleAttr = [[NSAttributedString alloc] initWithString:self.title?:NSLocalizedString(@"Back", nil) attributes:@{NSForegroundColorAttributeName: self.view.tintColor, NSBaselineOffsetAttributeName: @(1)}];
         NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithAttributedString:leftArrow];
-        [attr appendAttributedString:titleAttr];
         [label setAttributedTitle:attr forState:UIControlStateNormal];
         
         NSMutableAttributedString *selectedAttr = [[NSMutableAttributedString alloc] initWithAttributedString:attr];
