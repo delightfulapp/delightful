@@ -165,11 +165,13 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [self setNavigationBarHidden:YES animated:YES];
 }
 
-- (void)toggleNavigationBarHidden
+- (BOOL)toggleNavigationBarHidden
 {
     BOOL hide = !([objc_getAssociatedObject(self, isNavigationBarHidden) boolValue]);
     //Fade status bar
     [self setNavigationBarHidden:hide animated:YES];
+    
+    return hide;
 }
 
 

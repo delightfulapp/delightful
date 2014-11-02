@@ -21,7 +21,7 @@
 
 - (void)openActivityPickerForURL:(NSURL *)URL completion:(void(^)())completion;
 
-- (void)toggleNavigationBarHidden;
+- (BOOL)toggleNavigationBarHidden;
 
 - (void)hideNavigationBar;
 

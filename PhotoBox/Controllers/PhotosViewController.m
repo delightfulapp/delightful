@@ -518,7 +518,7 @@
             [cell setAlpha:1];
         }
     }
-
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];
     [self dismissViewControllerAnimated:YES completion:^{
         for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
             [cell setAlpha:1];

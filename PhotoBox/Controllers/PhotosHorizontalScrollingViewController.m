@@ -176,6 +176,9 @@
 }
 
 - (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
+    if (self.navigationController.navigationBar.alpha == 1) {
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
+    } else [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];;
     [self toggleNavigationBarHidden];
     if (self.navigationController.navigationBar.alpha == 0) {
         [self darkenBackground];
