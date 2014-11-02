@@ -69,7 +69,7 @@
     } else {
         dataSource = [[FlattenedPhotosDataSource alloc] initWithCollectionView:self.collectionView groupedViewMapping:self.groupedViewMapping];
     }
-    
+    [dataSource setPause:YES];
     [dataSource setCellIdentifier:[self cellIdentifier]];
     __weak typeof (self) selfie = self;
     [dataSource setConfigureCellBlock:^(PhotoZoomableCell *cell, id item){
