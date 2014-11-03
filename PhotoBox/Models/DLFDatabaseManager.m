@@ -85,6 +85,14 @@ NSString *createdViewsCollectionName = @"createdViews";
     return [baseDir stringByAppendingPathComponent:databaseName];
 }
 
+- (int)numberOfPhotos {
+    __block int count;
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        count = (int)[transaction numberOfKeysInCollection:photosCollectionName];
+    }];
+    return count;
+}
+
 - (void)removeAllItems {
     CLS_LOG(@"Removing all items");
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {

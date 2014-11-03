@@ -107,8 +107,6 @@
         }
         
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
-        [navCon setModalPresentationStyle:UIModalPresentationCustom];
-        [navCon setTransitioningDelegate:self.fallingTransitioningDelegate];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
         [self presentViewController:navCon animated:YES completion:^{
             [textField setEnabled:YES];

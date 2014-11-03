@@ -240,10 +240,6 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
     [window.rootViewController dismissViewControllerAnimated:YES completion:^{
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-        
-        HintsViewController *hints = [[HintsViewController alloc] init];
-        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
-        [window.rootViewController presentViewController:navCon animated:YES completion:nil];
     }];
 }
 

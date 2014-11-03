@@ -34,8 +34,6 @@
 
 #import "SyncEngine.h"
 
-//#import "HintsViewController.h"
-
 static void * imageDownloadContext = &imageDownloadContext;
 
 static void * imageUploadContext = &imageUploadContext;

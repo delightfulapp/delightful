@@ -450,6 +450,7 @@ NSString *const galleryContainerType = @"gallery";
             if (userLoggedIn) {
                 PBX_LOG(@"Gonna fetch resource in KVO");
                 [[SyncEngine sharedEngine] initialize];
+                [self showSyncingLoadingMessageIfNeeded];
             } else {
                 CLS_LOG(@"Logging out, clearing everything");
                 [[DLFDatabaseManager manager] removeAllItems];
@@ -465,10 +466,9 @@ NSString *const galleryContainerType = @"gallery";
             [self showEmptyLoading:NO];
             [self showRightBarButtonItem:YES];
         } else {
-            int count = (int)[((CollectionViewDataSource *)self.dataSource) numberOfItems];
-            if ([[SyncEngine sharedEngine] isInitializing] && count == 0) {
-                [self showEmptyLoading:YES withText:NSLocalizedString(@"Fetching albums and tags, and initializing database. This might take a while. Please wait.", nil)];
-            } else [self showEmptyLoading:YES];
+            if (![self showSyncingLoadingMessageIfNeeded]) {
+                [self showEmptyLoading:YES];
+            }
             [self showRightBarButtonItem:NO];
         }
     }
@@ -481,6 +481,15 @@ NSString *const galleryContainerType = @"gallery";
     if (!isFetching) {
         [self.collectionView reloadData];
     }
+}
+
+- (BOOL)showSyncingLoadingMessageIfNeeded {
+    int count = (int)[[DLFDatabaseManager manager] numberOfPhotos];
+    if ([[SyncEngine sharedEngine] isInitializing] && count == 0) {
+        [self showEmptyLoading:YES withText:NSLocalizedString(@"Fetching albums and tags, and initializing database. This might take a while. Please wait.", nil)];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)willStartSyncingNotification:(NSNotification *)notification {

@@ -19,6 +19,8 @@ extern NSString *tagsCollectionName;
 
 + (instancetype)manager;
 
+- (int)numberOfPhotos;
+
 - (YapDatabase *)currentDatabase;
 
 - (void)removeAllItems;
