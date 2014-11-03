@@ -191,12 +191,12 @@
             for (YapDatabaseViewSectionChange *sectionChange in sectionChanges) {
                 switch (sectionChange.type) {
                     case YapDatabaseViewChangeDelete:{
-                        CLS_LOG(@"section deleted: %ld", sectionChange.index);
+                        CLS_LOG(@"section deleted: %lu", (unsigned long)sectionChange.index);
                         [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
                         break;
                     }
                     case YapDatabaseViewChangeInsert:{
-                        CLS_LOG(@"section inserted: %ld", sectionChange.index);
+                        CLS_LOG(@"section inserted: %lu", (unsigned long)sectionChange.index);
                         [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
                         break;
                     }
