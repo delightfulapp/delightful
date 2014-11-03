@@ -225,15 +225,21 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                         return [object.tags containsObject:t.tagId];
                     };
                     NSString *filterName = [NSString stringWithFormat:@"tag-%@", t.tagId];
-                    NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
-                    [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:dateUploadedLastViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
                     
-                    // register date upload last first flattened view for the album
-                    NSString *parentViewName = [DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName];
-                    viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
-                    [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
+                    NSSet *parentViewNames = [NSSet setWithObjects:dateTakenLastViewName, dateUploadedFirstViewName, dateTakenFirstViewName, dateUploadedLastViewName, nil];
+                    NSString *viewName;
+                    for (NSString *parentViewName in parentViewNames) {
+                        viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName filterName:filterName];
+                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                        [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
+                        
+                        // register date upload last first flattened view for the album
+                        NSString *parentViewName2 = [DLFYapDatabaseViewAndMapping flattenedViewName:parentViewName];
+                        viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName2 filterName:filterName];
+                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName2 database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                        [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName2 filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
+                    }
+                
                 }
                 [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Tag *tag in tags) {
@@ -285,17 +291,21 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 
                     // register date upload last first view for the album
                     NSString *filterName = [NSString stringWithFormat:@"album-%@", a.albumId];
-                    NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
                     
-                    [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:dateUploadedLastViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
-                    
-                    // register date upload last first flattened view for the album
-                    NSString *parentViewName = [DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName];
-                    viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
-                    [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
-                    
+                    NSSet *parentViewNames = [NSSet setWithObjects:dateTakenLastViewName, dateUploadedFirstViewName, dateTakenFirstViewName, dateUploadedLastViewName, nil];
+                    NSString *viewName;
+                    for (NSString *parentViewName in parentViewNames) {
+                        viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName filterName:filterName];
+                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                        
+                        [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
+                        
+                        // register date upload last first flattened view for the album
+                        NSString *parentViewName2 = [DLFYapDatabaseViewAndMapping flattenedViewName:parentViewName];
+                        viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName2 filterName:filterName];
+                        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName2 database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                        [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName2 filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
+                    }
                 }
                 
                 [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
