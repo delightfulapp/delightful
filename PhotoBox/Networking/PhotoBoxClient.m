@@ -153,7 +153,7 @@
               pageSize:(int)pageSize
                success:(void(^)(id object))successBlock
                failure:(void(^)(NSError*))failureBlock {
-    [self getPhotosInResource:Tag.class resourceId:tagId sort:nil page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    [self getPhotosInResource:Tag.class resourceId:tagId sort:sort page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
 - (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId sort:(NSString *)sort page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
