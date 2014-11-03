@@ -24,6 +24,8 @@
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
 
+#import <UIView+AutoLayout.h>
+
 #define INITIAL_PAGE_NUMBER 1
 
 #define BATCH_SIZE 30
@@ -113,15 +115,57 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (void)showEmptyLoading:(BOOL)show {
+    [self showEmptyLoading:show withText:nil];
+}
+
+- (void)showEmptyLoading:(BOOL)show withText:(id)text {
     if (show) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
-        [view setBackgroundColor:[UIColor whiteColor]];
-        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [indicator setCenter:CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame)/2)];
-        [view addSubview:indicator];
-        [indicator startAnimating];
-        [indicator setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
-        [self.collectionView setBackgroundView:view];
+        UIView *view = self.collectionView.backgroundView;
+        
+        if (!view) {
+            view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
+            [self.collectionView setBackgroundView:view];
+            [view setBackgroundColor:[UIColor whiteColor]];
+        }
+        
+        UIActivityIndicatorView *indicator = (UIActivityIndicatorView *)[view viewWithTag:20000];
+        if (!indicator) {
+            indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [indicator setCenter:CGPointMake(CGRectGetWidth(view.frame)/2, CGRectGetHeight(view.frame)/2)];
+            [indicator setTag:20000];
+            [view addSubview:indicator];
+            [indicator startAnimating];
+            [indicator setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [indicator autoCenterInSuperview];
+        }
+        
+        if (text) {
+            UILabel *textLabel = (UILabel *)[view viewWithTag:10000];
+            if (!textLabel) {
+                textLabel = [[UILabel alloc] initForAutoLayout];
+                [textLabel setNumberOfLines:0];
+                [textLabel setTag:10000];
+                [view addSubview:textLabel];
+                [textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:view withOffset:20];
+                [textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:view withOffset:-20];
+                [textLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:indicator withOffset:10];
+            }
+            
+            if ([text isKindOfClass:[NSAttributedString class]]) {
+                [textLabel setAttributedText:text];
+            } else {
+                [textLabel setText:text];
+                [textLabel setTextColor:[UIColor lightGrayColor]];
+                [textLabel setFont:[UIFont systemFontOfSize:12]];
+                [textLabel setTextAlignment:NSTextAlignmentCenter];
+            }
+            [textLabel sizeToFit];
+        } else {
+            UILabel *textLabel = (UILabel *)[view viewWithTag:10000];
+            if (textLabel) {
+                [textLabel setText:nil];
+            }
+        }
     } else {
         [self.collectionView setBackgroundView:nil];
     }
@@ -258,7 +302,6 @@ NSString *const galleryContainerType = @"gallery";
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     return nil;
 }
-
 
 #pragma mark - Setter
 
@@ -422,7 +465,10 @@ NSString *const galleryContainerType = @"gallery";
             [self showEmptyLoading:NO];
             [self showRightBarButtonItem:YES];
         } else {
-            [self showEmptyLoading:YES];
+            int count = (int)[((CollectionViewDataSource *)self.dataSource) numberOfItems];
+            if ([[SyncEngine sharedEngine] isInitializing] && count == 0) {
+                [self showEmptyLoading:YES withText:NSLocalizedString(@"Fetching albums and tags, and initializing database. This might take a while. Please wait.", nil)];
+            } else [self showEmptyLoading:YES];
             [self showRightBarButtonItem:NO];
         }
     }

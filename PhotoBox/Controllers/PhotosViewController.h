@@ -15,9 +15,13 @@ typedef NS_ENUM(NSInteger, PhotosViewControllerState) {
     PhotosViewControllerStateUploading
 };
 
+@class PhotosCollection;
+
 @interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
 @property (nonatomic, assign) PhotosViewControllerState photosViewControllerState;
+
+@property (nonatomic, strong) PhotosCollection *item;
 
 - (void)setupRightBarButtonsWithSettings:(BOOL)showSetting;
 

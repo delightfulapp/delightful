@@ -28,6 +28,9 @@
 
 #define DEFAULT_PHOTOS_SORT @"dateUploaded,desc"
 
+NSString *const SyncEngineWillStartInitializingNotification = @"com.getdelightfulapp.SyncEngineWillStartInitializingNotification";
+NSString *const SyncEngineDidFinishInitializingNotification = @"com.getdelightfulapp.SyncEngineDidFinishInitializingNotification";
+
 NSString *const SyncEngineWillStartFetchingNotification = @"com.getdelightfulapp.SyncEngineWillStartFetchingNotification";
 NSString *const SyncEngineDidFinishFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFinishFetchingNotification";
 NSString *const SyncEngineDidFailFetchingNotification = @"com.getdelightfulapp.SyncEngineDidFailFetchingNotification";
@@ -129,6 +132,11 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     if (!self.isInitializing) {
         self.isInitializing = YES;
         NSLog(@"Starting initialization");
+        __block NSInteger count;
+        [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+            count = [transaction numberOfKeysInCollection:photosCollectionName];
+        }];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartInitializingNotification object:nil userInfo:@{SyncEngineNotificationCountKey:@(count)}];
         [self initializeAlbums];
     }
 }
@@ -246,6 +254,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                         self.isInitializing = NO;
                         self.isSyncingPhotos = NO;
                         NSLog(@"Done initialization");
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishInitializingNotification object:nil];
                         [self startSyncingPhotos];
                     }
                     

@@ -16,6 +16,4 @@
 
 @property (nonatomic, copy) NSString *objectKey;
 
-@property (nonatomic, strong) PhotosCollection *item;
-
 @end

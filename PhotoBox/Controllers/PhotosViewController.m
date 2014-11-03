@@ -192,7 +192,12 @@
         [[SyncEngine sharedEngine] setPhotosSyncSort:sort];
         [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
         [sortTableViewController dismissViewControllerAnimated:YES completion:^{
+            if (self.item) {
+                [self showEmptyLoading:YES withText:[NSString stringWithFormat:NSLocalizedString(@"First time loading photos in this %@ might take time to complete. Please wait.", nil), ([self.item isKindOfClass:[Tag class]])?NSLocalizedString(@"tag", nil):NSLocalizedString(@"album", nil)]];
+            }
+            
             [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:^{
+                [self showEmptyLoading:NO];
                 [self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
             }];
         }];
@@ -324,7 +329,6 @@
         });
         self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
     }
-    
 }
 
 #pragma mark - Do something
