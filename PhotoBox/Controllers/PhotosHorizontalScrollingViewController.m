@@ -207,6 +207,7 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
+            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
             [self hideNavigationBar];
             [self darkenBackground];
         } else {
