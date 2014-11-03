@@ -16,18 +16,9 @@
 
 @implementation StickyHeaderFlowLayout
 
-//- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-//    UICollectionViewLayoutAttributes *attr = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
-//    if ([self.insertIndexPaths containsObject:itemIndexPath]) {
-//        attr.alpha = 0;
-//        CGFloat centerY = CGRectGetHeight(self.collectionView.frame) + CGRectGetHeight(attr.frame) + (itemIndexPath.item%3) * 1000 + itemIndexPath.item/3 * 1000;
-//        attr.center = CGPointMake(attr.center.x, centerY);
-//    }
-//    
-//    return attr;
-//}
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    CLS_LOG(@"Layout attributes in rect %@", NSStringFromCGRect(rect));
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
     
     NSIndexSet *missingSections = [self missingSectionsForAttributes:answer];
@@ -49,15 +40,23 @@
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    
     UICollectionViewLayoutAttributes *attr = [super layoutAttributesForSupplementaryViewOfKind:elementKind atIndexPath:indexPath];
+    
     if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
         [self adjustHeaderLayoutAttributes:attr];
+    } else {
+        CLS_LOG(@"Layout attributes for footer at %d-%d = %@", (int)indexPath.section, (int)indexPath.row, attr);
+        if (!attr) {
+            attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:elementKind withIndexPath:indexPath];
+        }
     }
     
     return attr;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CLS_LOG(@"Attributes at index %d-%d", (int)indexPath.section, (int)indexPath.item);
     UICollectionViewLayoutAttributes *attr = [super layoutAttributesForItemAtIndexPath:indexPath];
     attr.zIndex = 0;
     return attr;

@@ -42,6 +42,12 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (NSString *)titleForSection:(NSInteger)section {
+    return [self.selectedViewMapping.mapping groupForSection:section];
+}
+
+#pragma mark - <UICollectionViewDataSource>
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex {
     NSInteger items = [self.selectedViewMapping.mapping numberOfItemsInSection:sectionIndex];
     return items;
@@ -49,10 +55,6 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return self.selectedViewMapping.mapping.numberOfSections;
-}
-
-- (NSString *)titleForSection:(NSInteger)section {
-    return [self.selectedViewMapping.mapping groupForSection:section];
 }
 
 - (NSInteger)numberOfItems {
@@ -104,6 +106,8 @@
     }];
 }
 
+#pragma mark - Setters
+
 - (void)setSelectedViewMapping:(DLFYapDatabaseViewAndMapping *)selectedViewMapping {
     if (_selectedViewMapping != selectedViewMapping) {
         _selectedViewMapping = selectedViewMapping;
@@ -150,6 +154,8 @@
 - (void)setDefaultMapping {
     
 }
+
+#pragma mark - Notifications
 
 - (void)yapDatabaseModified:(NSNotification *)notification {
     NSArray *notifications = [self.mainConnection beginLongLivedReadTransaction];
