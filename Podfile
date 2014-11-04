@@ -1,3 +1,5 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
 platform :ios, '7.0'
 
 inhibit_all_warnings!
@@ -20,7 +22,7 @@ pod 'UIColor-Crayola', '1.0'
 pod 'MBProgressHUD', '~> 0.5'
 pod 'DAProgressOverlayView'
 pod 'Lookback'
-pod 'YapDatabase', '2.5.3'
+pod 'YapDatabase', :git => 'git@github.com:nicnocquee/YapDatabase.git'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

@@ -149,14 +149,6 @@ NSString *const SyncEngineNotificationCountKey = @"count";
     if (!self.isSyncingPhotos) {
         if (!self.isInitializing) {
             fetchingPhotosBlock();
-        } else {
-            __block NSInteger count;
-            [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-                count = [transaction numberOfKeysInCollection:photosCollectionName];
-            }];
-            if (count > 0) {
-                fetchingPhotosBlock();
-            }
         }
     }
 }
@@ -234,13 +226,13 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                     };
                     NSString *filterName = [NSString stringWithFormat:@"tag-%@", t.tagId];
                     NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
                     [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:dateUploadedLastViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
                     
                     // register date upload last first flattened view for the album
                     NSString *parentViewName = [DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName];
                     viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
                     [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
                 }
                 [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
@@ -296,14 +288,14 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                     // register date upload last first view for the album
                     NSString *filterName = [NSString stringWithFormat:@"album-%@", a.albumId];
                     NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
                     
                     [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:dateUploadedLastViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
                     
                     // register date upload last first flattened view for the album
                     NSString *parentViewName = [DLFYapDatabaseViewAndMapping flattenedViewName:dateUploadedLastViewName];
                     viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:parentViewName filterName:filterName];
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
                     [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
                     
                 }
@@ -604,7 +596,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
                 if (![self.database registeredExtension:viewName]) {
                     NSLog(@"Creating YDBView for album %@", album);
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
                         return [object.albums containsObject:album];
                     }];
                     
@@ -617,7 +609,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 NSString *viewName = [DLFYapDatabaseViewAndMapping filteredViewNameFromParentViewName:dateUploadedLastViewName filterName:filterName];
                 if (![self.database registeredExtension:viewName]) {
                     NSLog(@"Creating YDBView for tag %@", tag);
-                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+                    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:dateUploadedLastViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
                         return [object.tags containsObject:tag];
                     }];
                     

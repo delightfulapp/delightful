@@ -401,6 +401,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0042B91DB9174023AFB49E27 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		03108FE817D0FE3A0075F9D8 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Album.h; path = PhotoBox/Models/Album.h; sourceTree = "<group>"; };
 		03108FE917D0FE3A0075F9D8 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Album.m; path = PhotoBox/Models/Album.m; sourceTree = "<group>"; };
 		03108FF117D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+setValuesForKeysWithJSONDictionary.h"; sourceTree = "<group>"; };
@@ -726,8 +727,9 @@
 		03FD48331920ABE000D4ADF7 /* star.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star.png; sourceTree = "<group>"; };
 		03FD48351920B27300D4ADF7 /* star-fill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-fill.png"; sourceTree = "<group>"; };
 		03FD48361920B27300D4ADF7 /* star-fill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "star-fill@2x.png"; sourceTree = "<group>"; };
-		2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.xcconfig"; path = "Pods/Pods-DelightfulTests.xcconfig"; sourceTree = "<group>"; };
-		2D8562143BB5431496ECF57D /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		31E94A888907EE60466BDE2A /* Pods-DelightfulTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DelightfulTests/Pods-DelightfulTests.release.xcconfig"; sourceTree = "<group>"; };
+		49DC3171F5100AD279D2478D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		E1EA0693B737D6D16E94D5BA /* Pods-DelightfulTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DelightfulTests/Pods-DelightfulTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -909,9 +911,8 @@
 				032CBBA217D0BDF3001205B1 /* DelightfulTests */,
 				032CBB7C17D0BDF3001205B1 /* Frameworks */,
 				032CBB7B17D0BDF3001205B1 /* Products */,
-				2D8562143BB5431496ECF57D /* Pods.xcconfig */,
-				2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */,
 				03EFD96019251CD700E80A71 /* DelightfulTestFlight-Info.plist */,
+				48141EAD224C32AC0563DA92 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1294,6 +1295,17 @@
 				03CE50E31818148800445084 /* IntroViewController.m */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		48141EAD224C32AC0563DA92 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0042B91DB9174023AFB49E27 /* Pods.debug.xcconfig */,
+				49DC3171F5100AD279D2478D /* Pods.release.xcconfig */,
+				E1EA0693B737D6D16E94D5BA /* Pods-DelightfulTests.debug.xcconfig */,
+				31E94A888907EE60466BDE2A /* Pods-DelightfulTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1766,7 +1778,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-DelightfulTests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DelightfulTests/Pods-DelightfulTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -2142,7 +2154,7 @@
 		};
 		032CBBAD17D0BDF3001205B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
+			baseConfigurationReference = 0042B91DB9174023AFB49E27 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2155,27 +2167,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/AFOAuth1Client\"",
-					"\"${PODS_ROOT}/Headers/Expecta\"",
-					"\"${PODS_ROOT}/Headers/GPUImage\"",
-					"\"${PODS_ROOT}/Headers/JASidePanels\"",
-					"\"${PODS_ROOT}/Headers/MYBlurIntroductionView\"",
-					"\"${PODS_ROOT}/Headers/Mantle\"",
-					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
-					"\"${PODS_ROOT}/Headers/NSDate-Escort\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/OGCoreDataStack\"",
-					"\"${PODS_ROOT}/Headers/Overcoat\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/UIColor+MLPFlatColors\"",
-					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
-					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
-					"\"${PODS_ROOT}/Headers/iOS-blur\"",
-					"$(SRCROOT)/**",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
@@ -2210,7 +2202,7 @@
 		};
 		032CBBAE17D0BDF3001205B1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
+			baseConfigurationReference = 49DC3171F5100AD279D2478D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2223,27 +2215,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/AFOAuth1Client\"",
-					"\"${PODS_ROOT}/Headers/Expecta\"",
-					"\"${PODS_ROOT}/Headers/GPUImage\"",
-					"\"${PODS_ROOT}/Headers/JASidePanels\"",
-					"\"${PODS_ROOT}/Headers/MYBlurIntroductionView\"",
-					"\"${PODS_ROOT}/Headers/Mantle\"",
-					"\"${PODS_ROOT}/Headers/NSDate+TimeAgo\"",
-					"\"${PODS_ROOT}/Headers/NSDate-Escort\"",
-					"\"${PODS_ROOT}/Headers/OCMock\"",
-					"\"${PODS_ROOT}/Headers/OGCoreDataStack\"",
-					"\"${PODS_ROOT}/Headers/Overcoat\"",
-					"\"${PODS_ROOT}/Headers/SDWebImage\"",
-					"\"${PODS_ROOT}/Headers/UIColor+MLPFlatColors\"",
-					"\"${PODS_ROOT}/Headers/UIImageViewModeScaleAspect\"",
-					"\"${PODS_ROOT}/Headers/UIView+AutoLayout\"",
-					"\"${PODS_ROOT}/Headers/iOS-blur\"",
-					"$(SRCROOT)/**",
-				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "PhotoBox/Delightful-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_LDFLAGS = (
@@ -2270,7 +2242,7 @@
 		};
 		032CBBB017D0BDF3001205B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
+			baseConfigurationReference = E1EA0693B737D6D16E94D5BA /* Pods-DelightfulTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2310,7 +2282,7 @@
 		};
 		032CBBB117D0BDF3001205B1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C995EE544AC478BB9C452A9 /* Pods-DelightfulTests.xcconfig */;
+			baseConfigurationReference = 31E94A888907EE60466BDE2A /* Pods-DelightfulTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Delightful.app/Delightful";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2346,7 +2318,7 @@
 		};
 		03EFD95D19251CD700E80A71 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
+			baseConfigurationReference = 0042B91DB9174023AFB49E27 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -2413,7 +2385,7 @@
 		};
 		03EFD95E19251CD700E80A71 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2D8562143BB5431496ECF57D /* Pods.xcconfig */;
+			baseConfigurationReference = 49DC3171F5100AD279D2478D /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

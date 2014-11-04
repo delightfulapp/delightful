@@ -158,16 +158,18 @@
                                                          database:(YapDatabase *)database
                                                        collection:(NSString *)collection
                                                      isPersistent:(BOOL)isPersistent
+                                        skipInitialViewPopulation:(BOOL)skipInitialViewPopulation
                                                        filterName:(NSString *)filterName
                                                      groupSortAsc:(BOOL)groupSortAscending
                                                       filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock {
-    return [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database collection:collection isPersistent:isPersistent groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:nil];
+    return [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database collection:collection isPersistent:isPersistent skipInitialViewPopulation:skipInitialViewPopulation groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:nil];
 }
 
 + (DLFYapDatabaseViewAndMapping *)filteredViewMappingFromViewName:(NSString *)fromViewName
                                                          database:(YapDatabase *)database
                                                        collection:(NSString *)collection
                                                      isPersistent:(BOOL)isPersistent
+                                        skipInitialViewPopulation:(BOOL)skipInitialViewPopulation
                                                      groupSortAsc:(BOOL)groupSortAscending
                                                        filterName:(NSString *)filterName
                                                       filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock
@@ -178,6 +180,7 @@
     }];
     YapDatabaseViewOptions *options = [[YapDatabaseViewOptions alloc] init];
     [options setIsPersistent:isPersistent];
+    [options setSkipInitialViewPopulation:skipInitialViewPopulation];
     YapDatabaseFilteredView *filteredView = [[YapDatabaseFilteredView alloc] initWithParentViewName:fromViewName filtering:filtering versionTag:filterName options:options];
     
     NSString *viewName = [self.class filteredViewNameFromParentViewName:fromViewName filterName:filterName];
@@ -295,10 +298,11 @@
                                     database:(YapDatabase *)database
                                   collection:(NSString *)collection
                                 isPersistent:(BOOL)isPersistent
+                   skipInitialViewPopulation:(BOOL)skipInitialViewPopulation
                                   filterName:(NSString *)filterName
                                 groupSortAsc:(BOOL)groupSortAscending
                                  filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock {
-    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database collection:collection isPersistent:isPersistent groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:completionBlock];
+    [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:database collection:collection isPersistent:isPersistent skipInitialViewPopulation:skipInitialViewPopulation groupSortAsc:groupSortAscending filterName:filterName filterBlock:filterBlock completion:completionBlock];
 }
 
 @end

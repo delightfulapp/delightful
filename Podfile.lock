@@ -60,11 +60,13 @@ DEPENDENCIES:
   - UIColor-Crayola (= 1.0)
   - UIImageViewModeScaleAspect (= 1.3)
   - UIView+AutoLayout (= 1.3.0)
-  - YapDatabase (= 2.5.3)
+  - YapDatabase (from `git@github.com:nicnocquee/YapDatabase.git`)
 
 EXTERNAL SOURCES:
   CTAssetsPickerController:
     :git: git@github.com:nicnocquee/CTAssetsPickerController.git
+  YapDatabase:
+    :git: git@github.com:nicnocquee/YapDatabase.git
 
 SPEC CHECKSUMS:
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
@@ -89,6 +91,6 @@ SPEC CHECKSUMS:
   UIColor-Crayola: 8dad18d86c040cdc6fbd21f98733c340b6bab732
   UIImageViewModeScaleAspect: 61ea5fbcbddab6ff8ae5fe86a657f9208dd19fda
   UIView+AutoLayout: dc24ec6114498617510af759148a05b957af1b38
-  YapDatabase: 096e860167b04e629b88bea33dfb7a4153279bb0
+  YapDatabase: 097c5cc7964e0856c8ff859fdf1b18961e92a50b
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.4

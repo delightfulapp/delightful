@@ -18,7 +18,7 @@
 
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
-    CLS_LOG(@"Layout attributes in rect %@", NSStringFromCGRect(rect));
+    //CLS_LOG(@"Layout attributes in rect %@", NSStringFromCGRect(rect));
     NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
     
     NSIndexSet *missingSections = [self missingSectionsForAttributes:answer];
@@ -46,7 +46,7 @@
     if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
         [self adjustHeaderLayoutAttributes:attr];
     } else {
-        CLS_LOG(@"Layout attributes for footer at %d-%d = %@", (int)indexPath.section, (int)indexPath.row, attr);
+        //CLS_LOG(@"Layout attributes for footer at %d-%d = %@", (int)indexPath.section, (int)indexPath.row, attr);
         if (!attr) {
             attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:elementKind withIndexPath:indexPath];
         }
@@ -56,7 +56,7 @@
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CLS_LOG(@"Attributes at index %d-%d", (int)indexPath.section, (int)indexPath.item);
+    //CLS_LOG(@"Attributes at index %d-%d", (int)indexPath.section, (int)indexPath.item);
     UICollectionViewLayoutAttributes *attr = [super layoutAttributesForItemAtIndexPath:indexPath];
     attr.zIndex = 0;
     return attr;

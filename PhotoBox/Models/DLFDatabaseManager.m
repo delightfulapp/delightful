@@ -151,7 +151,7 @@ NSString *createdViewsCollectionName = @"createdViews";
         NSString *objectKey = dict[@"objectKey"];
         NSString *filterKey = dict[@"filterKey"];
         NSString *fromViewName = dict[@"fromViewName"];
-        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:self.database collection:photosCollectionName isPersistent:YES filterName:filterName groupSortAsc:groupSortAsc  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
+        [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:fromViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:NO filterName:filterName groupSortAsc:groupSortAsc  filterBlock:^BOOL(NSString *aCollection, NSString *key, Photo *object) {
             return [[object valueForKey:objectKey] containsObject:filterKey];
         }];
     }

@@ -65,6 +65,7 @@
                                                          database:(YapDatabase *)database
                                                        collection:(NSString *)collection
                                                      isPersistent:(BOOL)isPersistent
+                                        skipInitialViewPopulation:(BOOL)skipInitialViewPopulation
                                                        filterName:(NSString *)filterName
                                                      groupSortAsc:(BOOL)groupSortAscending
                                                       filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock;
@@ -113,6 +114,7 @@
                                     database:(YapDatabase *)database
                                   collection:(NSString *)collection
                                 isPersistent:(BOOL)isPersistent
+                   skipInitialViewPopulation:(BOOL)skipInitialViewPopulation
                                   filterName:(NSString *)filterName
                                 groupSortAsc:(BOOL)groupSortAscending
                                  filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock
