@@ -65,11 +65,12 @@
         if (!URL) {
             URL = photo.pathOriginal;
         }
-        [self.cellImageView setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+        [self.cellImageView sd_setImageWithURL:URL placeholderImage:nil completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             if (image) {
                 [photo setPlaceholderImage:image];
             }
         }];
+        
         
         [self setText:[self photoCellTitle]];
     }
