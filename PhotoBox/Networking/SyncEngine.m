@@ -41,6 +41,8 @@ NSString *const SyncEngineNotificationPageKey = @"page";
 NSString *const SyncEngineNotificationErrorKey = @"error";
 NSString *const SyncEngineNotificationCountKey = @"count";
 
+NSString *const PhotosCollectionLastSyncKey = @"photos_collection_last_sync";
+
 @interface SyncPhotosParam : NSObject
 
 @property (nonatomic, assign) BOOL isSyncing;
@@ -84,6 +86,9 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 @property (nonatomic, assign) BOOL isInitializing;
 
 @property (nonatomic, strong) NSMutableDictionary *syncingJobs;
+
+@property (nonatomic, strong) NSDate *lastSyncAlbums;
+@property (nonatomic, strong) NSDate *lastSyncTags;
 
 @end
 
@@ -155,21 +160,25 @@ NSString *const SyncEngineNotificationCountKey = @"count";
 
 - (void)startSyncingAlbums {
     if (!self.isSyncingAlbums && !self.isInitializing) {
+        self.lastSyncAlbums = [NSDate date];
         [self fetchAlbumsForPage:1];
     }
 }
 
 - (void)startSyncingTags {
     if (!self.isSyncingTags && !self.isInitializing) {
+        self.lastSyncTags = [NSDate date];
         [self fetchTagsForPage:1];
     }
 }
 
 - (void)initializeTags {
+    self.lastSyncTags = [NSDate date];
     [self fetchTagsForPage:1];
 }
 
 - (void)initializeAlbums {
+    self.lastSyncAlbums = [NSDate date];
     [self fetchAlbumsForPage:1];
 }
 
@@ -237,7 +246,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 }
                 [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Tag *tag in tags) {
-                        [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName];
+                        [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName withMetadata:@{PhotosCollectionLastSyncKey: self.lastSyncTags}];
                     }
                 } completionBlock:^{
                     CLS_LOG(@"Done inserting tags to db");
@@ -250,13 +259,26 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                         [self startSyncingPhotos];
                     }
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
-                    self.isSyncingTags = NO;
-                    
-                    if (self.tagsRefreshRequested) {
-                        self.tagsRefreshRequested = NO;
-                        [self fetchTagsForPage:0];
-                    }
+                    [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                        __block NSMutableArray *toDeleteTags = [NSMutableArray array];
+                        [transaction enumerateKeysAndMetadataInCollection:tagsCollectionName usingBlock:^(NSString *key, NSDictionary *metadata, BOOL *stop) {
+                            NSDate *lastSyncDate = metadata[PhotosCollectionLastSyncKey];
+                            if (![lastSyncDate isEqualToDate:self.lastSyncTags]) {
+                                [toDeleteTags addObject:key];
+                            }
+                        }];
+                        if (toDeleteTags.count > 0) {
+                            [transaction removeObjectsForKeys:toDeleteTags inCollection:tagsCollectionName];
+                        }
+                    } completionBlock:^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
+                        self.isSyncingTags = NO;
+                        
+                        if (self.tagsRefreshRequested) {
+                            self.tagsRefreshRequested = NO;
+                            [self fetchTagsForPage:0];
+                        }
+                    }];
                 }];
             });
         }
@@ -302,7 +324,7 @@ NSString *const SyncEngineNotificationCountKey = @"count";
                 
                 [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Album *album in albums) {
-                        [transaction setObject:album forKey:album.albumId inCollection:albumsCollectionName];
+                        [transaction setObject:album forKey:album.albumId inCollection:albumsCollectionName withMetadata:@{PhotosCollectionLastSyncKey:self.lastSyncAlbums}];
                     }
                 } completionBlock:^{
                     CLS_LOG(@"Done inserting albums to db page %d", page);
@@ -322,9 +344,23 @@ NSString *const SyncEngineNotificationCountKey = @"count";
         } else {
             self.isSyncingAlbums = NO;
             self.albumsFetchingPage = 0;
-            if (self.isInitializing) {
-                [self initializeTags];
-            }
+            [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                __block NSMutableArray *toDeleteKeys = [NSMutableArray array];
+                [transaction enumerateKeysAndMetadataInCollection:albumsCollectionName usingBlock:^(NSString *key, NSDictionary *metadata, BOOL *stop) {
+                    NSDate *lastSyncDate = metadata[PhotosCollectionLastSyncKey];
+                    if (![lastSyncDate isEqualToDate:self.lastSyncAlbums]) {
+                        [toDeleteKeys addObject:key];
+                    }
+                }];
+                
+                if (toDeleteKeys.count > 0) {
+                    [transaction removeObjectsForKeys:toDeleteKeys inCollection:albumsCollectionName];
+                }
+            } completionBlock:^{
+                if (self.isInitializing) {
+                    [self initializeTags];
+                }
+            }];
         }
     } failure:^(NSError *error) {
         CLS_LOG(@"Error fetching albums page %d: %@", page, error);
