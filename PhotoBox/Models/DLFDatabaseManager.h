@@ -25,7 +25,11 @@ extern NSString *tagsCollectionName;
 
 - (void)removeAllItems;
 
+- (void)removeAllPhotosWithCompletion:(void(^)())completion;
+
 + (void)removeDatabase;
+
+- (void)removeItemWithKey:(NSString *)key inCollection:(NSString *)collection;
 
 - (void)saveFilteredViewName:(NSString *)viewName fromViewName:(NSString *)fromViewName filterName:(NSString *)filterName groupSortAsc:(BOOL)groupSortAsc objectKey:(NSString *)objectKey filterKey:(NSString *)filterKey;
 

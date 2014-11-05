@@ -100,6 +100,20 @@ NSString *createdViewsCollectionName = @"createdViews";
     }];
 }
 
+- (void)removeAllPhotosWithCompletion:(void (^)())completion {
+    [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction removeAllObjectsInCollection:photosCollectionName];
+    } completionBlock:completion];
+}
+
+- (void)removeItemWithKey:(NSString *)key inCollection:(NSString *)collection {
+    if (key && collection) {
+        [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            [transaction removeObjectForKey:key inCollection:collection];
+        }];
+    }
+}
+
 + (void)removeDatabase {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();

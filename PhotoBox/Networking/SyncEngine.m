@@ -26,6 +26,8 @@
 
 #define FETCHING_PAGE_SIZE 20
 
+#define DEFAULT_PHOTOS_CACHE_EXPIRATION_INTERVAL 30*24*60*60
+
 #define DEFAULT_PHOTOS_SORT @"dateUploaded,desc"
 
 NSString *const SyncEngineWillStartInitializingNotification = @"com.getdelightfulapp.SyncEngineWillStartInitializingNotification";
@@ -42,6 +44,10 @@ NSString *const SyncEngineNotificationErrorKey = @"error";
 NSString *const SyncEngineNotificationCountKey = @"count";
 
 NSString *const PhotosCollectionLastSyncKey = @"photos_collection_last_sync";
+
+NSString *const PhotosLastSyncDateKey = @"photos_last_sync";
+NSString *const PhotosCacheExpirationKey = @"photos_cache_expiration_interval";
+NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 
 @interface SyncPhotosParam : NSObject
 
@@ -136,13 +142,52 @@ NSString *const PhotosCollectionLastSyncKey = @"photos_collection_last_sync";
 - (void)initialize {
     if (!self.isInitializing) {
         self.isInitializing = YES;
-        NSLog(@"Starting initialization");
-        __block NSInteger count;
-        [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-            count = [transaction numberOfKeysInCollection:photosCollectionName];
+        CLS_LOG(@"Starting initialization");
+        
+        __block NSDate *lastPhotosSyncDate;
+        __block int secondsPhotosCacheExpiration;
+        [self.readConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            lastPhotosSyncDate = [transaction objectForKey:PhotosLastSyncDateKey inCollection:SyncSettingCollectionName];
+            secondsPhotosCacheExpiration = [[transaction objectForKey:PhotosCacheExpirationKey inCollection:SyncSettingCollectionName] intValue];
         }];
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartInitializingNotification object:nil userInfo:@{SyncEngineNotificationCountKey:@(count)}];
-        [self initializeAlbums];
+        if (secondsPhotosCacheExpiration == 0) {
+            secondsPhotosCacheExpiration = DEFAULT_PHOTOS_CACHE_EXPIRATION_INTERVAL;
+        }
+        BOOL needToInvalidateCache = NO;
+        if (lastPhotosSyncDate) {
+            CLS_LOG(@"There is last photos sync date. Checking if it has expired");
+            NSDate *date = [NSDate date];
+            NSInteger interval = [date timeIntervalSinceDate:lastPhotosSyncDate];
+            if (interval > secondsPhotosCacheExpiration) {
+                needToInvalidateCache = YES;
+            }
+        } else {
+            CLS_LOG(@"No last photos sync date.");
+            needToInvalidateCache = YES;
+        }
+        
+        [self.photosConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            [transaction setObject:[NSDate date] forKey:PhotosLastSyncDateKey inCollection:SyncSettingCollectionName];
+        }];
+        
+        void (^initializationBlock)() = ^void() {
+            __block NSInteger count;
+            [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+                count = [transaction numberOfKeysInCollection:photosCollectionName];
+            }];
+            [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartInitializingNotification object:nil userInfo:@{SyncEngineNotificationCountKey:@(count)}];
+            [self initializeAlbums];
+        };
+
+        
+        if (needToInvalidateCache) {
+            CLS_LOG(@"Cache expired. Removing photos.");
+            [[DLFDatabaseManager manager] removeAllPhotosWithCompletion:^{
+                initializationBlock();
+            }];
+        } else {
+            initializationBlock();
+        }
     }
 }
 
