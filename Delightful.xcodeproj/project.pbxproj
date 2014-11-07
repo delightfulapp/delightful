@@ -74,6 +74,8 @@
 		0334EBBA1841FDC8001B262F /* 0.0.5.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBB91841FDC8001B262F /* 0.0.5.plist */; };
 		0334EBC01842093A001B262F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
+		0342D97A1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
+		0342D97B1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
 		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
 		0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */; };
@@ -484,6 +486,7 @@
 		0334EBBF1842093A001B262F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
+		0342D9791A0D1D4E000158B8 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = ../../Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
 		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
 		0348D22317DA208000C932BA /* MWInterpollationMotionEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWInterpollationMotionEffect.h; sourceTree = "<group>"; };
 		0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWInterpollationMotionEffect.m; sourceTree = "<group>"; };
@@ -1220,6 +1223,7 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0342D9791A0D1D4E000158B8 /* 1Password.xcassets */,
 				035DACD91980D99B00557547 /* uploadedmark.png */,
 				035DACDA1980D99B00557547 /* uploadedmark@2x.png */,
 				0327CC7D194723B70086C4B8 /* uploaded.png */,
@@ -1424,6 +1428,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0342D97A1A0D1D4E000158B8 /* 1Password.xcassets in Resources */,
 				031DD2AB17D9BB8300A80167 /* upload.png in Resources */,
 				0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
 				03EB627A19DE2EF000E65248 /* delightful.ttf in Resources */,
@@ -1508,6 +1513,7 @@
 				035DACF61985EDBD00557547 /* Lookback.plist in Resources */,
 				03EFD93519251CD700E80A71 /* 0.0.3.plist in Resources */,
 				03EFD93619251CD700E80A71 /* npr_notification_image_close@2x.png in Resources */,
+				0342D97B1A0D1D4E000158B8 /* 1Password.xcassets in Resources */,
 				0327CC82194723B70086C4B8 /* uploaded@2x.png in Resources */,
 				0327CC80194723B70086C4B8 /* uploaded.png in Resources */,
 				03B5CCC9193C7AE500E0BAD0 /* camera@2x.png in Resources */,

@@ -8,6 +8,8 @@
 
 #import "LoginWebViewViewController.h"
 
+#import <OnePasswordExtension.h>
+
 @interface LoginWebViewViewController () <UIWebViewDelegate>
 
 @end
@@ -34,9 +36,7 @@
     
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonTapped:)];
     [self.navigationItem setLeftBarButtonItem:cancelButton];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+    
     [self.activityView startAnimating];
     [self.webView loadRequest:[NSURLRequest requestWithURL:self.initialURL]];
 }
@@ -76,6 +76,22 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     [self.activityView stopAnimating];
+    
+    BOOL onePasswordAvailable = [[OnePasswordExtension sharedExtension] isAppExtensionAvailable];
+    if (onePasswordAvailable) {
+        UIBarButtonItem *onePasswordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"onepassword-navbar"] style:UIBarButtonItemStylePlain target:self action:@selector(fillUsing1Password:)];
+        [self.navigationItem setRightBarButtonItem:onePasswordButton];
+    }
+}
+
+#pragma mark - OnePassword
+
+- (IBAction)fillUsing1Password:(id)sender {
+    [[OnePasswordExtension sharedExtension] fillLoginIntoWebView:self.webView forViewController:self sender:sender completion:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@"Failed to fill login in webview: <%@>", error);
+        }
+    }];
 }
 
 @end

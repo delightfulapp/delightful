@@ -23,6 +23,7 @@ pod 'MBProgressHUD', '~> 0.5'
 pod 'DAProgressOverlayView'
 pod 'Lookback'
 pod 'YapDatabase', :git => 'git@github.com:nicnocquee/YapDatabase.git'
+pod '1PasswordExtension', '~> 1.1'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

@@ -1,4 +1,5 @@
 PODS:
+  - 1PasswordExtension (1.1)
   - AFNetworking (1.3.4)
   - AFOAuth1Client (0.3.3):
     - AFNetworking (~> 1.3)
@@ -40,6 +41,7 @@ PODS:
     - YapDatabase/common
 
 DEPENDENCIES:
+  - 1PasswordExtension (~> 1.1)
   - AFOAuth1Client (= 0.3.3)
   - CTAssetsPickerController (from `git@github.com:nicnocquee/CTAssetsPickerController.git`)
   - DAProgressOverlayView
@@ -69,6 +71,7 @@ EXTERNAL SOURCES:
     :git: git@github.com:nicnocquee/YapDatabase.git
 
 SPEC CHECKSUMS:
+  1PasswordExtension: 37d1488cf049b8bc0811beb7b52a19f8f803f7c8
   AFNetworking: 80c4e0652b08eb34e25b9c0ff3c82556fe5967b4
   AFOAuth1Client: 53c76d9cadd73142a9f73854456d5d970bdc147a
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
