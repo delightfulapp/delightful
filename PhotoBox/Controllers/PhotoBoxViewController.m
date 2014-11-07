@@ -335,8 +335,6 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (void)refresh {
-    PBX_LOG(@"Refresh %@", NSStringFromClass(self.resourceClass));
-    [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
 }
 
 -(void)showError:(NSError *)error {

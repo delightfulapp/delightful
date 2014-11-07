@@ -161,6 +161,11 @@
     }
 }
 
+- (void)refresh {
+    NSLog(@"Refresh");
+    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
+}
+
 #pragma mark - Buttons
 
 - (void)didTapSortButton:(id)sender {
