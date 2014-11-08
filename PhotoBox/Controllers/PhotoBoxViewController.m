@@ -20,6 +20,7 @@
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"
 #import "StickyHeaderFlowLayout.h"
+#import "NSAttributedString+DelighftulFonts.h"
 
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
@@ -171,8 +172,21 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
+
+
 - (void)showRightBarButtonItem:(BOOL)show {
-    
+    if (show) {
+        UIButton *sortingButton = [[UIButton alloc] init];
+        NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
+        [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
+        [sortingButton sizeToFit];
+        [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
+        [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
+        [self.navigationItem setRightBarButtonItem:leftItem];
+    } else {
+        [self.navigationItem setRightBarButtonItem:nil];
+    }
 }
 
 #pragma mark - Orientation

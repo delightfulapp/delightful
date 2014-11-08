@@ -17,7 +17,6 @@
 #import "ConnectionManager.h"
 #import "AppDelegate.h"
 #import "UIViewController+Additionals.h"
-#import "NSAttributedString+DelighftulFonts.h"
 #import "AlbumsDataSource.h"
 #import "SyncEngine.h"
 #import "SortTableViewController.h"
@@ -58,21 +57,6 @@
     [sort setSelectedSort:self.currentSort];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
     [self presentViewController:nav animated:YES completion:nil];
-}
-
-- (void)showRightBarButtonItem:(BOOL)show {
-    if (show) {
-        UIButton *sortingButton = [[UIButton alloc] init];
-        NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
-        [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
-        [sortingButton sizeToFit];
-        [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
-        [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
-        [self.navigationItem setRightBarButtonItem:leftItem];
-    } else {
-        [self.navigationItem setRightBarButtonItem:nil];
-    }
 }
 
 #pragma mark - SortingDelegate

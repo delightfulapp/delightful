@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "PhotoBoxViewController.h"
+#import "PhotosCollectionWithSearchViewController.h"
 
-@interface TagsViewController : PhotoBoxViewController
+@interface TagsViewController : PhotosCollectionWithSearchViewController
 
 @end
