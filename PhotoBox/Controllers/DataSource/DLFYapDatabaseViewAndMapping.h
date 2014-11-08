@@ -117,7 +117,7 @@
                    skipInitialViewPopulation:(BOOL)skipInitialViewPopulation
                                   filterName:(NSString *)filterName
                                 groupSortAsc:(BOOL)groupSortAscending
-                                 filterBlock:(BOOL (^)(NSString *, NSString *, id))filterBlock
+                                 filterBlock:(BOOL (^)(NSString *collection, NSString *key, id object))filterBlock
                                   completion:(void(^)(DLFYapDatabaseViewAndMapping *viewMapping))completionBlock;
 
 + (void)asyncUngroupedViewMappingFromViewMapping:(DLFYapDatabaseViewAndMapping *)viewMappingSource

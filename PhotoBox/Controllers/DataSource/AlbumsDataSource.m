@@ -19,6 +19,12 @@ NSString *albumsUpdatedFirstViewName = @"updated-first-albums";
 NSString *albumsAlphabeticalAscendingViewName = @"alphabetical-asc-albums";
 NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
 
+@interface AlbumsDataSource ()
+
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *unfilteredSelectedViewMapping;
+
+@end
+
 @implementation AlbumsDataSource
 
 - (void)setupMapping {
@@ -40,6 +46,21 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
         [self setSelectedViewMapping:(ascending)?self.alphabetAscAlbumsViewMapping:self.alphabetDescAlbumsViewMapping];
     } else if (sortBy == AlbumsSortKeyDateLastUpdated) {
         [self setSelectedViewMapping:(ascending)?self.updatedFirstAlbumsViewMapping:self.updatedLastAlbumsViewMapping];
+    }
+}
+
+- (void)filterWithSearchText:(NSString *)searchText {
+    if (searchText && searchText.length > 0) {
+        if (!self.unfilteredSelectedViewMapping) self.unfilteredSelectedViewMapping = self.selectedViewMapping;
+        DLFYapDatabaseViewAndMapping *filteredMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:self.unfilteredSelectedViewMapping.viewName database:self.database collection:self.unfilteredSelectedViewMapping.collection isPersistent:NO skipInitialViewPopulation:NO filterName:[NSString stringWithFormat:@"%@-%@", self.unfilteredSelectedViewMapping.viewName, searchText] groupSortAsc:self.unfilteredSelectedViewMapping.groupSortAscending filterBlock:^BOOL(NSString *collection, NSString *key, Album *object) {
+            return ([object.name rangeOfString:searchText options:NSCaseInsensitiveSearch].location==NSNotFound)?NO:YES;
+        }];
+        [self setSelectedViewMapping:filteredMapping];
+    } else {
+        if (self.unfilteredSelectedViewMapping) {
+            [self setSelectedViewMapping:self.unfilteredSelectedViewMapping];
+            self.unfilteredSelectedViewMapping = nil;
+        }
     }
 }
 

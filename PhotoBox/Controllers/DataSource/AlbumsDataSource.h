@@ -29,4 +29,6 @@ extern NSString *albumsAlphabeticalDescendingViewName;
 
 - (void)sortBy:(AlbumsSortKey)sortBy ascending:(BOOL)ascending;
 
+- (void)filterWithSearchText:(NSString *)searchText;
+
 @end
