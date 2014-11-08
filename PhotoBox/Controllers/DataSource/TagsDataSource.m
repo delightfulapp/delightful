@@ -60,4 +60,10 @@ NSString *numbersLastViewName = @"numbers-last-tags";
     }
 }
 
+- (searchFilterBlock)searchFilterBlock {
+    return ^BOOL(NSString *collection, NSString *key, Tag *object, NSString *searchText) {
+        return ([object.tagId rangeOfString:searchText options:NSCaseInsensitiveSearch range:NSMakeRange(0, (searchText.length==1)?1:object.tagId.length)].location==NSNotFound)?NO:YES;
+    };
+}
+
 @end

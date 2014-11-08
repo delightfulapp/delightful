@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Touches. All rights reserved.
 //
 
-#import "YapDataSource.h"
+#import "YapDatasourceWithSearching.h"
 
 @class DLFYapDatabaseViewAndMapping;
 
@@ -20,7 +20,7 @@ extern NSString *albumsUpdatedFirstViewName;
 extern NSString *albumsAlphabeticalAscendingViewName;
 extern NSString *albumsAlphabeticalDescendingViewName;
 
-@interface AlbumsDataSource : YapDataSource
+@interface AlbumsDataSource : YapDatasourceWithSearching
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *updatedLastAlbumsViewMapping;
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *updatedFirstAlbumsViewMapping;
@@ -28,7 +28,5 @@ extern NSString *albumsAlphabeticalDescendingViewName;
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *alphabetDescAlbumsViewMapping;
 
 - (void)sortBy:(AlbumsSortKey)sortBy ascending:(BOOL)ascending;
-
-- (void)filterWithSearchText:(NSString *)searchText;
 
 @end

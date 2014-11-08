@@ -21,8 +21,6 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
 
 @interface AlbumsDataSource ()
 
-@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *unfilteredSelectedViewMapping;
-
 @end
 
 @implementation AlbumsDataSource
@@ -49,19 +47,10 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
     }
 }
 
-- (void)filterWithSearchText:(NSString *)searchText {
-    if (searchText && searchText.length > 0) {
-        if (!self.unfilteredSelectedViewMapping) self.unfilteredSelectedViewMapping = self.selectedViewMapping;
-        DLFYapDatabaseViewAndMapping *filteredMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:self.unfilteredSelectedViewMapping.viewName database:self.database collection:self.unfilteredSelectedViewMapping.collection isPersistent:NO skipInitialViewPopulation:NO filterName:[NSString stringWithFormat:@"%@-%@", self.unfilteredSelectedViewMapping.viewName, searchText] groupSortAsc:self.unfilteredSelectedViewMapping.groupSortAscending filterBlock:^BOOL(NSString *collection, NSString *key, Album *object) {
-            return ([object.name rangeOfString:searchText options:NSCaseInsensitiveSearch range:NSMakeRange(0, (searchText.length==1)?1:object.name.length)].location==NSNotFound)?NO:YES;
-        }];
-        [self setSelectedViewMapping:filteredMapping];
-    } else {
-        if (self.unfilteredSelectedViewMapping) {
-            [self setSelectedViewMapping:self.unfilteredSelectedViewMapping];
-            self.unfilteredSelectedViewMapping = nil;
-        }
-    }
+- (searchFilterBlock)searchFilterBlock {
+    return ^BOOL(NSString *collection, NSString *key, Album *object, NSString *searchText) {
+        return ([object.name rangeOfString:searchText options:NSCaseInsensitiveSearch range:NSMakeRange(0, (searchText.length==1)?1:object.name.length)].location==NSNotFound)?NO:YES;
+    };
 }
 
 @end

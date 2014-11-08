@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Touches. All rights reserved.
 //
 
-#import "YapDataSource.h"
+#import "YapDatasourceWithSearching.h"
 
 extern NSString *tagsAlphabeticalFirstViewName;
 extern NSString *tagsAlphabeticalLastViewName;
@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, TagsSortKey) {
     TagsSortKeyNumberOfPhotos
 };
 
-@interface TagsDataSource : YapDataSource
+@interface TagsDataSource : YapDatasourceWithSearching
 
 - (void)sortBy:(TagsSortKey)sortBy ascending:(BOOL)ascending;
 

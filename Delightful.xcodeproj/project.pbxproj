@@ -80,6 +80,8 @@
 		0342D97F1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */; };
 		0342D9821A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D9811A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m */; };
 		0342D9831A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D9811A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m */; };
+		0342D9861A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D9851A0E7E38000158B8 /* YapDatasourceWithSearching.m */; };
+		0342D9871A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D9851A0E7E38000158B8 /* YapDatasourceWithSearching.m */; };
 		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
 		0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */; };
@@ -493,6 +495,8 @@
 		0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YapBackedPhotosViewController.m; path = PhotoBox/Controllers/YapBackedPhotosViewController.m; sourceTree = "<group>"; };
 		0342D9801A0E6301000158B8 /* PhotosCollectionWithSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosCollectionWithSearchViewController.h; path = PhotoBox/Controllers/PhotosCollectionWithSearchViewController.h; sourceTree = "<group>"; };
 		0342D9811A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosCollectionWithSearchViewController.m; path = PhotoBox/Controllers/PhotosCollectionWithSearchViewController.m; sourceTree = "<group>"; };
+		0342D9841A0E7E38000158B8 /* YapDatasourceWithSearching.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDatasourceWithSearching.h; sourceTree = "<group>"; };
+		0342D9851A0E7E38000158B8 /* YapDatasourceWithSearching.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YapDatasourceWithSearching.m; sourceTree = "<group>"; };
 		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
 		0348D22317DA208000C932BA /* MWInterpollationMotionEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWInterpollationMotionEffect.h; sourceTree = "<group>"; };
 		0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWInterpollationMotionEffect.m; sourceTree = "<group>"; };
@@ -1119,6 +1123,8 @@
 				035B035019ECC72800153F24 /* TagsDataSource.m */,
 				03643BC819F76A11003E4025 /* PhotosSubsetDataSource.h */,
 				03643BC919F76A11003E4025 /* PhotosSubsetDataSource.m */,
+				0342D9841A0E7E38000158B8 /* YapDatasourceWithSearching.h */,
+				0342D9851A0E7E38000158B8 /* YapDatasourceWithSearching.m */,
 			);
 			name = DataSource;
 			path = PhotoBox/Controllers/DataSource;
@@ -1886,6 +1892,7 @@
 				03CE50FA18183A6000445084 /* SeeThroughCircleView.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
 				0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */,
+				0342D9861A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,
@@ -2029,6 +2036,7 @@
 				03EFD90119251CD700E80A71 /* SeeThroughCircleView.m in Sources */,
 				03EFD90219251CD700E80A71 /* CollectionViewDataSource.m in Sources */,
 				03EFD90319251CD700E80A71 /* UIWindow+Additionals.m in Sources */,
+				0342D9871A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */,
 				03EFD90419251CD700E80A71 /* main.m in Sources */,
 				03EFD90519251CD700E80A71 /* PhotoBoxClient.m in Sources */,
 				03EFD90619251CD700E80A71 /* UIImage+Additionals.m in Sources */,
