@@ -51,11 +51,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)restoreContentInset {
-    [self.collectionView setContentInset:UIEdgeInsetsMake(64, 0, 0, 0)];
-    [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
-}
-
 - (void)didTapSortButton:(NSNotification *)notification {
     SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [sort setResourceClass:Album.class];
