@@ -25,6 +25,4 @@ typedef NS_ENUM(NSInteger, PhotosViewControllerState) {
 
 @property (nonatomic, strong) NSString *currentSort;
 
-- (void)setupRightBarButtonsWithSettings:(BOOL)showSetting;
-
 @end

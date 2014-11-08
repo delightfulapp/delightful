@@ -55,10 +55,6 @@
 
 #import "DelightfulCache.h"
 
-#import "DLFImageUploader.h"
-
-#import "UploadViewController.h"
-
 #import "TagsAlbumsPickerViewController.h"
 
 #import "DLFAsset.h"
@@ -72,7 +68,7 @@
 #import "SortTableViewController.h"
 
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -83,22 +79,11 @@
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 
-@property (nonatomic, strong) UploadViewController *uploadViewController;
-
 @end
 
 @implementation PhotosViewController
 
 @synthesize numberOfColumns = _numberOfColumns;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -116,8 +101,6 @@
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     [self.collectionView registerClass:[FooterLoadingReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[self footerIdentifier]];
-    
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeNumberOfUploads:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
     self.title = NSLocalizedString(@"Photos", nil);
     
@@ -197,12 +180,7 @@
         }
         
         [sortTableViewController dismissViewControllerAnimated:YES completion:^{
-            if (self.item) {
-                //[self showEmptyLoading:YES withText:[NSString stringWithFormat:NSLocalizedString(@"First time loading photos in this %@ might take time to complete. Please wait.", nil), ([self.item isKindOfClass:[Tag class]])?NSLocalizedString(@"tag", nil):NSLocalizedString(@"album", nil)]];
-            }
-            
             [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:^{
-                //[self.collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0] atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
             }];
         }];
     } else {
