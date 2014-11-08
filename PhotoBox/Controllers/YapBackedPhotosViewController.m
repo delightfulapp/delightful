@@ -18,6 +18,8 @@
 
 #import "SyncEngine.h"
 
+#import "Photo.h"
+
 @interface YapBackedPhotosViewController ()
 
 @end
@@ -25,7 +27,7 @@
 @implementation YapBackedPhotosViewController
 
 - (void)refresh {
-    NSLog(@"Refresh in %@", self.item);
+    NSLog(@"Refresh in %@", self.item?:@"all photos");
     
     if (self.item) {
         [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:self.item.itemId];
@@ -37,6 +39,15 @@
             
             [self.refreshControl endRefreshing];
             [[SyncEngine sharedEngine] refreshPhotosInCollection:self.item.itemId collectionType:self.item.class sort:self.currentSort];
+        }];
+    } else {
+        [[SyncEngine sharedEngine] setPausePhotosSync:YES];
+        
+        [[DLFDatabaseManager manager] removeAllPhotosWithCompletion:^{
+            NSLog(@"Removed all photos");
+            
+            [self.refreshControl endRefreshing];
+            [[SyncEngine sharedEngine] refreshResource:NSStringFromClass(Photo.class)];
         }];
     }
 }
