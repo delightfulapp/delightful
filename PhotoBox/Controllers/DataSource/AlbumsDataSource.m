@@ -53,7 +53,7 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
     if (searchText && searchText.length > 0) {
         if (!self.unfilteredSelectedViewMapping) self.unfilteredSelectedViewMapping = self.selectedViewMapping;
         DLFYapDatabaseViewAndMapping *filteredMapping = [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:self.unfilteredSelectedViewMapping.viewName database:self.database collection:self.unfilteredSelectedViewMapping.collection isPersistent:NO skipInitialViewPopulation:NO filterName:[NSString stringWithFormat:@"%@-%@", self.unfilteredSelectedViewMapping.viewName, searchText] groupSortAsc:self.unfilteredSelectedViewMapping.groupSortAscending filterBlock:^BOOL(NSString *collection, NSString *key, Album *object) {
-            return ([object.name rangeOfString:searchText options:NSCaseInsensitiveSearch].location==NSNotFound)?NO:YES;
+            return ([object.name rangeOfString:searchText options:NSCaseInsensitiveSearch range:NSMakeRange(0, (searchText.length==1)?1:object.name.length)].location==NSNotFound)?NO:YES;
         }];
         [self setSelectedViewMapping:filteredMapping];
     } else {
