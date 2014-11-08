@@ -482,11 +482,6 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (BOOL)showSyncingLoadingMessageIfNeeded {
-    int count = (int)[[DLFDatabaseManager manager] numberOfPhotos];
-    if ([[SyncEngine sharedEngine] isInitializing] && count == 0) {
-        [self showEmptyLoading:YES withText:NSLocalizedString(@"Fetching albums and tags, and initializing database. This might take a while. Please wait.", nil)];
-        return YES;
-    }
     return NO;
 }
 

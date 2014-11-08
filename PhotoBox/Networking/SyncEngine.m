@@ -170,23 +170,14 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
             [transaction setObject:[NSDate date] forKey:PhotosLastSyncDateKey inCollection:SyncSettingCollectionName];
         }];
         
-        void (^initializationBlock)() = ^void() {
-            __block NSInteger count;
-            [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-                count = [transaction numberOfKeysInCollection:photosCollectionName];
-            }];
-            [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartInitializingNotification object:nil userInfo:@{SyncEngineNotificationCountKey:@(count)}];
-            [self initializeAlbums];
-        };
-
-        
         if (needToInvalidateCache) {
             CLS_LOG(@"Cache expired. Removing photos.");
             [[DLFDatabaseManager manager] removeAllPhotosWithCompletion:^{
-                initializationBlock();
+                self.isInitializing = NO;
+                [self startSyncingPhotos];
             }];
         } else {
-            initializationBlock();
+            self.isInitializing = NO;
         }
     }
 }
