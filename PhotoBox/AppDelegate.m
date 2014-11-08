@@ -34,6 +34,8 @@
 
 #import "SyncEngine.h"
 
+#import <SDWebImageManager.h>
+
 static void * imageDownloadContext = &imageDownloadContext;
 
 static void * imageUploadContext = &imageUploadContext;
@@ -57,6 +59,8 @@ static void * imageUploadContext = &imageUploadContext;
     [self runLookback];
 
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
+    
+    [[[SDWebImageManager sharedManager] imageCache] setMaxCacheAge:DEFAULT_PHOTOS_CACHE_AGE];
     
     [self.window setTintColor:[UIColor redColor]];
     

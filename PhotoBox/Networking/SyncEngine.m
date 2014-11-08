@@ -26,8 +26,6 @@
 
 #define FETCHING_PAGE_SIZE 20
 
-#define DEFAULT_PHOTOS_CACHE_EXPIRATION_INTERVAL 30*24*60*60
-
 #define DEFAULT_PHOTOS_SORT @"dateUploaded,desc"
 
 NSString *const SyncEngineWillStartInitializingNotification = @"com.getdelightfulapp.SyncEngineWillStartInitializingNotification";
@@ -151,7 +149,7 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
             secondsPhotosCacheExpiration = [[transaction objectForKey:PhotosCacheExpirationKey inCollection:SyncSettingCollectionName] intValue];
         }];
         if (secondsPhotosCacheExpiration == 0) {
-            secondsPhotosCacheExpiration = DEFAULT_PHOTOS_CACHE_EXPIRATION_INTERVAL;
+            secondsPhotosCacheExpiration = DEFAULT_PHOTOS_CACHE_AGE;
         }
         BOOL needToInvalidateCache = NO;
         if (lastPhotosSyncDate) {

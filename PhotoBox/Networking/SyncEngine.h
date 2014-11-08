@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#define DEFAULT_PHOTOS_CACHE_AGE 30*24*60*60
+
 extern NSString *const SyncEngineWillStartInitializingNotification;
 extern NSString *const SyncEngineDidFinishInitializingNotification;
 
