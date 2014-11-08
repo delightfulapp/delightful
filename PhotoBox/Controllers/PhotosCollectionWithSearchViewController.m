@@ -16,6 +16,8 @@
 
 @property (nonatomic, assign, getter=isSearching) BOOL searching;
 
+@property (nonatomic, assign) UIEdgeInsets collectionViewInsets;
+
 @end
 
 @implementation PhotosCollectionWithSearchViewController
@@ -28,6 +30,9 @@
     [self.searchBar setSearchBarStyle:UISearchBarStyleProminent];
     [self.view addSubview:self.searchBar];
     [self.searchBar sizeToFit];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
     
     [self restoreContentInset];
 }
@@ -78,6 +83,26 @@
             [self showSearchBar:([self.dataSource numberOfItems] > 0)?YES:NO];
         }
     }
+}
+
+#pragma mark - Keyboard
+
+- (void)keyboardWillAppear:(NSNotification *)notification {
+    self.collectionViewInsets = self.collectionView.contentInset;
+    NSDictionary *userInfo = [notification userInfo];
+    CGRect keyboardEndFrame = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    self.collectionView.contentInset = ({
+        UIEdgeInsets inset = self.collectionView.contentInset;
+        inset.bottom += keyboardEndFrame.size.height;
+        inset;
+    });
+    [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
+}
+
+- (void)keyboardDidDisappear:(NSNotification *)notification {
+    [self.collectionView setContentInset:self.collectionViewInsets];
+    self.collectionViewInsets = UIEdgeInsetsZero;
+    [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
 }
 
 @end
