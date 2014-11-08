@@ -274,6 +274,7 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
         CLS_LOG(@"Did finish fetching %d tags page %d", (int)tags.count, page);
         if (tags.count > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                /*
                 for (Tag *t in tags) {
                     BOOL (^filterBlock)(NSString *aCollection, NSString *key, Photo *object) = ^BOOL(NSString *collection, NSString *key, Photo *object) {
                         return [object.tags containsObject:t.tagId];
@@ -289,6 +290,7 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
                     [DLFYapDatabaseViewAndMapping filteredViewMappingFromViewName:parentViewName database:self.database collection:photosCollectionName isPersistent:YES skipInitialViewPopulation:YES filterName:filterName groupSortAsc:NO filterBlock:filterBlock];
                     [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(tags)) filterKey:t.tagId];
                 }
+                */
                 [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Tag *tag in tags) {
                         [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName withMetadata:@{PhotosCollectionLastSyncKey: self.lastSyncTags}];
@@ -347,6 +349,8 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
         
         if (albums.count > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                /*
                 for (Album *a in albums) {
                     BOOL (^filterBlock)(NSString *aCollection, NSString *key, Photo *object) = ^BOOL(NSString *aCollection, NSString *key, Photo *object) {
                         return [object.albums containsObject:a.albumId];
@@ -366,6 +370,7 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
                     [[DLFDatabaseManager manager] saveFilteredViewName:viewName fromViewName:parentViewName filterName:filterName groupSortAsc:NO objectKey:NSStringFromSelector(@selector(albums)) filterKey:a.albumId];
                     
                 }
+                 */
                 
                 [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Album *album in albums) {
@@ -676,6 +681,8 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 - (void)insertPhotos:(NSArray *)photos completion:(void(^)())completionBlock {
     NSLog(@"inserting %d photos to db", (int)photos.count);
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        /*
         for (Photo *photo in photos) {
             for (NSString *album in photo.albums) {
                 NSString *filterName = [NSString stringWithFormat:@"album-%@", album];
@@ -703,6 +710,9 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
                 }
             }
         }
+        
+         */
+        
         
         [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
             for (Photo *photo in photos) {
