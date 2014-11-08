@@ -76,6 +76,8 @@
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		0342D97A1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
 		0342D97B1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
+		0342D97E1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */; };
+		0342D97F1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */; };
 		034603CB1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */; };
 		0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */; };
 		0348D22817DA208000C932BA /* UIView+NGAParallaxMotion.m in Sources */ = {isa = PBXBuildFile; fileRef = 0348D22617DA208000C932BA /* UIView+NGAParallaxMotion.m */; };
@@ -487,6 +489,8 @@
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
 		0342D9791A0D1D4E000158B8 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = ../../Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
+		0342D97C1A0E1F38000158B8 /* YapBackedPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YapBackedPhotosViewController.h; path = PhotoBox/Controllers/YapBackedPhotosViewController.h; sourceTree = "<group>"; };
+		0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YapBackedPhotosViewController.m; path = PhotoBox/Controllers/YapBackedPhotosViewController.m; sourceTree = "<group>"; };
 		034603CA1824B3CD00531985 /* CollectionViewSelectCellGestureRecognizerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewSelectCellGestureRecognizerTests.m; sourceTree = "<group>"; };
 		0348D22317DA208000C932BA /* MWInterpollationMotionEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWInterpollationMotionEffect.h; sourceTree = "<group>"; };
 		0348D22417DA208000C932BA /* MWInterpollationMotionEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWInterpollationMotionEffect.m; sourceTree = "<group>"; };
@@ -1086,6 +1090,8 @@
 				035B5E5519F3BEBF00C657B0 /* SortTableViewController.m */,
 				03643BD419F77F14003E4025 /* PhotosSubsetViewController.h */,
 				03643BD519F77F14003E4025 /* PhotosSubsetViewController.m */,
+				0342D97C1A0E1F38000158B8 /* YapBackedPhotosViewController.h */,
+				0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1810,6 +1816,7 @@
 				03D311B21930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
 				035DACBD197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */,
 				0327CC6C1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
+				0342D97E1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
 				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
 				037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
@@ -1952,6 +1959,7 @@
 				03D311B31930B775003DE5FC /* FallingTransitioningDelegate.m in Sources */,
 				035DACBE197F9A8E00557547 /* PermissionPickerTableViewCell.m in Sources */,
 				0327CC6D1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
+				0342D97F1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */,
 				03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */,
 				03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */,
 				037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */,

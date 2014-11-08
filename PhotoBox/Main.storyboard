@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eYR-Kj-a0Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eYR-Kj-a0Y">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -116,10 +116,10 @@
             </objects>
             <point key="canvasLocation" x="1036.875" y="-896.83098591549287"/>
         </scene>
-        <!--Photos View Controller-->
+        <!--Yap Backed Photos View Controller-->
         <scene sceneID="7c7-na-921">
             <objects>
-                <viewController storyboardIdentifier="photosViewController" id="HBy-8P-H4I" customClass="PhotosViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="photosViewController" id="HBy-8P-H4I" customClass="YapBackedPhotosViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rdK-4r-U4K"/>
                         <viewControllerLayoutGuide type="bottom" id="0rM-IL-g6P"/>

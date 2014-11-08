@@ -71,6 +71,7 @@
 
 #import "SortTableViewController.h"
 
+
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, CTAssetsPickerControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
@@ -83,8 +84,6 @@
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 
 @property (nonatomic, strong) UploadViewController *uploadViewController;
-
-@property (nonatomic, strong) NSString *currentSort;
 
 @end
 
@@ -159,11 +158,6 @@
     } else {
         [self.navigationItem setRightBarButtonItem:nil];
     }
-}
-
-- (void)refresh {
-    NSLog(@"Refresh");
-    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
 }
 
 #pragma mark - Buttons

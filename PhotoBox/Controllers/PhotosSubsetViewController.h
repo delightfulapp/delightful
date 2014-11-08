@@ -6,11 +6,9 @@
 //  Copyright (c) 2014 Touches. All rights reserved.
 //
 
-#import "PhotosViewController.h"
+#import "YapBackedPhotosViewController.h"
 
-@class PhotosCollection;
-
-@interface PhotosSubsetViewController : PhotosViewController
+@interface PhotosSubsetViewController : YapBackedPhotosViewController
 
 @property (nonatomic, copy) NSString *filterName;
 

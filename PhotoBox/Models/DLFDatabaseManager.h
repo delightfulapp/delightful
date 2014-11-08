@@ -14,6 +14,7 @@ extern NSString *tagsCollectionName;
 
 @class YapDatabase;
 @class DLFYapDatabaseViewAndMapping;
+@class PhotosCollection;
 
 @interface DLFDatabaseManager : NSObject
 
@@ -26,6 +27,8 @@ extern NSString *tagsCollectionName;
 - (void)removeAllItems;
 
 - (void)removeAllPhotosWithCompletion:(void(^)())completion;
+
+- (void)removePhotosInFlattenedView:(NSString *)viewName completion:(void(^)())completion;
 
 + (void)removeDatabase;
 

@@ -114,6 +114,21 @@ NSString *createdViewsCollectionName = @"createdViews";
     }
 }
 
+- (void)removePhotosInFlattenedView:(NSString *)view completion:(void (^)())completion {
+    __block NSMutableArray *keys = [NSMutableArray array];
+    [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [[transaction ext:view] enumerateKeysInGroup:@"" usingBlock:^(NSString *collection, NSString *key, NSUInteger index, BOOL *stop) {
+            if ([collection  isEqualToString:photosCollectionName]) {
+                [keys addObject:key];
+            }
+        }];
+        
+        if (keys && keys.count > 0) {
+            [transaction removeObjectsForKeys:keys inCollection:photosCollectionName];
+        }
+    } completionBlock:completion];
+}
+
 + (void)removeDatabase {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *baseDir = ([paths count] > 0) ? [paths objectAtIndex:0] : NSTemporaryDirectory();

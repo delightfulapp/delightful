@@ -496,6 +496,9 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
                         }
                     }
                 }];
+            } else {
+                [self setIsSyncing:NO photosInCollection:tag collectionType:Tag.class page:page sort:sort];
+                [self setPhotosFetchingPage:0 photosInCollection:tag];
             }
         }
         
@@ -656,8 +659,10 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
     
     if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
         if (collectionType == Album.class) {
+            NSLog(@"Refresh album requested");
             [self fetchPhotosInAlbum:collection page:0 sort:sort];
         } else if (collectionType == Tag.class) {
+            NSLog(@"Refresh tag requested");
             [self fetchPhotosInTag:collection page:0 sort:sort];
         }
     }
