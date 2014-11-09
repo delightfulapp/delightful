@@ -10,6 +10,8 @@
 
 #import "AlbumsDataSource.h"
 
+#import <UIView+AutoLayout.h>
+
 @interface PhotosCollectionWithSearchViewController () <UISearchBarDelegate>
 
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -26,10 +28,16 @@
     [super viewDidLoad];
     
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), CGRectGetWidth(self.view.frame), 0)];
+    [self.searchBar setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.searchBar setDelegate:self];
     [self.searchBar setSearchBarStyle:UISearchBarStyleProminent];
     [self.view addSubview:self.searchBar];
     [self.searchBar sizeToFit];
+    
+    NSLayoutConstraint *searchLeftConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft multiplier:1 constant:0];
+    NSLayoutConstraint *searchRightConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeRight multiplier:1 constant:0];
+    NSLayoutConstraint *searchTopConstraint = [NSLayoutConstraint constraintWithItem:self.searchBar attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.topLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
+    [self.view addConstraints:@[searchLeftConstraint, searchRightConstraint, searchTopConstraint]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
