@@ -50,6 +50,10 @@
     [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
 }
 
+- (void)restoreContentInsetForSize:(CGSize)size {
+    [self restoreContentInset];
+}
+
 - (void)showSearchBar:(BOOL)show {
     if (self.searchBar.isHidden == show) {
         [self.searchBar setHidden:!show];

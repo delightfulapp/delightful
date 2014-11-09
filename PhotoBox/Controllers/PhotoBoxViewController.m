@@ -189,40 +189,52 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
+- (void)didTapSortButton:(id)sender {
+}
+
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    CLS_LOG(@"**** will transition in photobox");
-    self.currentSize = size;
-    
-    CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
-    NSIndexPath *indexPath;
-    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
-        NSIndexPath *ind = [self.collectionView indexPathForCell:cell];
+    CLS_LOG(@"**** will transition in %@", self.class);
+    if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+        self.currentSize = size;
         
-        UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:ind];
-        if (attr.frame.origin.y > originYRectToExamine-5) {
-            if (!indexPath) {
-                indexPath = ind;
-            } else {
-                if ([indexPath compare:ind] == NSOrderedDescending) {
+        CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
+        NSIndexPath *indexPath;
+        for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+            NSIndexPath *ind = [self.collectionView indexPathForCell:cell];
+            
+            UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:ind];
+            if (attr.frame.origin.y > originYRectToExamine-5) {
+                if (!indexPath) {
                     indexPath = ind;
+                } else {
+                    if ([indexPath compare:ind] == NSOrderedDescending) {
+                        indexPath = ind;
+                    }
                 }
             }
         }
+        
+        if (self.selectedCell) {
+            [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:[self.collectionView indexPathForCell:self.selectedCell]];
+        } else {
+            [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] firstObject]]];
+        }
     }
     
-    if (self.selectedCell) {
-        [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:[self.collectionView indexPathForCell:self.selectedCell]];
-    } else {
-        [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] firstObject]]];
+    BOOL needToRestoreOffset = NO;
+    if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
+        needToRestoreOffset = YES;
     }
-    
-    
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self restoreContentInsetForSize:size];
         [self.collectionView.collectionViewLayout invalidateLayout];
+        if (needToRestoreOffset) {
+            self.collectionView.contentOffset = CGPointMake(0, -self.collectionView.contentInset.top);
+        }
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        
     }];
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
