@@ -132,7 +132,7 @@
 #pragma mark - Collection View Flow Layout Delegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    CGFloat collectionViewWidth = CGRectGetWidth(collectionView.frame);
     return CGSizeMake(collectionViewWidth, 44);
 }
 

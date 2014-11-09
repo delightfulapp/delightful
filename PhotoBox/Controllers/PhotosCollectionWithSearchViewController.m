@@ -22,6 +22,8 @@ static char *kSearchBarCenterContext;
 
 @property (nonatomic, assign) UIEdgeInsets collectionViewInsets;
 
+@property (nonatomic, assign) BOOL viewJustDidLoad;
+
 @end
 
 @implementation PhotosCollectionWithSearchViewController
@@ -47,6 +49,16 @@ static char *kSearchBarCenterContext;
     [self.searchBar addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:NSKeyValueObservingOptionNew context:&kSearchBarCenterContext];
     
     [self restoreContentInset];
+    
+    self.viewJustDidLoad = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.viewJustDidLoad) {
+        self.viewJustDidLoad = NO;
+        [self.collectionView.collectionViewLayout invalidateLayout];
+    }
+    [super viewWillAppear:animated];
 }
 
 - (void)restoreContentInset {

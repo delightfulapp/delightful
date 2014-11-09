@@ -195,7 +195,7 @@ NSString *const galleryContainerType = @"gallery";
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    CLS_LOG(@"**** will transition in %@", self.class);
+    CLS_LOG(@"**** will transition to size %@ in %@", NSStringFromCGSize(size), self.class);
     if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
         self.currentSize = size;
         
@@ -446,7 +446,7 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    CGFloat collectionViewWidth = CGRectGetWidth(self.view.frame);
     CGFloat width = floorf((collectionViewWidth/(float)[self numberOfColumnsForCurrentSize]));
     return CGSizeMake(width, width);
 }
