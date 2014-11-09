@@ -194,7 +194,7 @@ NSString *const galleryContainerType = @"gallery";
 
 #pragma mark - Orientation
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+- (void)dlf_viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     CLS_LOG(@"**** will transition to size %@ in %@", NSStringFromCGSize(size), self.class);
     if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
         self.currentSize = size;
@@ -236,7 +236,6 @@ NSString *const galleryContainerType = @"gallery";
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
         
     }];
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 #pragma mark - Setup

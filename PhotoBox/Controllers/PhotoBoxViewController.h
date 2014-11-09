@@ -9,9 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "PhotoBoxClient.h"
-
 #import "CollectionViewDataSource.h"
-#import "PhotoBoxFetchedResultsController.h"
 
 extern NSString *const galleryContainerType;
 
