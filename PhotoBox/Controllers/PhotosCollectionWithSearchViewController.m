@@ -12,6 +12,8 @@
 
 #import <UIView+AutoLayout.h>
 
+static char *kSearchBarCenterContext;
+
 @interface PhotosCollectionWithSearchViewController () <UISearchBarDelegate>
 
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -41,6 +43,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillAppear:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidDisappear:) name:UIKeyboardDidHideNotification object:nil];
+    
+    [self.searchBar addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:NSKeyValueObservingOptionNew context:&kSearchBarCenterContext];
     
     [self restoreContentInset];
 }
@@ -93,6 +97,15 @@
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentSize))]) {
         if (!self.isSearching) {
             [self showSearchBar:([self.dataSource numberOfItems] > 0)?YES:NO];
+        }
+    } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(center))]) {
+        BOOL needToRestoreOffset = NO;
+        if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
+            needToRestoreOffset = YES;
+        }
+        [self restoreContentInset];
+        if (needToRestoreOffset) {
+            self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
         }
     }
 }
