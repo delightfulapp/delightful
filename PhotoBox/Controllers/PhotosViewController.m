@@ -66,7 +66,6 @@
 
 #import "SortTableViewController.h"
 
-
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
@@ -103,10 +102,19 @@
     
     self.title = NSLocalizedString(@"Photos", nil);
     
-    self.currentSort = @"dateUploaded,desc";    
+    self.currentSort = @"dateUploaded,desc";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    BOOL needToRestoreOffset = NO;
+    if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
+        needToRestoreOffset = YES;
+    }
+    [self restoreContentInset];
+    if (needToRestoreOffset) {
+        self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
+    }
+    
     [self setRegisterSyncingNotification:YES];
     [((YapDataSource *)self.dataSource) setPause:NO];
     [[SyncEngine sharedEngine] setPausePhotosSync:NO];
