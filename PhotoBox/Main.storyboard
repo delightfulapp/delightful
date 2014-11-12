@@ -128,8 +128,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZVU-nt-A9t">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZVU-nt-A9t">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Rv7-wg-niM" customClass="StickyHeaderFlowLayout">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -151,10 +151,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ZVU-nt-A9t" firstAttribute="leading" secondItem="iXy-qh-nhv" secondAttribute="leadingMargin" constant="-16" id="WMm-CB-G8d"/>
+                            <constraint firstItem="ZVU-nt-A9t" firstAttribute="leading" secondItem="iXy-qh-nhv" secondAttribute="leading" id="WMm-CB-G8d"/>
                             <constraint firstItem="ZVU-nt-A9t" firstAttribute="top" secondItem="rdK-4r-U4K" secondAttribute="top" id="eSl-Er-dqm"/>
                             <constraint firstItem="0rM-IL-g6P" firstAttribute="top" secondItem="ZVU-nt-A9t" secondAttribute="bottom" id="maf-zb-DMH"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="ZVU-nt-A9t" secondAttribute="trailing" constant="-16" id="mmG-1D-P58"/>
+                            <constraint firstAttribute="trailing" secondItem="ZVU-nt-A9t" secondAttribute="trailing" id="mmG-1D-P58"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="May-Kx-w9Y"/>

@@ -445,23 +445,17 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat collectionViewWidth = CGRectGetWidth(self.view.frame);
-    CGFloat width = floorf((collectionViewWidth/(float)[self numberOfColumnsForCurrentSize]));
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    CGFloat width = floorf(((collectionViewWidth - ([self numberOfColumnsForCurrentSize]-1))/(float)[self numberOfColumnsForCurrentSize]));
     return CGSizeMake(width, width);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    NSInteger columns = [self numberOfColumnsForCurrentSize];
-    if ((int)CGRectGetWidth(self.collectionView.frame)%columns == 0 && columns != 1) {
-        return 0;
-    } else if (columns == 1) {
-        return 5;
-    }
     return 1;
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 0;
+    return 1;
 }
 
 #pragma mark - KVO
