@@ -30,8 +30,6 @@
 
 #import "DLFImageUploader.h"
 
-#import <Lookback/Lookback.h>
-
 #import "SyncEngine.h"
 
 #import <SDWebImageManager.h>
@@ -56,8 +54,6 @@ static void * imageUploadContext = &imageUploadContext;
     
     [self runCrashlytics];
     
-    [self runLookback];
-
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
     [[[SDWebImageManager sharedManager] imageCache] setMaxCacheAge:DEFAULT_PHOTOS_CACHE_AGE];
@@ -143,20 +139,6 @@ static BOOL isRunningTests(void)
         }
     }
 #endif
-}
-
-- (void)runLookback {
-    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Lookback" ofType:@"plist"];
-    if (filePath) {
-        NSDictionary *dict = [[NSDictionary alloc] initWithContentsOfFile:filePath];
-        if (dict) {
-            NSString *apiKey = [dict objectForKey:@"token"];
-            if ((apiKey && apiKey.length > 0) && ![apiKey isEqualToString:@"<YOUR_TOKEN_HERE>"]) {
-                [Lookback_Weak setupWithAppToken:apiKey];
-                [Lookback_Weak lookback].shakeToRecord = YES;
-            }
-        }
-    }
 }
 
 #pragma mark - Observer
