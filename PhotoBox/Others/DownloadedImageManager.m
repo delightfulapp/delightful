@@ -10,11 +10,17 @@
 
 #import "Photo.h"
 
+#import "DLFDatabaseManager.h"
+
+#import <YapDatabase.h>
+
 #define kDownloadedImageManagerKey @"com.delightful.kDownloadedImageManagerKey"
 
 @interface DownloadedImageManager ()
 
-@property (nonatomic, strong) NSMutableOrderedSet *data;
+@property (nonatomic, strong) YapDatabase *database;
+@property (nonatomic, strong) YapDatabaseConnection *readConnection;
+@property (nonatomic, strong) YapDatabaseConnection *writeConnection;
 
 @end
 
@@ -33,48 +39,67 @@
 - (id)init {
     self = [super init];
     if (self) {
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self downloadedImageKey]];
-        if (data) {
-            NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            if (arr) {
-                [self.data addObjectsFromArray:arr];
-            }
-        }
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+        self.database = [[DLFDatabaseManager manager] currentDatabase];
+        self.writeConnection = [self.database newConnection];
+        self.readConnection = [self.database newConnection];
+        
+        self.readConnection.objectCacheLimit = 500; // increase object cache size
+        self.readConnection.metadataCacheEnabled = NO; // not using metadata on this connection
+        
+        self.writeConnection.objectCacheEnabled = NO; // don't need cache for write-only connection
+        self.writeConnection.metadataCacheEnabled = NO;
+        
+        [self migrateFromUserDefaultsToDb];
     }
     return self;
 }
 
-- (NSMutableOrderedSet *)data {
-    if (!_data) {
-        _data = [NSMutableOrderedSet orderedSet];
-    }
-    return _data;
-}
-
 - (void)addPhoto:(Photo *)photo {
-    [photo setValue:[NSDate date] forKey:NSStringFromSelector(@selector(downloadedDate))];
-    [self.data addObject:photo];
+    NSDate *currentDate = [NSDate date];
+    [photo setValue:currentDate forKey:NSStringFromSelector(@selector(downloadedDate))];
+    [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction setObject:currentDate forKey:photo.photoId inCollection:[self photosCollectionName]];
+    }];
+    
 }
 
 - (BOOL)photoHasBeenDownloaded:(Photo *)photo {
-    return [self.data containsObject:photo];
-}
-
-- (void)appWillResignActive:(NSNotification *)notification {
-    NSData *archived = [NSKeyedArchiver archivedDataWithRootObject:self.data.array];
-    [[NSUserDefaults standardUserDefaults] setObject:archived forKey:[self downloadedImageKey]];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-- (NSArray *)photos {
-    return self.data.array;
+    __block BOOL has;
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        has = [transaction hasObjectForKey:photo.photoId inCollection:[self photosCollectionName]];
+    }];
+    return has;
 }
 
 - (void)clearHistory {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:[self downloadedImageKey]];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    [self.data removeAllObjects];
+    NSString *collectionName = [self photosCollectionName];
+    [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction removeAllObjectsInCollection:collectionName];
+    }];
+}
+
+- (void)migrateFromUserDefaultsToDb {
+    NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:[self downloadedImageKey]];
+    NSMutableOrderedSet *previouslyDownloadedPhotos = [NSMutableOrderedSet orderedSet];
+    if (data) {
+        NSArray *arr = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        if (arr) {
+            [previouslyDownloadedPhotos addObjectsFromArray:arr];
+        }
+    }
+    if (previouslyDownloadedPhotos.count > 0) {
+        [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            for (Photo *photo in previouslyDownloadedPhotos) {
+                [transaction setObject:photo.downloadedDate forKey:photo.photoId inCollection:[self photosCollectionName]];
+            }
+        }];
+    }
+}
+
+#pragma mark - Constants
+
+- (NSString *)photosCollectionName {
+    return downloadedPhotosCollectionName;
 }
 
 - (NSString *)downloadedImageKey {

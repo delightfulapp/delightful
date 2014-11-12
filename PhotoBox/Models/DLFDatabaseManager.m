@@ -28,6 +28,8 @@ NSString *photosCollectionName = @"photos";
 NSString *albumsCollectionName = @"albums";
 NSString *tagsCollectionName = @"tags";
 NSString *createdViewsCollectionName = @"createdViews";
+NSString *downloadedPhotosCollectionName = @"downloadedPhotos";
+NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
 
 @interface DLFDatabaseManager ()
 

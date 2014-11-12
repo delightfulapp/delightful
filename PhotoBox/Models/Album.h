@@ -28,10 +28,4 @@
 
 @property (nonatomic, strong) UIImage *albumThumbnailImage;
 
-+ (Album *)allPhotosAlbum;
-
-+ (Album *)favoritesAlbum;
-
-+ (Album *)downloadHistoryAlbum;
-
 @end

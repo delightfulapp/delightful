@@ -18,8 +18,6 @@
 
 - (BOOL)photoHasBeenDownloaded:(Photo *)photo;
 
-- (NSArray *)photos;
-
 - (void)clearHistory;
 
 @end

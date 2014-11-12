@@ -12,6 +12,9 @@ extern NSString *photosCollectionName;
 extern NSString *albumsCollectionName;
 extern NSString *tagsCollectionName;
 
+extern NSString *downloadedPhotosCollectionName;
+extern NSString *favoritedPhotosCollectionName;
+
 @class YapDatabase;
 @class DLFYapDatabaseViewAndMapping;
 @class PhotosCollection;

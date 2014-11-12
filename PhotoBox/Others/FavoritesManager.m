@@ -8,6 +8,8 @@
 
 #import "FavoritesManager.h"
 
+#import "DLFDatabaseManager.h"
+
 #define kFavoritesManagerKey @"com.delightful.kFavoritesManagerKey"
 
 @implementation FavoritesManager
@@ -24,6 +26,10 @@
 
 - (NSString *)downloadedImageKey {
     return kFavoritesManagerKey;
+}
+
+- (NSString *)photosCollectionName {
+    return favoritedPhotosCollectionName;
 }
 
 - (BOOL)photoHasBeenFavorited:(Photo *)photo {
