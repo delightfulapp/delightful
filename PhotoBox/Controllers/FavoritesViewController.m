@@ -22,7 +22,7 @@
 
 @end
 
-@interface FavoritesViewController ()
+@interface FavoritesViewController () <UICollectionViewDelegateFlowLayout>
 
 @end
 
@@ -30,7 +30,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,6 +89,16 @@
 
 - (NSString *)noPhotosMessage {
     return NSLocalizedString(@"Favorited photos will appear here", nil);
+}
+
+#pragma mark - <UICollectionViewDelegateFlowLayout>
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), 0);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(2, 0, 0, 0);
 }
 
 @end

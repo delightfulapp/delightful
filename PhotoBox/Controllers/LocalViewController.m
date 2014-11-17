@@ -8,7 +8,9 @@
 
 #import "LocalViewController.h"
 
-@interface LocalViewController ()
+#import "MainTabBarController.h"
+
+@interface LocalViewController () <ViewControllerTransitionToSizeDelegate>
 
 @end
 
@@ -27,4 +29,15 @@
 - (IBAction)selectedSegmentDidChange:(UISegmentedControl *)sender {
     [self setSelectedIndex:sender.selectedSegmentIndex];
 }
+
+#pragma mark - <ViewControllerTransitionToSizeDelegate>
+
+- (void)dlf_viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    for (UIViewController *controller in self.viewControllers) {
+        if ([controller respondsToSelector:@selector(dlf_viewWillTransitionToSize:withTransitionCoordinator:)]) {
+            [((id)controller) dlf_viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+        }
+    }
+}
+
 @end
