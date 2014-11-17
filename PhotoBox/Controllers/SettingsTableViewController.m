@@ -35,25 +35,18 @@
 {
     [super viewDidLoad];
     
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    
-    self.tableView.contentInset = UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0);
-    
     self.title = NSLocalizedString(@"Settings", nil);
-    
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Done", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
-    [self.navigationItem setLeftBarButtonItem:doneButton];
     
     NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
     NSString *appVersion = [NSString stringWithFormat:@"%@ (%@)", shortVersion, version];
     self.items = @[
-                   @[@{@"title": NSLocalizedString(@"Logout", nil), @"detail": @""}],
+                   @[@{@"title": NSLocalizedString(@"Logout", nil), @"detail": @"", @"title_is_link": @(YES)}],
                    @[@{@"title": NSLocalizedString(@"Delightful Version", nil), @"detail": appVersion},
                      @{@"title": NSLocalizedString(@"Delightful on Twitter", nil), @"detail": @"@delightfulapp"},
                      @{@"title": NSLocalizedString(@"Created by Nico", nil), @"detail": @"@nicnocquee"},
-                     @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @""}],
-                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}]
+                     @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @"", @"title_is_link": @(YES)}],
+                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @"", @"title_is_link": @(YES)}]
                    ];
     
 }
@@ -89,6 +82,12 @@
     [cell.textLabel setText:dictionary[@"title"]];
     [cell.detailTextLabel setText:dictionary[@"detail"]];
     
+    if ([dictionary objectForKey:@"title_is_link"] && [[dictionary objectForKey:@"title_is_link"] boolValue]) {
+        [cell.textLabel setTextColor:self.view.tintColor];
+    } else {
+        [cell.textLabel setTextColor:[UIColor blackColor]];
+    }
+    
     return cell;
 }
 
@@ -120,6 +119,13 @@
             [self presentViewController:mail animated:YES completion:nil];
         }
     }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return [[[ConnectionManager sharedManager] baseURL] absoluteString];
+    }
+    return nil;
 }
 
 #pragma mark - Buttons
