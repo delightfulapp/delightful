@@ -22,6 +22,10 @@
 
 #import "Tag.h"
 
+#import "DownloadedImageManager.h"
+
+#import "FavoritesManager.h"
+
 #import <YapDatabase.h>
 
 NSString *photosCollectionName = @"photos";
@@ -168,6 +172,9 @@ NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:NO];
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:YES];
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:NO];
+    
+    [DownloadedImageManager databaseViewMappingWithDatabase:self.database collectionName:[DownloadedImageManager photosCollectionName] connection:self.readConnection viewName:[DownloadedImageManager databaseViewName]];
+    [FavoritesManager databaseViewMappingWithDatabase:self.database collectionName:[FavoritesManager photosCollectionName] connection:self.readConnection viewName:[FavoritesManager databaseViewName]];
     
     __block NSMutableSet *createdViews = [NSMutableSet set];
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {

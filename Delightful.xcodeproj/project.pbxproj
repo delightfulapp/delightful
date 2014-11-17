@@ -22,6 +22,8 @@
 		031230581927C613004AFD1E /* InfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031230561927C613004AFD1E /* InfoTableViewCell.m */; };
 		0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031230591927C627004AFD1E /* InfoTableViewCell.xib */; };
 		0312305B1927C627004AFD1E /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 031230591927C627004AFD1E /* InfoTableViewCell.xib */; };
+		0312721D1A18FE0900FFC898 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312721C1A18FE0900FFC898 /* FavoritesViewController.m */; };
+		0312721E1A18FE0900FFC898 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312721C1A18FE0900FFC898 /* FavoritesViewController.m */; };
 		0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
 		031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
 		031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A217D9A08000A80167 /* PhotoModelTests.m */; };
@@ -207,6 +209,10 @@
 		0398D7C618103B6E00FDD83B /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C518103B6E00FDD83B /* download@2x.png */; };
 		0398D7C918103CD000FDD83B /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
 		0398D7CA18103CD000FDD83B /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
+		03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
+		03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
+		03AD74291A18FF0B00C34525 /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74281A18FF0B00C34525 /* LocalViewController.m */; };
+		03AD742A1A18FF0B00C34525 /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74281A18FF0B00C34525 /* LocalViewController.m */; };
 		03AE182617D8B004009CD844 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182517D8B004009CD844 /* LoginViewController.m */; };
 		03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03AE182817D8B2F5009CD844 /* loginbackground.jpg */; };
 		03AE182C17D8F267009CD844 /* NSString+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AE182B17D8F267009CD844 /* NSString+Additionals.m */; };
@@ -430,6 +436,8 @@
 		031230551927C613004AFD1E /* InfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoTableViewCell.h; path = PhotoBox/Views/InfoTableViewCell.h; sourceTree = "<group>"; };
 		031230561927C613004AFD1E /* InfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoTableViewCell.m; path = PhotoBox/Views/InfoTableViewCell.m; sourceTree = "<group>"; };
 		031230591927C627004AFD1E /* InfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = InfoTableViewCell.xib; path = PhotoBox/Views/InfoTableViewCell.xib; sourceTree = "<group>"; };
+		0312721B1A18FE0900FFC898 /* FavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesViewController.h; path = PhotoBox/Controllers/FavoritesViewController.h; sourceTree = "<group>"; };
+		0312721C1A18FE0900FFC898 /* FavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesViewController.m; path = PhotoBox/Controllers/FavoritesViewController.m; sourceTree = "<group>"; };
 		0318FC0B1808087E00C32BC1 /* UIColor+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additionals.h"; sourceTree = "<group>"; };
 		0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additionals.m"; sourceTree = "<group>"; };
 		031DD29F17D99B1300A80167 /* PhotoBoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxImage.h; path = PhotoBox/Models/PhotoBoxImage.h; sourceTree = "<group>"; };
@@ -661,6 +669,10 @@
 		0398D7C518103B6E00FDD83B /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
 		0398D7C718103CD000FDD83B /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		0398D7C818103CD000FDD83B /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
+		03AD74231A18FE7800C34525 /* DownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedViewController.h; path = PhotoBox/Controllers/DownloadedViewController.h; sourceTree = "<group>"; };
+		03AD74241A18FE7800C34525 /* DownloadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedViewController.m; path = PhotoBox/Controllers/DownloadedViewController.m; sourceTree = "<group>"; };
+		03AD74271A18FF0B00C34525 /* LocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalViewController.h; path = PhotoBox/Controllers/LocalViewController.h; sourceTree = "<group>"; };
+		03AD74281A18FF0B00C34525 /* LocalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LocalViewController.m; path = PhotoBox/Controllers/LocalViewController.m; sourceTree = "<group>"; };
 		03AE182417D8B004009CD844 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoginViewController.h; path = PhotoBox/Controllers/LoginViewController.h; sourceTree = "<group>"; };
 		03AE182517D8B004009CD844 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginViewController.m; path = PhotoBox/Controllers/LoginViewController.m; sourceTree = "<group>"; };
 		03AE182817D8B2F5009CD844 /* loginbackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = loginbackground.jpg; sourceTree = "<group>"; };
@@ -1096,6 +1108,12 @@
 				0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */,
 				0342D9801A0E6301000158B8 /* PhotosCollectionWithSearchViewController.h */,
 				0342D9811A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m */,
+				0312721B1A18FE0900FFC898 /* FavoritesViewController.h */,
+				0312721C1A18FE0900FFC898 /* FavoritesViewController.m */,
+				03AD74231A18FE7800C34525 /* DownloadedViewController.h */,
+				03AD74241A18FE7800C34525 /* DownloadedViewController.m */,
+				03AD74271A18FF0B00C34525 /* LocalViewController.h */,
+				03AD74281A18FF0B00C34525 /* LocalViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1866,6 +1884,7 @@
 				035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */,
+				03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
 				032222A8181419A8004F3830 /* NPRNotificationView.m in Sources */,
 				0396BDEE19227804004B6290 /* HintsViewController.m in Sources */,
@@ -1879,6 +1898,7 @@
 				03120461194C1738004EA8CB /* DLFImageUploader.m in Sources */,
 				0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */,
 				0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */,
+				03AD74291A18FF0B00C34525 /* LocalViewController.m in Sources */,
 				0310904517D1B2840075F9D8 /* Tag.m in Sources */,
 				035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				0358468A17D1C1B100E196D7 /* AlbumCell.m in Sources */,
@@ -1916,6 +1936,7 @@
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
+				0312721D1A18FE0900FFC898 /* FavoritesViewController.m in Sources */,
 				03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				035846C317D2598600E196D7 /* PhotoZoomableCell.m in Sources */,
@@ -2010,6 +2031,7 @@
 				035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
+				03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */,
 				03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */,
 				03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */,
 				03EFD8F119251CD700E80A71 /* HintsViewController.m in Sources */,
@@ -2023,6 +2045,7 @@
 				03120462194C1738004EA8CB /* DLFImageUploader.m in Sources */,
 				03EFD8F819251CD700E80A71 /* UIColor+Additionals.m in Sources */,
 				03EFD8F919251CD700E80A71 /* PhotoBoxRequestOperation.m in Sources */,
+				03AD742A1A18FF0B00C34525 /* LocalViewController.m in Sources */,
 				03EFD8FA19251CD700E80A71 /* Tag.m in Sources */,
 				035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */,
 				03EFD8FB19251CD700E80A71 /* AlbumCell.m in Sources */,
@@ -2060,6 +2083,7 @@
 				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
 				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
+				0312721E1A18FE0900FFC898 /* FavoritesViewController.m in Sources */,
 				03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */,
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
 				03EFD91A19251CD700E80A71 /* PhotoZoomableCell.m in Sources */,
@@ -2346,8 +2370,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2400,7 +2424,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "d9533600-f432-40cb-b232-102affa2ed8e";
+				PROVISIONING_PROFILE = "ecb1eda6-333a-4d98-997f-f53740ecd8bc";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2413,8 +2437,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_STATIC_ANALYZER_MODE_ON_ANALYZE_ACTION = deep;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2459,7 +2483,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "073c9b0c-c591-4b6a-9167-b07948ce9a2b";
+				PROVISIONING_PROFILE = "2d5649f2-cd8a-45ea-9b1d-93af099d270b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

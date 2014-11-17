@@ -10,6 +10,12 @@
 
 @class Photo;
 
+@class DLFYapDatabaseViewAndMapping;
+
+@class YapDatabase;
+
+@class YapDatabaseConnection;
+
 @interface DownloadedImageManager : NSObject
 
 + (instancetype)sharedManager;
@@ -19,5 +25,13 @@
 - (BOOL)photoHasBeenDownloaded:(Photo *)photo;
 
 - (void)clearHistory;
+
+- (DLFYapDatabaseViewAndMapping *)databaseViewMapping;
+
++ (DLFYapDatabaseViewAndMapping *)databaseViewMappingWithDatabase:(id)database collectionName:(NSString *)collectionName connection:(YapDatabaseConnection *)connection viewName:(NSString *)viewName;
+
++ (NSString *)databaseViewName;
+
++ (NSString *)photosCollectionName;
 
 @end

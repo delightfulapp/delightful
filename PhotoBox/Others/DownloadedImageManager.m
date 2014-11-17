@@ -12,6 +12,8 @@
 
 #import "DLFDatabaseManager.h"
 
+#import "DLFYapDatabaseViewAndMapping.h"
+
 #import <YapDatabase.h>
 
 #define kDownloadedImageManagerKey @"com.delightful.kDownloadedImageManagerKey"
@@ -56,9 +58,14 @@
 
 - (void)addPhoto:(Photo *)photo {
     NSDate *currentDate = [NSDate date];
-    [photo setValue:currentDate forKey:NSStringFromSelector(@selector(downloadedDate))];
+    //[photo setValue:currentDate forKey:NSStringFromSelector(@selector(downloadedDate))];
+    NSString *downloadedOrFavoritedCollection = [self.class photosCollectionName];
     [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-        [transaction setObject:currentDate forKey:photo.photoId inCollection:[self photosCollectionName]];
+        [transaction setObject:currentDate forKey:photo.photoId inCollection:downloadedOrFavoritedCollection];
+    } completionBlock:^{
+        [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
+        }];
     }];
     
 }
@@ -66,13 +73,13 @@
 - (BOOL)photoHasBeenDownloaded:(Photo *)photo {
     __block BOOL has;
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        has = [transaction hasObjectForKey:photo.photoId inCollection:[self photosCollectionName]];
+        has = [transaction hasObjectForKey:photo.photoId inCollection:[self.class photosCollectionName]];
     }];
     return has;
 }
 
 - (void)clearHistory {
-    NSString *collectionName = [self photosCollectionName];
+    NSString *collectionName = [self.class photosCollectionName];
     [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         [transaction removeAllObjectsInCollection:collectionName];
     }];
@@ -90,15 +97,77 @@
     if (previouslyDownloadedPhotos.count > 0) {
         [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
             for (Photo *photo in previouslyDownloadedPhotos) {
-                [transaction setObject:photo.downloadedDate forKey:photo.photoId inCollection:[self photosCollectionName]];
+                [transaction setObject:photo.downloadedDate forKey:photo.photoId inCollection:[self.class photosCollectionName]];
             }
         }];
     }
 }
 
+- (DLFYapDatabaseViewAndMapping *)databaseViewMapping {
+    return [self.class databaseViewMappingWithDatabase:self.database collectionName:[self.class photosCollectionName] connection:self.readConnection viewName:[self.class databaseViewName]];
+}
+
++ (DLFYapDatabaseViewAndMapping *)databaseViewMappingWithDatabase:(id)database collectionName:(NSString *)collectionName connection:(YapDatabaseConnection *)connection viewName:(NSString *)viewName {
+    YapDatabaseViewGrouping *grouping = [YapDatabaseViewGrouping withKeyBlock:^NSString *(NSString *collection, NSString *key) {
+        if (![collection isEqualToString:photosCollectionName]) {
+            return nil;
+        }
+        __block BOOL include = NO;
+        [connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+            if ([transaction hasObjectForKey:key inCollection:collectionName]) {
+                include = YES;
+            }
+        }];
+        return (include)?@"":nil;
+    }];
+    
+    YapDatabaseViewSorting *sorting = [YapDatabaseViewSorting withObjectBlock:^NSComparisonResult(NSString *group, NSString *collection1, NSString *key1, Photo *object1, NSString *collection2, NSString *key2, Photo *object2) {
+        __block NSDate *date1, *date2;
+        [connection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+            date1 = [transaction objectForKey:key1 inCollection:collectionName];
+            date2 = [transaction objectForKey:key2 inCollection:collectionName];
+        }];
+        return [date2 compare:date1];
+    }];
+    
+    YapDatabaseViewOptions *option = [[YapDatabaseViewOptions alloc] init];
+    [option setIsPersistent:YES];
+    [option setAllowedCollections:[[YapWhitelistBlacklist alloc] initWithWhitelist:[NSSet setWithObject:photosCollectionName]]];
+    
+    YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1.0" options:option];
+    
+    DLFYapDatabaseViewAndMapping *(^viewMappingInit)() = ^DLFYapDatabaseViewAndMapping *() {
+        YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
+            return (group)?YES:NO;
+        } sortBlock:^NSComparisonResult(NSString *group1, NSString *group2, YapDatabaseReadTransaction *transaction) {
+            return [group1 compare:group2];
+        } view:viewName];
+        
+        DLFYapDatabaseViewAndMapping *returnObject = [[DLFYapDatabaseViewAndMapping alloc] init];
+        returnObject.view = view;
+        returnObject.mapping = mappings;
+        returnObject.viewName = viewName;
+        returnObject.isPersistent = YES;
+        returnObject.collection = photosCollectionName;
+        
+        return returnObject;
+    };
+    
+    if (![database registeredExtension:viewName]) {
+        NSLog(@"registering extension %@", viewName);
+        [database registerExtension:view withName:viewName];
+    }
+    
+    return viewMappingInit();
+}
+
++ (NSString *)databaseViewName {
+    return @"downloaded-photos";
+}
+
 #pragma mark - Constants
 
-- (NSString *)photosCollectionName {
++ (NSString *)photosCollectionName {
     return downloadedPhotosCollectionName;
 }
 

@@ -377,8 +377,7 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [((YapDataSource *)self.dataSource) setPause:YES];
-    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
+    [self viewWillDisappear:YES];
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
@@ -499,6 +498,8 @@
             [cell setAlpha:1];
         }
         self.selectedCell = nil;
+        
+        [self viewDidAppear:YES];
     }];
 }
 

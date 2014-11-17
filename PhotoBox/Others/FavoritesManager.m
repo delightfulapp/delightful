@@ -28,7 +28,11 @@
     return kFavoritesManagerKey;
 }
 
-- (NSString *)photosCollectionName {
++ (NSString *)databaseViewName {
+    return @"favorited-photos";
+}
+
++ (NSString *)photosCollectionName {
     return favoritedPhotosCollectionName;
 }
 
