@@ -58,7 +58,6 @@
 
 - (void)addPhoto:(Photo *)photo {
     NSDate *currentDate = [NSDate date];
-    //[photo setValue:currentDate forKey:NSStringFromSelector(@selector(downloadedDate))];
     NSString *downloadedOrFavoritedCollection = [self.class photosCollectionName];
     [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         [transaction setObject:currentDate forKey:photo.photoId inCollection:downloadedOrFavoritedCollection];

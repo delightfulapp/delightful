@@ -22,4 +22,6 @@
 
 @property (nonatomic, assign) UINavigationControllerOperation operation;
 
+@property (nonatomic, strong) UIViewController<CustomAnimationTransitionFromViewControllerDelegate> *presentingViewController;
+
 @end

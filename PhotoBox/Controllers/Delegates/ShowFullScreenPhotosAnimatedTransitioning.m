@@ -53,15 +53,7 @@
     [self removeHelperViews];
     
     UIViewController *fromVCContainer = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
-    PhotosViewController *fromVC;
-    if ([fromVCContainer isKindOfClass:[UITabBarController class]]) {
-        fromVC = (id)((UITabBarController *)fromVCContainer).selectedViewController;
-    } else {
-        fromVC = (PhotosViewController *)fromVCContainer;
-    }
-    if ([fromVC isKindOfClass:[UINavigationController class]]) {
-        fromVC = (PhotosViewController *)((UINavigationController *)fromVC).topViewController;
-    }
+    PhotosViewController *fromVC = (PhotosViewController *)self.presentingViewController;
     
     UIViewController *toVCContainer = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
     PhotosHorizontalScrollingViewController *toVC;
@@ -114,18 +106,8 @@
     } else {
         fromVC = (PhotosHorizontalScrollingViewController *)fromVCContainer;
     }
-    UIViewController *toVCContainer = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];
-    PhotosViewController *toVC;
-    if ([toVCContainer isKindOfClass:[UITabBarController class]]) {
-        toVC = (id)(((UITabBarController *)toVCContainer).selectedViewController);
-    } else {
-        toVC = (PhotosViewController *)toVCContainer;
-    }
-    if ([toVC isKindOfClass:[UINavigationController class]]) {
-        toVC = (PhotosViewController *)(((UINavigationController *)toVC).topViewController);
-    } else {
-        toVC = (PhotosViewController *)toVC;
-    }
+    PhotosViewController *toVC = (PhotosViewController *)self.presentingViewController;
+    
     NSAssert([fromVC conformsToProtocol:@protocol(CustomAnimationTransitionFromViewControllerDelegate)], @"PhotosHorizontalViewController needs to conform to CustomAnimationTransitionFromViewControllerDelegate");
     
     // get the container view where the animation will happen
@@ -169,7 +151,6 @@
         [whiteView removeFromSuperview];
         [transitionContext completeTransition:YES];
     }];
-    
 }
 
 @end

@@ -8,13 +8,13 @@
 
 #import "DownloadedViewController.h"
 
-#import "YapDataSource.h"
+#import "GroupedPhotosDataSource.h"
 
 #import "DownloadedImageManager.h"
 
 #import "DLFYapDatabaseViewAndMapping.h"
 
-@interface DownloadedDataSource : YapDataSource
+@interface DownloadedDataSource : GroupedPhotosDataSource
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *downloadedMapping;
 
@@ -54,6 +54,10 @@
 
 - (void)setDefaultMapping {
     self.selectedViewMapping = self.downloadedMapping;
+}
+
+- (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {
+    return self.selectedViewMapping;
 }
 
 @end

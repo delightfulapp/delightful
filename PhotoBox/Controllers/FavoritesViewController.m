@@ -8,7 +8,7 @@
 
 #import "FavoritesViewController.h"
 
-#import "YapDataSource.h"
+#import "GroupedPhotosDataSource.h"
 
 #import "FavoritesManager.h"
 
@@ -16,7 +16,7 @@
 
 #import <UIView+AutoLayout.h>
 
-@interface FavoritesDataSource : YapDataSource
+@interface FavoritesDataSource : GroupedPhotosDataSource
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *favoritesMapping;
 
@@ -102,6 +102,10 @@
 
 - (void)setDefaultMapping {
     self.selectedViewMapping = self.favoritesMapping;
+}
+
+- (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {
+    return self.selectedViewMapping;
 }
 
 @end
