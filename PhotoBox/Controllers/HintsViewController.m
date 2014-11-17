@@ -59,7 +59,7 @@
     
     [self.scrollView setFrame:self.view.bounds];
     
-    NSArray *hints = @[@"HintPinch", @"Hint-Side", @"Hint-CloseInfo"];
+    NSArray *hints = @[@"HintPinch", @"Hint-CloseInfo"];
     self.hints = hints;
     int i = 0;
     for (NSString *hint in hints) {
