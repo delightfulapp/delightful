@@ -169,6 +169,7 @@ NSString *const galleryContainerType = @"gallery";
         }
     } else {
         [self.collectionView setBackgroundView:nil];
+        //[self.collectionView setAlwaysBounceVertical:YES];
     }
 }
 

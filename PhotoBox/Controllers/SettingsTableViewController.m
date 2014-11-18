@@ -14,9 +14,19 @@
 
 #import "HintsViewController.h"
 
+#import "NPRImageDownloader.h"
+
+#import "OriginalImageDownloaderViewController.h"
+
+static void * imageDownloadContext = &imageDownloadContext;
+
 @interface SettingsTableViewController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *items;
+
+@property (nonatomic, assign) int numberOfDownloads;
+
+@property (nonatomic, assign) int numberOfUploads;
 
 @end
 
@@ -42,6 +52,8 @@
     NSString *appVersion = [NSString stringWithFormat:@"%@ (%@)", shortVersion, version];
     self.items = @[
                    @[@{@"title": NSLocalizedString(@"Logout", nil), @"detail": @"", @"title_is_link": @(YES)}],
+                   @[@{@"title": NSLocalizedString(@"Downloads", nil), @"detail": @""},
+                     @{@"title": NSLocalizedString(@"Uploads", nil), @"detail": @""}],
                    @[@{@"title": NSLocalizedString(@"Delightful Version", nil), @"detail": appVersion},
                      @{@"title": NSLocalizedString(@"Delightful on Twitter", nil), @"detail": @"@delightfulapp"},
                      @{@"title": NSLocalizedString(@"Created by Nico", nil), @"detail": @"@nicnocquee"},
@@ -49,6 +61,9 @@
                    @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @"", @"title_is_link": @(YES)}]
                    ];
     
+    self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
+    
+    [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,9 +93,36 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cell"];
     }
     
+    [cell setAccessoryType:UITableViewCellAccessoryNone];
+    
     NSDictionary *dictionary = ((NSArray *)self.items[indexPath.section])[indexPath.row];
-    [cell.textLabel setText:dictionary[@"title"]];
-    [cell.detailTextLabel setText:dictionary[@"detail"]];
+    NSString *titleText = dictionary[@"title"];
+    NSString *detailText = dictionary[@"detail"];
+    
+    if (indexPath.section == 1) {
+        switch (indexPath.row) {
+            case 0:{
+                if (self.numberOfDownloads > 0) {
+                    titleText = (self.numberOfDownloads==1)?[NSString stringWithFormat:NSLocalizedString(@"Downloading %d photo ...", nil), self.numberOfDownloads]:[NSString stringWithFormat:NSLocalizedString(@"Downloading %d photos ...", nil), self.numberOfDownloads];
+                    detailText = @"";
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                }
+                break;
+            } case 1:{
+                if (self.numberOfUploads > 0) {
+                    titleText = NSLocalizedString(@"Uploading ...", nil);
+                    detailText = [NSString stringWithFormat:@"%d", self.numberOfUploads];
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
+    [cell.textLabel setText:titleText];
+    [cell.detailTextLabel setText:detailText];
     
     if ([dictionary objectForKey:@"title_is_link"] && [[dictionary objectForKey:@"title_is_link"] boolValue]) {
         [cell.textLabel setTextColor:self.view.tintColor];
@@ -95,13 +137,13 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 0) {
         [self logoutTapped];
-    } else if (indexPath.section == 3) {
+    } else if (indexPath.section == 4) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://trovebox.com"]];
-    } else if (indexPath.section == 2) {
+    } else if (indexPath.section == 3) {
         HintsViewController *hints = [[HintsViewController alloc] init];
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
         [self presentViewController:navCon animated:YES completion:nil];
-    } else if (indexPath.section == 1) {
+    } else if (indexPath.section == 2) {
         if (indexPath.row == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/delightfulapp"]];
         } else if (indexPath.row == 2) {
@@ -117,6 +159,11 @@
             [mail setMessageBody:@"Please provide detail description of the bug and how to reproduce it." isHTML:NO];
             [mail setMailComposeDelegate:self];
             [self presentViewController:mail animated:YES completion:nil];
+        }
+    } else if (indexPath.section == 1) {
+        if (indexPath.row == 0) {
+            OriginalImageDownloaderViewController *downloadingVC = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
+            [self showViewController:downloadingVC sender:nil];
         }
     }
 }
@@ -153,6 +200,15 @@
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Observer
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))] && context == imageDownloadContext) {
+        self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
+        [self.tableView reloadData];
+    }
 }
 
 @end

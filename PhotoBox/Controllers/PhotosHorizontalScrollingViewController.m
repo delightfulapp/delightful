@@ -22,6 +22,7 @@
 #import "FavoritesManager.h"
 #import "TransitionToInfoDelegate.h"
 #import "TransitionToInfoPresentationController.h"
+#import "NPRNotificationManager.h"
 
 #import <SVProgressHUD.h>
 
@@ -88,7 +89,7 @@
     [super viewDidAppear:animated];
     
     
-    [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:1];
+    [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:0.5];
     [self showInfoButton:YES animated:YES];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -328,6 +329,7 @@
     
     if (currentPhoto.pathOriginal) {
         [[NPRImageDownloader sharedDownloader] queuePhoto:currentPhoto thumbnail:[self currentCell].thisImageview.image];
+        [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Download has started", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
     }
 }
 

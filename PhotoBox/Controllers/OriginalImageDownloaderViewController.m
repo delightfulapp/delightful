@@ -12,6 +12,8 @@
 
 #import "DownloadCell.h"
 
+#import <UIView+AutoLayout.h>
+
 static NSString *const downloadCellIdentifier = @"downloadCellIdentifier";
 
 @interface OriginalImageDownloaderViewController ()
@@ -35,6 +37,8 @@ static NSString *const downloadCellIdentifier = @"downloadCellIdentifier";
 {
     [super viewDidLoad];
     
+    [self showNoDownloads:YES];
+    
     [self.tableView registerClass:[DownloadCell class] forCellReuseIdentifier:downloadCellIdentifier];
     
     self.dataSource = [[NPRImageDownloaderTableViewDataSource alloc] initWithTableView:self.tableView];
@@ -49,8 +53,11 @@ static NSString *const downloadCellIdentifier = @"downloadCellIdentifier";
 
     [self.tableView setRowHeight:50];
     
-    UIBarButtonItem *done = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(doneTapped:)];
-    [self.navigationItem setRightBarButtonItem:done];
+    [self.tableView addObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize)) options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)dealloc {
+    [self.tableView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize))];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,5 +70,36 @@ static NSString *const downloadCellIdentifier = @"downloadCellIdentifier";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)showNoDownloads:(BOOL)show {
+    if (show) {
+        UIView *whiteView = [[UIView alloc] initWithFrame:self.tableView.frame];
+        [whiteView setBackgroundColor:[UIColor whiteColor]];
+        UILabel *textLabel = [[UILabel alloc] initForAutoLayout];
+        [textLabel setText:NSLocalizedString(@"You have no active downloads.", nil)];
+        [textLabel setTextColor:[UIColor grayColor]];
+        [textLabel sizeToFit];
+        [whiteView addSubview:textLabel];
+        [textLabel autoCenterInSuperview];
+        [textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:whiteView withOffset:20 relation:NSLayoutRelationGreaterThanOrEqual];
+        [textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:whiteView withOffset:-20 relation:NSLayoutRelationLessThanOrEqual];
+        [self.tableView setBackgroundView:whiteView];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    } else {
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
+        [self.tableView setBackgroundView:nil];
+    }
+}
+
+#pragma mark - Observer
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentSize))]) {
+        if ([self.tableView numberOfRowsInSection:0] == 0) {
+            [self showNoDownloads:YES];
+        } else {
+            [self showNoDownloads:NO];
+        }
+    }
+}
 
 @end

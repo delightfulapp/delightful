@@ -63,6 +63,8 @@
     } else {
         UIView *view = self.collectionView.backgroundView;
         
+        //[self.collectionView setAlwaysBounceVertical:NO];
+        
         if (!view) {
             view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
             [self.collectionView setBackgroundView:view];
@@ -89,6 +91,9 @@
 
 - (NSString *)noPhotosMessage {
     return NSLocalizedString(@"Favorited photos will appear here", nil);
+}
+
+- (void)setupRefreshControl {
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
