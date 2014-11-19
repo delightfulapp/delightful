@@ -122,15 +122,20 @@
         self.viewJustDidLoad = NO;
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:dateUploadedDescSortKey];
     } else {
-        [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:nil];
+        NSLog(@"----> view did appear");
+        [self pauseSyncing:NO];
     }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     CLS_LOG(@"view will disappear");
-    [self setRegisterSyncingNotification:NO];
-    [((YapDataSource *)self.dataSource) setPause:YES];
-    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:nil];
+    [self pauseSyncing:YES];
+}
+
+- (void)pauseSyncing:(BOOL)pause {
+    [self setRegisterSyncingNotification:!pause];
+    [((YapDataSource *)self.dataSource) setPause:pause];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:pause collection:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -383,7 +388,7 @@
 #pragma mark - Collection view delegate
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    [self viewWillDisappear:YES];
+    [self pauseSyncing:YES];
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
@@ -396,6 +401,8 @@
 }
 
 - (void)openPhoto:(Photo *)photo{
+    [self viewWillDisappear:YES];
+    
     PhotosHorizontalScrollingYapBackedViewController *destination = [PhotosHorizontalScrollingYapBackedViewController defaultControllerWithViewMapping:[((GroupedPhotosDataSource *)self.dataSource) selectedFlattenedViewMapping]];
     [destination setFirstShownPhoto:photo];
     [destination setDelegate:self];
@@ -504,8 +511,6 @@
             [cell setAlpha:1];
         }
         self.selectedCell = nil;
-        
-        [self viewDidAppear:YES];
     }];
 }
 

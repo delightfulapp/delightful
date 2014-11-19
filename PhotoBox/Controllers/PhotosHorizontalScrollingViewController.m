@@ -33,7 +33,6 @@
 @property (nonatomic, assign) NSInteger previousPage;
 @property (nonatomic, strong) UIView *darkBackgroundView;
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
-@property (nonatomic, strong) UIButton *infoButton;
 @property (nonatomic, assign) NSInteger firstShownPhotoIndex;
 @property (nonatomic, strong) id<UIViewControllerTransitioningDelegate> transitionToInfoDelegate;
 
@@ -78,6 +77,8 @@
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
+    
+    [self.navigationController setToolbarHidden:NO animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,16 +91,10 @@
     
     
     [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:0.5];
-    [self showInfoButton:YES animated:YES];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showLoadingBarButtonItem:NO];
     });
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self showInfoButton:NO animated:YES];
 }
 
 - (void)setupDataSource {
@@ -176,14 +171,24 @@
     return NO;
 }
 
-- (void)tapOnce:(UITapGestureRecognizer *)tapGesture {
+- (void)tapOnce:(id)sender {
+    [self toggleFullScreen];
+}
+
+- (void)toggleFullScreen {
     if (self.navigationController.navigationBar.alpha == 1) {
-        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-    } else [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationFade];;
-    [self toggleNavigationBarHidden];
-    if (self.navigationController.navigationBar.alpha == 0) {
-        [self darkenBackground];
-    } else [self brightenBackground];
+        [self setFullScreen:YES];
+    } else {
+        [self setFullScreen:NO];
+    }
+}
+
+- (void)setFullScreen:(BOOL)fullScreen {
+    [[UIApplication sharedApplication] setStatusBarHidden:fullScreen withAnimation:UIStatusBarAnimationFade];
+    [self.navigationController setToolbarHidden:fullScreen animated:YES];
+    if (fullScreen) [self darkenBackground];
+    else [self brightenBackground];
+    [self setNavigationBarHidden:fullScreen animated:YES];
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
@@ -208,9 +213,7 @@
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
         if (!shouldHideNavigationBar) {
-            [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationFade];
-            [self hideNavigationBar];
-            [self darkenBackground];
+            [self setFullScreen:YES];
         } else {
             shouldHideNavigationBar = NO;
         }
@@ -278,7 +281,6 @@
 
 - (void)infoButtonTapped:(id)sender {
     [sender setEnabled:NO];
-    [self showInfoButton:NO animated:YES];
     
     PhotoInfoViewController *photoInfo = [[PhotoInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [photoInfo setPhoto:[[self currentCell] item]];
@@ -290,8 +292,7 @@
     [photoInfo setTransitioningDelegate:self.transitionToInfoDelegate];
     
     [self presentViewController:photoInfo animated:YES completion:^{
-        //[sender setEnabled:YES];
-        //[self showInfoButton:YES animated:YES];
+        [sender setEnabled:YES];
     }];
 }
 
@@ -359,6 +360,9 @@
     if ([[FavoritesManager sharedManager] photoHasBeenDownloaded:[self currentPhoto]]) {
         [favoriteButton setImage:[UIImage imageNamed:@"star-fill.png"]];
     }
+    UIBarButtonItem *infoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonTapped:)];
+    
+    UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     UIBarButtonItem *shareButton;
     
     if (show) {
@@ -369,40 +373,10 @@
     } else {
         shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
     }
-    if (!self.hideDownloadButton) [self.navigationItem setRightBarButtonItems:@[shareButton, rightButton, favoriteButton]];
-    else [self.navigationItem setRightBarButtonItems:@[shareButton, favoriteButton]];
-}
-
-- (void)showInfoButton:(BOOL)show animated:(BOOL)animated{
-    if (show) {
-        [self.infoButton setAlpha:0];
-        if (animated) {
-            [UIView animateWithDuration:0.5 animations:^{
-                [self.infoButton setAlpha:1];
-            }];
-        } else [self.infoButton setAlpha:1];
+    if (!self.hideDownloadButton) {
+        [self setToolbarItems:@[shareButton, space, rightButton, space, favoriteButton, space, infoButton]];
     }
-    else {
-        if (animated) {
-            [UIView animateWithDuration:0.5 animations:^{
-                [self.infoButton setAlpha:0];
-            }];
-        } else [self.infoButton setAlpha:1];
-    }
-}
-
-- (UIButton *)infoButton {
-    if (!_infoButton) {
-        _infoButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 50, 50)];
-        [_infoButton setShowsTouchWhenHighlighted:YES];
-        [_infoButton setImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
-        [_infoButton setBackgroundColor:[UIColor clearColor]];
-        [_infoButton addTarget:self action:@selector(infoButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self.navigationController.view addSubview:_infoButton];
-        [_infoButton setPositionFromEdge:MNCUIViewRightEdge margin:10];
-        [_infoButton setPositionFromEdge:MNCUIViewBottomEdge margin:10];
-    }
-    return _infoButton;
+    else [self setToolbarItems:@[shareButton, space, favoriteButton, space, infoButton]];
 }
 
 #pragma mark - Custom Animation Transition Delegate
@@ -443,7 +417,6 @@
 
 - (void)photoInfoViewControllerDidClose:(PhotoInfoViewController *)photoInfo {
     [photoInfo dismissViewControllerAnimated:YES completion:^{
-        [self showInfoButton:YES animated:YES];
     }];
 }
 
@@ -458,7 +431,7 @@
 }
 
 - (void)animateAlongTransitionToPresentInfoController:(id)presentationController{
-    [self setNavigationBarHidden:YES animated:YES];
+    [self setFullScreen:YES];
     [[self currentCell] setZoomToFillScreen:YES];
 }
 
@@ -468,7 +441,6 @@
 }
 
 - (void)didFinishDismissAnimationFromInfoControllerPresentationController:(id)presentationController {
-    [self.infoButton setEnabled:YES];
 }
 
 #pragma mark - Alert 
