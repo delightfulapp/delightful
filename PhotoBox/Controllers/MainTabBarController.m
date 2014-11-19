@@ -44,6 +44,8 @@ static void * imageDownloadContext = &imageDownloadContext;
         [moreVC.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", totalOperation]];
     } else {
         [moreVC.tabBarItem setBadgeValue:nil];
+        
+        [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
     }
     
 }

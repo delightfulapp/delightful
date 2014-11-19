@@ -50,7 +50,7 @@
 }
 
 - (void)didStartDownloadOperation:(id)operation {
-    //[self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)didFinishDownloadOperation:(id)operation atIndex:(NSInteger)index{
