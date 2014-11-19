@@ -76,6 +76,7 @@
 
 @property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
+@property (nonatomic, assign) BOOL viewJustDidLoad;
 
 @end
 
@@ -103,6 +104,8 @@
     self.title = NSLocalizedString(@"Photos", nil);
     
     self.currentSort = @"dateUploaded,desc";
+    
+    self.viewJustDidLoad = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -115,16 +118,19 @@
         self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
     }
     
-    [self setRegisterSyncingNotification:YES];
-    [((YapDataSource *)self.dataSource) setPause:NO];
-    [[SyncEngine sharedEngine] setPausePhotosSync:NO];
+    if (self.viewJustDidLoad) {
+        self.viewJustDidLoad = NO;
+        [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:dateUploadedDescSortKey];
+    } else {
+        [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:nil];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     CLS_LOG(@"view will disappear");
     [self setRegisterSyncingNotification:NO];
     [((YapDataSource *)self.dataSource) setPause:YES];
-    [[SyncEngine sharedEngine] setPausePhotosSync:YES];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:nil];
 }
 
 - (void)didReceiveMemoryWarning

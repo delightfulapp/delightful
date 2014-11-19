@@ -40,25 +40,25 @@ typedef NS_ENUM(NSInteger, ActionType) {
 
 #pragma mark - Resource Fetch
 
-- (void)getPhotosForPage:(int)page
+- (NSOperation *)getPhotosForPage:(int)page
                     sort:(NSString *)sort
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (void)getAlbumsForPage:(int)page
+- (NSOperation *)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (void)getTagsForPage:(int)page pageSize:(int)pageSize
+- (NSOperation *)getTagsForPage:(int)page pageSize:(int)pageSize
                success:(void(^)(id object))successBlock
                failure:(void(^)(NSError*))failureBlock;
-- (void)getPhotosInAlbum:(NSString *)albumId
+- (NSOperation *)getPhotosInAlbum:(NSString *)albumId
                     sort:(NSString *)sort
                     page:(int)page
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (void)getPhotosInTag:(NSString *)tagId
+- (NSOperation *)getPhotosInTag:(NSString *)tagId
                   sort:(NSString *)sort
                   page:(int)page
               pageSize:(int)pageSize

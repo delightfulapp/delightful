@@ -508,7 +508,8 @@ NSString *const galleryContainerType = @"gallery";
 - (void)willStartSyncingNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isKindOfClass:[NSNull class]]) {
         NSLog(@"will start syncing");
         [self setIsFetching:YES];
     }
@@ -517,8 +518,8 @@ NSString *const galleryContainerType = @"gallery";
 - (void)didFinishSyncingNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        NSLog(@"did finish syncing");
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isKindOfClass:[NSNull class]]) {
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
             [self setIsFetching:NO];
@@ -529,7 +530,8 @@ NSString *const galleryContainerType = @"gallery";
 - (void)didFailSyncingNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isKindOfClass:[NSNull class]]) {
         [self setIsFetching:NO];
     }
 }

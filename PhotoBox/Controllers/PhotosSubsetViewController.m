@@ -35,13 +35,14 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [self setRegisterSyncingNotification:YES];
+    [((YapDataSource *)self.dataSource) setPause:NO];
     if (self.viewJustDidLoad) {
         self.viewJustDidLoad = NO;
         [((PhotosSubsetDataSource *)self.dataSource) setFilterName:self.filterName objectKey:self.objectKey filterKey:self.item.itemId];
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:self.item.class sort:dateUploadedDescSortKey];
+    } else {
+        [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:self.item.itemId];
     }
-    [((YapDataSource *)self.dataSource) setPause:NO];
-    [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:self.item.itemId];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -79,6 +80,7 @@
         NSLog(@"did finish syncing");
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
+            NSLog(@"fetched 0 photos");
             [self setIsFetching:NO];
         }
     }

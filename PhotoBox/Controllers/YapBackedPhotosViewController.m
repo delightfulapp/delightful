@@ -27,28 +27,23 @@
 @implementation YapBackedPhotosViewController
 
 - (void)refresh {
-    NSLog(@"Refresh in %@", self.item?:@"all photos");
+    NSLog(@"Refresh in %@", self.item?self.item.itemId:@"all photos");
     
-    if (self.item) {
-        [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:self.item.itemId];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:(self.item?self.item.itemId:nil)];
+    
+    void (^photosRemovalCompletion)() = ^void() {
+        NSLog(@"Photos in %@ removed", self.item.itemId);
         
+        [self.refreshControl endRefreshing];
+        [[SyncEngine sharedEngine] refreshPhotosInCollection:(self.item?self.item.itemId:nil) collectionType:(self.item?self.item.class:nil) sort:self.currentSort];
+    };
+
+    if (self.item) {
         DLFYapDatabaseViewAndMapping *flattenedMapping = [((GroupedPhotosDataSource *)self.dataSource) selectedFlattenedViewMapping];
         NSString *flattenedView = flattenedMapping.viewName;
-        [[DLFDatabaseManager manager] removePhotosInFlattenedView:flattenedView completion:^{
-            NSLog(@"Photos in %@ removed", self.item.itemId);
-            
-            [self.refreshControl endRefreshing];
-            [[SyncEngine sharedEngine] refreshPhotosInCollection:self.item.itemId collectionType:self.item.class sort:self.currentSort];
-        }];
+        [[DLFDatabaseManager manager] removePhotosInFlattenedView:flattenedView completion:photosRemovalCompletion];
     } else {
-        [[SyncEngine sharedEngine] setPausePhotosSync:YES];
-        
-        [[DLFDatabaseManager manager] removeAllPhotosWithCompletion:^{
-            NSLog(@"Removed all photos");
-            
-            [self.refreshControl endRefreshing];
-            [[SyncEngine sharedEngine] refreshResource:NSStringFromClass(Photo.class)];
-        }];
+        [[DLFDatabaseManager manager] removeAllPhotosWithCompletion:photosRemovalCompletion];
     }
 }
 

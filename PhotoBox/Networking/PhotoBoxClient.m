@@ -110,12 +110,12 @@
 
 #pragma mark - Resource Fetch
 
-- (void)getPhotosForPage:(int)page
+- (NSOperation *)getPhotosForPage:(int)page
                     sort:(NSString *)sort
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock {
-    [self getPhotosInAlbum:nil
+    return [self getPhotosInAlbum:nil
                       sort:sort
                       page:page
                   pageSize:(int)pageSize
@@ -123,40 +123,44 @@
                    failure:failureBlock];
 }
 
-- (void)getAlbumsForPage:(int)page
+- (NSOperation *)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
+    __block NSOperation *operation;
     [self loginIfNecessaryToConnect:^{
-        [self GET:[NSString stringWithFormat:@"v1/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+        operation = [self GET:[NSString stringWithFormat:@"v1/albums/list.json?page=%d&pageSize=%d&%@",page, pageSize, [self photoSizesString]] parameters:nil resultClass:[Album class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
     }];
+    return operation;
 }
 
-- (void)getTagsForPage:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (NSOperation *)getTagsForPage:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    __block NSOperation *operation;
     [self loginIfNecessaryToConnect:^{
-        [self GET:[NSString stringWithFormat:@"v1/tags/list.json?page=%d&pageSize=%d",page, pageSize] parameters:nil resultClass:[Tag class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+        operation = [self GET:[NSString stringWithFormat:@"v1/tags/list.json?page=%d&pageSize=%d",page, pageSize] parameters:nil resultClass:[Tag class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
     }];
+    return operation;
 }
 
-- (void)getPhotosInAlbum:(NSString *)albumId
+- (NSOperation *)getPhotosInAlbum:(NSString *)albumId
                     sort:(NSString *)sort
                     page:(int)page
                 pageSize:(int)pageSize
                  success:(void (^)(id))successBlock
                  failure:(void (^)(NSError *))failureBlock {
-    [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId sort:sort page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    return [self getPhotosInResource:(albumId)?Album.class:Photo.class resourceId:albumId sort:sort page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
-- (void)getPhotosInTag:(NSString *)tagId
+- (NSOperation *)getPhotosInTag:(NSString *)tagId
                   sort:(NSString *)sort
                   page:(int)page
               pageSize:(int)pageSize
                success:(void(^)(id object))successBlock
                failure:(void(^)(NSError*))failureBlock {
-    [self getPhotosInResource:Tag.class resourceId:tagId sort:sort page:page pageSize:pageSize success:successBlock failure:failureBlock];
+    return [self getPhotosInResource:Tag.class resourceId:tagId sort:sort page:page pageSize:pageSize success:successBlock failure:failureBlock];
 }
 
-- (void)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId sort:(NSString *)sort page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+- (NSOperation *)getPhotosInResource:(Class)resourceClass resourceId:(NSString *)resourceId sort:(NSString *)sort page:(int)page pageSize:(int)pageSize success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     NSString *resource = nil;
     if ([resourceClass isSubclassOfClass:Album.class]) {
         resource = [NSString stringWithFormat:@"&%@", [self albumsQueryString:resourceId]];
@@ -179,10 +183,12 @@
         path = [path stringByAppendingString:resource];
     }
     
+    __block NSOperation *operation;
     [self loginIfNecessaryToConnect:^{
-        [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+        operation = [self GET:path parameters:nil resultClass:[Photo class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
     }];
     
+    return operation;
 }
 
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
