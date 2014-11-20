@@ -177,13 +177,7 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)showRightBarButtonItem:(BOOL)show {
     if (show) {
-        UIButton *sortingButton = [[UIButton alloc] init];
-        NSMutableAttributedString *sortingSymbol = [[NSAttributedString symbol:dlf_icon_menu_sort size:25] mutableCopy];
-        [sortingButton setAttributedTitle:sortingSymbol forState:UIControlStateNormal];
-        [sortingButton sizeToFit];
-        [sortingButton setContentEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -10)];
-        [sortingButton addTarget:self action:@selector(didTapSortButton:) forControlEvents:UIControlEventTouchUpInside];
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithCustomView:sortingButton];
+        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
         [self.navigationItem setRightBarButtonItem:leftItem];
     } else {
         [self.navigationItem setRightBarButtonItem:nil];

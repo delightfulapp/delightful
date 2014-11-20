@@ -105,6 +105,9 @@
     
     self.currentSort = @"dateUploaded,desc";
     
+    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"upload"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(didTapUploadButton:)];
+    [self.navigationItem setLeftBarButtonItem:uploadButton];
+    
     self.viewJustDidLoad = YES;
 }
 
@@ -154,6 +157,10 @@
     [sort setSelectedSort:self.currentSort];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:sort];
     [self presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)didTapUploadButton:(id)sender {
+    
 }
 
 #pragma mark - SortingDelegate
