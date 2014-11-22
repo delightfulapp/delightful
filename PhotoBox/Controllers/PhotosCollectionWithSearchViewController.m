@@ -61,6 +61,10 @@ static char *kSearchBarCenterContext;
     [super viewWillAppear:animated];
 }
 
+- (void)dealloc {
+    [self.searchBar removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
+}
+
 - (void)restoreContentInset {
     [self.collectionView setContentInset:UIEdgeInsetsMake(self.searchBar.isHidden?CGRectGetMaxY(self.navigationController.navigationBar.frame):CGRectGetMaxY(self.searchBar.frame), 0, 0, 0)];
     [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];

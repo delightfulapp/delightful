@@ -7,64 +7,39 @@
 //
 
 #import "PhotosViewController.h"
-
 #import "Album.h"
 #import "Photo.h"
 #import "Tag.h"
-
 #import "LocationManager.h"
 #import "ConnectionManager.h"
-
 #import "PhotosSectionHeaderView.h"
 #import "FooterLoadingReusableView.h"
 #import "PhotoCell.h"
-
 #import "PhotosHorizontalScrollingYapBackedViewController.h"
 #import "SettingsTableViewController.h"
-
 #import "CollectionViewSelectCellGestureRecognizer.h"
-
 #import "UIView+Additionals.h"
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
-
 #import "AppDelegate.h"
-
 #import "DelightfulLayout.h"
-
 #import "GroupedPhotosDataSource.h"
-
 #import "Photo.h"
-
 #import "Album.h"
-
 #import "Tag.h"
-
 #import "StickyHeaderFlowLayout.h"
-
 #import "UIImageView+Additionals.h"
-
 #import "NoPhotosView.h"
-
 #import "HeaderImageView.h"
-
-#import "FallingTransitioningDelegate.h"
-
 #import "PhotosPickerViewController.h"
-
 #import "DelightfulCache.h"
-
 #import "TagsAlbumsPickerViewController.h"
-
 #import "DLFAsset.h"
-
 #import "ShowFullScreenTransitioningDelegate.h"
-
 #import "NSAttributedString+DelighftulFonts.h"
-
 #import "SyncEngine.h"
-
 #import "SortTableViewController.h"
+#import "UploadViewController.h"
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
@@ -73,10 +48,10 @@
 @property (nonatomic, weak) HeaderImageView *headerImageView;
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
-
-@property (nonatomic, strong) FallingTransitioningDelegate *fallingTransitioningDelegate;
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 @property (nonatomic, assign) BOOL viewJustDidLoad;
+@property (nonatomic, strong) NSArray *assetsToUpload;
+@property (nonatomic, strong) UploadViewController *uploadViewController;
 
 @end
 
@@ -160,7 +135,10 @@
 }
 
 - (void)didTapUploadButton:(id)sender {
-    
+    PhotosPickerViewController *picker = [[PhotosPickerViewController alloc] init];
+    picker.delegate = self;
+    [picker setAssetsFilter:[ALAssetsFilter allPhotos]];
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - SortingDelegate
@@ -550,6 +528,41 @@
     }];
     
     return location;
+}
+
+#pragma mark - CTAssetsPickerControllerDelegate
+
+- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldShowAssetsGroup:(ALAssetsGroup *)group {
+    return [group numberOfAssets] > 0?YES:NO;
+}
+
+- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+    self.assetsToUpload = assets;
+    
+    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [tagsalbumspicker setDelegate:self];
+    [picker pushViewController:tagsalbumspicker animated:YES];
+}
+
+#pragma mark - Tags Albums Picker View Controller Delegate
+
+- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishWithTags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos {
+    [self dismissViewControllerAnimated:YES completion:^{
+        UploadViewController *uploadVC = [[UploadViewController alloc] init];
+        [uploadVC setUploads:self.assetsToUpload];
+        [uploadVC setTags:tags];
+        [uploadVC setAlbum:album];
+        [uploadVC setPrivatePhotos:privatePhotos];
+        
+        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:uploadVC];
+        
+        self.uploadViewController = uploadVC;
+        self.assetsToUpload = nil;
+        
+        [self presentViewController:navCon animated:YES completion:^{
+            [uploadVC startUpload];
+        }];
+    }];
 }
 
 @end

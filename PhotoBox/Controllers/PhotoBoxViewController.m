@@ -105,6 +105,7 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 - (void)dealloc {
+    [self.collectionView removeObserver:self forKeyPath:NSStringFromSelector(@selector(contentSize))];
     if (isObservingLoggedInUser) {
         [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
         [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage))];

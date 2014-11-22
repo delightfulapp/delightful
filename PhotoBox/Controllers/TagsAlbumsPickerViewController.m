@@ -24,7 +24,7 @@
 
 #import "TagsSuggestionTableViewController.h"
 
-#import "AlbumsPickerTableViewController.h"
+#import "AlbumsPickerViewController.h"
 
 #import "DelightfulCache.h"
 
@@ -32,7 +32,7 @@
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerTableViewControllerPickerDelegate>
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 
@@ -119,12 +119,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsAlbums) {
-        AlbumsPickerTableViewController *albumsPicker = [[AlbumsPickerTableViewController alloc] initWithStyle:UITableViewStylePlain];
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        AlbumsPickerViewController *albumsPicker = [storyBoard instantiateViewControllerWithIdentifier:@"albumsPicker"];
         [albumsPicker setDelegate:self];
         [albumsPicker setSelectedAlbum:self.selectedAlbum];
         [self.navigationController pushViewController:albumsPicker animated:YES];
     }
-    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -323,7 +323,7 @@
 
 #pragma mark - AlbumsPickerTableViewControllerPickerDelegate
 
-- (void)albumsPickerViewController:(AlbumsPickerTableViewController *)albumsPicker didSelectAlbum:(Album *)album {
+- (void)albumsPickerViewController:(AlbumsPickerViewController *)albumsPicker didSelectAlbum:(Album *)album {
     self.selectedAlbum = album;
     
     if (self.selectedAlbum) [[DelightfulCache sharedCache] setObject:[NSKeyedArchiver archivedDataWithRootObject:album] forKey:LAST_SELECTED_ALBUM];

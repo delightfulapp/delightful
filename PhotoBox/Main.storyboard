@@ -595,6 +595,56 @@
             </objects>
             <point key="canvasLocation" x="1710" y="3177"/>
         </scene>
+        <!--Albums Picker View Controller-->
+        <scene sceneID="y3m-DO-QGg">
+            <objects>
+                <viewController storyboardIdentifier="albumsPicker" id="O2L-LO-YUc" customClass="AlbumsPickerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0l5-7g-DWk"/>
+                        <viewControllerLayoutGuide type="bottom" id="s6k-ok-Htw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Y8O-oj-lbp">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7zk-uB-EvR">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="AKf-Sn-Cma">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Bhr-wb-MdU">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="s6k-ok-Htw" firstAttribute="top" secondItem="7zk-uB-EvR" secondAttribute="bottom" id="5bD-LM-h0g"/>
+                            <constraint firstItem="7zk-uB-EvR" firstAttribute="leading" secondItem="Y8O-oj-lbp" secondAttribute="leadingMargin" constant="-16" id="D94-kp-492"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7zk-uB-EvR" secondAttribute="trailing" constant="-16" id="aWj-Md-6v8"/>
+                            <constraint firstItem="7zk-uB-EvR" firstAttribute="top" secondItem="0l5-7g-DWk" secondAttribute="top" id="hMY-dJ-GqI"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="254-GA-1D4"/>
+                    <connections>
+                        <outlet property="collectionView" destination="7zk-uB-EvR" id="UGB-bJ-ZfT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sTh-eD-gny" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2522" y="-1106"/>
+        </scene>
     </scenes>
     <resources>
         <image name="albums" width="25" height="25"/>

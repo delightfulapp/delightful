@@ -140,8 +140,8 @@
 		035DACC8197FAC2B00557547 /* NSString+Score.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACC6197FAC2B00557547 /* NSString+Score.m */; };
 		035DACCC197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
 		035DACCD197FAE6D00557547 /* TagsSuggestionTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */; };
-		035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
-		035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */; };
+		035DACD1197FD8BF00557547 /* AlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerViewController.m */; };
+		035DACD2197FD8BF00557547 /* AlbumsPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035DACD0197FD8BF00557547 /* AlbumsPickerViewController.m */; };
 		035DACDB1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
 		035DACDC1980D99B00557547 /* uploadedmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACD91980D99B00557547 /* uploadedmark.png */; };
 		035DACDE1980D99B00557547 /* uploadedmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 035DACDA1980D99B00557547 /* uploadedmark@2x.png */; };
@@ -580,8 +580,8 @@
 		035DACC6197FAC2B00557547 /* NSString+Score.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Score.m"; path = "PhotoBox/External/NSString+Score.m"; sourceTree = SOURCE_ROOT; };
 		035DACCA197FAE6D00557547 /* TagsSuggestionTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TagsSuggestionTableViewController.h; path = PhotoBox/Controllers/TagsSuggestionTableViewController.h; sourceTree = "<group>"; };
 		035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TagsSuggestionTableViewController.m; path = PhotoBox/Controllers/TagsSuggestionTableViewController.m; sourceTree = "<group>"; };
-		035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsPickerTableViewController.h; path = PhotoBox/Controllers/AlbumsPickerTableViewController.h; sourceTree = "<group>"; };
-		035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsPickerTableViewController.m; path = PhotoBox/Controllers/AlbumsPickerTableViewController.m; sourceTree = "<group>"; };
+		035DACCF197FD8BF00557547 /* AlbumsPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlbumsPickerViewController.h; path = PhotoBox/Controllers/AlbumsPickerViewController.h; sourceTree = "<group>"; };
+		035DACD0197FD8BF00557547 /* AlbumsPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlbumsPickerViewController.m; path = PhotoBox/Controllers/AlbumsPickerViewController.m; sourceTree = "<group>"; };
 		035DACD91980D99B00557547 /* uploadedmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploadedmark.png; sourceTree = "<group>"; };
 		035DACDA1980D99B00557547 /* uploadedmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploadedmark@2x.png"; sourceTree = "<group>"; };
 		035DACE11983490B00557547 /* UploadReloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadReloadView.h; path = PhotoBox/Views/UploadReloadView.h; sourceTree = "<group>"; };
@@ -1088,8 +1088,8 @@
 				035DACAD197F84A600557547 /* TagsAlbumsPickerViewController.m */,
 				035DACCA197FAE6D00557547 /* TagsSuggestionTableViewController.h */,
 				035DACCB197FAE6D00557547 /* TagsSuggestionTableViewController.m */,
-				035DACCF197FD8BF00557547 /* AlbumsPickerTableViewController.h */,
-				035DACD0197FD8BF00557547 /* AlbumsPickerTableViewController.m */,
+				035DACCF197FD8BF00557547 /* AlbumsPickerViewController.h */,
+				035DACD0197FD8BF00557547 /* AlbumsPickerViewController.m */,
 				03EB624019DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.h */,
 				03EB624119DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m */,
 				035B035319ECDC3E00153F24 /* MainTabBarController.h */,
@@ -1869,7 +1869,7 @@
 				035B5E5619F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
 				03643BD619F77F14003E4025 /* PhotosSubsetViewController.m in Sources */,
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
-				035DACD1197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
+				035DACD1197FD8BF00557547 /* AlbumsPickerViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */,
 				03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */,
@@ -2016,7 +2016,7 @@
 				035B5E5719F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
 				03643BD719F77F14003E4025 /* PhotosSubsetViewController.m in Sources */,
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
-				035DACD2197FD8BF00557547 /* AlbumsPickerTableViewController.m in Sources */,
+				035DACD2197FD8BF00557547 /* AlbumsPickerViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
 				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
 				03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */,
