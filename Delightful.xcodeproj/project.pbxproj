@@ -45,12 +45,6 @@
 		032222BC1814F2E4004F3830 /* npr_notification_image_close.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222BA1814F2E4004F3830 /* npr_notification_image_close.png */; };
 		0327CC6C1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */; };
 		0327CC6D1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */; };
-		0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */; };
-		0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */; };
-		0327CC77194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */; };
-		0327CC78194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */; };
-		0327CC7B194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */; };
-		0327CC7C194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */; };
 		0327CC7F194723B70086C4B8 /* uploaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7D194723B70086C4B8 /* uploaded.png */; };
 		0327CC80194723B70086C4B8 /* uploaded.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7D194723B70086C4B8 /* uploaded.png */; };
 		0327CC81194723B70086C4B8 /* uploaded@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0327CC7E194723B70086C4B8 /* uploaded@2x.png */; };
@@ -186,6 +180,8 @@
 		0391824A17FEDC960099480C /* PhotoBoxRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824917FEDC960099480C /* PhotoBoxRequestOperation.m */; };
 		0391824C17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */; };
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
+		039580B51A28A16000597ECA /* PhotosPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039580B41A28A16000597ECA /* PhotosPicker.storyboard */; };
+		039580B71A28A17000597ECA /* PhotosPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039580B61A28A17000597ECA /* PhotosPicker.storyboard */; };
 		0396BDD01920B8B4004B6290 /* NoPhotosView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */; };
 		0396BDD31920B91B004B6290 /* NoPhotosView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDD21920B91B004B6290 /* NoPhotosView.m */; };
 		0396BDD51921AB76004B6290 /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDD41921AB76004B6290 /* refresh.png */; };
@@ -219,8 +215,6 @@
 		03B337EB17D89CF5002A486B /* ConnectionManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */; };
 		03B5CCC8193C7AE500E0BAD0 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
 		03B5CCC9193C7AE500E0BAD0 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */; };
-		03B5CCCC193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B5CCCB193CC20500E0BAD0 /* PhotosPickerViewController.m */; };
-		03B5CCCD193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03B5CCCB193CC20500E0BAD0 /* PhotosPickerViewController.m */; };
 		03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */; };
 		03CE50E01818136E00445084 /* introbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DE1818136E00445084 /* introbg.jpg */; };
 		03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DF1818136E00445084 /* introbg@2x.jpg */; };
@@ -459,12 +453,6 @@
 		032222BA1814F2E4004F3830 /* npr_notification_image_close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = npr_notification_image_close.png; sourceTree = "<group>"; };
 		0327CC6A1946AC350086C4B8 /* ALAsset+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ALAsset+Additionals.h"; sourceTree = "<group>"; };
 		0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ALAsset+Additionals.m"; sourceTree = "<group>"; };
-		0327CC71194715620086C4B8 /* PhotosPickerGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerGroupViewController.h; path = PhotoBox/Controllers/PhotosPickerGroupViewController.h; sourceTree = "<group>"; };
-		0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosPickerGroupViewController.m; path = PhotoBox/Controllers/PhotosPickerGroupViewController.m; sourceTree = "<group>"; };
-		0327CC75194717890086C4B8 /* PhotosPickerAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerAssetsViewController.h; path = PhotoBox/Controllers/PhotosPickerAssetsViewController.h; sourceTree = "<group>"; };
-		0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosPickerAssetsViewController.m; path = PhotoBox/Controllers/PhotosPickerAssetsViewController.m; sourceTree = "<group>"; };
-		0327CC79194718C60086C4B8 /* DLFAssetsViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFAssetsViewCell.h; path = PhotoBox/Cells/DLFAssetsViewCell.h; sourceTree = "<group>"; };
-		0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFAssetsViewCell.m; path = PhotoBox/Cells/DLFAssetsViewCell.m; sourceTree = "<group>"; };
 		0327CC7D194723B70086C4B8 /* uploaded.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = uploaded.png; sourceTree = "<group>"; };
 		0327CC7E194723B70086C4B8 /* uploaded@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "uploaded@2x.png"; sourceTree = "<group>"; };
 		032B0D1C17D4CF4800ABFA9F /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocationManager.h; path = PhotoBox/Others/LocationManager.h; sourceTree = "<group>"; };
@@ -633,6 +621,8 @@
 		0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxRequestOperationTests.m; sourceTree = "<group>"; };
 		0391824D1800074A0099480C /* NSObject+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Additionals.h"; sourceTree = "<group>"; };
 		0391824E1800074A0099480C /* NSObject+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additionals.m"; sourceTree = "<group>"; };
+		039580B41A28A16000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
+		039580B61A28A17000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
 		0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoPhotosView.xib; path = PhotoBox/Views/NoPhotosView.xib; sourceTree = "<group>"; };
 		0396BDD11920B91B004B6290 /* NoPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoPhotosView.h; path = PhotoBox/Views/NoPhotosView.h; sourceTree = "<group>"; };
 		0396BDD21920B91B004B6290 /* NoPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoPhotosView.m; path = PhotoBox/Views/NoPhotosView.m; sourceTree = "<group>"; };
@@ -677,8 +667,6 @@
 		03B3271A19D16B4C00B87347 /* DLFDatabaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFDatabaseManager.m; path = PhotoBox/Models/DLFDatabaseManager.m; sourceTree = "<group>"; };
 		03B337EA17D89CF5002A486B /* ConnectionManagerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionManagerTests.m; sourceTree = "<group>"; };
 		03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
-		03B5CCCA193CC20500E0BAD0 /* PhotosPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotosPickerViewController.h; path = PhotoBox/Controllers/PhotosPickerViewController.h; sourceTree = "<group>"; };
-		03B5CCCB193CC20500E0BAD0 /* PhotosPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotosPickerViewController.m; path = PhotoBox/Controllers/PhotosPickerViewController.m; sourceTree = "<group>"; };
 		03BA85501801A90900D77B39 /* PhotoBoxFetchedResultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoBoxFetchedResultsController.h; sourceTree = "<group>"; };
 		03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxFetchedResultsController.m; sourceTree = "<group>"; };
 		03CE50DE1818136E00445084 /* introbg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = introbg.jpg; sourceTree = "<group>"; };
@@ -912,6 +900,8 @@
 		032CBB7117D0BDF3001205B1 = {
 			isa = PBXGroup;
 			children = (
+				039580B61A28A17000597ECA /* PhotosPicker.storyboard */,
+				039580B41A28A16000597ECA /* PhotosPicker.storyboard */,
 				03CE50E818181D3000445084 /* Intro */,
 				032222A218140796004F3830 /* Notification */,
 				03D972AB18119CE6008A087B /* README.md */,
@@ -1076,12 +1066,6 @@
 				0365160B192DE6490042C1B6 /* LoginWebViewViewController.h */,
 				0365160C192DE6490042C1B6 /* LoginWebViewViewController.m */,
 				03D311B4193204BD003DE5FC /* UIViewControllerModalDelegate.h */,
-				03B5CCCA193CC20500E0BAD0 /* PhotosPickerViewController.h */,
-				03B5CCCB193CC20500E0BAD0 /* PhotosPickerViewController.m */,
-				0327CC71194715620086C4B8 /* PhotosPickerGroupViewController.h */,
-				0327CC72194715620086C4B8 /* PhotosPickerGroupViewController.m */,
-				0327CC75194717890086C4B8 /* PhotosPickerAssetsViewController.h */,
-				0327CC76194717890086C4B8 /* PhotosPickerAssetsViewController.m */,
 				037B089C1955A627001F55D6 /* UploadViewController.h */,
 				037B089D1955A627001F55D6 /* UploadViewController.m */,
 				035DACAC197F84A600557547 /* TagsAlbumsPickerViewController.h */,
@@ -1145,8 +1129,6 @@
 		0358468417D1C17000E196D7 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				0327CC79194718C60086C4B8 /* DLFAssetsViewCell.h */,
-				0327CC7A194718C60086C4B8 /* DLFAssetsViewCell.m */,
 				0358468517D1C19A00E196D7 /* PhotoBoxCell.h */,
 				0358468617D1C19A00E196D7 /* PhotoBoxCell.m */,
 				0358468817D1C1B100E196D7 /* AlbumCell.h */,
@@ -1390,7 +1372,6 @@
 				03EFD8CB19251CD700E80A71 /* Sources */,
 				03EFD91C19251CD700E80A71 /* Frameworks */,
 				03EFD92819251CD700E80A71 /* Copy Crashlytics plist */,
-				03CE49BE19C9316900817C28 /* Copy Lookback plist */,
 				03EFD92919251CD700E80A71 /* Resources */,
 				03EFD95919251CD700E80A71 /* Crashlytics */,
 				03EFD95A19251CD700E80A71 /* Build number increment */,
@@ -1500,6 +1481,7 @@
 				0396BDD51921AB76004B6290 /* refresh.png in Resources */,
 				031DD2AA17D9BB8300A80167 /* camera.png in Resources */,
 				031DD2B117D9BD6B00A80167 /* user@2x.png in Resources */,
+				039580B71A28A17000597ECA /* PhotosPicker.storyboard in Resources */,
 				03CE50E01818136E00445084 /* introbg.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1526,6 +1508,7 @@
 				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
 				03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */,
 				035DACDC1980D99B00557547 /* uploadedmark.png in Resources */,
+				039580B51A28A16000597ECA /* PhotosPicker.storyboard in Resources */,
 				03EFD93019251CD700E80A71 /* info@2x.png in Resources */,
 				03EFD93119251CD700E80A71 /* 0.0.4.plist in Resources */,
 				03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */,
@@ -1604,20 +1587,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
-		};
-		03CE49BE19C9316900817C28 /* Copy Lookback plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Lookback plist";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FILE=./PhotoBox/Lookback.plist\nSTUB=./PhotoBox/Lookback.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Lookback.plist exists\"\nelse\ncp $STUB $FILE\nfi";
 		};
 		03CE49BF19C932A700817C28 /* Copy Lookback plist */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1863,7 +1832,6 @@
 				03FD4829191FCE2000D4ADF7 /* SettingsTableViewController.m in Sources */,
 				03D972AA181188CE008A087B /* PhotoSharingManager.m in Sources */,
 				03BA85521801A90900D77B39 /* PhotoBoxFetchedResultsController.m in Sources */,
-				0327CC7B194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
 				035DACB8197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				035846D917D364FE00E196D7 /* UIView+Additionals.m in Sources */,
 				035B5E5619F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
@@ -1906,12 +1874,10 @@
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,
 				036DF368181F65D8002E9FCB /* PhotoInfoViewController.m in Sources */,
 				03CE50E41818148800445084 /* IntroViewController.m in Sources */,
-				0327CC77194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */,
 				035846A817D2021100E196D7 /* PhotosViewController.m in Sources */,
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
 				035DACE81983555500557547 /* DLFAsset.m in Sources */,
 				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
-				03B5CCCC193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
@@ -1923,7 +1889,6 @@
 				03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */,
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
-				0327CC73194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
 				0312721D1A18FE0900FFC898 /* FavoritesViewController.m in Sources */,
 				03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */,
 				03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,
@@ -2010,7 +1975,6 @@
 				03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */,
 				03EFD8E919251CD700E80A71 /* PhotoSharingManager.m in Sources */,
 				03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */,
-				0327CC7C194718C60086C4B8 /* DLFAssetsViewCell.m in Sources */,
 				035DACB9197F92C900557547 /* AlbumPickerTableViewCell.m in Sources */,
 				03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */,
 				035B5E5719F3BEBF00C657B0 /* SortTableViewController.m in Sources */,
@@ -2053,12 +2017,10 @@
 				03EFD90619251CD700E80A71 /* UIImage+Additionals.m in Sources */,
 				03EFD90719251CD700E80A71 /* PhotoInfoViewController.m in Sources */,
 				03EFD90819251CD700E80A71 /* IntroViewController.m in Sources */,
-				0327CC78194717890086C4B8 /* PhotosPickerAssetsViewController.m in Sources */,
 				03EFD90919251CD700E80A71 /* PhotosViewController.m in Sources */,
 				03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */,
 				035DACE91983555500557547 /* DLFAsset.m in Sources */,
 				03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */,
-				03B5CCCD193CC20500E0BAD0 /* PhotosPickerViewController.m in Sources */,
 				03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */,
 				03EFD90E19251CD700E80A71 /* TagsViewController.m in Sources */,
 				03EFD90F19251CD700E80A71 /* Album.m in Sources */,
@@ -2070,7 +2032,6 @@
 				03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */,
 				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
 				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
-				0327CC74194715620086C4B8 /* PhotosPickerGroupViewController.m in Sources */,
 				0312721E1A18FE0900FFC898 /* FavoritesViewController.m in Sources */,
 				03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */,
 				03EFD91919251CD700E80A71 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */,

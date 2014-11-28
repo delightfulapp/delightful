@@ -31,7 +31,6 @@
 #import "UIImageView+Additionals.h"
 #import "NoPhotosView.h"
 #import "HeaderImageView.h"
-#import "PhotosPickerViewController.h"
 #import "DelightfulCache.h"
 #import "TagsAlbumsPickerViewController.h"
 #import "DLFAsset.h"
@@ -40,6 +39,7 @@
 #import "SyncEngine.h"
 #import "SortTableViewController.h"
 #import "UploadViewController.h"
+#import <DLFPhotosPickerViewController.h>
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
 
@@ -135,9 +135,7 @@
 }
 
 - (void)didTapUploadButton:(id)sender {
-    PhotosPickerViewController *picker = [[PhotosPickerViewController alloc] init];
-    picker.delegate = self;
-    [picker setAssetsFilter:[ALAssetsFilter allPhotos]];
+    DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
     [self presentViewController:picker animated:YES completion:nil];
 }
 
@@ -529,20 +527,20 @@
     
     return location;
 }
-
-#pragma mark - CTAssetsPickerControllerDelegate
-
-- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldShowAssetsGroup:(ALAssetsGroup *)group {
-    return [group numberOfAssets] > 0?YES:NO;
-}
-
-- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-    self.assetsToUpload = assets;
-    
-    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    [tagsalbumspicker setDelegate:self];
-    [picker pushViewController:tagsalbumspicker animated:YES];
-}
+//
+//#pragma mark - CTAssetsPickerControllerDelegate
+//
+//- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldShowAssetsGroup:(ALAssetsGroup *)group {
+//    return [group numberOfAssets] > 0?YES:NO;
+//}
+//
+//- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
+//    self.assetsToUpload = assets;
+//    
+//    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+//    [tagsalbumspicker setDelegate:self];
+//    [picker pushViewController:tagsalbumspicker animated:YES];
+//}
 
 #pragma mark - Tags Albums Picker View Controller Delegate
 
