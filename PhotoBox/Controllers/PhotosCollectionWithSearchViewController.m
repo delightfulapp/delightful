@@ -62,6 +62,7 @@ static char *kSearchBarCenterContext;
 }
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.searchBar removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
 }
 
