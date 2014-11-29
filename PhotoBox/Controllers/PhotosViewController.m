@@ -555,6 +555,7 @@
 
 - (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
     [self dismissViewControllerAnimated:YES completion:^{
+        CLS_LOG(@"+++ Gonna show upload view");
         UploadViewController *uploadVC = [[UploadViewController alloc] init];
         [uploadVC setDelegate:self];
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:uploadVC];
@@ -572,12 +573,14 @@
 #pragma mark - UploadViewControllerDelegate
 
 - (void)uploadViewControllerDidClose:(UploadViewController *)uploadViewController {
+    CLS_LOG(@"+++ dismissing upload");
     [uploadViewController dismissViewControllerAnimated:YES completion:^{
     }];
 }
 
 - (void)uploadViewControllerDidFinishUploading:(UploadViewController *)uploadViewController {
     [uploadViewController dismissViewControllerAnimated:YES completion:^{
+        CLS_LOG(@"+++ did finish uploading and closing upload vc");
         [self refresh];
     }];
 }
@@ -586,7 +589,8 @@
 
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
     int numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] intValue];
-    if (numberOfUploads) {
+    if (numberOfUploads == 0 && !self.presentedViewController) {
+        CLS_LOG(@"+++ upload done and no upload vc");
         [self refresh];
     }
 }
