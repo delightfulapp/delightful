@@ -9,6 +9,9 @@
 #import "PhotosCollectionWithSearchViewController.h"
 
 #import "AlbumsDataSource.h"
+#import "DLFYapDatabaseViewAndMapping.h"
+#import "DLFDatabaseManager.h"
+#import "SyncEngine.h"
 
 #import <UIView+AutoLayout.h>
 
@@ -105,6 +108,29 @@ static char *kSearchBarCenterContext;
     self.searching = NO;
     [self.searchBar setShowsCancelButton:NO];
     return YES;
+}
+
+- (void)refresh {
+    CLS_LOG(@"Refresh in %@", NSStringFromClass([self resourceClass]));
+    
+    [(YapDatasourceWithSearching *)self.dataSource setPause:YES];
+    [[SyncEngine sharedEngine] pauseAlbumsSync];
+    
+    void (^collectionRemovalCompletion)() = ^void() {
+        [((YapDatasourceWithSearching *)self.dataSource).mainConnection beginLongLivedReadTransaction];
+        [((YapDatasourceWithSearching *)self.dataSource).mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+            [((YapDatasourceWithSearching *)self.dataSource).selectedViewMapping.mapping updateWithTransaction:transaction];
+        }];
+        [self.collectionView reloadData];
+        [self.refreshControl endRefreshing];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            CLS_LOG(@"refreshing %@ now", NSStringFromClass([self resourceClass]));
+            [(YapDatasourceWithSearching *)self.dataSource setPause:NO];
+            [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([self resourceClass])];
+        });
+    };
+    
+    [[DLFDatabaseManager manager] removeCollection:[self resourceClass] completion:collectionRemovalCompletion];
 }
 
 #pragma mark - KVO
