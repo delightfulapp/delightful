@@ -168,6 +168,7 @@
             frame.origin = [self endPointForPosition:self.position];
             frame;
         });
+        self.notificationView.hidden = NO;
     };
     return showAnimation;
 }
@@ -194,6 +195,7 @@
 - (id)hideAnimationCompletion {
     return ^(BOOL finished) {
         self.isShowingNotification = NO;
+        [self.notificationView setHidden:YES];
     };
 }
 

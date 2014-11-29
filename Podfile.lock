@@ -70,7 +70,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DLFPhotosPicker:
-    :commit: fc59d07f7cf84fc31c7e0fb8e5d29d06763518b7
+    :commit: 2e6be94771daf2e84ee078f97cfc881ad0329b88
     :git: git@github.com:nicnocquee/DLFPhotosPicker.git
   YapDatabase:
     :commit: 9f717d54a0a7b5e5b0ab52834b36ef588c21f1a8
