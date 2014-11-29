@@ -2432,7 +2432,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "2d5649f2-cd8a-45ea-9b1d-93af099d270b";
+				PROVISIONING_PROFILE = "e30292a2-be45-4136-b5a6-fdb72f61fca0";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
