@@ -16,13 +16,13 @@
 
 #import "DLFImageUploader.h"
 
-#import <AssetsLibrary/AssetsLibrary.h>
-
 #import "DelightfulCache.h"
 
 #import "UploadReloadView.h"
 
 #import "DLFAsset.h"
+
+@import Photos;
 
 @interface UploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -72,7 +72,6 @@
 
 - (void)startUpload {
     for (DLFAsset *asset in self.uploads) {
-        //CLS_LOG(@"Asset URL = %@", [asset.asset valueForProperty:ALAssetPropertyAssetURL]);
         [[DLFImageUploader sharedUploader] queueAsset:asset];
     }
 }
@@ -177,11 +176,11 @@
 }
 
 - (void)uploadProgressNotification:(NSNotification *)notification {
-    NSURL *assetURL = notification.userInfo[kAssetURLKey];
+    NSString *identifier = notification.userInfo[kAssetURLKey];
     
     for (UploadAssetCell *cell in self.collectionView.visibleCells) {
         DLFAsset *cellAsset = (DLFAsset *)cell.item;
-        if ([[cellAsset.asset valueForProperty:ALAssetPropertyAssetURL] isEqual:assetURL]) {
+        if ([[cellAsset.asset localIdentifier] isEqual:identifier]) {
             [cell setUploadProgress:[notification.userInfo[kProgressKey] floatValue]];
             break;
         }
@@ -189,15 +188,15 @@
 }
 
 - (void)uploadDoneNotification:(NSNotification *)notification {
-    NSURL *assetURL = notification.userInfo[kAssetURLKey];
-    [self logUploadedAssetURL:assetURL];
+    NSString *identifier = notification.userInfo[kAssetURLKey];
+    [self logUploadedAssetURL:identifier];
     
     if (self.internalUploads.count == 1) {
         return;
     }
     
     NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
-        if ([[obj.asset valueForProperty:ALAssetPropertyAssetURL] isEqual:assetURL]) {
+        if ([[obj.asset localIdentifier] isEqualToString:identifier]) {
             *stop = YES;
             return YES;
         }
@@ -215,12 +214,12 @@
     }
 }
 
-- (void)logUploadedAsset:(ALAsset *)asset {
-    NSURL *URL = [asset valueForProperty:ALAssetPropertyAssetURL];
+- (void)logUploadedAsset:(PHAsset *)asset {
+    NSString *URL = [asset localIdentifier];
     [self logUploadedAssetURL:URL];
 }
 
-- (void)logUploadedAssetURL:(NSURL *)URL {
+- (void)logUploadedAssetURL:(NSString *)URL {
     NSMutableOrderedSet *uploaded = [[[DelightfulCache sharedCache] objectForKey:DLF_UPLOADED_ASSETS] mutableCopy];
     if (!uploaded) {
         uploaded = [NSMutableOrderedSet orderedSet];

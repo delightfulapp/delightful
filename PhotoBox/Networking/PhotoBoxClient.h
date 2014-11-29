@@ -9,7 +9,7 @@
 #import "AFOAuth1Client.h"
 #import <OVCClient.h>
 
-@class ALAsset;
+@import Photos;
 
 @class Album;
 

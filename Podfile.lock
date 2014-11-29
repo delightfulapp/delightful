@@ -9,7 +9,7 @@ PODS:
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
   - DAProgressOverlayView (1.0.2)
-  - DLFPhotosPicker (0.1)
+  - DLFPhotosPicker (0.3)
   - Expecta (0.2.4)
   - GPUImage (0.1.4)
   - Mantle (1.4.1):
@@ -70,7 +70,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DLFPhotosPicker:
-    :commit: 95e2084dfeb0c4e5466ef45057417768c410b9e4
+    :commit: fc59d07f7cf84fc31c7e0fb8e5d29d06763518b7
     :git: git@github.com:nicnocquee/DLFPhotosPicker.git
   YapDatabase:
     :commit: 9f717d54a0a7b5e5b0ab52834b36ef588c21f1a8
@@ -82,7 +82,7 @@ SPEC CHECKSUMS:
   AFOAuth1Client: 53c76d9cadd73142a9f73854456d5d970bdc147a
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
   DAProgressOverlayView: 66f743e4bbbb0b5fe241670b9156d948cc228fc1
-  DLFPhotosPicker: 823055b0ed5bcdadfe2be0fe41769ad944747b11
+  DLFPhotosPicker: 5c8e6438ae5955253178ef62284e26df7c31018b
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   Mantle: 1ca9c0fa84d3d3fc98524e7229f30489b6dd44e5

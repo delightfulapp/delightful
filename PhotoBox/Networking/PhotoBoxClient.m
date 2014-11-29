@@ -14,9 +14,9 @@
 #import "Album.h"
 #import "Photo.h"
 #import "Tag.h"
-#import "ALAsset+Additionals.h"
 #import "DLFAsset.h"
 
+#import <CoreLocation/CoreLocation.h>
 #import <objc/runtime.h>
 #import <OVCMultipartPart.h>
 
@@ -219,59 +219,57 @@
            progress:(void(^)(float progress))progress
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock {
-    ALAsset *photo = asset.asset;
-    if (photo.defaultRepresentation.url) {
+    PHAsset *photo = asset.asset;
+    [photo requestContentEditingInputWithOptions:nil completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
         NSString *tags = asset.tags;
         Album *album = asset.album;
         BOOL privatePhotos = asset.privatePhoto;
-        
-        NSString *type = photo.defaultRepresentation.UTI;
-        NSString *fileName = photo.defaultRepresentation.filename;
-        NSData *data = [photo defaultRepresentationData];
-        NSString *latitude = [photo latitudeString];
-        NSString *longitude = [photo longitudeString];
-        NSString *path = @"/photo/upload.json";
-        NSMutableDictionary *params = [NSMutableDictionary dictionary];
-        if (latitude && longitude) {
-            [params addEntriesFromDictionary:@{@"latitude": latitude, @"longitude": longitude}];
-        }
-        if (tags && tags.length > 0) {
-            [params addEntriesFromDictionary:@{@"tags": tags}];
-        }
-        if (album) {
-            [params addEntriesFromDictionary:@{@"albums": album.albumId}];
-        }
-        [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
-        
-        OVCMultipartPart *part = [OVCMultipartPart partWithData:data name:@"photo" type:type filename:fileName];
-        NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:path parameters:params parts:@[part]];
-        [request setValue:[self.oauthClient authorizationHeaderForMethod:request.HTTPMethod path:path parameters:params] forHTTPHeaderField:@"Authorization"];
-        [request setHTTPShouldHandleCookies:NO];
-        OVCRequestOperation *operation = [self HTTPRequestOperationWithRequest:request resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-            if (error) {
-                if (failureBlock) {
-                    failureBlock(error);
-                }
-            } else {
-                if (successBlock) {
-                    successBlock(responseObject);
-                }
+        NSString *fileName = contentEditingInput.fullSizeImageURL.lastPathComponent;
+        [[PHImageManager defaultManager] requestImageDataForAsset:photo options:nil resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+            CLLocation *location = photo.location;
+            NSString *path = @"/photo/upload.json";
+            NSMutableDictionary *params = [NSMutableDictionary dictionary];
+            if (location) {
+                [params addEntriesFromDictionary:@{@"latitude": [NSString stringWithFormat:@"%f", location.coordinate.latitude], @"longitude": [NSString stringWithFormat:@"%f", location.coordinate.longitude]}];
             }
-        }];
-        if (progress) {
-            [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-                float prog = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
-                progress(prog);
+            if (tags && tags.length > 0) {
+                [params addEntriesFromDictionary:@{@"tags": tags}];
+            }
+            if (album) {
+                [params addEntriesFromDictionary:@{@"albums": album.albumId}];
+            }
+            [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
+            
+            NSString *type = (__bridge NSString *)(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)(dataUTI), kUTTagClassMIMEType));
+            NSLog(@"Params: %@", params);
+            NSLog(@"Type: %@", type);
+            NSLog(@"Filename: %@", fileName);
+            
+            OVCMultipartPart *part = [OVCMultipartPart partWithData:imageData name:@"photo" type:type filename:fileName];
+            NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:path parameters:params parts:@[part]];
+            [request setValue:[self.oauthClient authorizationHeaderForMethod:request.HTTPMethod path:path parameters:params] forHTTPHeaderField:@"Authorization"];
+            [request setHTTPShouldHandleCookies:NO];
+            OVCRequestOperation *operation = [self HTTPRequestOperationWithRequest:request resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+                if (error) {
+                    if (failureBlock) {
+                        failureBlock(error);
+                    }
+                } else {
+                    if (successBlock) {
+                        successBlock(responseObject);
+                    }
+                }
             }];
-        }
-        
-        [self enqueueHTTPRequestOperation:operation];
-    } else {
-        if (failureBlock) {
-            NSError *error = [NSError errorWithDomain:@"com.getdelightful" code:-100 userInfo:@{NSLocalizedFailureReasonErrorKey: NSLocalizedString(@"Invalid asset", nil)}];
-            failureBlock(error);
-        }
-    }
+            if (progress) {
+                [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
+                    float prog = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
+                    progress(prog);
+                }];
+            }
+            
+            [self enqueueHTTPRequestOperation:operation];
+        }];
+    }];
 }
 
 #pragma mark - Getters

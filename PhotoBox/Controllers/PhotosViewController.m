@@ -40,8 +40,9 @@
 #import "SortTableViewController.h"
 #import "UploadViewController.h"
 #import <DLFPhotosPickerViewController.h>
+#import <DLFDetailViewController.h>
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -50,7 +51,6 @@
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 @property (nonatomic, assign) BOOL viewJustDidLoad;
-@property (nonatomic, strong) NSArray *assetsToUpload;
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 
 @end
@@ -136,6 +136,7 @@
 
 - (void)didTapUploadButton:(id)sender {
     DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
+    [picker setPhotosPickerDelegate:self];
     [self presentViewController:picker animated:YES completion:nil];
 }
 
@@ -527,35 +528,36 @@
     
     return location;
 }
-//
-//#pragma mark - CTAssetsPickerControllerDelegate
-//
-//- (BOOL)assetsPickerController:(CTAssetsPickerController *)picker shouldShowAssetsGroup:(ALAssetsGroup *)group {
-//    return [group numberOfAssets] > 0?YES:NO;
-//}
-//
-//- (void)assetsPickerController:(CTAssetsPickerController *)picker didFinishPickingAssets:(NSArray *)assets {
-//    self.assetsToUpload = assets;
-//    
-//    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-//    [tagsalbumspicker setDelegate:self];
-//    [picker pushViewController:tagsalbumspicker animated:YES];
-//}
+
+#pragma mark - DLFPhotosPickerViewControllerDelegate
+
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker detailViewController:(DLFDetailViewController *)detailViewController didSelectPhotos:(NSArray *)photos {
+    NSMutableArray *assets = [NSMutableArray arrayWithCapacity:photos.count];
+    for (PHAsset *photo in photos) {
+        DLFAsset *asset = [[DLFAsset alloc] init];
+        asset.asset = photo;
+        [assets addObject:asset];
+    }
+    TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    [tagsalbumspicker setSelectedAssets:assets];
+    [tagsalbumspicker setDelegate:self];
+    [detailViewController.navigationController pushViewController:tagsalbumspicker animated:YES];
+}
+
+- (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
+    [photosPicker dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - Tags Albums Picker View Controller Delegate
 
-- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishWithTags:(NSString *)tags album:(Album *)album private:(BOOL)privatePhotos {
+- (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
     [self dismissViewControllerAnimated:YES completion:^{
         UploadViewController *uploadVC = [[UploadViewController alloc] init];
-        [uploadVC setUploads:self.assetsToUpload];
-        [uploadVC setTags:tags];
-        [uploadVC setAlbum:album];
-        [uploadVC setPrivatePhotos:privatePhotos];
+        [uploadVC setUploads:assets];
         
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:uploadVC];
         
         self.uploadViewController = uploadVC;
-        self.assetsToUpload = nil;
         
         [self presentViewController:navCon animated:YES completion:^{
             [uploadVC startUpload];

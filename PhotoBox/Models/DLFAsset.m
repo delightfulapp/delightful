@@ -12,7 +12,7 @@
 
 + (NSArray *)assetsArrayFromALAssetArray:(NSArray *)array {
     NSMutableArray *dlfAssetArray = [NSMutableArray arrayWithCapacity:array.count];
-    for (ALAsset *asset in array) {
+    for (PHAsset *asset in array) {
         DLFAsset *a = [[DLFAsset alloc] init];
         a.asset = asset;
         [dlfAssetArray addObject:a];

@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class ALAsset;
-
 @class Album;
 
 @class DLFAsset;
