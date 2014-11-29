@@ -234,9 +234,17 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 
 - (void)refreshResource:(NSString *)resource {
     if ([resource isEqualToString:NSStringFromClass([Tag class])]) {
-        self.tagsRefreshRequested = YES;
+        if (!self.isSyncingTags) {
+            [self fetchTagsForPage:1];
+        } else {
+            self.tagsRefreshRequested = YES;
+        }
     } else if ([resource isEqualToString:NSStringFromClass([Album class])]) {
-        self.albumsRefreshRequested = YES;
+        if (!self.isSyncingAlbums) {
+            [self fetchAlbumsForPage:1];
+        } else {
+            self.albumsRefreshRequested = YES;
+        }
     }
 }
 

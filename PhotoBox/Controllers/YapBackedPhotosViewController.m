@@ -27,13 +27,13 @@
 @implementation YapBackedPhotosViewController
 
 - (void)refresh {
-    NSLog(@"Refresh in %@", self.item?self.item.itemId:@"all photos");
+    CLS_LOG(@"Refresh in %@", self.item?self.item.itemId:@"all photos");
     
     [(GroupedPhotosDataSource *)self.dataSource setPause:YES];
     [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:(self.item?self.item.itemId:nil)];
     
     void (^photosRemovalCompletion)() = ^void() {
-        NSLog(@"Photos in %@ removed", self.item.itemId);
+        CLS_LOG(@"Photos in %@ removed", self.item.itemId);
         [((GroupedPhotosDataSource *)self.dataSource).mainConnection beginLongLivedReadTransaction];
         [((GroupedPhotosDataSource *)self.dataSource).mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
             [((GroupedPhotosDataSource *)self.dataSource).selectedViewMapping.mapping updateWithTransaction:transaction];
@@ -41,7 +41,7 @@
         [self.collectionView reloadData];
         [self.refreshControl endRefreshing];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            NSLog(@"refreshing now");
+            CLS_LOG(@"refreshing now");
             [(GroupedPhotosDataSource *)self.dataSource setPause:NO];
             [[SyncEngine sharedEngine] refreshPhotosInCollection:(self.item?self.item.itemId:nil) collectionType:(self.item?self.item.class:nil) sort:self.currentSort];
         });

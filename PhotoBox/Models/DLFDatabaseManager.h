@@ -33,6 +33,12 @@ extern NSString *favoritedPhotosCollectionName;
 
 - (void)removePhotosInFlattenedView:(NSString *)viewName completion:(void(^)())completion;
 
+- (void)removeAlbumsCompletion:(void(^)())completion;
+
+- (void)removeTagsCompletion:(void(^)())completion;
+
+- (void)removeCollection:(Class)classCollection completion:(void(^)())completion;
+
 + (void)removeDatabase;
 
 - (void)removeItemWithKey:(NSString *)key inCollection:(NSString *)collection;

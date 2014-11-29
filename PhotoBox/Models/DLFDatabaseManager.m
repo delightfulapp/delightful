@@ -99,6 +99,26 @@ NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
     return count;
 }
 
+- (void)removeAlbumsCompletion:(void (^)())completion {
+    [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction removeAllObjectsInCollection:albumsCollectionName];
+    } completionBlock:completion];
+}
+
+- (void)removeTagsCompletion:(void (^)())completion {
+    [self.writeConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction removeAllObjectsInCollection:tagsCollectionName];
+    } completionBlock:completion];
+}
+
+- (void)removeCollection:(Class)classCollection completion:(void (^)())completion {
+    if (classCollection == Album.class) {
+        [self removeAlbumsCompletion:completion];
+    } else if (classCollection == Tag.class) {
+        [self removeTagsCompletion:completion];
+    }
+}
+
 - (void)removeAllItems {
     CLS_LOG(@"Removing all items");
     [self.writeConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
