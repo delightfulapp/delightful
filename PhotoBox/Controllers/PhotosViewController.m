@@ -81,8 +81,10 @@
     
     self.currentSort = @"dateUploaded,desc";
     
-    UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"upload"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(didTapUploadButton:)];
-    [self.navigationItem setLeftBarButtonItem:uploadButton];
+    if (self.navigationController.viewControllers.count == 1) {
+        UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"upload"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(didTapUploadButton:)];
+        [self.navigationItem setLeftBarButtonItem:uploadButton];
+    }
     
     self.viewJustDidLoad = YES;
     
