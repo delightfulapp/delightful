@@ -20,7 +20,11 @@ extern NSString *const DLFAssetUploadDidChangeNumberOfFailUploadsNotification;
 
 extern NSString *const DLFAssetUploadDidSucceedNotification;
 
+extern NSString *const DLFAssetUploadDidQueueAssetNotification;
+
 extern NSString *const kAssetURLKey;
+
+extern NSString *const kAssetKey;
 
 extern NSString *const kProgressKey;
 
@@ -39,5 +43,7 @@ extern NSString *const kNumberOfUploadsKey;
 - (void)reloadUpload;
 
 - (void)clearFailUploads;
+
+- (NSArray *)queuedAssets;
 
 @end

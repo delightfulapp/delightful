@@ -16,7 +16,11 @@
 
 #import "NPRImageDownloader.h"
 
+#import "DLFImageUploader.h"
+
 #import "OriginalImageDownloaderViewController.h"
+
+#import "UploadViewController.h"
 
 static void * imageDownloadContext = &imageDownloadContext;
 
@@ -64,12 +68,19 @@ static void * imageDownloadContext = &imageDownloadContext;
     self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
     
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    [[NPRImageDownloader sharedDownloader] removeObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) context:imageDownloadContext];
 }
 
 #pragma mark - Table view data source
@@ -110,8 +121,8 @@ static void * imageDownloadContext = &imageDownloadContext;
                 break;
             } case 1:{
                 if (self.numberOfUploads > 0) {
-                    titleText = NSLocalizedString(@"Uploading ...", nil);
-                    detailText = [NSString stringWithFormat:@"%d", self.numberOfUploads];
+                    titleText = (self.numberOfUploads==1)?[NSString stringWithFormat:NSLocalizedString(@"Uploading %d photo ...", nil), self.numberOfUploads]:[NSString stringWithFormat:NSLocalizedString(@"Uploading %d photos ...", nil), self.numberOfUploads];
+                    detailText = @"";
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                 }
                 break;
@@ -164,6 +175,9 @@ static void * imageDownloadContext = &imageDownloadContext;
         if (indexPath.row == 0) {
             OriginalImageDownloaderViewController *downloadingVC = [[OriginalImageDownloaderViewController alloc] initWithStyle:UITableViewStylePlain];
             [self showViewController:downloadingVC sender:nil];
+        } else if (indexPath.row == 1) {
+            UploadViewController *uploadVC = [[UploadViewController alloc] init];
+            [self showViewController:uploadVC sender:nil];
         }
     }
 }
@@ -209,6 +223,13 @@ static void * imageDownloadContext = &imageDownloadContext;
         self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
         [self.tableView reloadData];
     }
+}
+
+#pragma mark - Notification
+
+- (void)uploadNumberChangeNotification:(NSNotification *)notification {
+    self.numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] intValue];
+    [self.tableView reloadData];
 }
 
 @end

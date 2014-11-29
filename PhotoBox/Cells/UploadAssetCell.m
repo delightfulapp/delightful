@@ -36,8 +36,6 @@
     if (_item != item) {
         _item = item;
         
-        DLFAsset *asset = (DLFAsset *)_item;
-        //[self.cellImageView setImage:[UIImage imageWithCGImage:[asset.asset thumbnail]]];
         [self setUploadProgress:0];
     }
 }

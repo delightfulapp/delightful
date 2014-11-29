@@ -12,6 +12,16 @@
 
 #define UPLOAD_BAR_HEIGHT 22
 
+@class UploadViewController;
+
+@protocol UploadViewControllerDelegate <NSObject>
+
+@optional
+- (void)uploadViewControllerDidFinishUploading:(UploadViewController *)uploadViewController;
+- (void)uploadViewControllerDidClose:(UploadViewController *)uploadViewController;
+
+@end
+
 @class Album;
 
 @interface UploadViewController : UIViewController
@@ -30,7 +40,7 @@
 
 @property (nonatomic, weak, readonly) UIButton *cancelButton;
 
-- (void)startUpload;
+@property (nonatomic, weak) id<UploadViewControllerDelegate>delegate;
 
 - (void)reloadUpload;
 

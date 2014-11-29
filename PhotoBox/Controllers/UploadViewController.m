@@ -28,8 +28,6 @@
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 
-@property (nonatomic, strong) UploadHeaderView *headerView;
-
 @property (nonatomic, strong) NSMutableArray *internalUploads;
 
 @property (nonatomic, weak) UploadReloadView *reloadView;
@@ -47,37 +45,40 @@
 {
     [super viewDidLoad];
     
-    self.headerView = [[UploadHeaderView alloc] initWithFrame:CGRectZero];
-    [self.headerView setTranslatesAutoresizingMaskIntoConstraints:NO];
-    [self.view addSubview:self.headerView];
-    [self.headerView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
-    [self.headerView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
-    [self.headerView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view];
-    [self.headerView autoSetDimension:ALDimensionHeight toSize:UPLOAD_BAR_HEIGHT];
+    self.internalUploads = [NSMutableArray arrayWithArray:[[DLFImageUploader sharedUploader] queuedAssets]];
     
     [self.collectionView registerClass:[UploadAssetCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     
     [self.collectionView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.view];
     [self.collectionView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.view];
-    [self.collectionView autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.headerView];
+    [self.collectionView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.view];
     [self.collectionView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.view];
-    
-    [self.headerView setNumberOfUploads:self.uploads.count];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadProgressNotification:) name:DLFAssetUploadProgressNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDoneNotification:) name:DLFAssetUploadDidSucceedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didQueueAssetToUploadNotification:) name:DLFAssetUploadDidQueueAssetNotification object:nil];
     
+    self.title = NSLocalizedString(@"Uploading ...", nil);
 }
 
-- (void)startUpload {
-    for (DLFAsset *asset in self.uploads) {
-        [[DLFImageUploader sharedUploader] queueAsset:asset];
+- (void)viewWillAppear:(BOOL)animated {
+    if (self.navigationController.viewControllers.count == 1) {
+        [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height+[[UIApplication sharedApplication] statusBarFrame].size.height, 0, 0, 0)];
+        
+        UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStyleDone target:self action:@selector(didTapCancelButton:)];
+        [self.navigationItem setLeftBarButtonItem:cancelButton];
     }
 }
 
 - (void)reloadUpload {
     [[DLFImageUploader sharedUploader] reloadUpload];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DLFAssetUploadProgressNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DLFAssetUploadDidSucceedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,8 +97,6 @@
 
 - (void)showReloadButtons:(BOOL)show {
     if (show) {
-        [self.headerView setNumberOfUploads:0];
-        
         UploadReloadView *reloadView = [[UploadReloadView alloc] init];
         [reloadView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [self.view addSubview:reloadView];
@@ -115,22 +114,37 @@
     }
 }
 
+- (void)showNoUploads:(BOOL)show {
+    if (show) {
+        UIView *whiteView = [[UIView alloc] initWithFrame:self.collectionView.frame];
+        [whiteView setBackgroundColor:[UIColor whiteColor]];
+        UILabel *textLabel = [[UILabel alloc] initForAutoLayout];
+        [textLabel setText:NSLocalizedString(@"You have no active uploads.", nil)];
+        [textLabel setTextColor:[UIColor grayColor]];
+        [textLabel sizeToFit];
+        [whiteView addSubview:textLabel];
+        [textLabel autoCenterInSuperview];
+        [textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:whiteView withOffset:20 relation:NSLayoutRelationGreaterThanOrEqual];
+        [textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:whiteView withOffset:-20 relation:NSLayoutRelationLessThanOrEqual];
+        [self.collectionView setBackgroundView:whiteView];
+    } else {
+        [self.collectionView setBackgroundView:nil];
+    }
+}
+
 #pragma mark - Getters
 
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        [layout setItemSize:CGSizeMake(UPLOAD_ITEM_WIDTH, UPLOAD_ITEM_WIDTH)];
-        [layout setMinimumInteritemSpacing:1];
-        [layout setMinimumLineSpacing:1];
-        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+        [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
         [_collectionView setDelegate:self];
         [_collectionView setDataSource:self];
         [_collectionView setTranslatesAutoresizingMaskIntoConstraints:NO];
         [_collectionView setAlwaysBounceVertical:NO];
-        [_collectionView setAlwaysBounceHorizontal:YES];
-        [_collectionView setBackgroundColor:[UIColor tabBarTintColor]];
+        [_collectionView setAlwaysBounceVertical:YES];
+        [_collectionView setBackgroundColor:[UIColor whiteColor]];
         
         [self.view addSubview:_collectionView];
     }
@@ -145,17 +159,52 @@
     return @"uploadHeaderIdentifier";
 }
 
+#pragma mark - Buttons
+
+- (void)didTapCancelButton:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(uploadViewControllerDidClose:)]) {
+        [self.delegate uploadViewControllerDidClose:self];
+    }
+}
+
 #pragma mark - Collection View Delegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UploadAssetCell *cell = (UploadAssetCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[self cellIdentifier] forIndexPath:indexPath];
-    [cell setItem:[self.internalUploads objectAtIndex:indexPath.item]];
+    DLFAsset *asset = [self.internalUploads objectAtIndex:indexPath.item];
+    [cell setItem:asset];
+    
+    NSInteger currentTag = cell.tag + 1;
+    cell.tag = currentTag;
+    
+    PHAsset *photo = asset.asset;
+    [[PHCachingImageManager defaultManager] requestImageForAsset:photo targetSize:cell.frame.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
+        if (cell.tag == currentTag) {
+            cell.cellImageView.image = result;
+        }
+    }];
+    
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UploadAssetCell *cell = (UploadAssetCell *)[collectionView cellForItemAtIndexPath:indexPath];
     CLS_LOG(@"Cell progress = %f", cell.uploadProg);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    int numberOfColumns = 3;
+    CGFloat width = collectionView.frame.size.width - (numberOfColumns-1);
+    CGFloat itemWidth = floorf(width/numberOfColumns);
+    return CGSizeMake(itemWidth, itemWidth);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 1;
 }
 
 #pragma mark - Collection View Data Source
@@ -170,9 +219,22 @@
 
 #pragma mark - Upload observers
 
+- (void)didQueueAssetToUploadNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    DLFAsset *asset = [userInfo objectForKey:kAssetKey];
+    [self.internalUploads insertObject:asset atIndex:0];
+    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+}
+
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
     NSInteger numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] integerValue];
-    [self.headerView setNumberOfUploads:numberOfUploads];
+    if (numberOfUploads==0) {
+        self.title = NSLocalizedString(@"Uploading done", nil);
+        [self showNoUploads:YES];
+    } else {
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"Uploading %1$d %2$@", nil), numberOfUploads, (numberOfUploads==1)?NSLocalizedString(@"photo", nil):NSLocalizedString(@"photos", nil)];
+        [self showNoUploads:NO];
+    }
 }
 
 - (void)uploadProgressNotification:(NSNotification *)notification {
@@ -191,10 +253,6 @@
     NSString *identifier = notification.userInfo[kAssetURLKey];
     [self logUploadedAssetURL:identifier];
     
-    if (self.internalUploads.count == 1) {
-        return;
-    }
-    
     NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
         if ([[obj.asset localIdentifier] isEqualToString:identifier]) {
             *stop = YES;
@@ -209,7 +267,11 @@
         [self.collectionView performBatchUpdates:^{
             [self.collectionView deleteItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:index inSection:0]]];
         } completion:^(BOOL finished) {
-            
+            if (self.internalUploads.count == 0) {
+                if (self.delegate && [self.delegate respondsToSelector:@selector(uploadViewControllerDidFinishUploading:)]) {
+                    [self.delegate uploadViewControllerDidFinishUploading:self];
+                }
+            }
         }];
     }
 }

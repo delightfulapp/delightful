@@ -14,6 +14,8 @@
 
 #import "NPRImageDownloader.h"
 
+#import "DLFImageUploader.h"
+
 static void * imageDownloadContext = &imageDownloadContext;
 
 @interface MainTabBarController ()
@@ -21,6 +23,10 @@ static void * imageDownloadContext = &imageDownloadContext;
 @property (nonatomic, assign) int numberOfDownloads;
 
 @property (nonatomic, assign) int numberOfUploads;
+
+@property (nonatomic, assign) BOOL isDownloadingPhotos;
+
+@property (nonatomic, assign) BOOL isUploadingPhotos;
 
 @end
 
@@ -30,6 +36,7 @@ static void * imageDownloadContext = &imageDownloadContext;
     [super viewDidLoad];
     
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,7 +52,13 @@ static void * imageDownloadContext = &imageDownloadContext;
     } else {
         [moreVC.tabBarItem setBadgeValue:nil];
         
-        [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
+        if (self.isDownloadingPhotos) {
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are saved to Photo gallery", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
+            self.isDownloadingPhotos = NO;
+        } else if (self.isUploadingPhotos) {
+            [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Image(s) are uploaded", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
+            self.isUploadingPhotos = NO;
+        }
     }
     
 }
@@ -71,8 +84,17 @@ static void * imageDownloadContext = &imageDownloadContext;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if ([keyPath isEqualToString:NSStringFromSelector(@selector(numberOfDownloads))] && context == imageDownloadContext) {
         self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
+        self.isDownloadingPhotos = YES;
         [self showBadgeOnMoreBarItem];
     }
+}
+
+#pragma mark - Notification
+
+- (void)uploadNumberChangeNotification:(NSNotification *)notification {
+    self.numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] intValue];
+    self.isUploadingPhotos = YES;
+    [self showBadgeOnMoreBarItem];
 }
 
 @end

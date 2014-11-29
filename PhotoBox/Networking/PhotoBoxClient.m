@@ -241,9 +241,6 @@
             [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
             
             NSString *type = (__bridge NSString *)(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)(dataUTI), kUTTagClassMIMEType));
-            NSLog(@"Params: %@", params);
-            NSLog(@"Type: %@", type);
-            NSLog(@"Filename: %@", fileName);
             
             OVCMultipartPart *part = [OVCMultipartPart partWithData:imageData name:@"photo" type:type filename:fileName];
             NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:path parameters:params parts:@[part]];

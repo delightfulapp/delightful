@@ -39,10 +39,11 @@
 #import "SyncEngine.h"
 #import "SortTableViewController.h"
 #import "UploadViewController.h"
+#import "DLFImageUploader.h"
 #import <DLFPhotosPickerViewController.h>
 #import <DLFDetailViewController.h>
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -84,6 +85,8 @@
     [self.navigationItem setLeftBarButtonItem:uploadButton];
     
     self.viewJustDidLoad = YES;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -553,16 +556,39 @@
 - (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
     [self dismissViewControllerAnimated:YES completion:^{
         UploadViewController *uploadVC = [[UploadViewController alloc] init];
-        [uploadVC setUploads:assets];
-        
+        [uploadVC setDelegate:self];
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:uploadVC];
         
         self.uploadViewController = uploadVC;
         
         [self presentViewController:navCon animated:YES completion:^{
-            [uploadVC startUpload];
+            for (DLFAsset *asset in assets) {
+                [[DLFImageUploader sharedUploader] queueAsset:asset];
+            }
         }];
     }];
+}
+
+#pragma mark - UploadViewControllerDelegate
+
+- (void)uploadViewControllerDidClose:(UploadViewController *)uploadViewController {
+    [uploadViewController dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+
+- (void)uploadViewControllerDidFinishUploading:(UploadViewController *)uploadViewController {
+    [uploadViewController dismissViewControllerAnimated:YES completion:^{
+        [self refresh];
+    }];
+}
+
+#pragma mark - Upload Notification
+
+- (void)uploadNumberChangeNotification:(NSNotification *)notification {
+    int numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] intValue];
+    if (numberOfUploads) {
+        [self refresh];
+    }
 }
 
 @end

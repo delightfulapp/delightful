@@ -26,7 +26,11 @@ NSString *const kAssetURLKey = @"com.getdelightfulapp.kAssetURLKey";
 
 NSString *const kProgressKey = @"com.getdelightfulapp.kProgressKey";
 
+NSString *const kAssetKey = @"com.getdelightfulapp.kAssetKey";
+
 NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey";
+
+NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp.DLFAssetUploadDidQueueAssetNotification";
 
 @interface DLFImageUploader ()
 
@@ -77,6 +81,10 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
     return YES;
 }
 
+- (NSArray *)queuedAssets {
+    return self.uploadingAssets;
+}
+
 - (void)uploadProgress:(float)progress asset:(DLFAsset *)asset {
     [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadProgressNotification object:nil userInfo:@{kAssetURLKey: [asset.asset localIdentifier], kProgressKey: @(progress)}];
 }
@@ -94,17 +102,18 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
 - (void)addAsset:(DLFAsset *)asset {
     @synchronized(self){
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
-        [self.uploadingAssets addObject:[asset.asset localIdentifier]];
+        [self.uploadingAssets addObject:asset];
         _numberOfUploading = self.uploadingAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidQueueAssetNotification object:nil userInfo:@{kAssetKey:asset}];
     }
 }
 
 - (void)removeAsset:(DLFAsset *)asset {
     @synchronized(self){
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
-        [self.uploadingAssets removeObject:[asset.asset localIdentifier]];
+        [self.uploadingAssets removeObject:asset];
         _numberOfUploading = self.uploadingAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading)}];
@@ -135,8 +144,7 @@ NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey
 
 - (BOOL)isUploadingAsset:(DLFAsset *)asset {
     @synchronized(self){
-        NSString *identifier = [asset.asset localIdentifier];
-        return [self.uploadingAssets containsObject:identifier];
+        return [self.uploadingAssets containsObject:asset];
     }
 }
 
