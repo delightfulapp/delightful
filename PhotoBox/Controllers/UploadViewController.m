@@ -59,7 +59,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didQueueAssetToUploadNotification:) name:DLFAssetUploadDidQueueAssetNotification object:nil];
     
-    self.title = NSLocalizedString(@"Uploading ...", nil);
+    self.title = NSLocalizedString(@"Uploads", nil);
+    if (self.internalUploads.count == 0) {
+        [self showNoUploads:YES];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {
