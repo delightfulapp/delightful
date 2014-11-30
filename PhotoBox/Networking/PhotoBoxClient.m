@@ -225,7 +225,10 @@
         Album *album = asset.album;
         BOOL privatePhotos = asset.privatePhoto;
         NSString *fileName = contentEditingInput.fullSizeImageURL.lastPathComponent;
-        [[PHImageManager defaultManager] requestImageDataForAsset:photo options:nil resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        [options setResizeMode:PHImageRequestOptionsResizeModeNone];
+        [options setDeliveryMode:PHImageRequestOptionsDeliveryModeHighQualityFormat];
+        [[PHImageManager defaultManager] requestImageDataForAsset:photo options:options resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
             CLLocation *location = photo.location;
             NSString *path = @"/photo/upload.json";
             NSMutableDictionary *params = [NSMutableDictionary dictionary];
