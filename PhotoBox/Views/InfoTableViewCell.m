@@ -71,6 +71,12 @@
     }
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self.infoTextLabel setPreferredMaxLayoutWidth:self.infoTextLabel.frame.size.width];
+    [super layoutSubviews];
+}
+
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
