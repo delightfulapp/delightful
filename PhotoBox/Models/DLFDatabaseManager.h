@@ -43,6 +43,10 @@ extern NSString *favoritedPhotosCollectionName;
 
 - (void)removeItemWithKey:(NSString *)key inCollection:(NSString *)collection;
 
+- (void)tagsWithCompletion:(void(^)(NSArray *tags))completion;
+
+- (NSArray *)tags;
+
 - (void)saveFilteredViewName:(NSString *)viewName fromViewName:(NSString *)fromViewName filterName:(NSString *)filterName groupSortAsc:(BOOL)groupSortAsc objectKey:(NSString *)objectKey filterKey:(NSString *)filterKey;
 
 @end

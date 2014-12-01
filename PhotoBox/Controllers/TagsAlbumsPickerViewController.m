@@ -7,28 +7,18 @@
 //
 
 #import "TagsAlbumsPickerViewController.h"
-
 #import "TagEntryTableViewCell.h"
-
 #import "AlbumPickerTableViewCell.h"
-
 #import "PermissionPickerTableViewCell.h"
-
 #import "Album.h"
-
 #import "Tag.h"
-
 #import "PhotoBoxClient.h"
-
 #import "NSString+Score.h"
-
 #import "TagsSuggestionTableViewController.h"
-
 #import "AlbumsPickerViewController.h"
-
 #import "DelightfulCache.h"
-
 #import "DLFAsset.h"
+#import "DLFDatabaseManager.h"
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
 
@@ -87,6 +77,12 @@
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
     [self.navigationItem setRightBarButtonItem:doneButton];
+    
+    __weak typeof (self) selfie = self;
+    [[DLFDatabaseManager manager] tagsWithCompletion:^(NSArray *tags) {
+        selfie.tags = tags;
+        [selfie.tagsSuggestionViewController.tableView reloadData];
+    }];
 }
 
 
@@ -206,8 +202,8 @@
     self.currentEditedTag = tagToSuggest;
     if (self.tags) {
         if (tagToSuggest && tagToSuggest.length > 0) {
-            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Tag *evaluatedObject, NSDictionary *bindings) {
-                NSString *tagName = evaluatedObject.tagId;
+            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *evaluatedObject, NSDictionary *bindings) {
+                NSString *tagName = evaluatedObject;
                 return [[tagName lowercaseString] scoreAgainst:[tagToSuggest lowercaseString]] > 0.5;
             }];
             NSArray *suggestions = [self.tags filteredArrayUsingPredicate:predicate];
@@ -267,7 +263,7 @@
             self.tagsSuggestionViewController = [[TagsSuggestionTableViewController alloc] initWithStyle:UITableViewStylePlain];
             [self.tagsSuggestionViewController setPickerDelegate:self];
         }
-        [self.tagsSuggestionViewController setSuggestions:[suggestions valueForKeyPath:NSStringFromSelector(@selector(tagId))]];
+        [self.tagsSuggestionViewController setSuggestions:suggestions];
         
         self.tagsSuggestionViewController.tableView.frame = ({
             CGRect frame = self.tagsSuggestionViewController.tableView.frame;

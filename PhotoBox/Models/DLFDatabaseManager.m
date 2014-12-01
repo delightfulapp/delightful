@@ -222,4 +222,23 @@ NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
     }];
 }
 
+- (void)tagsWithCompletion:(void (^)(NSArray *))completion {
+    [self.readConnection asyncReadWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        NSArray *tags = [transaction allKeysInCollection:tagsCollectionName];
+        if (completion) {
+            completion(tags);
+        }
+    }];
+}
+
+- (NSArray *)tags {
+    __block NSArray *tags;
+    
+    [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        tags = [transaction allKeysInCollection:tagsCollectionName];
+    }];
+    
+    return tags;
+}
+
 @end

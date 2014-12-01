@@ -546,6 +546,7 @@
     TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
     [tagsalbumspicker setSelectedAssets:assets];
     [tagsalbumspicker setDelegate:self];
+        
     [detailViewController.navigationController pushViewController:tagsalbumspicker animated:YES];
 }
 
