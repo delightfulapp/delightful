@@ -72,6 +72,7 @@ static char *kSearchBarCenterContext;
 - (void)restoreContentInset {
     [self.collectionView setContentInset:UIEdgeInsetsMake(self.searchBar.isHidden?CGRectGetMaxY(self.navigationController.navigationBar.frame):CGRectGetMaxY(self.searchBar.frame), 0, 0, 0)];
     [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
+    self.collectionViewInsets = self.collectionView.contentInset;
 }
 
 - (void)restoreContentInsetForSize:(CGSize)size {
