@@ -50,9 +50,7 @@ static void * imageUploadContext = &imageUploadContext;
         // if unit test, need to return quickly. Reference: http://www.objc.io/issue-1/testing-view-controllers.html
         return YES;
     }
-    
-    [self runCrashlytics];
-    
+        
     [[[SDWebImageManager sharedManager] imageCache] setMaxCacheAge:DEFAULT_PHOTOS_CACHE_AGE];
     
     [self.window setTintColor:[UIColor redColor]];
@@ -60,6 +58,8 @@ static void * imageUploadContext = &imageUploadContext;
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         [[SyncEngine sharedEngine] initialize];
     }
+    
+    [self runCrashlytics];
     
     return YES;
 }
