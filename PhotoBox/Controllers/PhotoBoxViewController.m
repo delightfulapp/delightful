@@ -500,12 +500,11 @@ NSString *const galleryContainerType = @"gallery";
             [self showEmptyLoading:NO];
             [self showRightBarButtonItem:YES];
         } else {
-            if (self.isFetching) {
-                if (![self showSyncingLoadingMessageIfNeeded]) {
-                    [self showEmptyLoading:YES];
-                }
-                [self showRightBarButtonItem:NO];
-            } else {
+            if (![self showSyncingLoadingMessageIfNeeded]) {
+                [self showEmptyLoading:YES];
+            }
+            [self showRightBarButtonItem:NO];
+            if (self.isDoneSyncing) {
                 [self showNoItems:YES];
             }
             

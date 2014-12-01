@@ -28,6 +28,9 @@
 
 - (void)refresh {
     CLS_LOG(@"Refresh in %@", self.item?self.item.itemId:@"all photos");
+    self.isDoneSyncing = NO;
+    [self showNoItems:NO];
+    [self showEmptyLoading:YES];
     
     [(GroupedPhotosDataSource *)self.dataSource setPause:YES];
     [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:(self.item?self.item.itemId:nil)];

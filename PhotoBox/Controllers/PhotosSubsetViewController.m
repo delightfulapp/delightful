@@ -69,6 +69,7 @@
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
         NSLog(@"will start syncing");
         [self setIsFetching:YES];
+        self.isDoneSyncing = NO;
     }
 }
 
@@ -83,10 +84,7 @@
             NSLog(@"fetched 0 photos");
             [self setIsFetching:NO];
             
-            int numberOfItems = (int)[((PhotosSubsetDataSource *)self.dataSource) numberOfItems];
-            if (numberOfItems == 0) {
-                [self showNoItems:YES];
-            }
+            self.isDoneSyncing = YES;
         }
     }
 }

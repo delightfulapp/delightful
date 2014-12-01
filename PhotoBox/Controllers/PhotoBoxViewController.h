@@ -42,6 +42,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) BOOL registerSyncingNotification;
 
 @property (nonatomic, assign) BOOL isFetching;
+@property (nonatomic, assign) BOOL isDoneSyncing;
 
 - (Class)dataSourceClass;
 - (void)refresh;
