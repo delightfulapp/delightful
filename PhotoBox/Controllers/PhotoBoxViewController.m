@@ -122,13 +122,9 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)showEmptyLoading:(BOOL)show withText:(id)text {
     if (show) {
-        UIView *view = self.collectionView.backgroundView;
-        
-        if (!view) {
-            view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
-            [self.collectionView setBackgroundView:view];
-            [view setBackgroundColor:[UIColor whiteColor]];
-        }
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
+        [self.collectionView setBackgroundView:view];
+        [view setBackgroundColor:[UIColor whiteColor]];
         
         UIActivityIndicatorView *indicator = (UIActivityIndicatorView *)[view viewWithTag:20000];
         if (!indicator) {
@@ -174,6 +170,31 @@ NSString *const galleryContainerType = @"gallery";
     }
 }
 
+- (void)showNoItems:(BOOL)show {
+    if (show) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
+        [self.collectionView setBackgroundView:view];
+        [view setBackgroundColor:[UIColor whiteColor]];
+        
+        UILabel *textLabel = (UILabel *)[view viewWithTag:10000];
+        if (!textLabel) {
+            textLabel = [[UILabel alloc] initForAutoLayout];
+            [textLabel setNumberOfLines:0];
+            [textLabel setTag:10000];
+            [view addSubview:textLabel];
+            [textLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:view withOffset:20];
+            [textLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:view withOffset:-20];
+            [textLabel autoCenterInSuperview];
+        }
+        
+        [textLabel setText:NSLocalizedString(@"No Photos", nil)];
+        [textLabel setTextAlignment:NSTextAlignmentCenter];
+        [textLabel setFont:[UIFont systemFontOfSize:12]];
+        [textLabel setTextColor:[UIColor lightGrayColor]];
+    } else {
+        [self.collectionView setBackgroundView:nil];
+    }
+}
 
 
 - (void)showRightBarButtonItem:(BOOL)show {
@@ -479,10 +500,15 @@ NSString *const galleryContainerType = @"gallery";
             [self showEmptyLoading:NO];
             [self showRightBarButtonItem:YES];
         } else {
-            if (![self showSyncingLoadingMessageIfNeeded]) {
-                [self showEmptyLoading:YES];
+            if (self.isFetching) {
+                if (![self showSyncingLoadingMessageIfNeeded]) {
+                    [self showEmptyLoading:YES];
+                }
+                [self showRightBarButtonItem:NO];
+            } else {
+                [self showNoItems:YES];
             }
-            [self showRightBarButtonItem:NO];
+            
         }
     }
 }

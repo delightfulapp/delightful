@@ -59,6 +59,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 - (void)showEmptyLoading:(BOOL)show;
 - (void)showEmptyLoading:(BOOL)show withText:(id)text;
+- (void)showNoItems:(BOOL)show;
 - (void)showRightBarButtonItem:(BOOL)show;
 
 @end

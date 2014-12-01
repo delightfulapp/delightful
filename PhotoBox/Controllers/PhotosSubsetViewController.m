@@ -82,6 +82,11 @@
         if (count.intValue == 0) {
             NSLog(@"fetched 0 photos");
             [self setIsFetching:NO];
+            
+            int numberOfItems = (int)[((PhotosSubsetDataSource *)self.dataSource) numberOfItems];
+            if (numberOfItems == 0) {
+                [self showNoItems:YES];
+            }
         }
     }
 }
