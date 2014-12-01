@@ -19,6 +19,7 @@
 #import "DelightfulCache.h"
 #import "DLFAsset.h"
 #import "DLFDatabaseManager.h"
+#import "SyncEngine.h"
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
 
@@ -70,6 +71,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishFetchingTagsNotification:) name:SyncEngineDidFinishFetchingNotification object:nil];
     
     [self.tableView registerClass:[TagEntryTableViewCell class] forCellReuseIdentifier:[TagEntryTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
@@ -81,8 +83,13 @@
     __weak typeof (self) selfie = self;
     [[DLFDatabaseManager manager] tagsWithCompletion:^(NSArray *tags) {
         selfie.tags = tags;
-        [selfie.tagsSuggestionViewController.tableView reloadData];
     }];
+    
+    [[SyncEngine sharedEngine] startSyncingTags];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SyncEngineDidFinishFetchingNotification object:nil];
 }
 
 
@@ -292,6 +299,19 @@
 // Called when the UIKeyboardWillHideNotification is sent
 - (void)keyboardWillBeHidden:(NSNotification*)aNotification
 {
+    
+}
+
+#pragma mark - Tags Fetching Notification
+
+- (void)didFinishFetchingTagsNotification:(NSNotification *)notification {
+    if ([notification.userInfo[SyncEngineNotificationResourceKey] isEqualToString:NSStringFromClass([Tag class])]) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:SyncEngineDidFinishFetchingNotification object:nil];
+        __weak typeof (self) selfie = self;
+        [[DLFDatabaseManager manager] tagsWithCompletion:^(NSArray *tags) {
+            selfie.tags = tags;
+        }];
+    }
     
 }
 
