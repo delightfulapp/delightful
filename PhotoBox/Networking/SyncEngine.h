@@ -27,9 +27,9 @@ extern NSString *const SyncEngineNotificationCountKey;
 
 + (instancetype)sharedEngine;
 
-- (void)startSyncingPhotosInCollection:(NSString *)albumId collectionType:(Class)collectionType sort:(NSString *)sort;
+- (void)startSyncingPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort;
 
-- (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection;
+- (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection collectionType:(Class)collectionType;
 
 - (void)refreshPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort;
 
@@ -39,11 +39,8 @@ extern NSString *const SyncEngineNotificationCountKey;
 
 - (void)refreshResource:(NSString *)resource;
 
-- (void)initialize;
-
 @property (nonatomic, assign, readonly) BOOL isSyncingAlbums;
 @property (nonatomic, assign, readonly) BOOL isSyncingTags;
-@property (nonatomic, assign, readonly) BOOL isInitializing;
 
 @property (nonatomic, assign) BOOL pauseAlbumsSync;
 @property (nonatomic, assign) BOOL pauseTagsSync;

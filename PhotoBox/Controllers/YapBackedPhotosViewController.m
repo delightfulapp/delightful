@@ -32,8 +32,7 @@
     [self showNoItems:NO];
     [self showEmptyLoading:YES];
     
-    [(GroupedPhotosDataSource *)self.dataSource setPause:YES];
-    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:(self.item?self.item.itemId:nil)];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:(self.item?self.item.itemId:nil) collectionType:self.item.class];
     
     void (^photosRemovalCompletion)() = ^void() {
         CLS_LOG(@"Photos in %@ removed", self.item.itemId);
@@ -45,7 +44,6 @@
         [self.refreshControl endRefreshing];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             CLS_LOG(@"refreshing now");
-            [(GroupedPhotosDataSource *)self.dataSource setPause:NO];
             [[SyncEngine sharedEngine] refreshPhotosInCollection:(self.item?self.item.itemId:nil) collectionType:(self.item?self.item.class:nil) sort:self.currentSort];
         });
     };

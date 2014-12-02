@@ -124,7 +124,7 @@
 - (void)pauseSyncing:(BOOL)pause {
     [self setRegisterSyncingNotification:!pause];
     [((YapDataSource *)self.dataSource) setPause:pause];
-    [[SyncEngine sharedEngine] pauseSyncingPhotos:pause collection:nil];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:pause collection:nil collectionType:self.item.class];
 }
 
 - (void)didReceiveMemoryWarning

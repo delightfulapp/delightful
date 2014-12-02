@@ -7,22 +7,15 @@
 //
 
 #import "SyncEngine.h"
-
 #import "PhotoBoxClient.h"
-
 #import "DLFDatabaseManager.h"
-
 #import "Photo.h"
-
 #import "Album.h"
-
 #import "Tag.h"
-
 #import "GroupedPhotosDataSource.h"
-
 #import "DLFYapDatabaseViewAndMapping.h"
-
 #import <YapDatabase.h>
+#import <AFURLConnectionOperation.h>
 
 #define FETCHING_PAGE_SIZE 20
 
@@ -49,6 +42,8 @@ NSString *const PhotosLastSyncDateKey = @"photos_last_sync";
 NSString *const PhotosCacheExpirationKey = @"photos_cache_expiration_interval";
 NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 
+static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
+
 @interface SyncPhotosParam : NSObject
 
 @property (nonatomic, assign) BOOL isSyncing;
@@ -67,36 +62,26 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 @interface SyncEngine ()
 
 @property (nonatomic, strong) YapDatabase *database;
-
 @property (nonatomic, strong) YapDatabaseConnection *photosConnection;
-
 @property (nonatomic, strong) YapDatabaseConnection *albumsConnection;
-
 @property (nonatomic, strong) YapDatabaseConnection *tagsConnection;
-
 @property (nonatomic, strong) YapDatabaseConnection *readConnection;
+@property (nonatomic, strong) AFURLConnectionOperation *allPhotosSyncingOperation;
+@property (nonatomic, strong) AFURLConnectionOperation *photosInAlbumSyncingOperation;
+@property (nonatomic, strong) AFURLConnectionOperation *photosInTagSyncingOperation;
+@property (nonatomic, strong) AFURLConnectionOperation *tagsSyncingOperation;
+@property (nonatomic, strong) AFURLConnectionOperation *albumsSyncingOperation;
+@property (nonatomic, assign) BOOL pauseAllPhotosSyncOperation;
+@property (nonatomic, assign) BOOL pausePhotosInAlbumSyncOperation;
+@property (nonatomic, assign) BOOL pausePhotosInTagSyncOperation;
+@property (nonatomic, assign) int allPhotosSyncOperationPage;
+@property (nonatomic, assign) int photosInAlbumSyncOperationPage;
+@property (nonatomic, assign) int photosInTagSyncOperationPage;
+@property (nonatomic, strong) NSString *allPhotosSyncOperationSort;
+@property (nonatomic, strong) NSString *photosInAlbumSyncOperationSort;
+@property (nonatomic, strong) NSString *photosInTagSyncOperationSort;
 
-@property (nonatomic, assign) int albumsFetchingPage;
-
-@property (nonatomic, assign) int photosFetchingPage;
-
-@property (nonatomic, assign) BOOL tagsRefreshRequested;
-
-@property (nonatomic, assign) BOOL albumsRefreshRequested;
-
-@property (nonatomic, assign) BOOL photosRefreshRequested;
-
-@property (nonatomic, assign) BOOL isSyncingPhotos;
-@property (nonatomic, assign) BOOL isSyncingAlbums;
-@property (nonatomic, assign) BOOL isSyncingTags;
-@property (nonatomic, assign) BOOL isInitializing;
-
-@property (nonatomic, strong) NSMutableDictionary *syncingJobs;
-
-@property (nonatomic, strong) NSDate *lastSyncAlbums;
-@property (nonatomic, strong) NSDate *lastSyncTags;
-
-@property (nonatomic, strong) NSOperation *allPhotosFetchingOperation;
+@property (readwrite, nonatomic, strong) NSRecursiveLock *lock;
 
 @end
 
@@ -134,182 +119,106 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
         self.readConnection.objectCacheEnabled = YES; // don't needpa cache for write-only connection
         self.readConnection.metadataCacheEnabled = NO;
         
-        self.syncingJobs = [NSMutableDictionary dictionary];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didReceiveMemoryWarning:) name:UIApplicationDidReceiveMemoryWarningNotification object:nil];
+        self.lock = [[NSRecursiveLock alloc] init];
+        self.lock.name = kLockName;
     }
     return self;
 }
 
-- (void)initialize {
-    if (!self.isInitializing) {
-        self.isInitializing = YES;
-        CLS_LOG(@"Starting initialization");
-        
-        __block NSDate *lastPhotosSyncDate;
-        __block int secondsPhotosCacheExpiration;
-        [self.readConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-            lastPhotosSyncDate = [transaction objectForKey:PhotosLastSyncDateKey inCollection:SyncSettingCollectionName];
-            secondsPhotosCacheExpiration = [[transaction objectForKey:PhotosCacheExpirationKey inCollection:SyncSettingCollectionName] intValue];
-        }];
-        if (secondsPhotosCacheExpiration == 0) {
-            secondsPhotosCacheExpiration = DEFAULT_PHOTOS_CACHE_AGE;
+- (void)startSyncingPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort {
+    if (collectionType == Album.class) {
+        if (self.photosInAlbumSyncingOperation) {
+            [self.photosInAlbumSyncingOperation cancel];
         }
-        BOOL needToInvalidateCache = NO;
-        if (lastPhotosSyncDate) {
-            CLS_LOG(@"There is last photos sync date. Checking if it has expired");
-            NSDate *date = [NSDate date];
-            NSInteger interval = [date timeIntervalSinceDate:lastPhotosSyncDate];
-            if (interval > secondsPhotosCacheExpiration) {
-                needToInvalidateCache = YES;
-            }
-        } else {
-            CLS_LOG(@"No last photos sync date.");
-            needToInvalidateCache = YES;
+        self.pausePhotosInAlbumSyncOperation = NO;
+        self.photosInAlbumSyncOperationSort = sort;
+        self.photosInAlbumSyncOperationPage = 0;
+        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:0 sort:sort];
+    } else if (collectionType == Tag.class) {
+        if (self.photosInTagSyncingOperation) {
+            [self.photosInTagSyncingOperation cancel];
         }
-        
-        [self.photosConnection readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-            [transaction setObject:[NSDate date] forKey:PhotosLastSyncDateKey inCollection:SyncSettingCollectionName];
-        }];
-        
-        if (needToInvalidateCache) {
-            CLS_LOG(@"Cache expired. Removing photos.");
-            [[DLFDatabaseManager manager] removeAllPhotosWithCompletion:^{
-                self.isInitializing = NO;
-                [self startSyncingPhotos];
-            }];
-        } else {
-            self.isInitializing = NO;
+        self.pausePhotosInTagSyncOperation = NO;
+        self.photosInTagSyncOperationSort = sort;
+        self.photosInTagSyncOperationPage = 0;
+        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:0 sort:sort];
+    } else {
+        if (self.allPhotosSyncingOperation) {
+            [self.allPhotosSyncingOperation cancel];
         }
-    }
-}
-
-- (void)startSyncingPhotos {
-    void (^fetchingPhotosBlock)() = ^void() {
-        [self fetchPhotosForPage:0 sort:self.photosSyncSort?:DEFAULT_PHOTOS_SORT];
-    };
-    
-    if (!self.isSyncingPhotos) {
-        if (!self.isInitializing) {
-            fetchingPhotosBlock();
-        }
+        self.pauseAllPhotosSyncOperation = NO;
+        self.allPhotosSyncOperationPage = 0;
+        self.allPhotosSyncOperationSort = sort;
+        self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:0 sort:sort];
     }
 }
 
 - (void)startSyncingAlbums {
-    if (!self.isSyncingAlbums && !self.isInitializing) {
-        self.lastSyncAlbums = [NSDate date];
-        [self fetchAlbumsForPage:1];
+    if (self.albumsSyncingOperation) {
+        [self.albumsSyncingOperation cancel];
     }
+    self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:1];
 }
 
 - (void)startSyncingTags {
-    if (!self.isSyncingTags && !self.isInitializing) {
-        self.lastSyncTags = [NSDate date];
-        [self fetchTagsForPage:1];
+    if (self.tagsSyncingOperation) {
+        [self.tagsSyncingOperation cancel];
     }
-}
-
-- (void)initializeTags {
-    self.lastSyncTags = [NSDate date];
-    [self fetchTagsForPage:1];
-}
-
-- (void)initializeAlbums {
-    self.lastSyncAlbums = [NSDate date];
-    [self fetchAlbumsForPage:1];
-}
-
-- (void)startSyncingPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort {
-    if (![self isSyncingPhotosInCollectionWithIdentifier:collection]) {
-        if (collectionType == Album.class) {
-            [self fetchPhotosInAlbum:collection page:0 sort:sort];
-        } else if (collectionType == Tag.class) {
-            [self fetchPhotosInTag:collection page:0 sort:sort];
-        } else {
-            [self fetchPhotosForPage:0 sort:sort];
-        }
-    }
+    self.tagsSyncingOperation = (AFURLConnectionOperation *)[self fetchTagsForPage:1];
 }
 
 - (void)refreshResource:(NSString *)resource {
-    if ([resource isEqualToString:NSStringFromClass([Tag class])]) {
-        if (!self.isSyncingTags) {
-            [self fetchTagsForPage:1];
-        } else {
-            self.tagsRefreshRequested = YES;
-        }
-    } else if ([resource isEqualToString:NSStringFromClass([Album class])]) {
-        if (!self.isSyncingAlbums) {
-            [self fetchAlbumsForPage:1];
-        } else {
-            self.albumsRefreshRequested = YES;
-        }
-    }
+//    if ([resource isEqualToString:NSStringFromClass([Tag class])]) {
+//        if (!self.isSyncingTags) {
+//            [self fetchTagsForPage:1];
+//        } else {
+//            self.tagsRefreshRequested = YES;
+//        }
+//    } else if ([resource isEqualToString:NSStringFromClass([Album class])]) {
+//        if (!self.isSyncingAlbums) {
+//            [self fetchAlbumsForPage:1];
+//        } else {
+//            self.albumsRefreshRequested = YES;
+//        }
+//    }
 }
 
 
-- (void)fetchTagsForPage:(int)page {
+- (NSOperation *)fetchTagsForPage:(int)page {
     CLS_LOG(@"Fetching tags page %d", page);
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
-    self.isSyncingTags = YES;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
+    });
     
-    [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
+    return [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
         CLS_LOG(@"Did finish fetching %d tags page %d", (int)tags.count, page);
         if (tags.count > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Tag *tag in tags) {
-                        [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName withMetadata:@{PhotosCollectionLastSyncKey: self.lastSyncTags}];
+                        [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName];
                     }
                 } completionBlock:^{
                     CLS_LOG(@"Done inserting tags to db");
                     
-                    if (self.isInitializing) {
-                        self.isInitializing = NO;
-                        self.isSyncingPhotos = NO;
-                        NSLog(@"Done initialization");
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishInitializingNotification object:nil];
-                        [self startSyncingPhotos];
-                    }
-                    
-                    [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                        __block NSMutableArray *toDeleteTags = [NSMutableArray array];
-                        [transaction enumerateKeysAndMetadataInCollection:tagsCollectionName usingBlock:^(NSString *key, NSDictionary *metadata, BOOL *stop) {
-                            NSDate *lastSyncDate = metadata[PhotosCollectionLastSyncKey];
-                            if (![lastSyncDate isEqualToDate:self.lastSyncTags]) {
-                                [toDeleteTags addObject:key];
-                            }
-                        }];
-                        if (toDeleteTags.count > 0) {
-                            [transaction removeObjectsForKeys:toDeleteTags inCollection:tagsCollectionName];
-                        }
-                    } completionBlock:^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
-                        self.isSyncingTags = NO;
-                        
-                        if (self.tagsRefreshRequested) {
-                            self.tagsRefreshRequested = NO;
-                            [self fetchTagsForPage:0];
-                        }
-                    }];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
                 }];
             });
         }
         
     } failure:^(NSError *error) {
         CLS_LOG(@"Error fetching tags page %d: %@", page, error);
-        self.isSyncingTags = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
-- (void)fetchAlbumsForPage:(int)page {
+- (NSOperation *)fetchAlbumsForPage:(int)page {
     CLS_LOG(@"Fetching albums page %d", page);
-    self.isSyncingAlbums = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
+    });
     
-    [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
+    return [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
         CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
@@ -319,299 +228,148 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
                 
                 [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                     for (Album *album in albums) {
-                        [transaction setObject:album forKey:album.albumId inCollection:albumsCollectionName withMetadata:@{PhotosCollectionLastSyncKey:self.lastSyncAlbums}];
+                        [transaction setObject:album forKey:album.albumId inCollection:albumsCollectionName];
                     }
                 } completionBlock:^{
                     CLS_LOG(@"Done inserting albums to db page %d", page);
-                    
-                    if (self.albumsRefreshRequested) {
-                        self.albumsRefreshRequested = NO;
-                        [self fetchAlbumsForPage:1];
-                    } else {
-                        if (self.pauseAlbumsSync) {
-                            self.albumsFetchingPage = page;
-                        } else {
-                            [self fetchAlbumsForPage:page+1];
-                        }
-                    }
+                    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:page+1];
+                    });
                 }];
             });
         } else {
-            self.isSyncingAlbums = NO;
-            self.albumsFetchingPage = 0;
-            [self.albumsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                __block NSMutableArray *toDeleteKeys = [NSMutableArray array];
-                [transaction enumerateKeysAndMetadataInCollection:albumsCollectionName usingBlock:^(NSString *key, NSDictionary *metadata, BOOL *stop) {
-                    NSDate *lastSyncDate = metadata[PhotosCollectionLastSyncKey];
-                    if (![lastSyncDate isEqualToDate:self.lastSyncAlbums]) {
-                        [toDeleteKeys addObject:key];
-                    }
-                }];
-                
-                if (toDeleteKeys.count > 0) {
-                    [transaction removeObjectsForKeys:toDeleteKeys inCollection:albumsCollectionName];
-                }
-            } completionBlock:^{
-                if (self.isInitializing) {
-                    [self initializeTags];
-                }
-            }];
+            
         }
     } failure:^(NSError *error) {
         CLS_LOG(@"Error fetching albums page %d: %@", page, error);
-        self.isSyncingAlbums = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
-        self.albumsFetchingPage = page;
     }];
 }
 
-- (void)fetchPhotosForPage:(int)page sort:(NSString *)sort{
+- (NSOperation *)fetchPhotosForPage:(int)page sort:(NSString *)sort{
     CLS_LOG(@"Fetching photos for page %d", page);
-    self.isSyncingPhotos = YES;
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
+    });
     
-    [[PhotoBoxClient sharedClient] getPhotosForPage:page sort:sort pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    self.allPhotosSyncOperationPage = page;
+    self.allPhotosSyncOperationSort = sort;
+    
+    return [[PhotoBoxClient sharedClient] getPhotosForPage:page sort:sort pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         CLS_LOG(@"Did finish fetching %d photos page %d", (int)photos.count, page);
         
         [self didFetchPhotos:photos collection:nil collectionType:nil page:page sort:sort];
     } failure:^(NSError *error) {
         CLS_LOG(@"Error fetching photos page %d: %@", page, error);
-        self.isSyncingPhotos = NO;
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
-        self.photosFetchingPage = page;
     }];
 }
 
-- (void)fetchPhotosInTag:(NSString *)tag page:(int)page sort:(NSString *)sort {
-    [self setIsSyncing:YES photosInCollection:tag collectionType:Tag.class page:page sort:sort];
+- (NSOperation *)fetchPhotosInTag:(NSString *)tag page:(int)page sort:(NSString *)sort {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:tag}];
+    });
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:tag}];
+    self.photosInTagSyncOperationPage = page;
+    self.photosInTagSyncOperationSort = sort;
     
-    [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    return [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         CLS_LOG(@"Did finish fetching %d photos page %d in tag %@", (int)photos.count, page, tag);
         [self didFetchPhotos:photos collection:tag collectionType:[Tag class] page:page sort:sort];
     } failure:^(NSError *error) {
-        [self setIsSyncing:NO photosInCollection:tag collectionType:Tag.class page:page sort:sort];
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationIdentifierKey:tag, SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
-- (void)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
+- (NSOperation *)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
     NSLog(@"Fetching photos in album %@ page %d", album, page);
-    [self setIsSyncing:YES photosInCollection:album collectionType:Album.class page:page sort:sort];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:album}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:album}];
+    });
     
-    [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    self.photosInAlbumSyncOperationPage = page;
+    self.photosInAlbumSyncOperationSort = sort;
+    
+    return [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         NSLog(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);
         
         [self didFetchPhotos:photos collection:album collectionType:[Album class] page:page sort:sort];
     } failure:^(NSError *error) {
-        [self setIsSyncing:NO photosInCollection:album collectionType:Album.class page:page sort:sort];
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationIdentifierKey:album, SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
 - (void)didFetchPhotos:(NSArray *)photos collection:(NSString *)collection collectionType:(Class)collectionType page:(int)page sort:(NSString *)sort{
-    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:collection?:[NSNull null]}];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(photos.count), SyncEngineNotificationIdentifierKey:collection?:[NSNull null]}];
+    });
     
-    void (^refreshSyncing)() = ^void() {
-        [self setRefreshRequested:NO collection:collection];
-        [self pauseSyncingPhotos:NO collection:collection];
-        [self setPhotosFetchingPage:0 photosInCollection:collection];
-        if (collectionType == [Album class]) {
-            [self fetchPhotosInAlbum:collection page:0 sort:sort];
-        } else if (collectionType == [Tag class]) {
-            [self fetchPhotosInTag:collection page:0 sort:sort];
-        } else {
-            [self fetchPhotosForPage:0 sort:sort];
-        }
-    };
-    
-    if ([self isRefreshRequestedForCollection:collection]) {
-        NSLog(@"photos refresh in %@ requested", collection);
-        refreshSyncing();
-    } else {
-        if ([self isPausedForCollection:collection]) {
-            CLS_LOG(@"Pausing photos in %@ sync before inserting to db", collection);
-            [self setIsPaused:NO collection:collection];
-            if ([self isRefreshRequestedForCollection:collection]) {
-                refreshSyncing();
-            } else {
-                [self setPhotosFetchingPage:page photosInCollection:collection];
-                [self setIsSyncing:NO photosInCollection:collection collectionType:collectionType page:page sort:sort];
-            }
-        } else {
-            if (photos.count > 0) {
-                [self insertPhotos:photos completion:^{
-                    CLS_LOG(@"Done inserting photos in %@ to db page %d", collection, page);
-                    
-                    if ([self isRefreshRequestedForCollection:collection]) {
-                        refreshSyncing();
-                    } else {
-                        if ([self isPausedForCollection:collection]) {
-                            CLS_LOG(@"Pausing photos sync in %@", collection);
-                            [self setIsPaused:NO collection:collection];
-                            [self setPhotosFetchingPage:page photosInCollection:collection];
-                            [self setIsSyncing:NO photosInCollection:collection collectionType:collectionType page:page sort:sort];
-                        } else {
-                            if (collectionType == [Album class]) {
-                                [self fetchPhotosInAlbum:collection page:page+1 sort:sort];
-                            } else if (collectionType == [Tag class]) {
-                                [self fetchPhotosInTag:collection page:page+1 sort:sort];
-                            } else {
-                                [self fetchPhotosForPage:page+1 sort:sort];
-                            }
-                        }
+    if (photos.count > 0) {
+        [self insertPhotos:photos completion:^{
+            CLS_LOG(@"Done inserting photos in %@ to db page %d", collection, page);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (collectionType==Album.class) {
+                    if (!self.pausePhotosInAlbumSyncOperation) {
+                        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:page+1 sort:sort];
                     }
-                }];
-            } else {
-                if ([self isRefreshRequestedForCollection:collection]) {
-                    refreshSyncing();
+                } else if (collectionType==Tag.class) {
+                    if (!self.pausePhotosInTagSyncOperation) {
+                        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:page+1 sort:sort];
+                    }
                 } else {
-                    CLS_LOG(@"No photos fetched for page %d", page);
-                    [self setPhotosFetchingPage:0 photosInCollection:collection];
-                    [self setIsSyncing:NO photosInCollection:collection collectionType:collectionType page:page sort:sort];
+                    if (!self.pauseAllPhotosSyncOperation) {
+                        self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:page+1 sort:sort];
+                    }
                 }
-            }
+            });
+        }];
+    }
+}
+
+- (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection collectionType:(Class)collectionType {
+    NSLog(@"%@ syncing photos in %@", (pause)?@"pausing":@"resuming", collection);
+    if (collectionType==Album.class) {
+        if (pause) {
+            self.pausePhotosInAlbumSyncOperation = YES;
+            [self.photosInAlbumSyncingOperation cancel];
         }
-    }
-}
-
-- (void)setRefreshRequested:(BOOL)refreshRequested collection:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        param = [[SyncPhotosParam alloc] init];
-        [param setIdentifier:coll];
-    }
-    [param setRefreshRequested:refreshRequested];
-    [self.syncingJobs setObject:param forKey:coll];
-}
-
-- (BOOL)isRefreshRequestedForCollection:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        return NO;
-    }
-    return param.refreshRequested;
-}
-
-- (void)setIsPaused:(BOOL)pause collection:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        param = [[SyncPhotosParam alloc] init];
-        [param setIdentifier:coll];
-    }
-    [param setIsPaused:pause];
-    if (pause) NSLog(@"Pausing photos fetching in %@", coll);
-    [self.syncingJobs setObject:param forKey:coll];
-}
-
-- (BOOL)isPausedForCollection:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        return NO;
-    }
-    return param.isPaused;
-}
-
-- (void)setIsSyncing:(BOOL)isSyncing photosInCollection:(NSString *)collectionIdentifier collectionType:(Class)collectionType page:(int)page sort:(NSString *)sort {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    if (isSyncing) {
-        SyncPhotosParam *param = [[SyncPhotosParam alloc] init];
-        [param setIdentifier:collectionIdentifier];
-        [param setIsSyncing:YES];
-        [param setCollectionType:collectionType];
-        [param setSort:sort];
-        [param setPhotosFetchingPage:page];
-        [self.syncingJobs setObject:param forKey:coll];
+        else {
+            self.pausePhotosInAlbumSyncOperation = NO;
+            [self fetchPhotosInAlbum:collection page:self.photosInAlbumSyncOperationPage sort:self.photosInAlbumSyncOperationSort];
+        }
+    } else if (collectionType==Tag.class) {
+        if (pause) {
+            self.pausePhotosInTagSyncOperation = YES;
+            [self.photosInTagSyncingOperation cancel];
+        }
+        else {
+            self.pausePhotosInTagSyncOperation = NO;
+            [self fetchPhotosInTag:collection page:self.photosInTagSyncOperationPage sort:self.photosInTagSyncOperationSort];
+        }
     } else {
-        SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-        if (param) {
-            [param setIsSyncing:NO];
-            [param setPhotosFetchingPage:page];
-            [self.syncingJobs setObject:param forKey:coll];
+        if (pause) {
+            self.pauseAllPhotosSyncOperation = YES;
+            [self.allPhotosSyncingOperation cancel];
         }
-    }
-}
-
-- (BOOL)isSyncingPhotosInCollectionWithIdentifier:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        return NO;
-    }
-    
-    return param.isSyncing;
-}
-
-- (void)setPhotosFetchingPage:(int)photosFetchingPage photosInCollection:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        param = [[SyncPhotosParam alloc] init];
-    }
-    param.photosFetchingPage = photosFetchingPage;
-    [self.syncingJobs setObject:param forKey:coll];
-}
-
-- (int)photosFetchingPageForIdentifier:(NSString *)collectionIdentifier {
-    NSString *coll = collectionIdentifier?:ALL_PHOTOS_COLLECTION;
-    
-    SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-    if (!param) {
-        return 0;
-    }
-    
-    return param.photosFetchingPage;
-}
-
-- (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection {
-    NSString *coll = collection?:ALL_PHOTOS_COLLECTION;
-    [self setIsPaused:pause collection:coll];
-    
-    if (!pause) {
-        SyncPhotosParam *param = [self.syncingJobs objectForKey:coll];
-        if (![self isSyncingPhotosInCollectionWithIdentifier:coll]) {
-            if (param.collectionType == Album.class) {
-                [self fetchPhotosInAlbum:param.identifier page:param.photosFetchingPage sort:param.sort];
-            } else if (param.collectionType == Tag.class) {
-                [self fetchPhotosInTag:param.identifier page:param.photosFetchingPage sort:param.sort];
-            } else {
-                [self fetchPhotosForPage:param.photosFetchingPage sort:param.sort];
-            }
+        else {
+            self.pauseAllPhotosSyncOperation = NO;
+            [self fetchPhotosForPage:self.allPhotosSyncOperationPage sort:self.allPhotosSyncOperationSort];
         }
-        
     }
 }
 
 - (void)refreshPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort {
-    NSString *coll = collection?:ALL_PHOTOS_COLLECTION;
-    
-    if (![self isSyncingPhotosInCollectionWithIdentifier:coll]) {
-        if (collectionType == Album.class) {
-            NSLog(@"Refresh album %@ requested", coll);
-            [self fetchPhotosInAlbum:coll page:0 sort:sort];
-        } else if (collectionType == Tag.class) {
-            NSLog(@"Refresh photos in tag %@ requested", coll);
-            [self fetchPhotosInTag:coll page:0 sort:sort];
-        } else {
-            NSLog(@"Refresh all photos");
-            [self fetchPhotosForPage:0 sort:sort];
-        }
+    if ([collection isEqualToString:NSStringFromClass([Album class])]) {
+        [self.photosInAlbumSyncingOperation cancel];
+        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:0 sort:sort];
+    } else if ([collection isEqualToString:NSStringFromClass([Tag class])]) {
+        [self.photosInTagSyncingOperation cancel];
+        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:0 sort:sort];
     } else {
-        [self setRefreshRequested:YES collection:coll];
+        [self.allPhotosSyncingOperation cancel];
+        self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:0 sort:sort];
     }
 }
 
@@ -621,13 +379,11 @@ NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 
 - (void)insertPhotos:(NSArray *)photos completion:(void(^)())completionBlock {
     NSLog(@"inserting %d photos to db", (int)photos.count);
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-            for (Photo *photo in photos) {
-                [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
-            }
-        } completionBlock:completionBlock];
-    });
+    [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        for (Photo *photo in photos) {
+            [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
+        }
+    } completionBlock:completionBlock];
     
 }
 

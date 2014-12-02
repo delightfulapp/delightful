@@ -483,7 +483,6 @@ NSString *const galleryContainerType = @"gallery";
             BOOL userLoggedIn = [[ConnectionManager sharedManager] isUserLoggedIn];
             if (userLoggedIn) {
                 PBX_LOG(@"Gonna fetch resource in KVO");
-                [[SyncEngine sharedEngine] initialize];
                 [self showSyncingLoadingMessageIfNeeded];
             } else {
                 CLS_LOG(@"Logging out, clearing everything");

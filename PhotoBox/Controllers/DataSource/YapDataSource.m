@@ -120,19 +120,6 @@
     }
 }
 
-- (void)setPause:(BOOL)pause {
-    _pause = pause;
-    
-    if (_pause) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self];
-    } else {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(yapDatabaseModified:)
-                                                     name:YapDatabaseModifiedNotification
-                                                   object:nil];
-    }
-}
-
 - (void)setupDatabase {
     self.database = [[DLFDatabaseManager manager] currentDatabase];
     
@@ -184,9 +171,7 @@
     
     CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), (int)sectionChanges.count, (int)rowChanges.count);
     //CLS_LOG(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
-    
-    [self.mainConnection beginLongLivedReadTransaction];
-    
+        
     if (self.pause) {
         [self.collectionView reloadData];
         return;

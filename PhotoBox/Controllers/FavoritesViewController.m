@@ -106,6 +106,11 @@
     return UIEdgeInsetsMake(2, 0, 0, 0);
 }
 
+#pragma mark - Upload Notification
+
+- (void)uploadNumberChangeNotification:(NSNotification *)notification {
+}
+
 @end
 
 @implementation FavoritesDataSource

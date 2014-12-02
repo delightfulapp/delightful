@@ -55,10 +55,6 @@ static void * imageUploadContext = &imageUploadContext;
     
     [self.window setTintColor:[UIColor redColor]];
     
-    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
-        [[SyncEngine sharedEngine] initialize];
-    }
-    
     [self runCrashlytics];
     
     return YES;

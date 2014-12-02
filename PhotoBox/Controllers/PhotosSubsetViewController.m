@@ -37,7 +37,7 @@
         [((PhotosSubsetDataSource *)self.dataSource) setFilterName:self.filterName objectKey:self.objectKey filterKey:self.item.itemId];
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:self.item.class sort:dateUploadedDescSortKey];
     } else {
-        [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:self.item.itemId];
+        [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:self.item.itemId collectionType:self.item.class];
     }
 }
 
@@ -45,7 +45,7 @@
     CLS_LOG(@"view will disappear");
     [self setRegisterSyncingNotification:NO];
     [((YapDataSource *)self.dataSource) setPause:YES];
-    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:self.item.itemId];
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:self.item.itemId collectionType:self.item.class];
 }
 
 - (void)didReceiveMemoryWarning {
