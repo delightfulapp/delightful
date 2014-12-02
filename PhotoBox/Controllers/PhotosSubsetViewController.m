@@ -7,13 +7,9 @@
 //
 
 #import "PhotosSubsetViewController.h"
-
 #import "PhotosSubsetDataSource.h"
-
 #import "SyncEngine.h"
-
 #import "PhotosCollection.h"
-
 #import "SortTableViewController.h"
 
 @interface PhotosSubsetViewController ()

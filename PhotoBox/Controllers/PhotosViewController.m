@@ -53,6 +53,7 @@
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 @property (nonatomic, assign) BOOL viewJustDidLoad;
 @property (nonatomic, strong) UploadViewController *uploadViewController;
+@property (nonatomic, assign) BOOL doneUploadingNeedRefresh;
 
 @end
 
@@ -106,7 +107,12 @@
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:dateUploadedDescSortKey];
     } else {
         NSLog(@"----> view did appear");
-        [self pauseSyncing:NO];
+        if ([self doneUploadingNeedRefresh]) {
+            self.doneUploadingNeedRefresh = NO;
+            [self refresh];
+        } else {
+            [self pauseSyncing:NO];
+        }
     }
 }
 
@@ -593,8 +599,14 @@
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
     int numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] intValue];
     if (numberOfUploads == 0 && !self.presentedViewController) {
-        CLS_LOG(@"+++ upload done and no upload vc");
-        [self refresh];
+        if ([(YapDataSource *)self.dataSource pause]) {
+            CLS_LOG(@"+++ upload done but paused");
+            [self setDoneUploadingNeedRefresh:YES];
+        } else {
+            [self setDoneUploadingNeedRefresh:NO];
+            [self refresh];
+        }
+        
     }
 }
 
