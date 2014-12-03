@@ -71,6 +71,8 @@ NSString *const galleryContainerType = @"gallery";
     [self.collectionView reloadData];
     
     [self restoreContentInset];
+    
+    [self setRegisterSyncingNotification:YES];
 }
 
 - (void)setRegisterSyncingNotification:(BOOL)registerSyncingNotification {
@@ -528,7 +530,7 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isKindOfClass:[NSNull class]]) {
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && !item) {
         NSLog(@"will start syncing");
         [self setIsFetching:YES];
     }
