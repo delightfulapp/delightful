@@ -219,12 +219,16 @@
         }
         
         self.previousPage = page;
+        Photo *photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
         if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
-            id photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
-            
             [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             [self showLoadingBarButtonItem:NO];
         }
+        // this is to fix the very weird bug  in iPhone 6plus where cannot change page after double tap to max zoom
+        PhotoZoomableCell *cell = [self currentCell];
+        [cell setImageSize:CGSizeMake(photo.normalImage.width.floatValue, photo.normalImage.height.floatValue)];
+        [cell centerScrollViewContents];
+        // end of fix
     }
 }
 

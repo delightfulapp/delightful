@@ -30,12 +30,13 @@
 - (BOOL)isDownloadingOriginalImage;
 - (UIImage *)originalImage;
 - (void)doTeasingGesture;
-
+- (void)centerScrollViewContents;
 - (void)setGrayscale:(BOOL)grayscale;
 - (void)setZoomScale:(CGFloat)zoomScale;
 - (void)setZoomToFillScreen:(BOOL)zoomToFillScreen;
 - (BOOL)isGrayscaled;
 - (CGFloat)zoomScaleToFillScreen;
 - (UIImageView *)grayImageView;
+- (void)setImageSize:(CGSize)size;
 
 @end

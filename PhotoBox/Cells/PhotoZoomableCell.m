@@ -117,6 +117,9 @@
     if (self.scrollView.zoomScale == self.scrollView.maximumZoomScale) {
         scale = self.scrollView.minimumZoomScale;
         [self.scrollView setZoomScale:scale animated:YES];
+        // this is to fix the very weird bug  in iPhone 6plus where cannot change page after double tap to max zoom
+        [self setImageSize:CGSizeMake(self.thisImageview.image.size.width , self.thisImageview.image.size.height)];
+        // end of fix
         [self centerScrollViewContents];
     } else {
         [self.scrollView zoomToRect:CGRectMake(point.x - 10, point.y - 10, 20, 20) animated:YES];
@@ -154,7 +157,8 @@
     [super layoutSubviews];
     
     if (self.thisImageview.image && self.thisImageview.image.size.width > 0) {
-        [self setImageSize:self.thisImageview.image.size];
+        Photo *photo = (Photo *)self.item;
+        [self setImageSize:CGSizeMake(photo.normalImage.width.floatValue, photo.normalImage.height.floatValue)];
     }
     
 }
