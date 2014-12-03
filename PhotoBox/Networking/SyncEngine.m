@@ -312,15 +312,21 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (collectionType==Album.class) {
                     if (!self.pausePhotosInAlbumSyncOperation) {
-                        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:page+1 sort:sort];
+                        if (![self.photosInAlbumSyncingOperation isExecuting]) {
+                            self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:page+1 sort:sort];
+                        }
                     }
                 } else if (collectionType==Tag.class) {
                     if (!self.pausePhotosInTagSyncOperation) {
-                        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:page+1 sort:sort];
+                        if (![self.photosInTagSyncingOperation isExecuting]) {
+                            self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:page+1 sort:sort];
+                        }
                     }
                 } else {
                     if (!self.pauseAllPhotosSyncOperation) {
-                        self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:page+1 sort:sort];
+                        if (![self.allPhotosSyncingOperation isExecuting]) {
+                            self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:page+1 sort:sort];
+                        }
                     }
                 }
             });
@@ -361,14 +367,17 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
 }
 
 - (void)refreshPhotosInCollection:(NSString *)collection collectionType:(Class)collectionType sort:(NSString *)sort {
-    if ([collection isEqualToString:NSStringFromClass([Album class])]) {
+    if (collectionType == Album.class) {
         [self.photosInAlbumSyncingOperation cancel];
+        self.pausePhotosInAlbumSyncOperation = NO;
         self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:0 sort:sort];
-    } else if ([collection isEqualToString:NSStringFromClass([Tag class])]) {
+    } else if (collectionType == Tag.class) {
         [self.photosInTagSyncingOperation cancel];
-        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:0 sort:sort];
+        self.pausePhotosInTagSyncOperation = NO;
+        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:0 sort:sort];
     } else {
         [self.allPhotosSyncingOperation cancel];
+        self.pauseAllPhotosSyncOperation = NO;
         self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:0 sort:sort];
     }
 }
