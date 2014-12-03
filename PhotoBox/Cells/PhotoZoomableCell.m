@@ -103,7 +103,6 @@
         maxScale;
     });
     self.scrollView.maximumZoomScale = MAX(maxScale, maxZoomScaleFillScreen);
-    
     CGFloat min = self.scrollView.minimumZoomScale;
     self.scrollView.zoomScale = MIN(min, 1);
     [self centerScrollViewContents];
@@ -118,12 +117,15 @@
 }
 
 - (void)scrollViewDoubleTapped:(UITapGestureRecognizer*)recognizer {
+    CGPoint point = [recognizer locationInView:self.thisImageview];
+    CGFloat scale = 0;
     if (self.scrollView.zoomScale == self.scrollView.maximumZoomScale) {
-        [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+        scale = self.scrollView.minimumZoomScale;
+        [self.scrollView setZoomScale:scale animated:YES];
+        [self centerScrollViewContents];
     } else {
-        [self.scrollView setZoomScale:self.scrollView.maximumZoomScale animated:YES];
+        [self.scrollView zoomToRect:CGRectMake(point.x - 10, point.y - 10, 20, 20) animated:YES];
     }
-    [self centerScrollViewContents];
 }
 
 - (void)centerScrollViewContents {
