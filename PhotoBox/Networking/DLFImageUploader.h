@@ -20,15 +20,21 @@ extern NSString *const DLFAssetUploadDidChangeNumberOfFailUploadsNotification;
 
 extern NSString *const DLFAssetUploadDidSucceedNotification;
 
+extern NSString *const DLFAssetUploadDidFailNotification;
+
 extern NSString *const DLFAssetUploadDidQueueAssetNotification;
 
 extern NSString *const kAssetURLKey;
 
 extern NSString *const kAssetKey;
 
+extern NSString *const kErrorKey;
+
 extern NSString *const kProgressKey;
 
 extern NSString *const kNumberOfUploadsKey;
+
+extern NSString *const kNumberOfFailUploadsKey;
 
 @interface DLFImageUploader : NSObject
 
@@ -45,5 +51,7 @@ extern NSString *const kNumberOfUploadsKey;
 - (void)clearFailUploads;
 
 - (NSArray *)queuedAssets;
+
+- (NSArray *)failedAssets;
 
 @end

@@ -12,6 +12,7 @@
 
 - (void)setUploadProgress:(float)progress;
 - (void)removeUploadProgress;
+- (void)showReloadButton:(BOOL)show;
 
 @property (nonatomic, assign, readonly) float uploadProg;
 

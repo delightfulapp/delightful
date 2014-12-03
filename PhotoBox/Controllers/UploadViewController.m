@@ -7,33 +7,23 @@
 //
 
 #import "UploadViewController.h"
-
 #import "UploadAssetCell.h"
-
 #import "UploadHeaderView.h"
-
-#import <UIView+AutoLayout.h>
-
 #import "DLFImageUploader.h"
-
 #import "DelightfulCache.h"
-
 #import "UploadReloadView.h"
-
 #import "DLFAsset.h"
+#import <UIView+AutoLayout.h>
 
 @import Photos;
 
 @interface UploadViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
-
 @property (nonatomic, strong) NSMutableArray *internalUploads;
-
+@property (nonatomic, strong) NSMutableArray *failUploads;
 @property (nonatomic, weak) UploadReloadView *reloadView;
-
 @property (nonatomic, weak) UIButton *reloadButton;
-
 @property (nonatomic, weak) UIButton *cancelButton;
 
 @end
@@ -46,6 +36,12 @@
     [super viewDidLoad];
     
     self.internalUploads = [NSMutableArray arrayWithArray:[[DLFImageUploader sharedUploader] queuedAssets]];
+    self.failUploads = [NSMutableArray arrayWithArray:[[DLFImageUploader sharedUploader] failedAssets]];
+    for (DLFAsset *failAsset in self.failUploads) {
+        if (![self.internalUploads containsObject:failAsset]) {
+            [self.internalUploads addObject:failAsset];
+        }
+    }
     
     [self.collectionView registerClass:[UploadAssetCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     
@@ -58,6 +54,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDoneNotification:) name:DLFAssetUploadDidSucceedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didQueueAssetToUploadNotification:) name:DLFAssetUploadDidQueueAssetNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadDidFailNotification:) name:DLFAssetUploadDidFailNotification object:nil];
     
     self.title = NSLocalizedString(@"Uploads", nil);
     if (self.internalUploads.count == 0) {
@@ -187,12 +184,23 @@
         }
     }];
     
+    if ([self.failUploads containsObject:asset]) {
+        [cell setUploadProgress:0];
+        [cell showReloadButton:YES];
+    } else {
+        [cell showReloadButton:NO];
+    }
+    
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     UploadAssetCell *cell = (UploadAssetCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    CLS_LOG(@"Cell progress = %f", cell.uploadProg);
+    DLFAsset *asset = (DLFAsset *)cell.item;
+    
+    if ([self.failUploads containsObject:asset]) {
+        [[DLFImageUploader sharedUploader] queueAsset:asset];
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -225,15 +233,27 @@
 - (void)didQueueAssetToUploadNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
     DLFAsset *asset = [userInfo objectForKey:kAssetKey];
-    [self.internalUploads insertObject:asset atIndex:0];
-    [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+    if (![self.internalUploads containsObject:asset]) {
+        [self.internalUploads insertObject:asset atIndex:0];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+    } else {
+        NSInteger index = [self.internalUploads indexOfObject:asset];
+        UploadAssetCell *cell = (UploadAssetCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+        if (cell) {
+            [cell showReloadButton:NO];
+        }
+    }
 }
 
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
     NSInteger numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] integerValue];
-    if (numberOfUploads==0) {
+    NSInteger numberOfFailUploads = [notification.userInfo[kNumberOfFailUploadsKey] integerValue];
+    if (numberOfUploads==0 && numberOfFailUploads == 0) {
         self.title = NSLocalizedString(@"Uploading done", nil);
         [self showNoUploads:YES];
+    } else if (numberOfUploads == 0 && numberOfFailUploads > 0) {
+        self.title = [NSString stringWithFormat:NSLocalizedString(@"%d uploads failed", nil), numberOfFailUploads];
+        [self showNoUploads:NO];
     } else {
         self.title = [NSString stringWithFormat:NSLocalizedString(@"Uploading %1$d %2$@", nil), numberOfUploads, (numberOfUploads==1)?NSLocalizedString(@"photo", nil):NSLocalizedString(@"photos", nil)];
         [self showNoUploads:NO];
@@ -253,16 +273,18 @@
 }
 
 - (void)uploadDoneNotification:(NSNotification *)notification {
-    NSString *identifier = notification.userInfo[kAssetURLKey];
-    [self logUploadedAssetURL:identifier];
+    DLFAsset *asset = notification.userInfo[kAssetKey];
+    [self logUploadedAssetURL:asset.asset.localIdentifier];
     
     NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
-        if ([[obj.asset localIdentifier] isEqualToString:identifier]) {
+        if ([[obj.asset localIdentifier] isEqualToString:asset.asset.localIdentifier]) {
             *stop = YES;
             return YES;
         }
         return NO;
     }];
+    
+    [self.failUploads removeObject:asset];
     
     if (index != NSNotFound) {
         [self.internalUploads removeObjectAtIndex:index];
@@ -279,9 +301,25 @@
     }
 }
 
-- (void)logUploadedAsset:(PHAsset *)asset {
-    NSString *URL = [asset localIdentifier];
-    [self logUploadedAssetURL:URL];
+- (void)uploadDidFailNotification:(NSNotification *)notification {
+    DLFAsset *asset = notification.userInfo[kAssetKey];
+    
+    NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
+        if ([[obj.asset localIdentifier] isEqualToString:asset.asset.localIdentifier]) {
+            *stop = YES;
+            return YES;
+        }
+        return NO;
+    }];
+    
+    if (index != NSNotFound) {
+        [self.failUploads addObject:asset];
+        UploadAssetCell *cell = (UploadAssetCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];
+        if (cell) {
+            [cell setUploadProgress:0];
+            [cell showReloadButton:YES];
+        }
+    }
 }
 
 - (void)logUploadedAssetURL:(NSString *)URL {

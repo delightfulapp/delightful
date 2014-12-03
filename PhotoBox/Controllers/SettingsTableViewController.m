@@ -27,10 +27,9 @@ static void * imageDownloadContext = &imageDownloadContext;
 @interface SettingsTableViewController () <UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *items;
-
 @property (nonatomic, assign) int numberOfDownloads;
-
 @property (nonatomic, assign) int numberOfUploads;
+@property (nonatomic, assign) int numberOfFailUploads;
 
 @end
 
@@ -70,6 +69,12 @@ static void * imageDownloadContext = &imageDownloadContext;
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    self.numberOfUploads = (int)[[DLFImageUploader sharedUploader] numberOfUploading];
+    self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -122,6 +127,10 @@ static void * imageDownloadContext = &imageDownloadContext;
             } case 1:{
                 if (self.numberOfUploads > 0) {
                     titleText = (self.numberOfUploads==1)?[NSString stringWithFormat:NSLocalizedString(@"Uploading %d photo ...", nil), self.numberOfUploads]:[NSString stringWithFormat:NSLocalizedString(@"Uploading %d photos ...", nil), self.numberOfUploads];
+                    detailText = @"";
+                    [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+                } else if (self.numberOfFailUploads > 0) {
+                    titleText = (self.numberOfFailUploads==1)?[NSString stringWithFormat:NSLocalizedString(@"Uploading %d photo failed", nil), self.numberOfFailUploads]:[NSString stringWithFormat:NSLocalizedString(@"Uploading %d photos failed", nil), self.numberOfFailUploads];
                     detailText = @"";
                     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
                 }
@@ -227,6 +236,7 @@ static void * imageDownloadContext = &imageDownloadContext;
 
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
     self.numberOfUploads = [notification.userInfo[kNumberOfUploadsKey] intValue];
+    self.numberOfFailUploads = [notification.userInfo[kNumberOfFailUploadsKey] intValue];
     [self.tableView reloadData];
 }
 

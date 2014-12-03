@@ -7,18 +7,15 @@
 //
 
 #import "UploadAssetCell.h"
-
-#import <AssetsLibrary/AssetsLibrary.h>
-
 #import <DAProgressOverlayView.h>
-
 #import "DLFAsset.h"
+#import "NSAttributedString+DelighftulFonts.h"
 
 @interface UploadAssetCell ()
 
 @property (nonatomic, strong) DAProgressOverlayView *uploadingView;
-
 @property (nonatomic, assign) float uploadProg;
+@property (nonatomic, strong) UILabel *reloadButton;
 
 @end
 
@@ -65,6 +62,24 @@
 - (void)removeUploadProgress {
     [self.uploadingView removeFromSuperview];
     self.uploadingView = nil;
+}
+
+- (void)showReloadButton:(BOOL)show {
+    if (show) {
+        if (!self.reloadButton) {
+            self.reloadButton = [[UILabel alloc] init];
+            [self.contentView addSubview:self.reloadButton];
+            [self.reloadButton setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
+            NSMutableAttributedString *reloadString = [[NSAttributedString symbol:dlf_icon_spinner size:40] mutableCopy];
+            [reloadString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, reloadString.string.length)];
+            [self.reloadButton setAttributedText:reloadString];
+            [self.reloadButton sizeToFit];
+            self.reloadButton.center = CGPointMake(CGRectGetWidth(self.contentView.frame)/2, CGRectGetHeight(self.contentView.frame)/2);
+        }
+        [self.reloadButton setHidden:NO];
+    } else {
+        [self.reloadButton setHidden:YES];
+    }
 }
 
 @end

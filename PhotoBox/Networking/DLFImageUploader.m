@@ -22,13 +22,19 @@ NSString *const DLFAssetUploadDidChangeNumberOfFailUploadsNotification = @"com.g
 
 NSString *const DLFAssetUploadDidSucceedNotification = @"com.getdelightfulapp.DLFAssetUploadDidSucceedNotification";
 
+NSString *const DLFAssetUploadDidFailNotification = @"com.getdelightfulapp.DLFAssetUploadDidFailNotification";
+
 NSString *const kAssetURLKey = @"com.getdelightfulapp.kAssetURLKey";
 
 NSString *const kProgressKey = @"com.getdelightfulapp.kProgressKey";
 
 NSString *const kAssetKey = @"com.getdelightfulapp.kAssetKey";
 
+NSString *const kErrorKey = @"com.getdelightfulapp.kErrorKey";
+
 NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey";
+
+NSString *const kNumberOfFailUploadsKey = @"com.getdelightfulapp.kNumberOfFailUploadsKey";
 
 NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp.DLFAssetUploadDidQueueAssetNotification";
 
@@ -67,6 +73,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         return NO;
     }
     
+    [self removeFailAsset:asset];
     [self addAsset:asset];
     __weak typeof (self) selfie = self;
     [[PhotoBoxClient sharedClient] uploadAsset:asset progress:^(float progress) {
@@ -85,18 +92,23 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     return self.uploadingAssets;
 }
 
+- (NSArray *)failedAssets {
+    return self.uploadFailAssets.array;
+}
+
 - (void)uploadProgress:(float)progress asset:(DLFAsset *)asset {
     [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadProgressNotification object:nil userInfo:@{kAssetURLKey: [asset.asset localIdentifier], kProgressKey: @(progress)}];
 }
 
 - (void)assetUploadDidSucceed:(DLFAsset *)asset {
     [self removeAsset:asset];
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidSucceedNotification object:nil userInfo:@{kAssetURLKey: [asset.asset localIdentifier]}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidSucceedNotification object:nil userInfo:@{kAssetKey: asset}];
 }
 
 - (void)assetUploadDidFail:(DLFAsset *)asset error:(NSError *)error {
     [self addFailAsset:asset];
     [self removeAsset:asset];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidFailNotification object:nil userInfo:@{kAssetKey: asset, kErrorKey: error}];
 }
 
 - (void)addAsset:(DLFAsset *)asset {
@@ -105,7 +117,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [self.uploadingAssets addObject:asset];
         _numberOfUploading = self.uploadingAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
-        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading), kNumberOfFailUploadsKey:@(_numberOfFailUpload)}];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidQueueAssetNotification object:nil userInfo:@{kAssetKey:asset}];
     }
 }
@@ -116,7 +128,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [self.uploadingAssets removeObject:asset];
         _numberOfUploading = self.uploadingAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
-        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading), kNumberOfFailUploadsKey:@(_numberOfFailUpload)}];
     }
 }
 
@@ -126,7 +138,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [self.uploadFailAssets addObject:asset];
         _numberOfFailUpload = self.uploadFailAssets.count;
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
-        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfFailUpload)}];
+        [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfFailUploadsKey: @(_numberOfFailUpload)}];
     }
 }
 
@@ -137,7 +149,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
             [self.uploadFailAssets removeObject:asset];
             _numberOfFailUpload = self.uploadFailAssets.count;
             [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
-            [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfFailUpload)}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfFailUploadsNotification object:nil userInfo:@{kNumberOfFailUploadsKey: @(_numberOfFailUpload)}];
         }
     }
 }
