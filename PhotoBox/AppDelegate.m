@@ -34,6 +34,8 @@
 
 #import <SDWebImageManager.h>
 
+// #import <COSTouchVisualizerWindow.h>
+
 static void * imageDownloadContext = &imageDownloadContext;
 
 static void * imageUploadContext = &imageUploadContext;
@@ -57,8 +59,20 @@ static void * imageUploadContext = &imageUploadContext;
     
     [self runCrashlytics];
     
+    [self showUpdateInfoViewIfNeeded];
+    
     return YES;
 }
+
+/*
+ // uncomment this to show touches when recording demo
+- (COSTouchVisualizerWindow *)window
+{
+    static COSTouchVisualizerWindow *visWindow = nil;
+    if (!visWindow) visWindow = [[COSTouchVisualizerWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    return visWindow;
+}
+ */
 							
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -153,10 +167,12 @@ static BOOL isRunningTests(void)
 - (BOOL)showUpdateInfoViewIfNeeded {
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
         NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
-        if (![currentVersion isEqualToString:[[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY]]) {
+        NSString *showIntroVersion = [[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+        if (![currentVersion isEqualToString:showIntroVersion]) {
             if ([self versionInfOPlistExistsForVersion:currentVersion]) {
                 IntroViewController *intro = [[IntroViewController alloc] init];
-                [[UIWindow topMostViewController] presentViewController:intro animated:YES completion:nil];
+                UIViewController *rootVC = [UIWindow rootViewController];
+                [rootVC presentViewController:intro animated:YES completion:nil];
                 [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
                 [[NSUserDefaults standardUserDefaults] synchronize];
                 return YES;

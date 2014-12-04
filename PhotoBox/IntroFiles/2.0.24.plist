@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>backgroundImage</key>
+	<string></string>
+	<key>panels</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>What&apos;s New in 2.0.21</string>
+			<key>description</key>
+			<string>1. New user interface!
+2. Upload photos with awesome slide-to-select gesture to quickly select multiple photos.
+3. Offline support. No internet connection? No problem.
+4. Landscape mode to better view landscape photos.
+5. 1password extension.
+6. Sort photos by date taken or date uploaded.</string>
+			<key>image</key>
+			<string></string>
+			<key>header</key>
+			<dict>
+				<key>type</key>
+				<string>view</string>
+				<key>value</key>
+				<string>VersionNumberHeaderView</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -81,6 +81,8 @@
 		0348D23017DA263500C932BA /* Crashlytics.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0348D22F17DA263500C932BA /* Crashlytics.plist */; };
 		034E9F9217FA6BC200E3565E /* photo.json in Resources */ = {isa = PBXBuildFile; fileRef = 034E9F9117FA6BC200E3565E /* photo.json */; };
 		034E9F9517FA6C2000E3565E /* XCTestCase+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */; };
+		03551B131A307FC80050126E /* 2.0.24.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03551B121A307FC80050126E /* 2.0.24.plist */; };
+		03551B141A307FCD0050126E /* 2.0.24.plist in Resources */ = {isa = PBXBuildFile; fileRef = 03551B121A307FC80050126E /* 2.0.24.plist */; };
 		0357966B19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */; };
 		0357966C19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */; };
 		0357966F19D8435600A28334 /* YapDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0357966E19D8435600A28334 /* YapDataSource.m */; };
@@ -494,6 +496,7 @@
 		034E9F9117FA6BC200E3565E /* photo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photo.json; sourceTree = "<group>"; };
 		034E9F9317FA6C2000E3565E /* XCTestCase+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCTestCase+Additionals.h"; sourceTree = "<group>"; };
 		034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Additionals.m"; sourceTree = "<group>"; };
+		03551B121A307FC80050126E /* 2.0.24.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 2.0.24.plist; path = PhotoBox/IntroFiles/2.0.24.plist; sourceTree = "<group>"; };
 		0357966919D842D200A28334 /* GroupedPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupedPhotosDataSource.h; sourceTree = "<group>"; };
 		0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupedPhotosDataSource.m; sourceTree = "<group>"; };
 		0357966D19D8435600A28334 /* YapDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDataSource.h; sourceTree = "<group>"; };
@@ -617,8 +620,8 @@
 		0391824B17FEDF0F0099480C /* PhotoBoxRequestOperationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoBoxRequestOperationTests.m; sourceTree = "<group>"; };
 		0391824D1800074A0099480C /* NSObject+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Additionals.h"; sourceTree = "<group>"; };
 		0391824E1800074A0099480C /* NSObject+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additionals.m"; sourceTree = "<group>"; };
-		039580B41A28A16000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
-		039580B61A28A17000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
+		039580B41A28A16000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = ../Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
+		039580B61A28A17000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = ../Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
 		0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoPhotosView.xib; path = PhotoBox/Views/NoPhotosView.xib; sourceTree = "<group>"; };
 		0396BDD11920B91B004B6290 /* NoPhotosView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NoPhotosView.h; path = PhotoBox/Views/NoPhotosView.h; sourceTree = "<group>"; };
 		0396BDD21920B91B004B6290 /* NoPhotosView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NoPhotosView.m; path = PhotoBox/Views/NoPhotosView.m; sourceTree = "<group>"; };
@@ -788,6 +791,8 @@
 		03108FDB17D0F3FA0075F9D8 /* External */ = {
 			isa = PBXGroup;
 			children = (
+				039580B61A28A17000597ECA /* PhotosPicker.storyboard */,
+				039580B41A28A16000597ECA /* PhotosPicker.storyboard */,
 				035DACC5197FAC2B00557547 /* NSString+Score.h */,
 				035DACC6197FAC2B00557547 /* NSString+Score.m */,
 			);
@@ -894,8 +899,6 @@
 		032CBB7117D0BDF3001205B1 = {
 			isa = PBXGroup;
 			children = (
-				039580B61A28A17000597ECA /* PhotosPicker.storyboard */,
-				039580B41A28A16000597ECA /* PhotosPicker.storyboard */,
 				03CE50E818181D3000445084 /* Intro */,
 				032222A218140796004F3830 /* Notification */,
 				03D972AB18119CE6008A087B /* README.md */,
@@ -1264,6 +1267,7 @@
 		03CE50E518181CE700445084 /* IntroPlist */ = {
 			isa = PBXGroup;
 			children = (
+				03551B121A307FC80050126E /* 2.0.24.plist */,
 				0334EBB91841FDC8001B262F /* 0.0.5.plist */,
 				036DF369181FBA67002E9FCB /* 0.0.4.plist */,
 				036DF362181A850C002E9FCB /* 0.0.3.plist */,
@@ -1435,6 +1439,7 @@
 				035DACDB1980D99B00557547 /* uploadedmark.png in Resources */,
 				036DF365181AA60B002E9FCB /* info@2x.png in Resources */,
 				036DF36A181FBA67002E9FCB /* 0.0.4.plist in Resources */,
+				03551B131A307FC80050126E /* 2.0.24.plist in Resources */,
 				0396BDDC1921AC79004B6290 /* HeaderImageView.xib in Resources */,
 				036DF363181A850C002E9FCB /* 0.0.3.plist in Resources */,
 				032222BB1814F2E4004F3830 /* npr_notification_image_close@2x.png in Resources */,
@@ -1514,6 +1519,7 @@
 				0327CC80194723B70086C4B8 /* uploaded.png in Resources */,
 				03B5CCC9193C7AE500E0BAD0 /* camera@2x.png in Resources */,
 				03EFD93719251CD700E80A71 /* HintPinch.xib in Resources */,
+				03551B141A307FCD0050126E /* 2.0.24.plist in Resources */,
 				03EFD93819251CD700E80A71 /* info.png in Resources */,
 				03EFD93919251CD700E80A71 /* user.png in Resources */,
 				03EFD93A19251CD700E80A71 /* download@2x.png in Resources */,
