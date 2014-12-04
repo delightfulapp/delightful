@@ -17,6 +17,7 @@
 @interface DownloadedDataSource : GroupedPhotosDataSource
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *downloadedMapping;
+@property (nonatomic, strong) DLFYapDatabaseViewAndMapping *flattenedDownloadedMapping;
 
 @end
 
@@ -50,6 +51,7 @@
 
 - (void)setupMapping {
     self.downloadedMapping = [[DownloadedImageManager sharedManager] databaseViewMapping];
+    self.flattenedDownloadedMapping = [[DownloadedImageManager sharedManager] flattenedDatabaseViewMapping];
 }
 
 - (void)setDefaultMapping {
@@ -57,7 +59,7 @@
 }
 
 - (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {
-    return self.selectedViewMapping;
+    return self.flattenedDownloadedMapping;
 }
 
 @end

@@ -106,6 +106,10 @@
     return [self.class databaseViewMappingWithDatabase:self.database collectionName:[self.class photosCollectionName] connection:self.readConnection viewName:[self.class databaseViewName]];
 }
 
+- (DLFYapDatabaseViewAndMapping *)flattenedDatabaseViewMapping {
+    return [self.class databaseViewMappingWithDatabase:self.database collectionName:[self.class photosCollectionName] connection:self.readConnection viewName:[self.class flattenedDatabaseViewName]];
+}
+
 + (DLFYapDatabaseViewAndMapping *)databaseViewMappingWithDatabase:(id)database collectionName:(NSString *)collectionName connection:(YapDatabaseConnection *)connection viewName:(NSString *)viewName {
     YapDatabaseViewGrouping *grouping = [YapDatabaseViewGrouping withKeyBlock:^NSString *(NSString *collection, NSString *key) {
         if (![collection isEqualToString:photosCollectionName]) {
@@ -162,6 +166,10 @@
 
 + (NSString *)databaseViewName {
     return @"downloaded-photos";
+}
+
++ (NSString *)flattenedDatabaseViewName {
+    return @"downloaded-photos-flattened";
 }
 
 #pragma mark - Constants

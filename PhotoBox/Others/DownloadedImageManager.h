@@ -28,9 +28,13 @@
 
 - (DLFYapDatabaseViewAndMapping *)databaseViewMapping;
 
+- (DLFYapDatabaseViewAndMapping *)flattenedDatabaseViewMapping;
+
 + (DLFYapDatabaseViewAndMapping *)databaseViewMappingWithDatabase:(id)database collectionName:(NSString *)collectionName connection:(YapDatabaseConnection *)connection viewName:(NSString *)viewName;
 
 + (NSString *)databaseViewName;
+
++ (NSString *)flattenedDatabaseViewName;
 
 + (NSString *)photosCollectionName;
 

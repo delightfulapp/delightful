@@ -194,7 +194,9 @@ NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
     [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:NO];
     
     [DownloadedImageManager databaseViewMappingWithDatabase:self.database collectionName:[DownloadedImageManager photosCollectionName] connection:self.readConnection viewName:[DownloadedImageManager databaseViewName]];
+    [DownloadedImageManager databaseViewMappingWithDatabase:self.database collectionName:[DownloadedImageManager photosCollectionName] connection:self.readConnection viewName:[DownloadedImageManager flattenedDatabaseViewName]];
     [FavoritesManager databaseViewMappingWithDatabase:self.database collectionName:[FavoritesManager photosCollectionName] connection:self.readConnection viewName:[FavoritesManager databaseViewName]];
+    [FavoritesManager databaseViewMappingWithDatabase:self.database collectionName:[FavoritesManager photosCollectionName] connection:self.readConnection viewName:[FavoritesManager flattenedDatabaseViewName]];
     
     __block NSMutableSet *createdViews = [NSMutableSet set];
     [self.readConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {

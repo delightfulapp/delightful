@@ -32,6 +32,10 @@
     return @"favorited-photos";
 }
 
++ (NSString *)flattenedDatabaseViewName {
+    return @"favorited-photos-flattened";
+}
+
 + (NSString *)photosCollectionName {
     return favoritedPhotosCollectionName;
 }

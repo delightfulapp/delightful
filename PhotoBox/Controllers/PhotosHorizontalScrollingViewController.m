@@ -82,7 +82,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    //[self insertBackgroundSnapshotView];
+    if (!self.dataSource) {
+        [self setupDataSource];
+    }
     [self scrollToFirstShownPhoto];
 }
 
@@ -95,6 +97,14 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self showLoadingBarButtonItem:NO];
     });
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    self.dataSource = nil;
+}
+
+- (void)dealloc {
+    self.dataSource = nil;
 }
 
 - (void)setupDataSource {
@@ -334,7 +344,7 @@
     
     if (currentPhoto.pathOriginal) {
         [[NPRImageDownloader sharedDownloader] queuePhoto:currentPhoto thumbnail:[self currentCell].thisImageview.image];
-        [[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Download has started", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
+        //[[NPRNotificationManager sharedManager] postNotificationWithImage:nil position:NPRNotificationPositionBottom type:NPRNotificationTypeSuccess string:NSLocalizedString(@"Download has started", nil) accessoryType:NPRNotificationAccessoryTypeNone accessoryView:nil duration:1 onTap:nil];
     }
 }
 
@@ -348,7 +358,7 @@
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.thisImageview.image tokenFetchedBlock:^(id token) {
+    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.thisImageview.image fromViewController:self tokenFetchedBlock:^(id token) {
         [weakSelf showLoadingBarButtonItem:NO];
         if (token) {
             [[NPRNotificationManager sharedManager] hideNotification];
