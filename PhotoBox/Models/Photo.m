@@ -9,7 +9,6 @@
 #import "Photo.h"
 #import "Tag.h"
 #import "Album.h"
-#import "FetchedIn.h"
 
 #import "NSObject+Additionals.h"
 #import "NSArray+Additionals.h"

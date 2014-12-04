@@ -169,7 +169,6 @@
 		037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
-		037BA8BC18A63C830072760C /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
 		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
 		038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
@@ -273,7 +272,6 @@
 		03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03CE50F41818364500445084 /* SharePanel.m */; };
 		03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 038EC59F183D806B00AFEA53 /* AlbumRowCell.m */; };
 		03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76E180FE55D00FDD83B /* DownloadCell.m */; };
-		03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA8BB18A63C830072760C /* FetchedIn.m */; };
 		03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D972A61811865A008A087B /* Photo+Additionals.m */; };
 		03EFD8E719251CD700E80A71 /* NPRImageDownloaderTableViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 0398D76A180FD15F00FDD83B /* NPRImageDownloaderTableViewDataSource.m */; };
 		03EFD8E819251CD700E80A71 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD4828191FCE2000D4ADF7 /* SettingsTableViewController.m */; };
@@ -601,8 +599,6 @@
 		037B08A71956C0A6001F55D6 /* UploadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadHeaderView.m; path = PhotoBox/Views/UploadHeaderView.m; sourceTree = "<group>"; };
 		037BA89618A0EB470072760C /* DelightfulLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelightfulLayout.h; sourceTree = "<group>"; };
 		037BA89718A0EB470072760C /* DelightfulLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelightfulLayout.m; sourceTree = "<group>"; };
-		037BA8BA18A63C830072760C /* FetchedIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FetchedIn.h; sourceTree = "<group>"; };
-		037BA8BB18A63C830072760C /* FetchedIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FetchedIn.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		03866324184073D7006C76DE /* DelightfulTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulTabBar.h; path = PhotoBox/Views/DelightfulTabBar.h; sourceTree = "<group>"; };
 		03866325184073D7006C76DE /* DelightfulTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulTabBar.m; path = PhotoBox/Views/DelightfulTabBar.m; sourceTree = "<group>"; };
@@ -811,8 +807,6 @@
 				0310904417D1B2840075F9D8 /* Tag.m */,
 				031DD29F17D99B1300A80167 /* PhotoBoxImage.h */,
 				031DD2A017D99B1300A80167 /* PhotoBoxImage.m */,
-				037BA8BA18A63C830072760C /* FetchedIn.h */,
-				037BA8BB18A63C830072760C /* FetchedIn.m */,
 				0396BDE31922032D004B6290 /* PhotosCollection.h */,
 				0396BDE41922032D004B6290 /* PhotosCollection.m */,
 				035DACE61983555500557547 /* DLFAsset.h */,
@@ -1823,7 +1817,6 @@
 				03CE50F51818364500445084 /* SharePanel.m in Sources */,
 				038EC5A0183D806B00AFEA53 /* AlbumRowCell.m in Sources */,
 				0398D76F180FE55D00FDD83B /* DownloadCell.m in Sources */,
-				037BA8BC18A63C830072760C /* FetchedIn.m in Sources */,
 				03D972A71811865A008A087B /* Photo+Additionals.m in Sources */,
 				03EB629219DF065700E65248 /* TransitionToInfoDelegate.m in Sources */,
 				0342D9821A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m in Sources */,
@@ -1966,7 +1959,6 @@
 				03EFD8E119251CD700E80A71 /* SharePanel.m in Sources */,
 				03EFD8E219251CD700E80A71 /* AlbumRowCell.m in Sources */,
 				03EFD8E419251CD700E80A71 /* DownloadCell.m in Sources */,
-				03EFD8E519251CD700E80A71 /* FetchedIn.m in Sources */,
 				03EFD8E619251CD700E80A71 /* Photo+Additionals.m in Sources */,
 				03EB629319DF065700E65248 /* TransitionToInfoDelegate.m in Sources */,
 				0342D9831A0E6301000158B8 /* PhotosCollectionWithSearchViewController.m in Sources */,
