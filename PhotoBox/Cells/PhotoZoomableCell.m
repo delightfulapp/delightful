@@ -229,17 +229,12 @@
         Photo *photo = (Photo *)item;
         
         if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
+            self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
             CGFloat width, height;
             NSURL *URL;
-            if (photo.normalImage) {
-                width = [photo.normalImage.width floatValue];
-                height = [photo.normalImage.height floatValue];
-                URL = [NSURL URLWithString:photo.normalImage.urlString];
-            } else {
-                width = [photo.width floatValue];
-                height = [photo.height floatValue];
-                URL = photo.pathOriginal;
-            }
+            width = [photo.normalImage.width floatValue];
+            height = [photo.normalImage.height floatValue];
+            URL = [NSURL URLWithString:photo.normalImage.urlString];
             [self setImageSize:CGSizeMake(width, height)];
             [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
             [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
@@ -254,36 +249,9 @@
                 }
             }
             [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
-            
-            self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
         }
     }
    
-}
-
-- (void)loadOriginalImage {
-    Photo *photo = (Photo *)self.item;
-    [self setImageSize:CGSizeMake([photo.width floatValue], [photo.height floatValue])];
-    [self.thisImageview sd_setImageWithURL:[NSURL URLWithString:photo.pathOriginal.absoluteString] placeholderImage:nil];
-}
-
-- (BOOL)hasDownloadedOriginalImage {
-    return NO;
-//    Photo *photo = (Photo *)self.item;
-//    return [self.thisImageview hasDownloadedOriginalImageAtURL:photo.pathOriginal.absoluteString];
-}
-
-- (BOOL)isDownloadingOriginalImage {
-    return NO;
-//    Photo *photo = (Photo *)self.item;
-//    return [self.thisImageview isDownloadingImageAtURLString:photo.pathOriginal.absoluteString];
-}
-
-- (UIImage *)originalImage {
-    if ([self hasDownloadedOriginalImage]) {
-        return self.thisImageview.image;
-    }
-    return nil;
 }
 
 - (UIImageView *)grayImageView {
@@ -301,7 +269,7 @@
 }
 
 - (void)startTeasing {
-    PBX_LOG(@"Do teaasing gesture");
+    CLS_LOG(@"Do teaasing gesture");
     [self scrollViewWillBeginDragging:self.scrollView];
     [UIView animateWithDuration:0.5 animations:^{
         [self.scrollView setContentOffset:CGPointMake(0, -50) animated:NO];
@@ -354,5 +322,8 @@
     return (grayImageView)?YES:NO;
 }
 
+- (void)prepareForReuse {
+    [self setNeedsLayout];
+}
 
 @end

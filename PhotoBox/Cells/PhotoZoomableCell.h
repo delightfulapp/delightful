@@ -25,10 +25,6 @@
 @property (nonatomic, assign, getter = isClosingViewController) BOOL closingViewController;
 @property (nonatomic, strong) id item;
 
-- (void)loadOriginalImage;
-- (BOOL)hasDownloadedOriginalImage;
-- (BOOL)isDownloadingOriginalImage;
-- (UIImage *)originalImage;
 - (void)doTeasingGesture;
 - (void)centerScrollViewContents;
 - (void)setGrayscale:(BOOL)grayscale;
