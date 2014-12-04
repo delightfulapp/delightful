@@ -14,6 +14,6 @@
 
 + (instancetype)sharedManager;
 
-- (void)sharePhoto:(Photo *)photo image:(UIImage *)image tokenFetchedBlock:(void(^)(id))tokenFetchedBlock completion:(void(^)())completion;
+- (void)sharePhoto:(Photo *)photo image:(UIImage *)image fromViewController:(UIViewController *)fromViewController tokenFetchedBlock:(void(^)(id))tokenFetchedBlock completion:(void(^)())completion;
 
 @end
