@@ -69,7 +69,7 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 }
 
 - (void)openActivityPickerForImage:(UIImage *)image {
-    void (^UIActivityViewControllerCompletionHandler)(NSString*, BOOL) = ^(NSString *activityType, BOOL completed){
+    void (^UIActivityViewControllerCompletionHandler)(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError) = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError){
         if (completed) {
             if ([activityType isEqualToString:@"openin.activity"]) {
                 [self performSelector:@selector(showDocumentInteractionController:) withObject:image afterDelay:0.3];
@@ -88,11 +88,11 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
     [self openActivityPickerForItem:URL applicationActivities:@[activity] completion:completion activityCompletionHandler:nil];
 }
 
-- (void)openActivityPickerForItem:(id)item applicationActivities:(NSArray *)activities completion:(void(^)())completion activityCompletionHandler:(void(^)(NSString *, BOOL))activityCompletionHandler{
+- (void)openActivityPickerForItem:(id)item applicationActivities:(NSArray *)activities completion:(void(^)())completion activityCompletionHandler:(void(^)(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError))activityCompletionHandler{
     
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[item] applicationActivities:activities];
     [activityViewController setTitle:@"Share Photo's URL"];
-    [activityViewController setCompletionHandler:activityCompletionHandler];
+    [activityViewController setCompletionWithItemsHandler:activityCompletionHandler];
     [activityViewController setExcludedActivityTypes:@[UIActivityTypePrint, UIActivityTypeAssignToContact]];
     [self presentViewController:activityViewController animated:YES completion:completion];
     
