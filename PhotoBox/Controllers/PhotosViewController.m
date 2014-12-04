@@ -390,7 +390,7 @@
     if (photo.asset) {
         return;
     }
-    self.selectedCell = cell;
+    self.selectedItem = photo;
     
     [self openPhoto:cell.item];
 }
@@ -440,7 +440,7 @@
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate
 
 - (UIImage *)imageToAnimate {
-    if (self.selectedCell) {
+    if (self.selectedItem) {
         return ((PhotoBoxCell *)self.selectedCell).cellImageView.image;
     }
     if (self.headerImageView) {
@@ -450,15 +450,15 @@
 }
 
 - (CGRect)startRectInContainerView:(UIView *)containerView {
-    if (self.selectedCell) {
+    if (self.selectedItem) {
         return [self.selectedCell convertFrameRectToView:containerView];
     }
     return [self.headerImageView.imageView convertFrameRectToView:containerView];
 }
 
 - (CGRect)endRectInContainerView:(UIView *)containerView {
-    if (self.selectedCell) {
-        NSIndexPath *indexPath = [self.collectionView indexPathForCell:self.selectedCell];
+    if (self.selectedItem) {
+        NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.selectedItem];
         UICollectionViewLayoutAttributes *attributes = [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
         CGRect originalPosition = CGRectOffset(attributes.frame, 0, self.collectionView.contentInset.top);
         CGFloat adjustment = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
@@ -471,7 +471,7 @@
 }
 
 - (UIView *)destinationViewOnDismiss {
-    if (self.selectedCell) {
+    if (self.selectedItem) {
         return self.selectedCell;
     }
     return self.headerImageView;
@@ -484,19 +484,21 @@
 #pragma mark - PhotosHorizontalScrollingViewControllerDelegate
 
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
-    NSIndexPath *indexPath = [self.dataSource indexPathOfItem:item];
+    self.selectedItem = item;
+    NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.selectedItem];
+    NSLog(@"index path of new selected item %@", indexPath);
     if (indexPath) {
         if (indexPath.section < [self.collectionView numberOfSections]) {
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-            self.selectedCell = (PhotoBoxCell *)[self.collectionView cellForItemAtIndexPath:indexPath];
         }
     }
     
 }
 
 - (void)shouldClosePhotosHorizontalViewController:(PhotosHorizontalScrollingViewController *)controller {
+    UICollectionViewCell *selectedCell = self.selectedCell;
     for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
-        if (cell != self.selectedCell) {
+        if (cell != selectedCell) {
             [cell setAlpha:1];
         }
     }
@@ -505,14 +507,15 @@
         for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
             [cell setAlpha:1];
         }
-        self.selectedCell = nil;
+        self.selectedItem = nil;
     }];
 }
 
 - (void)willDismissViewController:(PhotosHorizontalScrollingViewController *)controller {
-    [self.selectedCell setAlpha:0];
+    UICollectionViewCell *selectedCell = self.selectedCell;
+    [selectedCell setAlpha:0];
     for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
-        if (cell != self.selectedCell) {
+        if (cell != selectedCell) {
             [cell setAlpha:1];
         }
     }

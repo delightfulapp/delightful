@@ -347,6 +347,12 @@ NSString *const galleryContainerType = @"gallery";
     return nil;
 }
 
+- (UICollectionViewCell *)selectedCell {
+    NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.selectedItem];
+    UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+    return cell;
+}
+
 #pragma mark - Setter
 
 - (void)setAttributedTitle:(NSAttributedString *)title {

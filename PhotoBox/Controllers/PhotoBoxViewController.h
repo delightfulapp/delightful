@@ -33,8 +33,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, assign) int numberOfColumns;
-@property (nonatomic, strong) UICollectionViewCell *selectedCell;
-
+@property (nonatomic, strong) id selectedItem;
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
 @property (nonatomic) CollectionViewDataSource *dataSource;
@@ -44,6 +43,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) BOOL isFetching;
 @property (nonatomic, assign) BOOL isDoneSyncing;
 
+- (UICollectionViewCell *)selectedCell;
 - (Class)dataSourceClass;
 - (void)refresh;
 - (void)showError:(NSError *)error;
