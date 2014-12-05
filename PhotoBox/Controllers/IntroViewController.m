@@ -35,6 +35,10 @@
     NSAttributedString *attr = [[NSAttributedString alloc] initWithData:[description dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType} documentAttributes:nil error:nil];
     self.versionView.text = currentVersion;
     self.whatsNewLabel.attributedText = attr;
+    
+    [self.doneButton.layer setBorderColor:[UIColor whiteColor].CGColor];
+    [self.doneButton.layer setCornerRadius:7];
+    [self.doneButton.layer setBorderWidth:1];
 }
 
 - (void)didReceiveMemoryWarning
@@ -44,7 +48,6 @@
 }
 
 + (NSDictionary *)introPlistForVersion:(NSString *)version {
-    NSString *errorDesc = nil;
     NSPropertyListFormat format;
     NSString *plistPath;
     NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
@@ -54,16 +57,17 @@
         plistPath = [[NSBundle mainBundle] pathForResource:version ofType:@"plist"];
     }
     NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+    NSError *error;
     NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
-                                          propertyListFromData:plistXML
-                                          mutabilityOption:NSPropertyListMutableContainersAndLeaves
-                                          format:&format
-                                          errorDescription:&errorDesc];
+                                          propertyListWithData:plistXML options:0 format:&format error:&error];
     if (!temp) {
-        PBX_LOG(@"Error reading plist: %@, format: %d", errorDesc, format);
+        PBX_LOG(@"Error reading plist: %@, format: %lu", error, format);
     }
     return temp;
 }
 
 
+- (IBAction)didTapDoneButton:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
 @end

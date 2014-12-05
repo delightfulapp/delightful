@@ -72,14 +72,17 @@ static void * imageDownloadContext = &imageDownloadContext;
 
 - (BOOL)showUpdateInfoViewIfNeeded {
     if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        NSString *previousVersion = [[NSUserDefaults standardUserDefaults] objectForKey:APP_VERSION_KEY];
         NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
         NSString *showIntroVersion = [[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
-        if (![currentVersion isEqualToString:showIntroVersion]) {
-            if ([self versionInfOPlistExistsForVersion:currentVersion]) {
-                [self performSegueWithIdentifier:@"showIntro" sender:nil];
-                [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                return YES;
+        if (previousVersion) {
+            if (![currentVersion isEqualToString:showIntroVersion]) {
+                if ([self versionInfOPlistExistsForVersion:currentVersion]) {
+                    [self performSegueWithIdentifier:@"showIntro" sender:nil];
+                    [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    return YES;
+                }
             }
         }
     }

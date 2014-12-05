@@ -12,5 +12,7 @@
 
 @interface IntroViewController : UIViewController
 @property (weak, nonatomic) IBOutlet SeeThroughCircleView *versionView;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet UITextView *whatsNewLabel;
+- (IBAction)didTapDoneButton:(id)sender;
 @end
