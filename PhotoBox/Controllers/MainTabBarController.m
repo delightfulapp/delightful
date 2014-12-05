@@ -16,15 +16,13 @@
 #import "ConnectionManager.h"
 
 static void * imageDownloadContext = &imageDownloadContext;
+static void * kUserLoggedInContext = &kUserLoggedInContext;
 
 @interface MainTabBarController ()
 
 @property (nonatomic, assign) int numberOfDownloads;
-
 @property (nonatomic, assign) int numberOfUploads;
-
 @property (nonatomic, assign) BOOL isDownloadingPhotos;
-
 @property (nonatomic, assign) BOOL isUploadingPhotos;
 
 @end
@@ -36,6 +34,7 @@ static void * imageDownloadContext = &imageDownloadContext;
     
     [[NPRImageDownloader sharedDownloader] addObserver:self forKeyPath:NSStringFromSelector(@selector(numberOfDownloads)) options:0 context:imageDownloadContext];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:kUserLoggedInContext];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -117,6 +116,10 @@ static void * imageDownloadContext = &imageDownloadContext;
         self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
         self.isDownloadingPhotos = YES;
         [self showBadgeOnMoreBarItem];
+    } else if (context == kUserLoggedInContext) {
+        for (UINavigationController *navCon in self.viewControllers) {
+            [navCon popToRootViewControllerAnimated:NO];
+        }
     }
 }
 
