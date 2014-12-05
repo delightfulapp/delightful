@@ -14,11 +14,4 @@
 
 @property (nonatomic, assign, getter = isDemoMode) BOOL demoMode;
 
-/**
- *  Call this method to show the Update Info if needed.
- *
- *  @return YES if the update info screen is shown. NO otherwise.
- */
-- (BOOL)showUpdateInfoViewIfNeeded;
-
 @end

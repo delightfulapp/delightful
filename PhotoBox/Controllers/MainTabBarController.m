@@ -7,14 +7,13 @@
 //
 
 #import "MainTabBarController.h"
-
 #import "SyncEngine.h"
-
 #import "PhotoBoxViewController.h"
-
 #import "NPRImageDownloader.h"
-
 #import "DLFImageUploader.h"
+#import "UIWindow+Additionals.h"
+#import "IntroViewController.h"
+#import "ConnectionManager.h"
 
 static void * imageDownloadContext = &imageDownloadContext;
 
@@ -39,6 +38,12 @@ static void * imageDownloadContext = &imageDownloadContext;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self showUpdateInfoViewIfNeeded];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -61,6 +66,29 @@ static void * imageDownloadContext = &imageDownloadContext;
         }
     }
     
+}
+
+#pragma mark - Intro
+
+- (BOOL)showUpdateInfoViewIfNeeded {
+    if ([[ConnectionManager sharedManager] isUserLoggedIn]) {
+        NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+        NSString *showIntroVersion = [[NSUserDefaults standardUserDefaults] objectForKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+        if (![currentVersion isEqualToString:showIntroVersion]) {
+            if ([self versionInfOPlistExistsForVersion:currentVersion]) {
+                [self performSegueWithIdentifier:@"showIntro" sender:nil];
+                [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:PBX_SHOWN_INTRO_VIEW_USER_DEFAULT_KEY];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                return YES;
+            }
+        }
+    }
+    return NO;
+}
+
+- (BOOL)versionInfOPlistExistsForVersion:(NSString *)version {
+    NSString * filePath = [[NSBundle bundleForClass:[self class]] pathForResource:version ofType:@"plist"];
+    return (filePath)?YES:NO;
 }
 
 #pragma mark - Orientation

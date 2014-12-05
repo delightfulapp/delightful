@@ -10,14 +10,13 @@ PODS:
     - CocoaLumberjack/Core
   - COSTouchVisualizer (1.0.3)
   - DAProgressOverlayView (1.0.2)
-  - DLFPhotosPicker (0.6)
+  - DLFPhotosPicker (0.8)
   - Expecta (0.2.4)
   - GPUImage (0.1.4)
   - Mantle (1.4.1):
     - Mantle/extobjc (= 1.4.1)
   - Mantle/extobjc (1.4.1)
   - MBProgressHUD (0.8)
-  - MYBlurIntroductionView (1.0.3)
   - NSDate+TimeAgo (1.0.3)
   - NSDate-Escort (1.3.0)
   - OCMock (2.2.4)
@@ -50,7 +49,6 @@ DEPENDENCIES:
   - GPUImage (= 0.1.4)
   - Mantle (= 1.4.1)
   - MBProgressHUD (= 0.8)
-  - MYBlurIntroductionView (= 1.0.3)
   - NSDate+TimeAgo (= 1.0.3)
   - NSDate-Escort (= 1.3.0)
   - OCMock (~> 2.2.1)
@@ -72,7 +70,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DLFPhotosPicker:
-    :commit: e04187d433364a35f7b856378224cdca1e96b45e
+    :commit: 53e771daf138191a44a77317551a0606327f5e0c
     :git: git@github.com:nicnocquee/DLFPhotosPicker.git
   YapDatabase:
     :commit: 9f717d54a0a7b5e5b0ab52834b36ef588c21f1a8
@@ -85,12 +83,11 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
   COSTouchVisualizer: 2edcc5626758400d90e50ebf5a7740076c82d1b5
   DAProgressOverlayView: 66f743e4bbbb0b5fe241670b9156d948cc228fc1
-  DLFPhotosPicker: 1d91680dc661923ef3c3f0c1078c162319601479
+  DLFPhotosPicker: a45b9176b5770e4ae501a45d837f7d2ddfece571
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   Mantle: 1ca9c0fa84d3d3fc98524e7229f30489b6dd44e5
   MBProgressHUD: c356980b0cd097f19acec959b49dca5eb8ec31be
-  MYBlurIntroductionView: 6caf60805eaa555538aba9e2615820fd6f07cd23
   NSDate+TimeAgo: f3533e0198fab05b716368b19f8c2185d53d6f3b
   NSDate-Escort: f36b94f19622172f9c9b691102d76dfeb9607012
   OCMock: 6db79185520e24f9f299548f2b8b07e41d881bd5

@@ -7,15 +7,9 @@
 //
 
 #import "IntroViewController.h"
+#import "SeeThroughCircleView.h"
 
-#import <MYBlurIntroductionView.h>
-
-#import "PanelFactory.h"
-
-@interface IntroViewController () <MYIntroductionDelegate>
-
-@property (nonatomic, strong) MYBlurIntroductionView *introductionView;
-
+@interface IntroViewController () 
 @end
 
 @implementation IntroViewController
@@ -32,12 +26,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    NSString *version = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
     
-    self.introductionView.BackgroundImageView.image = [PanelFactory imageBackgroundForVersion:version];
-    [self.introductionView buildIntroductionWithPanels:[PanelFactory panelsForVersion:version]];
-    [self.introductionView.BlurView removeFromSuperview];
+    NSString *currentVersion = [[NSBundle mainBundle] infoDictionary][@"CFBundleShortVersionString"];
+    NSDictionary *versionPlist = [self.class introPlistForVersion:currentVersion];
+    NSArray *panels = [versionPlist objectForKey:@"panels"];
+    NSDictionary *panel = [panels firstObject];
+    NSString *description = panel[@"description"];
+    NSAttributedString *attr = [[NSAttributedString alloc] initWithData:[description dataUsingEncoding:NSUnicodeStringEncoding] options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType} documentAttributes:nil error:nil];
+    self.versionView.text = currentVersion;
+    self.whatsNewLabel.attributedText = attr;
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,25 +43,27 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Getters
-
-- (MYBlurIntroductionView *)introductionView {
-    if (!_introductionView) {
-        _introductionView = [[MYBlurIntroductionView alloc] initWithFrame:self.view.bounds];
-        _introductionView.delegate = self;
-        [self.view addSubview:self.introductionView];
++ (NSDictionary *)introPlistForVersion:(NSString *)version {
+    NSString *errorDesc = nil;
+    NSPropertyListFormat format;
+    NSString *plistPath;
+    NSString *rootPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                              NSUserDomainMask, YES) objectAtIndex:0];
+    plistPath = [rootPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", version]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:plistPath]) {
+        plistPath = [[NSBundle mainBundle] pathForResource:version ofType:@"plist"];
     }
-    return _introductionView;
+    NSData *plistXML = [[NSFileManager defaultManager] contentsAtPath:plistPath];
+    NSDictionary *temp = (NSDictionary *)[NSPropertyListSerialization
+                                          propertyListFromData:plistXML
+                                          mutabilityOption:NSPropertyListMutableContainersAndLeaves
+                                          format:&format
+                                          errorDescription:&errorDesc];
+    if (!temp) {
+        PBX_LOG(@"Error reading plist: %@, format: %d", errorDesc, format);
+    }
+    return temp;
 }
 
-#pragma mark - Introductions delegate
-
--(void)introduction:(MYBlurIntroductionView *)introductionView didFinishWithType:(MYFinishType)finishType {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
--(void)introduction:(MYBlurIntroductionView *)introductionView didChangeToPanel:(MYIntroductionPanel *)panel withIndex:(NSInteger)panelIndex {
-    
-}
 
 @end

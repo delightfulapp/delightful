@@ -32,7 +32,7 @@
     //// Text Drawing
     CGRect tmpRect = CGRectMake(0, 0, CGRectGetWidth(rect), CGRectGetHeight(rect));
     CGRect topRect, topRemainderRect, middleRect, middleRemainderRect;
-    CGRectDivide(tmpRect, &topRect, &topRemainderRect, CGRectGetHeight(tmpRect)*0.3, CGRectMinYEdge);
+    CGRectDivide(tmpRect, &topRect, &topRemainderRect, CGRectGetHeight(tmpRect)*0.35, CGRectMinYEdge);
     CGRectDivide(topRemainderRect, &middleRect, &middleRemainderRect, CGRectGetHeight(tmpRect)*0.4, CGRectMinYEdge);
     CGRect textRect = middleRect;
     [[UIColor blackColor] setFill];
@@ -43,7 +43,12 @@
     CGContextSaveGState(context);
     {
         CGContextSetBlendMode(context, kCGBlendModeDestinationOut);
-        [self.text drawInRect:textRect withAttributes:@{NSFontAttributeName: [UIFont fontWithName:self.fontName  size:(self.fontSize > 0)?self.fontSize:CGRectGetHeight(rect)/4], NSParagraphStyleAttributeName: paragraph}];
+        float fontSize = (self.fontSize > 0)?self.fontSize:CGRectGetHeight(rect)/4;
+        UIFont *fontName = [UIFont systemFontOfSize:fontSize];
+        if (self.fontName) {
+            fontName = [UIFont fontWithName:self.fontName  size:fontSize];
+        }
+        [self.text drawInRect:textRect withAttributes:@{NSFontAttributeName:fontName, NSParagraphStyleAttributeName: paragraph}];
     }
     CGContextRestoreGState(context);
 }

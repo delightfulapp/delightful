@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IntroViewController : UIViewController
+@class SeeThroughCircleView;
 
+@interface IntroViewController : UIViewController
+@property (weak, nonatomic) IBOutlet SeeThroughCircleView *versionView;
+@property (weak, nonatomic) IBOutlet UITextView *whatsNewLabel;
 @end
