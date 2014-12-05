@@ -7,12 +7,11 @@
 //
 
 #import "TagsDataSource.h"
-
 #import "DLFYapDatabaseViewAndMapping.h"
-
 #import "DLFDatabaseManager.h"
-
 #import "Tag.h"
+#import "SortingConstants.h"
+#import "SortTableViewController.h"
 
 NSString *tagsAlphabeticalFirstViewName = @"alphabetical-first-tags";
 NSString *tagsAlphabeticalLastViewName = @"alphabetical-last-tags";
@@ -36,12 +35,32 @@ NSString *numbersLastViewName = @"numbers-last-tags";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
         self.alphabeticalFirstTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:YES];
         self.alphabeticalLastTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:tagsAlphabeticalLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(tagId)) sortKeyAsc:NO];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self setSelectedViewMapping:self.alphabeticalFirstTagsViewMapping];
-        });
         self.numberFirstTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersFirstViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:YES];
         self.numbersLastTagsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:numbersLastViewName collection:tagsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(count)) sortKeyAsc:NO];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setDefaultMapping];
+        });
     });
+}
+
+- (void)setDefaultMapping {
+    NSString *sort = nameAscSortKey;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_TAGS_SORT]) {
+        sort = [[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_TAGS_SORT];
+    }
+    TagsSortKey selectedSortKey;
+    NSArray *sortArray = [sort componentsSeparatedByString:@","];
+    BOOL ascending = YES;
+    if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(name))]) {
+        selectedSortKey = TagsSortKeyName;
+    } else {
+        selectedSortKey = TagsSortKeyNumberOfPhotos;
+    }
+    if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
+        ascending = NO;
+    }
+    
+    [self sortBy:selectedSortKey ascending:ascending];
 }
 
 - (void)sortBy:(TagsSortKey)sortBy ascending:(BOOL)ascending {
