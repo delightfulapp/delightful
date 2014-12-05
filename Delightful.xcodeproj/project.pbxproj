@@ -485,6 +485,7 @@
 		034E9F9417FA6C2000E3565E /* XCTestCase+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "XCTestCase+Additionals.m"; sourceTree = "<group>"; };
 		03551B121A307FC80050126E /* 2.0.22.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = 2.0.22.plist; path = PhotoBox/IntroFiles/2.0.22.plist; sourceTree = "<group>"; };
 		03551B151A31558F0050126E /* intro.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = intro.jpg; sourceTree = "<group>"; };
+		03551B181A31E0C70050126E /* SortingConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SortingConstants.h; sourceTree = "<group>"; };
 		0357966919D842D200A28334 /* GroupedPhotosDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupedPhotosDataSource.h; sourceTree = "<group>"; };
 		0357966A19D842D200A28334 /* GroupedPhotosDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupedPhotosDataSource.m; sourceTree = "<group>"; };
 		0357966D19D8435600A28334 /* YapDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YapDataSource.h; sourceTree = "<group>"; };
@@ -953,6 +954,7 @@
 				032CBB8B17D0BDF3001205B1 /* Delightful-Prefix.pch */,
 				0310903C17D103780075F9D8 /* Constants.h */,
 				0348D22F17DA263500C932BA /* Crashlytics.plist */,
+				03551B181A31E0C70050126E /* SortingConstants.h */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";

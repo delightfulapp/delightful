@@ -11,6 +11,7 @@
 #import "SyncEngine.h"
 #import "PhotosCollection.h"
 #import "SortTableViewController.h"
+#import "SortingConstants.h"
 
 @interface PhotosSubsetViewController ()
 
@@ -23,9 +24,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.viewJustDidLoad = YES;
-    
     self.title = self.item.titleName;
 }
 
@@ -35,7 +34,13 @@
     if (self.viewJustDidLoad) {
         self.viewJustDidLoad = NO;
         [((PhotosSubsetDataSource *)self.dataSource) setFilterName:self.filterName objectKey:self.objectKey filterKey:self.item.itemId];
-        [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:self.item.class sort:dateUploadedDescSortKey];
+        self.currentSort = dateUploadedDescSortKey;
+        NSString *sortDefaultsKey = [NSString stringWithFormat:@"%@-%@", DLF_LAST_SELECTED_PHOTOS_SORT, self.item.itemId?:@""];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:sortDefaultsKey]) {
+            self.currentSort = [[NSUserDefaults standardUserDefaults] objectForKey:sortDefaultsKey];
+        }
+        [self selectSort:self.currentSort sortTableViewController:nil];
+        [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:self.item.class sort:self.currentSort];
     } else {
         [[SyncEngine sharedEngine] pauseSyncingPhotos:NO collection:self.item.itemId collectionType:self.item.class];
     }

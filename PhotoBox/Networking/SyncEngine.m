@@ -286,7 +286,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 }
 
 - (NSOperation *)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
-    NSLog(@"Fetching photos in album %@ page %d", album, page);
+    NSLog(@"Fetching photos in album %@ page %d sort %@", album, page, sort);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:album}];

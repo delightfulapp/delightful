@@ -7,26 +7,17 @@
 //
 
 #import "TagsViewController.h"
-
 #import "Tag.h"
-
 #import "TagRowCell.h"
-
 #import "PhotosViewController.h"
-
 #import "AppDelegate.h"
-
 #import "UIViewController+Additionals.h"
-
 #import "TagsDataSource.h"
-
 #import "SyncEngine.h"
-
 #import "SortTableViewController.h"
-
 #import "PhotosSubsetViewController.h"
-
 #import "Photo.h"
+#import "SortingConstants.h"
 
 @interface TagsViewController () <UICollectionViewDelegate, SortingDelegate>
 
@@ -47,7 +38,10 @@
     
     [self setTitle:NSLocalizedString(@"Tags", nil)];
     
-    self.currentSort = @"name,asc";
+    self.currentSort = nameAscSortKey;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_TAGS_SORT]) {
+        self.currentSort = [[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_TAGS_SORT];
+    }
     
     [self.collectionView reloadData];
     
@@ -86,6 +80,8 @@
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
         self.currentSort = sort;
+        [[NSUserDefaults standardUserDefaults] setObject:self.currentSort forKey:DLF_LAST_SELECTED_TAGS_SORT];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
         BOOL ascending = YES;
         TagsSortKey selectedSortKey;

@@ -7,12 +7,11 @@
 //
 
 #import "GroupedPhotosDataSource.h"
-
 #import "Photo.h"
-
 #import "DLFDatabaseManager.h"
-
 #import "DLFYapDatabaseViewAndMapping.h"
+#import "SortingConstants.h"
+#import "SortTableViewController.h"
 
 NSString *const dateUploadedLastViewName = @"date-uploaded-last-photos";
 NSString *const dateTakenLastViewName = @"date-taken-last-photos";
@@ -80,7 +79,7 @@ NSString *const dateTakenFirstViewName = @"date-taken-first-photos";
     } else if (sortBy == PhotosSortKeyDateTaken) {
         [self setSelectedViewMapping:(ascending)?self.dateTakenFirstViewMapping:self.dateTakenLastViewMapping];
     }
-    completion();
+    if (completion) completion();
 }
 
 - (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {

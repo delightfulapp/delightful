@@ -7,12 +7,11 @@
 //
 
 #import "AlbumsDataSource.h"
-
 #import "DLFYapDatabaseViewAndMapping.h"
-
 #import "DLFDatabaseManager.h"
-
 #import "Album.h"
+#import "SortTableViewController.h"
+#import "SortingConstants.h"
 
 NSString *albumsUpdatedLastViewName = @"updated-last-albums";
 NSString *albumsUpdatedFirstViewName = @"updated-first-albums";
@@ -32,12 +31,14 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
         self.alphabetAscAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsAlphabeticalAscendingViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(name)) sortKeyAsc:YES];
         self.alphabetDescAlbumsViewMapping = [DLFYapDatabaseViewAndMapping viewMappingWithViewName:albumsAlphabeticalDescendingViewName collection:albumsCollectionName database:self.database sortKey:NSStringFromSelector(@selector(name)) sortKeyAsc:NO];
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self setSelectedViewMapping:self.updatedLastAlbumsViewMapping];
+            [self setDefaultMapping];
         });
     });
 }
 
-- (void)setDefaultMapping {}
+- (void)setDefaultMapping {
+    [self setSelectedViewMapping:self.updatedLastAlbumsViewMapping];
+}
 
 - (void)sortBy:(AlbumsSortKey)sortBy ascending:(BOOL)ascending {
     if (sortBy == AlbumsSortKeyName) {

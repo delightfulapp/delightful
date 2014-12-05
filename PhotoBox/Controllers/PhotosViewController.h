@@ -25,4 +25,6 @@ typedef NS_ENUM(NSInteger, PhotosViewControllerState) {
 
 @property (nonatomic, strong) NSString *currentSort;
 
+- (void)selectSort:(NSString *)sort sortTableViewController:(id)sortTableViewController;
+
 @end

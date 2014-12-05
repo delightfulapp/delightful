@@ -21,6 +21,7 @@
 #import "SyncEngine.h"
 #import "SortTableViewController.h"
 #import "PhotosSubsetViewController.h"
+#import "SortingConstants.h"
 
 @interface AlbumsViewController () <UIActionSheetDelegate, SortingDelegate, UICollectionViewDelegate>
 
@@ -34,7 +35,10 @@
 {    
     [super viewDidLoad];
     
-    self.currentSort = @"dateLastPhotoAdded,desc";
+    self.currentSort = dateLastPhotoAddedDescSortKey;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_ALBUMS_SORT]) {
+        self.currentSort = [[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_ALBUMS_SORT];
+    }
         
     [self.collectionView registerClass:[AlbumRowCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView setDelegate:self];
@@ -74,6 +78,9 @@
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
         self.currentSort = sort;
+        [[NSUserDefaults standardUserDefaults] setObject:self.currentSort forKey:DLF_LAST_SELECTED_ALBUMS_SORT];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        
         AlbumsSortKey selectedSortKey;
         NSArray *sortArray = [sort componentsSeparatedByString:@","];
         if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(dateLastPhotoAdded))]) {

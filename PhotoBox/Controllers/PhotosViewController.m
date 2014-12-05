@@ -40,6 +40,7 @@
 #import "SortTableViewController.h"
 #import "UploadViewController.h"
 #import "DLFImageUploader.h"
+#import "SortingConstants.h"
 #import <DLFPhotosPickerViewController.h>
 #import <DLFDetailViewController.h>
 
@@ -80,8 +81,6 @@
     
     self.title = NSLocalizedString(@"Photos", nil);
     
-    self.currentSort = @"dateUploaded,desc";
-    
     if (self.navigationController.viewControllers.count == 1) {
         UIBarButtonItem *uploadButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"upload"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] style:UIBarButtonItemStylePlain target:self action:@selector(didTapUploadButton:)];
         [self.navigationItem setLeftBarButtonItem:uploadButton];
@@ -104,7 +103,13 @@
     
     if (self.viewJustDidLoad) {
         self.viewJustDidLoad = NO;
-        [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:dateUploadedDescSortKey];
+        self.currentSort = dateUploadedDescSortKey;
+        NSString *sortDefaultsKey = [NSString stringWithFormat:@"%@-%@", DLF_LAST_SELECTED_PHOTOS_SORT, self.item.itemId?:@""];
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:sortDefaultsKey]) {
+            self.currentSort = [[NSUserDefaults standardUserDefaults] objectForKey:sortDefaultsKey];
+        }
+        [self selectSort:self.currentSort sortTableViewController:nil];
+        [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:self.currentSort];
     } else {
         NSLog(@"----> view did appear");
         if ([self doneUploadingNeedRefresh]) {
@@ -166,34 +171,37 @@
 
 - (void)sortTableViewController:(id)sortTableViewController didSelectSort:(NSString *)sort {
     if (![self.currentSort isEqualToString:sort]) {
-        [((GroupedPhotosDataSource *)self.dataSource) setSelectedViewMapping:nil];
         self.currentSort = sort;
-        PhotosSortKey selectedSortKey;
-        NSArray *sortArray = [sort componentsSeparatedByString:@","];
-        if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(dateTaken))]) {
-            selectedSortKey = PhotosSortKeyDateTaken;
-        } else {
-            selectedSortKey = PhotosSortKeyDateUploaded;
-        }
-        BOOL ascending = YES;
-        if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
-            ascending = NO;
-        }
+        [[NSUserDefaults standardUserDefaults] setObject:self.currentSort forKey:[NSString stringWithFormat:@"%@-%@", DLF_LAST_SELECTED_PHOTOS_SORT, self.item.itemId?:@""]];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
+        [[SyncEngine sharedEngine] refreshPhotosInCollection:self.item.itemId collectionType:self.item.class sort:self.currentSort];
         
-        if (self.item) {
-            [[SyncEngine sharedEngine] refreshPhotosInCollection:self.item.itemId collectionType:self.item.class sort:self.currentSort];
-        } else {
-            [[SyncEngine sharedEngine] setPhotosSyncSort:sort];
-            [[SyncEngine sharedEngine] refreshResource:NSStringFromClass([Photo class])];
-        }
-        
-        [sortTableViewController dismissViewControllerAnimated:YES completion:^{
-            [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:^{
-            }];
-        }];
+        [self selectSort:self.currentSort sortTableViewController:sortTableViewController];
     } else {
         [sortTableViewController dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)selectSort:(NSString *)sort sortTableViewController:(id)sortTableViewController {
+    PhotosSortKey selectedSortKey;
+    NSArray *sortArray = [sort componentsSeparatedByString:@","];
+    if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(dateTaken))]) {
+        selectedSortKey = PhotosSortKeyDateTaken;
+    } else {
+        selectedSortKey = PhotosSortKeyDateUploaded;
+    }
+    BOOL ascending = YES;
+    if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
+        ascending = NO;
+    }
+    
+    if (sortTableViewController) {
+        [sortTableViewController dismissViewControllerAnimated:YES completion:^{
+            [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:nil];
+        }];
+    } else {
+        [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:nil];
     }
 }
 
@@ -478,7 +486,6 @@
         return self.headerImageView.frame;
     }
     return CGRectZero;
-    
 }
 
 - (UIView *)destinationViewOnDismiss {
