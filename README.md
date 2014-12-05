@@ -1,11 +1,18 @@
 Delightful for iPhone
 ==
 
+Delightful is an unofficial [Trovebox](https://trovebox.com/) iPhone app client.
+
+Screenshot
+--
+
 ![Delightful app](http://f.cl.ly/items/423u39153T3w0r2p291G/iOS%20Simulator%20Screen%20Shot%20Dec%206,%202014,%2001.03.10.png)
+
+App Preview
+--
 
 [![Delightful App Preview](http://f.cl.ly/items/1K2k072D2W1m2X0b0o1k/Screen%20Shot%202014-12-06%20at%2002.12.31.png)](http://cl.ly/0g1Y0X06253s)
 
-Delightful is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
 
 Features (so far)
 --
