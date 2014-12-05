@@ -203,6 +203,33 @@
         if (!error) {
             successBlock(responseObject);
         } else {
+            if ([self.baseURL.host isEqualToString:@"current.trovebox.com"]) {
+                NSDictionary *userInfo = error.userInfo;
+                if (userInfo) {
+                    NSString *responseString = userInfo[NSLocalizedRecoverySuggestionErrorKey];
+                    if (responseString) {
+                        NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:[responseString dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+                        if (responseObject) {
+                            NSArray *results = responseObject[@"result"];
+                            if (results) {
+                                NSMutableArray *responseObjects = [NSMutableArray arrayWithCapacity:results.count];
+                                for (NSDictionary *obj in results) {
+                                    NSError *error;
+                                    id transformedObj = [MTLJSONAdapter modelOfClass:resultClass fromJSONDictionary:obj error:&error];
+                                    if (transformedObj) {
+                                        [responseObjects addObject:transformedObj];
+                                    }
+                                }
+                                if (successBlock) {
+                                    successBlock(responseObjects);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
             if (operation.response.statusCode == 401) {
                // [[ConnectionManager sharedManager] logout];
             } else {

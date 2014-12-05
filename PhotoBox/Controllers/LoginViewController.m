@@ -97,21 +97,26 @@
         [textField setEnabled:NO];
         [self.activityView startAnimating];
         [self.view endEditing:YES];
-        NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
-        LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
-        [loginWebView setViewControllerDelegate:self];
-        [loginWebView setInitialURL:url];
-        if (!self.fallingTransitioningDelegate) {
-            FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
-            self.fallingTransitioningDelegate = falling;
-        }
         
-        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-        [self presentViewController:navCon animated:YES completion:^{
-            [textField setEnabled:YES];
-            [self.activityView stopAnimating];
-        }];
+        if ([textField.text isEqualToString:@"current.trovebox.com"]) {
+            [[ConnectionManager sharedManager] connectAsTester];
+        } else {
+            NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
+            LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
+            [loginWebView setViewControllerDelegate:self];
+            [loginWebView setInitialURL:url];
+            if (!self.fallingTransitioningDelegate) {
+                FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
+                self.fallingTransitioningDelegate = falling;
+            }
+            
+            UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
+            [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+            [self presentViewController:navCon animated:YES completion:^{
+                [textField setEnabled:YES];
+                [self.activityView stopAnimating];
+            }];
+        }
     } else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
         [alert show];

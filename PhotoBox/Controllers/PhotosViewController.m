@@ -146,9 +146,20 @@
 }
 
 - (void)didTapUploadButton:(id)sender {
-    DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
-    [picker setPhotosPickerDelegate:self];
-    [self presentViewController:picker animated:YES completion:nil];
+    if ([[[ConnectionManager sharedManager] baseURL].host isEqualToString:@"current.trovebox.com"]) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Demo account", nil) message:NSLocalizedString(@"You are viewing demo server at current.trovebox.com. Please login to your own account to upload.", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *loginAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Login", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            [[ConnectionManager sharedManager] logout];
+        }];
+        [alertController addAction:cancelAction];
+        [alertController addAction:loginAction];
+        [self presentViewController:alertController animated:YES completion:nil];
+    } else {
+        DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
+        [picker setPhotosPickerDelegate:self];
+        [self presentViewController:picker animated:YES completion:nil];
+    }
 }
 
 #pragma mark - SortingDelegate

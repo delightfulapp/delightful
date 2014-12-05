@@ -69,7 +69,7 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
 }
 
 - (void)connectAsTester {
-    [self setBaseURL:[NSURL URLWithString:@"http://delightful.no-ip.biz"]];
+    [self setBaseURL:[NSURL URLWithString:@"http://current.trovebox.com"]];
     _consumerToken = [[AFOAuth1Token alloc] initWithKey:@"c74a0c32f07dd015328d19d7d8cddc" secret:@"eb6d7e5bbb" session:nil expiration:nil renewable:YES];
     [AFOAuth1Token storeCredential:_consumerToken withIdentifier:consumerTokenIdentifier];
     _oauthToken = [[AFOAuth1Token alloc] initWithKey:@"7fefb2ccfd7c059985c7bad3ccf6e6" secret:@"978a2788c8" session:nil expiration:nil renewable:YES];
