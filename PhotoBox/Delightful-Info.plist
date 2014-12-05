@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.22</string>
+	<string>2.0.23</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -34,9 +34,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>2575</string>
+	<string>2576</string>
 	<key>FacebookAppID</key>
-	<string></string>
+	<string>378582835605137</string>
 	<key>FacebookDisplayName</key>
 	<string>Delightful</string>
 	<key>LSRequiresIPhoneOS</key>

@@ -1298,7 +1298,6 @@
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
 				037EC053189D05AF009C54EE /* Copy Crashlytics plist */,
-				03CE49BF19C932A700817C28 /* Copy Lookback plist */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
 				03635E1B187996290037851F /* Crashlytics */,
 				03D972AC18123A20008A087B /* Build number increment */,
@@ -1538,7 +1537,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "FILE=./Crashlytics.framework/run\nKEYFILE=./crashlytics-code\n\nif [ -f $KEYFILE ];\nthen\nKEY=`head -1 $KEYFILE`\necho $KEY\nif [ -f $FILE ];\nthen\n./Crashlytics.framework/run $KEY\nelse\necho \"No Crashlytics\"\nfi\nfi\n\n";
+			shellScript = "echo \"Gonna Running crashlytics framework\"\nFILE=./Crashlytics.framework/run\nAPI_KEY_PLIST=./PhotoBox/Crashlytics.plist\nBUILD_SECRET_FILE=./crashlytics-code\n\nAPI_KEY=$(/usr/libexec/PlistBuddy -c \"Print :key\" \"$API_KEY_PLIST\")\n\nif [ -f $BUILD_SECRET_FILE ];\nthen\nBUILD_SECRET=`head -1 $BUILD_SECRET_FILE`\necho $BUILD_SECRET\nif [ -f $FILE ];\nthen\necho \"Running crashlytics framework\"\n./Crashlytics.framework/run $API_KEY $BUILD_SECRET\nelse\necho \"No Crashlytics\"\nfi\nelse\necho \"No crashlytics-code\"\nfi\n\n";
 		};
 		037EC053189D05AF009C54EE /* Copy Crashlytics plist */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1553,20 +1552,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
-		};
-		03CE49BF19C932A700817C28 /* Copy Lookback plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Lookback plist";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FILE=./PhotoBox/Lookback.plist\nSTUB=./PhotoBox/Lookback.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Lookback.plist exists\"\nelse\ncp $STUB $FILE\nfi";
 		};
 		03CE49C019C9366800817C28 /* Facebook App Id */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2148,7 +2133,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "A042EA3A-184A-4B3E-AF08-54763B1348C4";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2159,8 +2144,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)",
@@ -2188,7 +2173,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "E6A2D0D5-104F-4699-B71C-7DE96C89EBBA";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
