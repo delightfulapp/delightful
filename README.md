@@ -1,43 +1,45 @@
-Delightful
+Delightful for iPhone
 ==
 
-![Delightful - Trovebox Photo Viewer](http://f.cl.ly/items/2k3n0Q0e053m2n2h0p2c/iOS%20Simulator%20Screen%20shot%20Nov%2024,%202013,%209.40.42%20PM.png)
+![Delightful app](http://f.cl.ly/items/423u39153T3w0r2p291G/iOS%20Simulator%20Screen%20Shot%20Dec%206,%202014,%2001.03.10.png)
 
-![Delightful app](http://f.cl.ly/items/24113E420E3i2l2c3I1W/Photo_Nov_24%252C_8_26_54_PM-3.png)
+[![Delightful App Preview](http://f.cl.ly/items/1K2k072D2W1m2X0b0o1k/Screen%20Shot%202014-12-06%20at%2002.12.31.png)](http://cl.ly/0g1Y0X06253s)
 
 Delightful is a unofficial [Trovebox](https://trovebox.com/) iPhone app client. This is an experiment.
 
 Features (so far)
 --
 
-1. Photos grouped by date taken.
-2. View albums and lists.
+2. View albums and tags.
 3. Pinch to zoom in/out to see more or less photos. (change number of columns)
 4. Download original photos and save to photo album.
+5. Favorite photos.
 5. Reverse Geocoding! If there is a photo with location within photos taken at the same date, the location name will be shown next to the date. Just like that of iOS 7 Photos app.
 6. Browse All Photos.
 7. Parallax effect on login page!
-8. Core data support a.k.a you can see your photos and albums offline.
+8. Offline viewing.
 9. Share your Trovebox Photo's URL to Twitter/Facebook/Email.
 10. View photo's camera data and tags.
+11. 1password extension.
+12. Sort photos, albums, and tags.
+13. Upload photos with slide-to-select gestures to select multiple photos quickly and tap-and-hold to preview a photo.
+14. Portrait and landscape mode.
+15. iPhone 6 plus ready.
+16. iOS 8 ready.
 
 Requirements
 --
 
-1. [iOS 7](https://developer.apple.com/devcenter/ios/index.action).
-2. [Xcode 5](https://developer.apple.com/devcenter/ios/index.action).
+1. [iOS 8](https://developer.apple.com/devcenter/ios/index.action).
+2. [Xcode 6](https://developer.apple.com/devcenter/ios/index.action).
 3. [Cocoapods](http://cocoapods.org/).
 
 How to
 --
 
 1. After cloning: `pod install`
-2. ~~Copy `PhotoBox/Controllers/PhotoBoxViewController.m.stub` to `PhotoBox/Controllers/PhotoBoxViewController.m` (Same folder, remove .stub).~~
-2. ~~Get consumer key, secret, oauth token, and secret at your [Trovebox's Settings](https://nicnocquee.trovebox.com/manage/settings#apps) page.~~
-3. ~~On Trovebox's Settings page, click `Create New App`, put any app name.~~
-4. ~~Copy your consumer key, secret, oauth token, and secret and put it in `PhotoBoxViewController.m` file inside `setupConnectionManager` method. Remove the `#error`.~~
-5. Open `PhotoBox.xcworkspace`.
-5. Build and run!
+2. Open `PhotoBox.xcworkspace`.
+2. Build and run!
 
 Contact
 --
