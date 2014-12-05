@@ -14,6 +14,7 @@
 #import "Tag.h"
 #import "GroupedPhotosDataSource.h"
 #import "DLFYapDatabaseViewAndMapping.h"
+#import "ConnectionManager.h"
 #import <YapDatabase.h>
 #import <AFURLConnectionOperation.h>
 
@@ -43,6 +44,8 @@ NSString *const PhotosCacheExpirationKey = @"photos_cache_expiration_interval";
 NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 
 static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
+
+static void * kUserLoggedInContext = &kUserLoggedInContext;
 
 @interface SyncPhotosParam : NSObject
 
@@ -74,14 +77,14 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
 @property (nonatomic, assign) BOOL pauseAllPhotosSyncOperation;
 @property (nonatomic, assign) BOOL pausePhotosInAlbumSyncOperation;
 @property (nonatomic, assign) BOOL pausePhotosInTagSyncOperation;
+@property (nonatomic, assign) BOOL pauseAlbumsSyncOperation;
 @property (nonatomic, assign) int allPhotosSyncOperationPage;
 @property (nonatomic, assign) int photosInAlbumSyncOperationPage;
 @property (nonatomic, assign) int photosInTagSyncOperationPage;
+@property (nonatomic, assign) int albumsSyncOperationPage;
 @property (nonatomic, strong) NSString *allPhotosSyncOperationSort;
 @property (nonatomic, strong) NSString *photosInAlbumSyncOperationSort;
 @property (nonatomic, strong) NSString *photosInTagSyncOperationSort;
-
-@property (readwrite, nonatomic, strong) NSRecursiveLock *lock;
 
 @end
 
@@ -119,8 +122,7 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
         self.readConnection.objectCacheEnabled = YES; // don't needpa cache for write-only connection
         self.readConnection.metadataCacheEnabled = NO;
         
-        self.lock = [[NSRecursiveLock alloc] init];
-        self.lock.name = kLockName;
+        [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:kUserLoggedInContext];
     }
     return self;
 }
@@ -168,19 +170,14 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
 }
 
 - (void)refreshResource:(NSString *)resource {
-//    if ([resource isEqualToString:NSStringFromClass([Tag class])]) {
-//        if (!self.isSyncingTags) {
-//            [self fetchTagsForPage:1];
-//        } else {
-//            self.tagsRefreshRequested = YES;
-//        }
-//    } else if ([resource isEqualToString:NSStringFromClass([Album class])]) {
-//        if (!self.isSyncingAlbums) {
-//            [self fetchAlbumsForPage:1];
-//        } else {
-//            self.albumsRefreshRequested = YES;
-//        }
-//    }
+    if ([resource isEqualToString:NSStringFromClass(Album.class)]) {
+        self.pauseAlbumsSyncOperation = NO;
+        [self.albumsSyncingOperation cancel];
+        self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:1];
+    } else if ([resource isEqualToString:NSStringFromClass(Tag.class)]) {
+        [self.tagsSyncingOperation cancel];
+        self.tagsSyncingOperation = (AFURLConnectionOperation *)[self fetchTagsForPage:1];
+    }
 }
 
 
@@ -218,6 +215,8 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
     });
     
+    self.albumsSyncOperationPage = page;
+    
     return [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
         CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
         
@@ -234,7 +233,11 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
                     CLS_LOG(@"Done inserting albums to db page %d", page);
                     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
                     dispatch_async(dispatch_get_main_queue(), ^{
-                        self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:page+1];
+                        if (!self.pauseAlbumsSyncOperation) {
+                            if (![self.albumsSyncingOperation isExecuting]) {
+                                self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:page+1];
+                            }
+                        }
                     });
                 }];
             });
@@ -342,8 +345,10 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
             [self.photosInAlbumSyncingOperation cancel];
         }
         else {
-            self.pausePhotosInAlbumSyncOperation = NO;
-            [self fetchPhotosInAlbum:collection page:self.photosInAlbumSyncOperationPage sort:self.photosInAlbumSyncOperationSort];
+            if (self.pausePhotosInAlbumSyncOperation) {
+                self.pausePhotosInAlbumSyncOperation = NO;
+                self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:self.photosInAlbumSyncOperationPage sort:self.photosInAlbumSyncOperationSort];
+            }
         }
     } else if (collectionType==Tag.class) {
         if (pause) {
@@ -351,8 +356,10 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
             [self.photosInTagSyncingOperation cancel];
         }
         else {
-            self.pausePhotosInTagSyncOperation = NO;
-            [self fetchPhotosInTag:collection page:self.photosInTagSyncOperationPage sort:self.photosInTagSyncOperationSort];
+            if (self.pausePhotosInTagSyncOperation) {
+                self.pausePhotosInTagSyncOperation = NO;
+                self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:self.photosInTagSyncOperationPage sort:self.photosInTagSyncOperationSort];
+            }
         }
     } else {
         if (pause) {
@@ -360,8 +367,32 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
             [self.allPhotosSyncingOperation cancel];
         }
         else {
-            self.pauseAllPhotosSyncOperation = NO;
-            [self fetchPhotosForPage:self.allPhotosSyncOperationPage sort:self.allPhotosSyncOperationSort];
+            if (self.pauseAllPhotosSyncOperation) {
+                self.pauseAllPhotosSyncOperation = NO;
+                self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:self.allPhotosSyncOperationPage sort:self.allPhotosSyncOperationSort];
+            }
+        }
+    }
+}
+
+- (void)pauseSyncingAlbums:(BOOL)pause {
+    if (pause) {
+        self.pauseAlbumsSyncOperation = YES;
+        [self.albumsSyncingOperation cancel];
+    } else {
+        self.pauseAlbumsSyncOperation = NO;
+        if (![self.albumsSyncingOperation isExecuting]) {
+            self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:self.albumsSyncOperationPage];
+        }
+    }
+}
+
+- (void)pauseSyncingTags:(BOOL)pause {
+    if (pause) {
+        [self.tagsSyncingOperation cancel];
+    } else {
+        if (![self.tagsSyncingOperation isExecuting]) {
+            self.tagsSyncingOperation = (AFURLConnectionOperation *)[self fetchTagsForPage:1];
         }
     }
 }
@@ -394,6 +425,17 @@ static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
         }
     } completionBlock:completionBlock];
     
+}
+
+#pragma mark - Observer
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (context == kUserLoggedInContext) {
+        self.allPhotosSyncOperationPage = 0;
+        self.photosInAlbumSyncOperationPage = 0;
+        self.photosInTagSyncOperationPage = 0;
+        self.albumsSyncOperationPage = 1;
+    }
 }
 
 @end

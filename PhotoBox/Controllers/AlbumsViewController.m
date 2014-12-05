@@ -44,6 +44,16 @@
     [[SyncEngine sharedEngine] startSyncingAlbums];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [[SyncEngine sharedEngine] pauseSyncingAlbums:NO];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[SyncEngine sharedEngine] pauseSyncingAlbums:YES];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

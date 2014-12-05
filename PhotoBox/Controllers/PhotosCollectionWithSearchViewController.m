@@ -12,6 +12,8 @@
 #import "DLFYapDatabaseViewAndMapping.h"
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
+#import "Album.h"
+#import "Tag.h"
 
 #import <UIView+AutoLayout.h>
 
@@ -61,7 +63,13 @@ static char *kSearchBarCenterContext;
         self.viewJustDidLoad = NO;
         [self.collectionView.collectionViewLayout invalidateLayout];
     }
+    [((YapDataSource *)self.dataSource) setPause:NO];
     [super viewWillAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog(@"view did disappear in %@", NSStringFromClass(self.class));
+    [((YapDataSource *)self.dataSource) setPause:YES];
 }
 
 - (void)dealloc {
@@ -115,7 +123,8 @@ static char *kSearchBarCenterContext;
     CLS_LOG(@"Refresh in %@", NSStringFromClass([self resourceClass]));
     
     [(YapDatasourceWithSearching *)self.dataSource setPause:YES];
-    [[SyncEngine sharedEngine] pauseAlbumsSync];
+    if ([self resourceClass] == Album.class) [[SyncEngine sharedEngine] pauseSyncingAlbums:YES];
+    else if ([self resourceClass] == Tag.class) [[SyncEngine sharedEngine] pauseSyncingTags:YES];
     
     void (^collectionRemovalCompletion)() = ^void() {
         [((YapDatasourceWithSearching *)self.dataSource).mainConnection beginLongLivedReadTransaction];
