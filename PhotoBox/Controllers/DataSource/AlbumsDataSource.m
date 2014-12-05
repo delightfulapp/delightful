@@ -37,7 +37,23 @@ NSString *albumsAlphabeticalDescendingViewName = @"alphabetical-desc-albums";
 }
 
 - (void)setDefaultMapping {
-    [self setSelectedViewMapping:self.updatedLastAlbumsViewMapping];
+    NSString *sort = dateLastPhotoAddedDescSortKey;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_ALBUMS_SORT]) {
+        sort = [[NSUserDefaults standardUserDefaults] objectForKey:DLF_LAST_SELECTED_ALBUMS_SORT];
+    }
+    AlbumsSortKey selectedSortKey;
+    NSArray *sortArray = [sort componentsSeparatedByString:@","];
+    if ([[sortArray objectAtIndex:0] isEqualToString:NSStringFromSelector(@selector(dateLastPhotoAdded))]) {
+        selectedSortKey = AlbumsSortKeyDateLastUpdated;
+    } else {
+        selectedSortKey = AlbumsSortKeyName;
+    }
+    BOOL ascending = YES;
+    if ([[[sortArray objectAtIndex:1] lowercaseString] isEqualToString:@"desc"]) {
+        ascending = NO;
+    }
+    
+    [self sortBy:selectedSortKey ascending:ascending];
 }
 
 - (void)sortBy:(AlbumsSortKey)sortBy ascending:(BOOL)ascending {
