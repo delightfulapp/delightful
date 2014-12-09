@@ -1,6 +1,13 @@
 Delightful for iPhone
 ==
 
+<p align="center">
+<a href="http://www.getdelightfulapp.com">Website</a>
+<a href="http://twitter.com/delightfulapp">Twitter</a> &bull; 
+<a href="http://blog.getdelightfulapp.com/">Blog</a> &bull; 
+<a href="https://itunes.apple.com/us/app/delightful-trovebox-photo/id878230610?ls=1&mt=8">App Store</a> &bull; 
+</p>
+
 Delightful is an unofficial [Trovebox](https://trovebox.com/) iPhone app client.
 
 Screenshot
