@@ -251,7 +251,6 @@
                                 <include reference="rIQ-n3-jGm"/>
                             </mask>
                         </variation>
-                        <variation key="widthClass=compact"/>
                     </view>
                     <connections>
                         <outlet property="doneButton" destination="imL-cP-Fdv" id="35k-19-ae7"/>

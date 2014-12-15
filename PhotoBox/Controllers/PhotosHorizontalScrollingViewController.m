@@ -288,7 +288,6 @@
             [self.delegate willDismissViewController:self];
         }
     }
-    
 }
 
 #pragma mark - Button

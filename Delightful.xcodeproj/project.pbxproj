@@ -64,7 +64,6 @@
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
 		0334EBB81841DF37001B262F /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
-		0334EBC01842093A001B262F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
 		0342D97A1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
 		0342D97B1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
@@ -348,7 +347,6 @@
 		03EFD94319251CD700E80A71 /* LeftPanelHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03FD4825191FA5E700D4ADF7 /* LeftPanelHeaderView.xib */; };
 		03EFD94419251CD700E80A71 /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
 		03EFD94519251CD700E80A71 /* introbg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DF1818136E00445084 /* introbg@2x.jpg */; };
-		03EFD94619251CD700E80A71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		03EFD94719251CD700E80A71 /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
 		03EFD94819251CD700E80A71 /* npr_notification_image_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AF1814CBF0004F3830 /* npr_notification_image_warning.png */; };
 		03EFD94919251CD700E80A71 /* npr_notification_image_success.png in Resources */ = {isa = PBXBuildFile; fileRef = 032222AD1814CBF0004F3830 /* npr_notification_image_success.png */; };
@@ -366,6 +364,8 @@
 		03EFD95619251CD700E80A71 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
 		03EFD95719251CD700E80A71 /* user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2B017D9BD6B00A80167 /* user@2x.png */; };
 		03EFD95819251CD700E80A71 /* introbg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 03CE50DE1818136E00445084 /* introbg.jpg */; };
+		03F670DC1A3D237900CCD3E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
+		03F670DD1A3D238300CCD3E5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0334EBBF1842093A001B262F /* Main.storyboard */; };
 		03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6C9F619EAD92E000F524B /* SyncEngine.m */; };
 		03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 03F6C9F619EAD92E000F524B /* SyncEngine.m */; };
 		03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 03FD481D191F553200D4ADF7 /* DownloadedImageManager.m */; };
@@ -1401,6 +1401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0342D97A1A0D1D4E000158B8 /* 1Password.xcassets in Resources */,
+				03F670DC1A3D237900CCD3E5 /* Main.storyboard in Resources */,
 				0312305A1927C627004AFD1E /* InfoTableViewCell.xib in Resources */,
 				03EB627A19DE2EF000E65248 /* delightful.ttf in Resources */,
 				0396BDEB1922772E004B6290 /* Hint-CloseInfo.xib in Resources */,
@@ -1430,7 +1431,6 @@
 				03551B161A31558F0050126E /* intro.jpg in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
-				0334EBC01842093A001B262F /* Main.storyboard in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
 				032222B31814CBF0004F3830 /* npr_notification_image_success.png in Resources */,
@@ -1474,6 +1474,7 @@
 				03EFD92D19251CD700E80A71 /* npr_notification_image_error@2x.png in Resources */,
 				03EFD92F19251CD700E80A71 /* Images.xcassets in Resources */,
 				035DACDC1980D99B00557547 /* uploadedmark.png in Resources */,
+				03F670DD1A3D238300CCD3E5 /* Main.storyboard in Resources */,
 				039580B51A28A16000597ECA /* PhotosPicker.storyboard in Resources */,
 				03EFD93019251CD700E80A71 /* info@2x.png in Resources */,
 				03EFD93219251CD700E80A71 /* HeaderImageView.xib in Resources */,
@@ -1500,7 +1501,6 @@
 				035DACDF1980D99B00557547 /* uploadedmark@2x.png in Resources */,
 				03EFD94419251CD700E80A71 /* right.png in Resources */,
 				03EFD94519251CD700E80A71 /* introbg@2x.jpg in Resources */,
-				03EFD94619251CD700E80A71 /* Main.storyboard in Resources */,
 				03EFD94719251CD700E80A71 /* right@2x.png in Resources */,
 				03EFD94819251CD700E80A71 /* npr_notification_image_warning.png in Resources */,
 				03EFD94919251CD700E80A71 /* npr_notification_image_success.png in Resources */,
