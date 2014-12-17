@@ -33,6 +33,9 @@
             frame.origin = CGPointMake(10, 10);
             frame;
         });
+        
+        [self.contentView.layer setBorderWidth:1];
+        [self.contentView.layer setBorderColor:[[UIColor colorWithWhite:0.850 alpha:1.000] CGColor]];
     }
     return self;
 }

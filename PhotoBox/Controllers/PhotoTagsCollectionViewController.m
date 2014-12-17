@@ -80,7 +80,8 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    PhotoTagsCell *cell = [[PhotoTagsCell alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(collectionView.frame), CGFLOAT_MAX)];
+    CGFloat width = CGRectGetWidth(collectionView.frame) - 20;
+    PhotoTagsCell *cell = [[PhotoTagsCell alloc] initWithFrame:CGRectMake(0, 0, width, CGFLOAT_MAX)];
     DLFAsset *asset = self.assets[indexPath.item];
     [cell setTags:asset.smartTags];
     [cell.contentView setNeedsLayout];
@@ -90,7 +91,11 @@ static NSString * const reuseIdentifier = @"Cell";
         maxY = MAX(maxY, CGRectGetMaxY(subview.frame));
     }
     
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), maxY + 10);
+    return CGSizeMake(width, maxY + 10);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    return UIEdgeInsetsMake(10, 0, 10, 0);
 }
 
 @end
