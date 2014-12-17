@@ -74,17 +74,24 @@
         CLLocation *location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
         if (location) {
             __weak typeof (self) selfie = self;
-            [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemark, NSError *error) {
+            
+            [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
+                CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
+                NSString *placemark = firstPlacemark.name;
                 NSMutableArray *cameraDataSectionRowsCopy = [selfie.cameraDataSectionRows mutableCopy];
                 [cameraDataSectionRowsCopy removeLastObject];
-                if (placemark && !error) {
+                if (placemark) {
                     [cameraDataSectionRowsCopy addObject:@[NSLocalizedString(@"Location Name", nil), placemark]];
                 } else {
                     [cameraDataSectionRowsCopy addObject:@[NSLocalizedString(@"Location Name", nil), @""]];
                 }
                 
                 selfie.cameraDataSectionRows = cameraDataSectionRowsCopy;
-                [selfie.tableView reloadData];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [selfie.tableView reloadData];
+                });
+                
+                return nil;
             }];
         } else {
             NSMutableArray *cameraDataSectionRowsCopy = [self.cameraDataSectionRows mutableCopy];

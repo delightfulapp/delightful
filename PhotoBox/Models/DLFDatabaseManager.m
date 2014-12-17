@@ -34,6 +34,7 @@ NSString *tagsCollectionName = @"tags";
 NSString *createdViewsCollectionName = @"createdViews";
 NSString *downloadedPhotosCollectionName = @"downloadedPhotos";
 NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
+NSString *locationsCollectionName = @"locations";
 
 @interface DLFDatabaseManager ()
 

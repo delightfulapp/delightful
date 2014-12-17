@@ -11,6 +11,7 @@
 extern NSString *photosCollectionName;
 extern NSString *albumsCollectionName;
 extern NSString *tagsCollectionName;
+extern NSString *locationsCollectionName;
 
 extern NSString *downloadedPhotosCollectionName;
 extern NSString *favoritedPhotosCollectionName;
@@ -18,8 +19,12 @@ extern NSString *favoritedPhotosCollectionName;
 @class YapDatabase;
 @class DLFYapDatabaseViewAndMapping;
 @class PhotosCollection;
+@class YapDatabaseConnection;
 
 @interface DLFDatabaseManager : NSObject
+
+@property (nonatomic, strong, readonly) YapDatabaseConnection *writeConnection;
+@property (nonatomic, strong, readonly) YapDatabaseConnection *readConnection;
 
 + (instancetype)manager;
 

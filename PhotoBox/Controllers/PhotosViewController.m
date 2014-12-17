@@ -247,6 +247,8 @@
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     __weak typeof (self) selfie = self;
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
+        NSInteger currentTag = cell.tag+1;
+        cell.tag = currentTag;
         [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
         if (selfie.numberOfColumns > 1) {
             Photo *firstObject = [selfie.dataSource itemAtIndexPath:indexPath];
@@ -257,12 +259,12 @@
                 [cell setTitleLabelText:[item localizedDate]?:@""];
                 CLLocation *location = [selfie locationSampleForSection:indexPath.section];
                 if (location) {
-                    [[LocationManager sharedManager] nameForLocation:location completionHandler:^(NSString *placemarks, NSError *error) {
-                        if (placemarks) {
-                            [cell setLocationString:placemarks];
-                        } else {
-                            [cell setLocationString:nil];
-                        }
+                    [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
+                        CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
+                        NSString *placemark = firstPlacemark.name;
+                        if (cell.tag == currentTag) [cell setLocationString:placemark];
+                        
+                        return nil;
                     }];
                 } else {
                     [cell setLocationString:nil];

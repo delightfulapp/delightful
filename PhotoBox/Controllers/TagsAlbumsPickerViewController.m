@@ -21,6 +21,8 @@
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
 #import "PhotoTagsCollectionViewController.h"
+#import "LocationManager.h"
+#import <Bolts.h>
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
 
@@ -29,22 +31,15 @@ NSString *const normalCellIdentifier = @"normalCell";
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
-
 @property (nonatomic, assign) BOOL isFetchingTags;
-
 @property (nonatomic, strong) Album *selectedAlbum;
-
 @property (nonatomic, strong) TagsSuggestionTableViewController *tagsSuggestionViewController;
-
 @property (nonatomic, assign) CGSize keyboardSize;
-
 @property (nonatomic, strong) NSString *currentEditedTag;
-
 @property (nonatomic, assign) NSRange currentEditedTagRange;
-
 @property (nonatomic, strong) NSString *selectedTags;
-
 @property (nonatomic, assign) BOOL privatePhotos;
+@property (nonatomic, assign) BOOL isPreparingSmartTags;
 
 @end
 
@@ -90,6 +85,49 @@ NSString *const normalCellIdentifier = @"normalCell";
     }];
     
     [[SyncEngine sharedEngine] startSyncingTags];
+    
+    [[self prepareSmartTags] continueWithBlock:^id(BFTask *task) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            selfie.isPreparingSmartTags = NO;
+            [selfie.tableView reloadData];
+        });
+        return nil;
+    }];
+}
+
+- (BFTask *)prepareSmartTags {
+    self.isPreparingSmartTags = YES;
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        BFTask *smartTagsTask = [BFTask taskWithResult:nil];
+        for (DLFAsset *asset in self.selectedAssets) {
+            smartTagsTask = [smartTagsTask continueWithBlock:^id(BFTask *task) {
+                BFTaskCompletionSource *imageFetchTask = [BFTaskCompletionSource taskCompletionSource];
+                PHContentEditingInputRequestOptions *editOptions = [[PHContentEditingInputRequestOptions alloc]init];
+                editOptions.networkAccessAllowed = YES;
+                PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+                [option setVersion:PHImageRequestOptionsVersionOriginal];
+                [[PHImageManager defaultManager] requestImageDataForAsset:asset.asset options:option resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                        CIImage *image = [CIImage imageWithData:imageData];
+                        [imageFetchTask setResult:image];
+                    });
+                }];
+                
+                return [imageFetchTask.task continueWithBlock:^id(BFTask *task) {
+                    CIImage *image = task.result;
+                    return [[asset prepareSmartTagsWithCIImage:image] continueWithBlock:^id(BFTask *task) {
+                        NSArray *tags = task.result;
+                        asset.smartTags = tags;
+                        return nil;
+                    }];
+                }];
+            }];
+        }
+        [task setResult:smartTagsTask];
+    });
+    
+    return task.task;
 }
 
 - (void)dealloc {
@@ -133,10 +171,7 @@ NSString *const normalCellIdentifier = @"normalCell";
         [self.navigationController pushViewController:albumsPicker animated:YES];
     }
     
-    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags && indexPath.row == TagsSectionRowsSmartTags) {
-        for (DLFAsset *asset in self.selectedAssets) {
-            [asset setSmartTags:@[@"test", @"iphone", @"something long here", @"hehe"]];
-        }
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags && indexPath.row == TagsSectionRowsSmartTags && !self.isPreparingSmartTags) {
         PhotoTagsCollectionViewController *tagsVC = [[PhotoTagsCollectionViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
         [tagsVC setAssets:self.selectedAssets];
         [self.navigationController pushViewController:tagsVC animated:YES];
@@ -158,7 +193,8 @@ NSString *const normalCellIdentifier = @"normalCell";
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {
         if (indexPath.row == TagsSectionRowsSmartTags) {
-            [cell.textLabel setText:NSLocalizedString(@"Smart Tags", nil)];
+            [cell.textLabel setText:(self.isPreparingSmartTags)?NSLocalizedString(@"Preparing smart tags ...", nil):NSLocalizedString(@"Smart Tags", nil)];
+            [cell.textLabel setTextColor:(self.isPreparingSmartTags)?[UIColor grayColor]:[UIColor blackColor]];
             [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         } else {
             [((TagEntryTableViewCell *)cell).tagField setDelegate:self];

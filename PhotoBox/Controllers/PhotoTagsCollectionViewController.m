@@ -20,11 +20,7 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Register cell classes
+    self.title = NSLocalizedString(@"Smart Tags", nil);
     [self.collectionView registerClass:[PhotoTagsCell class] forCellWithReuseIdentifier:reuseIdentifier];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];

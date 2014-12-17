@@ -41,7 +41,7 @@
     if (_tags != tags) {
         _tags = tags;
         
-        NSMutableArray *tagsCopies = [_tags copy];
+        NSMutableArray *tagsCopies = [NSMutableArray arrayWithArray:_tags];
         if (!self.tagButtons) {
             self.tagButtons = [NSArray array];
         }

@@ -7,6 +7,9 @@
 //
 
 #import "DLFAsset.h"
+#import "LocationManager.h"
+#import "UIDevice+Additionals.h"
+#import <TDImageColors.h>
 
 @implementation DLFAsset
 
@@ -19,5 +22,81 @@
     }
     return dlfAssetArray;
 }
+
+- (BFTask *)prepareSmartTagsWithCIImage:(CIImage *)image {
+    BFTask *locationTask = [[[[LocationManager sharedManager] nameForLocation:self.asset.location] continueWithBlock:^id(BFTask *task) {
+        CLPlacemark *placemark = [((NSArray *)task.result) firstObject];
+        NSMutableArray *tags = [NSMutableArray array];
+        NSString *name = placemark.name;
+        if (name) [tags addObject:name];
+        NSString *country = placemark.country;
+        if (country) [tags addObject:country];
+        NSString *city = placemark.locality;
+        if (city) [tags addObject:city];
+        return [BFTask taskWithResult:tags];
+    }] continueWithBlock:^id(BFTask *task) {
+        NSMutableArray *tags = [((NSArray *)task.result) mutableCopy];
+        if (!tags) {
+            tags = [NSMutableArray array];
+        }
+        NSDictionary *metadata = image.properties;
+        NSDictionary *exif = metadata[(NSString *)kCGImagePropertyExifDictionary];
+        if (exif) {
+            NSString *lensModel = exif[(NSString *)kCGImagePropertyExifLensModel];
+            if (lensModel) {
+                if ([lensModel rangeOfString:@"front camera"].location != NSNotFound) {
+                    [tags addObject:@"selfie"];
+                }
+            }
+        }
+        
+        BOOL photoFromCamera = NO;
+        if (exif) {
+            NSString *lensModel = exif[(NSString *)kCGImagePropertyExifLensModel];
+            if (lensModel) {
+                photoFromCamera = YES;
+            }
+        }
+        BOOL isScreenshot = NO;
+        if (!photoFromCamera) {
+            CGSize windowSize = [[UIApplication sharedApplication] keyWindow].frame.size;
+            CGSize size = CGSizeMake(self.asset.pixelWidth, self.asset.pixelHeight);
+            if (CGSizeEqualToSize(size, windowSize)) {
+                isScreenshot = YES;
+            } else {
+                for (NSValue *dimension in [UIDevice deviceDimensions]) {
+                    if (CGSizeEqualToSize(size, [dimension CGSizeValue])) {
+                        isScreenshot = YES;
+                        break;
+                    }
+                }
+            }
+        }
+        if (isScreenshot) {
+            [tags addObject:@"screenshot"];
+        }
+        
+        if (self.asset.mediaType == PHAssetMediaTypeImage && (self.asset.mediaSubtypes & PHAssetMediaSubtypePhotoHDR)) {
+            [tags addObject:@"hdr"];
+        }
+        
+        if (self.asset.mediaType == PHAssetMediaTypeImage && (self.asset.mediaSubtypes & PHAssetMediaSubtypePhotoPanorama)) {
+            [tags addObject:@"panorama"];
+        }
+        
+        NSDictionary *tiff = metadata[(NSString *)kCGImagePropertyTIFFDictionary];
+        if (tiff) {
+            NSString *cameraModel = tiff[(NSString *)kCGImagePropertyTIFFModel];
+            if (cameraModel) {
+                [tags addObject:cameraModel];
+            }
+        }
+        
+        return [BFTask taskWithResult:tags];
+    }];
+    
+    return locationTask;
+}
+
 
 @end

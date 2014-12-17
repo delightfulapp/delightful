@@ -9,7 +9,8 @@
 #import <AFNetworking.h>
 #import <AFHTTPRequestOperation.h>
 #import "LocationManager.h"
-#import "DelightfulCache.h"
+#import "DLFDatabaseManager.h"
+#import <YapDatabase.h>
 
 #define FOURSQUARE_CLIENT_ID @"YE01OOGFTM5L3NDWWWGOVAANYV3QEHVCG421PSNQUBRTXAMS"
 #define FOURSQUARE_CLIENT_SECRET @"XEIWU4SHBATNHZBEW0FRMEMVANJKHSZ4SGYMFAMSMVFQZYQ2"
@@ -25,7 +26,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 @interface LocationManager ()
 
 @property (nonatomic, strong) CLGeocoder *geocoder;
-@property (nonatomic, strong) NSOperationQueue *queue;
+@property (nonatomic, strong) NSOperationQueue *requestQueue;
 
 @end
 
@@ -43,142 +44,46 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 }
 
 - (void)setup {
-    _queue = [[NSOperationQueue alloc] init];
-    [_queue setMaxConcurrentOperationCount:1];
+    self.geocoder = [[CLGeocoder alloc] init];
+    self.requestQueue = [[NSOperationQueue alloc] init];
+    [self.requestQueue setMaxConcurrentOperationCount:1];
+    [self.requestQueue setName:@"ayano.geocoder"];
 }
 
-- (void)nameForLocation:(CLLocation*)location completionHandler:(void(^)(NSString* placemark, NSError* error))completionHandler {
-    NSString *lat = [NSString stringWithFormat:@"%f", location.coordinate.latitude];
-    NSString *longi = [NSString stringWithFormat:@"%f", location.coordinate.longitude];
-    NSString *locationKey = [NSString stringWithFormat:@"%@,%@", lat,longi];
-    
-    NSString *cachedNameFromDefaults = [[DelightfulCache sharedCache] objectForKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
-    
-    if (cachedNameFromDefaults) {
-        if (completionHandler) {
-            completionHandler(cachedNameFromDefaults, nil);
-        }
-        return;
+- (BFTask *)nameForLocation:(CLLocation *)location {
+    if (!location) {
+        return [BFTask taskWithResult:nil];
+    }
+    __block NSArray *placemarks;
+    [[[DLFDatabaseManager manager] readConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        placemarks = [transaction objectForKey:location.description inCollection:locationsCollectionName];
+    }];
+    if (placemarks) {
+        return [BFTask taskWithResult:placemarks];
     }
     
+    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    NSBlockOperation *blockOperation = [[NSBlockOperation alloc] init];
+    __weak NSBlockOperation *weakOperation = blockOperation;
     __weak typeof (self) selfie = self;
-    
-    //NSString *urlString = [NSString stringWithFormat:@"https://api.foursquare.com/v2/venues/search?client_id=%@&client_secret=%@&ll=%@,%@&v=%@&limit=1", FOURSQUARE_CLIENT_ID, FOURSQUARE_CLIENT_SECRET, lat, longi, FOURSQUARE_API_VERSION_DATE];
-    
-    NSString *resultType = @"locality|political";
-    NSString *urlString = [NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/geocode/json?latlng=%@&sensor=true&key=%@&result_type=%@", locationKey, GOOGLE_API_KEY, [resultType stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-    CLS_LOG(@"Seraching location %@", urlString);
-    NSURL *URL = [NSURL URLWithString:urlString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSError *error;
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:&error];
-        if (!error) {
-            if (completionHandler) {
-                NSArray *results = [dict objectForKey:@"results"];
-                if (results && results.count > 0) {
-                    NSDictionary *venue = [results firstObject];
-                    NSString *location = [venue objectForKey:@"formatted_address"];
-                    if (location) {
-                        [selfie cacheLocation:locationKey name:location];
-                        completionHandler(location, nil);
-                    }
-                } else {
-                    completionHandler(nil, nil);
-                }
-                /*
-                NSArray *unsortedVenues = dict[@"response"][@"venues"];
-                NSArray *sort = @[[NSSortDescriptor sortDescriptorWithKey:@"stats.checkinsCount" ascending:NO]];
-                NSArray *sorted = [unsortedVenues sortedArrayUsingDescriptors:sort];
-                
-                NSArray *venues;
-                if (sorted) {
-                    venues = sorted;
-                } else venues = unsortedVenues;
-                PBX_LOG(@"%@", venues);
-                if (venues && venues.count > 0) {
-                    NSDictionary *venue = [venues firstObject];
-                    
-                    NSString *name = [venue objectForKey:@"name"];
-                    NSString *country;
-                    NSString *crossStreet;
-                    NSString *city;
-                    
-                    NSDictionary *locationDictionary = [venue objectForKey:@"location"];
-                    if (locationDictionary) {
-                        country = [locationDictionary objectForKey:@"country"];
-                        crossStreet = [locationDictionary objectForKey:@"crossStreet"];
-                        city = [locationDictionary objectForKey:@"city"];
-                    }
-                    
-                    NSString *location;
-                    
-                    if (crossStreet && crossStreet.length > 0) {
-                        location = crossStreet;
-                        if (country && country.length > 0) {
-                            location = [NSString stringWithFormat:@"%@, %@", location, country];
-                        }
-                    } else {
-                        if (name && name.length > 0) {
-                            location = name;
-                            if (country && country.length > 0) {
-                                location = [NSString stringWithFormat:@"%@, %@", location, country];
-                            }
-                        } else {
-                            if (country && country.length > 0) {
-                                location = country;
-                            }
-                        }
-                    }
-                    
-                    
-                    if (location && location.length > 0) {
-                        [selfie.locationCache setObject:location forKey:locationKey];
-                        completionHandler(location, nil);
-                    } else {
-                        completionHandler(nil, nil);
-                    }
-                } else {
-                    if (completionHandler) {
-                        completionHandler(nil,nil);
-                    }
-                }
-                 */
-            }
-        } else {
-            if (completionHandler) {
-                completionHandler(nil, nil);
-            }
+    [blockOperation addExecutionBlock:^{
+        if ([weakOperation isCancelled]) {
+            return;
         }
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        PBX_LOG(@"Error: %@", error);
+        [selfie.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+            if (error) {
+                [task setError:error];
+            } else {
+                [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                    [transaction setObject:placemarks forKey:location.description inCollection:locationsCollectionName];
+                } completionBlock:^{
+                    [task setResult:placemarks];
+                }];
+            }
+        }];
     }];
-    [[NSOperationQueue mainQueue] addOperation:op];
-    
-//    if (!self.geocoder)
-//        self.geocoder = [[CLGeocoder alloc] init];
-//    
-//    if ([self.locationCache objectForKey:location]) {
-//        if (completionHandler) {
-//            completionHandler(self.locationCache[location], nil);
-//            return;
-//        }
-//    }
-//    
-//    __weak typeof (self) selfie = self;
-//    [self.queue addOperationWithBlock:^{
-//        [selfie.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
-//            [selfie.locationCache setObject:placemarks forKey:location];
-//            if (completionHandler) {
-//                completionHandler(placemarks, error);
-//            }
-//        }];
-//    }];
-}
-
-- (void)cacheLocation:(NSString *)locationKey name:(NSString *)name {
-    [[DelightfulCache sharedCache] setObject:name forKey:[NSString stringWithFormat:@"%@-%@", LOCATION_CACHE_KEY, locationKey]];
+    [self.requestQueue addOperation:blockOperation];
+    return task.task;
 }
 
 @end

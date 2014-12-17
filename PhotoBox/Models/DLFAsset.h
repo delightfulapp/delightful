@@ -7,6 +7,7 @@
 //
 
 @import Photos;
+#import <Bolts.h>
 
 @class Album;
 
@@ -19,5 +20,6 @@
 @property (nonatomic, assign) BOOL privatePhoto;
 
 + (NSArray *)assetsArrayFromALAssetArray:(NSArray *)array;
+- (BFTask *)prepareSmartTagsWithCIImage:(CIImage *)image;
 
 @end
