@@ -20,8 +20,11 @@
 #import "DLFAsset.h"
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
+#import "PhotoTagsCollectionViewController.h"
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
+
+NSString *const normalCellIdentifier = @"normalCell";
 
 @interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate>
 
@@ -76,6 +79,7 @@
     [self.tableView registerClass:[TagEntryTableViewCell class] forCellReuseIdentifier:[TagEntryTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[PermissionPickerTableViewCell class] forCellReuseIdentifier:[PermissionPickerTableViewCell defaultCellReuseIdentifier]];
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:normalCellIdentifier];
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
     [self.navigationItem setRightBarButtonItem:doneButton];
@@ -113,7 +117,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return (section==TagsAlbumsPickerCollectionViewSectionsTags)?TagsSectionRowsCount:1;
 }
 
 #pragma mark - Table View Delegate
@@ -127,6 +131,15 @@
         [albumsPicker setDelegate:self];
         [albumsPicker setSelectedAlbum:self.selectedAlbum];
         [self.navigationController pushViewController:albumsPicker animated:YES];
+    }
+    
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags && indexPath.row == TagsSectionRowsSmartTags) {
+        for (DLFAsset *asset in self.selectedAssets) {
+            [asset setSmartTags:@[@"test", @"iphone", @"something long here", @"hehe"]];
+        }
+        PhotoTagsCollectionViewController *tagsVC = [[PhotoTagsCollectionViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
+        [tagsVC setAssets:self.selectedAssets];
+        [self.navigationController pushViewController:tagsVC animated:YES];
     }
 }
 
@@ -144,13 +157,17 @@
     }
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags) {
-        [((TagEntryTableViewCell *)cell).tagField setDelegate:self];
+        if (indexPath.row == TagsSectionRowsSmartTags) {
+            [cell.textLabel setText:NSLocalizedString(@"Smart Tags", nil)];
+            [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        } else {
+            [((TagEntryTableViewCell *)cell).tagField setDelegate:self];
+        }
     }
     
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsPermission) {
         [((PermissionPickerTableViewCell *)cell).permissionSwitch setOn:self.privatePhotos];
         [((PermissionPickerTableViewCell *)cell).permissionSwitch addTarget:self action:@selector(permissionSwitchDidChange:) forControlEvents:UIControlEventValueChanged];
-        
     }
     
     return cell;
@@ -178,12 +195,15 @@
 }
 
 - (NSString *)cellIdentifierForIndexPath:(NSIndexPath *)indexPath {
-    return [(id)[self cellClassForIndexPath:indexPath] defaultCellReuseIdentifier];
+    return (indexPath.section==TagsAlbumsPickerCollectionViewSectionsTags&&indexPath.row==TagsSectionRowsSmartTags)?normalCellIdentifier:[(id)[self cellClassForIndexPath:indexPath] defaultCellReuseIdentifier];
 }
 
 - (Class)cellClassForIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case TagsAlbumsPickerCollectionViewSectionsTags:
+            if (indexPath.row == TagsSectionRowsSmartTags) {
+                return [UITableViewCell class];
+            }
             return [TagEntryTableViewCell class];
             break;
         case TagsAlbumsPickerCollectionViewSectionsAlbums:

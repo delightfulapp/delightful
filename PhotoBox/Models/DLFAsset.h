@@ -13,11 +13,9 @@
 @interface DLFAsset : NSObject
 
 @property (nonatomic, strong) PHAsset *asset;
-
 @property (nonatomic, copy) NSString *tags;
-
+@property (nonatomic, copy) NSArray *smartTags;
 @property (nonatomic, strong) Album *album;
-
 @property (nonatomic, assign) BOOL privatePhoto;
 
 + (NSArray *)assetsArrayFromALAssetArray:(NSArray *)array;

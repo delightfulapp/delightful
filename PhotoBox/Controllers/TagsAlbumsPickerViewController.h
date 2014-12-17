@@ -15,6 +15,12 @@ typedef NS_ENUM(NSInteger, TagsAlbumsPickerCollectionViewSections) {
     TagsAlbumsPickerCollectionViewSectionsCount
 };
 
+typedef NS_ENUM(NSInteger, TagsSectionRows) {
+    TagsSectionRowsEntryField,
+    TagsSectionRowsSmartTags,
+    TagsSectionRowsCount
+};
+
 @class TagsAlbumsPickerViewController;
 @class Album;
 

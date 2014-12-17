@@ -201,6 +201,10 @@
 		0398D7C618103B6E00FDD83B /* download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C518103B6E00FDD83B /* download@2x.png */; };
 		0398D7C918103CD000FDD83B /* right.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C718103CD000FDD83B /* right.png */; };
 		0398D7CA18103CD000FDD83B /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0398D7C818103CD000FDD83B /* right@2x.png */; };
+		03A4381A1A413C88005922E8 /* PhotoTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438191A413C88005922E8 /* PhotoTagsCell.m */; };
+		03A4381B1A413C88005922E8 /* PhotoTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438191A413C88005922E8 /* PhotoTagsCell.m */; };
+		03A438221A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */; };
+		03A438231A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */; };
 		03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
 		03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
 		03AD74291A18FF0B00C34525 /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74281A18FF0B00C34525 /* LocalViewController.m */; };
@@ -639,6 +643,10 @@
 		0398D7C518103B6E00FDD83B /* download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download@2x.png"; sourceTree = "<group>"; };
 		0398D7C718103CD000FDD83B /* right.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right.png; sourceTree = "<group>"; };
 		0398D7C818103CD000FDD83B /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
+		03A438181A413C88005922E8 /* PhotoTagsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoTagsCell.h; path = PhotoBox/Cells/PhotoTagsCell.h; sourceTree = "<group>"; };
+		03A438191A413C88005922E8 /* PhotoTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoTagsCell.m; path = PhotoBox/Cells/PhotoTagsCell.m; sourceTree = "<group>"; };
+		03A438201A414705005922E8 /* PhotoTagsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoTagsCollectionViewController.h; path = PhotoBox/Controllers/PhotoTagsCollectionViewController.h; sourceTree = "<group>"; };
+		03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoTagsCollectionViewController.m; path = PhotoBox/Controllers/PhotoTagsCollectionViewController.m; sourceTree = "<group>"; };
 		03AD74231A18FE7800C34525 /* DownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedViewController.h; path = PhotoBox/Controllers/DownloadedViewController.h; sourceTree = "<group>"; };
 		03AD74241A18FE7800C34525 /* DownloadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedViewController.m; path = PhotoBox/Controllers/DownloadedViewController.m; sourceTree = "<group>"; };
 		03AD74271A18FF0B00C34525 /* LocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalViewController.h; path = PhotoBox/Controllers/LocalViewController.h; sourceTree = "<group>"; };
@@ -1070,6 +1078,8 @@
 				03AD74241A18FE7800C34525 /* DownloadedViewController.m */,
 				03AD74271A18FF0B00C34525 /* LocalViewController.h */,
 				03AD74281A18FF0B00C34525 /* LocalViewController.m */,
+				03A438201A414705005922E8 /* PhotoTagsCollectionViewController.h */,
+				03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1135,6 +1145,8 @@
 				035DACBC197F9A8E00557547 /* PermissionPickerTableViewCell.m */,
 				035DACC0197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.h */,
 				035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */,
+				03A438181A413C88005922E8 /* PhotoTagsCell.h */,
+				03A438191A413C88005922E8 /* PhotoTagsCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1763,6 +1775,7 @@
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035DACE31983490B00557547 /* UploadReloadView.m in Sources */,
 				035846AB17D20B8100E196D7 /* PhotoCell.m in Sources */,
+				03A4381A1A413C88005922E8 /* PhotoTagsCell.m in Sources */,
 				0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
@@ -1817,6 +1830,7 @@
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
 				0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */,
 				0342D9861A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */,
+				03A438221A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */,
 				032CBB8A17D0BDF3001205B1 /* main.m in Sources */,
 				0310903B17D103330075F9D8 /* PhotoBoxClient.m in Sources */,
 				0398D762180FB88F00FDD83B /* UIImage+Additionals.m in Sources */,
@@ -1902,6 +1916,7 @@
 				03EFD8DB19251CD700E80A71 /* HeaderImageView.m in Sources */,
 				035DACE41983490B00557547 /* UploadReloadView.m in Sources */,
 				03EFD8DC19251CD700E80A71 /* PhotoCell.m in Sources */,
+				03A4381B1A413C88005922E8 /* PhotoTagsCell.m in Sources */,
 				0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
 				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
@@ -1956,6 +1971,7 @@
 				03EFD90219251CD700E80A71 /* CollectionViewDataSource.m in Sources */,
 				03EFD90319251CD700E80A71 /* UIWindow+Additionals.m in Sources */,
 				0342D9871A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */,
+				03A438231A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */,
 				03EFD90419251CD700E80A71 /* main.m in Sources */,
 				03EFD90519251CD700E80A71 /* PhotoBoxClient.m in Sources */,
 				03EFD90619251CD700E80A71 /* UIImage+Additionals.m in Sources */,
