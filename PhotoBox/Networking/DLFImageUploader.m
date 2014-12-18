@@ -7,42 +7,30 @@
 //
 
 #import "DLFImageUploader.h"
-
 #import "PhotoBoxClient.h"
-
 #import "DLFAsset.h"
+#import <Bolts.h>
 
 @import Photos;
 
 NSString *const DLFAssetUploadProgressNotification = @"com.getdelightfulapp.DLFAssetUploadProgressNotification";
-
 NSString *const DLFAssetUploadDidChangeNumberOfUploadsNotification = @"com.getdelightfulapp.DLFAssetUploadDidChangeNumberOfUploadsNotification";
-
 NSString *const DLFAssetUploadDidChangeNumberOfFailUploadsNotification = @"com.getdelightfulapp.DLFAssetUploadDidChangeNumberOfFailUploadsNotification";
-
 NSString *const DLFAssetUploadDidSucceedNotification = @"com.getdelightfulapp.DLFAssetUploadDidSucceedNotification";
-
 NSString *const DLFAssetUploadDidFailNotification = @"com.getdelightfulapp.DLFAssetUploadDidFailNotification";
-
 NSString *const kAssetURLKey = @"com.getdelightfulapp.kAssetURLKey";
-
 NSString *const kProgressKey = @"com.getdelightfulapp.kProgressKey";
-
 NSString *const kAssetKey = @"com.getdelightfulapp.kAssetKey";
-
 NSString *const kErrorKey = @"com.getdelightfulapp.kErrorKey";
-
 NSString *const kNumberOfUploadsKey = @"com.getdelightfulapp.kNumberOfUploadsKey";
-
 NSString *const kNumberOfFailUploadsKey = @"com.getdelightfulapp.kNumberOfFailUploadsKey";
-
 NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp.DLFAssetUploadDidQueueAssetNotification";
 
 @interface DLFImageUploader ()
 
 @property (nonatomic, strong) NSMutableArray *uploadingAssets;
-
 @property (nonatomic, strong) NSMutableOrderedSet *uploadFailAssets;
+@property (nonatomic, strong) BFTask *uploadingTask;
 
 @end
 
@@ -76,13 +64,28 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     [self removeFailAsset:asset];
     [self addAsset:asset];
     __weak typeof (self) selfie = self;
-    [[PhotoBoxClient sharedClient] uploadAsset:asset progress:^(float progress) {
-        [selfie uploadProgress:progress asset:asset];
-    } success:^(id object) {
-        [selfie assetUploadDidSucceed:asset];
-        [selfie removeFailAsset:asset];
-    } failure:^(NSError *error) {
-        [selfie assetUploadDidFail:asset error:error];
+    
+    if (!self.uploadingTask || [self.uploadingTask isCancelled] || [self.uploadingTask isCompleted]) {
+        self.uploadingTask = [BFTask taskWithResult:nil];
+    }
+    
+    
+    self.uploadingTask = [self.uploadingTask continueWithBlock:^id(BFTask *task) {
+        BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
+        NSLog(@"uploading photo %@", asset.asset.localIdentifier);
+        [[PhotoBoxClient sharedClient] uploadAsset:asset progress:^(float progress) {
+            [selfie uploadProgress:progress asset:asset];
+        } success:^(id object) {
+            [selfie assetUploadDidSucceed:asset];
+            [selfie removeFailAsset:asset];
+            [taskCompletionSource setResult:asset];
+            NSLog(@"- done uploading %@", asset.asset.localIdentifier);
+        } failure:^(NSError *error) {
+            [selfie assetUploadDidFail:asset error:error];
+            [taskCompletionSource setError:error];
+            NSLog(@"x fail uploading %@", asset.asset.localIdentifier);
+        }];
+        return taskCompletionSource.task;
     }];
     
     return YES;
