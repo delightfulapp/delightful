@@ -10,6 +10,40 @@
 #import "PhotoTagsCell.h"
 #import "DLFAsset.h"
 #import "SmartTagButton.h"
+#import <UIView+AutoLayout.h>
+
+@interface HeaderReusableView : UICollectionReusableView
+
+@property (nonatomic, weak) UILabel *label;
+
+@end
+
+@implementation HeaderReusableView
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        UILabel *label = [[UILabel alloc] initForAutoLayout];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setNumberOfLines:0];
+        [label setFont:[UIFont systemFontOfSize:12]];
+        [label setTextColor:[UIColor darkGrayColor]];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [label setText:NSLocalizedString(@"Tap the tag to add or remove it from the photo.", nil)];
+        [self addSubview:label];
+        [label autoCenterInSuperview];
+        [label autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self withOffset:20 relation:NSLayoutRelationGreaterThanOrEqual];
+        [label autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self withOffset:-10 relation:NSLayoutRelationLessThanOrEqual];
+        [label autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10 relation:NSLayoutRelationGreaterThanOrEqual];
+        [label autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-10 relation:NSLayoutRelationLessThanOrEqual];
+        self.label = label;
+    }
+    return self;
+}
+
+@end
+
 @import Photos;
 
 @interface PhotoTagsCollectionViewController () <UICollectionViewDelegateFlowLayout, PhotoTagsCellDelegate>
@@ -21,11 +55,13 @@
 @implementation PhotoTagsCollectionViewController
 
 static NSString * const reuseIdentifier = @"Cell";
+static NSString * const headerIdentifier = @"headerCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"Smart Tags", nil);
     [self.collectionView registerClass:[PhotoTagsCell class] forCellWithReuseIdentifier:reuseIdentifier];
+    [self.collectionView registerClass:[HeaderReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:headerIdentifier];
     [self.collectionView setBackgroundColor:[UIColor whiteColor]];
     [self.collectionView setAlwaysBounceVertical:YES];
     // Do any additional setup after loading the view.
@@ -53,6 +89,13 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self.collectionView.collectionViewLayout invalidateLayout];
+    } completion:nil];
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
 #pragma mark <UICollectionViewDataSource>
@@ -91,6 +134,21 @@ static NSString * const reuseIdentifier = @"Cell";
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    HeaderReusableView *reusableView = (HeaderReusableView *)[collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:headerIdentifier forIndexPath:indexPath];
+    return reusableView;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    HeaderReusableView *headerView = [[HeaderReusableView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(collectionView.frame), CGFLOAT_MAX)];
+    [headerView.label setPreferredMaxLayoutWidth:CGRectGetWidth(collectionView.frame) - 20];
+    [headerView setNeedsLayout];
+    [headerView layoutIfNeeded];
+    CGSize size = [headerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    return CGSizeMake(CGRectGetWidth(collectionView.frame), size.height);
+}
+
+
 #pragma mark <UICollectionViewDelegate>
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -110,7 +168,7 @@ static NSString * const reuseIdentifier = @"Cell";
 }
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    return UIEdgeInsetsMake(10, 0, 10, 0);
+    return UIEdgeInsetsMake(0, 0, 10, 0);
 }
 
 #pragma mark - <PhotoTagsCellDelegate>
