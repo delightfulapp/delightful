@@ -234,8 +234,8 @@
     NSDictionary *userInfo = notification.userInfo;
     DLFAsset *asset = [userInfo objectForKey:kAssetKey];
     if (![self.internalUploads containsObject:asset]) {
-        [self.internalUploads insertObject:asset atIndex:0];
-        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:0 inSection:0]]];
+        [self.internalUploads addObject:asset];
+        [self.collectionView insertItemsAtIndexPaths:@[[NSIndexPath indexPathForItem:self.internalUploads.count-1 inSection:0]]];
     } else {
         NSInteger index = [self.internalUploads indexOfObject:asset];
         UploadAssetCell *cell = (UploadAssetCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:index inSection:0]];

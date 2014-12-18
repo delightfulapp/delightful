@@ -75,6 +75,7 @@
             [self.reloadButton setAttributedText:reloadString];
             [self.reloadButton sizeToFit];
             self.reloadButton.center = CGPointMake(CGRectGetWidth(self.contentView.frame)/2, CGRectGetHeight(self.contentView.frame)/2);
+            [self.contentView bringSubviewToFront:self.reloadButton];
         }
         [self.reloadButton setHidden:NO];
     } else {
