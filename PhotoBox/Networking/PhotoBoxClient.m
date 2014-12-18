@@ -249,6 +249,13 @@
     PHAsset *photo = asset.asset;
     [photo requestContentEditingInputWithOptions:nil completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
         NSString *tags = asset.tags;
+        NSString *smartTags = [asset.smartTags componentsJoinedByString:@","];
+        if (smartTags && smartTags.length > 0) {
+            if (!tags) {
+                tags = @"";
+            }
+            tags = [[tags stringByAppendingFormat:@", %@", smartTags] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@", "]];
+        }
         Album *album = asset.album;
         BOOL privatePhotos = asset.privatePhoto;
         NSString *fileName = contentEditingInput.fullSizeImageURL.lastPathComponent;
