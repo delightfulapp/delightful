@@ -28,11 +28,35 @@
         CLPlacemark *placemark = [((NSArray *)task.result) firstObject];
         NSMutableArray *tags = [NSMutableArray array];
         NSString *name = placemark.name;
-        if (name) [tags addObject:name];
+        if (name) {
+            if ([name rangeOfString:@","].location==NSNotFound) {
+                [tags addObject:name];
+            } else {
+                NSArray *nameComponents = [name componentsSeparatedByString:@","];
+                for (NSString *component in nameComponents) {
+                    NSString *trimmed = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                    if (trimmed && trimmed.length > 0) {
+                        [tags addObject:trimmed];
+                    }
+                }
+            }
+        }
         NSString *country = placemark.country;
         if (country) [tags addObject:country];
         NSString *city = placemark.locality;
-        if (city) [tags addObject:city];
+        if (city) {
+            if ([city rangeOfString:@","].location==NSNotFound) {
+                [tags addObject:city];
+            } else {
+                NSArray *cityComponents = [city componentsSeparatedByString:@","];
+                for (NSString *component in cityComponents) {
+                    NSString *trimmed = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                    if (trimmed && trimmed.length > 0) {
+                        [tags addObject:trimmed];
+                    }
+                }
+            }
+        }
         return [BFTask taskWithResult:tags];
     }] continueWithBlock:^id(BFTask *task) {
         NSMutableArray *tags = [((NSArray *)task.result) mutableCopy];

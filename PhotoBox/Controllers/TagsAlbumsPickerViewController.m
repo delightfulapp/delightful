@@ -97,7 +97,7 @@ NSString *const normalCellIdentifier = @"normalCell";
 
 - (BFTask *)prepareSmartTags {
     self.isPreparingSmartTags = YES;
-    BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
+    BFTaskCompletionSource *preparingSmartTagsTask = [BFTaskCompletionSource taskCompletionSource];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         BFTask *smartTagsTask = [BFTask taskWithResult:nil];
         for (DLFAsset *asset in self.selectedAssets) {
@@ -124,10 +124,13 @@ NSString *const normalCellIdentifier = @"normalCell";
                 }];
             }];
         }
-        [task setResult:smartTagsTask];
+        [smartTagsTask continueWithBlock:^id(BFTask *task) {
+            [preparingSmartTagsTask setResult:task.result];
+            return [BFTask taskWithResult:nil];
+        }];
     });
     
-    return task.task;
+    return preparingSmartTagsTask.task;
 }
 
 - (void)dealloc {
