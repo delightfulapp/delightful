@@ -11,6 +11,8 @@
 typedef NS_ENUM(NSInteger, UIDeviceScreenType) {
     UIDeviceScreenType35Inch,
     UIDeviceScreenType4Inch,
+    UIDeviceScreenType47Inch,
+    UIDeviceScreenType55Inch,
     UIDeviceScreenTypeiPad
 };
 
