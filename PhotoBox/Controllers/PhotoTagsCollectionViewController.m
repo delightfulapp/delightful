@@ -9,8 +9,12 @@
 #import "PhotoTagsCollectionViewController.h"
 #import "PhotoTagsCell.h"
 #import "DLFAsset.h"
+#import "SmartTagButton.h"
+@import Photos;
 
-@interface PhotoTagsCollectionViewController () <UICollectionViewDelegateFlowLayout>
+@interface PhotoTagsCollectionViewController () <UICollectionViewDelegateFlowLayout, PhotoTagsCellDelegate>
+
+@property (nonatomic, strong) NSMutableDictionary *smartTagsDictionary;
 
 @end
 
@@ -27,20 +31,29 @@ static NSString * const reuseIdentifier = @"Cell";
     // Do any additional setup after loading the view.
 }
 
+- (void)setAssets:(NSArray *)assets {
+    if (_assets != assets) {
+        _assets = assets;
+        
+        if (!self.smartTagsDictionary) {
+            self.smartTagsDictionary = [NSMutableDictionary dictionary];
+        }
+        
+        for (DLFAsset *asset in _assets) {
+            NSString *identifier = asset.asset.localIdentifier;
+            NSArray *smartTags = asset.smartTags;
+            NSMutableDictionary *thisAssetSmartTagsDictionary = [NSMutableDictionary dictionary];
+            for (NSString *tag in smartTags) {
+                [thisAssetSmartTagsDictionary setObject:@(YES) forKey:tag];
+            }
+            [self.smartTagsDictionary setObject:thisAssetSmartTagsDictionary forKey:identifier];
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -56,8 +69,9 @@ static NSString * const reuseIdentifier = @"Cell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoTagsCell *cell = (PhotoTagsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     DLFAsset *asset = self.assets[indexPath.item];
-    [cell setTags:asset.smartTags];
-    
+    [cell setLocalAssetIdentifier:asset.asset.localIdentifier];
+    [cell setTagsDictionary:self.smartTagsDictionary[asset.asset.localIdentifier]];
+    [cell setDelegate:self];
     NSInteger currentTag = cell.tag + 1;
     cell.tag = currentTag;
     
@@ -83,7 +97,8 @@ static NSString * const reuseIdentifier = @"Cell";
     CGFloat width = CGRectGetWidth(collectionView.frame) - 20;
     PhotoTagsCell *cell = [[PhotoTagsCell alloc] initWithFrame:CGRectMake(0, 0, width, CGFLOAT_MAX)];
     DLFAsset *asset = self.assets[indexPath.item];
-    [cell setTags:asset.smartTags];
+    [cell setLocalAssetIdentifier:asset.asset.localIdentifier];
+    [cell setTagsDictionary:self.smartTagsDictionary[asset.asset.localIdentifier]];
     [cell.contentView setNeedsLayout];
     [cell.contentView layoutIfNeeded];
     CGFloat maxY = 0;
@@ -96,6 +111,31 @@ static NSString * const reuseIdentifier = @"Cell";
 
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
     return UIEdgeInsetsMake(10, 0, 10, 0);
+}
+
+#pragma mark - <PhotoTagsCellDelegate>
+
+- (void)cell:(PhotoTagsCell *)cell didTapButton:(SmartTagButton *)button {
+    NSString *key = [NSString stringWithFormat:@"%@.%@", NSStringFromSelector(@selector(asset)), NSStringFromSelector(@selector(localIdentifier))];
+    DLFAsset *selectedAsset = [[self.assets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", key, cell.localAssetIdentifier]] firstObject];
+    NSMutableArray *smartTags = [selectedAsset.smartTags mutableCopy];
+    BOOL smartTagIsIncluded = YES;
+    if (button.tagState == TagStateSelected) {
+        [smartTags removeObject:button.titleLabel.text];
+        [button setTagState:TagStateNotSelected];
+        smartTagIsIncluded = NO;
+    } else {
+        [smartTags addObject:button.titleLabel.text];
+        [button setTagState:TagStateSelected];
+    }
+    [selectedAsset setSmartTags:smartTags];
+    NSMutableDictionary *dict = [self.smartTagsDictionary[selectedAsset.asset.localIdentifier] mutableCopy];
+    [dict setObject:(smartTagIsIncluded)?@(YES):@(NO) forKey:button.titleLabel.text];
+    [self.smartTagsDictionary setObject:dict forKey:selectedAsset.asset.localIdentifier];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(photoTagsViewController:didChangeSmartTagsForAsset:)]) {
+        [self.delegate photoTagsViewController:self didChangeSmartTagsForAsset:selectedAsset];
+    }
 }
 
 @end

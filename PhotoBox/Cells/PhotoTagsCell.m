@@ -7,6 +7,7 @@
 //
 
 #import "PhotoTagsCell.h"
+#import "SmartTagButton.h"
 
 @interface PhotoTagsCell ()
 
@@ -40,34 +41,43 @@
     return self;
 }
 
-- (void)setTags:(NSArray *)tags {
-    if (_tags != tags) {
-        _tags = tags;
+- (void)setTagsDictionary:(NSDictionary *)tagsDictionary {
+    if (_tagsDictionary != tagsDictionary) {
+        _tagsDictionary = tagsDictionary;
         
-        NSMutableArray *tagsCopies = [NSMutableArray arrayWithArray:_tags];
+        NSMutableArray *tagStrings = [[_tagsDictionary allKeys] mutableCopy];
         if (!self.tagButtons) {
             self.tagButtons = [NSArray array];
         }
         NSMutableArray *tagLabelsCopy = [self.tagButtons mutableCopy];
-        for (UIButton *button in _tagButtons) {
-            NSString *tag = [tagsCopies firstObject];
+        for (SmartTagButton *button in self.tagButtons) {
+            NSString *tag = [tagStrings firstObject];
             if (tag) {
                 [button setTitle:tag forState:UIControlStateNormal];
-                [tagsCopies removeObjectAtIndex:0];
+                BOOL selected = [_tagsDictionary[tag] boolValue];
+                [button setTagState:(selected)?TagStateSelected:TagStateNotSelected];
+                [tagStrings removeObjectAtIndex:0];
+                [button setEnabled:YES];
+                [button setHidden:NO];
             } else {
+                [button setTitle:nil forState:UIControlStateNormal];
                 [button setHidden:YES];
-                [tagLabelsCopy removeObject:button];
+                [button setFrame:CGRectZero];
+                [button setEnabled:NO];
             }
         }
         
-        for (NSString *tag in tagsCopies) {
-            UIButton *button = [[UIButton alloc] init];
+        for (NSString *tag in tagStrings) {
+            SmartTagButton *button = [[SmartTagButton alloc] init];
             [button setTitle:tag forState:UIControlStateNormal];
+            [button setAssetIdentifier:self.localAssetIdentifier];
+            BOOL selected = [_tagsDictionary[tag] boolValue];
+            [button setTagState:(selected)?TagStateSelected:TagStateNotSelected];
             [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [button.titleLabel setFont:[UIFont systemFontOfSize:12]];
             [button setContentEdgeInsets:UIEdgeInsetsMake(2, 5, 2, 5)];
-            [button setBackgroundColor:[UIColor colorWithRed:0.255 green:0.529 blue:0.835 alpha:1.000]];
             [button.layer setCornerRadius:9];
+            [button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
             [self.contentView addSubview:button];
             [tagLabelsCopy addObject:button];
         }
@@ -88,23 +98,9 @@
         frame;
     });
     
-    CGFloat width = CGRectGetWidth(self.contentView.frame) - CGRectGetWidth(self.imageView.frame) - 3 * 10;
-    UIButton *firstTag = [self.tagButtons firstObject];
-    [firstTag sizeToFit];
-    firstTag.frame = ({
-        CGRect frame = firstTag.frame;
-        frame.origin.x = CGRectGetMaxX(self.imageView.frame) + 10;
-        frame.origin.y = CGRectGetMinY(self.imageView.frame);
-        if (frame.size.width > width) {
-            frame.size.width = width;
-        }
-        frame;
-    });
-    UIView *lastView = firstTag;
-    int i = 0;
+    UIView *lastView = self.imageView;
     for (UIButton *button in self.tagButtons) {
-        if (i == 0) {
-            i++;
+        if (!button.isEnabled) {
             continue;
         }
         [button sizeToFit];
@@ -112,12 +108,24 @@
         CGFloat originX = CGRectGetMaxX(lastView.frame) + 5;
         CGFloat originY = CGRectGetMinY(lastView.frame);
         if (originX + frame.size.width + 10 > CGRectGetWidth(self.contentView.frame)) {
-            originX = CGRectGetMinX(firstTag.frame);
+            originX = CGRectGetMaxX(self.imageView.frame) + 5;
             originY = CGRectGetMaxY(lastView.frame) + 5;
         }
+        if (originX + frame.size.width + 10 > CGRectGetWidth(self.contentView.frame)) {
+            originX = CGRectGetMaxX(lastView.frame) + 5;
+            originY = CGRectGetMinY(lastView.frame);
+            frame.size.width = CGRectGetWidth(self.contentView.frame) - CGRectGetWidth(self.imageView.frame) - 3 * 10;
+        }
+        
         frame.origin = CGPointMake(originX, originY);
         [button setFrame:frame];
         lastView = button;
+    }
+}
+
+- (void)didTapButton:(SmartTagButton *)button {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(cell:didTapButton:)]) {
+        [self.delegate cell:self didTapButton:button];
     }
 }
 

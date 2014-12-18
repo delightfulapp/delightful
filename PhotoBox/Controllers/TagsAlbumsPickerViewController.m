@@ -28,7 +28,7 @@
 
 NSString *const normalCellIdentifier = @"normalCell";
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate>
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate, PhotoTagsCollectionViewControllerDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, assign) BOOL isFetchingTags;
@@ -174,6 +174,7 @@ NSString *const normalCellIdentifier = @"normalCell";
     if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTags && indexPath.row == TagsSectionRowsSmartTags && !self.isPreparingSmartTags) {
         PhotoTagsCollectionViewController *tagsVC = [[PhotoTagsCollectionViewController alloc] initWithCollectionViewLayout:[[UICollectionViewFlowLayout alloc] init]];
         [tagsVC setAssets:self.selectedAssets];
+        [tagsVC setDelegate:self];
         [self.navigationController pushViewController:tagsVC animated:YES];
     }
 }
@@ -422,5 +423,15 @@ NSString *const normalCellIdentifier = @"normalCell";
         [self.delegate tagsAlbumsPickerViewController:self didFinishSelectTagsAndAlbum:self.selectedAssets];
     }
 }
+
+#pragma mark - <PhotoTagsCollectionViewControllerDelegate>
+
+- (void)photoTagsViewController:(PhotoTagsCollectionViewController *)controller didChangeSmartTagsForAsset:(DLFAsset *)asset {
+    NSString *format = [NSString stringWithFormat:@"%@.%@", NSStringFromSelector(@selector(asset)), NSStringFromSelector(@selector(localIdentifier))];
+    DLFAsset *changedAsset = [[self.selectedAssets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", format, asset.asset.localIdentifier]] firstObject];
+    [changedAsset setSmartTags:asset.smartTags];
+    NSLog(@"smart tags changed: %@", changedAsset.smartTags);
+}
+
 
 @end

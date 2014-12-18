@@ -181,6 +181,8 @@
 		0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391824E1800074A0099480C /* NSObject+Additionals.m */; };
 		0391F10E1A4180C600F8BC99 /* UIDevice+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391F10D1A4180C600F8BC99 /* UIDevice+Additionals.m */; };
 		0391F10F1A4180C600F8BC99 /* UIDevice+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391F10D1A4180C600F8BC99 /* UIDevice+Additionals.m */; };
+		0391F1121A425E2B00F8BC99 /* SmartTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391F1111A425E2B00F8BC99 /* SmartTagButton.m */; };
+		0391F1131A425E2B00F8BC99 /* SmartTagButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0391F1111A425E2B00F8BC99 /* SmartTagButton.m */; };
 		039580B51A28A16000597ECA /* PhotosPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039580B41A28A16000597ECA /* PhotosPicker.storyboard */; };
 		039580B71A28A17000597ECA /* PhotosPicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 039580B61A28A17000597ECA /* PhotosPicker.storyboard */; };
 		0396BDD01920B8B4004B6290 /* NoPhotosView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */; };
@@ -615,6 +617,8 @@
 		0391824E1800074A0099480C /* NSObject+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Additionals.m"; sourceTree = "<group>"; };
 		0391F10C1A4180C600F8BC99 /* UIDevice+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+Additionals.h"; sourceTree = "<group>"; };
 		0391F10D1A4180C600F8BC99 /* UIDevice+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+Additionals.m"; sourceTree = "<group>"; };
+		0391F1101A425E2B00F8BC99 /* SmartTagButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SmartTagButton.h; path = PhotoBox/Views/SmartTagButton.h; sourceTree = "<group>"; };
+		0391F1111A425E2B00F8BC99 /* SmartTagButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SmartTagButton.m; path = PhotoBox/Views/SmartTagButton.m; sourceTree = "<group>"; };
 		039580B41A28A16000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = ../Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
 		039580B61A28A17000597ECA /* PhotosPicker.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PhotosPicker.storyboard; path = ../Pods/DLFPhotosPicker/PhotosPicker/Base.lproj/PhotosPicker.storyboard; sourceTree = "<group>"; };
 		0396BDCF1920B8B4004B6290 /* NoPhotosView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NoPhotosView.xib; path = PhotoBox/Views/NoPhotosView.xib; sourceTree = "<group>"; };
@@ -1188,6 +1192,8 @@
 				03EB628119DE3A0600E65248 /* CustomBackButton.m */,
 				03E130BD19FF7AFE00AD70A3 /* FooterLoadingReusableView.h */,
 				03E130BE19FF7AFE00AD70A3 /* FooterLoadingReusableView.m */,
+				0391F1101A425E2B00F8BC99 /* SmartTagButton.h */,
+				0391F1111A425E2B00F8BC99 /* SmartTagButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1760,6 +1766,7 @@
 				0334EBB81841DF37001B262F /* TagRowCell.m in Sources */,
 				03643BCA19F76A11003E4025 /* PhotosSubsetDataSource.m in Sources */,
 				032B0D1E17D4CF4800ABFA9F /* LocationManager.m in Sources */,
+				0391F1121A425E2B00F8BC99 /* SmartTagButton.m in Sources */,
 				0357966F19D8435600A28334 /* YapDataSource.m in Sources */,
 				0398D768180FC5F500FDD83B /* OriginalImageDownloaderViewController.m in Sources */,
 				03FD4824191FA5CA00D4ADF7 /* LeftPanelHeaderView.m in Sources */,
@@ -1902,6 +1909,7 @@
 				03EFD8CE19251CD700E80A71 /* TagRowCell.m in Sources */,
 				03643BCB19F76A11003E4025 /* PhotosSubsetDataSource.m in Sources */,
 				03EFD8CF19251CD700E80A71 /* LocationManager.m in Sources */,
+				0391F1131A425E2B00F8BC99 /* SmartTagButton.m in Sources */,
 				0357967019D8435600A28334 /* YapDataSource.m in Sources */,
 				03EFD8D019251CD700E80A71 /* OriginalImageDownloaderViewController.m in Sources */,
 				03EFD8D119251CD700E80A71 /* LeftPanelHeaderView.m in Sources */,
