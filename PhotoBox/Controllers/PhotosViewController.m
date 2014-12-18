@@ -41,8 +41,13 @@
 #import "UploadViewController.h"
 #import "DLFImageUploader.h"
 #import "SortingConstants.h"
+#import "DLFDatabaseManager.h"
+#import <UIView+AutoLayout.h>
+#import <DLFPhotoCell.h>
 #import <DLFPhotosPickerViewController.h>
 #import <DLFDetailViewController.h>
+
+#define UPLOADED_MARK_TAG 123456910
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate>
 
@@ -581,6 +586,38 @@
 
 - (void)photosPickerDidCancel:(DLFPhotosPickerViewController *)photosPicker {
     [photosPicker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker
+detailViewController:(DLFDetailViewController *)detailViewController
+       configureCell:(DLFPhotoCell *)cell
+           indexPath:(NSIndexPath *)indexPath
+               asset:(PHAsset *)asset {
+    __block NSString *status;
+    [[[DLFDatabaseManager manager] readConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        status = [transaction objectForKey:asset.localIdentifier inCollection:uploadedCollectionName];
+    }];
+    
+    UIImageView *uploadedView = (UIImageView *)[cell.contentView viewWithTag:UPLOADED_MARK_TAG];
+    if ([status isEqualToString:photoUploadedKey]) {
+        if (!uploadedView) {
+            uploadedView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"uploaded"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+            [uploadedView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [uploadedView setTintColor:[UIColor whiteColor]];
+            [cell.contentView addSubview:uploadedView];
+            [uploadedView setTag:UPLOADED_MARK_TAG];
+            [uploadedView.layer setShadowColor:[[UIColor blackColor] CGColor]];
+            [uploadedView.layer setShadowRadius:1];
+            [uploadedView.layer setShadowOffset:CGSizeMake(0, 1)];
+            [uploadedView.layer setShadowOpacity:1];
+            [uploadedView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:5];
+            [uploadedView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:5];
+            [uploadedView autoSetDimensionsToSize:CGSizeMake(30, 30)];
+        }
+        [uploadedView setHidden:NO];
+    } else {
+        [uploadedView setHidden:YES];
+    }
 }
 
 #pragma mark - Tags Albums Picker View Controller Delegate

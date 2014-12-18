@@ -7,25 +7,15 @@
 //
 
 #import "DLFDatabaseManager.h"
-
 #import "GroupedPhotosDataSource.h"
-
 #import "AlbumsDataSource.h"
-
 #import "TagsDataSource.h"
-
 #import "DLFYapDatabaseViewAndMapping.h"
-
 #import "Photo.h"
-
 #import "Album.h"
-
 #import "Tag.h"
-
 #import "DownloadedImageManager.h"
-
 #import "FavoritesManager.h"
-
 #import <YapDatabase.h>
 
 NSString *photosCollectionName = @"photos";
@@ -35,6 +25,10 @@ NSString *createdViewsCollectionName = @"createdViews";
 NSString *downloadedPhotosCollectionName = @"downloadedPhotos";
 NSString *favoritedPhotosCollectionName = @"favoritedPhotos";
 NSString *locationsCollectionName = @"locations";
+NSString *uploadedCollectionName = @"uploaded";
+NSString *photoUploadedKey = @"uploaded";
+NSString *photoQueuedKey = @"queued";
+NSString *photoUploadedFailedKey = @"failed";
 
 @interface DLFDatabaseManager ()
 

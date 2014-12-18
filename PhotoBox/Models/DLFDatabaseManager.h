@@ -12,6 +12,11 @@ extern NSString *photosCollectionName;
 extern NSString *albumsCollectionName;
 extern NSString *tagsCollectionName;
 extern NSString *locationsCollectionName;
+extern NSString *uploadedCollectionName;
+
+extern NSString *photoUploadedKey;
+extern NSString *photoQueuedKey;
+extern NSString *photoUploadedFailedKey;
 
 extern NSString *downloadedPhotosCollectionName;
 extern NSString *favoritedPhotosCollectionName;

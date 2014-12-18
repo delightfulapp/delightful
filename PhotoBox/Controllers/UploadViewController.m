@@ -274,7 +274,6 @@
 
 - (void)uploadDoneNotification:(NSNotification *)notification {
     DLFAsset *asset = notification.userInfo[kAssetKey];
-    [self logUploadedAssetURL:asset.asset.localIdentifier];
     
     NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
         if ([[obj.asset localIdentifier] isEqualToString:asset.asset.localIdentifier]) {
@@ -320,15 +319,6 @@
             [cell showReloadButton:YES];
         }
     }
-}
-
-- (void)logUploadedAssetURL:(NSString *)URL {
-    NSMutableOrderedSet *uploaded = [[[DelightfulCache sharedCache] objectForKey:DLF_UPLOADED_ASSETS] mutableCopy];
-    if (!uploaded) {
-        uploaded = [NSMutableOrderedSet orderedSet];
-    }
-    [uploaded addObject:URL];
-    [[DelightfulCache sharedCache] setObject:uploaded forKey:DLF_UPLOADED_ASSETS];
 }
 
 @end
