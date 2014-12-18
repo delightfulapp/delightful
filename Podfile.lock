@@ -10,6 +10,7 @@ PODS:
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
   - COSTouchVisualizer (1.0.3)
+  - CSNotificationView (0.5.2)
   - DAProgressOverlayView (1.0.2)
   - DLFPhotosPicker (0.8)
   - Expecta (0.2.4)
@@ -46,6 +47,7 @@ DEPENDENCIES:
   - AFOAuth1Client (= 0.3.3)
   - Bolts (~> 1.1.3)
   - COSTouchVisualizer (= 1.0.3)
+  - CSNotificationView (~> 0.5)
   - DAProgressOverlayView
   - DLFPhotosPicker (from `git@github.com:nicnocquee/DLFPhotosPicker.git`)
   - Expecta (~> 0.2.3)
@@ -87,6 +89,7 @@ SPEC CHECKSUMS:
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
   COSTouchVisualizer: 2edcc5626758400d90e50ebf5a7740076c82d1b5
+  CSNotificationView: a01c96b12e4451c9ed42e93a6d494e586c91ad14
   DAProgressOverlayView: 66f743e4bbbb0b5fe241670b9156d948cc228fc1
   DLFPhotosPicker: a45b9176b5770e4ae501a45d837f7d2ddfece571
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5

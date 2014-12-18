@@ -25,6 +25,7 @@ pod 'DLFPhotosPicker', :git => 'git@github.com:nicnocquee/DLFPhotosPicker.git'
 pod 'COSTouchVisualizer', '1.0.3'
 pod 'Bolts', '~> 1.1.3'
 pod 'TDImageColors', '~> 0.2'
+pod 'CSNotificationView', '~> 0.5'
 target :DelightfulTests, :exclusive => true do
     pod 'OCMock', '~> 2.2.1'
     pod 'Expecta', '~> 0.2.3'

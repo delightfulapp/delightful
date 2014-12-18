@@ -11,6 +11,7 @@
 #import "DLFAsset.h"
 #import "SmartTagButton.h"
 #import <UIView+AutoLayout.h>
+#import <CSNotificationView.h>
 
 @interface HeaderReusableView : UICollectionReusableView
 
@@ -190,6 +191,24 @@ static NSString * const headerIdentifier = @"headerCell";
     NSMutableDictionary *dict = [self.smartTagsDictionary[selectedAsset.asset.localIdentifier] mutableCopy];
     [dict setObject:(smartTagIsIncluded)?@(YES):@(NO) forKey:button.titleLabel.text];
     [self.smartTagsDictionary setObject:dict forKey:selectedAsset.asset.localIdentifier];
+    
+    if (smartTagIsIncluded) {
+        [CSNotificationView showInViewController:self
+                                       tintColor:[UIColor colorWithRed:0.000 green:0.6 blue:1.000 alpha:1]
+                                            font:[UIFont systemFontOfSize:14]
+                                   textAlignment:NSTextAlignmentCenter
+                                           image:nil
+                                         message:[NSString stringWithFormat:@"\"%@\" tag is added to photo.", button.titleLabel.text]
+                                        duration:1.f];
+    } else {
+        [CSNotificationView showInViewController:self
+                                       tintColor:[UIColor colorWithRed:0.931 green:0.598 blue:0.209 alpha:1.000]
+                                            font:[UIFont systemFontOfSize:14]
+                                   textAlignment:NSTextAlignmentCenter
+                                           image:nil
+                                         message:[NSString stringWithFormat:@"\"%@\" tag is removed from photo.", button.titleLabel.text]
+                                        duration:1.f];
+    }
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(photoTagsViewController:didChangeSmartTagsForAsset:)]) {
         [self.delegate photoTagsViewController:self didChangeSmartTagsForAsset:selectedAsset];
