@@ -30,10 +30,10 @@
             return CGSizeMake(768*scale, 1024*scale);
             break;
         case UIDeviceScreenType47Inch:
-            return CGSizeMake(667*scale, 375*scale);
+            return CGSizeMake(375*scale, 667*scale);
             break;
         case UIDeviceScreenType55Inch:
-            return CGSizeMake(640*scale, 360*scale);
+            return CGSizeMake(414*scale, 736*scale);
             break;
         default:
             break;
