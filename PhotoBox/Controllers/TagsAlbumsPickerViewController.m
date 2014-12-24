@@ -245,7 +245,7 @@ NSString *const normalCellIdentifier = @"normalCell";
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     if (section == TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload) {
-        return NSLocalizedString(@"If you turn this on, Delightful will delete the uploaded photos and replace them with smaller size photos to free up storage space from your device. You will need to allow Delightful to delete the uploaded photos.", nil);
+        return NSLocalizedString(@"If you turn this on, Delightful will delete the uploaded photos and replace them with smaller size photos to free up storage space from your device. You will need to allow Delightful to delete the uploaded photos. The deleted photos will stay in Recently Deleted album until you permanently delete them.", nil);
     }
     return nil;
 }
