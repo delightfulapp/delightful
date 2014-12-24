@@ -11,5 +11,6 @@
 @interface PermissionPickerTableViewCell : TagsAlbumPermissionPickerTableViewCell
 
 @property (nonatomic, strong, readonly) UISwitch *permissionSwitch;
+@property (nonatomic, strong, readonly) UILabel *permissionLabel;
 
 @end

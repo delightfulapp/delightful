@@ -18,6 +18,7 @@
 @property (nonatomic, copy) NSArray *smartTags;
 @property (nonatomic, strong) Album *album;
 @property (nonatomic, assign) BOOL privatePhoto;
+@property (nonatomic, assign) BOOL scaleAfterUpload;
 
 + (NSArray *)assetsArrayFromALAssetArray:(NSArray *)array;
 - (BFTask *)prepareSmartTagsWithCIImage:(CIImage *)image;

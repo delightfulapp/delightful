@@ -10,7 +10,7 @@
 #import "PhotoBoxClient.h"
 #import "DLFAsset.h"
 #import "DLFDatabaseManager.h"
-#import <Bolts.h>
+#import "PHPhotoLibrary+Additionals.h"
 #import <YapDatabase.h>
 
 @import Photos;
@@ -32,7 +32,6 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
 
 @property (nonatomic, strong) NSMutableArray *uploadingAssets;
 @property (nonatomic, strong) NSMutableOrderedSet *uploadFailAssets;
-@property (nonatomic, strong) BFTask *uploadingTask;
 
 @end
 
@@ -43,11 +42,21 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedUploader = [[DLFImageUploader alloc] init];
-        _sharedUploader.uploadingAssets = [[NSMutableArray alloc] init];
-        _sharedUploader.uploadFailAssets = [[NSMutableOrderedSet alloc] init];
     });
     
     return _sharedUploader;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _uploadingAssets = [[NSMutableArray alloc] init];
+        _uploadFailAssets = [[NSMutableOrderedSet alloc] init];
+        
+        
+    }
+    return self;
 }
 
 - (void)reloadUpload {
@@ -183,5 +192,6 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
     }
 }
+
 
 @end

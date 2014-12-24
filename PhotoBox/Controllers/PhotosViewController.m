@@ -42,6 +42,7 @@
 #import "DLFImageUploader.h"
 #import "SortingConstants.h"
 #import "DLFDatabaseManager.h"
+#import "PHPhotoLibrary+Additionals.h"
 #import <UIView+AutoLayout.h>
 #import <DLFPhotoCell.h>
 #import <DLFPhotosPickerViewController.h>
@@ -632,9 +633,32 @@ detailViewController:(DLFDetailViewController *)detailViewController
         self.uploadViewController = uploadVC;
         
         [self presentViewController:navCon animated:YES completion:^{
+            
             for (DLFAsset *asset in assets) {
                 [[DLFImageUploader sharedUploader] queueAsset:asset];
             }
+            
+            BFTask *uploadingTask = [[DLFImageUploader sharedUploader] uploadingTask];
+            [uploadingTask continueWithBlock:^id(BFTask *t) {
+                BFTask *task = [BFTask taskWithResult:nil];
+                NSMutableArray *phAssets = [NSMutableArray arrayWithCapacity:assets.count];
+                for (DLFAsset *asset in assets) {
+                    if (asset.scaleAfterUpload) {
+                        [phAssets addObject:asset.asset];
+                        task = [task continueWithBlock:^id(BFTask *task) {
+                            return [[PHPhotoLibrary sharedPhotoLibrary] resizeAndCreateNewAsset:asset.asset scale:0.5];
+                        }];
+                    }
+                }
+                
+                if (phAssets.count > 0) {
+                    return [task continueWithBlock:^id(BFTask *task) {
+                        return [[PHPhotoLibrary sharedPhotoLibrary] deleteAssets:phAssets];
+                    }];
+                }
+                
+                return task;
+            }];
         }];
     }];
 }
