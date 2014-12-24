@@ -41,8 +41,14 @@
 #import "UploadViewController.h"
 #import "DLFImageUploader.h"
 #import "SortingConstants.h"
+#import "DLFDatabaseManager.h"
+#import "PHPhotoLibrary+Additionals.h"
+#import <UIView+AutoLayout.h>
+#import <DLFPhotoCell.h>
 #import <DLFPhotosPickerViewController.h>
 #import <DLFDetailViewController.h>
+
+#define UPLOADED_MARK_TAG 123456910
 
 @interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate>
 
@@ -583,6 +589,38 @@
     [photosPicker dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)photosPicker:(DLFPhotosPickerViewController *)photosPicker
+detailViewController:(DLFDetailViewController *)detailViewController
+       configureCell:(DLFPhotoCell *)cell
+           indexPath:(NSIndexPath *)indexPath
+               asset:(PHAsset *)asset {
+    __block NSString *status;
+    [[[DLFDatabaseManager manager] readConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        status = [transaction objectForKey:asset.localIdentifier inCollection:uploadedCollectionName];
+    }];
+    
+    UIImageView *uploadedView = (UIImageView *)[cell.contentView viewWithTag:UPLOADED_MARK_TAG];
+    if ([status isEqualToString:photoUploadedKey]) {
+        if (!uploadedView) {
+            uploadedView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"uploaded"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
+            [uploadedView setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [uploadedView setTintColor:[UIColor whiteColor]];
+            [cell.contentView addSubview:uploadedView];
+            [uploadedView setTag:UPLOADED_MARK_TAG];
+            [uploadedView.layer setShadowColor:[[UIColor blackColor] CGColor]];
+            [uploadedView.layer setShadowRadius:1];
+            [uploadedView.layer setShadowOffset:CGSizeMake(0, 1)];
+            [uploadedView.layer setShadowOpacity:1];
+            [uploadedView autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:5];
+            [uploadedView autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:5];
+            [uploadedView autoSetDimensionsToSize:CGSizeMake(30, 30)];
+        }
+        [uploadedView setHidden:NO];
+    } else {
+        [uploadedView setHidden:YES];
+    }
+}
+
 #pragma mark - Tags Albums Picker View Controller Delegate
 
 - (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
@@ -595,9 +633,32 @@
         self.uploadViewController = uploadVC;
         
         [self presentViewController:navCon animated:YES completion:^{
+            
             for (DLFAsset *asset in assets) {
                 [[DLFImageUploader sharedUploader] queueAsset:asset];
             }
+            
+            BFTask *uploadingTask = [[DLFImageUploader sharedUploader] uploadingTask];
+            [uploadingTask continueWithBlock:^id(BFTask *t) {
+                BFTask *task = [BFTask taskWithResult:nil];
+                NSMutableArray *phAssets = [NSMutableArray arrayWithCapacity:assets.count];
+                for (DLFAsset *asset in assets) {
+                    if (asset.scaleAfterUpload) {
+                        [phAssets addObject:asset.asset];
+                        task = [task continueWithBlock:^id(BFTask *task) {
+                            return [[PHPhotoLibrary sharedPhotoLibrary] resizeAndCreateNewAsset:asset.asset scale:0.5];
+                        }];
+                    }
+                }
+                
+                if (phAssets.count > 0) {
+                    return [task continueWithBlock:^id(BFTask *task) {
+                        return [[PHPhotoLibrary sharedPhotoLibrary] deleteAssets:phAssets];
+                    }];
+                }
+                
+                return task;
+            }];
         }];
     }];
 }

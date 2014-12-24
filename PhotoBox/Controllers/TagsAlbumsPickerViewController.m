@@ -40,6 +40,7 @@ NSString *const normalCellIdentifier = @"normalCell";
 @property (nonatomic, strong) NSString *selectedTags;
 @property (nonatomic, assign) BOOL privatePhotos;
 @property (nonatomic, assign) BOOL isPreparingSmartTags;
+@property (nonatomic, assign) BOOL resizeAfterUploads;
 
 @end
 
@@ -210,6 +211,12 @@ NSString *const normalCellIdentifier = @"normalCell";
         [((PermissionPickerTableViewCell *)cell).permissionSwitch addTarget:self action:@selector(permissionSwitchDidChange:) forControlEvents:UIControlEventValueChanged];
     }
     
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload) {
+        [((PermissionPickerTableViewCell *)cell).permissionSwitch setOn:self.resizeAfterUploads];
+        [((PermissionPickerTableViewCell *)cell).permissionSwitch addTarget:self action:@selector(resizeAfterUploadSwitchDidChange:) forControlEvents:UIControlEventValueChanged];
+        [((PermissionPickerTableViewCell *)cell).permissionLabel setText:NSLocalizedString(@"Resize Uploaded Photos", nil)];
+    }
+    
     return cell;
 }
 
@@ -228,8 +235,17 @@ NSString *const normalCellIdentifier = @"normalCell";
             break;
         case TagsAlbumsPickerCollectionViewSectionsPermission:
             return NSLocalizedString(@"Permission", nil);
+        case TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload:
+            return NSLocalizedString(@"Free up space", nil);
         default:
             break;
+    }
+    return nil;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    if (section == TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload) {
+        return NSLocalizedString(@"If you turn this on, Delightful will delete the uploaded photos and replace them with smaller size photos to free up storage space from your device. You will need to allow Delightful to delete the uploaded photos. The deleted photos will stay in Recently Deleted album until you permanently delete them.", nil);
     }
     return nil;
 }
@@ -250,6 +266,7 @@ NSString *const normalCellIdentifier = @"normalCell";
             return [AlbumPickerTableViewCell class];
             break;
         case TagsAlbumsPickerCollectionViewSectionsPermission:
+        case TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload:
             return [PermissionPickerTableViewCell class];
         default:
             break;
@@ -416,12 +433,17 @@ NSString *const normalCellIdentifier = @"normalCell";
     self.privatePhotos = sender.isOn;
 }
 
+- (void)resizeAfterUploadSwitchDidChange:(UISwitch *)sender {
+    self.resizeAfterUploads = sender.isOn;
+}
+
 - (void)doneButtonTapped:(id)sender {
     if (self.delegate && [self.delegate respondsToSelector:@selector(tagsAlbumsPickerViewController:didFinishSelectTagsAndAlbum:)]) {
         for (DLFAsset *asset in self.selectedAssets) {
             [asset setTags:self.selectedTags];
             [asset setAlbum:self.selectedAlbum];
             [asset setPrivatePhoto:self.privatePhotos];
+            [asset setScaleAfterUpload:self.resizeAfterUploads];
         }
         [self.delegate tagsAlbumsPickerViewController:self didFinishSelectTagsAndAlbum:self.selectedAssets];
     }

@@ -9,7 +9,9 @@
 #import "DLFImageUploader.h"
 #import "PhotoBoxClient.h"
 #import "DLFAsset.h"
-#import <Bolts.h>
+#import "DLFDatabaseManager.h"
+#import "PHPhotoLibrary+Additionals.h"
+#import <YapDatabase.h>
 
 @import Photos;
 
@@ -30,7 +32,6 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
 
 @property (nonatomic, strong) NSMutableArray *uploadingAssets;
 @property (nonatomic, strong) NSMutableOrderedSet *uploadFailAssets;
-@property (nonatomic, strong) BFTask *uploadingTask;
 
 @end
 
@@ -41,11 +42,21 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedUploader = [[DLFImageUploader alloc] init];
-        _sharedUploader.uploadingAssets = [[NSMutableArray alloc] init];
-        _sharedUploader.uploadFailAssets = [[NSMutableOrderedSet alloc] init];
     });
     
     return _sharedUploader;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _uploadingAssets = [[NSMutableArray alloc] init];
+        _uploadFailAssets = [[NSMutableOrderedSet alloc] init];
+        
+        
+    }
+    return self;
 }
 
 - (void)reloadUpload {
@@ -105,6 +116,9 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
 
 - (void)assetUploadDidSucceed:(DLFAsset *)asset {
     [self removeAsset:asset];
+    [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction setObject:photoUploadedKey forKey:asset.asset.localIdentifier inCollection:uploadedCollectionName];
+    }];
     [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidSucceedNotification object:nil userInfo:@{kAssetKey: asset}];
 }
 
@@ -112,6 +126,9 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     [self addFailAsset:asset];
     [self removeAsset:asset];
     [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidFailNotification object:nil userInfo:@{kAssetKey: asset, kErrorKey: error}];
+    [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction setObject:photoUploadedFailedKey forKey:asset.asset.localIdentifier inCollection:uploadedCollectionName];
+    }];
 }
 
 - (void)addAsset:(DLFAsset *)asset {
@@ -122,6 +139,10 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfUploading))];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil userInfo:@{kNumberOfUploadsKey: @(_numberOfUploading), kNumberOfFailUploadsKey:@(_numberOfFailUpload)}];
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidQueueAssetNotification object:nil userInfo:@{kAssetKey:asset}];
+        
+        [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+            [transaction setObject:photoQueuedKey forKey:asset.asset.localIdentifier inCollection:uploadedCollectionName];
+        }];
     }
 }
 
@@ -171,5 +192,6 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [self didChangeValueForKey:NSStringFromSelector(@selector(numberOfFailUpload))];
     }
 }
+
 
 @end

@@ -12,7 +12,7 @@ PODS:
   - COSTouchVisualizer (1.0.3)
   - CSNotificationView (0.5.2)
   - DAProgressOverlayView (1.0.2)
-  - DLFPhotosPicker (0.8)
+  - DLFPhotosPicker (0.9)
   - Expecta (0.2.4)
   - GPUImage (0.1.4)
   - Mantle (1.4.1):
@@ -76,7 +76,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   DLFPhotosPicker:
-    :commit: 53e771daf138191a44a77317551a0606327f5e0c
+    :commit: 1d4151dfea51a9ece05f3c4dac924ab6f1664955
     :git: git@github.com:nicnocquee/DLFPhotosPicker.git
   YapDatabase:
     :commit: 9f717d54a0a7b5e5b0ab52834b36ef588c21f1a8
@@ -91,7 +91,7 @@ SPEC CHECKSUMS:
   COSTouchVisualizer: 2edcc5626758400d90e50ebf5a7740076c82d1b5
   CSNotificationView: a01c96b12e4451c9ed42e93a6d494e586c91ad14
   DAProgressOverlayView: 66f743e4bbbb0b5fe241670b9156d948cc228fc1
-  DLFPhotosPicker: a45b9176b5770e4ae501a45d837f7d2ddfece571
+  DLFPhotosPicker: 33efe4af25bc79099eb6c7440762a5e54939ff79
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5
   GPUImage: ac2bde5f4dbea02a81ced6313964cec1f2043ca9
   Mantle: 1ca9c0fa84d3d3fc98524e7229f30489b6dd44e5

@@ -12,6 +12,7 @@ typedef NS_ENUM(NSInteger, TagsAlbumsPickerCollectionViewSections) {
     TagsAlbumsPickerCollectionViewSectionsTags,
     TagsAlbumsPickerCollectionViewSectionsAlbums,
     TagsAlbumsPickerCollectionViewSectionsPermission,
+    TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload,
     TagsAlbumsPickerCollectionViewSectionsCount
 };
 

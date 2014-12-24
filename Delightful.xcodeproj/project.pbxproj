@@ -65,6 +65,10 @@
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
 		0334EBB81841DF37001B262F /* TagRowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0334EBB71841DF37001B262F /* TagRowCell.m */; };
 		0337524717D3953100928409 /* OpenInActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 0337524617D3953100928409 /* OpenInActivity.m */; };
+		033A44411A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 033A44401A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m */; };
+		033A44421A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 033A44401A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m */; };
+		033A44451A4A4DEF000E24E2 /* PHAsset+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 033A44441A4A4DEF000E24E2 /* PHAsset+Additionals.m */; };
+		033A44461A4A4DEF000E24E2 /* PHAsset+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 033A44441A4A4DEF000E24E2 /* PHAsset+Additionals.m */; };
 		0342D97A1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
 		0342D97B1A0D1D4E000158B8 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0342D9791A0D1D4E000158B8 /* 1Password.xcassets */; };
 		0342D97E1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */; };
@@ -475,6 +479,10 @@
 		0334EBBF1842093A001B262F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0337524517D3953100928409 /* OpenInActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OpenInActivity.h; path = PhotoBox/Others/OpenInActivity.h; sourceTree = "<group>"; };
 		0337524617D3953100928409 /* OpenInActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OpenInActivity.m; path = PhotoBox/Others/OpenInActivity.m; sourceTree = "<group>"; };
+		033A443F1A4A491B000E24E2 /* PHPhotoLibrary+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHPhotoLibrary+Additionals.h"; sourceTree = "<group>"; };
+		033A44401A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHPhotoLibrary+Additionals.m"; sourceTree = "<group>"; };
+		033A44431A4A4DEF000E24E2 /* PHAsset+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+Additionals.h"; sourceTree = "<group>"; };
+		033A44441A4A4DEF000E24E2 /* PHAsset+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+Additionals.m"; sourceTree = "<group>"; };
 		0342D9791A0D1D4E000158B8 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = 1Password.xcassets; path = ../../Pods/1PasswordExtension/1Password.xcassets; sourceTree = "<group>"; };
 		0342D97C1A0E1F38000158B8 /* YapBackedPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YapBackedPhotosViewController.h; path = PhotoBox/Controllers/YapBackedPhotosViewController.h; sourceTree = "<group>"; };
 		0342D97D1A0E1F38000158B8 /* YapBackedPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YapBackedPhotosViewController.m; path = PhotoBox/Controllers/YapBackedPhotosViewController.m; sourceTree = "<group>"; };
@@ -859,6 +867,10 @@
 				0327CC6B1946AC350086C4B8 /* ALAsset+Additionals.m */,
 				03EB627C19DE304100E65248 /* NSAttributedString+DelighftulFonts.h */,
 				03EB627D19DE304100E65248 /* NSAttributedString+DelighftulFonts.m */,
+				033A443F1A4A491B000E24E2 /* PHPhotoLibrary+Additionals.h */,
+				033A44401A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m */,
+				033A44431A4A4DEF000E24E2 /* PHAsset+Additionals.h */,
+				033A44441A4A4DEF000E24E2 /* PHAsset+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -1775,6 +1787,7 @@
 				0327CC6C1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
 				0342D97E1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */,
 				0358467417D1BC1D00E196D7 /* PhotoBoxViewController.m in Sources */,
+				033A44411A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m in Sources */,
 				038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */,
 				037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				035846BA17D2403500E196D7 /* PhotosSectionHeaderView.m in Sources */,
@@ -1842,6 +1855,7 @@
 				03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */,
 				03CE50FA18183A6000445084 /* SeeThroughCircleView.m in Sources */,
 				0358468317D1C0E800E196D7 /* CollectionViewDataSource.m in Sources */,
+				033A44451A4A4DEF000E24E2 /* PHAsset+Additionals.m in Sources */,
 				0398D7721810032A00FDD83B /* UIWindow+Additionals.m in Sources */,
 				0342D9861A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */,
 				03A438221A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */,
@@ -1918,6 +1932,7 @@
 				0327CC6D1946AC350086C4B8 /* ALAsset+Additionals.m in Sources */,
 				0342D97F1A0E1F38000158B8 /* YapBackedPhotosViewController.m in Sources */,
 				03EFD8D219251CD700E80A71 /* PhotoBoxViewController.m in Sources */,
+				033A44421A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m in Sources */,
 				03EFD8D319251CD700E80A71 /* UIColor+DelightfulColors.m in Sources */,
 				037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */,
 				03EFD8D519251CD700E80A71 /* PhotosSectionHeaderView.m in Sources */,
@@ -1985,6 +2000,7 @@
 				03EFD90019251CD700E80A71 /* PhotoBoxModel.m in Sources */,
 				03EFD90119251CD700E80A71 /* SeeThroughCircleView.m in Sources */,
 				03EFD90219251CD700E80A71 /* CollectionViewDataSource.m in Sources */,
+				033A44461A4A4DEF000E24E2 /* PHAsset+Additionals.m in Sources */,
 				03EFD90319251CD700E80A71 /* UIWindow+Additionals.m in Sources */,
 				0342D9871A0E7E38000158B8 /* YapDatasourceWithSearching.m in Sources */,
 				03A438231A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */,
