@@ -411,9 +411,6 @@
     
     PhotoBoxCell *cell = (PhotoBoxCell *)[collectionView cellForItemAtIndexPath:indexPath];
     Photo *photo = (Photo *)cell.item;
-    if (photo.asset) {
-        return;
-    }
     self.selectedItem = photo;
     
     [self openPhoto:cell.item];
@@ -554,10 +551,8 @@
     __block CLLocation *location;
     
     [self.dataSource enumerateKeysAndObjectsInSection:sectionIndex usingBlock:^(NSString *collection, NSString *key, Photo *photo, NSUInteger index, BOOL *stop) {
-        NSNumber *latitude = [photo valueForKey:@"latitude"];
-        NSNumber *longitude = [photo valueForKey:@"longitude"];
-        if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
-            location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
+        location = [photo clLocation];
+        if (location) {
             *stop = YES;
         }
     }];

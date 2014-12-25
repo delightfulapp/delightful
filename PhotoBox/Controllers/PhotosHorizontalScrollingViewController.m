@@ -22,9 +22,11 @@
 #import "FavoritesManager.h"
 #import "TransitionToInfoDelegate.h"
 #import "TransitionToInfoPresentationController.h"
+#import "LocationManager.h"
 #import "NPRNotificationManager.h"
 
 #import <SVProgressHUD.h>
+#import <UIView+AutoLayout.h>
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, TransitionToInfoPresentationControllerPresentingDelegate> {
     BOOL shouldHideNavigationBar;
@@ -133,6 +135,7 @@
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.firstShownPhoto];
     self.previousPage = indexPath.item;
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    [self setTitleForItem:self.firstShownPhoto atPage:(int)self.previousPage];
 }
 
 - (void)didReceiveMemoryWarning
@@ -145,6 +148,96 @@
     _hideDownloadButton = hideDownloadButton;
     
     [self showLoadingBarButtonItem:NO];
+}
+
+- (void)setTitleForItem:(Photo *)item atPage:(int)page {
+    CLLocation *location = [item clLocation];
+    if (!location) {
+        [self.navigationItem setTitleView:nil];
+        return;
+    }
+    NSString *dateString = item.dateTimeTakenLocalizedString?:@"";
+    
+    __weak typeof (self) selfie = self;
+    [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
+        NSArray *placemarks = task.result;
+        CLPlacemark *firstPlacemark = [placemarks firstObject];
+        NSString *placemarkName = firstPlacemark.name;
+        NSString *placemarkLocality = firstPlacemark.locality;
+        if (placemarkLocality) {
+            NSArray *localityComponents = [placemarkLocality componentsSeparatedByString:@","];
+            placemarkLocality = [localityComponents lastObject];
+        }
+        NSString *placemarkCountry = firstPlacemark.country;
+        NSString *placeName = @"";
+        if (placemarkName) {
+            NSArray *nameComponents = [placemarkName componentsSeparatedByString:@","];
+            if (nameComponents.count > 1) {
+                NSString *placemarkNameToUse = @"";
+                for (NSString *component in nameComponents) {
+                    NSString *com = [component stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                    if (com.length > placemarkNameToUse.length) {
+                        placemarkNameToUse = com;
+                    }
+                }
+                placemarkName = placemarkNameToUse;
+            }
+            
+            if (placemarkLocality && placemarkCountry) {
+                placeName = [NSString stringWithFormat:@"%@, %@, %@", placemarkName, placemarkLocality, placemarkCountry];
+            } else if (placemarkLocality) {
+                placeName = [NSString stringWithFormat:@"%@, %@", placemarkName, placemarkLocality];
+            } else if (placemarkCountry) {
+                placeName = [NSString stringWithFormat:@"%@, %@", placemarkName, placemarkCountry];
+            }
+        } else {
+            if (placemarkLocality && placemarkCountry) {
+                placeName = [NSString stringWithFormat:@"%@ %@", placemarkLocality, placemarkCountry];
+            } else if (placemarkCountry) {
+                placeName = placemarkCountry;
+            } else {
+                placemarkName = placemarkLocality;
+            }
+        }
+        
+        int currentPage = (int)[selfie currentCollectionViewPage:selfie.collectionView];
+        if (currentPage == page) {
+            UILabel *placeLabel = [[UILabel alloc] init];
+            [placeLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [placeLabel setBackgroundColor:[UIColor clearColor]];
+            [placeLabel setTextAlignment:NSTextAlignmentCenter];
+            [placeLabel setText:placeName];
+            [placeLabel setFont:[UIFont boldSystemFontOfSize:14]];
+            [placeLabel sizeToFit];
+            
+            UILabel *dateLabel = [[UILabel alloc] init];
+            [dateLabel  setTranslatesAutoresizingMaskIntoConstraints:NO];
+            [dateLabel setBackgroundColor:[UIColor clearColor]];
+            [dateLabel setTextAlignment:NSTextAlignmentCenter];
+            [dateLabel setText:dateString];
+            [dateLabel setFont:[UIFont systemFontOfSize:10]];
+            [dateLabel sizeToFit];
+            
+            UIView *containerView = [[UIView alloc] init];
+            [containerView setBackgroundColor:[UIColor clearColor]];
+            [containerView addSubview:placeLabel];
+            [containerView addSubview:dateLabel];
+            
+            [placeLabel autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:0];
+            [placeLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+            [placeLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+            [dateLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:placeLabel];
+            [dateLabel autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:0];
+            [dateLabel autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:0];
+            [dateLabel autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:0];
+            
+            containerView.frame = (CGRect){CGPointZero, [containerView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize]};
+            [containerView setClipsToBounds:NO];
+            [self.navigationItem setTitleView:containerView];
+        }
+        
+        return nil;
+    }];
 }
 
 #pragma mark - Orientation
@@ -222,14 +315,15 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger page = [self currentCollectionViewPage:scrollView];
     if (self.previousPage != page) {
-        if (!shouldHideNavigationBar) {
-            [self setFullScreen:YES];
-        } else {
+        if (shouldHideNavigationBar) {
             shouldHideNavigationBar = NO;
         }
         
         self.previousPage = page;
         Photo *photo = [self.dataSource itemAtIndexPath:[NSIndexPath indexPathForItem:page inSection:0]];
+        
+        [self setTitleForItem:photo atPage:(int)page];
+        
         if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
             [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
             [self showLoadingBarButtonItem:NO];
