@@ -76,15 +76,33 @@
             __weak typeof (self) selfie = self;
             
             [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
-                CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
-                NSString *placemark = firstPlacemark.name;
+                NSArray *placemarks = task.result;
+                CLPlacemark *firstPlacemark = [placemarks firstObject];
+                NSString *placemarkName = firstPlacemark.name;
+                NSString *placemarkLocality = firstPlacemark.locality;
+                NSString *placemarkCountry = firstPlacemark.country;
+                NSString *placeName = @"";
+                if (placemarkName) {
+                    if (placemarkLocality && placemarkCountry) {
+                        placeName = [NSString stringWithFormat:@"%@, %@, %@", placemarkName, placemarkLocality, placemarkCountry];
+                    } else if (placemarkLocality) {
+                        placeName = [NSString stringWithFormat:@"%@, %@", placemarkName, placemarkLocality];
+                    } else if (placemarkCountry) {
+                        placeName = [NSString stringWithFormat:@"%@, %@", placemarkName, placemarkCountry];
+                    }
+                } else {
+                    if (placemarkLocality && placemarkCountry) {
+                        placeName = [NSString stringWithFormat:@"%@ %@", placemarkLocality, placemarkCountry];
+                    } else if (placemarkCountry) {
+                        placeName = placemarkCountry;
+                    } else {
+                        placemarkName = placemarkLocality;
+                    }
+                }
+                
                 NSMutableArray *cameraDataSectionRowsCopy = [selfie.cameraDataSectionRows mutableCopy];
                 [cameraDataSectionRowsCopy removeLastObject];
-                if (placemark) {
-                    [cameraDataSectionRowsCopy addObject:@[NSLocalizedString(@"Location Name", nil), placemark]];
-                } else {
-                    [cameraDataSectionRowsCopy addObject:@[NSLocalizedString(@"Location Name", nil), @""]];
-                }
+                [cameraDataSectionRowsCopy addObject:@[NSLocalizedString(@"Location Name", nil), placeName]];
                 
                 selfie.cameraDataSectionRows = cameraDataSectionRowsCopy;
                 dispatch_async(dispatch_get_main_queue(), ^{
