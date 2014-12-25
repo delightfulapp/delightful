@@ -90,7 +90,7 @@
                 [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
             }
         } completionBlock:^{
-            CLS_LOG(@"Done inserting to db");
+            //CLS_LOG(@"Done inserting to db");
         }];
     }
 }
@@ -169,8 +169,8 @@
         return;
     }
     
-    CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), (int)sectionChanges.count, (int)rowChanges.count);
-    //CLS_LOG(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
+    //CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), (int)sectionChanges.count, (int)rowChanges.count);
+    ////CLS_LOG(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
         
     if (self.pause) {
         [self.collectionView reloadData];
@@ -182,12 +182,12 @@
             for (YapDatabaseViewSectionChange *sectionChange in sectionChanges) {
                 switch (sectionChange.type) {
                     case YapDatabaseViewChangeDelete:{
-                        CLS_LOG(@"section deleted: %lu", (unsigned long)sectionChange.index);
+                        //CLS_LOG(@"section deleted: %lu", (unsigned long)sectionChange.index);
                         [self.collectionView deleteSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
                         break;
                     }
                     case YapDatabaseViewChangeInsert:{
-                        CLS_LOG(@"section inserted: %lu", (unsigned long)sectionChange.index);
+                        //CLS_LOG(@"section inserted: %lu", (unsigned long)sectionChange.index);
                         [self.collectionView insertSections:[NSIndexSet indexSetWithIndex:sectionChange.index]];
                         break;
                     }
@@ -229,7 +229,7 @@
     };
     
     if ([self.collectionView isDragging] || [self.collectionView isDecelerating] || [self.collectionView isTracking]) {
-        CLS_LOG(@"is dragging reloading data");
+        //CLS_LOG(@"is dragging reloading data");
         [self.collectionView reloadData];
     } else {
         performBatchUpdates();

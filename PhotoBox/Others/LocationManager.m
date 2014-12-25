@@ -26,7 +26,7 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 @interface LocationManager ()
 
 @property (nonatomic, strong) CLGeocoder *geocoder;
-@property (nonatomic, strong) NSOperationQueue *requestQueue;
+@property (nonatomic, strong) BFTask *requestTask;
 
 @end
 
@@ -45,44 +45,46 @@ NSString *const PhotoBoxLocationPlacemarkDidFetchNotification = @"nico.PhotoBoxL
 
 - (void)setup {
     self.geocoder = [[CLGeocoder alloc] init];
-    self.requestQueue = [[NSOperationQueue alloc] init];
-    [self.requestQueue setMaxConcurrentOperationCount:1];
-    [self.requestQueue setName:@"ayano.geocoder"];
 }
 
 - (BFTask *)nameForLocation:(CLLocation *)location {
     if (!location) {
         return [BFTask taskWithResult:nil];
     }
+    NSString *key = [NSString stringWithFormat:@"%f-%f", location.coordinate.latitude, location.coordinate.longitude];
     __block NSArray *placemarks;
     [[[DLFDatabaseManager manager] readConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        placemarks = [transaction objectForKey:location.description inCollection:locationsCollectionName];
+        placemarks = [transaction objectForKey:key inCollection:locationsCollectionName];
     }];
     if (placemarks) {
         return [BFTask taskWithResult:placemarks];
     }
     
+    if (!self.requestTask) {
+        self.requestTask = [BFTask taskWithResult:nil];
+    }
+    
     BFTaskCompletionSource *task = [BFTaskCompletionSource taskCompletionSource];
-    NSBlockOperation *blockOperation = [[NSBlockOperation alloc] init];
-    __weak NSBlockOperation *weakOperation = blockOperation;
-    __weak typeof (self) selfie = self;
-    [blockOperation addExecutionBlock:^{
-        if ([weakOperation isCancelled]) {
-            return;
-        }
-        [selfie.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+    
+    self.requestTask = [self.requestTask continueWithBlock:^id(BFTask *t) {
+        [self.geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
             if (error) {
                 [task setError:error];
             } else {
-                [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                    [transaction setObject:placemarks forKey:location.description inCollection:locationsCollectionName];
-                } completionBlock:^{
-                    [task setResult:placemarks];
-                }];
+                if (placemarks && placemarks.count > 0) {
+                    [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                        [transaction setObject:placemarks forKey:key inCollection:locationsCollectionName];
+                    } completionBlock:^{
+                        [task setResult:placemarks];
+                    }];
+                } else {
+                    [task setResult:nil];
+                }
             }
         }];
+        return task.task;
     }];
-    [self.requestQueue addOperation:blockOperation];
+    
     return task.task;
 }
 

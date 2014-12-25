@@ -537,7 +537,6 @@ NSString *const galleryContainerType = @"gallery";
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && !item) {
-        NSLog(@"will start syncing");
         [self setIsFetching:YES];
     }
 }

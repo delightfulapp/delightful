@@ -90,7 +90,7 @@
 #pragma mark - Share
 
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void (^)(NSString *))completion {
-    PBX_LOG(@"Fetching sharing token");
+    //CLS_LOG(@"Fetching sharing token");
     NSString *path = [NSString stringWithFormat: @"/token/photo/%@/create.json", photoId];
     [self postPath:path parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         if (responseObject) {
@@ -99,11 +99,11 @@
             if ([result isKindOfClass:[NSDictionary class]]){
                 token = result[@"id"];
             }
-            PBX_LOG(@"Fetching sharing token succeed");
+            //CLS_LOG(@"Fetching sharing token succeed");
             completion(token);
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        PBX_LOG(@"Fetching sharing token failed: %@", error);
+        //CLS_LOG(@"Fetching sharing token failed: %@", error);
         completion(nil);
     }];
 }
@@ -199,7 +199,7 @@
 
 - (OVCRequestOperation *)GET:(NSString *)path parameters:(NSDictionary *)parameters resultClass:(Class)resultClass resultKeyPath:(NSString *)keyPath success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
     return [self GET:path parameters:parameters resultClass:resultClass resultKeyPath:keyPath completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-        PBX_LOG(@"Fetched responses");
+        //CLS_LOG(@"Fetched responses");
         if (!error) {
             successBlock(responseObject);
         } else {

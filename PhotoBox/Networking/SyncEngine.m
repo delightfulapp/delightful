@@ -196,13 +196,13 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 
 
 - (NSOperation *)fetchTagsForPage:(int)page {
-    CLS_LOG(@"Fetching tags page %d", page);
+    //CLS_LOG(@"Fetching tags page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     });
     
     return [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
-        CLS_LOG(@"Did finish fetching %d tags page %d", (int)tags.count, page);
+        //CLS_LOG(@"Did finish fetching %d tags page %d", (int)tags.count, page);
         if (tags.count > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 [self.tagsConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
@@ -210,7 +210,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
                         [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName];
                     }
                 } completionBlock:^{
-                    CLS_LOG(@"Done inserting tags to db");
+                    //CLS_LOG(@"Done inserting tags to db");
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
                 }];
@@ -218,13 +218,13 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         }
         
     } failure:^(NSError *error) {
-        CLS_LOG(@"Error fetching tags page %d: %@", page, error);
+        //CLS_LOG(@"Error fetching tags page %d: %@", page, error);
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
 - (NSOperation *)fetchAlbumsForPage:(int)page {
-    CLS_LOG(@"Fetching albums page %d", page);
+    //CLS_LOG(@"Fetching albums page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
     });
@@ -232,7 +232,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.albumsSyncOperationPage = page;
     
     return [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
-        CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
+        //CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
         
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
         
@@ -244,7 +244,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
                         [transaction setObject:album forKey:album.albumId inCollection:albumsCollectionName];
                     }
                 } completionBlock:^{
-                    CLS_LOG(@"Done inserting albums to db page %d", page);
+                    //CLS_LOG(@"Done inserting albums to db page %d", page);
                     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (!self.pauseAlbumsSyncOperation) {
@@ -259,13 +259,13 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
             
         }
     } failure:^(NSError *error) {
-        CLS_LOG(@"Error fetching albums page %d: %@", page, error);
+        //CLS_LOG(@"Error fetching albums page %d: %@", page, error);
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
     }];
 }
 
 - (NSOperation *)fetchPhotosForPage:(int)page sort:(NSString *)sort{
-    CLS_LOG(@"Fetching photos for page %d", page);
+    //CLS_LOG(@"Fetching photos for page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
     });
@@ -274,11 +274,11 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.allPhotosSyncOperationSort = sort;
     
     return [[PhotoBoxClient sharedClient] getPhotosForPage:page sort:sort pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
-        CLS_LOG(@"Did finish fetching %d photos page %d", (int)photos.count, page);
+        //CLS_LOG(@"Did finish fetching %d photos page %d", (int)photos.count, page);
         
         [self didFetchPhotos:photos collection:nil collectionType:nil page:page sort:sort];
     } failure:^(NSError *error) {
-        CLS_LOG(@"Error fetching photos page %d: %@", page, error);
+        //CLS_LOG(@"Error fetching photos page %d: %@", page, error);
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
     }];
 }
@@ -293,7 +293,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.photosInTagSyncOperationCollection = tag;
     
     return [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
-        CLS_LOG(@"Did finish fetching %d photos page %d in tag %@", (int)photos.count, page, tag);
+        //CLS_LOG(@"Did finish fetching %d photos page %d in tag %@", (int)photos.count, page, tag);
         [self didFetchPhotos:photos collection:tag collectionType:[Tag class] page:page sort:sort];
     } failure:^(NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationIdentifierKey:tag, SyncEngineNotificationPageKey: @(page)}];
@@ -301,7 +301,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 }
 
 - (NSOperation *)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
-    NSLog(@"Fetching photos in album %@ page %d sort %@", album, page, sort);
+    //NSLog(@"Fetching photos in album %@ page %d sort %@", album, page, sort);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:album}];
@@ -312,7 +312,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.photosInAlbumSyncOperationCollection = album;
     
     return [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
-        NSLog(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);
+        //NSLog(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);
         
         [self didFetchPhotos:photos collection:album collectionType:[Album class] page:page sort:sort];
     } failure:^(NSError *error) {
@@ -327,7 +327,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     
     if (photos.count > 0) {
         [self insertPhotos:photos completion:^{
-            CLS_LOG(@"Done inserting photos in %@ to db page %d", collection, page);
+            //CLS_LOG(@"Done inserting photos in %@ to db page %d", collection, page);
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (collectionType==Album.class) {
                     if (!self.pausePhotosInAlbumSyncOperation) {
@@ -354,7 +354,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 }
 
 - (void)pauseSyncingPhotos:(BOOL)pause collection:(NSString *)collection collectionType:(Class)collectionType {
-    NSLog(@"%@ syncing photos in %@", (pause)?@"pausing":@"resuming", collection);
+    //NSLog(@"%@ syncing photos in %@", (pause)?@"pausing":@"resuming", collection);
     if (collectionType==Album.class) {
         if (pause) {
             self.pausePhotosInAlbumSyncOperation = YES;
@@ -430,11 +430,11 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 }
 
 - (void)didReceiveMemoryWarning:(NSNotification *)notification {
-    CLS_LOG(@"did receive memory warning");
+    //CLS_LOG(@"did receive memory warning");
 }
 
 - (void)insertPhotos:(NSArray *)photos completion:(void(^)())completionBlock {
-    NSLog(@"inserting %d photos to db", (int)photos.count);
+    //NSLog(@"inserting %d photos to db", (int)photos.count);
     [self.photosConnection asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
         for (Photo *photo in photos) {
             [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
@@ -457,7 +457,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 #pragma mark - Notifications
 
 - (void)willEnterForeground:(NSNotification *)notification {
-    NSLog(@"will enter foreground");
+    //NSLog(@"will enter foreground");
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     
     switch (self.syncOperationType) {
@@ -482,7 +482,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 }
 
 - (void)didEnterBackground:(NSNotification *)notification {
-    NSLog(@"enter background");
+    //NSLog(@"enter background");
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     

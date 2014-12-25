@@ -253,28 +253,27 @@
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
     __weak typeof (self) selfie = self;
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
-        NSInteger currentTag = cell.tag+1;
-        cell.tag = currentTag;
+        cell.section = indexPath.section;
+        NSInteger section = indexPath.section;
         [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
         if (selfie.numberOfColumns > 1) {
-            Photo *firstObject = [selfie.dataSource itemAtIndexPath:indexPath];
-            if (firstObject.asset) {
-                [cell setTitleLabelText:NSLocalizedString(@"Uploading ...", nil)];
-                [cell setLocationString:nil];
+            [cell setTitleLabelText:[item localizedDate]?:@""];
+            CLLocation *location = [selfie locationSampleForSection:indexPath.section];
+            if (location) {
+                [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
+                    CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
+                    NSString *placemark = firstPlacemark.name?:firstPlacemark.locality?:firstPlacemark.country;
+                    if (cell.section == section) {
+                        if (placemark && placemark.length > 0) {
+                            [cell setLocationString:placemark];
+                        } else {
+                            [cell setLocationString:nil];
+                        }
+                    }
+                    return nil;
+                }];
             } else {
-                [cell setTitleLabelText:[item localizedDate]?:@""];
-                CLLocation *location = [selfie locationSampleForSection:indexPath.section];
-                if (location) {
-                    [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
-                        CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
-                        NSString *placemark = firstPlacemark.name;
-                        if (cell.tag == currentTag) [cell setLocationString:placemark];
-                        
-                        return nil;
-                    }];
-                } else {
-                    [cell setLocationString:nil];
-                }
+                [cell setLocationString:nil];
             }
         }
     };
@@ -317,9 +316,7 @@
     return [GroupedPhotosDataSource class];
 }
 
-- (void)restoreContentInset {
-    PBX_LOG(@"");
-    
+- (void)restoreContentInset {    
     if (self.headerImageView) {
         CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
         self.collectionView.contentInset = ({
@@ -561,7 +558,6 @@
         NSNumber *longitude = [photo valueForKey:@"longitude"];
         if (latitude && ![latitude isKindOfClass:[NSNull class]] && longitude && ![longitude isKindOfClass:[NSNull class]]) {
             location = [[CLLocation alloc] initWithLatitude:[latitude doubleValue] longitude:[longitude doubleValue]];
-            
             *stop = YES;
         }
     }];
