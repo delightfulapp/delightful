@@ -43,6 +43,15 @@ NSString *const PhotosLastSyncDateKey = @"photos_last_sync";
 NSString *const PhotosCacheExpirationKey = @"photos_cache_expiration_interval";
 NSString *const SyncSettingCollectionName = @"sync_setting_collection_name";
 
+typedef NS_ENUM(NSInteger, SyncOperationType) {
+    SyncOperationTypeNone,
+    SyncOperationTypeAllPhotos,
+    SyncOperationTypeTagPhotos,
+    SyncOperationTypeAlbumPhotos,
+    SyncOperationTypeAlbums,
+    SyncOperationTypeTags
+};
+
 static NSString *const kLockName = @"com.getdelightfulapp.SyncingLock";
 
 static void * kUserLoggedInContext = &kUserLoggedInContext;
@@ -85,6 +94,9 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 @property (nonatomic, strong) NSString *allPhotosSyncOperationSort;
 @property (nonatomic, strong) NSString *photosInAlbumSyncOperationSort;
 @property (nonatomic, strong) NSString *photosInTagSyncOperationSort;
+@property (nonatomic, strong) NSString *photosInAlbumSyncOperationCollection;
+@property (nonatomic, strong) NSString *photosInTagSyncOperationCollection;
+@property (nonatomic, assign) SyncOperationType syncOperationType;
 
 @end
 
@@ -123,6 +135,8 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         self.readConnection.metadataCacheEnabled = NO;
         
         [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:kUserLoggedInContext];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didEnterBackground:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     }
     return self;
 }
@@ -276,6 +290,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     
     self.photosInTagSyncOperationPage = page;
     self.photosInTagSyncOperationSort = sort;
+    self.photosInTagSyncOperationCollection = tag;
     
     return [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         CLS_LOG(@"Did finish fetching %d photos page %d in tag %@", (int)photos.count, page, tag);
@@ -294,6 +309,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     
     self.photosInAlbumSyncOperationPage = page;
     self.photosInAlbumSyncOperationSort = sort;
+    self.photosInAlbumSyncOperationCollection = album;
     
     return [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         NSLog(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);
@@ -436,6 +452,60 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         self.photosInTagSyncOperationPage = 0;
         self.albumsSyncOperationPage = 1;
     }
+}
+
+#pragma mark - Notifications
+
+- (void)willEnterForeground:(NSNotification *)notification {
+    NSLog(@"will enter foreground");
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    switch (self.syncOperationType) {
+        case SyncOperationTypeAllPhotos:
+            [self pauseSyncingPhotos:NO collection:nil collectionType:nil];
+            break;
+        case SyncOperationTypeTagPhotos:
+            [self pauseSyncingPhotos:NO collection:self.photosInTagSyncOperationCollection collectionType:Tag.class];
+            break;
+        case SyncOperationTypeAlbumPhotos:
+            [self pauseSyncingPhotos:NO collection:self.photosInAlbumSyncOperationCollection collectionType:Album.class];
+            break;
+        case SyncOperationTypeTags:
+            [self pauseSyncingTags:NO];
+            break;
+        case SyncOperationTypeAlbums:
+            [self pauseSyncingAlbums:NO];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)didEnterBackground:(NSNotification *)notification {
+    NSLog(@"enter background");
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    if ([self.allPhotosSyncingOperation isExecuting]) {
+        self.syncOperationType = SyncOperationTypeAllPhotos;
+    } else if ([self.photosInTagSyncingOperation isExecuting]) {
+        self.syncOperationType = SyncOperationTypeTagPhotos;
+    } else if ([self.photosInAlbumSyncingOperation isExecuting]) {
+        self.syncOperationType = SyncOperationTypeAlbumPhotos;
+    } else if ([self.albumsSyncingOperation isExecuting]) {
+        self.syncOperationType = SyncOperationTypeAlbums;
+    } else if ([self.tagsSyncingOperation isExecuting]) {
+        self.syncOperationType = SyncOperationTypeTags;
+    } else {
+        self.syncOperationType  =SyncOperationTypeNone;
+    }
+    
+    [self pauseSyncingPhotos:YES collection:nil collectionType:nil];
+    [self pauseSyncingPhotos:YES collection:nil collectionType:Album.class];
+    [self pauseSyncingPhotos:YES collection:nil collectionType:Tag.class];
+    [self pauseSyncingTags:YES];
+    [self pauseSyncingAlbums:YES];
+    
 }
 
 @end
