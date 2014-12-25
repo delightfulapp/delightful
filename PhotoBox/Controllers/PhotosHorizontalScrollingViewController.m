@@ -215,7 +215,12 @@
             [dateLabel setBackgroundColor:[UIColor clearColor]];
             [dateLabel setTextAlignment:NSTextAlignmentCenter];
             [dateLabel setText:dateString];
-            [dateLabel setFont:[UIFont systemFontOfSize:10]];
+            if (placeName && placeName.length > 0) {
+                [dateLabel setFont:[UIFont systemFontOfSize:10]];
+            } else {
+                [dateLabel setFont:[UIFont boldSystemFontOfSize:14]];
+            }
+            
             [dateLabel sizeToFit];
             
             UIView *containerView = [[UIView alloc] init];
