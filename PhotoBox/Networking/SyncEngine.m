@@ -212,7 +212,9 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
                 } completionBlock:^{
                     //CLS_LOG(@"Done inserting tags to db");
                     
-                    [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
+                    });
                 }];
             });
         }
@@ -224,7 +226,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 }
 
 - (NSOperation *)fetchAlbumsForPage:(int)page {
-    //CLS_LOG(@"Fetching albums page %d", page);
+    CLS_LOG(@"Fetching albums page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
     });
@@ -232,9 +234,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.albumsSyncOperationPage = page;
     
     return [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
-        //CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
+        CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
         
         if (albums.count > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -256,11 +256,15 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
                 }];
             });
         } else {
-            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
+            });
         }
     } failure:^(NSError *error) {
         //CLS_LOG(@"Error fetching albums page %d: %@", page, error);
-        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
+        dispatch_async(dispatch_get_main_queue(), ^{
+           [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
+        });
     }];
 }
 

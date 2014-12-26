@@ -21,7 +21,7 @@
 #import "NSArray+Additionals.h"
 #import "StickyHeaderFlowLayout.h"
 #import "NSAttributedString+DelighftulFonts.h"
-
+#import "LoadingNavigationItemTitleView.h"
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
 
@@ -525,6 +525,18 @@ NSString *const galleryContainerType = @"gallery";
     _isFetching = isFetching;
     if (!isFetching) {
         [self.collectionView reloadData];
+        self.navigationItem.titleView = nil;
+    } else {
+        LoadingNavigationItemTitleView *loadingItemTitleView = (LoadingNavigationItemTitleView *)self.navigationItem.titleView;
+        if (!loadingItemTitleView || ![loadingItemTitleView isKindOfClass:[LoadingNavigationItemTitleView class]]) {
+            loadingItemTitleView = [[LoadingNavigationItemTitleView alloc] initWithFrame:CGRectMake(0, 0, CGFLOAT_MAX, CGFLOAT_MAX)];
+            [loadingItemTitleView.titleLabel setText:self.title];
+            [loadingItemTitleView.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+            CGSize size = [loadingItemTitleView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+            loadingItemTitleView.frame = (CGRect){CGPointZero, size};
+            [self.navigationItem setTitleView:loadingItemTitleView];
+        }
+        if (!loadingItemTitleView.indicatorView.isAnimating)[loadingItemTitleView.indicatorView startAnimating];
     }
 }
 
@@ -545,7 +557,7 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isKindOfClass:[NSNull class]]) {
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && !item) {
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
             [self setIsFetching:NO];
@@ -557,7 +569,7 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isKindOfClass:[NSNull class]]) {
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && !item) {
         [self setIsFetching:NO];
     }
 }
