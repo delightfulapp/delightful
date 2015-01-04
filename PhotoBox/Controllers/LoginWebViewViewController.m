@@ -7,7 +7,7 @@
 //
 
 #import "LoginWebViewViewController.h"
-
+#import "ConnectionManager.h"
 #import <OnePasswordExtension.h>
 
 @interface LoginWebViewViewController () <UIWebViewDelegate>
@@ -39,6 +39,8 @@
     
     [self.activityView startAnimating];
     [self.webView loadRequest:[NSURLRequest requestWithURL:self.initialURL]];
+    
+    [self addOnePasswordButton:NO];
 }
 
 - (void)didReceiveMemoryWarning
@@ -79,9 +81,31 @@
     
     BOOL onePasswordAvailable = [[OnePasswordExtension sharedExtension] isAppExtensionAvailable];
     if (onePasswordAvailable) {
-        UIBarButtonItem *onePasswordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"onepassword-navbar"] style:UIBarButtonItemStylePlain target:self action:@selector(fillUsing1Password:)];
-        [self.navigationItem setRightBarButtonItem:onePasswordButton];
+        [self addOnePasswordButton:YES];
     }
+}
+
+- (void)addOnePasswordButton:(BOOL)add {
+    UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Skip", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didTapSkipButton:)];
+    if (add) {
+        [self.navigationItem setRightBarButtonItem:skipButton];
+    } else {
+        UIBarButtonItem *onePasswordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"onepassword-navbar"] style:UIBarButtonItemStylePlain target:self action:@selector(fillUsing1Password:)];
+        [self.navigationItem setRightBarButtonItems:@[onePasswordButton, skipButton]];
+    }
+}
+
+- (void)didTapSkipButton:(id)sender {
+    NSString *message = [NSString stringWithFormat:NSLocalizedString(@"By skipping login, you will not see private photos and you will not be able to upload to %@", nil), self.initialURL.host];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Guest Login", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *continueAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", self.initialURL.host]];
+        [[ConnectionManager sharedManager] connectAsGuest:url];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:cancelAction];
+    [alert addAction:continueAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 #pragma mark - OnePassword

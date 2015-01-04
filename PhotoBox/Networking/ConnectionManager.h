@@ -21,6 +21,7 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 @property (nonatomic, strong) AFOAuth1Token *oauthToken;
 @property (nonatomic, assign, getter = isUserLoggedIn) BOOL userLoggedIn;
 @property (nonatomic, assign) BOOL isShowingLoginPage;
+@property (nonatomic, assign) BOOL isGuestUser;
 
 - (void)setBaseURL:(NSURL *)baseURL
        consumerKey:(NSString *)consumerKey
@@ -37,7 +38,7 @@ extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 - (void)logoutWithShowingLoginScreen:(BOOL)show;
 - (BOOL)isUserLoggingIn;
 
-- (void)connectAsTester;
+- (void)connectAsGuest:(NSURL *)url;
 
 + (NSURL *)oAuthInitialUrlForServer:(NSString *)server;
 + (NSURL *)oAuthAccessUrlForServer:(NSString *)server;

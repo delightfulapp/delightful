@@ -203,7 +203,10 @@
         if (!error) {
             successBlock(responseObject);
         } else {
-            if ([self.baseURL.host isEqualToString:@"current.trovebox.com"]) {
+            if (operation.response.statusCode == 401) {
+                [[ConnectionManager sharedManager] setIsGuestUser:YES];
+            }
+            if ([[ConnectionManager sharedManager] isGuestUser]) {
                 NSDictionary *userInfo = error.userInfo;
                 if (userInfo) {
                     NSString *responseString = userInfo[NSLocalizedRecoverySuggestionErrorKey];

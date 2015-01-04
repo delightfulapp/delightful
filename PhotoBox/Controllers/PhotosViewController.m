@@ -157,7 +157,7 @@
 }
 
 - (void)didTapUploadButton:(id)sender {
-    if ([[[ConnectionManager sharedManager] baseURL].host isEqualToString:@"current.trovebox.com"]) {
+    if ([[ConnectionManager sharedManager] isGuestUser]) {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Demo account", nil) message:NSLocalizedString(@"You are viewing demo server at current.trovebox.com. Please login to your own account to upload.", nil) preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *loginAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Login", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
