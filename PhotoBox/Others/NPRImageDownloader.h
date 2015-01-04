@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Bolts.h>
 
 extern NSString *const NPRImageDownloadDidStartNotification;
 extern NSString *const NPRImageDownloadDidFinishNotification;
@@ -45,17 +46,12 @@ extern NSString *const NPRImageDownloadDidFinishNotification;
 @property (nonatomic, copy) id(^downloadViewControllerInitBlock)();
 
 + (instancetype)sharedDownloader;
-
 - (void)showDownloads;
-
 - (BOOL)queueImageURL:(NSURL *)URL thumbnail:(UIImage *)image;
-
 - (BOOL)queuePhoto:(Photo *)photo thumbnail:(UIImage *)image;
-
 - (NSInteger)numberOfDownloads;
-
 - (id)downloadOperationAtIndex:(NSInteger)index;
-
 - (BOOL)isDownloadingImageAtURL:(NSURL *)URL;
+- (BFTask *)downloadOriginalPhoto:(Photo *)photo;
 
 @end

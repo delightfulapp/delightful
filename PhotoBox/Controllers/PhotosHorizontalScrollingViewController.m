@@ -24,8 +24,8 @@
 #import "TransitionToInfoPresentationController.h"
 #import "LocationManager.h"
 #import "NPRNotificationManager.h"
-
 #import <SVProgressHUD.h>
+#import <MBProgressHUD.h>
 #import <UIView+AutoLayout.h>
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, TransitionToInfoPresentationControllerPresentingDelegate> {
@@ -453,11 +453,49 @@
 - (void)actionButtonTapped:(id)sender {
     PBX_LOG(@"Sharing tapped");
     [self showLoadingBarButtonItem:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = NSLocalizedString(@"Downloading original ...", nil);
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
     Photo *photo = cell.item;
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
-    [[PhotoSharingManager sharedManager] sharePhoto:photo image:cell.thisImageview.image fromViewController:self tokenFetchedBlock:^(id token) {
-        [weakSelf showLoadingBarButtonItem:NO];
+    [[[NPRImageDownloader sharedDownloader] downloadOriginalPhoto:photo] continueWithBlock:^id(BFTask *task) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf showLoadingBarButtonItem:NO];
+            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+        });
+        
+        if (task.error) {
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:task.error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *doneAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil) style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:doneAction];
+            [weakSelf presentViewController:alert animated:YES completion:nil];
+        } else {
+            UIImage *image = task.result;
+            if (image) {
+                UIActivityViewController *activity = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
+                [weakSelf presentViewController:activity animated:YES completion:nil];
+            } else {
+                UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Downloaded image is corrupted. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *doneAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Dismiss", nil) style:UIAlertActionStyleCancel handler:nil];
+                [alert addAction:doneAction];
+                [weakSelf presentViewController:alert animated:YES completion:nil];
+            }
+        }
+        return nil;
+    }];
+}
+
+- (void)linkButtonTapped:(id)sender {
+    PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
+    Photo *photo = cell.item;
+    __weak PhotosHorizontalScrollingViewController *weakSelf = self;
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = NSLocalizedString(@"Fetching link ...", nil);
+    [[PhotoSharingManager sharedManager] shareLinkPhoto:photo image:cell.thisImageview.image fromViewController:self tokenFetchedBlock:^(id token) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
+            [weakSelf showLoadingBarButtonItem:NO];
+        });
         if (token) {
             [[NPRNotificationManager sharedManager] hideNotification];
         } else {
@@ -485,10 +523,13 @@
     } else {
         shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
     }
+    
+    UIBarButtonItem *linkButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"link.png"] style:UIBarButtonItemStylePlain target:self action:@selector(linkButtonTapped:)];
+    
     if (!self.hideDownloadButton) {
-        [self setToolbarItems:@[shareButton, space, rightButton, space, favoriteButton, space, infoButton]];
+        [self setToolbarItems:@[shareButton, space, linkButton, space, rightButton, space, favoriteButton, space, infoButton]];
     }
-    else [self setToolbarItems:@[shareButton, space, favoriteButton, space, infoButton]];
+    else [self setToolbarItems:@[shareButton, space, linkButton, space, favoriteButton, space, infoButton]];
 }
 
 #pragma mark - Custom Animation Transition Delegate

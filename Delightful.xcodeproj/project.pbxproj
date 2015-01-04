@@ -25,6 +25,10 @@
 		0312721D1A18FE0900FFC898 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312721C1A18FE0900FFC898 /* FavoritesViewController.m */; };
 		0312721E1A18FE0900FFC898 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0312721C1A18FE0900FFC898 /* FavoritesViewController.m */; };
 		0318FC0D1808087E00C32BC1 /* UIColor+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */; };
+		031B39331A5925CE00117BFC /* link.png in Resources */ = {isa = PBXBuildFile; fileRef = 031B39311A5925CE00117BFC /* link.png */; };
+		031B39341A5925CE00117BFC /* link.png in Resources */ = {isa = PBXBuildFile; fileRef = 031B39311A5925CE00117BFC /* link.png */; };
+		031B39351A5925CE00117BFC /* link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031B39321A5925CE00117BFC /* link@2x.png */; };
+		031B39361A5925CE00117BFC /* link@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 031B39321A5925CE00117BFC /* link@2x.png */; };
 		031DD2A117D99B1300A80167 /* PhotoBoxImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A017D99B1300A80167 /* PhotoBoxImage.m */; };
 		031DD2A317D9A08000A80167 /* PhotoModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 031DD2A217D9A08000A80167 /* PhotoModelTests.m */; };
 		031DD2AA17D9BB8300A80167 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 031DD2A417D9BB8300A80167 /* camera.png */; };
@@ -432,6 +436,8 @@
 		0312721C1A18FE0900FFC898 /* FavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesViewController.m; path = PhotoBox/Controllers/FavoritesViewController.m; sourceTree = "<group>"; };
 		0318FC0B1808087E00C32BC1 /* UIColor+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Additionals.h"; sourceTree = "<group>"; };
 		0318FC0C1808087E00C32BC1 /* UIColor+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Additionals.m"; sourceTree = "<group>"; };
+		031B39311A5925CE00117BFC /* link.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = link.png; sourceTree = "<group>"; };
+		031B39321A5925CE00117BFC /* link@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "link@2x.png"; sourceTree = "<group>"; };
 		031DD29F17D99B1300A80167 /* PhotoBoxImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoBoxImage.h; path = PhotoBox/Models/PhotoBoxImage.h; sourceTree = "<group>"; };
 		031DD2A017D99B1300A80167 /* PhotoBoxImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoBoxImage.m; path = PhotoBox/Models/PhotoBoxImage.m; sourceTree = "<group>"; };
 		031DD2A217D9A08000A80167 /* PhotoModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoModelTests.m; sourceTree = "<group>"; };
@@ -1249,39 +1255,41 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				031B39311A5925CE00117BFC /* link.png */,
+				031B39321A5925CE00117BFC /* link@2x.png */,
 				0342D9791A0D1D4E000158B8 /* 1Password.xcassets */,
-				035DACD91980D99B00557547 /* uploadedmark.png */,
-				035DACDA1980D99B00557547 /* uploadedmark@2x.png */,
-				0327CC7D194723B70086C4B8 /* uploaded.png */,
-				0327CC7E194723B70086C4B8 /* uploaded@2x.png */,
-				03FD48351920B27300D4ADF7 /* star-fill.png */,
-				03FD48361920B27300D4ADF7 /* star-fill@2x.png */,
-				03FD48331920ABE000D4ADF7 /* star.png */,
-				03FD48311920AB8B00D4ADF7 /* star@2x.png */,
+				031DD2A417D9BB8300A80167 /* camera.png */,
+				03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */,
+				031DD2A617D9BB8300A80167 /* download.png */,
+				0398D7C518103B6E00FDD83B /* download@2x.png */,
+				031DD2A817D9BB8300A80167 /* info.png */,
 				036DF364181AA60B002E9FCB /* info@2x.png */,
 				03CE50DE1818136E00445084 /* introbg.jpg */,
 				03CE50DF1818136E00445084 /* introbg@2x.jpg */,
-				032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */,
+				03AE182817D8B2F5009CD844 /* loginbackground.jpg */,
 				032222BA1814F2E4004F3830 /* npr_notification_image_close.png */,
+				032222B91814F2E4004F3830 /* npr_notification_image_close@2x.png */,
+				032222B11814CBF0004F3830 /* npr_notification_image_error.png */,
+				032222B21814CBF0004F3830 /* npr_notification_image_error@2x.png */,
 				032222AD1814CBF0004F3830 /* npr_notification_image_success.png */,
 				032222AE1814CBF0004F3830 /* npr_notification_image_success@2x.png */,
 				032222AF1814CBF0004F3830 /* npr_notification_image_warning.png */,
 				032222B01814CBF0004F3830 /* npr_notification_image_warning@2x.png */,
-				032222B11814CBF0004F3830 /* npr_notification_image_error.png */,
-				032222B21814CBF0004F3830 /* npr_notification_image_error@2x.png */,
-				0398D7C718103CD000FDD83B /* right.png */,
-				0398D7C818103CD000FDD83B /* right@2x.png */,
-				0398D7C518103B6E00FDD83B /* download@2x.png */,
-				031DD2B017D9BD6B00A80167 /* user@2x.png */,
-				031DD2A417D9BB8300A80167 /* camera.png */,
-				03B5CCC7193C7AE500E0BAD0 /* camera@2x.png */,
-				031DD2A617D9BB8300A80167 /* download.png */,
-				031DD2A717D9BB8300A80167 /* user.png */,
-				031DD2A817D9BB8300A80167 /* info.png */,
-				031DD2A917D9BB8300A80167 /* setting.png */,
 				0396BDD41921AB76004B6290 /* refresh.png */,
 				0396BDD61921ABAE004B6290 /* refresh@2x.png */,
-				03AE182817D8B2F5009CD844 /* loginbackground.jpg */,
+				0398D7C718103CD000FDD83B /* right.png */,
+				0398D7C818103CD000FDD83B /* right@2x.png */,
+				031DD2A917D9BB8300A80167 /* setting.png */,
+				03FD48351920B27300D4ADF7 /* star-fill.png */,
+				03FD48361920B27300D4ADF7 /* star-fill@2x.png */,
+				03FD48331920ABE000D4ADF7 /* star.png */,
+				03FD48311920AB8B00D4ADF7 /* star@2x.png */,
+				0327CC7D194723B70086C4B8 /* uploaded.png */,
+				0327CC7E194723B70086C4B8 /* uploaded@2x.png */,
+				035DACD91980D99B00557547 /* uploadedmark.png */,
+				035DACDA1980D99B00557547 /* uploadedmark@2x.png */,
+				031DD2A717D9BB8300A80167 /* user.png */,
+				031DD2B017D9BD6B00A80167 /* user@2x.png */,
 			);
 			name = Images;
 			path = PhotoBox/Images;
@@ -1472,6 +1480,7 @@
 				035DACDE1980D99B00557547 /* uploadedmark@2x.png in Resources */,
 				03551B161A31558F0050126E /* intro.jpg in Resources */,
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
+				031B39351A5925CE00117BFC /* link@2x.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
@@ -1486,6 +1495,7 @@
 				03FD48341920ABE000D4ADF7 /* star.png in Resources */,
 				032222B71814CBF0004F3830 /* npr_notification_image_error.png in Resources */,
 				031DD2AF17D9BB8300A80167 /* setting.png in Resources */,
+				031B39331A5925CE00117BFC /* link.png in Resources */,
 				03FD48321920AB8B00D4ADF7 /* star@2x.png in Resources */,
 				0396BDD51921AB76004B6290 /* refresh.png in Resources */,
 				031DD2AA17D9BB8300A80167 /* camera.png in Resources */,
@@ -1531,6 +1541,7 @@
 				03EFD93819251CD700E80A71 /* info.png in Resources */,
 				03EFD93919251CD700E80A71 /* user.png in Resources */,
 				03EFD93A19251CD700E80A71 /* download@2x.png in Resources */,
+				031B39341A5925CE00117BFC /* link.png in Resources */,
 				03EFD93B19251CD700E80A71 /* npr_notification_image_success@2x.png in Resources */,
 				03551B171A31558F0050126E /* intro.jpg in Resources */,
 				03EFD93C19251CD700E80A71 /* InfoPlist.strings in Resources */,
@@ -1560,6 +1571,7 @@
 				03EFD95519251CD700E80A71 /* refresh.png in Resources */,
 				03EFD95619251CD700E80A71 /* camera.png in Resources */,
 				03EFD95719251CD700E80A71 /* user@2x.png in Resources */,
+				031B39361A5925CE00117BFC /* link@2x.png in Resources */,
 				03EFD95819251CD700E80A71 /* introbg.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

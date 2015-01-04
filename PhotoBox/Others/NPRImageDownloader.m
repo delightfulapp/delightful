@@ -147,6 +147,20 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     }
 }
 
+- (BFTask *)downloadOriginalPhoto:(Photo *)photo {
+    BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
+    NSURLSessionDataTask *dataTask = [[NSURLSession sharedSession] dataTaskWithURL:photo.pathOriginal completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            [taskCompletionSource setError:error];
+        } else {
+            UIImage *image = [UIImage imageWithData:data];
+            [taskCompletionSource setResult:image];
+        }
+    }];
+    [dataTask resume];
+    return taskCompletionSource.task;
+}
+
 @end
 
 @implementation NPRImageDownloaderOperation

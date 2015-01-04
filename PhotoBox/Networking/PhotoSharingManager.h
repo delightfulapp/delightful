@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "Photo.h"
+#import <Bolts.h>
 
 @interface PhotoSharingManager : NSObject
 
 + (instancetype)sharedManager;
 
-- (void)sharePhoto:(Photo *)photo image:(UIImage *)image fromViewController:(UIViewController *)fromViewController tokenFetchedBlock:(void(^)(id))tokenFetchedBlock completion:(void(^)())completion;
+- (void)shareLinkPhoto:(Photo *)photo image:(UIImage *)image fromViewController:(UIViewController *)fromViewController tokenFetchedBlock:(void(^)(id))tokenFetchedBlock completion:(void(^)())completion;
 
 @end

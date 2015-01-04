@@ -26,7 +26,7 @@
     return _sharedManager;
 }
 
-- (void)sharePhoto:(Photo *)photo image:(UIImage *)image fromViewController:(UIViewController *)fromViewController tokenFetchedBlock:(void (^)(id token))tokenFetchedBlock completion:(void (^)())completion {
+- (void)shareLinkPhoto:(Photo *)photo image:(UIImage *)image fromViewController:(UIViewController *)fromViewController tokenFetchedBlock:(void (^)(id token))tokenFetchedBlock completion:(void (^)())completion {
     [[PhotoBoxClient sharedClient] fetchSharingTokenForPhotoWithId:photo.photoId completionBlock:^(NSString *token) {
         if (tokenFetchedBlock) {
             tokenFetchedBlock(token);
