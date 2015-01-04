@@ -120,6 +120,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         for (UINavigationController *navCon in self.viewControllers) {
             [navCon popToRootViewControllerAnimated:NO];
         }
+        [self setSelectedViewController:[self.viewControllers firstObject]];
     }
 }
 
