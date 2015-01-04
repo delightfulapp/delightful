@@ -62,6 +62,7 @@ NSString *const normalCellIdentifier = @"normalCell";
     self.privatePhotos = YES;
     
     if ([[DelightfulCache sharedCache] objectForKey:LAST_SELECTED_ALBUM]) self.selectedAlbum = [NSKeyedUnarchiver unarchiveObjectWithData:[[DelightfulCache sharedCache] objectForKey:LAST_SELECTED_ALBUM]];
+    self.resizeAfterUploads = [[NSUserDefaults standardUserDefaults] boolForKey:DLF_RESIZE_AFTER_UPLOAD_USER_DEFAULT_KEY];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
@@ -435,6 +436,8 @@ NSString *const normalCellIdentifier = @"normalCell";
 
 - (void)resizeAfterUploadSwitchDidChange:(UISwitch *)sender {
     self.resizeAfterUploads = sender.isOn;
+    [[NSUserDefaults standardUserDefaults] setBool:self.resizeAfterUploads forKey:DLF_RESIZE_AFTER_UPLOAD_USER_DEFAULT_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void)doneButtonTapped:(id)sender {

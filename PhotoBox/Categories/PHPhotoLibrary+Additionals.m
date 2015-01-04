@@ -108,7 +108,7 @@
     return taskCompletionSource.task;
 }
 
--(PHAssetCollection*)albumWithTitle:(NSString*)title{
+- (PHAssetCollection*)albumWithTitle:(NSString*)title{
     // Check if album exists. If not, create it.
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"localizedTitle = %@", title];
     PHFetchOptions *options = [[PHFetchOptions alloc]init];
