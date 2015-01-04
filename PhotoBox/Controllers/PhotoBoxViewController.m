@@ -533,10 +533,13 @@ NSString *const galleryContainerType = @"gallery";
             [loadingItemTitleView.titleLabel setText:self.title];
             [loadingItemTitleView.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
             CGSize size = [loadingItemTitleView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-            loadingItemTitleView.frame = (CGRect){CGPointZero, size};
+            loadingItemTitleView.frame = (CGRect){loadingItemTitleView.frame.origin, size};
+            loadingItemTitleView.center = CGPointMake(self.navigationController.navigationBar.frame.size.width/2, self.navigationController.navigationBar.frame.size.height/2);
             [self.navigationItem setTitleView:loadingItemTitleView];
         }
-        if (!loadingItemTitleView.indicatorView.isAnimating)[loadingItemTitleView.indicatorView startAnimating];
+        if (!loadingItemTitleView.indicatorView.isAnimating) {
+            [loadingItemTitleView.indicatorView startAnimating];
+        }
     }
 }
 

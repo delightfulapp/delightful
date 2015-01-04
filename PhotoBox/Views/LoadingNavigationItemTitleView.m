@@ -33,8 +33,12 @@
         self.indicatorView = indicator;
         
         [self.titleLabel autoCenterInSuperview];
+        [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
+        [self.titleLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self];
+        [self.titleLabel autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self];
         [self.indicatorView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.titleLabel];
         [self.indicatorView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.titleLabel withOffset:8];
+        [self.indicatorView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self];
     }
     return self;
 }
