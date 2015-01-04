@@ -205,6 +205,9 @@
         } else {
             if (operation.response.statusCode == 401) {
                 [[ConnectionManager sharedManager] setIsGuestUser:YES];
+            } else {
+                failureBlock(error);
+                return;
             }
             if ([[ConnectionManager sharedManager] isGuestUser]) {
                 NSDictionary *userInfo = error.userInfo;
@@ -231,12 +234,6 @@
                         }
                     }
                 }
-            }
-            
-            if (operation.response.statusCode == 401) {
-               // [[ConnectionManager sharedManager] logout];
-            } else {
-                failureBlock(error);
             }
 
         }
