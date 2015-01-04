@@ -551,6 +551,9 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([item isKindOfClass:[NSNull class]]) {
+        item = nil;
+    }
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && !item) {
         [self setIsFetching:YES];
     }
@@ -560,6 +563,9 @@ NSString *const galleryContainerType = @"gallery";
     NSDictionary *userInfo = notification.userInfo;
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([item isKindOfClass:[NSNull class]]) {
+        item = nil;
+    }
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && !item) {
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {

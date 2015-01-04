@@ -146,14 +146,4 @@
     return CGSizeZero;
 }
 
-#pragma mark - Syncing Notification
-
-- (void)didFinishSyncingNotification:(NSNotification *)notification {
-    NSDictionary *userInfo = notification.userInfo;
-    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
-    if ([resource isEqualToString:NSStringFromClass([self resourceClass])]) {
-        [self.navigationItem setLeftBarButtonItem:nil];
-    }
-}
-
 @end

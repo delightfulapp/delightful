@@ -210,14 +210,12 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
                         [transaction setObject:tag forKey:tag.tagId inCollection:tagsCollectionName];
                     }
                 } completionBlock:^{
-                    //CLS_LOG(@"Done inserting tags to db");
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(tags.count)}];
-                    });
                 }];
             });
         }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(0)}];
+        });
         
     } failure:^(NSError *error) {
         //CLS_LOG(@"Error fetching tags page %d: %@", page, error);
