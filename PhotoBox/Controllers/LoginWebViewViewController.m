@@ -87,8 +87,8 @@
 
 - (void)addOnePasswordButton:(BOOL)add {
     UIBarButtonItem *skipButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Skip", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didTapSkipButton:)];
-    if (add) {
-        [self.navigationItem setRightBarButtonItem:skipButton];
+    if (!add) {
+        [self.navigationItem setRightBarButtonItems:@[skipButton]];
     } else {
         UIBarButtonItem *onePasswordButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"onepassword-navbar"] style:UIBarButtonItemStylePlain target:self action:@selector(fillUsing1Password:)];
         [self.navigationItem setRightBarButtonItems:@[onePasswordButton, skipButton]];
