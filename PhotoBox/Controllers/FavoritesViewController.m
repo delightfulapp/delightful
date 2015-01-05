@@ -10,7 +10,7 @@
 #import "GroupedPhotosDataSource.h"
 #import "FavoritesManager.h"
 #import "DLFYapDatabaseViewAndMapping.h"
-
+#import "DLFDatabaseManager.h"
 #import <UIView+AutoLayout.h>
 
 @interface FavoritesDataSource : GroupedPhotosDataSource
@@ -28,6 +28,35 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    __block NSMutableArray *localFavoritesFromPreviousVersion = [NSMutableArray array];
+    [[[DLFDatabaseManager manager] readConnection] asyncReadWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        [transaction enumerateKeysInCollection:favoritedPhotosCollectionName usingBlock:^(NSString *key, BOOL *stop) {
+            [localFavoritesFromPreviousVersion addObject:key];
+        }];
+    } completionBlock:^{
+        BFTask *task = [BFTask taskWithResult:nil];
+        for (NSString *photoId in localFavoritesFromPreviousVersion) {
+            task = [task continueWithBlock:^id(BFTask *t) {
+                return [[[FavoritesManager sharedManager] addPhotoWithId:photoId] continueWithBlock:^id(BFTask *t2) {
+                    Photo *object = t2.result;
+                    BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
+                    [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                        [transaction removeObjectForKey:photoId inCollection:favoritedPhotosCollectionName];
+                    } completionBlock:^{
+                        NSLog(@"done removing favorites from db");
+                        [taskCompletionSource setResult:object];
+                    }];
+                    return taskCompletionSource.task;
+                }];
+            }];
+        }
+        
+        [task continueWithBlock:^id(BFTask *task) {
+            NSLog(@"done migrating local favorites");
+            return nil;
+        }];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

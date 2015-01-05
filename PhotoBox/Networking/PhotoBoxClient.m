@@ -90,7 +90,11 @@
 #pragma mark - Favorite
 
 - (NSOperation *)addFavoritePhoto:(Photo *)photo success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    NSString *path = [NSString stringWithFormat:@"photo/%@/update.json", photo.photoId];
+    return [self addFavoritePhotoWithId:photo.photoId success:successBlock failure:failureBlock];
+}
+
+- (NSOperation *)addFavoritePhotoWithId:(NSString *)photoId success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    NSString *path = [NSString stringWithFormat:@"photo/%@/update.json", photoId];
     return [self POST:path parameters:@{@"tagsAdd": favoritesTagName} resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (error) {
             if (failureBlock) {
@@ -105,7 +109,11 @@
 }
 
 - (NSOperation *)removeFavoritePhoto:(Photo *)photo success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
-    NSString *path = [NSString stringWithFormat:@"photo/%@/update.json", photo.photoId];
+    return [self removeFavoritePhotoWithId:photo.photoId success:successBlock failure:failureBlock];
+}
+
+- (NSOperation *)removeFavoritePhotoWithId:(NSString *)photo success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    NSString *path = [NSString stringWithFormat:@"photo/%@/update.json", photo];
     return [self POST:path parameters:@{@"tagsRemove": favoritesTagName} resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
         if (error) {
             if (failureBlock) {

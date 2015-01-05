@@ -70,9 +70,15 @@ typedef NS_ENUM(NSInteger, ActionType) {
 - (NSOperation *)addFavoritePhoto:(Photo *)photo
                              success:(void(^)(id object))successBlock
                              failure:(void(^)(NSError*))failureBlock;
+- (NSOperation *)addFavoritePhotoWithId:(NSString *)photoId
+                          success:(void(^)(id object))successBlock
+                          failure:(void(^)(NSError*))failureBlock;
 - (NSOperation *)removeFavoritePhoto:(Photo *)photo
                           success:(void(^)(id object))successBlock
                           failure:(void(^)(NSError*))failureBlock;
+- (NSOperation *)removeFavoritePhotoWithId:(NSString *)photo
+                             success:(void(^)(id object))successBlock
+                             failure:(void(^)(NSError*))failureBlock;
 
 #pragma mark - Sharing
 

@@ -58,10 +58,36 @@ NSString *const favoritesTagName = @"Favorites";
     return taskCompletionSource.task;
 }
 
+- (BFTask *)addPhotoWithId:(NSString *)photo {
+    __weak typeof (self) selfie = self;
+    BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
+    [[PhotoBoxClient sharedClient] addFavoritePhotoWithId:photo success:^(Photo *object) {
+        [selfie savePhoto:object withCompletionBlock:^{
+            [taskCompletionSource setResult:object];
+        }];
+    } failure:^(NSError *error) {
+        [taskCompletionSource setError:error];
+    }];
+    return taskCompletionSource.task;
+}
+
 - (BFTask *)removePhoto:(Photo *)photo {
     __weak typeof (self) selfie = self;
     BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
     [[PhotoBoxClient sharedClient] removeFavoritePhoto:photo success:^(id object) {
+        [selfie savePhoto:object withCompletionBlock:^{
+            [taskCompletionSource setResult:object];
+        }];
+    } failure:^(NSError *error) {
+        [taskCompletionSource setError:error];
+    }];
+    return taskCompletionSource.task;
+}
+
+- (BFTask *)removePhotoWithId:(NSString *)photo {
+    __weak typeof (self) selfie = self;
+    BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
+    [[PhotoBoxClient sharedClient] removeFavoritePhotoWithId:photo success:^(id object) {
         [selfie savePhoto:object withCompletionBlock:^{
             [taskCompletionSource setResult:object];
         }];
