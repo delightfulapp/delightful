@@ -69,8 +69,6 @@
     
     [self.collectionView reloadData];
     
-    [self showLoadingBarButtonItem:NO];
-        
     UITapGestureRecognizer *tapOnce = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOnce:)];
     [tapOnce setDelegate:self];
     [tapOnce setNumberOfTapsRequired:1];
@@ -79,8 +77,6 @@
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
-    
-    [self.navigationController setToolbarHidden:NO animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -93,12 +89,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    
     [self performSelector:@selector(scrollViewDidEndDecelerating:) withObject:self.collectionView afterDelay:0.5];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self showLoadingBarButtonItem:NO];
-    });
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -136,6 +127,8 @@
     self.previousPage = indexPath.item;
     [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
     [self setTitleForItem:self.firstShownPhoto atPage:(int)self.previousPage];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    [self showLoadingBarButtonItem:NO currentPhoto:self.firstShownPhoto];
 }
 
 - (void)didReceiveMemoryWarning
@@ -147,7 +140,7 @@
 - (void)setHideDownloadButton:(BOOL)hideDownloadButton{
     _hideDownloadButton = hideDownloadButton;
     
-    [self showLoadingBarButtonItem:NO];
+    [self showLoadingBarButtonItem:NO currentPhoto:[self currentPhoto]];
 }
 
 - (void)setTitleForItem:(Photo *)item atPage:(int)page {
@@ -336,7 +329,7 @@
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(photosHorizontalScrollingViewController:didChangePage:item:)]) {
             [self.delegate photosHorizontalScrollingViewController:self didChangePage:page item:photo];
-            [self showLoadingBarButtonItem:NO];
+            [self showLoadingBarButtonItem:NO currentPhoto:photo];
         }
     }
     PhotoZoomableCell *cell = [self currentCell];
@@ -428,14 +421,28 @@
 }
 
 - (void)favoriteButtonTapped:(id)sender {
-    [sender setEnabled:NO];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [[FavoritesManager sharedManager] addPhoto:[self currentPhoto]];
-        
-        [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Saved to Favorites", nil)];
-        
-        [self showLoadingBarButtonItem:NO];
-    });
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    Photo *currentPhoto = [self currentPhoto];
+    __weak typeof (self) selfie = self;
+    if (![[FavoritesManager sharedManager] photoHasBeenFavorited:currentPhoto]) {
+        [[[FavoritesManager sharedManager] addPhoto:currentPhoto] continueWithBlock:^id(BFTask *task) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:selfie.navigationController.view animated:YES];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Saved to Favorites", nil)];
+                [selfie showLoadingBarButtonItem:NO currentPhoto:[selfie currentPhoto]];
+            });
+            return nil;
+        }];
+    } else {
+        [[[FavoritesManager sharedManager] removePhoto:currentPhoto] continueWithBlock:^id(BFTask *task) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUDForView:selfie.navigationController.view animated:YES];
+                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Removed from Favorites", nil)];
+                [selfie showLoadingBarButtonItem:NO currentPhoto:[selfie currentPhoto]];
+            });
+            return nil;
+        }];
+    }
 }
 
 - (void)continueDownloadOriginalImage {
@@ -461,7 +468,7 @@
 
 - (void)actionButtonTapped:(id)sender {
     PBX_LOG(@"Sharing tapped");
-    [self showLoadingBarButtonItem:YES];
+    [self showLoadingBarButtonItem:YES currentPhoto:[self currentPhoto]];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText = NSLocalizedString(@"Downloading original ...", nil);
     PhotoZoomableCell *cell = (PhotoZoomableCell *)[[self.collectionView visibleCells] objectAtIndex:0];
@@ -469,7 +476,7 @@
     __weak PhotosHorizontalScrollingViewController *weakSelf = self;
     [[[NPRImageDownloader sharedDownloader] downloadOriginalPhoto:photo] continueWithBlock:^id(BFTask *task) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf showLoadingBarButtonItem:NO];
+            [weakSelf showLoadingBarButtonItem:NO currentPhoto:photo];
             [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
         });
         
@@ -503,7 +510,7 @@
     [[PhotoSharingManager sharedManager] shareLinkPhoto:photo image:cell.thisImageview.image fromViewController:self tokenFetchedBlock:^(id token) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [MBProgressHUD hideHUDForView:weakSelf.navigationController.view animated:YES];
-            [weakSelf showLoadingBarButtonItem:NO];
+            [weakSelf showLoadingBarButtonItem:NO currentPhoto:photo];
         });
         if (token) {
             [[NPRNotificationManager sharedManager] hideNotification];
@@ -513,10 +520,10 @@
     } completion:nil];
 }
 
-- (void)showLoadingBarButtonItem:(BOOL)show {
+- (void)showLoadingBarButtonItem:(BOOL)show currentPhoto:(Photo *)currentPhoto {
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"download.png"] style:UIBarButtonItemStylePlain target:self action:@selector(viewOriginalButtonTapped:)];
     UIBarButtonItem *favoriteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"star.png"] style:UIBarButtonItemStylePlain target:self action:@selector(favoriteButtonTapped:)];
-    if ([[FavoritesManager sharedManager] photoHasBeenDownloaded:[self currentPhoto]]) {
+    if ([[FavoritesManager sharedManager] photoHasBeenFavorited:currentPhoto]) {
         [favoriteButton setImage:[UIImage imageNamed:@"star-fill.png"]];
     }
     UIBarButtonItem *infoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonTapped:)];
@@ -614,6 +621,8 @@
 }
 
 @end
+
+#pragma mark -
 
 @implementation PhotosHorizontalLayout
 

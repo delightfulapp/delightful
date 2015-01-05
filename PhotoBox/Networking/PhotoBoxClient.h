@@ -12,7 +12,7 @@
 @import Photos;
 
 @class Album;
-
+@class Photo;
 @class DLFAsset;
 
 typedef NS_ENUM(NSInteger, ResourceType) {
@@ -65,6 +65,14 @@ typedef NS_ENUM(NSInteger, ActionType) {
                success:(void(^)(id object))successBlock
                failure:(void(^)(NSError*))failureBlock;
 
+#pragma mark - Favorite
+
+- (NSOperation *)addFavoritePhoto:(Photo *)photo
+                             success:(void(^)(id object))successBlock
+                             failure:(void(^)(NSError*))failureBlock;
+- (NSOperation *)removeFavoritePhoto:(Photo *)photo
+                          success:(void(^)(id object))successBlock
+                          failure:(void(^)(NSError*))failureBlock;
 
 #pragma mark - Sharing
 

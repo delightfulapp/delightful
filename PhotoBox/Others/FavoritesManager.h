@@ -7,9 +7,14 @@
 //
 
 #import "DownloadedImageManager.h"
+#import <Bolts.h>
+
+extern NSString *const favoritesTagName;
 
 @interface FavoritesManager : DownloadedImageManager
 
 - (BOOL)photoHasBeenFavorited:(Photo *)photo;
+- (BFTask *)addPhoto:(Photo *)photo;
+- (BFTask *)removePhoto:(Photo *)photo;
 
 @end

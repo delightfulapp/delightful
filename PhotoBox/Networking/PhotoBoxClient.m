@@ -10,7 +10,7 @@
 
 #import "ConnectionManager.h"
 #import "PhotoBoxRequestOperation.h"
-
+#import "FavoritesManager.h"
 #import "Album.h"
 #import "Photo.h"
 #import "Tag.h"
@@ -85,6 +85,38 @@
 - (void)setValue:(id)value forKey:(NSString *)key {
     [super setValue:value forKey:key];
     [self.oauthClient setValue:value forKey:key];
+}
+
+#pragma mark - Favorite
+
+- (NSOperation *)addFavoritePhoto:(Photo *)photo success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    NSString *path = [NSString stringWithFormat:@"photo/%@/update.json", photo.photoId];
+    return [self POST:path parameters:@{@"tagsAdd": favoritesTagName} resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        if (error) {
+            if (failureBlock) {
+                failureBlock(error);
+            }
+        } else {
+            if (successBlock) {
+                successBlock(responseObject);
+            }
+        }
+    }];
+}
+
+- (NSOperation *)removeFavoritePhoto:(Photo *)photo success:(void (^)(id))successBlock failure:(void (^)(NSError *))failureBlock {
+    NSString *path = [NSString stringWithFormat:@"photo/%@/update.json", photo.photoId];
+    return [self POST:path parameters:@{@"tagsRemove": favoritesTagName} resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        if (error) {
+            if (failureBlock) {
+                failureBlock(error);
+            }
+        } else {
+            if (successBlock) {
+                successBlock(responseObject);
+            }
+        }
+    }];
 }
 
 #pragma mark - Share
