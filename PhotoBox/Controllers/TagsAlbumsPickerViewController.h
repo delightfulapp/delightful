@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, TagsAlbumsPickerCollectionViewSections) {
+    TagsAlbumsPickerCollectionViewSectionsTitle,
     TagsAlbumsPickerCollectionViewSectionsTags,
     TagsAlbumsPickerCollectionViewSectionsAlbums,
     TagsAlbumsPickerCollectionViewSectionsPermission,
@@ -20,6 +21,12 @@ typedef NS_ENUM(NSInteger, TagsSectionRows) {
     TagsSectionRowsEntryField,
     TagsSectionRowsSmartTags,
     TagsSectionRowsCount
+};
+
+typedef NS_ENUM(NSInteger, TitleSectionRows) {
+    TitleSectionRowsTitle,
+    TitleSectionRowsDescription,
+    TitleSectionRowsCount
 };
 
 @class TagsAlbumsPickerViewController;

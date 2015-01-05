@@ -7,11 +7,8 @@
 //
 
 #import "PhotoZoomableCell.h"
-
 #import "Photo.h"
-
 #import <SDWebImageManager.h>
-
 #import "UIImage+Additionals.h"
 #import "UIWindow+Additionals.h"
 #import "UIImageView+Additionals.h"

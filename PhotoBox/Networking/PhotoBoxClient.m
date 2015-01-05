@@ -276,6 +276,12 @@
                 [params addEntriesFromDictionary:@{@"albums": album.albumId}];
             }
             [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
+            if (asset.photoTitle) {
+                [params addEntriesFromDictionary:@{@"title":asset.photoTitle}];
+            }
+            if (asset.photoDescription) {
+                [params addEntriesFromDictionary:@{@"description":asset.photoDescription}];
+            }
             
             NSString *type = (__bridge NSString *)(UTTypeCopyPreferredTagWithClass((__bridge CFStringRef)(dataUTI), kUTTagClassMIMEType));
             

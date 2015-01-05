@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0310356A1A5A144600E4990D /* UploadDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031035691A5A144600E4990D /* UploadDescriptionTableViewCell.m */; };
+		0310356B1A5A144600E4990D /* UploadDescriptionTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 031035691A5A144600E4990D /* UploadDescriptionTableViewCell.m */; };
 		03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FE917D0FE3A0075F9D8 /* Album.m */; };
 		03108FF317D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF217D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.m */; };
 		03108FF617D0FF0C0075F9D8 /* PhotoBoxModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03108FF517D0FF0C0075F9D8 /* PhotoBoxModel.m */; };
@@ -410,6 +412,8 @@
 
 /* Begin PBXFileReference section */
 		0042B91DB9174023AFB49E27 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		031035681A5A144600E4990D /* UploadDescriptionTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadDescriptionTableViewCell.h; path = PhotoBox/Cells/UploadDescriptionTableViewCell.h; sourceTree = "<group>"; };
+		031035691A5A144600E4990D /* UploadDescriptionTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadDescriptionTableViewCell.m; path = PhotoBox/Cells/UploadDescriptionTableViewCell.m; sourceTree = "<group>"; };
 		03108FE817D0FE3A0075F9D8 /* Album.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Album.h; path = PhotoBox/Models/Album.h; sourceTree = "<group>"; };
 		03108FE917D0FE3A0075F9D8 /* Album.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Album.m; path = PhotoBox/Models/Album.m; sourceTree = "<group>"; };
 		03108FF117D0FED40075F9D8 /* NSObject+setValuesForKeysWithJSONDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+setValuesForKeysWithJSONDictionary.h"; sourceTree = "<group>"; };
@@ -1179,6 +1183,8 @@
 				035DACC1197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m */,
 				03A438181A413C88005922E8 /* PhotoTagsCell.h */,
 				03A438191A413C88005922E8 /* PhotoTagsCell.m */,
+				031035681A5A144600E4990D /* UploadDescriptionTableViewCell.h */,
+				031035691A5A144600E4990D /* UploadDescriptionTableViewCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1904,6 +1910,7 @@
 				035DACAE197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
 				035B035119ECC72800153F24 /* TagsDataSource.m in Sources */,
 				035DACC2197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
+				0310356A1A5A144600E4990D /* UploadDescriptionTableViewCell.m in Sources */,
 				0348D22717DA208000C932BA /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB3197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 				03EB629619DF06BF00E65248 /* TransitionToInfoPresentationController.m in Sources */,
@@ -2050,6 +2057,7 @@
 				035DACAF197F84A600557547 /* TagsAlbumsPickerViewController.m in Sources */,
 				035B035219ECC72800153F24 /* TagsDataSource.m in Sources */,
 				035DACC3197FA1C400557547 /* TagsAlbumPermissionPickerTableViewCell.m in Sources */,
+				0310356B1A5A144600E4990D /* UploadDescriptionTableViewCell.m in Sources */,
 				03EFD91B19251CD700E80A71 /* MWInterpollationMotionEffect.m in Sources */,
 				035DACB4197F88B800557547 /* TagEntryTableViewCell.m in Sources */,
 				03EB629719DF06BF00E65248 /* TransitionToInfoPresentationController.m in Sources */,

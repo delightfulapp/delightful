@@ -10,6 +10,7 @@
 #import "TagEntryTableViewCell.h"
 #import "AlbumPickerTableViewCell.h"
 #import "PermissionPickerTableViewCell.h"
+#import "UploadDescriptionTableViewCell.h"
 #import "Album.h"
 #import "Tag.h"
 #import "PhotoBoxClient.h"
@@ -25,10 +26,11 @@
 #import <Bolts.h>
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
+#define TITLE_TEXTFIELD_TAG 100000
 
 NSString *const normalCellIdentifier = @"normalCell";
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate, PhotoTagsCollectionViewControllerDelegate>
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate, PhotoTagsCollectionViewControllerDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, assign) BOOL isFetchingTags;
@@ -41,6 +43,8 @@ NSString *const normalCellIdentifier = @"normalCell";
 @property (nonatomic, assign) BOOL privatePhotos;
 @property (nonatomic, assign) BOOL isPreparingSmartTags;
 @property (nonatomic, assign) BOOL resizeAfterUploads;
+@property (nonatomic, strong) NSString *uploadTitle;
+@property (nonatomic, strong) NSString *uploadDescription;
 
 @end
 
@@ -76,6 +80,7 @@ NSString *const normalCellIdentifier = @"normalCell";
     [self.tableView registerClass:[TagEntryTableViewCell class] forCellReuseIdentifier:[TagEntryTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[AlbumPickerTableViewCell class] forCellReuseIdentifier:[AlbumPickerTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[PermissionPickerTableViewCell class] forCellReuseIdentifier:[PermissionPickerTableViewCell defaultCellReuseIdentifier]];
+    [self.tableView registerClass:[UploadDescriptionTableViewCell class] forCellReuseIdentifier:[UploadDescriptionTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:normalCellIdentifier];
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
@@ -160,7 +165,7 @@ NSString *const normalCellIdentifier = @"normalCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (section==TagsAlbumsPickerCollectionViewSectionsTags)?TagsSectionRowsCount:1;
+    return (section==TagsAlbumsPickerCollectionViewSectionsTags)?TagsSectionRowsCount:((section==TagsAlbumsPickerCollectionViewSectionsTitle)?TitleSectionRowsCount:1);
 }
 
 #pragma mark - Table View Delegate
@@ -218,6 +223,22 @@ NSString *const normalCellIdentifier = @"normalCell";
         [((PermissionPickerTableViewCell *)cell).permissionLabel setText:NSLocalizedString(@"Resize Uploaded Photos", nil)];
     }
     
+    if (indexPath.section == TagsAlbumsPickerCollectionViewSectionsTitle) {
+        if (indexPath.row == TitleSectionRowsTitle) {
+            ((TagEntryTableViewCell *)cell).tagField.placeholder = NSLocalizedString(@"Title (Optional)", nil);
+            [((TagEntryTableViewCell *)cell).tagField setTag:TITLE_TEXTFIELD_TAG];
+            [((TagEntryTableViewCell *)cell).tagField setDelegate:self];
+            if (self.uploadTitle && self.uploadTitle.length > 0) {
+                ((TagEntryTableViewCell *)cell).tagField.text = self.uploadTitle;
+            }
+        } else if (indexPath.row == TitleSectionRowsDescription) {
+            [((UploadDescriptionTableViewCell *)cell).textView setDelegate:self];
+            if (self.uploadDescription && self.uploadDescription.length > 0) {
+                ((UploadDescriptionTableViewCell *)cell).textView.text = self.uploadDescription;
+            }
+        }
+    }
+    
     return cell;
 }
 
@@ -269,6 +290,14 @@ NSString *const normalCellIdentifier = @"normalCell";
         case TagsAlbumsPickerCollectionViewSectionsPermission:
         case TagsAlbumsPickerCollectionViewSectionsResizeAfterUpload:
             return [PermissionPickerTableViewCell class];
+        case TagsAlbumsPickerCollectionViewSectionsTitle:
+            if (indexPath.row == TitleSectionRowsTitle) {
+                return [TagEntryTableViewCell class];
+            } else {
+                return [UploadDescriptionTableViewCell class];
+            }
+            
+            break;
         default:
             break;
     }
@@ -281,23 +310,25 @@ NSString *const normalCellIdentifier = @"normalCell";
     NSString *text = textField.text;
     NSString *newText = [text stringByReplacingCharactersInRange:range withString:string];
     
-    self.selectedTags = newText;
-    
-    NSString *tagToSuggest = [self tagToSuggestForText:newText replacementRange:range replacementString:string];
-    self.currentEditedTag = tagToSuggest;
-    if (self.tags) {
-        if (tagToSuggest && tagToSuggest.length > 0) {
-            NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *evaluatedObject, NSDictionary *bindings) {
-                NSString *tagName = evaluatedObject;
-                return [[tagName lowercaseString] scoreAgainst:[tagToSuggest lowercaseString]] > 0.5;
-            }];
-            NSArray *suggestions = [self.tags filteredArrayUsingPredicate:predicate];
-            [self showSuggestions:suggestions];
-        } else {
-            [self showSuggestions:nil];
+    if (textField.tag != TITLE_TEXTFIELD_TAG) {
+        self.selectedTags = newText;
+        
+        NSString *tagToSuggest = [self tagToSuggestForText:newText replacementRange:range replacementString:string];
+        self.currentEditedTag = tagToSuggest;
+        if (self.tags) {
+            if (tagToSuggest && tagToSuggest.length > 0) {
+                NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(NSString *evaluatedObject, NSDictionary *bindings) {
+                    NSString *tagName = evaluatedObject;
+                    return [[tagName lowercaseString] scoreAgainst:[tagToSuggest lowercaseString]] > 0.5;
+                }];
+                NSArray *suggestions = [self.tags filteredArrayUsingPredicate:predicate];
+                [self showSuggestions:suggestions];
+            } else {
+                [self showSuggestions:nil];
+            }
         }
     } else {
-       
+        self.uploadTitle = text;
     }
     
     return YES;
@@ -306,6 +337,12 @@ NSString *const normalCellIdentifier = @"normalCell";
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return NO;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    if (textField.tag == TITLE_TEXTFIELD_TAG) {
+        self.uploadTitle = textField.text;
+    }
 }
 
 - (NSString *)tagToSuggestForText:(NSString *)newText replacementRange:(NSRange)range replacementString:(NSString *)string {
@@ -447,6 +484,10 @@ NSString *const normalCellIdentifier = @"normalCell";
             [asset setAlbum:self.selectedAlbum];
             [asset setPrivatePhoto:self.privatePhotos];
             [asset setScaleAfterUpload:self.resizeAfterUploads];
+            NSString *trimmedTitle = [self.uploadTitle stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *trimmedDescription = [self.uploadDescription stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            [asset setPhotoTitle:trimmedTitle.length>0?trimmedTitle:nil];
+            [asset setPhotoDescription:trimmedDescription.length>0?trimmedDescription:nil];
         }
         [self.delegate tagsAlbumsPickerViewController:self didFinishSelectTagsAndAlbum:self.selectedAssets];
     }
@@ -459,6 +500,12 @@ NSString *const normalCellIdentifier = @"normalCell";
     DLFAsset *changedAsset = [[self.selectedAssets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", format, asset.asset.localIdentifier]] firstObject];
     [changedAsset setSmartTags:asset.smartTags];
     NSLog(@"smart tags changed: %@", changedAsset.smartTags);
+}
+
+#pragma mark - UITextViewDelegate
+
+- (void)textViewDidChange:(UITextView *)textView {
+    self.uploadDescription = textView.text;
 }
 
 
