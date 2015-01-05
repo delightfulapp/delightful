@@ -14,7 +14,7 @@
 
 #import "PhotoZoomableCell.h"
 
-@interface PhotosHorizontalScrollingYapBackedViewController () <PhotoZoomableCellDelegate>
+@interface PhotosHorizontalScrollingYapBackedViewController () <PhotoZoomableCellDelegate, YapDataSourceDelegate>
 
 @property (nonatomic, strong) DLFYapDatabaseViewAndMapping *groupedViewMapping;
 
@@ -76,7 +76,17 @@
         [cell setItem:item];
         [cell setDelegate:selfie];
     }];
+    [dataSource setDelegate:self];
     self.dataSource = dataSource;
+}
+
+#pragma mark - YapDataSourceDelegate
+
+- (void)dataSourceDidModified:(YapDataSource *)dataSource {
+    NSInteger numberOfItem = [dataSource numberOfItems];
+    if (numberOfItem == 0) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }
 }
 
 @end

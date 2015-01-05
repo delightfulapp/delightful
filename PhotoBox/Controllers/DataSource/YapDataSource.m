@@ -171,11 +171,20 @@
     
     //CLS_LOG(@"begin updates %@ section changes = %d rowchanges = %d", NSStringFromClass(self.class), (int)sectionChanges.count, (int)rowChanges.count);
     ////CLS_LOG(@"begin updates \n section changes %@ row changes %@", sectionChanges, rowChanges);
-        
+    
+    void (^callDelegate)() = ^void() {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(dataSourceDidModified:)]) {
+            [self.delegate dataSourceDidModified:self];
+        }
+    };
+    
     if (self.pause) {
         [self.collectionView reloadData];
+        callDelegate();
         return;
     }
+    
+    
     
     void (^performBatchUpdates)() = ^void() {
         [self.collectionView performBatchUpdates:^{
@@ -224,13 +233,14 @@
                 }
             }
         } completion:^(BOOL finished) {
-            
+            callDelegate();
         }];
     };
     
     if ([self.collectionView isDragging] || [self.collectionView isDecelerating] || [self.collectionView isTracking]) {
         //CLS_LOG(@"is dragging reloading data");
         [self.collectionView reloadData];
+        callDelegate();
     } else {
         performBatchUpdates();
     }

@@ -24,7 +24,7 @@
 
 @end
 
-@interface FavoritesViewController () <UICollectionViewDelegateFlowLayout>
+@interface FavoritesViewController () <UICollectionViewDelegateFlowLayout, YapDataSourceDelegate>
 
 @property (nonatomic, assign) BOOL viewJustDidLoad;
 
@@ -37,6 +37,8 @@
     
     self.viewJustDidLoad = YES;
     [self migratePreviousFavorites];
+    
+    [((YapDataSource *)self.dataSource) setDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -158,6 +160,7 @@
 
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
 }
+
 
 @end
 
