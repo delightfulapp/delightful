@@ -91,7 +91,6 @@
 }
 
 - (void)textViewDidChangeNotification:(NSNotification *)notification {
-    NSLog(@"Text: %@", self.text);
     [self.placeholderLabel setHidden:(self.text.length>0)];
 }
 
