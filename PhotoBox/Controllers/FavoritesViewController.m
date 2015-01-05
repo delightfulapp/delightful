@@ -11,7 +11,11 @@
 #import "FavoritesManager.h"
 #import "DLFYapDatabaseViewAndMapping.h"
 #import "DLFDatabaseManager.h"
+#import "SyncEngine.h"
+#import "Tag.h"
+#import "SortTableViewController.h"
 #import <UIView+AutoLayout.h>
+#import <MBProgressHUD.h>
 
 @interface FavoritesDataSource : GroupedPhotosDataSource
 
@@ -22,6 +26,8 @@
 
 @interface FavoritesViewController () <UICollectionViewDelegateFlowLayout>
 
+@property (nonatomic, assign) BOOL viewJustDidLoad;
+
 @end
 
 @implementation FavoritesViewController
@@ -29,6 +35,38 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.viewJustDidLoad = YES;
+    [self migratePreviousFavorites];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    BOOL needToRestoreOffset = NO;
+    if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
+        needToRestoreOffset = YES;
+    }
+    [self restoreContentInset];
+    if (needToRestoreOffset) {
+        self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
+    }
+    
+    [((YapDataSource *)self.dataSource) setPause:NO];
+    
+    if (self.viewJustDidLoad) {
+        self.viewJustDidLoad = NO;
+    } else {
+        [self pauseSync:NO];
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self pauseSync:YES];
+}
+
+- (void)pauseSync:(BOOL)pauseSync {
+    [[SyncEngine sharedEngine] pauseSyncingPhotos:pauseSync collection:favoritesTagName collectionType:[Tag class]];
+}
+
+- (void)migratePreviousFavorites {
     __block NSMutableArray *localFavoritesFromPreviousVersion = [NSMutableArray array];
     [[[DLFDatabaseManager manager] readConnection] asyncReadWithBlock:^(YapDatabaseReadTransaction *transaction) {
         [transaction enumerateKeysInCollection:favoritedPhotosCollectionName usingBlock:^(NSString *key, BOOL *stop) {
@@ -44,7 +82,6 @@
                     [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                         [transaction removeObjectForKey:photoId inCollection:favoritedPhotosCollectionName];
                     } completionBlock:^{
-                        NSLog(@"done removing favorites from db");
                         [taskCompletionSource setResult:object];
                     }];
                     return taskCompletionSource.task;
@@ -53,26 +90,10 @@
         }
         
         [task continueWithBlock:^id(BFTask *task) {
-            NSLog(@"done migrating local favorites");
+            [[SyncEngine sharedEngine] startSyncingPhotosInCollection:favoritesTagName collectionType:[Tag class] sort:dateUploadedDescSortKey];
             return nil;
         }];
     }];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    BOOL needToRestoreOffset = NO;
-    if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
-        needToRestoreOffset = YES;
-    }
-    [self restoreContentInset];
-    if (needToRestoreOffset) {
-        self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
-    }
-    
-    [((YapDataSource *)self.dataSource) setPause:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
 }
 
 - (void)didReceiveMemoryWarning {

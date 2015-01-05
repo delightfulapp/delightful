@@ -156,8 +156,8 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         }
         self.pausePhotosInTagSyncOperation = NO;
         self.photosInTagSyncOperationSort = sort;
-        self.photosInTagSyncOperationPage = 0;
-        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:0 sort:sort];
+        self.photosInTagSyncOperationPage = 1;
+        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:1 sort:sort];
     } else {
         if (self.allPhotosSyncingOperation) {
             [self.allPhotosSyncingOperation cancel];

@@ -11,5 +11,6 @@
 @interface FavoritesViewController : YapBackedPhotosViewController
 
 - (NSString *)noPhotosMessage;
+- (void)migratePreviousFavorites;
 
 @end
