@@ -38,6 +38,9 @@
     self.viewJustDidLoad = YES;
     [self migratePreviousFavorites];
     
+    Tag *favoriteTag = [Tag modelWithDictionary:@{NSStringFromSelector(@selector(tagId)):favoritesTagName} error:nil];
+    self.item = favoriteTag;
+    
     [((YapDataSource *)self.dataSource) setDelegate:self];
 }
 
@@ -107,7 +110,7 @@
     return [FavoritesDataSource class];
 }
 
-- (void)showEmptyLoading:(BOOL)show {
+- (void)showNoItems:(BOOL)show {
     if (!show) {
         [super showEmptyLoading:show];
     } else {
@@ -141,9 +144,6 @@
 
 - (NSString *)noPhotosMessage {
     return NSLocalizedString(@"Favorited photos will appear here", nil);
-}
-
-- (void)setupRefreshControl {
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>

@@ -47,8 +47,15 @@
     return [DownloadedDataSource class];
 }
 
+- (void)showEmptyLoading:(BOOL)show {
+    [self showNoItems:show];
+}
+
 - (NSString *)noPhotosMessage {
     return NSLocalizedString(@"Downloaded photos will appear here", nil);
+}
+
+- (void)setupRefreshControl {
 }
 
 @end
