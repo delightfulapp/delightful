@@ -45,6 +45,39 @@ NSString *const favoritesTagName = @"Favorites";
     return favoritedPhotosCollectionName;
 }
 
+- (BFTask *)migratePreviousFavorites {
+    __block NSMutableArray *localFavoritesFromPreviousVersion = [NSMutableArray array];
+    BFTaskCompletionSource *migratingTaskSource = [BFTaskCompletionSource taskCompletionSource];
+    [[[DLFDatabaseManager manager] readConnection] asyncReadWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        [transaction enumerateKeysInCollection:favoritedPhotosCollectionName usingBlock:^(NSString *key, BOOL *stop) {
+            [localFavoritesFromPreviousVersion addObject:key];
+        }];
+    } completionBlock:^{
+        BFTask *task = [BFTask taskWithResult:nil];
+        for (NSString *photoId in localFavoritesFromPreviousVersion) {
+            task = [task continueWithBlock:^id(BFTask *t) {
+                return [[[FavoritesManager sharedManager] addPhotoWithId:photoId] continueWithBlock:^id(BFTask *t2) {
+                    Photo *object = t2.result;
+                    BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
+                    [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+                        [transaction removeObjectForKey:photoId inCollection:favoritedPhotosCollectionName];
+                    } completionBlock:^{
+                        [taskCompletionSource setResult:object];
+                    }];
+                    return taskCompletionSource.task;
+                }];
+            }];
+        }
+        
+        [task continueWithBlock:^id(BFTask *task) {
+            [migratingTaskSource setResult:nil];
+            return nil;
+        }];
+    }];
+    
+    return migratingTaskSource.task;
+}
+
 - (BFTask *)addPhoto:(Photo *)photo {
     __weak typeof (self) selfie = self;
     BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];

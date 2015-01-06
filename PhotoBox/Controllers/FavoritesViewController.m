@@ -36,7 +36,6 @@
     [super viewDidLoad];
     
     self.viewJustDidLoad = YES;
-    [self migratePreviousFavorites];
     
     Tag *favoriteTag = [Tag modelWithDictionary:@{NSStringFromSelector(@selector(tagId)):favoritesTagName} error:nil];
     self.item = favoriteTag;
@@ -45,6 +44,8 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [self setRegisterSyncingNotification:YES];
+    
     BOOL needToRestoreOffset = NO;
     if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
         needToRestoreOffset = YES;
@@ -58,6 +59,10 @@
     
     if (self.viewJustDidLoad) {
         self.viewJustDidLoad = NO;
+        [[[FavoritesManager sharedManager] migratePreviousFavorites] continueWithBlock:^id(BFTask *task) {
+            [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:[Tag class] sort:dateUploadedDescSortKey];
+            return nil;
+        }];
     } else {
         [self pauseSync:NO];
     }
@@ -69,36 +74,6 @@
 
 - (void)pauseSync:(BOOL)pauseSync {
     [[SyncEngine sharedEngine] pauseSyncingPhotos:pauseSync collection:favoritesTagName collectionType:[Tag class]];
-}
-
-- (void)migratePreviousFavorites {
-    __block NSMutableArray *localFavoritesFromPreviousVersion = [NSMutableArray array];
-    [[[DLFDatabaseManager manager] readConnection] asyncReadWithBlock:^(YapDatabaseReadTransaction *transaction) {
-        [transaction enumerateKeysInCollection:favoritedPhotosCollectionName usingBlock:^(NSString *key, BOOL *stop) {
-            [localFavoritesFromPreviousVersion addObject:key];
-        }];
-    } completionBlock:^{
-        BFTask *task = [BFTask taskWithResult:nil];
-        for (NSString *photoId in localFavoritesFromPreviousVersion) {
-            task = [task continueWithBlock:^id(BFTask *t) {
-                return [[[FavoritesManager sharedManager] addPhotoWithId:photoId] continueWithBlock:^id(BFTask *t2) {
-                    Photo *object = t2.result;
-                    BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
-                    [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-                        [transaction removeObjectForKey:photoId inCollection:favoritedPhotosCollectionName];
-                    } completionBlock:^{
-                        [taskCompletionSource setResult:object];
-                    }];
-                    return taskCompletionSource.task;
-                }];
-            }];
-        }
-        
-        [task continueWithBlock:^id(BFTask *task) {
-            [[SyncEngine sharedEngine] startSyncingPhotosInCollection:favoritesTagName collectionType:[Tag class] sort:dateUploadedDescSortKey];
-            return nil;
-        }];
-    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -160,6 +135,45 @@
 
 - (void)uploadNumberChangeNotification:(NSNotification *)notification {
 }
+
+#pragma mark - Syncing Notifications {
+
+- (void)willStartSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
+        NSLog(@"will start syncing");
+        [self setIsFetching:YES];
+        self.isDoneSyncing = NO;
+    }
+}
+
+- (void)didFinishSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if (![item isKindOfClass:[NSNull class]] && [resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
+        NSLog(@"did finish syncing");
+        NSNumber *count = userInfo[SyncEngineNotificationCountKey];
+        if (count.intValue == 0) {
+            NSLog(@"fetched 0 photos");
+            [self setIsFetching:NO];
+            
+            self.isDoneSyncing = YES;
+        }
+    }
+}
+
+- (void)didFailSyncingNotification:(NSNotification *)notification {
+    NSDictionary *userInfo = notification.userInfo;
+    NSString *resource = userInfo[SyncEngineNotificationResourceKey];
+    NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
+    if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
+        [self setIsFetching:NO];
+    }
+}
+
 
 
 @end

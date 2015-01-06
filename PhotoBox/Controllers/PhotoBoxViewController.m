@@ -512,6 +512,7 @@ NSString *const galleryContainerType = @"gallery";
             }
             [self showRightBarButtonItem:NO];
             if (self.isDoneSyncing) {
+                [self showEmptyLoading:NO];
                 [self showNoItems:YES];
             }
             

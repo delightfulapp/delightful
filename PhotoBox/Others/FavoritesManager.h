@@ -18,5 +18,6 @@ extern NSString *const favoritesTagName;
 - (BFTask *)removePhoto:(Photo *)photo;
 - (BFTask *)addPhotoWithId:(NSString *)photo;
 - (BFTask *)removePhotoWithId:(NSString *)photo;
+- (BFTask *)migratePreviousFavorites;
 
 @end

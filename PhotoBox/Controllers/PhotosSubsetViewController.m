@@ -62,6 +62,7 @@
     return [PhotosSubsetDataSource class];
 }
 
+#pragma mark - Syncing Notifications
 
 - (void)willStartSyncingNotification:(NSNotification *)notification {
     NSDictionary *userInfo = notification.userInfo;
