@@ -34,11 +34,11 @@ NSString *const favoritesTagName = @"Favorites";
 }
 
 + (NSString *)databaseViewName {
-    return @"favorited-photos";
+    return @"favorited-photos-3";
 }
 
 + (NSString *)flattenedDatabaseViewName {
-    return @"favorited-photos-flattened";
+    return @"favorited-photos-flattened-3";
 }
 
 + (NSString *)photosCollectionName {
@@ -167,9 +167,10 @@ NSString *const favoritesTagName = @"Favorites";
     
     YapDatabaseViewOptions *option = [[YapDatabaseViewOptions alloc] init];
     [option setIsPersistent:YES];
+    [option setSkipInitialViewPopulation:YES];
     [option setAllowedCollections:[[YapWhitelistBlacklist alloc] initWithWhitelist:[NSSet setWithObject:photosCollectionName]]];
     
-    YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"2.0" options:option];
+    YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1.0" options:option];
     
     DLFYapDatabaseViewAndMapping *(^viewMappingInit)() = ^DLFYapDatabaseViewAndMapping *() {
         YapDatabaseViewMappings *mappings = [[YapDatabaseViewMappings alloc] initWithGroupFilterBlock:^BOOL(NSString *group, YapDatabaseReadTransaction *transaction) {
