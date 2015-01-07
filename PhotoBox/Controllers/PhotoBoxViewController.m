@@ -41,6 +41,8 @@ NSString *const galleryContainerType = @"gallery";
 
 @property (nonatomic, assign, getter = isShowingAlert) BOOL showingAlert;
 @property (nonatomic, assign) CGSize currentSize;
+@property (nonatomic, assign) BOOL _showRightBarButtonItem;
+@property (nonatomic, strong) NSValue *contentSize;
 
 @end
 
@@ -200,11 +202,16 @@ NSString *const galleryContainerType = @"gallery";
 
 
 - (void)showRightBarButtonItem:(BOOL)show {
-    if (show) {
-        UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
-        [self.navigationItem setRightBarButtonItem:leftItem];
-    } else {
-        [self.navigationItem setRightBarButtonItem:nil];
+    if (__showRightBarButtonItem != show) {
+        __showRightBarButtonItem = show;
+        if (show) {
+            if (!self.navigationItem.rightBarButtonItem) {
+                UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
+                [self.navigationItem setRightBarButtonItem:leftItem];
+            }
+        } else {
+            [self.navigationItem setRightBarButtonItem:nil];
+        }
     }
 }
 
@@ -503,19 +510,23 @@ NSString *const galleryContainerType = @"gallery";
             }
         }
     } else if ([keyPath isEqualToString:NSStringFromSelector(@selector(contentSize))]) {
-        if ([self.dataSource numberOfItems] > 0) {
-            [self showEmptyLoading:NO];
-            [self showRightBarButtonItem:YES];
-        } else {
-            if (![self showSyncingLoadingMessageIfNeeded]) {
-                [self showEmptyLoading:YES];
-            }
-            [self showRightBarButtonItem:NO];
-            if (self.isDoneSyncing) {
-                [self showEmptyLoading:NO];
-                [self showNoItems:YES];
-            }
+        if (!CGSizeEqualToSize(self.contentSize.CGSizeValue, [change[@"new"] CGSizeValue])) {
+            self.contentSize = change[@"new"];
             
+            if ([self.dataSource numberOfItems] > 0) {
+                [self showEmptyLoading:NO];
+                [self showRightBarButtonItem:YES];
+            } else {
+                if (![self showSyncingLoadingMessageIfNeeded]) {
+                    [self showEmptyLoading:YES];
+                }
+                [self showRightBarButtonItem:NO];
+                if (self.isDoneSyncing) {
+                    [self showEmptyLoading:NO];
+                    [self showNoItems:YES];
+                }
+                
+            }
         }
     }
 }
