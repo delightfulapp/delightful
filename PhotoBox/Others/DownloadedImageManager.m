@@ -135,6 +135,7 @@
     
     YapDatabaseViewOptions *option = [[YapDatabaseViewOptions alloc] init];
     [option setIsPersistent:YES];
+    [option setSkipInitialViewPopulation:YES];
     [option setAllowedCollections:[[YapWhitelistBlacklist alloc] initWithWhitelist:[NSSet setWithObject:photosCollectionName]]];
     
     YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1.0" options:option];

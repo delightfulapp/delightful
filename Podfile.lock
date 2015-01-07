@@ -10,7 +10,7 @@ PODS:
   - CocoaLumberjack/Extensions (1.9.2):
     - CocoaLumberjack/Core
   - COSTouchVisualizer (1.0.3)
-  - CSNotificationView (0.5.2)
+  - CSNotificationView (0.5.3)
   - DAProgressOverlayView (1.0.2)
   - DLFPhotosPicker (0.10)
   - Expecta (0.2.4)
@@ -79,7 +79,7 @@ CHECKOUT OPTIONS:
     :commit: 8c43109b05956a8d543871cdd30b8c6f9d2f9a61
     :git: git@github.com:nicnocquee/DLFPhotosPicker.git
   YapDatabase:
-    :commit: 9f717d54a0a7b5e5b0ab52834b36ef588c21f1a8
+    :commit: dec7e7f793e4e0cc0e7b194ad559eb0be92ab6a4
     :git: git@github.com:nicnocquee/YapDatabase.git
 
 SPEC CHECKSUMS:
@@ -89,7 +89,7 @@ SPEC CHECKSUMS:
   Bolts: 3db0a875235e0c9042b013af13af0f00f79b102c
   CocoaLumberjack: 205769c032b5fef85b92472046bcc8b7e7c8a817
   COSTouchVisualizer: 2edcc5626758400d90e50ebf5a7740076c82d1b5
-  CSNotificationView: a01c96b12e4451c9ed42e93a6d494e586c91ad14
+  CSNotificationView: e4d26da44dfb569ab284949c822a8239f23cc13d
   DAProgressOverlayView: 66f743e4bbbb0b5fe241670b9156d948cc228fc1
   DLFPhotosPicker: 049af6b135dd015aaaa1ceea82ebef3ba92774fd
   Expecta: 112bcafa2304ee0f3c5e586505f24555a47b25d5

@@ -103,6 +103,7 @@
     [options setIsPersistent:isPersistent];
     YapWhitelistBlacklist *whitelist = [[YapWhitelistBlacklist alloc] initWithWhitelist:[NSSet setWithObject:aCollection]];
     [options setAllowedCollections:whitelist];
+    [options setSkipInitialViewPopulation:YES];
     
     YapDatabaseView *view = [[YapDatabaseView alloc] initWithGrouping:grouping sorting:sorting versionTag:@"1" options:options];
     
