@@ -12,5 +12,6 @@
 
 - (UIColor *)lighterColor;
 - (UIColor *)darkerColor;
++ (UIColor *)lightGrayTextColor;
 
 @end

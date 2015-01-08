@@ -8,6 +8,7 @@
 
 #import "UploadDescriptionTableViewCell.h"
 #import <UIView+AutoLayout.h>
+#import "UIColor+Additionals.h"
 
 @interface UploadDescriptionTableViewCell ()
 
@@ -74,7 +75,7 @@
         [self addSubview:placeholderLabel];
         [placeholderLabel autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsMake(7, 5, 0, 5) excludingEdge:ALEdgeBottom];
         [placeholderLabel setText:NSLocalizedString(@"Description (Optional)", nil)];
-        [placeholderLabel setTextColor:[UIColor colorWithRed:0.769 green:0.769 blue:0.792 alpha:1.000]];
+        [placeholderLabel setTextColor:[UIColor lightGrayTextColor]];
         [placeholderLabel setFont:[UIFont systemFontOfSize:17]];
         self.placeholderLabel = placeholderLabel;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeNotification:) name:UITextViewTextDidChangeNotification object:nil];

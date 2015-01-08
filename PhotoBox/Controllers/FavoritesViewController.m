@@ -14,8 +14,17 @@
 #import "SyncEngine.h"
 #import "Tag.h"
 #import "SortTableViewController.h"
+#import "UIColor+Additionals.h"
 #import <UIView+AutoLayout.h>
 #import <MBProgressHUD.h>
+
+@interface MigratingLabel : UIView
+
+@property (nonatomic, weak) UILabel *label;
+@property (nonatomic, weak) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, weak) UIView *wrappingView;
+
+@end
 
 @interface FavoritesDataSource : GroupedPhotosDataSource
 
@@ -27,6 +36,8 @@
 @interface FavoritesViewController () <UICollectionViewDelegateFlowLayout, YapDataSourceDelegate>
 
 @property (nonatomic, assign) BOOL viewJustDidLoad;
+@property (nonatomic, assign) NSInteger numberOfPhotosToMigrate;
+@property (nonatomic, strong) MigratingLabel *migratingLabel;
 
 @end
 
@@ -44,27 +55,40 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    [self setRegisterSyncingNotification:YES];
-    
-    BOOL needToRestoreOffset = NO;
-    if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
-        needToRestoreOffset = YES;
-    }
-    [self restoreContentInset];
-    if (needToRestoreOffset) {
-        self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
-    }
-    
-    [((YapDataSource *)self.dataSource) setPause:NO];
-    
-    if (self.viewJustDidLoad) {
-        self.viewJustDidLoad = NO;
-        [[[FavoritesManager sharedManager] migratePreviousFavorites] continueWithBlock:^id(BFTask *task) {
-            [[SyncEngine sharedEngine] startSyncingPhotosInCollection:self.item.itemId collectionType:[Tag class] sort:dateUploadedDescSortKey];
-            return nil;
-        }];
-    } else {
-        [self pauseSync:NO];
+    if (self.numberOfPhotosToMigrate == 0) {
+        BOOL needToRestoreOffset = NO;
+        if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
+            needToRestoreOffset = YES;
+        }
+        [self restoreContentInset];
+        if (needToRestoreOffset) {
+            self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
+        }
+        
+        [((YapDataSource *)self.dataSource) setPause:NO];
+        
+        if (self.viewJustDidLoad) {
+            self.viewJustDidLoad = NO;
+            NSInteger numberOfPhotosToMigrate = [[FavoritesManager sharedManager] numberOfPhotosToMigrate];
+            if (numberOfPhotosToMigrate > 0) {
+                NSLog(@"number of photos to migrate = %d", (int)numberOfPhotosToMigrate);
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesManagerMigratePhotosNotification:) name:FavoritesManagerWillMigratePhotosNotification object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesManagerMigratePhotosNotification:) name:FavoritesManagerDidMigratePhotosNotification object:nil];
+            }
+            __weak typeof (self) selfie = self;
+            [[[FavoritesManager sharedManager] migratePreviousFavorites] continueWithBlock:^id(BFTask *task) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [selfie setRegisterSyncingNotification:YES];
+                    [[SyncEngine sharedEngine] startSyncingPhotosInCollection:selfie.item.itemId collectionType:[Tag class] sort:dateUploadedDescSortKey];
+                    [[NSNotificationCenter defaultCenter] removeObserver:selfie name:FavoritesManagerWillMigratePhotosNotification object:nil];
+                    [[NSNotificationCenter defaultCenter] removeObserver:selfie name:FavoritesManagerDidMigratePhotosNotification object:nil];
+                });
+                
+                return nil;
+            }];
+        } else {
+            [self pauseSync:NO];
+        }
     }
 }
 
@@ -73,6 +97,7 @@
 }
 
 - (void)pauseSync:(BOOL)pauseSync {
+    [((YapDataSource *)self.dataSource) setPause:pauseSync];
     [[SyncEngine sharedEngine] pauseSyncingPhotos:pauseSync collection:favoritesTagName collectionType:[Tag class]];
 }
 
@@ -119,6 +144,35 @@
 
 - (NSString *)noPhotosMessage {
     return NSLocalizedString(@"Favorited photos will appear here", nil);
+}
+
+- (void)setMigratingState:(MigratingState)migratingState {
+    if (_migratingState != migratingState) {
+        _migratingState = migratingState;
+        
+        switch (_migratingState) {
+            case MigratingStateDone:{
+                [self setAutomaticallyAdjustsScrollViewInsets:YES];
+                [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, 0, 0, 0)];
+                [self.migratingLabel setHidden:YES];
+                break;
+            }
+            case MigratingStateRunning:{
+                [self setAutomaticallyAdjustsScrollViewInsets:NO];
+                [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height + 50, 0, 0, 0)];
+                [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top) animated:YES];
+                
+                if (!self.migratingLabel) {
+                    self.migratingLabel = [[MigratingLabel alloc] initWithFrame:CGRectMake(0, -50, self.collectionView.frame.size.width, 50)];
+                    [self.collectionView addSubview:self.migratingLabel];
+                }
+                [self.migratingLabel setHidden:NO];
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>
@@ -174,9 +228,22 @@
     }
 }
 
+#pragma mark - Migrate Notifications
 
+- (void)favoritesManagerMigratePhotosNotification:(NSNotification *)notification {
+    NSInteger count = [[notification.userInfo objectForKey:FavoritesManagerMigratedPhotosCountKey] integerValue];
+    self.numberOfPhotosToMigrate = count;
+    if (count > 0) {
+        self.migratingState = MigratingStateRunning;
+        [self.migratingLabel.label setText:[NSString stringWithFormat:NSLocalizedString(@"Tagging %d locally favorited photos", nil), (int)count]];
+        if (![self.migratingLabel.indicatorView isAnimating]) [self.migratingLabel.indicatorView startAnimating];
+    } else self.migratingState = MigratingStateDone;
+    
+}
 
 @end
+
+#pragma mark -
 
 @implementation FavoritesDataSource
 
@@ -191,6 +258,49 @@
 
 - (DLFYapDatabaseViewAndMapping *)selectedFlattenedViewMapping {
     return self.flattenedFavoritesMapping;
+}
+
+@end
+
+#pragma mark -
+
+@implementation MigratingLabel
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setBackgroundColor:[UIColor clearColor]];
+        
+        UIView *view = [[UIView alloc] initForAutoLayout];
+        [view setBackgroundColor:[UIColor clearColor]];
+        
+        UILabel *label = [[UILabel alloc] initForAutoLayout];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label setFont:[UIFont systemFontOfSize:14]];
+        [label setTextColor:[UIColor lightGrayTextColor]];
+        [label setTextAlignment:NSTextAlignmentCenter];
+        [view addSubview:label];
+        self.label = label;
+        [self.label autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:view];
+        [self.label autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:view];
+        [self.label autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:view];
+        [self.label setContentHuggingPriority:UILayoutPriorityRequired forAxis:UILayoutConstraintAxisHorizontal];
+        
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [indicator setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [view addSubview:indicator];
+        self.indicatorView = indicator;
+        [self.indicatorView autoPinEdge:ALEdgeLeft toEdge:ALEdgeRight ofView:self.label withOffset:10];
+        [self.indicatorView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:view];
+        [self.indicatorView autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.label];
+        
+        [self addSubview:view];
+        [view autoCenterInSuperview];
+        
+        self.wrappingView = view;
+    }
+    return self;
 }
 
 @end

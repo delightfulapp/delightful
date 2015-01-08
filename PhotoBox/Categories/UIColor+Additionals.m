@@ -34,4 +34,8 @@
     return nil;
 }
 
++ (UIColor *)lightGrayTextColor {
+    return [UIColor colorWithRed:0.769 green:0.769 blue:0.792 alpha:1.000];
+}
+
 @end

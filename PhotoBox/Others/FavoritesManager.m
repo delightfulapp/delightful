@@ -16,6 +16,9 @@
 #define kFavoritesManagerKey @"com.delightful.kFavoritesManagerKey"
 
 NSString *const favoritesTagName = @"Favorites";
+NSString *const FavoritesManagerWillMigratePhotosNotification = @"FavoritesManagerWillMigratePhotosNotification";
+NSString *const FavoritesManagerDidMigratePhotosNotification = @"FavoritesManagerDidMigratePhotosNotification";
+NSString *const FavoritesManagerMigratedPhotosCountKey = @"FavoritesManagerMigratedPhotosCountKey";
 
 @implementation FavoritesManager
 
@@ -45,6 +48,14 @@ NSString *const favoritesTagName = @"Favorites";
     return favoritedPhotosCollectionName;
 }
 
+- (NSInteger)numberOfPhotosToMigrate {
+    __block NSInteger number;
+    [[[DLFDatabaseManager manager] readConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        number = [transaction numberOfKeysInCollection:favoritedPhotosCollectionName];
+    }];
+    return number;
+}
+
 - (BFTask *)migratePreviousFavorites {
     __block NSMutableArray *localFavoritesFromPreviousVersion = [NSMutableArray array];
     BFTaskCompletionSource *migratingTaskSource = [BFTaskCompletionSource taskCompletionSource];
@@ -53,6 +64,12 @@ NSString *const favoritesTagName = @"Favorites";
             [localFavoritesFromPreviousVersion addObject:key];
         }];
     } completionBlock:^{
+        if (localFavoritesFromPreviousVersion.count > 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:FavoritesManagerWillMigratePhotosNotification object:nil userInfo:@{FavoritesManagerMigratedPhotosCountKey: @(localFavoritesFromPreviousVersion.count)}];
+            });
+        }
+        __block NSInteger favoritesCount = localFavoritesFromPreviousVersion.count;
         BFTask *task = [BFTask taskWithResult:nil];
         for (NSString *photoId in localFavoritesFromPreviousVersion) {
             task = [task continueWithBlock:^id(BFTask *t) {
@@ -62,6 +79,10 @@ NSString *const favoritesTagName = @"Favorites";
                     [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
                         [transaction removeObjectForKey:photoId inCollection:favoritedPhotosCollectionName];
                     } completionBlock:^{
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            favoritesCount--;
+                            [[NSNotificationCenter defaultCenter] postNotificationName:FavoritesManagerDidMigratePhotosNotification object:nil userInfo:@{FavoritesManagerMigratedPhotosCountKey: @(favoritesCount)}];
+                        });
                         [taskCompletionSource setResult:object];
                     }];
                     return taskCompletionSource.task;

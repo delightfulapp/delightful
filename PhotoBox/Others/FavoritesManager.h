@@ -10,6 +10,9 @@
 #import <Bolts.h>
 
 extern NSString *const favoritesTagName;
+extern NSString *const FavoritesManagerWillMigratePhotosNotification;
+extern NSString *const FavoritesManagerDidMigratePhotosNotification;
+extern NSString *const FavoritesManagerMigratedPhotosCountKey;
 
 @interface FavoritesManager : DownloadedImageManager
 
@@ -19,5 +22,6 @@ extern NSString *const favoritesTagName;
 - (BFTask *)addPhotoWithId:(NSString *)photo;
 - (BFTask *)removePhotoWithId:(NSString *)photo;
 - (BFTask *)migratePreviousFavorites;
+- (NSInteger)numberOfPhotosToMigrate;
 
 @end
