@@ -51,6 +51,17 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidAppearNotification:) name:UIKeyboardDidShowNotification object:nil];
+     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillDisappearNotification:) name:UIKeyboardDidHideNotification object:nil];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardDidShowNotification object:nil];
+}
+
+- (NSUInteger)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
 }
 
 - (void)didReceiveMemoryWarning
@@ -94,6 +105,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if ([textField.text isValidURL]) {
+        [self restoreKeyboardAndTitleLabel];
         [textField setEnabled:NO];
         [self.activityView startAnimating];
         [self.view endEditing:YES];
@@ -124,6 +136,40 @@
 
 - (void)viewController:(id)viewController didTapDismissButton:(id)sender {
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+}
+
+#pragma mark - Keyboards
+
+- (void)keyboardDidAppearNotification:(NSNotification *)aNotification {
+    NSDictionary* info = [aNotification userInfo];
+    CGRect rect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+    if (CGRectIsNull(CGRectIntersection(rect, self.serverField.frame))) {
+        CGRect frame = self.serverView.frame;
+        CGFloat newOrigin = rect.origin.y - frame.size.height - 10;
+        CGFloat diff = self.serverView.center.y - newOrigin;
+        self.serverViewCenterYConstraint.constant = -diff/2;
+        [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+            [self.delightfulTitleLabel setAlpha:0];
+            [self.delightfulSubtitleLabel setAlpha:0];
+            [self.view layoutIfNeeded];
+        } completion:nil];
+        
+    }
+}
+
+- (void)keyboardWillDisappearNotification:(NSNotification *)notification {
+    if (self.serverViewCenterYConstraint.constant != 0) {
+        [self restoreKeyboardAndTitleLabel];
+    }
+}
+
+- (void)restoreKeyboardAndTitleLabel {
+    self.serverViewCenterYConstraint.constant = 0;
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.6 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        [self.delightfulTitleLabel setAlpha:1];
+        [self.delightfulSubtitleLabel setAlpha:1];
+        [self.view layoutIfNeeded];
+    } completion:nil];
 }
 
 @end

@@ -105,6 +105,11 @@
                     <connections>
                         <outlet property="activityView" destination="2gu-0v-pEg" id="uSZ-k6-j6e"/>
                         <outlet property="backgroundImageView" destination="nrr-cA-3go" id="fyc-zM-c4S"/>
+                        <outlet property="delightfulSubtitleLabel" destination="cpG-xU-tbV" id="tVV-cG-rOf"/>
+                        <outlet property="delightfulTitleLabel" destination="o85-wA-I2t" id="7mQ-Mv-Xwv"/>
+                        <outlet property="serverField" destination="Ejh-My-8b8" id="NO6-d4-tNW"/>
+                        <outlet property="serverView" destination="8u9-Qt-Zwp" id="oud-OT-HKz"/>
+                        <outlet property="serverViewCenterYConstraint" destination="GIm-Pc-OeE" id="PZv-DF-frQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IN0-KN-Xt2" userLabel="First Responder" sceneMemberID="firstResponder"/>
