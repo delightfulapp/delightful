@@ -142,12 +142,12 @@
 
 - (void)keyboardDidAppearNotification:(NSNotification *)aNotification {
     NSDictionary* info = [aNotification userInfo];
-    CGRect rect = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue];
-    if (CGRectIsNull(CGRectIntersection(rect, self.serverField.frame))) {
+    CGRect rect = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    if (!CGRectIsNull(CGRectIntersection(rect, self.serverView.frame))) {
         CGRect frame = self.serverView.frame;
         CGFloat newOrigin = rect.origin.y - frame.size.height - 10;
         CGFloat diff = self.serverView.center.y - newOrigin;
-        self.serverViewCenterYConstraint.constant = -diff/2;
+        self.serverViewCenterYConstraint.constant = diff;
         [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.4 initialSpringVelocity:1 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             [self.delightfulTitleLabel setAlpha:0];
             [self.delightfulSubtitleLabel setAlpha:0];
