@@ -92,6 +92,12 @@
     [super viewDidAppear:animated];
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [self setIsFetching:NO];
+}
+
 
 - (void)pauseSyncing:(BOOL)pause {
     [self setRegisterSyncingNotification:!pause];
@@ -177,6 +183,17 @@
         }
         default:
             break;
+    }
+}
+
+- (void)setIsFetching:(BOOL)isFetching {
+    if (isFetching) {
+        UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:indicator];
+        [self.tabBarController.navigationItem setRightBarButtonItem:item];
+        [indicator startAnimating];
+    } else {
+        [self.tabBarController.navigationItem setRightBarButtonItem:nil];
     }
 }
 
