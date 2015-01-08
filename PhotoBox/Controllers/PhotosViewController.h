@@ -20,9 +20,7 @@ typedef NS_ENUM(NSInteger, PhotosViewControllerState) {
 @interface PhotosViewController : PhotoBoxViewController <CustomAnimationTransitionFromViewControllerDelegate>
 
 @property (nonatomic, assign) PhotosViewControllerState photosViewControllerState;
-
 @property (nonatomic, strong) PhotosCollection *item;
-
 @property (nonatomic, strong) NSString *currentSort;
 
 - (void)selectSort:(NSString *)sort sortTableViewController:(id)sortTableViewController;

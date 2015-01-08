@@ -71,13 +71,14 @@
             self.viewJustDidLoad = NO;
             NSInteger numberOfPhotosToMigrate = [[FavoritesManager sharedManager] numberOfPhotosToMigrate];
             if (numberOfPhotosToMigrate > 0) {
-                NSLog(@"number of photos to migrate = %d", (int)numberOfPhotosToMigrate);
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesManagerMigratePhotosNotification:) name:FavoritesManagerWillMigratePhotosNotification object:nil];
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesManagerMigratePhotosNotification:) name:FavoritesManagerDidMigratePhotosNotification object:nil];
+                [self.refreshControl removeFromSuperview];
             }
             __weak typeof (self) selfie = self;
             [[[FavoritesManager sharedManager] migratePreviousFavorites] continueWithBlock:^id(BFTask *task) {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    [selfie setupRefreshControl];
                     [selfie setRegisterSyncingNotification:YES];
                     [[SyncEngine sharedEngine] startSyncingPhotosInCollection:selfie.item.itemId collectionType:[Tag class] sort:dateUploadedDescSortKey];
                     [[NSNotificationCenter defaultCenter] removeObserver:selfie name:FavoritesManagerWillMigratePhotosNotification object:nil];
@@ -86,19 +87,18 @@
                 
                 return nil;
             }];
-        } else {
-            [self pauseSync:NO];
         }
     }
+    [super viewDidAppear:animated];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [self pauseSync:YES];
-}
 
-- (void)pauseSync:(BOOL)pauseSync {
-    [((YapDataSource *)self.dataSource) setPause:pauseSync];
-    [[SyncEngine sharedEngine] pauseSyncingPhotos:pauseSync collection:favoritesTagName collectionType:[Tag class]];
+- (void)pauseSyncing:(BOOL)pause {
+    [self setRegisterSyncingNotification:!pause];
+    [((YapDataSource *)self.dataSource) setPause:pause];
+    if (self.migratingState == MigratingStateDone) {
+        [[SyncEngine sharedEngine] pauseSyncingPhotos:pause collection:favoritesTagName collectionType:[Tag class]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

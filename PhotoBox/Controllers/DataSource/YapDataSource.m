@@ -142,6 +142,15 @@
     
 }
 
+- (void)setPause:(BOOL)pause {
+    if (_pause != pause) {
+        _pause = pause;
+    }
+    if (!_pause) {
+        [self.collectionView reloadData];
+    }
+}
+
 #pragma mark - Notifications
 
 - (void)yapDatabaseModified:(NSNotification *)notification {
@@ -179,7 +188,7 @@
     };
     
     if (self.pause) {
-        [self.collectionView reloadData];
+        //[self.collectionView reloadData];
         callDelegate();
         return;
     }

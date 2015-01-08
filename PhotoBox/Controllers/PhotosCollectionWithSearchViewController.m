@@ -67,11 +67,6 @@ static char *kSearchBarCenterContext;
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-    NSLog(@"view did disappear in %@", NSStringFromClass(self.class));
-    [((YapDataSource *)self.dataSource) setPause:YES];
-}
-
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.searchBar removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];

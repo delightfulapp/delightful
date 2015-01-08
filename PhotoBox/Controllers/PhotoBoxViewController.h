@@ -56,9 +56,8 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 - (void)setAttributedTitle:(NSAttributedString *)title;
 - (void)restoreContentInset;
 - (void)restoreContentInsetForSize:(CGSize)size;
-
 - (void)userDidLogout;
-
+- (void)setupRefreshControl;
 - (void)showEmptyLoading:(BOOL)show;
 - (void)showEmptyLoading:(BOOL)show withText:(id)text;
 - (void)showNoItems:(BOOL)show;
