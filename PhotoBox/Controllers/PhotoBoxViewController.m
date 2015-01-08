@@ -7,15 +7,12 @@
 //
 
 #import "PhotoBoxViewController.h"
-
 #import "ConnectionManager.h"
-
 #import "PhotoBoxCell.h"
 #import "PhotoBoxModel.h"
 #import "Photo.h"
 #import "Album.h"
 #import "Tag.h"
-
 #import "UIViewController+Additionals.h"
 #import "UIScrollView+Additionals.h"
 #import "NSArray+Additionals.h"

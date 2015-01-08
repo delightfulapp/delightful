@@ -149,30 +149,42 @@
 - (void)setMigratingState:(MigratingState)migratingState {
     if (_migratingState != migratingState) {
         _migratingState = migratingState;
-        
-        switch (_migratingState) {
-            case MigratingStateDone:{
-                [self setAutomaticallyAdjustsScrollViewInsets:YES];
-                [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, 0, 0, 0)];
-                [self.migratingLabel setHidden:YES];
-                break;
-            }
-            case MigratingStateRunning:{
-                [self setAutomaticallyAdjustsScrollViewInsets:NO];
-                [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height + 50, 0, 0, 0)];
-                [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top) animated:YES];
-                
-                if (!self.migratingLabel) {
-                    self.migratingLabel = [[MigratingLabel alloc] initWithFrame:CGRectMake(0, -50, self.collectionView.frame.size.width, 50)];
-                    [self.collectionView addSubview:self.migratingLabel];
-                }
-                [self.migratingLabel setHidden:NO];
-                break;
-            }
-            default:
-                break;
-        }
     }
+    
+    [self didChangeMigratingState];
+}
+
+- (void)didChangeMigratingState {
+    switch (self.migratingState) {
+        case MigratingStateDone:{
+            [self setAutomaticallyAdjustsScrollViewInsets:YES];
+            [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height, 0, 0, 0)];
+            [self.migratingLabel setHidden:YES];
+            break;
+        }
+        case MigratingStateRunning:{
+            [self setAutomaticallyAdjustsScrollViewInsets:NO];
+            BOOL adjustOffset = self.collectionView.contentOffset.y == -self.collectionView.contentInset.top;
+            [self.collectionView setContentInset:UIEdgeInsetsMake(self.navigationController.navigationBar.frame.size.height + [[UIApplication sharedApplication] statusBarFrame].size.height + 50, 0, 0, 0)];
+            if (adjustOffset) [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top) animated:YES];
+            
+            if (!self.migratingLabel) {
+                self.migratingLabel = [[MigratingLabel alloc] initWithFrame:CGRectMake(0, -50, self.collectionView.frame.size.width, 50)];
+                [self.collectionView addSubview:self.migratingLabel];
+            }
+            [self.migratingLabel setHidden:NO];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+#pragma mark - Rotation
+
+- (void)dlf_viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super dlf_viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [self.migratingLabel setFrame:CGRectMake(0, -50, size.width, 50)];
 }
 
 #pragma mark - <UICollectionViewDelegateFlowLayout>

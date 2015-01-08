@@ -10,6 +10,7 @@
 
 #import "PhotoBoxClient.h"
 #import "CollectionViewDataSource.h"
+#import "MainTabBarController.h"
 
 extern NSString *const galleryContainerType;
 
@@ -20,7 +21,7 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 
 @class PhotoBoxModel;
 
-@interface PhotoBoxViewController : UIViewController <UIScrollViewDelegate>
+@interface PhotoBoxViewController : UIViewController <UIScrollViewDelegate, ViewControllerTransitionToSizeDelegate>
 
 @property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, assign) ResourceType resourceType;
