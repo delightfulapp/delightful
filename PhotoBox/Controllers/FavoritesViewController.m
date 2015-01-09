@@ -66,6 +66,7 @@
         }
         
         [((YapDataSource *)self.dataSource) setPause:NO];
+        [self.refreshControl removeFromSuperview];
         
         if (self.viewJustDidLoad) {
             self.viewJustDidLoad = NO;
@@ -73,7 +74,6 @@
             if (numberOfPhotosToMigrate > 0) {
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesManagerMigratePhotosNotification:) name:FavoritesManagerWillMigratePhotosNotification object:nil];
                 [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(favoritesManagerMigratePhotosNotification:) name:FavoritesManagerDidMigratePhotosNotification object:nil];
-                [self.refreshControl removeFromSuperview];
             }
             __weak typeof (self) selfie = self;
             [[[FavoritesManager sharedManager] migratePreviousFavorites] continueWithBlock:^id(BFTask *task) {
