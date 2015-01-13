@@ -619,7 +619,7 @@ detailViewController:(DLFDetailViewController *)detailViewController
 #pragma mark - Tags Albums Picker View Controller Delegate
 
 - (void)tagsAlbumsPickerViewController:(TagsAlbumsPickerViewController *)tagsAlbumsPickerViewController didFinishSelectTagsAndAlbum:(NSArray *)assets {
-    [self dismissViewControllerAnimated:YES completion:^{
+    [self.presentedViewController dismissViewControllerAnimated:YES completion:^{
         CLS_LOG(@"+++ Gonna show upload view");
         UploadViewController *uploadVC = [[UploadViewController alloc] init];
         [uploadVC setDelegate:self];
