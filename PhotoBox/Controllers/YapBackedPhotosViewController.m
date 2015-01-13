@@ -31,6 +31,7 @@
     self.isDoneSyncing = NO;
     [self showNoItems:NO];
     [self showEmptyLoading:YES];
+    [(YapDataSource *)self.dataSource setPause:YES];
     
     [[SyncEngine sharedEngine] pauseSyncingPhotos:YES collection:(self.item?self.item.itemId:nil) collectionType:self.item.class];
     
@@ -40,8 +41,11 @@
         [((GroupedPhotosDataSource *)self.dataSource).mainConnection readWithBlock:^(YapDatabaseReadTransaction *transaction) {
             [((GroupedPhotosDataSource *)self.dataSource).selectedViewMapping.mapping updateWithTransaction:transaction];
         }];
-        [self.collectionView reloadData];
-        [self.refreshControl endRefreshing];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [(YapDataSource *)self.dataSource setPause:NO];
+            [self.refreshControl endRefreshing];
+        });
+        
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             CLS_LOG(@"refreshing now");
             [[SyncEngine sharedEngine] refreshPhotosInCollection:(self.item?self.item.itemId:nil) collectionType:(self.item?self.item.class:nil) sort:self.currentSort];

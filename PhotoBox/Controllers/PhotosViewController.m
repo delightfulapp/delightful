@@ -118,8 +118,12 @@
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:self.currentSort];
     } else {
         NSLog(@"----> view did appear");
+        
         if ([self doneUploadingNeedRefresh]) {
+            CLS_LOG(@"view did appear need refresh after uploading");
             self.doneUploadingNeedRefresh = NO;
+            [self setRegisterSyncingNotification:YES];
+            [((YapDataSource *)self.dataSource) setPause:NO];
             [self refresh];
         } else {
             [self pauseSyncing:NO];
@@ -665,7 +669,7 @@ detailViewController:(DLFDetailViewController *)detailViewController
 - (void)uploadViewControllerDidFinishUploading:(UploadViewController *)uploadViewController {
     [uploadViewController dismissViewControllerAnimated:YES completion:^{
         CLS_LOG(@"+++ did finish uploading and closing upload vc");
-        [self refresh];
+           [self refresh];
     }];
 }
 
