@@ -12,7 +12,7 @@
 #import "PhotoBoxClient.h"
 #import <YapDatabase.h>
 #import <YapDatabaseViewOptions.h>
-#import <DLFYapDatabaseViewAndMapping.h>
+#import "DLFYapDatabaseViewAndMapping.h"
 #define kFavoritesManagerKey @"com.delightful.kFavoritesManagerKey"
 
 NSString *const favoritesTagName = @"Favorites";

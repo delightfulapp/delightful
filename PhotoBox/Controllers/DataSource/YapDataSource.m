@@ -23,6 +23,7 @@
 - (id)initWithCollectionView:(id)collectionView {
     self = [super initWithCollectionView:collectionView];
     if (self) {
+        _pause = YES;
         [self setupDatabase];
         [self setupMapping];
         [self setDefaultMapping];
