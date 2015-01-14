@@ -70,6 +70,10 @@
 - (void)setImageSize:(CGSize)size {
     self.scrollView.zoomScale = 1;
     
+    if (CGSizeEqualToSize(size, CGSizeZero)) {
+        return;
+    }
+    
     self.thisImageview.frame = ({
         CGRect frame = self.thisImageview.frame;
         frame.size = size;
@@ -78,7 +82,7 @@
     [self.thisImageview setNeedsLayout];
     [self.scrollView setContentSize:CGSizeMake(size.width, size.height)];
     
-    self.scrollView.minimumZoomScale = ({
+    CGFloat minimumZoomScale = ({
         CGRect scrollViewFrame = self.scrollView.frame;
         CGFloat scaleWidth = scrollViewFrame.size.width / self.scrollView.contentSize.width;
         CGFloat scaleHeight = scrollViewFrame.size.height / self.scrollView.contentSize.height;
@@ -94,9 +98,11 @@
         CGFloat maxScale = MAX(scaleWidth, scaleHeight);
         maxScale;
     });
-    self.scrollView.maximumZoomScale = MAX(maxScale, maxZoomScaleFillScreen);
-    CGFloat min = self.scrollView.minimumZoomScale;
-    self.scrollView.zoomScale = MIN(min, 1);
+    self.scrollView.maximumZoomScale = MIN(MAX(maxScale, maxZoomScaleFillScreen), 1);
+    self.scrollView.minimumZoomScale = MIN(minimumZoomScale, 1);
+    
+    self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
+    
     [self centerScrollViewContents];
 }
 
@@ -155,7 +161,12 @@
     
     if (self.thisImageview.image && self.thisImageview.image.size.width > 0) {
         Photo *photo = (Photo *)self.item;
-        [self setImageSize:CGSizeMake(photo.normalImage.width.floatValue, photo.normalImage.height.floatValue)];
+        if (photo.normalImage) {
+            [self setImageSize:CGSizeMake(photo.normalImage.width.floatValue, photo.normalImage.height.floatValue)];
+        } else {
+            [self setImageSize:CGSizeMake(photo.originalImage.width.floatValue, photo.originalImage.height.floatValue)];
+        }
+        
     }
     
 }
@@ -225,27 +236,37 @@
         
         Photo *photo = (Photo *)item;
         
-        if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
-            self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
-            CGFloat width, height;
-            NSURL *URL;
-            width = [photo.normalImage.width floatValue];
-            height = [photo.normalImage.height floatValue];
-            URL = [NSURL URLWithString:photo.normalImage.urlString];
-            [self setImageSize:CGSizeMake(width, height)];
-            [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-            [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
-            UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
-            if (!placeholderImage) {
-                placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
+        if (photo.normalImage) {
+            if (![self.thumbnailURL.absoluteString isEqualToString:photo.normalImage.urlString]) {
+                self.thumbnailURL = [NSURL URLWithString:photo.normalImage.urlString];
+                CGFloat width, height;
+                NSURL *URL;
+                width = [photo.normalImage.width floatValue];
+                height = [photo.normalImage.height floatValue];
+                URL = [NSURL URLWithString:photo.normalImage.urlString];
+                [self setImageSize:CGSizeMake(width, height)];
+                [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+                [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
+                UIImage *placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.thumbnailImage.urlString]]];
                 if (!placeholderImage) {
-                    placeholderImage = photo.asAlbumCoverImage;
+                    placeholderImage = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:photo.photo200x200.urlString]]];
                     if (!placeholderImage) {
-                        placeholderImage = photo.placeholderImage;
+                        placeholderImage = photo.asAlbumCoverImage;
+                        if (!placeholderImage) {
+                            placeholderImage = photo.placeholderImage;
+                        }
                     }
                 }
+                [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
             }
-            [self.thisImageview npr_setImageWithURL:URL placeholderImage:placeholderImage];
+        } else {
+            if (photo.originalImage) {
+                CGSize size = CGSizeMake(photo.originalImage.width.floatValue, photo.originalImage.height.floatValue);
+                [self setImageSize:size];
+                [[self.thisImageview npr_activityView] setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+                [[self.thisImageview npr_activityView] setColor:[UIColor redColor]];
+                [self.thisImageview npr_setImageWithURL:[NSURL URLWithString:photo.originalImage.urlString] placeholderImage:nil];
+            }
         }
     }
    

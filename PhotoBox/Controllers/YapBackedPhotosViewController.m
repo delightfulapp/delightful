@@ -30,6 +30,7 @@
     [super viewWillAppear:animated];
     if (!self.viewJustDidLoad) {
         [self.collectionView reloadData];
+        [self.collectionView layoutIfNeeded];
     }
 }
 
