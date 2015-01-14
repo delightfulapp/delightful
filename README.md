@@ -32,7 +32,7 @@ Features (so far)
 6. Browse All Photos.
 7. Parallax effect on login page!
 8. Offline viewing.
-9. Share your Trovebox Photo's URL to Twitter/Facebook/Email.
+9. Share your Trovebox Photo's URL or original photo to Twitter/Facebook/Email.
 10. View photo's camera data and tags.
 11. 1password extension.
 12. Sort photos, albums, and tags.
@@ -40,6 +40,37 @@ Features (so far)
 14. Portrait and landscape mode.
 15. iPhone 6 plus ready.
 16. iOS 8 ready.
+17. Smart tags. Automatically tag photos based on photos' metadata when uploading.
+18. Guest login. Access a Trovebox server without logging in. You can only see public photos, albums, and tags; You cannot upload as guest either.
+
+What's New in 2.1.0
+--
+
+New Features:
+
+- Optional Title and Description for photos to upload.
+- Option to resize photos after upload to save storage space in your device.
+- Remember user’s choice on Resize after upload option.
+- Guest access. User can skip login but will only see public photos/albums/tags and cannot upload.
+- Favoriting a photo will tag the photo with “Favorites” tag. 
+- Migrate previous locally favorited photos to Favorites tag
+- Show indicator when migrating favorites.
+- Show indicator when syncing favorites.
+- Separate share link and share image.
+- Loading indicator on title view to indicate synchronization in operation.
+
+Bug Fixes:
+
+- Fix photos selection bug where sometimes photo got deselected.
+- Fix selected cell not visible when returning from full screen photos.
+- Fix crash when returning to Favorites after refreshing All Photos.
+- Fix crash after upload.
+- Fix 4S login
+- Fix refresh control not hiding in Favorites.
+- Fix stuck in launching.
+- Fix the crash when returning to the app after changing photos library (delete/insert/recover photos).
+- Fix bugs in title’s loading indicator.
+- Fix scrolling bug in iPhone 6 plus.
 
 Requirements
 --
@@ -52,8 +83,9 @@ How to
 --
 
 1. After cloning: `pod install`
-2. Open `PhotoBox.xcworkspace`.
+2. Open `Delightful.xcworkspace`.
 2. Build and run!
+
 
 Contact
 --
