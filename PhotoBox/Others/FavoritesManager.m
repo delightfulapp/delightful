@@ -156,8 +156,10 @@ NSString *const FavoritesManagerMigratedPhotosCountKey = @"FavoritesManagerMigra
         Photo *savedPhoto = [transaction objectForKey:photo.photoId inCollection:photosCollectionName];
         if (savedPhoto) {
             [savedPhoto setValue:photo.tags forKey:NSStringFromSelector(@selector(tags))];
+            [transaction setObject:savedPhoto forKey:photo.photoId inCollection:photosCollectionName];
+        } else {
+            [transaction setObject:photo forKey:photo.photoId inCollection:photosCollectionName];
         }
-        [transaction setObject:savedPhoto forKey:photo.photoId inCollection:photosCollectionName];
     } completionBlock:^{
         if (completion) {
             completion();

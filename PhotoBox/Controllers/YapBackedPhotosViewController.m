@@ -26,6 +26,13 @@
 
 @implementation YapBackedPhotosViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (!self.viewJustDidLoad) {
+        [self.collectionView reloadData];
+    }
+}
+
 - (void)refresh {
     CLS_LOG(@"Refresh in %@", self.item?self.item.itemId:@"all photos");
     self.isDoneSyncing = NO;

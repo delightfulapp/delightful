@@ -98,7 +98,6 @@
     [self setIsFetching:NO];
 }
 
-
 - (void)pauseSyncing:(BOOL)pause {
     [self setRegisterSyncingNotification:!pause];
     [((YapDataSource *)self.dataSource) setPause:pause];

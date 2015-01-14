@@ -58,7 +58,6 @@
 @property (nonatomic, weak) NoPhotosView *noPhotosView;
 @property (nonatomic, strong) NSMutableArray *uploadingPhotos;
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
-@property (nonatomic, assign) BOOL viewJustDidLoad;
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 @property (nonatomic, assign) BOOL doneUploadingNeedRefresh;
 
