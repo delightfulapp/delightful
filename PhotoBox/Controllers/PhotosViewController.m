@@ -509,7 +509,6 @@
 - (void)photosHorizontalScrollingViewController:(PhotosHorizontalScrollingViewController *)viewController didChangePage:(NSInteger)page item:(Photo *)item {
     self.selectedItem = item;
     NSIndexPath *indexPath = [self.dataSource indexPathOfItem:self.selectedItem];
-    NSLog(@"index path of new selected item %@", indexPath);
     if (indexPath) {
         if (indexPath.section < [self.collectionView numberOfSections]) {
             [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
@@ -530,6 +529,7 @@
         for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
             [cell setAlpha:1];
         }
+        [selectedCell setAlpha:1];
         self.selectedItem = nil;
     }];
 }

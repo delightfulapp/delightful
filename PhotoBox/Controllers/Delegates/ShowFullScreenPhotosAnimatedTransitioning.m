@@ -137,7 +137,6 @@
     [viewToAnimate removeFromSuperview];
     [containerView insertSubview:viewToAnimate belowSubview:fromVCContainer.view];
     
-    
     [fromVC.view setAlpha:0];
     
     // set the frame of the image view in container's view coordinate
