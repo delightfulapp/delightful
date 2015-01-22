@@ -2392,7 +2392,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "ecb1eda6-333a-4d98-997f-f53740ecd8bc";
+				PROVISIONING_PROFILE = "a24ea274-758f-4eb6-a48d-2113e598602b";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2451,7 +2451,7 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "e30292a2-be45-4136-b5a6-fdb72f61fca0";
+				PROVISIONING_PROFILE = "a2431d20-6ac6-48d0-885c-baecb181c849";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
