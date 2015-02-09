@@ -76,7 +76,11 @@
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
-    self.numberOfColumns = 3;
+    if (IS_IPAD) {
+        self.numberOfColumns = 6;
+    } else {
+        self.numberOfColumns = 3;
+    }
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     

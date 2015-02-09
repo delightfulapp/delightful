@@ -2393,6 +2393,7 @@
 				);
 				PRODUCT_NAME = "Delightful";
 				PROVISIONING_PROFILE = "a24ea274-758f-4eb6-a48d-2113e598602b";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2452,6 +2453,7 @@
 				);
 				PRODUCT_NAME = "Delightful";
 				PROVISIONING_PROFILE = "a2431d20-6ac6-48d0-885c-baecb181c849";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

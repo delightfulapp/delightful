@@ -57,7 +57,11 @@ NSString *const galleryContainerType = @"gallery";
     
     [self.dataSource setDebugName:NSStringFromClass([self class])];
     
-    self.numberOfColumns = 3;
+    if (IS_IPAD) {
+        self.numberOfColumns = 6;
+    } else {
+        self.numberOfColumns = 3;
+    }
     
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
