@@ -60,6 +60,7 @@
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 @property (nonatomic, assign) BOOL doneUploadingNeedRefresh;
+@property (nonatomic, assign) BOOL _showRightBarButtonItem;
 
 @end
 
@@ -152,24 +153,35 @@
 
 #pragma mark - Buttons
 
+
 - (void)showRightBarButtonItem:(BOOL)show {
-    [super showRightBarButtonItem:show];
-    
-    if (IS_IPAD) {
+    if (__showRightBarButtonItem != show) {
+        __showRightBarButtonItem = show;
         if (show) {
-            UIBarButtonItem *layoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Layout" style:UIBarButtonItemStylePlain target:self action:@selector(changeLayout:)]
-            ;
-            NSMutableArray *buttons = [self.navigationItem.rightBarButtonItems mutableCopy];
-            if (buttons.count == 1) {
-                [buttons addObject:layoutButton];
-                [self.navigationItem setRightBarButtonItems:buttons];
+            if (IS_IPAD) {
+                UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
+                UIImage *layoutButtonImage;
+                if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+                    layoutButtonImage = [UIImage imageNamed:@"balance-layout"];
+                } else if ([self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
+                    layoutButtonImage = [UIImage imageNamed:@"normal-layout"];
+                }
+                UIBarButtonItem *layoutItem = [[UIBarButtonItem alloc] initWithImage:layoutButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(changeLayout:)];
+                [self.navigationItem setRightBarButtonItems:@[leftItem, layoutItem]];
+            } else {
+                if (!self.navigationItem.rightBarButtonItem) {
+                    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
+                    [self.navigationItem setRightBarButtonItem:leftItem];
+                }
             }
+        } else {
+            [self.navigationItem setRightBarButtonItems:nil];
         }
     }
-    
 }
 
-- (void)changeLayout:(id)sender {
+- (void)changeLayout:(UIBarButtonItem *)sender {
+    [sender setEnabled:NO];
     NSIndexPath *indexPath;
     NSArray *visibleCell = [self.collectionView visibleCells];
     CGFloat minimumVisibleY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
@@ -186,16 +198,21 @@
             }
         }
     }
-    
     if (![self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
         NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
         [balancedLayout setPreferredRowSize:self.collectionView.frame.size.height/5];
         [balancedLayout setTargetIndexPath:indexPath];
-        [self.collectionView setCollectionViewLayout:balancedLayout animated:YES];
+        [self.collectionView setCollectionViewLayout:balancedLayout animated:YES completion:^(BOOL finished) {
+            [sender setImage:[UIImage imageNamed:@"normal-layout"]];
+            [sender setEnabled:YES];
+        }];
     } else {
         StickyHeaderFlowLayout *sticky = [[StickyHeaderFlowLayout alloc] init];
         [sticky setTargetIndexPath:indexPath];
-        [self.collectionView setCollectionViewLayout:sticky animated:YES];
+        [self.collectionView setCollectionViewLayout:sticky animated:YES completion:^(BOOL finished) {
+            [sender setImage:[UIImage imageNamed:@"balance-layout"]];
+            [sender setEnabled:YES];
+        }];
     }
 }
 
