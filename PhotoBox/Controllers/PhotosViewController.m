@@ -286,24 +286,6 @@
     }
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CLS_LOG(@"will begin dragging");
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!decelerate) {
-        CLS_LOG(@"end dragging");
-    }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    CLS_LOG(@"did end scrolling animation");
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CLS_LOG(@"did end decelerating");
-}
-
 #pragma mark - Override
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
