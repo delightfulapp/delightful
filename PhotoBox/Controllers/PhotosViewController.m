@@ -22,7 +22,6 @@
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
 #import "AppDelegate.h"
-#import "DelightfulLayout.h"
 #import "GroupedPhotosDataSource.h"
 #import "Photo.h"
 #import "Album.h"
@@ -43,6 +42,7 @@
 #import "SortingConstants.h"
 #import "DLFDatabaseManager.h"
 #import "PHPhotoLibrary+Additionals.h"
+#import "NHBalancedFlowLayout.h"
 #import <UIView+AutoLayout.h>
 #import <DLFPhotoCell.h>
 #import <DLFPhotosPickerViewController.h>
@@ -50,7 +50,7 @@
 
 #define UPLOADED_MARK_TAG 123456910
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate, NHBalancedFlowLayoutDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -77,7 +77,7 @@
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     if (IS_IPAD) {
-        self.numberOfColumns = 6;
+        self.numberOfColumns = 4;
     } else {
         self.numberOfColumns = 3;
     }
@@ -120,10 +120,7 @@
         [self selectSort:self.currentSort sortTableViewController:nil];
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:self.currentSort];
     } else {
-        NSLog(@"----> view did appear");
-        
         if ([self doneUploadingNeedRefresh]) {
-            CLS_LOG(@"view did appear need refresh after uploading");
             self.doneUploadingNeedRefresh = NO;
             [self setRegisterSyncingNotification:YES];
             [((YapDataSource *)self.dataSource) setPause:NO];
@@ -154,6 +151,53 @@
 }
 
 #pragma mark - Buttons
+
+- (void)showRightBarButtonItem:(BOOL)show {
+    [super showRightBarButtonItem:show];
+    
+    if (IS_IPAD) {
+        if (show) {
+            UIBarButtonItem *layoutButton = [[UIBarButtonItem alloc] initWithTitle:@"Layout" style:UIBarButtonItemStylePlain target:self action:@selector(changeLayout:)]
+            ;
+            NSMutableArray *buttons = [self.navigationItem.rightBarButtonItems mutableCopy];
+            if (buttons.count == 1) {
+                [buttons addObject:layoutButton];
+                [self.navigationItem setRightBarButtonItems:buttons];
+            }
+        }
+    }
+    
+}
+
+- (void)changeLayout:(id)sender {
+    NSIndexPath *indexPath;
+    NSArray *visibleCell = [self.collectionView visibleCells];
+    CGFloat minimumVisibleY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+    for (UICollectionViewCell *cell in visibleCell) {
+        if (cell.frame.origin.y > minimumVisibleY) {
+            if (!indexPath) {
+                indexPath = [self.collectionView indexPathForCell:cell];
+            } else {
+                NSIndexPath *thisIndexPath = [self.collectionView indexPathForCell:cell];
+                NSComparisonResult result = [thisIndexPath compare:indexPath];
+                if (result == NSOrderedAscending) {
+                    indexPath = thisIndexPath;
+                }
+            }
+        }
+    }
+    
+    if (![self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
+        NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
+        [balancedLayout setPreferredRowSize:self.collectionView.frame.size.height/5];
+        [balancedLayout setTargetIndexPath:indexPath];
+        [self.collectionView setCollectionViewLayout:balancedLayout animated:YES];
+    } else {
+        StickyHeaderFlowLayout *sticky = [[StickyHeaderFlowLayout alloc] init];
+        [sticky setTargetIndexPath:indexPath];
+        [self.collectionView setCollectionViewLayout:sticky animated:YES];
+    }
+}
 
 - (void)didTapSortButton:(id)sender {
     SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -212,6 +256,11 @@
     if (sortTableViewController) {
         [sortTableViewController dismissViewControllerAnimated:YES completion:^{
             [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:nil];
+//            if ([self.collectionView.collectionViewLayout respondsToSelector:@selector(needToResetFrames)]) {
+//                [((id)self.collectionView.collectionViewLayout) setNeedToResetFrames:YES];
+//                [self.collectionView.collectionViewLayout invalidateLayout];
+//            }
+            
         }];
     } else {
         [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:nil];
@@ -362,7 +411,7 @@
     if (_numberOfColumns != numberOfColumns) {
         _numberOfColumns = numberOfColumns;
                 
-        DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
+        StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
         [layout setNumberOfColumns:_numberOfColumns];
     }
 }
@@ -393,22 +442,16 @@
     
 }
 
-#pragma mark - Collection view flow layout delegate
+#pragma mark - <NHBalancedFlowLayoutDelegate>
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (self.numberOfColumns == 1) {
-        return UIEdgeInsetsMake(5, 0, 0, 0);
-    }
-    return UIEdgeInsetsZero;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if (section == [((GroupedPhotosDataSource *)self.dataSource) numberOfSectionsInCollectionView:collectionView]-1) {
-        if (self.isFetching) {
-            return CGSizeMake(CGRectGetWidth(collectionView.frame), 54);
-        }
-    }
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), 0);
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(NHBalancedFlowLayout *)collectionViewLayout preferredSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    Photo *photo = [self.dataSource itemAtIndexPath:indexPath];
+    CGSize size = CGSizeMake([photo.width floatValue], [photo.height floatValue]);
+    CGFloat preferredHeight = 200;
+    CGFloat width = preferredHeight * size.width/size.height;
+    CGSize preferredSize = CGSizeMake(width, preferredHeight);
+    //NSLog(@"size for %@ = %@", indexPath, NSStringFromCGSize(preferredSize));
+    return preferredSize;
 }
 
 #pragma mark - Collection view delegate

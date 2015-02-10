@@ -87,6 +87,8 @@
             [self setIsFetching:NO];
             
             self.isDoneSyncing = YES;
+        } else {
+            [self setIsFetching:YES];
         }
     }
 }

@@ -8,80 +8,229 @@
 
 #import "StickyHeaderFlowLayout.h"
 
-@interface StickyHeaderFlowLayout ()
+@interface StickyHeaderFlowLayout () {
+    CGRect **_itemFrameSections;
+    NSInteger _numberOfItemFrameSections;
+}
 
 @property (nonatomic, strong) NSMutableArray *insertIndexPaths;
+@property (nonatomic) CGSize contentSize;
+@property (nonatomic, strong) NSMutableDictionary *layoutAttributesIndexPath;
+@property (nonatomic, strong) NSMutableDictionary *layoutAttributesHeader;
+@property (nonatomic, strong) NSArray *headerFrames;
 
 @end
 
 @implementation StickyHeaderFlowLayout
 
-
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
-    //CLS_LOG(@"Layout attributes in rect %@", NSStringFromCGRect(rect));
-    NSMutableArray *answer = [[super layoutAttributesForElementsInRect:rect] mutableCopy];
-    
-    NSIndexSet *missingSections = [self missingSectionsForAttributes:answer];
-    
-    [answer addObjectsFromArray:[self layoutAttributesForMissingSectionsHeaders:missingSections]];
-    
-    // for each attributes including the missing header section's attribute
-    for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
-        
-        // if the attribute is header
-        if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-            [self adjustHeaderLayoutAttributes:layoutAttributes];
-        }  else {
-            layoutAttributes.zIndex = 0;
+- (void)clearItemFrames
+{
+    // free all item frame arrays
+    if (NULL != _itemFrameSections) {
+        for (NSInteger i = 0; i < _numberOfItemFrameSections; i++) {
+            CGRect *frames = _itemFrameSections[i];
+            free(frames);
         }
+        
+        free(_itemFrameSections);
+        _itemFrameSections = NULL;
     }
     
-    return answer;
+    [self.layoutAttributesIndexPath removeAllObjects];
+    [self.layoutAttributesHeader removeAllObjects];
 }
 
-- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+- (void)dealloc
+{
+    [self clearItemFrames];
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        [self initialize];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self initialize];
+    }
     
-    UICollectionViewLayoutAttributes *attr = [super layoutAttributesForSupplementaryViewOfKind:elementKind atIndexPath:indexPath];
+    return self;
+}
+
+- (void)initialize
+{
+    // set to NULL so it is not released by accident in dealloc
+    _itemFrameSections = NULL;
+    _layoutAttributesIndexPath = [NSMutableDictionary dictionary];
+    _layoutAttributesHeader = [NSMutableDictionary dictionary];
+    self.sectionInset = UIEdgeInsetsZero;
+    self.minimumLineSpacing = 1;
+    self.minimumInteritemSpacing = 1;
+    self.headerReferenceSize = CGSizeZero;
+    self.footerReferenceSize = CGSizeZero;
+    self.scrollDirection = UICollectionViewScrollDirectionVertical;
+}
+
+#pragma mark - Layout
+
+- (void)prepareLayout
+{
+    [super prepareLayout];
     
-    if ([elementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-        [self adjustHeaderLayoutAttributes:attr];
-    } else {
-        //CLS_LOG(@"Layout attributes for footer at %d-%d = %@", (int)indexPath.section, (int)indexPath.row, attr);
-        if (!attr) {
-            attr = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:elementKind withIndexPath:indexPath];
+    self.numberOfColumns = (IS_IPAD)?4:3;
+    
+    NSMutableArray *headerFrames = [NSMutableArray array];
+    
+    CGSize contentSize = CGSizeZero;
+    
+    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
+    CGFloat cols = [self numberOfColumnsForCurrentSize];
+    CGFloat width = (collectionViewWidth - (cols+1)*self.minimumInteritemSpacing)/cols;
+    CGSize itemSize = CGSizeMake(width, width);
+    
+    // first release old item frame sections
+    [self clearItemFrames];
+    
+    // create new item frame sections
+    _numberOfItemFrameSections = [self.collectionView numberOfSections];
+    _itemFrameSections = (CGRect **)malloc(sizeof(CGRect *) * _numberOfItemFrameSections);
+    
+    for (int section = 0; section < [self.collectionView numberOfSections]; section++) {
+        // add new item frames array to sections array
+        NSInteger numberOfItemsInSections = [self.collectionView numberOfItemsInSection:section];
+        CGRect *itemFrames = (CGRect *)malloc(sizeof(CGRect) * numberOfItemsInSections);
+        _itemFrameSections[section] = itemFrames;
+        
+        CGSize headerSize = CGSizeMake(self.collectionView.frame.size.width, 44);
+        
+        CGRect headerFrame = CGRectMake(0, contentSize.height, CGRectGetWidth(self.collectionView.bounds), headerSize.height);
+        [headerFrames addObject:[NSValue valueWithCGRect:headerFrame]];
+        
+        CGPoint sectionOffset = CGPointMake(0, contentSize.height + headerSize.height);
+        
+        CGSize sectionSize = [self setFrames:itemFrames forItemsInSection:section numberOfColumns:cols sectionOffset:sectionOffset itemSize:itemSize];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+        UICollectionViewLayoutAttributes *headerAttributes = [self.layoutAttributesHeader objectForKey:indexPath];
+        if (!headerAttributes) {
+            headerAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader withIndexPath:indexPath];
+        }
+        headerAttributes.frame = headerFrame;
+        headerAttributes.zIndex = 100000;
+        [self.layoutAttributesHeader setObject:headerAttributes forKey:indexPath];
+        contentSize = CGSizeMake(sectionSize.width, contentSize.height + headerSize.height + sectionSize.height);
+    }
+    
+    self.headerFrames = [headerFrames copy];
+    
+    self.contentSize = contentSize;
+}
+
+- (CGSize)setFrames:(CGRect *)frames forItemsInSection:(NSInteger)section numberOfColumns:(NSUInteger)numberOfColumns sectionOffset:(CGPoint)sectionOffset itemSize:(CGSize)itemSize
+{
+    
+    CGPoint offset = CGPointMake(sectionOffset.x + self.sectionInset.left + self.minimumInteritemSpacing, sectionOffset.y + self.sectionInset.top);
+    
+    NSInteger numberOfItemsInSection = [self.collectionView.dataSource collectionView:self.collectionView numberOfItemsInSection:section];
+    
+    CGFloat sectionHeight = 0;
+    
+    for (int j=0; j<numberOfItemsInSection; j++) {
+        CGRect f = (CGRect){.origin = CGPointZero, itemSize};
+        int row = j/numberOfColumns;
+        CGFloat originY = offset.y + row * (itemSize.height + self.minimumLineSpacing);
+        int col = j%numberOfColumns;
+        CGFloat originX = offset.x + col * (itemSize.width + self.minimumInteritemSpacing);
+        f.origin = CGPointMake(originX, originY);
+        *frames++ = f;
+        
+        sectionHeight = MAX(sectionHeight, CGRectGetMaxY(f));
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:section];
+        UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+        attr.frame = f;
+        attr.zIndex = 0;
+        [self.layoutAttributesIndexPath setObject:attr forKey:indexPath];
+    }
+    
+    
+    
+    return CGSizeMake(self.collectionView.frame.size.width, sectionHeight - sectionOffset.y);
+}
+
+- (CGSize)collectionViewContentSize
+{
+    return CGSizeMake(self.contentSize.width, self.contentSize.height + (self.showLoadingView?LOADING_VIEW_HEIGHT:0));
+}
+
+- (CGRect)headerFrameForSection:(NSInteger)section
+{
+    return [[self.headerFrames objectAtIndex:section] CGRectValue];
+}
+
+- (CGRect)itemFrameForIndexPath:(NSIndexPath *)indexPath
+{
+    return _itemFrameSections[indexPath.section][indexPath.item];
+}
+
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
+    NSMutableArray *layoutAttributes = [NSMutableArray array];
+    
+    for (NSInteger section = 0, n = [self.collectionView numberOfSections]; section < n; section++) {
+        NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+        
+        UICollectionViewLayoutAttributes *headerAttributes = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:sectionIndexPath];
+        
+        if (! CGSizeEqualToSize(headerAttributes.frame.size, CGSizeZero) && CGRectIntersectsRect(headerAttributes.frame, rect)) {
+            [layoutAttributes addObject:headerAttributes];
+        }
+        
+        for (int i = 0; i < [self.collectionView numberOfItemsInSection:section]; i++) {
+            CGRect itemFrame = _itemFrameSections[section][i];
+            if (CGRectIntersectsRect(rect, itemFrame)) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:section];
+                UICollectionViewLayoutAttributes *layoutAttr = [self layoutAttributesForItemAtIndexPath:indexPath];
+                layoutAttr.zIndex = 0;
+                [layoutAttributes addObject:layoutAttr];
+            }
         }
     }
     
-    return attr;
+    return layoutAttributes;
+}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attributes;
+    
+    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        attributes = [self.layoutAttributesHeader objectForKey:indexPath];
+        [self adjustHeaderLayoutAttributes:attributes];
+        attributes.zIndex = 100000;
+    } else {
+        attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
+        attributes.zIndex = 0;
+
+    }
+    
+    return attributes;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-    //CLS_LOG(@"Attributes at index %d-%d", (int)indexPath.section, (int)indexPath.item);
-    UICollectionViewLayoutAttributes *attr = [super layoutAttributesForItemAtIndexPath:indexPath];
+    UICollectionViewLayoutAttributes *attr = self.layoutAttributesIndexPath[indexPath];
     attr.zIndex = 0;
     return attr;
 }
 
-- (BOOL) shouldInvalidateLayoutForBoundsChange:(CGRect)newBound {
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
+{
     return YES;
-}
-
-- (NSIndexSet *)missingSectionsForAttributes:(NSArray *)answer {
-    NSMutableIndexSet *missingSections = [NSMutableIndexSet indexSet];
-    
-    // add visible sections to missingSections
-    for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
-        if (layoutAttributes.representedElementCategory == UICollectionElementCategoryCell) {
-            [missingSections addIndex:layoutAttributes.indexPath.section];
-        }
-    }
-    // remove visible section with header showing. it will leave us with only sections without visible header
-    for (UICollectionViewLayoutAttributes *layoutAttributes in answer) {
-        if ([layoutAttributes.representedElementKind isEqualToString:UICollectionElementKindSectionHeader]) {
-            [missingSections removeIndex:layoutAttributes.indexPath.section];
-        }
-    }
-    return missingSections;
 }
 
 - (NSArray *)layoutAttributesForMissingSectionsHeaders:(NSIndexSet *)missingSections {
@@ -190,6 +339,13 @@
         return CGPointMake(proposedContentOffset.x, attr.frame.origin.y-44-self.collectionView.contentInset.top);
     }
     return proposedContentOffset;
+}
+
+- (NSInteger)numberOfColumnsForCurrentSize {
+    if (self.collectionView.frame.size.width < self.collectionView.frame.size.height) {
+        return self.numberOfColumns;
+    }
+    return MAX(self.numberOfColumns * 2 - 1, 1);
 }
 
 @end
