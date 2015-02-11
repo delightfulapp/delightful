@@ -75,6 +75,12 @@
     
     [super viewDidLoad];
     
+    if (IS_IPAD) {
+        NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
+        [balancedLayout setPreferredRowSize:self.view.frame.size.height/5];
+        [self.collectionView setCollectionViewLayout:balancedLayout animated:NO];
+    }
+    
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
     if (IS_IPAD) {
@@ -166,7 +172,7 @@
                 } else if ([self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
                     layoutButtonImage = [UIImage imageNamed:@"normal-layout"];
                 }
-                UIBarButtonItem *layoutItem = [[UIBarButtonItem alloc] initWithImage:layoutButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(changeLayout:)];
+                UIBarButtonItem *layoutItem = [[UIBarButtonItem alloc] initWithImage:layoutButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(didTapChangeLayoutButton:)];
                 [self.navigationItem setRightBarButtonItems:@[leftItem, layoutItem]];
             } else {
                 if (!self.navigationItem.rightBarButtonItem) {
@@ -180,7 +186,7 @@
     }
 }
 
-- (void)changeLayout:(UIBarButtonItem *)sender {
+- (void)didTapChangeLayoutButton:(UIBarButtonItem *)sender {
     [sender setEnabled:NO];
     NSIndexPath *indexPath;
     NSArray *visibleCell = [self.collectionView visibleCells];
@@ -409,9 +415,11 @@
 - (void)setNumberOfColumns:(int)numberOfColumns {
     if (_numberOfColumns != numberOfColumns) {
         _numberOfColumns = numberOfColumns;
-                
-        StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
-        [layout setNumberOfColumns:_numberOfColumns];
+        
+        if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+            StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
+            [layout setNumberOfColumns:_numberOfColumns];
+        }
     }
 }
 
