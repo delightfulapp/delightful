@@ -27,7 +27,6 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) ResourceType resourceType;
 @property (nonatomic, strong) Class resourceClass;
 @property (nonatomic, strong) NSString *resourceId;
-@property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
 @property (nonatomic, strong, readonly) NSString *cellIdentifier;
 @property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
 @property (nonatomic, strong, readonly) NSString *footerIdentifier;

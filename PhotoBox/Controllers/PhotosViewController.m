@@ -71,7 +71,6 @@
 - (void)viewDidLoad
 {
     self.resourceType = PhotoResource;
-    self.relationshipKeyPathWithItem = @"albums";
     
     [super viewDidLoad];
     
