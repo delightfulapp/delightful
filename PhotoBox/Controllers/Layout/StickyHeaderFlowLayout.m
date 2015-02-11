@@ -68,6 +68,7 @@
 {
     // set to NULL so it is not released by accident in dealloc
     _itemFrameSections = NULL;
+    _numberOfColumns = (IS_IPAD)?4:3;
     _layoutAttributesIndexPath = [NSMutableDictionary dictionary];
     _layoutAttributesHeader = [NSMutableDictionary dictionary];
     self.sectionInset = UIEdgeInsetsZero;
@@ -83,8 +84,6 @@
 - (void)prepareLayout
 {
     [super prepareLayout];
-    
-    self.numberOfColumns = (IS_IPAD)?4:3;
     
     NSMutableArray *headerFrames = [NSMutableArray array];
     

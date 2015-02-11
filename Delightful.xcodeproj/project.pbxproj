@@ -228,6 +228,8 @@
 		03AA79AC1A89F24900C1BA3E /* NHLinearPartition.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A51A89F24900C1BA3E /* NHLinearPartition.m */; };
 		03AA79AD1A89F24900C1BA3E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A61A89F24900C1BA3E /* README.md */; };
 		03AA79AE1A89F24900C1BA3E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A61A89F24900C1BA3E /* README.md */; };
+		03AA79B11A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */; };
+		03AA79B21A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */; };
 		03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
 		03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
 		03AD74291A18FF0B00C34525 /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74281A18FF0B00C34525 /* LocalViewController.m */; };
@@ -687,6 +689,8 @@
 		03AA79A41A89F24900C1BA3E /* NHLinearPartition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NHLinearPartition.h; sourceTree = "<group>"; };
 		03AA79A51A89F24900C1BA3E /* NHLinearPartition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NHLinearPartition.m; sourceTree = "<group>"; };
 		03AA79A61A89F24900C1BA3E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		03AA79AF1A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewChangeColumnsNumberGestureRecognizer.h; path = PhotoBox/Others/CollectionViewChangeColumnsNumberGestureRecognizer.h; sourceTree = "<group>"; };
+		03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewChangeColumnsNumberGestureRecognizer.m; path = PhotoBox/Others/CollectionViewChangeColumnsNumberGestureRecognizer.m; sourceTree = "<group>"; };
 		03AD74231A18FE7800C34525 /* DownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedViewController.h; path = PhotoBox/Controllers/DownloadedViewController.h; sourceTree = "<group>"; };
 		03AD74241A18FE7800C34525 /* DownloadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedViewController.m; path = PhotoBox/Controllers/DownloadedViewController.m; sourceTree = "<group>"; };
 		03AD74271A18FF0B00C34525 /* LocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalViewController.h; path = PhotoBox/Controllers/LocalViewController.h; sourceTree = "<group>"; };
@@ -1065,6 +1069,8 @@
 				03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */,
 				0312305119278F9A004AFD1E /* DelightfulCache.h */,
 				0312305219278F9A004AFD1E /* DelightfulCache.m */,
+				03AA79AF1A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.h */,
+				03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -1825,6 +1831,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				03AA79B11A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */,
 				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
@@ -1974,6 +1981,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				03AA79B21A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */,
 				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,

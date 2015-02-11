@@ -63,7 +63,6 @@ NSString *const galleryContainerType = @"gallery";
     [self setupConnectionManager];
     [self setupCollectionView];
     [self setupRefreshControl];
-    [self setupPinchGesture];
     [self setupNavigationItemTitle];
     
     [self.collectionView reloadData];
@@ -289,11 +288,6 @@ NSString *const galleryContainerType = @"gallery";
     [self.collectionView setAlwaysBounceVertical:YES];
 }
 
-- (void)setupPinchGesture {
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(collectionViewPinched:)];
-    [self.collectionView addGestureRecognizer:pinch];
-}
-
 - (void)setupRefreshControl {
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -442,54 +436,7 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 
-#pragma mark - Gesture
 
-- (void)collectionViewPinched:(UIPinchGestureRecognizer *)gesture {
-    if (gesture.state == UIGestureRecognizerStateEnded) {
-        if (gesture.scale > 1) {
-            [self changeNumberOfColumnsWithPinch:PinchOut];
-        } else {
-            [self changeNumberOfColumnsWithPinch:PinchIn];
-        }
-    }
-    PBX_LOG(@"Pinched %@. Number of columns = %d", NSStringFromClass(self.resourceClass), self.numberOfColumns);
-}
-
-- (void)changeNumberOfColumnsWithPinch:(PinchDirection)direction {
-    PBX_LOG(@"");
-    NSArray *visibleItems = [self.collectionView visibleCells];
-    UICollectionViewCell *cell = visibleItems[0];
-    NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-    int numCol = self.numberOfColumns;
-    switch (direction) {
-        case PinchIn:{
-            self.numberOfColumns++;
-            self.numberOfColumns = MIN(self.numberOfColumns, 10);
-            break;
-        }
-        case PinchOut:{
-            self.numberOfColumns--;
-            if (self.numberOfColumns==0) {
-                self.numberOfColumns = 1;
-            }
-            break;
-        }
-        default:
-            break;
-    }
-    if (numCol != self.numberOfColumns) {
-        if (self.numberOfColumns == 1) {
-            [self.collectionView.collectionViewLayout invalidateLayout];
-        }
-        [self.collectionView performBatchUpdates:^{
-            
-        } completion:^(BOOL finished) {
-            [self didChangeNumberOfColumns];
-            [self restoreContentInset];
-            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-        }];
-    }
-}
 
 - (void)didChangeNumberOfColumns {
     

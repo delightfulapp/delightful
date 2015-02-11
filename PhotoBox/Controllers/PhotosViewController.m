@@ -43,6 +43,7 @@
 #import "DLFDatabaseManager.h"
 #import "PHPhotoLibrary+Additionals.h"
 #import "NHBalancedFlowLayout.h"
+#import "CollectionViewChangeColumnsNumberGestureRecognizer.h"
 #import <UIView+AutoLayout.h>
 #import <DLFPhotoCell.h>
 #import <DLFPhotosPickerViewController.h>
@@ -50,7 +51,7 @@
 
 #define UPLOADED_MARK_TAG 123456910
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate, NHBalancedFlowLayoutDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate, NHBalancedFlowLayoutDelegate, CollectionViewChangeColumnsNumberGestureRecognizerDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -61,12 +62,11 @@
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 @property (nonatomic, assign) BOOL doneUploadingNeedRefresh;
 @property (nonatomic, assign) BOOL _showRightBarButtonItem;
+@property (nonatomic, strong) CollectionViewChangeColumnsNumberGestureRecognizer *pinchGestureRecognizer;
 
 @end
 
 @implementation PhotosViewController
-
-@synthesize numberOfColumns = _numberOfColumns;
 
 - (void)viewDidLoad
 {
@@ -81,12 +81,6 @@
     }
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
-    if (IS_IPAD) {
-        self.numberOfColumns = 4;
-    } else {
-        self.numberOfColumns = 3;
-    }
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
@@ -104,6 +98,18 @@
     self.viewJustDidLoad = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    
+    if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+        if (!self.pinchGestureRecognizer) {
+            self.pinchGestureRecognizer = [[CollectionViewChangeColumnsNumberGestureRecognizer alloc] initWithCollectionView:self.collectionView numberOfColumnsKey:NSStringFromSelector(@selector(numberOfColumns))];
+        } else {
+            [self.pinchGestureRecognizer setEnableGesture:YES];
+        }
+    } else {
+        if (self.pinchGestureRecognizer) {
+            [self.pinchGestureRecognizer setEnableGesture:NO];
+        }
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -315,35 +321,42 @@
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
         cell.section = indexPath.section;
         NSInteger section = indexPath.section;
-        [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
-        if (selfie.numberOfColumns > 1) {
-            [cell setTitleLabelText:[item localizedDate]?:@""];
-            CLLocation *location = [selfie locationSampleForSection:indexPath.section];
-            if (location) {
-                [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
-                    CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
-                    NSString *placemark = firstPlacemark.name?:firstPlacemark.locality?:firstPlacemark.country;
-                    if (cell.section == section) {
-                        if (placemark && placemark.length > 0) {
-                            [cell setLocationString:placemark];
-                        } else {
-                            [cell setLocationString:nil];
-                        }
+        [cell setTitleLabelText:[item localizedDate]?:@""];
+        CLLocation *location = [selfie locationSampleForSection:indexPath.section];
+        if (location) {
+            [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
+                CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
+                NSString *placemark = firstPlacemark.name?:firstPlacemark.locality?:firstPlacemark.country;
+                if (cell.section == section) {
+                    if (placemark && placemark.length > 0) {
+                        [cell setLocationString:placemark];
+                    } else {
+                        [cell setLocationString:nil];
                     }
-                    return nil;
-                }];
-            } else {
-                [cell setLocationString:nil];
-            }
+                }
+                return nil;
+            }];
+        } else {
+            [cell setLocationString:nil];
         }
     };
     return configureCell;
 }
 
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
+    __weak typeof (self) selfie = self;
     void (^configureCell)(PhotoCell*, id) = ^(PhotoCell* cell, id item) {
         [cell setItem:item];
-        [cell setNumberOfColumns:self.numberOfColumns];
+        if ([selfie.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+            NSInteger numberOfColumns = [((StickyHeaderFlowLayout *)selfie.collectionView.collectionViewLayout) numberOfColumns];
+            if (numberOfColumns > 1) {
+                [cell setShowTitles:NO];
+            } else {
+                [cell setShowTitles:YES];
+            }
+        } else {
+            [cell setShowTitles:NO];
+        }
     };
     return configureCell;
 }
@@ -409,23 +422,6 @@
         [self.navigationItem setBackBarButtonItem:[[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backNavigationTapped:)]];
     }
     [self.navigationItem.backBarButtonItem setTitle:title];
-}
-
-- (void)setNumberOfColumns:(int)numberOfColumns {
-    if (_numberOfColumns != numberOfColumns) {
-        _numberOfColumns = numberOfColumns;
-        
-        if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
-            StickyHeaderFlowLayout *layout = (StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout;
-            [layout setNumberOfColumns:_numberOfColumns];
-        }
-    }
-}
-
-- (void)didChangeNumberOfColumns {
-    for (PhotoCell *cell in self.collectionView.visibleCells) {
-        [cell setNumberOfColumns:self.numberOfColumns];
-    }
 }
 
 - (void)showPinchGestureTipIfNeeded {
@@ -512,6 +508,18 @@
 
 - (void)didTapHorizontalBackButton:(id)sender {
     [self shouldClosePhotosHorizontalViewController:nil];
+}
+
+#pragma mark - <CollectionViewChangeColumnsNumberGestureRecognizerDelegate>
+
+- (void)didChangeNumberOfColumns:(NSInteger)newNumberOfColumns {
+    for (PhotoCell *cell in self.collectionView.visibleCells) {
+        if (newNumberOfColumns > 1) {
+            [cell setShowTitles:NO];
+        } else {
+            [cell setShowTitles:YES];
+        }
+    }
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate
