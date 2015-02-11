@@ -99,17 +99,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
     
-    if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
-        if (!self.pinchGestureRecognizer) {
-            self.pinchGestureRecognizer = [[CollectionViewChangeColumnsNumberGestureRecognizer alloc] initWithCollectionView:self.collectionView numberOfColumnsKey:NSStringFromSelector(@selector(numberOfColumns))];
-        } else {
-            [self.pinchGestureRecognizer setEnableGesture:YES];
-        }
-    } else {
-        if (self.pinchGestureRecognizer) {
-            [self.pinchGestureRecognizer setEnableGesture:NO];
-        }
-    }
+    [self configurePinchGesture];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -152,6 +142,21 @@
     [self setRegisterSyncingNotification:!pause];
     [((YapDataSource *)self.dataSource) setPause:pause];
     [[SyncEngine sharedEngine] pauseSyncingPhotos:pause collection:nil collectionType:self.item.class];
+}
+
+- (void)configurePinchGesture {
+    if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+        if (!self.pinchGestureRecognizer) {
+            self.pinchGestureRecognizer = [[CollectionViewChangeColumnsNumberGestureRecognizer alloc] initWithCollectionView:self.collectionView numberOfColumnsKey:NSStringFromSelector(@selector(numberOfColumns))];
+            [self.pinchGestureRecognizer setDelegate:self];
+        } else {
+            [self.pinchGestureRecognizer setEnableGesture:YES];
+        }
+    } else {
+        if (self.pinchGestureRecognizer) {
+            [self.pinchGestureRecognizer setEnableGesture:NO];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -209,6 +214,8 @@
             }
         }
     }
+    
+    __weak typeof (self) selfie = self;
     if (![self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
         NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
         [balancedLayout setPreferredRowSize:self.collectionView.frame.size.height/5];
@@ -216,6 +223,7 @@
         [self.collectionView setCollectionViewLayout:balancedLayout animated:YES completion:^(BOOL finished) {
             [sender setImage:[UIImage imageNamed:@"normal-layout"]];
             [sender setEnabled:YES];
+            [selfie configurePinchGesture];
         }];
     } else {
         StickyHeaderFlowLayout *sticky = [[StickyHeaderFlowLayout alloc] init];
@@ -223,6 +231,7 @@
         [self.collectionView setCollectionViewLayout:sticky animated:YES completion:^(BOOL finished) {
             [sender setImage:[UIImage imageNamed:@"balance-layout"]];
             [sender setEnabled:YES];
+            [selfie configurePinchGesture];
         }];
     }
 }
