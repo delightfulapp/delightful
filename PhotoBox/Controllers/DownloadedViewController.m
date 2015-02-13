@@ -33,6 +33,11 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+    [((YapDataSource *)self.dataSource) setPause:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [((YapDataSource *)self.dataSource) setPause:YES];
 }
 
 - (void)pauseSync:(BOOL)pauseSync {

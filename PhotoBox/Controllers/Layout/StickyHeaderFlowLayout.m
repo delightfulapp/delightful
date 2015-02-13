@@ -9,13 +9,13 @@
 #import "StickyHeaderFlowLayout.h"
 
 @interface StickyHeaderFlowLayout () {
-    CGRect **_itemFrameSections;
     NSInteger _numberOfItemFrameSections;
 }
 
 @property (nonatomic) CGSize contentSize;
 @property (nonatomic, strong) NSMutableDictionary *layoutAttributesIndexPath;
 @property (nonatomic, strong) NSMutableDictionary *layoutAttributesHeader;
+@property (nonatomic, strong) NSMutableDictionary *itemFrames;
 @property (nonatomic, strong) NSArray *headerFrames;
 @property (nonatomic, strong) NSMutableSet *visibleCellsIndexPaths;
 @property (nonatomic, strong) NSMutableDictionary *currentVisibleCellAttributes;
@@ -25,17 +25,7 @@
 
 - (void)clearItemFrames
 {
-    // free all item frame arrays
-    if (NULL != _itemFrameSections) {
-        for (NSInteger i = 0; i < _numberOfItemFrameSections; i++) {
-            CGRect *frames = _itemFrameSections[i];
-            free(frames);
-        }
-        
-        free(_itemFrameSections);
-        _itemFrameSections = NULL;
-    }
-    
+    [self.itemFrames removeAllObjects];
     [self.layoutAttributesIndexPath removeAllObjects];
     [self.layoutAttributesHeader removeAllObjects];
 }
@@ -67,10 +57,10 @@
 - (void)initialize
 {
     // set to NULL so it is not released by accident in dealloc
-    _itemFrameSections = NULL;
     _numberOfColumns = (IS_IPAD)?4:3;
     _layoutAttributesIndexPath = [NSMutableDictionary dictionary];
     _layoutAttributesHeader = [NSMutableDictionary dictionary];
+    _itemFrames = [NSMutableDictionary dictionary];
     self.sectionInset = UIEdgeInsetsZero;
     self.minimumLineSpacing = 1;
     self.minimumInteritemSpacing = 1;
@@ -108,14 +98,8 @@
     
     // create new item frame sections
     _numberOfItemFrameSections = [self.collectionView numberOfSections];
-    _itemFrameSections = (CGRect **)malloc(sizeof(CGRect *) * _numberOfItemFrameSections);
     
-    for (int section = 0; section < [self.collectionView numberOfSections]; section++) {
-        // add new item frames array to sections array
-        NSInteger numberOfItemsInSections = [self.collectionView numberOfItemsInSection:section];
-        CGRect *itemFrames = (CGRect *)malloc(sizeof(CGRect) * numberOfItemsInSections);
-        _itemFrameSections[section] = itemFrames;
-        
+    for (int section = 0; section < [self.collectionView numberOfSections]; section++) {        
         CGSize headerSize = CGSizeMake(self.collectionView.frame.size.width, (self.hideHeader)?0:44);
         
         CGRect headerFrame = CGRectMake(0, contentSize.height, CGRectGetWidth(self.collectionView.bounds), headerSize.height);
@@ -123,7 +107,7 @@
         
         CGPoint sectionOffset = CGPointMake(0, contentSize.height + headerSize.height);
         
-        CGSize sectionSize = [self setFrames:itemFrames forItemsInSection:section numberOfColumns:cols sectionOffset:sectionOffset itemSize:itemSize];
+        CGSize sectionSize = [self setFramesForItemsInSection:section numberOfColumns:cols sectionOffset:sectionOffset itemSize:itemSize];
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:section];
         UICollectionViewLayoutAttributes *headerAttributes = [self.layoutAttributesHeader objectForKey:indexPath];
@@ -139,12 +123,12 @@
         contentSize = CGSizeMake(sectionSize.width, contentSize.height + headerSize.height + sectionSize.height);
     }
     
-    self.headerFrames = [headerFrames copy];
+    self.headerFrames = [NSArray arrayWithArray:headerFrames];
     
     self.contentSize = contentSize;
 }
 
-- (CGSize)setFrames:(CGRect *)frames forItemsInSection:(NSInteger)section numberOfColumns:(NSUInteger)numberOfColumns sectionOffset:(CGPoint)sectionOffset itemSize:(CGSize)itemSize
+- (CGSize)setFramesForItemsInSection:(NSInteger)section numberOfColumns:(NSUInteger)numberOfColumns sectionOffset:(CGPoint)sectionOffset itemSize:(CGSize)itemSize
 {
     
     CGPoint offset = CGPointMake(sectionOffset.x + self.sectionInset.left + self.minimumInteritemSpacing, sectionOffset.y + self.sectionInset.top);
@@ -160,11 +144,11 @@
         int col = j%numberOfColumns;
         CGFloat originX = offset.x + col * (itemSize.width + self.minimumInteritemSpacing);
         f.origin = CGPointMake(originX, originY);
-        *frames++ = f;
         
         sectionHeight = MAX(sectionHeight, CGRectGetMaxY(f));
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j inSection:section];
+        [self.itemFrames setObject:[NSValue valueWithCGRect:f] forKey:indexPath];
         UICollectionViewLayoutAttributes *attr = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
         attr.frame = f;
         attr.zIndex = 0;
@@ -188,7 +172,7 @@
 
 - (CGRect)itemFrameForIndexPath:(NSIndexPath *)indexPath
 {
-    return _itemFrameSections[indexPath.section][indexPath.item];
+    return [self.itemFrames[indexPath] CGRectValue];
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -203,9 +187,9 @@
         }
         
         for (int i = 0; i < [self.collectionView numberOfItemsInSection:section]; i++) {
-            CGRect itemFrame = _itemFrameSections[section][i];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:section];
+            CGRect itemFrame = [self itemFrameForIndexPath:indexPath];
             if (CGRectIntersectsRect(rect, itemFrame)) {
-                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:section];
                 UICollectionViewLayoutAttributes *layoutAttr = [self layoutAttributesForItemAtIndexPath:indexPath];
                 layoutAttr.zIndex = 0;
                 [layoutAttributes addObject:layoutAttr];
