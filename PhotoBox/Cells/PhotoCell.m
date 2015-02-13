@@ -75,7 +75,9 @@
             }
         }];
         
-        [self setText:[self photoCellTitle]];
+        if (self.showTitles) {
+            [self setText:[self photoCellTitle]];
+        }
     }
 }
 
@@ -87,6 +89,7 @@
             [self.photoTitleBackgroundView setHidden:NO];
             [self.photoTitle setHidden:NO];
             [self.dateTitle setHidden:NO];
+            [self setText:[self photoCellTitle]];
         } else {
             [self.photoTitleBackgroundView setHidden:YES];
             [self.photoTitle setHidden:YES];

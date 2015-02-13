@@ -72,13 +72,13 @@
 {
     self.resourceType = PhotoResource;
     
-    [super viewDidLoad];
-    
     if (IS_IPAD) {
         NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
         [balancedLayout setPreferredRowSize:self.view.frame.size.height/5];
         [self.collectionView setCollectionViewLayout:balancedLayout animated:NO];
     }
+    
+    [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
     
