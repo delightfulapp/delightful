@@ -691,6 +691,7 @@
 		03AA79A61A89F24900C1BA3E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		03AA79AF1A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewChangeColumnsNumberGestureRecognizer.h; path = PhotoBox/Others/CollectionViewChangeColumnsNumberGestureRecognizer.h; sourceTree = "<group>"; };
 		03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewChangeColumnsNumberGestureRecognizer.m; path = PhotoBox/Others/CollectionViewChangeColumnsNumberGestureRecognizer.m; sourceTree = "<group>"; };
+		03AA79B31A8B583D00C1BA3E /* CollectionViewLayoutOffsetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewLayoutOffsetDelegate.h; path = PhotoBox/Others/CollectionViewLayoutOffsetDelegate.h; sourceTree = "<group>"; };
 		03AD74231A18FE7800C34525 /* DownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedViewController.h; path = PhotoBox/Controllers/DownloadedViewController.h; sourceTree = "<group>"; };
 		03AD74241A18FE7800C34525 /* DownloadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedViewController.m; path = PhotoBox/Controllers/DownloadedViewController.m; sourceTree = "<group>"; };
 		03AD74271A18FF0B00C34525 /* LocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalViewController.h; path = PhotoBox/Controllers/LocalViewController.h; sourceTree = "<group>"; };
@@ -1071,6 +1072,7 @@
 				0312305219278F9A004AFD1E /* DelightfulCache.m */,
 				03AA79AF1A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.h */,
 				03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */,
+				03AA79B31A8B583D00C1BA3E /* CollectionViewLayoutOffsetDelegate.h */,
 			);
 			name = Others;
 			sourceTree = "<group>";

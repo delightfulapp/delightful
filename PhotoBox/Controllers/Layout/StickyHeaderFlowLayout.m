@@ -13,12 +13,12 @@
     NSInteger _numberOfItemFrameSections;
 }
 
-@property (nonatomic, strong) NSMutableArray *insertIndexPaths;
 @property (nonatomic) CGSize contentSize;
 @property (nonatomic, strong) NSMutableDictionary *layoutAttributesIndexPath;
 @property (nonatomic, strong) NSMutableDictionary *layoutAttributesHeader;
 @property (nonatomic, strong) NSArray *headerFrames;
-
+@property (nonatomic, strong) NSMutableSet *visibleCellsIndexPaths;
+@property (nonatomic, strong) NSMutableDictionary *currentVisibleCellAttributes;
 @end
 
 @implementation StickyHeaderFlowLayout
@@ -84,6 +84,15 @@
 - (void)prepareLayout
 {
     [super prepareLayout];
+    
+    if (!self.visibleCellsIndexPaths) {
+        self.visibleCellsIndexPaths = [NSMutableSet setWithCapacity:self.collectionView.visibleCells.count];
+    } else {
+        [self.visibleCellsIndexPaths removeAllObjects];
+    }
+    for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
+        [self.visibleCellsIndexPaths addObject:[self.collectionView indexPathForCell:cell]];
+    }
     
     NSMutableArray *headerFrames = [NSMutableArray array];
     
@@ -186,7 +195,6 @@
         NSIndexPath *sectionIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
         
         UICollectionViewLayoutAttributes *headerAttributes = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader atIndexPath:sectionIndexPath];
-        
         if (! CGSizeEqualToSize(headerAttributes.frame.size, CGSizeZero) && CGRectIntersectsRect(headerAttributes.frame, rect)) {
             [layoutAttributes addObject:headerAttributes];
         }
@@ -203,6 +211,21 @@
     }
     
     return layoutAttributes;
+}
+
+- (UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    if ([self.visibleCellsIndexPaths containsObject:itemIndexPath]) {
+        return self.layoutAttributesIndexPath[itemIndexPath];
+    }
+    
+    return nil;
+}
+
+- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    if ([self.visibleCellsIndexPaths containsObject:itemIndexPath]) {
+        return self.layoutAttributesIndexPath[itemIndexPath];
+    }
+    return nil;
 }
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
@@ -306,29 +329,6 @@
             .size = layoutAttributes.frame.size
         };
     }
-}
-
-- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
-{
-    // Keep track of insert and delete index paths
-    [super prepareForCollectionViewUpdates:updateItems];
-    
-    self.insertIndexPaths = [NSMutableArray array];
-    
-    for (UICollectionViewUpdateItem *update in updateItems)
-    {
-        if (update.updateAction == UICollectionUpdateActionInsert)
-        {
-            [self.insertIndexPaths addObject:update.indexPathAfterUpdate];
-        }
-    }
-}
-
-- (void)finalizeCollectionViewUpdates
-{
-    [super finalizeCollectionViewUpdates];
-    // release the insert and delete index paths
-    self.insertIndexPaths = nil;
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {

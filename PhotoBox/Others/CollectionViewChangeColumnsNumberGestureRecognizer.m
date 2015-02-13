@@ -7,6 +7,7 @@
 //
 
 #import "CollectionViewChangeColumnsNumberGestureRecognizer.h"
+#import "CollectionViewLayoutOffsetDelegate.h"
 
 typedef NS_ENUM(NSUInteger, PinchDirection) {
     PinchIn,
@@ -82,9 +83,35 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
     }
     if (numCol != currentNumCol) {
         [self.collectionView.collectionViewLayout setValue:@(numCol) forKey:self.numberOfColumnsKey];
-        [self.collectionView.collectionViewLayout invalidateLayout];
-        if (self.delegate && [self.delegate respondsToSelector:@selector(didChangeNumberOfColumns:)]) {
-            [self.delegate didChangeNumberOfColumns:numCol];
+        
+        NSArray *visibleCells = [self.collectionView visibleCells];
+        if (visibleCells && visibleCells.count > 0) {
+            
+            NSIndexPath *indexPath;
+            CGFloat minimumVisibleY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+            for (UICollectionViewCell *cell in visibleCells) {
+                if (cell.frame.origin.y > minimumVisibleY) {
+                    if (!indexPath) {
+                        indexPath = [self.collectionView indexPathForCell:cell];
+                    } else {
+                        NSIndexPath *thisIndexPath = [self.collectionView indexPathForCell:cell];
+                        NSComparisonResult result = [thisIndexPath compare:indexPath];
+                        if (result == NSOrderedAscending) {
+                            indexPath = thisIndexPath;
+                        }
+                    }
+                }
+            }
+            if ([self.collectionView.collectionViewLayout respondsToSelector:@selector(targetIndexPath)]) {
+                [((id)self.collectionView.collectionViewLayout) setTargetIndexPath:indexPath];
+            }
+            
+            [self.collectionView performBatchUpdates:^{
+            } completion:^(BOOL finished) {
+                if (self.delegate && [self.delegate respondsToSelector:@selector(didChangeNumberOfColumns:)]) {
+                    [self.delegate didChangeNumberOfColumns:numCol];
+                }
+            }];
         }
     }
 }
