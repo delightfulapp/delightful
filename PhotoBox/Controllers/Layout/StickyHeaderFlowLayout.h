@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CollectionViewLayoutOffsetDelegate.h"
 
 #define LOADING_VIEW_HEIGHT 50
 
-@interface StickyHeaderFlowLayout : UICollectionViewFlowLayout
+@interface StickyHeaderFlowLayout : UICollectionViewFlowLayout <CollectionViewLayoutOffsetDelegate>
 
 - (void)adjustHeaderLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes;
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CollectionViewLayoutOffsetDelegate.h"
 
 /**
  * The BalancedFlowLayout class is designed to display items of different sizes and aspect ratios in a grid, without wasting any visual space. 
@@ -16,7 +17,7 @@
  * Currently this class does not support supplementary or decoration views.
  *
  */
-@interface NHBalancedFlowLayout : UICollectionViewLayout
+@interface NHBalancedFlowLayout : UICollectionViewLayout <CollectionViewLayoutOffsetDelegate>
 
 // The preferred size for each row measured in the scroll direction
 @property (nonatomic) CGFloat preferredRowSize;

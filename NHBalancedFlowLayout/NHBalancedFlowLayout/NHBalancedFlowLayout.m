@@ -94,7 +94,7 @@
         total += [self.collectionView numberOfItemsInSection:i];
     }
     
-    if (total == self.totalNumberOfItems) {
+    if (total == self.totalNumberOfItems && self.headerFrames.count == numSections) {
         return;
     }
     
@@ -117,7 +117,7 @@
 
     CGSize contentSize = CGSizeZero;
     
-    // first release old item frame sections
+    // first release old item frame sectionspo
     [self clearItemFrames];
     
     // create new item frame sections
