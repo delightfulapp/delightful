@@ -51,6 +51,8 @@
         StickyHeaderFlowLayout *stickyLayout = [[StickyHeaderFlowLayout alloc] init];
         [stickyLayout setHideHeader:YES];
         [self.collectionView setCollectionViewLayout:stickyLayout animated:NO];
+    } else {
+        [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setHideHeader:YES];
     }
     
     self.viewJustDidLoad = YES;
