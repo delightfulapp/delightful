@@ -116,7 +116,7 @@
         CGRect *itemFrames = (CGRect *)malloc(sizeof(CGRect) * numberOfItemsInSections);
         _itemFrameSections[section] = itemFrames;
         
-        CGSize headerSize = CGSizeMake(self.collectionView.frame.size.width, 44);
+        CGSize headerSize = CGSizeMake(self.collectionView.frame.size.width, (self.hideHeader)?0:44);
         
         CGRect headerFrame = CGRectMake(0, contentSize.height, CGRectGetWidth(self.collectionView.bounds), headerSize.height);
         [headerFrames addObject:[NSValue valueWithCGRect:headerFrame]];
@@ -132,6 +132,9 @@
         }
         headerAttributes.frame = headerFrame;
         headerAttributes.zIndex = 100000;
+        if (self.hideHeader) {
+            headerAttributes.hidden = YES;
+        }
         [self.layoutAttributesHeader setObject:headerAttributes forKey:indexPath];
         contentSize = CGSizeMake(sectionSize.width, contentSize.height + headerSize.height + sectionSize.height);
     }
@@ -235,6 +238,9 @@
         attributes = [self.layoutAttributesHeader objectForKey:indexPath];
         [self adjustHeaderLayoutAttributes:attributes];
         attributes.zIndex = 100000;
+        if (self.hideHeader) {
+            attributes.hidden = YES;
+        }
     } else {
         attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
         attributes.zIndex = 0;

@@ -14,6 +14,7 @@
 #import "SyncEngine.h"
 #import "Tag.h"
 #import "SortTableViewController.h"
+#import "StickyHeaderFlowLayout.h"
 #import "UIColor+Additionals.h"
 #import <UIView+AutoLayout.h>
 #import <MBProgressHUD.h>
@@ -45,6 +46,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (IS_IPAD) {
+        StickyHeaderFlowLayout *stickyLayout = [[StickyHeaderFlowLayout alloc] init];
+        [stickyLayout setHideHeader:YES];
+        [self.collectionView setCollectionViewLayout:stickyLayout animated:NO];
+    }
     
     self.viewJustDidLoad = YES;
     

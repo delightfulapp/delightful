@@ -190,7 +190,6 @@
 
         UICollectionViewLayoutAttributes *headerAttributes = [self layoutAttributesForSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                                                                                                   atIndexPath:sectionIndexPath];
-        [self adjustHeaderLayoutAttributes:headerAttributes];
         if (! CGSizeEqualToSize(headerAttributes.frame.size, CGSizeZero) && CGRectIntersectsRect(headerAttributes.frame, rect)) {
             [layoutAttributes addObject:headerAttributes];
         }
@@ -228,6 +227,7 @@
     
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         attributes.frame = [self headerFrameForSection:indexPath.section];
+        [self adjustHeaderLayoutAttributes:attributes];
     } else if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
         attributes.frame = [self footerFrameForSection:indexPath.section];
     }

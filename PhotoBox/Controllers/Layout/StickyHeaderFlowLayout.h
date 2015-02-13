@@ -19,5 +19,6 @@
 @property (nonatomic, strong) NSIndexPath *targetIndexPath;
 @property (nonatomic, assign) BOOL showLoadingView;
 @property (nonatomic, assign) NSInteger numberOfColumns;
+@property (nonatomic, assign) BOOL hideHeader;
 
 @end
