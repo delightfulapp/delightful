@@ -22,7 +22,6 @@
 #import "NSString+Additionals.h"
 #import "UIViewController+Additionals.h"
 #import "AppDelegate.h"
-#import "DelightfulLayout.h"
 #import "GroupedPhotosDataSource.h"
 #import "Photo.h"
 #import "Album.h"
@@ -43,6 +42,8 @@
 #import "SortingConstants.h"
 #import "DLFDatabaseManager.h"
 #import "PHPhotoLibrary+Additionals.h"
+#import "NHBalancedFlowLayout.h"
+#import "CollectionViewChangeColumnsNumberGestureRecognizer.h"
 #import <UIView+AutoLayout.h>
 #import <DLFPhotoCell.h>
 #import <DLFPhotosPickerViewController.h>
@@ -50,7 +51,7 @@
 
 #define UPLOADED_MARK_TAG 123456910
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate, NHBalancedFlowLayoutDelegate, CollectionViewChangeColumnsNumberGestureRecognizerDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -60,23 +61,26 @@
 @property (nonatomic, strong) ShowFullScreenTransitioningDelegate *transitionDelegate;
 @property (nonatomic, strong) UploadViewController *uploadViewController;
 @property (nonatomic, assign) BOOL doneUploadingNeedRefresh;
+@property (nonatomic, assign) BOOL _showRightBarButtonItem;
+@property (nonatomic, strong) CollectionViewChangeColumnsNumberGestureRecognizer *pinchGestureRecognizer;
 
 @end
 
 @implementation PhotosViewController
 
-@synthesize numberOfColumns = _numberOfColumns;
-
 - (void)viewDidLoad
 {
     self.resourceType = PhotoResource;
-    self.relationshipKeyPathWithItem = @"albums";
+    
+    if (IS_IPAD) {
+        NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
+        [balancedLayout setPreferredRowSize:self.view.frame.size.height/5];
+        [self.collectionView setCollectionViewLayout:balancedLayout animated:NO];
+    }
     
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
-    self.numberOfColumns = 3;
     
     [self.navigationController.interactivePopGestureRecognizer setDelegate:nil];
     
@@ -94,6 +98,8 @@
     self.viewJustDidLoad = YES;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(uploadNumberChangeNotification:) name:DLFAssetUploadDidChangeNumberOfUploadsNotification object:nil];
+    
+    [self configurePinchGesture];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -116,10 +122,7 @@
         [self selectSort:self.currentSort sortTableViewController:nil];
         [[SyncEngine sharedEngine] startSyncingPhotosInCollection:nil collectionType:nil sort:self.currentSort];
     } else {
-        NSLog(@"----> view did appear");
-        
         if ([self doneUploadingNeedRefresh]) {
-            CLS_LOG(@"view did appear need refresh after uploading");
             self.doneUploadingNeedRefresh = NO;
             [self setRegisterSyncingNotification:YES];
             [((YapDataSource *)self.dataSource) setPause:NO];
@@ -141,6 +144,21 @@
     [[SyncEngine sharedEngine] pauseSyncingPhotos:pause collection:nil collectionType:self.item.class];
 }
 
+- (void)configurePinchGesture {
+    if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+        if (!self.pinchGestureRecognizer) {
+            self.pinchGestureRecognizer = [[CollectionViewChangeColumnsNumberGestureRecognizer alloc] initWithCollectionView:self.collectionView numberOfColumnsKey:NSStringFromSelector(@selector(numberOfColumns))];
+            [self.pinchGestureRecognizer setDelegate:self];
+        } else {
+            [self.pinchGestureRecognizer setEnableGesture:YES];
+        }
+    } else {
+        if (self.pinchGestureRecognizer) {
+            [self.pinchGestureRecognizer setEnableGesture:NO];
+        }
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -150,6 +168,73 @@
 }
 
 #pragma mark - Buttons
+
+
+- (void)showRightBarButtonItem:(BOOL)show {
+    if (__showRightBarButtonItem != show) {
+        __showRightBarButtonItem = show;
+        if (show) {
+            if (IS_IPAD) {
+                UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
+                UIImage *layoutButtonImage;
+                if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+                    layoutButtonImage = [UIImage imageNamed:@"balance-layout"];
+                } else if ([self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
+                    layoutButtonImage = [UIImage imageNamed:@"normal-layout"];
+                }
+                UIBarButtonItem *layoutItem = [[UIBarButtonItem alloc] initWithImage:layoutButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(didTapChangeLayoutButton:)];
+                [self.navigationItem setRightBarButtonItems:@[leftItem, layoutItem]];
+            } else {
+                if (!self.navigationItem.rightBarButtonItem) {
+                    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"sort"] style:UIBarButtonItemStylePlain target:self action:@selector(didTapSortButton:)];
+                    [self.navigationItem setRightBarButtonItem:leftItem];
+                }
+            }
+        } else {
+            [self.navigationItem setRightBarButtonItems:nil];
+        }
+    }
+}
+
+- (void)didTapChangeLayoutButton:(UIBarButtonItem *)sender {
+    [sender setEnabled:NO];
+    NSIndexPath *indexPath;
+    NSArray *visibleCell = [self.collectionView visibleCells];
+    CGFloat minimumVisibleY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+    for (UICollectionViewCell *cell in visibleCell) {
+        if (cell.frame.origin.y > minimumVisibleY) {
+            if (!indexPath) {
+                indexPath = [self.collectionView indexPathForCell:cell];
+            } else {
+                NSIndexPath *thisIndexPath = [self.collectionView indexPathForCell:cell];
+                NSComparisonResult result = [thisIndexPath compare:indexPath];
+                if (result == NSOrderedAscending) {
+                    indexPath = thisIndexPath;
+                }
+            }
+        }
+    }
+    
+    __weak typeof (self) selfie = self;
+    if (![self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
+        NHBalancedFlowLayout *balancedLayout = [[NHBalancedFlowLayout alloc] init];
+        [balancedLayout setPreferredRowSize:self.collectionView.frame.size.height/5];
+        [balancedLayout setTargetIndexPath:indexPath];
+        [self.collectionView setCollectionViewLayout:balancedLayout animated:YES completion:^(BOOL finished) {
+            [sender setImage:[UIImage imageNamed:@"normal-layout"]];
+            [sender setEnabled:YES];
+            [selfie configurePinchGesture];
+        }];
+    } else {
+        StickyHeaderFlowLayout *sticky = [[StickyHeaderFlowLayout alloc] init];
+        [sticky setTargetIndexPath:indexPath];
+        [self.collectionView setCollectionViewLayout:sticky animated:YES completion:^(BOOL finished) {
+            [sender setImage:[UIImage imageNamed:@"balance-layout"]];
+            [sender setEnabled:YES];
+            [selfie configurePinchGesture];
+        }];
+    }
+}
 
 - (void)didTapSortButton:(id)sender {
     SortTableViewController *sort = [[SortTableViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -208,6 +293,11 @@
     if (sortTableViewController) {
         [sortTableViewController dismissViewControllerAnimated:YES completion:^{
             [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:nil];
+//            if ([self.collectionView.collectionViewLayout respondsToSelector:@selector(needToResetFrames)]) {
+//                [((id)self.collectionView.collectionViewLayout) setNeedToResetFrames:YES];
+//                [self.collectionView.collectionViewLayout invalidateLayout];
+//            }
+            
         }];
     } else {
         [((GroupedPhotosDataSource *)self.dataSource) sortBy:selectedSortKey ascending:ascending completion:nil];
@@ -233,24 +323,6 @@
     }
 }
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    CLS_LOG(@"will begin dragging");
-}
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!decelerate) {
-        CLS_LOG(@"end dragging");
-    }
-}
-
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    CLS_LOG(@"did end scrolling animation");
-}
-
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    CLS_LOG(@"did end decelerating");
-}
-
 #pragma mark - Override
 
 - (CollectionViewHeaderCellConfigureBlock)headerCellConfigureBlock {
@@ -258,35 +330,42 @@
     void (^configureCell)(PhotosSectionHeaderView*, id,NSIndexPath*) = ^(PhotosSectionHeaderView* cell, id item, NSIndexPath *indexPath) {
         cell.section = indexPath.section;
         NSInteger section = indexPath.section;
-        [cell setHidden:(selfie.numberOfColumns==1)?YES:NO];
-        if (selfie.numberOfColumns > 1) {
-            [cell setTitleLabelText:[item localizedDate]?:@""];
-            CLLocation *location = [selfie locationSampleForSection:indexPath.section];
-            if (location) {
-                [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
-                    CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
-                    NSString *placemark = firstPlacemark.name?:firstPlacemark.locality?:firstPlacemark.country;
-                    if (cell.section == section) {
-                        if (placemark && placemark.length > 0) {
-                            [cell setLocationString:placemark];
-                        } else {
-                            [cell setLocationString:nil];
-                        }
+        [cell setTitleLabelText:[item localizedDate]?:@""];
+        CLLocation *location = [selfie locationSampleForSection:indexPath.section];
+        if (location) {
+            [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
+                CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
+                NSString *placemark = firstPlacemark.name?:firstPlacemark.locality?:firstPlacemark.country;
+                if (cell.section == section) {
+                    if (placemark && placemark.length > 0) {
+                        [cell setLocationString:placemark];
+                    } else {
+                        [cell setLocationString:nil];
                     }
-                    return nil;
-                }];
-            } else {
-                [cell setLocationString:nil];
-            }
+                }
+                return nil;
+            }];
+        } else {
+            [cell setLocationString:nil];
         }
     };
     return configureCell;
 }
 
 - (CollectionViewCellConfigureBlock)cellConfigureBlock {
+    __weak typeof (self) selfie = self;
     void (^configureCell)(PhotoCell*, id) = ^(PhotoCell* cell, id item) {
         [cell setItem:item];
-        [cell setNumberOfColumns:self.numberOfColumns];
+        if ([selfie.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+            NSInteger numberOfColumns = [((StickyHeaderFlowLayout *)selfie.collectionView.collectionViewLayout) numberOfColumns];
+            if (numberOfColumns > 1) {
+                [cell setShowTitles:NO];
+            } else {
+                [cell setShowTitles:YES];
+            }
+        } else {
+            [cell setShowTitles:NO];
+        }
     };
     return configureCell;
 }
@@ -354,21 +433,6 @@
     [self.navigationItem.backBarButtonItem setTitle:title];
 }
 
-- (void)setNumberOfColumns:(int)numberOfColumns {
-    if (_numberOfColumns != numberOfColumns) {
-        _numberOfColumns = numberOfColumns;
-                
-        DelightfulLayout *layout = (DelightfulLayout *)self.collectionView.collectionViewLayout;
-        [layout setNumberOfColumns:_numberOfColumns];
-    }
-}
-
-- (void)didChangeNumberOfColumns {
-    for (PhotoCell *cell in self.collectionView.visibleCells) {
-        [cell setNumberOfColumns:self.numberOfColumns];
-    }
-}
-
 - (void)showPinchGestureTipIfNeeded {
     return;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -389,22 +453,16 @@
     
 }
 
-#pragma mark - Collection view flow layout delegate
+#pragma mark - <NHBalancedFlowLayoutDelegate>
 
-- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
-    if (self.numberOfColumns == 1) {
-        return UIEdgeInsetsMake(5, 0, 0, 0);
-    }
-    return UIEdgeInsetsZero;
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
-    if (section == [((GroupedPhotosDataSource *)self.dataSource) numberOfSectionsInCollectionView:collectionView]-1) {
-        if (self.isFetching) {
-            return CGSizeMake(CGRectGetWidth(collectionView.frame), 54);
-        }
-    }
-    return CGSizeMake(CGRectGetWidth(collectionView.frame), 0);
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(NHBalancedFlowLayout *)collectionViewLayout preferredSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    Photo *photo = [self.dataSource itemAtIndexPath:indexPath];
+    CGSize size = CGSizeMake([photo.width floatValue], [photo.height floatValue]);
+    CGFloat preferredHeight = 200;
+    CGFloat width = preferredHeight * size.width/size.height;
+    CGSize preferredSize = CGSizeMake(width, preferredHeight);
+    //NSLog(@"size for %@ = %@", indexPath, NSStringFromCGSize(preferredSize));
+    return preferredSize;
 }
 
 #pragma mark - Collection view delegate
@@ -459,6 +517,18 @@
 
 - (void)didTapHorizontalBackButton:(id)sender {
     [self shouldClosePhotosHorizontalViewController:nil];
+}
+
+#pragma mark - <CollectionViewChangeColumnsNumberGestureRecognizerDelegate>
+
+- (void)didChangeNumberOfColumns:(NSInteger)newNumberOfColumns {
+    for (PhotoCell *cell in self.collectionView.visibleCells) {
+        if (newNumberOfColumns > 1) {
+            [cell setShowTitles:NO];
+        } else {
+            [cell setShowTitles:YES];
+        }
+    }
 }
 
 #pragma mark - CustomAnimationTransitionFromViewControllerDelegate

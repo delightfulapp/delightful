@@ -96,7 +96,6 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 #pragma mark - Orientation
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    NSLog(@"Tabbar view will transition to size %@", NSStringFromCGSize(size));
     
     for (UINavigationController *navCon in self.viewControllers) {
         for (UIViewController *controller in navCon.viewControllers) {

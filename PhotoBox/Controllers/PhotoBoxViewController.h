@@ -14,11 +14,6 @@
 
 extern NSString *const galleryContainerType;
 
-typedef NS_ENUM(NSUInteger, PinchDirection) {
-    PinchIn,
-    PinchOut
-};
-
 @class PhotoBoxModel;
 
 @interface PhotoBoxViewController : UIViewController <UIScrollViewDelegate, ViewControllerTransitionToSizeDelegate>
@@ -27,13 +22,11 @@ typedef NS_ENUM(NSUInteger, PinchDirection) {
 @property (nonatomic, assign) ResourceType resourceType;
 @property (nonatomic, strong) Class resourceClass;
 @property (nonatomic, strong) NSString *resourceId;
-@property (nonatomic, strong) NSString *relationshipKeyPathWithItem;
 @property (nonatomic, strong, readonly) NSString *cellIdentifier;
 @property (nonatomic, strong, readonly) NSString *sectionHeaderIdentifier;
 @property (nonatomic, strong, readonly) NSString *footerIdentifier;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, assign) int numberOfColumns;
 @property (nonatomic, strong) id selectedItem;
 @property (nonatomic, strong) UILabel *navigationTitleLabel;
 
