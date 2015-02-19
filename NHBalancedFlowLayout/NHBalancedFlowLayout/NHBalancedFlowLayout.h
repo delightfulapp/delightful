@@ -44,6 +44,8 @@
 
 @property (nonatomic, strong) NSIndexPath *targetIndexPath;
 
+@property (nonatomic, assign) BOOL forceInvalidate;
+
 @end
 
 

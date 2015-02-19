@@ -131,11 +131,18 @@
             [self pauseSyncing:NO];
         }
     }
+    
+    if ([self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
+        [(NHBalancedFlowLayout *)self.collectionView.collectionViewLayout setForceInvalidate:NO];
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     CLS_LOG(@"view will disappear");
     [self pauseSyncing:YES];
+    if ([self.collectionView.collectionViewLayout isKindOfClass:[NHBalancedFlowLayout class]]) {
+        [(NHBalancedFlowLayout *)self.collectionView.collectionViewLayout setForceInvalidate:YES];
+    }
 }
 
 - (void)pauseSyncing:(BOOL)pause {

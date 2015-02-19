@@ -95,7 +95,9 @@
     }
     
     if (total == self.totalNumberOfItems && self.headerFrames.count == numSections) {
-        return;
+        if (!self.forceInvalidate ) {
+            return;
+        }
     }
     
     self.totalNumberOfItems = total;
