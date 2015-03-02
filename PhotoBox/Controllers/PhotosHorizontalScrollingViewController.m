@@ -489,6 +489,10 @@
             UIImage *image = task.result;
             if (image) {
                 UIActivityViewController *activity = [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
+                if (IS_IPAD) {
+                    [activity.popoverPresentationController setSourceView:self.navigationController.toolbar];
+                    [activity.popoverPresentationController setSourceRect:[sender frame]];
+                }
                 [weakSelf presentViewController:activity animated:YES completion:nil];
             } else {
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:NSLocalizedString(@"Downloaded image is corrupted. Please try again.", nil) preferredStyle:UIAlertControllerStyleAlert];
@@ -517,7 +521,17 @@
         } else {
             [[NPRNotificationManager sharedManager] postErrorNotificationWithText:NSLocalizedString(@"Sharing token cannot be fetched", nil) duration:3];
         }
-    } completion:nil];
+    } completion:^(NSURL *URL) {
+        UIActivityViewController *activity = [[UIActivityViewController alloc] initWithActivityItems:@[URL] applicationActivities:nil];
+        if (IS_IPAD) {
+            [activity.popoverPresentationController setBarButtonItem:sender];
+            /*
+            [activity.popoverPresentationController setSourceView:self.navigationController.toolbar];
+            [activity.popoverPresentationController setSourceRect:[sender frame]];
+             */
+        }
+        [weakSelf presentViewController:activity animated:YES completion:nil];
+    }];
 }
 
 - (void)showLoadingBarButtonItem:(BOOL)show currentPhoto:(Photo *)currentPhoto {
@@ -529,23 +543,27 @@
     UIBarButtonItem *infoButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"info.png"] style:UIBarButtonItemStylePlain target:self action:@selector(infoButtonTapped:)];
     
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    UIBarButtonItem *shareButton;
+    UIBarButtonItem *shareButtonItem;
     
     if (show) {
         UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [indicatorView setColor:[[[[UIApplication sharedApplication] delegate] window] tintColor]];
-        shareButton = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+        shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
         [indicatorView startAnimating];
     } else {
-        shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(actionButtonTapped:)];
+        UIButton *shareButton = [[UIButton alloc] init];
+        [shareButton setImage:[[UIImage imageNamed:@"actionshare"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [shareButton addTarget:self action:@selector(actionButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [shareButton sizeToFit];
+        shareButtonItem = [[UIBarButtonItem alloc] initWithCustomView:shareButton];
     }
     
     UIBarButtonItem *linkButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"link.png"] style:UIBarButtonItemStylePlain target:self action:@selector(linkButtonTapped:)];
     
     if (!self.hideDownloadButton) {
-        [self setToolbarItems:@[shareButton, space, linkButton, space, rightButton, space, favoriteButton, space, infoButton]];
+        [self setToolbarItems:@[shareButtonItem, space, linkButton, space, rightButton, space, favoriteButton, space, infoButton]];
     }
-    else [self setToolbarItems:@[shareButton, space, linkButton, space, favoriteButton, space, infoButton]];
+    else [self setToolbarItems:@[shareButtonItem, space, linkButton, space, favoriteButton, space, infoButton]];
 }
 
 #pragma mark - Custom Animation Transition Delegate
