@@ -427,18 +427,24 @@
     if (![[FavoritesManager sharedManager] photoHasBeenFavorited:currentPhoto]) {
         [[[FavoritesManager sharedManager] addPhoto:currentPhoto] continueWithBlock:^id(BFTask *task) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                Photo *updatedPhoto = task.result;
                 [MBProgressHUD hideHUDForView:selfie.navigationController.view animated:YES];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Saved to Favorites", nil)];
-                [selfie showLoadingBarButtonItem:NO currentPhoto:[selfie currentPhoto]];
+                if (updatedPhoto) {
+                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Saved to Favorites", nil)];
+                    [selfie showLoadingBarButtonItem:NO currentPhoto:updatedPhoto];
+                }
             });
             return nil;
         }];
     } else {
         [[[FavoritesManager sharedManager] removePhoto:currentPhoto] continueWithBlock:^id(BFTask *task) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                Photo *updatedPhoto = task.result;
                 [MBProgressHUD hideHUDForView:selfie.navigationController.view animated:YES];
-                [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Removed from Favorites", nil)];
-                [selfie showLoadingBarButtonItem:NO currentPhoto:[selfie currentPhoto]];
+                if (updatedPhoto) {
+                    [SVProgressHUD showSuccessWithStatus:NSLocalizedString(@"Removed from Favorites", nil)];
+                    [selfie showLoadingBarButtonItem:NO currentPhoto:updatedPhoto];
+                }
             });
             return nil;
         }];
