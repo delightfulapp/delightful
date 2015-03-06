@@ -6,14 +6,19 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "DelightfulLayout.h"
+#import <UIKit/UIKit.h>
+#import "CollectionViewLayoutOffsetDelegate.h"
 
-@interface StickyHeaderFlowLayout : DelightfulLayout
+#define LOADING_VIEW_HEIGHT 50
+
+@interface StickyHeaderFlowLayout : UICollectionViewFlowLayout <CollectionViewLayoutOffsetDelegate>
 
 - (void)adjustHeaderLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes;
 
 @property (nonatomic, assign) CGFloat topOffsetAdjustment;
-
 @property (nonatomic, strong) NSIndexPath *targetIndexPath;
+@property (nonatomic, assign) BOOL showLoadingView;
+@property (nonatomic, assign) NSInteger numberOfColumns;
+@property (nonatomic, assign) BOOL hideHeader;
 
 @end

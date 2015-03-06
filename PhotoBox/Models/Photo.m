@@ -18,6 +18,7 @@
 @implementation Photo
 
 @synthesize originalImage = _originalImage;
+@synthesize pathBaseImage = _pathBaseImage;
 
 #pragma mark - NSCoding
 
@@ -54,6 +55,13 @@
     return _originalImage;
 }
 
+- (PhotoBoxImage *)pathBaseImage {
+    if (!_pathBaseImage) {
+        _pathBaseImage = [[PhotoBoxImage alloc] initWithArray:@[(self.pathBase)?self.pathBase.absoluteString:@"", self.width?:@(0), self.height?:@(0)]];
+    }
+    return _pathBaseImage;
+}
+
 - (PhotoBoxImage *)thumbnailImage {
     if (self.photo320x320) return self.photo320x320;
     else if (self.photo200x200) return self.photo200x200;
@@ -62,6 +70,9 @@
 }
 
 - (PhotoBoxImage *)normalImage {
+    if (IS_IPAD) {
+        return self.pathBaseImage;
+    }
     return self.photo640x640;
 }
 

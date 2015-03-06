@@ -40,6 +40,7 @@ NSString *const galleryContainerType = @"gallery";
 @property (nonatomic, assign) CGSize currentSize;
 @property (nonatomic, assign) BOOL _showRightBarButtonItem;
 @property (nonatomic, strong) NSValue *contentSize;
+@property (nonatomic, strong) UIActivityIndicatorView *bottomLoadingView;
 
 @end
 
@@ -57,14 +58,11 @@ NSString *const galleryContainerType = @"gallery";
     
     [self.dataSource setDebugName:NSStringFromClass([self class])];
     
-    self.numberOfColumns = 3;
-    
     [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
     [self setupConnectionManager];
     [self setupCollectionView];
     [self setupRefreshControl];
-    [self setupPinchGesture];
     [self setupNavigationItemTitle];
     
     [self.collectionView reloadData];
@@ -219,30 +217,31 @@ NSString *const galleryContainerType = @"gallery";
 
 - (void)dlf_viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     CLS_LOG(@"**** will transition to size %@ in %@", NSStringFromCGSize(size), self.class);
-    if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+    
+    if ([self.collectionView.collectionViewLayout respondsToSelector:@selector(targetIndexPath)]) {
         self.currentSize = size;
         
-        CGFloat originYRectToExamine = self.collectionView.contentOffset.y + CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44;
         NSIndexPath *indexPath;
-        for (UICollectionViewCell *cell in self.collectionView.visibleCells) {
-            NSIndexPath *ind = [self.collectionView indexPathForCell:cell];
-            
-            UICollectionViewLayoutAttributes *attr = [self.collectionView layoutAttributesForItemAtIndexPath:ind];
-            if (attr.frame.origin.y > originYRectToExamine-5) {
+        NSArray *visibleCell = [self.collectionView visibleCells];
+        CGFloat minimumVisibleY = self.collectionView.contentOffset.y + self.collectionView.contentInset.top;
+        for (UICollectionViewCell *cell in visibleCell) {
+            if (cell.frame.origin.y > minimumVisibleY) {
                 if (!indexPath) {
-                    indexPath = ind;
+                    indexPath = [self.collectionView indexPathForCell:cell];
                 } else {
-                    if ([indexPath compare:ind] == NSOrderedDescending) {
-                        indexPath = ind;
+                    NSIndexPath *thisIndexPath = [self.collectionView indexPathForCell:cell];
+                    NSComparisonResult result = [thisIndexPath compare:indexPath];
+                    if (result == NSOrderedAscending) {
+                        indexPath = thisIndexPath;
                     }
                 }
             }
         }
         
         if (self.selectedCell) {
-            [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:[self.collectionView indexPathForCell:self.selectedCell]];
+            [((id)self.collectionView.collectionViewLayout) setTargetIndexPath:[self.collectionView indexPathForCell:self.selectedCell]];
         } else {
-            [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] firstObject]]];
+            [((id)self.collectionView.collectionViewLayout) setTargetIndexPath:(indexPath)?indexPath:[self.collectionView indexPathForCell:[[self.collectionView visibleCells] firstObject]]];
         }
     }
     
@@ -289,11 +288,6 @@ NSString *const galleryContainerType = @"gallery";
     [self.collectionView setAlwaysBounceVertical:YES];
 }
 
-- (void)setupPinchGesture {
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(collectionViewPinched:)];
-    [self.collectionView addGestureRecognizer:pinch];
-}
-
 - (void)setupRefreshControl {
     self.refreshControl = [[UIRefreshControl alloc] init];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -316,13 +310,6 @@ NSString *const galleryContainerType = @"gallery";
 
 
 #pragma mark - Getter
-
-- (NSInteger)numberOfColumnsForCurrentSize {
-    if (self.currentSize.width < self.currentSize.height) {
-        return self.numberOfColumns;
-    }
-    return MAX(self.numberOfColumns * 2 - 1, 1);
-}
 
 - (CollectionViewDataSource *)dataSource {
     if (!_dataSource) {
@@ -358,6 +345,44 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 #pragma mark - Setter
+
+- (void)setIsFetching:(BOOL)isFetching {
+    if (_isFetching != isFetching) {
+        _isFetching = isFetching;
+        if (!isFetching) {
+            [self.collectionView reloadData];
+            self.navigationItem.titleView = nil;
+        } else {
+            LoadingNavigationItemTitleView *loadingItemTitleView = (LoadingNavigationItemTitleView *)self.navigationItem.titleView;
+            if (!loadingItemTitleView || ![loadingItemTitleView isKindOfClass:[LoadingNavigationItemTitleView class]]) {
+                loadingItemTitleView = [[LoadingNavigationItemTitleView alloc] initWithFrame:CGRectMake(0, 0, CGFLOAT_MAX, CGFLOAT_MAX)];
+                [loadingItemTitleView.titleLabel setText:self.title];
+                [loadingItemTitleView.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
+                CGSize size = [loadingItemTitleView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+                loadingItemTitleView.frame = (CGRect){loadingItemTitleView.frame.origin, size};
+                loadingItemTitleView.center = CGPointMake(self.navigationController.navigationBar.frame.size.width/2, self.navigationController.navigationBar.frame.size.height/2);
+                [self.navigationItem setTitleView:loadingItemTitleView];
+            }
+            if (!loadingItemTitleView.indicatorView.isAnimating) {
+                [loadingItemTitleView.indicatorView startAnimating];
+            }
+        }
+        if ([self.collectionView.collectionViewLayout isKindOfClass:[StickyHeaderFlowLayout class]]) {
+            [((StickyHeaderFlowLayout *)self.collectionView.collectionViewLayout) setShowLoadingView:isFetching];
+        }
+    }
+    
+    if (isFetching) {
+        if (!self.bottomLoadingView) {
+            self.bottomLoadingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        }
+        self.bottomLoadingView.center = CGPointMake(CGRectGetWidth(self.collectionView.frame)/2, self.collectionView.contentSize.height - CGRectGetHeight(self.bottomLoadingView.frame)/2 - 10);
+        [self.collectionView insertSubview:self.bottomLoadingView atIndex:0];
+        if (![self.bottomLoadingView isAnimating]) [self.bottomLoadingView startAnimating];
+    } else {
+        [self.bottomLoadingView removeFromSuperview];
+    }
+}
 
 - (void)setAttributedTitle:(NSAttributedString *)title {
     super.title = title.string;
@@ -411,80 +436,10 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 
-#pragma mark - Gesture
 
-- (void)collectionViewPinched:(UIPinchGestureRecognizer *)gesture {
-    if (gesture.state == UIGestureRecognizerStateEnded) {
-        if (gesture.scale > 1) {
-            [self changeNumberOfColumnsWithPinch:PinchOut];
-        } else {
-            [self changeNumberOfColumnsWithPinch:PinchIn];
-        }
-    }
-    PBX_LOG(@"Pinched %@. Number of columns = %d", NSStringFromClass(self.resourceClass), self.numberOfColumns);
-}
-
-- (void)changeNumberOfColumnsWithPinch:(PinchDirection)direction {
-    PBX_LOG(@"");
-    NSArray *visibleItems = [self.collectionView visibleCells];
-    UICollectionViewCell *cell = visibleItems[0];
-    NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-    int numCol = self.numberOfColumns;
-    switch (direction) {
-        case PinchIn:{
-            self.numberOfColumns++;
-            self.numberOfColumns = MIN(self.numberOfColumns, 10);
-            break;
-        }
-        case PinchOut:{
-            self.numberOfColumns--;
-            if (self.numberOfColumns==0) {
-                self.numberOfColumns = 1;
-            }
-            break;
-        }
-        default:
-            break;
-    }
-    if (numCol != self.numberOfColumns) {
-        if (self.numberOfColumns == 1) {
-            [self.collectionView.collectionViewLayout invalidateLayout];
-        }
-        [self.collectionView performBatchUpdates:^{
-            
-        } completion:^(BOOL finished) {
-            [self didChangeNumberOfColumns];
-            [self restoreContentInset];
-            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-        }];
-    }
-}
 
 - (void)didChangeNumberOfColumns {
     
-}
-
-#pragma mark - UICollectionViewFlowLayoutDelegate
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
-    if (self.numberOfColumns <= 1) {
-        return CGSizeZero;
-    }
-    return CGSizeMake(CGRectGetWidth(self.collectionView.frame), 44);
-}
-
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat collectionViewWidth = CGRectGetWidth(self.collectionView.frame);
-    CGFloat width = floorf(((collectionViewWidth - ([self numberOfColumnsForCurrentSize]-1))/(float)[self numberOfColumnsForCurrentSize]));
-    return CGSizeMake(width, width);
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
-    return 1;
-}
-
-- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
-    return 1;
 }
 
 #pragma mark - KVO
@@ -529,28 +484,6 @@ NSString *const galleryContainerType = @"gallery";
 }
 
 #pragma mark - Sync Engine Notification
-
-- (void)setIsFetching:(BOOL)isFetching {
-    _isFetching = isFetching;
-    if (!isFetching) {
-        [self.collectionView reloadData];
-        self.navigationItem.titleView = nil;
-    } else {
-        LoadingNavigationItemTitleView *loadingItemTitleView = (LoadingNavigationItemTitleView *)self.navigationItem.titleView;
-        if (!loadingItemTitleView || ![loadingItemTitleView isKindOfClass:[LoadingNavigationItemTitleView class]]) {
-            loadingItemTitleView = [[LoadingNavigationItemTitleView alloc] initWithFrame:CGRectMake(0, 0, CGFLOAT_MAX, CGFLOAT_MAX)];
-            [loadingItemTitleView.titleLabel setText:self.title];
-            [loadingItemTitleView.titleLabel setFont:[UIFont boldSystemFontOfSize:17]];
-            CGSize size = [loadingItemTitleView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-            loadingItemTitleView.frame = (CGRect){loadingItemTitleView.frame.origin, size};
-            loadingItemTitleView.center = CGPointMake(self.navigationController.navigationBar.frame.size.width/2, self.navigationController.navigationBar.frame.size.height/2);
-            [self.navigationItem setTitleView:loadingItemTitleView];
-        }
-        if (!loadingItemTitleView.indicatorView.isAnimating) {
-            [loadingItemTitleView.indicatorView startAnimating];
-        }
-    }
-}
 
 - (BOOL)showSyncingLoadingMessageIfNeeded {
     return NO;

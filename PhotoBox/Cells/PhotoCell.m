@@ -28,6 +28,10 @@
 - (void)setup {
     [super setup];
     
+    [self.photoTitle setHidden:YES];
+    [self.photoTitleBackgroundView setHidden:YES];
+    [self.dateTitle setHidden:YES];
+    
     [self.photoTitleBackgroundView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.contentView];
     [self.photoTitleBackgroundView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.photoTitle withOffset:-10];
     [self.photoTitleBackgroundView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.contentView];
@@ -71,22 +75,30 @@
             }
         }];
         
-        
-        [self setText:[self photoCellTitle]];
-    }
-}
-
-- (void)setNumberOfColumns:(NSInteger)numberOfColumns {
-    if (_numberOfColumns != numberOfColumns) {
-        _numberOfColumns = numberOfColumns;
-        if (self.item) {
+        if (self.showTitles) {
             [self setText:[self photoCellTitle]];
         }
     }
 }
 
+- (void)setShowTitles:(BOOL)showTitles {
+    if (_showTitles != showTitles) {
+        _showTitles = showTitles;
+        
+        if (_showTitles) {
+            [self.photoTitleBackgroundView setHidden:NO];
+            [self.photoTitle setHidden:NO];
+            [self.dateTitle setHidden:NO];
+            [self setText:[self photoCellTitle]];
+        } else {
+            [self.photoTitleBackgroundView setHidden:YES];
+            [self.photoTitle setHidden:YES];
+            [self.dateTitle setHidden:YES];
+        }
+    }
+}
+
 - (void)setText:(id)text {
-    [self.photoTitleBackgroundView setHidden:(text)?NO:YES];
     [self.photoTitle setText:text];
     if (text) {
         [self.dateTitle setText:[self dateString]];
@@ -97,16 +109,14 @@
 
 - (id)photoCellTitle {
     if (self.item) {
-        if (_numberOfColumns < 3) {
-            Photo *photo = (Photo *)self.item;
-            return  photo.filenameOriginal;
-        }
+        Photo *photo = (Photo *)self.item;
+        return  photo.filenameOriginal;
     }
     return nil;
 }
 
 - (id)dateString {
-    if (_numberOfColumns < 3) {
+    if (self.item) {
         Photo *photo = (Photo *)self.item;
         return  [photo.dateTakenString localizedDate];
     }

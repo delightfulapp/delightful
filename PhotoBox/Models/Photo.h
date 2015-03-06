@@ -37,6 +37,7 @@
 @property (nonatomic, copy, readonly) NSNumber *longitude;
 @property (nonatomic, copy, readonly) NSString *photoId;
 @property (nonatomic, copy, readonly) NSURL *pathOriginal;
+@property (nonatomic, copy, readonly) NSURL *pathBase;
 @property (nonatomic, copy, readonly) NSNumber *size;
 @property (nonatomic, copy, readonly) NSSet *tags;
 @property (nonatomic, copy, readonly) NSSet *albums;
@@ -55,6 +56,7 @@
 @property (nonatomic, copy, readonly) PhotoBoxImage *thumbnailImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *normalImage;
 @property (nonatomic, copy, readonly) PhotoBoxImage *originalImage;
+@property (nonatomic, copy, readonly) PhotoBoxImage *pathBaseImage;
 
 @property (nonatomic, copy, readonly) NSString *dateMonthYearTakenString;
 @property (nonatomic, copy, readonly) NSDate *dateUploadedDate;

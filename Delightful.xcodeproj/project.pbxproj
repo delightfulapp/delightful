@@ -180,7 +180,6 @@
 		037B08A41956B85C001F55D6 /* UploadAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A21956B85C001F55D6 /* UploadAssetCell.m */; };
 		037B08A81956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
 		037B08A91956C0A6001F55D6 /* UploadHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A71956C0A6001F55D6 /* UploadHeaderView.m */; };
-		037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
 		037EC051189CF76D009C54EE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 037EC050189CF76D009C54EE /* Crashlytics.framework */; };
 		03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 03866325184073D7006C76DE /* DelightfulTabBar.m */; };
 		038663291840C57C006C76DE /* UIColor+DelightfulColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 038663281840C57C006C76DE /* UIColor+DelightfulColors.m */; };
@@ -221,6 +220,16 @@
 		03A4381B1A413C88005922E8 /* PhotoTagsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438191A413C88005922E8 /* PhotoTagsCell.m */; };
 		03A438221A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */; };
 		03A438231A414705005922E8 /* PhotoTagsCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */; };
+		03AA79A71A89F24900C1BA3E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 03AA79A01A89F24900C1BA3E /* LICENSE */; };
+		03AA79A81A89F24900C1BA3E /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 03AA79A01A89F24900C1BA3E /* LICENSE */; };
+		03AA79A91A89F24900C1BA3E /* NHBalancedFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A31A89F24900C1BA3E /* NHBalancedFlowLayout.m */; };
+		03AA79AA1A89F24900C1BA3E /* NHBalancedFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A31A89F24900C1BA3E /* NHBalancedFlowLayout.m */; };
+		03AA79AB1A89F24900C1BA3E /* NHLinearPartition.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A51A89F24900C1BA3E /* NHLinearPartition.m */; };
+		03AA79AC1A89F24900C1BA3E /* NHLinearPartition.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A51A89F24900C1BA3E /* NHLinearPartition.m */; };
+		03AA79AD1A89F24900C1BA3E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A61A89F24900C1BA3E /* README.md */; };
+		03AA79AE1A89F24900C1BA3E /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79A61A89F24900C1BA3E /* README.md */; };
+		03AA79B11A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */; };
+		03AA79B21A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */; };
 		03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
 		03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74241A18FE7800C34525 /* DownloadedViewController.m */; };
 		03AD74291A18FF0B00C34525 /* LocalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03AD74281A18FF0B00C34525 /* LocalViewController.m */; };
@@ -293,7 +302,6 @@
 		03EFD8EA19251CD700E80A71 /* PhotoBoxFetchedResultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 03BA85511801A90900D77B39 /* PhotoBoxFetchedResultsController.m */; };
 		03EFD8EB19251CD700E80A71 /* UIView+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846D817D364FE00E196D7 /* UIView+Additionals.m */; };
 		03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846BF17D255A600E196D7 /* PhotosHorizontalScrollingViewController.m */; };
-		03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 037BA89718A0EB470072760C /* DelightfulLayout.m */; };
 		03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 035846B017D2312500E196D7 /* NSArray+Additionals.m */; };
 		03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 032222A7181419A8004F3830 /* NPRNotificationView.m */; };
 		03EFD8F119251CD700E80A71 /* HintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0396BDED19227804004B6290 /* HintsViewController.m */; };
@@ -617,8 +625,6 @@
 		037B08A21956B85C001F55D6 /* UploadAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadAssetCell.m; path = PhotoBox/Cells/UploadAssetCell.m; sourceTree = "<group>"; };
 		037B08A61956C0A6001F55D6 /* UploadHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadHeaderView.h; path = PhotoBox/Views/UploadHeaderView.h; sourceTree = "<group>"; };
 		037B08A71956C0A6001F55D6 /* UploadHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadHeaderView.m; path = PhotoBox/Views/UploadHeaderView.m; sourceTree = "<group>"; };
-		037BA89618A0EB470072760C /* DelightfulLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DelightfulLayout.h; sourceTree = "<group>"; };
-		037BA89718A0EB470072760C /* DelightfulLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DelightfulLayout.m; sourceTree = "<group>"; };
 		037EC050189CF76D009C54EE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		03866324184073D7006C76DE /* DelightfulTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DelightfulTabBar.h; path = PhotoBox/Views/DelightfulTabBar.h; sourceTree = "<group>"; };
 		03866325184073D7006C76DE /* DelightfulTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DelightfulTabBar.m; path = PhotoBox/Views/DelightfulTabBar.m; sourceTree = "<group>"; };
@@ -677,6 +683,15 @@
 		03A438191A413C88005922E8 /* PhotoTagsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoTagsCell.m; path = PhotoBox/Cells/PhotoTagsCell.m; sourceTree = "<group>"; };
 		03A438201A414705005922E8 /* PhotoTagsCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoTagsCollectionViewController.h; path = PhotoBox/Controllers/PhotoTagsCollectionViewController.h; sourceTree = "<group>"; };
 		03A438211A414705005922E8 /* PhotoTagsCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoTagsCollectionViewController.m; path = PhotoBox/Controllers/PhotoTagsCollectionViewController.m; sourceTree = "<group>"; };
+		03AA79A01A89F24900C1BA3E /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		03AA79A21A89F24900C1BA3E /* NHBalancedFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NHBalancedFlowLayout.h; sourceTree = "<group>"; };
+		03AA79A31A89F24900C1BA3E /* NHBalancedFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NHBalancedFlowLayout.m; sourceTree = "<group>"; };
+		03AA79A41A89F24900C1BA3E /* NHLinearPartition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NHLinearPartition.h; sourceTree = "<group>"; };
+		03AA79A51A89F24900C1BA3E /* NHLinearPartition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NHLinearPartition.m; sourceTree = "<group>"; };
+		03AA79A61A89F24900C1BA3E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		03AA79AF1A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewChangeColumnsNumberGestureRecognizer.h; path = PhotoBox/Others/CollectionViewChangeColumnsNumberGestureRecognizer.h; sourceTree = "<group>"; };
+		03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewChangeColumnsNumberGestureRecognizer.m; path = PhotoBox/Others/CollectionViewChangeColumnsNumberGestureRecognizer.m; sourceTree = "<group>"; };
+		03AA79B31A8B583D00C1BA3E /* CollectionViewLayoutOffsetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewLayoutOffsetDelegate.h; path = PhotoBox/Others/CollectionViewLayoutOffsetDelegate.h; sourceTree = "<group>"; };
 		03AD74231A18FE7800C34525 /* DownloadedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DownloadedViewController.h; path = PhotoBox/Controllers/DownloadedViewController.h; sourceTree = "<group>"; };
 		03AD74241A18FE7800C34525 /* DownloadedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DownloadedViewController.m; path = PhotoBox/Controllers/DownloadedViewController.m; sourceTree = "<group>"; };
 		03AD74271A18FF0B00C34525 /* LocalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalViewController.h; path = PhotoBox/Controllers/LocalViewController.h; sourceTree = "<group>"; };
@@ -1055,6 +1070,9 @@
 				03FD482F1920AA9C00D4ADF7 /* FavoritesManager.m */,
 				0312305119278F9A004AFD1E /* DelightfulCache.h */,
 				0312305219278F9A004AFD1E /* DelightfulCache.m */,
+				03AA79AF1A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.h */,
+				03AA79B01A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m */,
+				03AA79B31A8B583D00C1BA3E /* CollectionViewLayoutOffsetDelegate.h */,
 			);
 			name = Others;
 			sourceTree = "<group>";
@@ -1231,10 +1249,9 @@
 		035846B417D23F9700E196D7 /* Layout */ = {
 			isa = PBXGroup;
 			children = (
+				03AA799F1A89F24900C1BA3E /* NHBalancedFlowLayout */,
 				035846B517D23FB800E196D7 /* StickyHeaderFlowLayout.h */,
 				035846B617D23FB800E196D7 /* StickyHeaderFlowLayout.m */,
-				037BA89618A0EB470072760C /* DelightfulLayout.h */,
-				037BA89718A0EB470072760C /* DelightfulLayout.m */,
 			);
 			name = Layout;
 			sourceTree = "<group>";
@@ -1256,6 +1273,27 @@
 				03EB629519DF06BF00E65248 /* TransitionToInfoPresentationController.m */,
 			);
 			name = Transition;
+			sourceTree = "<group>";
+		};
+		03AA799F1A89F24900C1BA3E /* NHBalancedFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				03AA79A01A89F24900C1BA3E /* LICENSE */,
+				03AA79A11A89F24900C1BA3E /* NHBalancedFlowLayout */,
+				03AA79A61A89F24900C1BA3E /* README.md */,
+			);
+			path = NHBalancedFlowLayout;
+			sourceTree = "<group>";
+		};
+		03AA79A11A89F24900C1BA3E /* NHBalancedFlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				03AA79A21A89F24900C1BA3E /* NHBalancedFlowLayout.h */,
+				03AA79A31A89F24900C1BA3E /* NHBalancedFlowLayout.m */,
+				03AA79A41A89F24900C1BA3E /* NHLinearPartition.h */,
+				03AA79A51A89F24900C1BA3E /* NHLinearPartition.m */,
+			);
+			path = NHBalancedFlowLayout;
 			sourceTree = "<group>";
 		};
 		03AE182717D8B2F5009CD844 /* Images */ = {
@@ -1471,6 +1509,7 @@
 				0327CC81194723B70086C4B8 /* uploaded@2x.png in Resources */,
 				0327CC7F194723B70086C4B8 /* uploaded.png in Resources */,
 				03B5CCC8193C7AE500E0BAD0 /* camera@2x.png in Resources */,
+				03AA79A71A89F24900C1BA3E /* LICENSE in Resources */,
 				0396BDE719227461004B6290 /* HintPinch.xib in Resources */,
 				031DD2AE17D9BB8300A80167 /* info.png in Resources */,
 				031DD2AD17D9BB8300A80167 /* user.png in Resources */,
@@ -1568,6 +1607,7 @@
 				03EFD94D19251CD700E80A71 /* refresh@2x.png in Resources */,
 				03EFD94E19251CD700E80A71 /* Crashlytics.plist in Resources */,
 				03EFD94F19251CD700E80A71 /* star-fill.png in Resources */,
+				03AA79A81A89F24900C1BA3E /* LICENSE in Resources */,
 				03651611192DE9E20042C1B6 /* LoginWebViewViewController.xib in Resources */,
 				03EFD95019251CD700E80A71 /* shareicons.ttf in Resources */,
 				03EFD95119251CD700E80A71 /* star.png in Resources */,
@@ -1793,6 +1833,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357967319D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				03AA79B11A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */,
 				0357967719D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				035B035519ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089E1955A627001F55D6 /* UploadViewController.m in Sources */,
@@ -1828,6 +1869,7 @@
 				03A4381A1A413C88005922E8 /* PhotoTagsCell.m in Sources */,
 				0312305319278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03AE182617D8B004009CD844 /* LoginViewController.m in Sources */,
+				03AA79AD1A89F24900C1BA3E /* README.md in Sources */,
 				0310903F17D104460075F9D8 /* ConnectionManager.m in Sources */,
 				038EC595183D5FB100AFEA53 /* DelightfulRowCell.m in Sources */,
 				0357966B19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */,
@@ -1852,7 +1894,6 @@
 				035846C017D255A600E196D7 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035DACD1197FD8BF00557547 /* AlbumsPickerViewController.m in Sources */,
 				0365160D192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
-				037BA89818A0EB470072760C /* DelightfulLayout.m in Sources */,
 				03AD74251A18FE7800C34525 /* DownloadedViewController.m in Sources */,
 				035846B117D2312500E196D7 /* NSArray+Additionals.m in Sources */,
 				032222A8181419A8004F3830 /* NPRNotificationView.m in Sources */,
@@ -1893,6 +1934,7 @@
 				035846A217D1F91000E196D7 /* AlbumTitleView.m in Sources */,
 				035DACE81983555500557547 /* DLFAsset.m in Sources */,
 				038EC59D183D742E00AFEA53 /* UICollectionViewCell+Additionals.m in Sources */,
+				03AA79AB1A89F24900C1BA3E /* NHLinearPartition.m in Sources */,
 				0391824F1800074A0099480C /* NSObject+Additionals.m in Sources */,
 				0358467717D1BC3D00E196D7 /* TagsViewController.m in Sources */,
 				03108FEA17D0FE3A0075F9D8 /* Album.m in Sources */,
@@ -1902,6 +1944,7 @@
 				0396BDE51922032D004B6290 /* PhotosCollection.m in Sources */,
 				03FD481E191F553200D4ADF7 /* DownloadedImageManager.m in Sources */,
 				03866326184073D7006C76DE /* DelightfulTabBar.m in Sources */,
+				03AA79A91A89F24900C1BA3E /* NHBalancedFlowLayout.m in Sources */,
 				03E738EA1824A7690021EB12 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0312721D1A18FE0900FFC898 /* FavoritesViewController.m in Sources */,
 				03F6C9F719EAD92E000F524B /* SyncEngine.m in Sources */,
@@ -1940,6 +1983,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0357967419D85E1600A28334 /* DLFYapDatabaseViewAndMapping.m in Sources */,
+				03AA79B21A8B387A00C1BA3E /* CollectionViewChangeColumnsNumberGestureRecognizer.m in Sources */,
 				0357967819D860F100A28334 /* FlattenedPhotosDataSource.m in Sources */,
 				035B035619ECDC3E00153F24 /* MainTabBarController.m in Sources */,
 				037B089F1955A627001F55D6 /* UploadViewController.m in Sources */,
@@ -1975,6 +2019,7 @@
 				03A4381B1A413C88005922E8 /* PhotoTagsCell.m in Sources */,
 				0312305419278F9A004AFD1E /* DelightfulCache.m in Sources */,
 				03EFD8DD19251CD700E80A71 /* LoginViewController.m in Sources */,
+				03AA79AE1A89F24900C1BA3E /* README.md in Sources */,
 				03EFD8DE19251CD700E80A71 /* ConnectionManager.m in Sources */,
 				03EFD8DF19251CD700E80A71 /* DelightfulRowCell.m in Sources */,
 				0357966C19D842D200A28334 /* GroupedPhotosDataSource.m in Sources */,
@@ -1999,7 +2044,6 @@
 				03EFD8EC19251CD700E80A71 /* PhotosHorizontalScrollingViewController.m in Sources */,
 				035DACD2197FD8BF00557547 /* AlbumsPickerViewController.m in Sources */,
 				0365160E192DE6490042C1B6 /* LoginWebViewViewController.m in Sources */,
-				03EFD8ED19251CD700E80A71 /* DelightfulLayout.m in Sources */,
 				03AD74261A18FE7800C34525 /* DownloadedViewController.m in Sources */,
 				03EFD8EF19251CD700E80A71 /* NSArray+Additionals.m in Sources */,
 				03EFD8F019251CD700E80A71 /* NPRNotificationView.m in Sources */,
@@ -2040,6 +2084,7 @@
 				03EFD90A19251CD700E80A71 /* AlbumTitleView.m in Sources */,
 				035DACE91983555500557547 /* DLFAsset.m in Sources */,
 				03EFD90B19251CD700E80A71 /* UICollectionViewCell+Additionals.m in Sources */,
+				03AA79AC1A89F24900C1BA3E /* NHLinearPartition.m in Sources */,
 				03EFD90C19251CD700E80A71 /* NSObject+Additionals.m in Sources */,
 				03EFD90E19251CD700E80A71 /* TagsViewController.m in Sources */,
 				03EFD90F19251CD700E80A71 /* Album.m in Sources */,
@@ -2049,6 +2094,7 @@
 				03EFD91519251CD700E80A71 /* PhotosCollection.m in Sources */,
 				03EFD91619251CD700E80A71 /* DownloadedImageManager.m in Sources */,
 				03EFD91719251CD700E80A71 /* DelightfulTabBar.m in Sources */,
+				03AA79AA1A89F24900C1BA3E /* NHBalancedFlowLayout.m in Sources */,
 				03EFD91819251CD700E80A71 /* CollectionViewSelectCellGestureRecognizer.m in Sources */,
 				0312721E1A18FE0900FFC898 /* FavoritesViewController.m in Sources */,
 				03F6C9F819EAD92E000F524B /* SyncEngine.m in Sources */,
@@ -2209,7 +2255,8 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9c4779c8-5a58-4988-bc84-3b20528babdd";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2220,7 +2267,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2249,7 +2296,8 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "9c4779c8-5a58-4988-bc84-3b20528babdd";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -2392,7 +2440,8 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "ecb1eda6-333a-4d98-997f-f53740ecd8bc";
+				PROVISIONING_PROFILE = "a24ea274-758f-4eb6-a48d-2113e598602b";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -2451,7 +2500,8 @@
 					Crashlytics,
 				);
 				PRODUCT_NAME = "Delightful";
-				PROVISIONING_PROFILE = "e30292a2-be45-4136-b5a6-fdb72f61fca0";
+				PROVISIONING_PROFILE = "a2431d20-6ac6-48d0-885c-baecb181c849";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

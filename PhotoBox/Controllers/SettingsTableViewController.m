@@ -207,13 +207,19 @@ static void * imageDownloadContext = &imageDownloadContext;
 #pragma mark - Actions
 
 - (void)logoutTapped {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Are you sure you want to logout?", nil) message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Are you sure you want to logout?", nil) message:nil preferredStyle:(IS_IPAD)?UIAlertControllerStyleAlert:UIAlertControllerStyleActionSheet];
     UIAlertAction *action = [UIAlertAction actionWithTitle:NSLocalizedString(@"Yes", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [[ConnectionManager sharedManager] logout];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    [alert addAction:action];
-    [alert addAction:cancelAction];
+    if (IS_IPAD) {
+        [alert addAction:cancelAction];
+        [alert addAction:action];
+    } else {
+        [alert addAction:action];
+        [alert addAction:cancelAction];
+    }
+    
     [self presentViewController:alert animated:YES completion:nil];
 }
 

@@ -33,6 +33,17 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated{
+    [((YapDataSource *)self.dataSource) setPause:NO];
+    [self restoreContentInset];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self restoreContentInset];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [((YapDataSource *)self.dataSource) setPause:YES];
 }
 
 - (void)pauseSync:(BOOL)pauseSync {
