@@ -44,10 +44,10 @@
 #import "PHPhotoLibrary+Additionals.h"
 #import "NHBalancedFlowLayout.h"
 #import "CollectionViewChangeColumnsNumberGestureRecognizer.h"
-#import <UIView+AutoLayout.h>
-#import <DLFPhotoCell.h>
-#import <DLFPhotosPickerViewController.h>
-#import <DLFDetailViewController.h>
+#import "PureLayout.h"
+#import "DLFPhotoCell.h"
+#import "DLFPhotosPickerViewController.h"
+#import "DLFDetailViewController.h"
 
 #define UPLOADED_MARK_TAG 123456910
 
@@ -262,9 +262,10 @@
         [alertController addAction:loginAction];
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
-        DLFPhotosPickerViewController *picker = [[UIStoryboard storyboardWithName:@"PhotosPicker" bundle:nil] instantiateInitialViewController];
-        [picker setPhotosPickerDelegate:self];
-        [self presentViewController:picker animated:YES completion:nil];
+        DLFPhotosPickerViewController *photosPicker = [[DLFPhotosPickerViewController alloc] init];
+        [photosPicker setPhotosPickerDelegate:self];
+        [photosPicker setMultipleSelections:YES];
+        [self presentViewController:photosPicker animated:YES completion:nil];
     }
 }
 

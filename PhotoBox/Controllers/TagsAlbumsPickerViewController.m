@@ -13,7 +13,7 @@
 #import "UploadDescriptionTableViewCell.h"
 #import "Album.h"
 #import "Tag.h"
-#import "PhotoBoxClient.h"
+#import "APIClient.h"
 #import "NSString+Score.h"
 #import "TagsSuggestionTableViewController.h"
 #import "AlbumsPickerViewController.h"
@@ -23,7 +23,7 @@
 #import "SyncEngine.h"
 #import "PhotoTagsCollectionViewController.h"
 #import "LocationManager.h"
-#import <Bolts.h>
+#import "Bolts.h"
 
 #define LAST_SELECTED_ALBUM @"last_selected_album_key"
 #define TITLE_TEXTFIELD_TAG 100000

@@ -8,7 +8,7 @@
 
 #import "PermissionPickerTableViewCell.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface PermissionPickerTableViewCell ()
 

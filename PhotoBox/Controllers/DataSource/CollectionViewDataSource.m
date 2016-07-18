@@ -10,7 +10,7 @@
 
 #import "PhotoBoxCell.h"
 
-#import <NSDate+Escort.h>
+#import "NSDate+Escort.h"
 
 #import "DLFDatabaseManager.h"
 

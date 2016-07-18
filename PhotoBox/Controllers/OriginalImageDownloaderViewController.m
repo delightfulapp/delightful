@@ -12,7 +12,7 @@
 
 #import "DownloadCell.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 static NSString *const downloadCellIdentifier = @"downloadCellIdentifier";
 

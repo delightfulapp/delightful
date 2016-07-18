@@ -15,7 +15,7 @@
 #import "Album.h"
 #import "Tag.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 static char *kSearchBarCenterContext;
 

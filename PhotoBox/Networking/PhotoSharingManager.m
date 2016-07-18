@@ -8,7 +8,7 @@
 
 #import "PhotoSharingManager.h"
 
-#import "PhotoBoxClient.h"
+#import "APIClient.h"
 
 #import "Photo+Additionals.h"
 
@@ -27,7 +27,7 @@
 }
 
 - (void)shareLinkPhoto:(Photo *)photo image:(UIImage *)image fromViewController:(UIViewController *)fromViewController tokenFetchedBlock:(void (^)(id token))tokenFetchedBlock completion:(void (^)(NSURL *URL))completion {
-    [[PhotoBoxClient sharedClient] fetchSharingTokenForPhotoWithId:photo.photoId completionBlock:^(NSString *token) {
+    [[APIClient sharedClient] fetchSharingTokenForPhotoWithId:photo.photoId completionBlock:^(NSString *token) {
         if (tokenFetchedBlock) {
             tokenFetchedBlock(token);
         }

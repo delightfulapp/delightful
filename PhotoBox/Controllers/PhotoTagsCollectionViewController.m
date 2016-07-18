@@ -10,8 +10,8 @@
 #import "PhotoTagsCell.h"
 #import "DLFAsset.h"
 #import "SmartTagButton.h"
-#import <UIView+AutoLayout.h>
-#import <CSNotificationView.h>
+#import "PureLayout.h"
+#import "CSNotificationView.h"
 
 @interface HeaderReusableView : UICollectionReusableView
 

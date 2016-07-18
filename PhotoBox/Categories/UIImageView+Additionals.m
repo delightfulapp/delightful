@@ -8,9 +8,9 @@
 
 #import "UIImageView+Additionals.h"
 
-#import <SDWebImageManager.h>
+#import "SDWebImageManager.h"
 
-#import <UIImageView+WebCache.h>
+#import "UIImageView+WebCache.h"
 
 #import <objc/runtime.h>
 

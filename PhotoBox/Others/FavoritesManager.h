@@ -7,7 +7,7 @@
 //
 
 #import "DownloadedImageManager.h"
-#import <Bolts.h>
+#import "Bolts.h"
 
 extern NSString *const favoritesTagName;
 extern NSString *const FavoritesManagerWillMigratePhotosNotification;

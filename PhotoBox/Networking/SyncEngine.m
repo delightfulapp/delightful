@@ -7,7 +7,7 @@
 //
 
 #import "SyncEngine.h"
-#import "PhotoBoxClient.h"
+#import "APIClient.h"
 #import "DLFDatabaseManager.h"
 #import "Photo.h"
 #import "Album.h"
@@ -15,8 +15,7 @@
 #import "GroupedPhotosDataSource.h"
 #import "DLFYapDatabaseViewAndMapping.h"
 #import "ConnectionManager.h"
-#import <YapDatabase.h>
-#import <AFURLConnectionOperation.h>
+#import "YapDatabase.h"
 
 #define FETCHING_PAGE_SIZE 20
 
@@ -78,11 +77,11 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
 @property (nonatomic, strong) YapDatabaseConnection *albumsConnection;
 @property (nonatomic, strong) YapDatabaseConnection *tagsConnection;
 @property (nonatomic, strong) YapDatabaseConnection *readConnection;
-@property (nonatomic, strong) AFURLConnectionOperation *allPhotosSyncingOperation;
-@property (nonatomic, strong) AFURLConnectionOperation *photosInAlbumSyncingOperation;
-@property (nonatomic, strong) AFURLConnectionOperation *photosInTagSyncingOperation;
-@property (nonatomic, strong) AFURLConnectionOperation *tagsSyncingOperation;
-@property (nonatomic, strong) AFURLConnectionOperation *albumsSyncingOperation;
+@property (nonatomic, strong) NSURLSessionDataTask *allPhotosSyncingOperation;
+@property (nonatomic, strong) NSURLSessionDataTask *photosInAlbumSyncingOperation;
+@property (nonatomic, strong) NSURLSessionDataTask *photosInTagSyncingOperation;
+@property (nonatomic, strong) NSURLSessionDataTask *tagsSyncingOperation;
+@property (nonatomic, strong) NSURLSessionDataTask *albumsSyncingOperation;
 @property (nonatomic, assign) BOOL pauseAllPhotosSyncOperation;
 @property (nonatomic, assign) BOOL pausePhotosInAlbumSyncOperation;
 @property (nonatomic, assign) BOOL pausePhotosInTagSyncOperation;
@@ -127,11 +126,11 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         self.albumsConnection.metadataCacheEnabled = NO;
         
         self.tagsConnection = [self.database newConnection];
-        self.tagsConnection.objectCacheEnabled = NO; // don't needpa cache for write-only connection
+        self.tagsConnection.objectCacheEnabled = NO; // don't need cache for write-only connection
         self.tagsConnection.metadataCacheEnabled = NO;
         
         self.readConnection = [self.database newConnection];
-        self.readConnection.objectCacheEnabled = YES; // don't needpa cache for write-only connection
+        self.readConnection.objectCacheEnabled = YES; // don't need cache for write-only connection
         self.readConnection.metadataCacheEnabled = NO;
         
         [[ConnectionManager sharedManager] addObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn)) options:0 context:kUserLoggedInContext];
@@ -149,7 +148,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         self.pausePhotosInAlbumSyncOperation = NO;
         self.photosInAlbumSyncOperationSort = sort;
         self.photosInAlbumSyncOperationPage = 0;
-        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:0 sort:sort];
+        self.photosInAlbumSyncingOperation = [self fetchPhotosInAlbum:collection page:0 sort:sort];
     } else if (collectionType == Tag.class) {
         if (self.photosInTagSyncingOperation) {
             [self.photosInTagSyncingOperation cancel];
@@ -157,7 +156,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         self.pausePhotosInTagSyncOperation = NO;
         self.photosInTagSyncOperationSort = sort;
         self.photosInTagSyncOperationPage = 1;
-        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:1 sort:sort];
+        self.photosInTagSyncingOperation = [self fetchPhotosInTag:collection page:1 sort:sort];
     } else {
         if (self.allPhotosSyncingOperation) {
             [self.allPhotosSyncingOperation cancel];
@@ -165,7 +164,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         self.pauseAllPhotosSyncOperation = NO;
         self.allPhotosSyncOperationPage = 0;
         self.allPhotosSyncOperationSort = sort;
-        self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:0 sort:sort];
+        self.allPhotosSyncingOperation = [self fetchPhotosForPage:0 sort:sort];
     }
 }
 
@@ -173,35 +172,35 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     if (self.albumsSyncingOperation) {
         [self.albumsSyncingOperation cancel];
     }
-    self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:1];
+    self.albumsSyncingOperation = [self fetchAlbumsForPage:1];
 }
 
 - (void)startSyncingTags {
     if (self.tagsSyncingOperation) {
         [self.tagsSyncingOperation cancel];
     }
-    self.tagsSyncingOperation = (AFURLConnectionOperation *)[self fetchTagsForPage:1];
+    self.tagsSyncingOperation = [self fetchTagsForPage:1];
 }
 
 - (void)refreshResource:(NSString *)resource {
     if ([resource isEqualToString:NSStringFromClass(Album.class)]) {
         self.pauseAlbumsSyncOperation = NO;
         [self.albumsSyncingOperation cancel];
-        self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:1];
+        self.albumsSyncingOperation = [self fetchAlbumsForPage:1];
     } else if ([resource isEqualToString:NSStringFromClass(Tag.class)]) {
         [self.tagsSyncingOperation cancel];
-        self.tagsSyncingOperation = (AFURLConnectionOperation *)[self fetchTagsForPage:1];
+        self.tagsSyncingOperation = [self fetchTagsForPage:1];
     }
 }
 
 
-- (NSOperation *)fetchTagsForPage:(int)page {
+- (NSURLSessionDataTask *)fetchTagsForPage:(int)page {
     //CLS_LOG(@"Fetching tags page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Tag class]), SyncEngineNotificationPageKey: @(page)}];
     });
     
-    return [[PhotoBoxClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
+    return [[APIClient sharedClient] getTagsForPage:page pageSize:0 success:^(NSArray *tags) {
         //CLS_LOG(@"Did finish fetching %d tags page %d", (int)tags.count, page);
         if (tags.count > 0) {
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -223,7 +222,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     }];
 }
 
-- (NSOperation *)fetchAlbumsForPage:(int)page {
+- (NSURLSessionDataTask *)fetchAlbumsForPage:(int)page {
     CLS_LOG(@"Fetching albums page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page)}];
@@ -231,7 +230,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     
     self.albumsSyncOperationPage = page;
     
-    return [[PhotoBoxClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
+    return [[APIClient sharedClient] getAlbumsForPage:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *albums) {
         CLS_LOG(@"Did finish fetching %d albums page %d", (int)albums.count, page);
         
         if (albums.count > 0) {
@@ -246,8 +245,8 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
                     [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFinishFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Album class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationCountKey: @(albums.count)}];
                     dispatch_async(dispatch_get_main_queue(), ^{
                         if (!self.pauseAlbumsSyncOperation) {
-                            if (![self.albumsSyncingOperation isExecuting]) {
-                                self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:page+1];
+                            if (self.albumsSyncingOperation.state != NSURLSessionTaskStateRunning ) {
+                                self.albumsSyncingOperation = [self fetchAlbumsForPage:page+1];
                             }
                         }
                     });
@@ -266,7 +265,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     }];
 }
 
-- (NSOperation *)fetchPhotosForPage:(int)page sort:(NSString *)sort{
+- (NSURLSessionDataTask *)fetchPhotosForPage:(int)page sort:(NSString *)sort{
     //CLS_LOG(@"Fetching photos for page %d", page);
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page)}];
@@ -275,7 +274,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.allPhotosSyncOperationPage = page;
     self.allPhotosSyncOperationSort = sort;
     
-    return [[PhotoBoxClient sharedClient] getPhotosForPage:page sort:sort pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    return [[APIClient sharedClient] getPhotosForPage:page sort:sort pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         //CLS_LOG(@"Did finish fetching %d photos page %d", (int)photos.count, page);
         
         [self didFetchPhotos:photos collection:nil collectionType:nil page:page sort:sort];
@@ -285,7 +284,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     }];
 }
 
-- (NSOperation *)fetchPhotosInTag:(NSString *)tag page:(int)page sort:(NSString *)sort {
+- (NSURLSessionDataTask *)fetchPhotosInTag:(NSString *)tag page:(int)page sort:(NSString *)sort {
     dispatch_async(dispatch_get_main_queue(), ^{
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineWillStartFetchingNotification object:nil userInfo:@{SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationPageKey: @(page), SyncEngineNotificationIdentifierKey:tag}];
     });
@@ -294,7 +293,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.photosInTagSyncOperationSort = sort;
     self.photosInTagSyncOperationCollection = tag;
     
-    return [[PhotoBoxClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    return [[APIClient sharedClient] getPhotosInTag:tag sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         //CLS_LOG(@"Did finish fetching %d photos page %d in tag %@", (int)photos.count, page, tag);
         [self didFetchPhotos:photos collection:tag collectionType:[Tag class] page:page sort:sort];
     } failure:^(NSError *error) {
@@ -302,7 +301,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     }];
 }
 
-- (NSOperation *)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
+- (NSURLSessionDataTask *)fetchPhotosInAlbum:(NSString *)album page:(int)page sort:(NSString *)sort {
     //NSLog(@"Fetching photos in album %@ page %d sort %@", album, page, sort);
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -313,7 +312,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.photosInAlbumSyncOperationSort = sort;
     self.photosInAlbumSyncOperationCollection = album;
     
-    return [[PhotoBoxClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
+    return [[APIClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
         //NSLog(@"Did finish fetching %d photos page %d in album %@", (int)photos.count, page, album);
         
         [self didFetchPhotos:photos collection:album collectionType:[Album class] page:page sort:sort];
@@ -333,20 +332,20 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (collectionType==Album.class) {
                     if (!self.pausePhotosInAlbumSyncOperation) {
-                        if (![self.photosInAlbumSyncingOperation isExecuting]) {
-                            self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:page+1 sort:sort];
+                        if (self.photosInAlbumSyncingOperation.state != NSURLSessionTaskStateRunning) {
+                            self.photosInAlbumSyncingOperation = [self fetchPhotosInAlbum:collection page:page+1 sort:sort];
                         }
                     }
                 } else if (collectionType==Tag.class) {
                     if (!self.pausePhotosInTagSyncOperation) {
-                        if (![self.photosInTagSyncingOperation isExecuting]) {
-                            self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:page+1 sort:sort];
+                        if (self.photosInTagSyncingOperation.state != NSURLSessionTaskStateRunning) {
+                            self.photosInTagSyncingOperation = [self fetchPhotosInTag:collection page:page+1 sort:sort];
                         }
                     }
                 } else {
                     if (!self.pauseAllPhotosSyncOperation) {
-                        if (![self.allPhotosSyncingOperation isExecuting]) {
-                            self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:page+1 sort:sort];
+                        if (self.allPhotosSyncingOperation.state != NSURLSessionTaskStateRunning) {
+                            self.allPhotosSyncingOperation = [self fetchPhotosForPage:page+1 sort:sort];
                         }
                     }
                 }
@@ -365,7 +364,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         else {
             if (self.pausePhotosInAlbumSyncOperation) {
                 self.pausePhotosInAlbumSyncOperation = NO;
-                self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:self.photosInAlbumSyncOperationPage sort:self.photosInAlbumSyncOperationSort];
+                self.photosInAlbumSyncingOperation = [self fetchPhotosInAlbum:collection page:self.photosInAlbumSyncOperationPage sort:self.photosInAlbumSyncOperationSort];
             }
         }
     } else if (collectionType==Tag.class) {
@@ -376,7 +375,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         else {
             if (self.pausePhotosInTagSyncOperation) {
                 self.pausePhotosInTagSyncOperation = NO;
-                self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:self.photosInTagSyncOperationPage sort:self.photosInTagSyncOperationSort];
+                self.photosInTagSyncingOperation = [self fetchPhotosInTag:collection page:self.photosInTagSyncOperationPage sort:self.photosInTagSyncOperationSort];
             }
         }
     } else {
@@ -387,7 +386,7 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         else {
             if (self.pauseAllPhotosSyncOperation) {
                 self.pauseAllPhotosSyncOperation = NO;
-                self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:self.allPhotosSyncOperationPage sort:self.allPhotosSyncOperationSort];
+                self.allPhotosSyncingOperation = [self fetchPhotosForPage:self.allPhotosSyncOperationPage sort:self.allPhotosSyncOperationSort];
             }
         }
     }
@@ -399,8 +398,8 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
         [self.albumsSyncingOperation cancel];
     } else {
         self.pauseAlbumsSyncOperation = NO;
-        if (![self.albumsSyncingOperation isExecuting]) {
-            self.albumsSyncingOperation = (AFURLConnectionOperation *)[self fetchAlbumsForPage:self.albumsSyncOperationPage];
+        if (self.albumsSyncingOperation.state != NSURLSessionTaskStateRunning) {
+            self.albumsSyncingOperation = [self fetchAlbumsForPage:self.albumsSyncOperationPage];
         }
     }
 }
@@ -409,8 +408,8 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     if (pause) {
         [self.tagsSyncingOperation cancel];
     } else {
-        if (![self.tagsSyncingOperation isExecuting]) {
-            self.tagsSyncingOperation = (AFURLConnectionOperation *)[self fetchTagsForPage:1];
+        if (self.tagsSyncingOperation.state != NSURLSessionTaskStateRunning) {
+            self.tagsSyncingOperation = [self fetchTagsForPage:1];
         }
     }
 }
@@ -419,15 +418,15 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     if (collectionType == Album.class) {
         [self.photosInAlbumSyncingOperation cancel];
         self.pausePhotosInAlbumSyncOperation = NO;
-        self.photosInAlbumSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInAlbum:collection page:0 sort:sort];
+        self.photosInAlbumSyncingOperation = [self fetchPhotosInAlbum:collection page:0 sort:sort];
     } else if (collectionType == Tag.class) {
         [self.photosInTagSyncingOperation cancel];
         self.pausePhotosInTagSyncOperation = NO;
-        self.photosInTagSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosInTag:collection page:0 sort:sort];
+        self.photosInTagSyncingOperation = [self fetchPhotosInTag:collection page:0 sort:sort];
     } else {
         [self.allPhotosSyncingOperation cancel];
         self.pauseAllPhotosSyncOperation = NO;
-        self.allPhotosSyncingOperation = (AFURLConnectionOperation *)[self fetchPhotosForPage:0 sort:sort];
+        self.allPhotosSyncingOperation = [self fetchPhotosForPage:0 sort:sort];
     }
 }
 
@@ -488,15 +487,15 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     
-    if ([self.allPhotosSyncingOperation isExecuting]) {
+    if (self.allPhotosSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeAllPhotos;
-    } else if ([self.photosInTagSyncingOperation isExecuting]) {
+    } else if (self.photosInTagSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeTagPhotos;
-    } else if ([self.photosInAlbumSyncingOperation isExecuting]) {
+    } else if (self.photosInAlbumSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeAlbumPhotos;
-    } else if ([self.albumsSyncingOperation isExecuting]) {
+    } else if (self.albumsSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeAlbums;
-    } else if ([self.tagsSyncingOperation isExecuting]) {
+    } else if (self.tagsSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeTags;
     } else {
         self.syncOperationType  =SyncOperationTypeNone;

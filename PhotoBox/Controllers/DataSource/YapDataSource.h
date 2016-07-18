@@ -8,8 +8,8 @@
 
 #import "CollectionViewDataSource.h"
 
-#import <YapDatabase.h>
-#import <YapDatabaseView.h>
+#import "YapDatabase.h"
+#import "YapDatabaseView.h"
 
 @protocol YapDataSourceDelegate <NSObject>
 

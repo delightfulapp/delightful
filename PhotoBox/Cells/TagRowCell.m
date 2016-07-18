@@ -10,7 +10,7 @@
 
 #import "Tag.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @implementation TagRowCell
 

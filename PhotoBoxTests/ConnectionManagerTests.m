@@ -1,5 +1,5 @@
 //
-//  PhotoBoxClient+URLsTests.m
+//  APIClient+URLsTests.m
 //  PhotoBox
 //
 //  Created by Nico Prananta on 9/5/13.
@@ -9,7 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "ConnectionManager.h"
-#import <OCMock.h>
+#import <OCMock/OCMock.h>
 
 
 @interface ConnectionManagerTests : XCTestCase
@@ -34,7 +34,7 @@
 {
     NSString *baseURL = @"http://someone.trovebox.com";
     NSURL *initialOauthURL = [ConnectionManager oAuthInitialUrlForServer:baseURL];
-    XCTAssertTrue([initialOauthURL.absoluteString isEqualToString:@"http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=photoboxbaby://&name=Delightful"], @"Expected initial URL: http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=photoboxbaby://&name=PhotoBox Actual: %@", initialOauthURL.absoluteString);
+    XCTAssertTrue([initialOauthURL.absoluteString isEqualToString:@"http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=delightful://&name=Delightful"], @"Expected initial URL: http://someone.trovebox.com/v1/oauth/authorize?oauth_callback=delightful://&name=Delightful Actual: %@", initialOauthURL.absoluteString);
     NSURL *oauthAccessURL = [ConnectionManager oAuthAccessUrlForServer:baseURL];
     XCTAssertTrue([oauthAccessURL.absoluteString isEqualToString:@"http://someone.trovebox.com/v1/oauth/token/access"], @"Expected access URL: http://someone.trovebox.com/v1/oauth/token/access Actual: %@", oauthAccessURL.absoluteString);
 }

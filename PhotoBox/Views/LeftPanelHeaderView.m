@@ -8,7 +8,7 @@
 
 #import "LeftPanelHeaderView.h"
 
-#import <UIView+Autolayout.h>
+#import "PureLayout.h"
 
 @interface LeftPanelHeaderView ()
 

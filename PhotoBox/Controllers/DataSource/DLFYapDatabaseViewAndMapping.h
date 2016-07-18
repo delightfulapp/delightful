@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import <YapDatabaseView.h>
-#import <YapDatabase.h>
+#import "YapDatabaseView.h"
+#import "YapDatabase.h"
 
 @interface DLFYapDatabaseViewAndMapping : NSObject
 

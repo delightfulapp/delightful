@@ -10,7 +10,7 @@
 
 #import "UIView+Additionals.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface DelightfulTabBar ()
 

@@ -13,7 +13,7 @@
 #import "NSObject+Additionals.h"
 #import "NSArray+Additionals.h"
 #import "MTLModel+NSCoding.h"
-#import <NSDate+Escort.h>
+#import "NSDate+Escort.h"
 
 @implementation Photo
 
@@ -120,12 +120,11 @@
 #pragma mark - JSON Serialization
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
-    return [[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{
-                                                                            @"photoId": @"id",
-                                                                            @"photoHash":@"hash",
-                                                                            @"photoDescription":@"description",
-                                                                            @"dateMonthYearTakenString":NSNull.null
-                                                                            }];
+    return [[NSDictionary mtl_identityPropertyMapWithModel:[self class]] mtl_dictionaryByAddingEntriesFromDictionary:[[super class] photoBoxJSONKeyPathsByPropertyKeyWithDictionary:@{
+                                                                                                                                                                                                        @"photoId": @"id",
+                                                                                                                                                                                                        @"photoHash":@"hash",
+                                                                                                                                                                                                        @"photoDescription":@"description"
+                                                                                                                                                                                                        }]];
 }
 
 + (NSValueTransformer *)timestampJSONTransformer {
@@ -138,8 +137,10 @@
         dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
     });
     
-    return [MTLValueTransformer transformerWithBlock:^id(NSString *string) {
+    return  [MTLValueTransformer transformerUsingForwardBlock:^id(NSString *string, BOOL *success, NSError *__autoreleasing *error) {
         return [dateFormatter dateFromString:string];
+    } reverseBlock:^id(id value, BOOL *success, NSError *__autoreleasing *error) {
+        return value;
     }];
 }
 
@@ -160,9 +161,9 @@
 }
 
 + (MTLValueTransformer *)photoImageTransformer {
-    return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSArray *imageArray) {
+    return [MTLValueTransformer transformerUsingForwardBlock:^id(NSArray *imageArray, BOOL *success, NSError *__autoreleasing *error) {
         return [[PhotoBoxImage alloc] initWithArray:imageArray];
-    } reverseBlock:^(PhotoBoxImage *image) {
+    } reverseBlock:^id(PhotoBoxImage *image, BOOL *success, NSError *__autoreleasing *error) {
         return [image toArray];
     }];
 }

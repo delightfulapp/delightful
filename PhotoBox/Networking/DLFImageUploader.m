@@ -7,11 +7,11 @@
 //
 
 #import "DLFImageUploader.h"
-#import "PhotoBoxClient.h"
+#import "APIClient.h"
 #import "DLFAsset.h"
 #import "DLFDatabaseManager.h"
 #import "PHPhotoLibrary+Additionals.h"
-#import <YapDatabase.h>
+#import "YapDatabase.h"
 
 @import Photos;
 
@@ -84,7 +84,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     self.uploadingTask = [self.uploadingTask continueWithBlock:^id(BFTask *task) {
         BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
         NSLog(@"uploading photo %@", asset.asset.localIdentifier);
-        [[PhotoBoxClient sharedClient] uploadAsset:asset progress:^(float progress) {
+        [[APIClient sharedClient] uploadAsset:asset progress:^(float progress) {
             [selfie uploadProgress:progress asset:asset];
         } success:^(id object) {
             [selfie assetUploadDidSucceed:asset];

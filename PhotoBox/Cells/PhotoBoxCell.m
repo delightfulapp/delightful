@@ -8,7 +8,7 @@
 
 #import "PhotoBoxCell.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @implementation PhotoBoxCell
 

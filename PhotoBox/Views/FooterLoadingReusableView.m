@@ -8,7 +8,7 @@
 
 #import "FooterLoadingReusableView.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @implementation FooterLoadingReusableView
 

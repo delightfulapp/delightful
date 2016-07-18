@@ -14,7 +14,7 @@
 
 #import "UICollectionViewCell+Additionals.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface PhotoCell ()
 

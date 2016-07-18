@@ -22,7 +22,7 @@
 #import "DLFDatabaseManager.h"
 #import "SyncEngine.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 #define INITIAL_PAGE_NUMBER 1
 

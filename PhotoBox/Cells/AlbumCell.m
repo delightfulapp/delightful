@@ -10,7 +10,7 @@
 #import "Album.h"
 #import "Photo.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @implementation AlbumCell
 

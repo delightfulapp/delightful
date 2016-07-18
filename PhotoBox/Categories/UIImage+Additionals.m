@@ -8,7 +8,7 @@
 
 #import "UIImage+Additionals.h"
 
-#import <GPUImage.h>
+#import "GPUImage.h"
 
 @implementation UIImage (Additionals)
 

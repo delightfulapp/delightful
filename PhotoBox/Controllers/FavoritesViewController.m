@@ -16,8 +16,8 @@
 #import "SortTableViewController.h"
 #import "StickyHeaderFlowLayout.h"
 #import "UIColor+Additionals.h"
-#import <UIView+AutoLayout.h>
-#import <MBProgressHUD.h>
+#import "PureLayout.h"
+#import "MBProgressHUD.h"
 
 @interface MigratingLabel : UIView
 

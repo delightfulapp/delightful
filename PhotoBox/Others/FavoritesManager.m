@@ -9,9 +9,9 @@
 #import "FavoritesManager.h"
 #import "DLFDatabaseManager.h"
 #import "Photo.h"
-#import "PhotoBoxClient.h"
-#import <YapDatabase.h>
-#import <YapDatabaseViewOptions.h>
+#import "APIClient.h"
+#import "YapDatabase.h"
+#import "YapDatabaseViewOptions.h"
 #import "DLFYapDatabaseViewAndMapping.h"
 #define kFavoritesManagerKey @"com.delightful.kFavoritesManagerKey"
 
@@ -102,7 +102,7 @@ NSString *const FavoritesManagerMigratedPhotosCountKey = @"FavoritesManagerMigra
 - (BFTask *)addPhoto:(Photo *)photo {
     __weak typeof (self) selfie = self;
     BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
-    [[PhotoBoxClient sharedClient] addFavoritePhoto:photo success:^(Photo *object) {
+    [[APIClient sharedClient] addFavoritePhoto:photo success:^(Photo *object) {
         [selfie savePhoto:object withCompletionBlock:^{
             [taskCompletionSource setResult:object];
         }];
@@ -115,7 +115,7 @@ NSString *const FavoritesManagerMigratedPhotosCountKey = @"FavoritesManagerMigra
 - (BFTask *)addPhotoWithId:(NSString *)photo {
     __weak typeof (self) selfie = self;
     BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
-    [[PhotoBoxClient sharedClient] addFavoritePhotoWithId:photo success:^(Photo *object) {
+    [[APIClient sharedClient] addFavoritePhotoWithId:photo success:^(Photo *object) {
         [selfie savePhoto:object withCompletionBlock:^{
             [taskCompletionSource setResult:object];
         }];
@@ -128,7 +128,7 @@ NSString *const FavoritesManagerMigratedPhotosCountKey = @"FavoritesManagerMigra
 - (BFTask *)removePhoto:(Photo *)photo {
     __weak typeof (self) selfie = self;
     BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
-    [[PhotoBoxClient sharedClient] removeFavoritePhoto:photo success:^(id object) {
+    [[APIClient sharedClient] removeFavoritePhoto:photo success:^(id object) {
         [selfie savePhoto:object withCompletionBlock:^{
             [taskCompletionSource setResult:object];
         }];
@@ -141,7 +141,7 @@ NSString *const FavoritesManagerMigratedPhotosCountKey = @"FavoritesManagerMigra
 - (BFTask *)removePhotoWithId:(NSString *)photo {
     __weak typeof (self) selfie = self;
     BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
-    [[PhotoBoxClient sharedClient] removeFavoritePhotoWithId:photo success:^(id object) {
+    [[APIClient sharedClient] removeFavoritePhotoWithId:photo success:^(id object) {
         [selfie savePhoto:object withCompletionBlock:^{
             [taskCompletionSource setResult:object];
         }];

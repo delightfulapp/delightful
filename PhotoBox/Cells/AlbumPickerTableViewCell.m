@@ -8,7 +8,7 @@
 
 #import "AlbumPickerTableViewCell.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface AlbumPickerTableViewCell ()
 

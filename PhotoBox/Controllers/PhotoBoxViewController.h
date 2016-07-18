@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PhotoBoxClient.h"
+#import "APIClient.h"
 #import "CollectionViewDataSource.h"
 #import "MainTabBarController.h"
 

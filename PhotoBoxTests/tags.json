@@ -1,0 +1,27 @@
+{
+    "message": "Tags for the user",
+    "code": 200,
+    "result": [
+               {
+               "id": "2016",
+               "owner": "some@email.com",
+               "actor": "some@email.com",
+               "extra": "",
+               "count": 6
+               },
+               {
+               "id": "July",
+               "owner": "some@email.com",
+               "actor": "some@email.com",
+               "extra": "",
+               "count": 6
+               },
+               {
+               "id": "screenshots",
+               "owner": "some@email.com",
+               "actor": "some@email.com",
+               "extra": "",
+               "count": 2
+               }
+               ]
+}

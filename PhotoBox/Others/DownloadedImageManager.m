@@ -14,7 +14,7 @@
 
 #import "DLFYapDatabaseViewAndMapping.h"
 
-#import <YapDatabase.h>
+#import "YapDatabase.h"
 
 #define kDownloadedImageManagerKey @"com.delightful.kDownloadedImageManagerKey"
 

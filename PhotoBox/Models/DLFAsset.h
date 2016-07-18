@@ -7,7 +7,7 @@
 //
 
 @import Photos;
-#import <Bolts.h>
+#import "Bolts.h"
 
 @class Album;
 

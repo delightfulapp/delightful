@@ -24,9 +24,9 @@
 #import "TransitionToInfoPresentationController.h"
 #import "LocationManager.h"
 #import "NPRNotificationManager.h"
-#import <SVProgressHUD.h>
-#import <MBProgressHUD.h>
-#import <UIView+AutoLayout.h>
+#import "SVProgressHUD.h"
+#import "MBProgressHUD.h"
+#import "PureLayout.h"
 
 @interface PhotosHorizontalScrollingViewController () <UIGestureRecognizerDelegate, PhotoZoomableCellDelegate, PhotoInfoViewControllerDelegate, UIAlertViewDelegate, UICollectionViewDelegateFlowLayout, TransitionToInfoPresentationControllerPresentingDelegate> {
     BOOL shouldHideNavigationBar;

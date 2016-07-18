@@ -8,7 +8,7 @@
 
 #import "UploadReloadView.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface UploadReloadView ()
 

@@ -6,11 +6,10 @@
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import <AFNetworking.h>
-#import <AFHTTPRequestOperation.h>
+#import "AFNetworking.h"
 #import "LocationManager.h"
 #import "DLFDatabaseManager.h"
-#import <YapDatabase.h>
+#import "YapDatabase.h"
 
 #define FOURSQUARE_CLIENT_ID @"YE01OOGFTM5L3NDWWWGOVAANYV3QEHVCG421PSNQUBRTXAMS"
 #define FOURSQUARE_CLIENT_SECRET @"XEIWU4SHBATNHZBEW0FRMEMVANJKHSZ4SGYMFAMSMVFQZYQ2"

@@ -30,7 +30,7 @@
 
 #import "SyncEngine.h"
 
-#import <SDWebImageManager.h>
+#import "SDWebImageManager.h"
 
 // #import <COSTouchVisualizerWindow.h>
 

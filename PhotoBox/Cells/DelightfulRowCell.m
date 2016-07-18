@@ -10,7 +10,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 #import "UIView+Additionals.h"
 

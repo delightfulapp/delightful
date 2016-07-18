@@ -16,7 +16,7 @@
 #import "Tag.h"
 #import "DownloadedImageManager.h"
 #import "FavoritesManager.h"
-#import <YapDatabase.h>
+#import "YapDatabase.h"
 
 NSString *photosCollectionName = @"photos";
 NSString *albumsCollectionName = @"albums";

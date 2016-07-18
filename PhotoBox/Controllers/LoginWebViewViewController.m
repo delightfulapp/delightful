@@ -8,7 +8,7 @@
 
 #import "LoginWebViewViewController.h"
 #import "ConnectionManager.h"
-#import <OnePasswordExtension.h>
+#import "OnePasswordExtension.h"
 
 @interface LoginWebViewViewController () <UIWebViewDelegate>
 

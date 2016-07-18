@@ -11,7 +11,7 @@
 extern NSString *const PhotoBoxLocationPlacemarkDidFetchNotification;
 
 #import <CoreLocation/CoreLocation.h>
-#import <Bolts.h>
+#import "Bolts.h"
 
 @interface LocationManager : NSObject
 

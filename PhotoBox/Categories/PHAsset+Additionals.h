@@ -7,7 +7,7 @@
 //
 
 #import <Photos/Photos.h>
-#import <Bolts.h>
+#import "Bolts.h"
 
 @interface PHAsset (Additionals)
 

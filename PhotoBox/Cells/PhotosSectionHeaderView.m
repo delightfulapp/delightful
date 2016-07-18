@@ -8,7 +8,7 @@
 
 #import "PhotosSectionHeaderView.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 #import "LocationManager.h"
 
@@ -72,9 +72,9 @@
 - (void)setupConstrains {
     self.rightTitleConstraint = [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self];
     [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-    [UIView autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-    }];
+//    [UIView autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
+//        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
+//    }];
     [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
     [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
     [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];

@@ -19,7 +19,7 @@
 
 #import <Social/Social.h>
 #import <objc/runtime.h>
-#import <TUSafariActivity.h>
+#import "TUSafariActivity.h"
 
 #define kLoadingViewTag 87261
 #define HAVE_SHOWN_NO_FACEBOOK @"HAVE_SHOWN_NO_FACEBOOK"

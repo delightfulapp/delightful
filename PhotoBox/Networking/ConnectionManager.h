@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import <AFOAuth1Client.h>
+#import "AFOAuth1Client.h"
 
 extern NSString *PhotoBoxAccessTokenDidAcquiredNotification;
 

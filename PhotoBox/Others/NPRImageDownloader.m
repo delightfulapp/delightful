@@ -7,7 +7,6 @@
 //
 
 #import "NPRImageDownloader.h"
-#import <AFImageRequestOperation.h>
 #import "Photo.h"
 #import "DownloadedImageManager.h"
 
@@ -182,6 +181,8 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     NSURLRequest *request = [NSURLRequest requestWithURL:URL];
     
     __weak NPRImageDownloaderOperation *weakOperation = self;
+    
+    /*
     self.operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:^UIImage *(UIImage *image) {
         if (image) {
             PBX_LOG(@"Writing image to photos album");
@@ -197,6 +198,7 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     [self.operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
         progress(weakOperation, bytesRead, totalBytesRead, totalBytesExpectedToRead);
     }];
+     */
 }
 
 - (BOOL)isEqual:(NPRImageDownloaderOperation *)object {

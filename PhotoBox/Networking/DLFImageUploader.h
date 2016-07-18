@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Bolts.h>
+#import "Bolts.h"
 
 @class Album;
 @class DLFAsset;

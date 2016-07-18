@@ -7,7 +7,7 @@
 //
 
 #import "LoadingNavigationItemTitleView.h"
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface LoadingNavigationItemTitleView ()
 @property (nonatomic, weak) UILabel *titleLabel;

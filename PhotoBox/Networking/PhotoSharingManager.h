@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Photo.h"
-#import <Bolts.h>
+#import "Bolts.h"
 
 @interface PhotoSharingManager : NSObject
 

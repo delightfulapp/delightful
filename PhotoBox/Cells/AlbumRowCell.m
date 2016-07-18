@@ -10,7 +10,7 @@
 
 #import "Album.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 #import "UIImageView+Additionals.h"
 

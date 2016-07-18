@@ -7,7 +7,7 @@
 //
 
 #import "UploadDescriptionTableViewCell.h"
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 #import "UIColor+Additionals.h"
 
 @interface UploadDescriptionTableViewCell ()

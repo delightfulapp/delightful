@@ -1,0 +1,242 @@
+{
+    "message": "List of albums",
+    "code": 200,
+    "result": [
+               {
+               "id": "3",
+               "owner": "nico@delightfuldev.com",
+               "actor": "nico@delightfuldev.com",
+               "name": "Emma Watson",
+               "groups": null,
+               "dateLastPhotoAdded": "0",
+               "cover": {
+               "id": "5",
+               "owner": "nico@delightfuldev.com",
+               "actor": "nico@delightfuldev.com",
+               "appId": "openphoto-frontend",
+               "host": "trovebox.dev/photos",
+               "title": "",
+               "description": "",
+               "key": null,
+               "hash": "ec6a15b31a111cbe81a4c55620aa06fdab5af177",
+               "size": "652",
+               "width": "1920",
+               "height": "1200",
+               "rotation": "0",
+               "latitude": null,
+               "longitude": null,
+               "views": "0",
+               "status": "1",
+               "permission": "0",
+               "license": "",
+               "dateTaken": "1468844535",
+               "dateTakenDay": "18",
+               "dateTakenMonth": "7",
+               "dateTakenYear": "2016",
+               "dateUploaded": "1468844535",
+               "dateUploadedDay": "18",
+               "dateUploadedMonth": "7",
+               "dateUploadedYear": "2016",
+               "dateSortByDay": "20160718183744",
+               "filenameOriginal": "iu-8.jpeg",
+               "pathOriginal": "http://trovebox.dev/photos/original/201607/iu-8-578cc9f72e5ee.jpeg",
+               "pathBase": "http://trovebox.dev/photos/base/201607/iu-8-984303.jpg",
+               "albums": [
+                          "3"
+                          ],
+               "groups": "",
+               "tags": [
+                        "2016",
+                        "July"
+                        ],
+               "active": "1",
+               "path100x100": "http://trovebox.dev/photos/custom/201607/iu-8-984303_100x100.jpg",
+               "path100x100xCR": "http://trovebox.dev/photos/custom/201607/iu-8-984303_100x100xCR.jpg",
+               "path200x200": "http://trovebox.dev/photos/custom/201607/iu-8-984303_200x200.jpg",
+               "path200x200xCR": "http://trovebox.dev/photos/custom/201607/iu-8-984303_200x200xCR.jpg",
+               "exifFNumber": "",
+               "exifFocalLength": "",
+               "photo100x100": [
+                                "http://trovebox.dev/photos/custom/201607/iu-8-984303_100x100.jpg",
+                                100,
+                                62
+                                ],
+               "photo100x100xCR": [
+                                   "http://trovebox.dev/photos/custom/201607/iu-8-984303_100x100xCR.jpg",
+                                   100,
+                                   100
+                                   ],
+               "photo200x200": [
+                                "http://trovebox.dev/photos/custom/201607/iu-8-984303_200x200.jpg",
+                                200,
+                                125
+                                ],
+               "photo200x200xCR": [
+                                   "http://trovebox.dev/photos/custom/201607/iu-8-984303_200x200xCR.jpg",
+                                   200,
+                                   200
+                                   ],
+               "pathDownload": "http://trovebox.dev/photo/5/download",
+               "url": "http://trovebox.dev/photo/5/view"
+               },
+               "count": "2"
+               },
+               {
+               "id": "2",
+               "owner": "nico@delightfuldev.com",
+               "actor": "nico@delightfuldev.com",
+               "name": "nature",
+               "groups": null,
+               "dateLastPhotoAdded": "0",
+               "cover": {
+               "id": "3",
+               "owner": "nico@delightfuldev.com",
+               "actor": "nico@delightfuldev.com",
+               "appId": "openphoto-frontend",
+               "host": "trovebox.dev/photos",
+               "title": "",
+               "description": "",
+               "key": null,
+               "hash": "7534527294a4d2493b538618407746f6e7ea728d",
+               "size": "940",
+               "width": "1600",
+               "height": "1200",
+               "rotation": "0",
+               "latitude": null,
+               "longitude": null,
+               "views": "0",
+               "status": "1",
+               "permission": "0",
+               "license": "",
+               "dateTaken": "1468844450",
+               "dateTakenDay": "18",
+               "dateTakenMonth": "7",
+               "dateTakenYear": "2016",
+               "dateUploaded": "1468844451",
+               "dateUploadedDay": "18",
+               "dateUploadedMonth": "7",
+               "dateUploadedYear": "2016",
+               "dateSortByDay": "20160718183909",
+               "filenameOriginal": "iu-6.jpeg",
+               "pathOriginal": "http://trovebox.dev/photos/original/201607/iu-6-578cc9a2b053c.jpeg",
+               "pathBase": "http://trovebox.dev/photos/base/201607/iu-6-2f86bb.jpg",
+               "albums": [
+                          "2"
+                          ],
+               "groups": "",
+               "tags": [
+                        "2016",
+                        "July"
+                        ],
+               "active": "1",
+               "path100x100": "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_100x100.jpg",
+               "path100x100xCR": "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_100x100xCR.jpg",
+               "path200x200": "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_200x200.jpg",
+               "path200x200xCR": "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_200x200xCR.jpg",
+               "exifFNumber": "",
+               "exifFocalLength": "",
+               "photo100x100": [
+                                "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_100x100.jpg",
+                                100,
+                                75
+                                ],
+               "photo100x100xCR": [
+                                   "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_100x100xCR.jpg",
+                                   100,
+                                   100
+                                   ],
+               "photo200x200": [
+                                "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_200x200.jpg",
+                                200,
+                                150
+                                ],
+               "photo200x200xCR": [
+                                   "http://trovebox.dev/photos/custom/201607/iu-6-2f86bb_200x200xCR.jpg",
+                                   200,
+                                   200
+                                   ],
+               "pathDownload": "http://trovebox.dev/photo/3/download",
+               "url": "http://trovebox.dev/photo/3/view"
+               },
+               "count": "2"
+               },
+               {
+               "id": "1",
+               "owner": "nico@delightfuldev.com",
+               "actor": "nico@delightfuldev.com",
+               "name": "TeeBox",
+               "groups": null,
+               "dateLastPhotoAdded": "0",
+               "cover": {
+               "id": "2",
+               "owner": "nico@delightfuldev.com",
+               "actor": "nico@delightfuldev.com",
+               "appId": "openphoto-frontend",
+               "host": "trovebox.dev/photos",
+               "title": "",
+               "description": "",
+               "key": null,
+               "hash": "76f206837710f28e909cc48942c97d1673ef1a80",
+               "size": "85",
+               "width": "768",
+               "height": "1280",
+               "rotation": "0",
+               "latitude": null,
+               "longitude": null,
+               "views": "0",
+               "status": "1",
+               "permission": "0",
+               "license": "",
+               "dateTaken": "1468839173",
+               "dateTakenDay": "18",
+               "dateTakenMonth": "7",
+               "dateTakenYear": "2016",
+               "dateUploaded": "1468839173",
+               "dateUploadedDay": "18",
+               "dateUploadedMonth": "7",
+               "dateUploadedYear": "2016",
+               "dateSortByDay": "20160718200706",
+               "filenameOriginal": "Screenshot_2016-07-16-21-17-01.png",
+               "pathOriginal": "http://trovebox.dev/photos/original/201607/Screenshot_2016-07-16-21-17-01-578cb50559819.png",
+               "pathBase": "http://trovebox.dev/photos/base/201607/Screenshot_2016-07-16-21-17-01-fb403.jpg",
+               "albums": [],
+               "groups": "",
+               "tags": [
+                        "2016",
+                        "July",
+                        "screenshots"
+                        ],
+               "active": "1",
+               "path100x100": "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_100x100.jpg",
+               "path100x100xCR": "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_100x100xCR.jpg",
+               "path200x200": "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_200x200.jpg",
+               "path200x200xCR": "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_200x200xCR.jpg",
+               "exifFNumber": "",
+               "exifFocalLength": "",
+               "photo100x100": [
+                                "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_100x100.jpg",
+                                60,
+                                100
+                                ],
+               "photo100x100xCR": [
+                                   "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_100x100xCR.jpg",
+                                   100,
+                                   100
+                                   ],
+               "photo200x200": [
+                                "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_200x200.jpg",
+                                120,
+                                200
+                                ],
+               "photo200x200xCR": [
+                                   "http://trovebox.dev/photos/custom/201607/Screenshot_2016-07-16-21-17-01-fb403_200x200xCR.jpg",
+                                   200,
+                                   200
+                                   ],
+               "pathDownload": "http://trovebox.dev/photo/2/download",
+               "url": "http://trovebox.dev/p/2"
+               },
+               "count": "2"
+               }
+               ]
+}

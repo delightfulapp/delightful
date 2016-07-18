@@ -8,7 +8,7 @@
 
 #import "TagEntryTableViewCell.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 @interface TagEntryTableViewCell ()
 

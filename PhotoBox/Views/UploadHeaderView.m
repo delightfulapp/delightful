@@ -8,7 +8,7 @@
 
 #import "UploadHeaderView.h"
 
-#import <UIView+AutoLayout.h>
+#import "PureLayout.h"
 
 #import "UIView+Additionals.h"
 
@@ -30,11 +30,11 @@
 }
 
 - (void)setup {
-    [UIView autoSetPriority:UILayoutPriorityRequired forConstraints:^{
-        [self.uploadingLabel autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
-        [self.uploadingLabel autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
-        [self.uploadingLabel autoCenterInSuperview];
-    }];
+//    [UIView autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+//        [self.uploadingLabel autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
+//        [self.uploadingLabel autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
+//        [self.uploadingLabel autoCenterInSuperview];
+//    }];
     
     [self setBackgroundColor:[UIColor albumsBackgroundColor]];
 }

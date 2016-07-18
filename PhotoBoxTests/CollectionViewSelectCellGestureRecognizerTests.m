@@ -7,8 +7,8 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <OCMock.h>
-#import <Expecta.h>
+#import <OCMock/OCMock.h>
+#import <Expecta/Expecta.h>
 
 #import "CollectionViewSelectCellGestureRecognizer.h"
 

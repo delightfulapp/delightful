@@ -1,19 +1,18 @@
 //
-//  PhotoBoxClient.h
+//  APIClient.h
 //  PhotoBox
 //
 //  Created by Nico Prananta on 8/31/13.
 //  Copyright (c) 2013 Touches. All rights reserved.
 //
 
-#import "AFOAuth1Client.h"
-#import <OVCClient.h>
 
 @import Photos;
 
 @class Album;
 @class Photo;
 @class DLFAsset;
+@class AFOAuth1Token;
 
 typedef NS_ENUM(NSInteger, ResourceType) {
     AlbumResource,
@@ -31,34 +30,39 @@ typedef NS_ENUM(NSInteger, ActionType) {
 };
 
 
-@interface PhotoBoxClient : OVCClient
+@interface APIClient : NSObject
 
-@property (nonatomic, strong) NSString *key;
-@property (nonatomic, strong) NSString *secret;
+@property (nonatomic, strong) AFOAuth1Token *consumerToken;
+@property (nonatomic, strong) AFOAuth1Token *accessToken;
+@property (nonatomic, strong) NSURLSession *session;
 
-+ (PhotoBoxClient *)sharedClient;
++ (APIClient *)sharedClient;
 
 #pragma mark - Resource Fetch
 
-- (NSOperation *)getPhotosForPage:(int)page
+- (NSURLSessionDataTask *)getPhotosForPage:(int)page
                     sort:(NSString *)sort
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)getAlbumsForPage:(int)page
+
+- (NSURLSessionDataTask *)getAlbumsForPage:(int)page
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)getTagsForPage:(int)page pageSize:(int)pageSize
+
+- (NSURLSessionDataTask *)getTagsForPage:(int)page pageSize:(int)pageSize
                success:(void(^)(id object))successBlock
                failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)getPhotosInAlbum:(NSString *)albumId
+
+- (NSURLSessionDataTask *)getPhotosInAlbum:(NSString *)albumId
                     sort:(NSString *)sort
                     page:(int)page
                 pageSize:(int)pageSize
                  success:(void(^)(id object))successBlock
                  failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)getPhotosInTag:(NSString *)tagId
+
+- (NSURLSessionDataTask *)getPhotosInTag:(NSString *)tagId
                   sort:(NSString *)sort
                   page:(int)page
               pageSize:(int)pageSize
@@ -67,16 +71,16 @@ typedef NS_ENUM(NSInteger, ActionType) {
 
 #pragma mark - Favorite
 
-- (NSOperation *)addFavoritePhoto:(Photo *)photo
+- (NSURLSessionDataTask *)addFavoritePhoto:(Photo *)photo
                              success:(void(^)(id object))successBlock
                              failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)addFavoritePhotoWithId:(NSString *)photoId
+- (NSURLSessionDataTask *)addFavoritePhotoWithId:(NSString *)photoId
                           success:(void(^)(id object))successBlock
                           failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)removeFavoritePhoto:(Photo *)photo
+- (NSURLSessionDataTask *)removeFavoritePhoto:(Photo *)photo
                           success:(void(^)(id object))successBlock
                           failure:(void(^)(NSError*))failureBlock;
-- (NSOperation *)removeFavoritePhotoWithId:(NSString *)photo
+- (NSURLSessionDataTask *)removeFavoritePhotoWithId:(NSString *)photo
                              success:(void(^)(id object))successBlock
                              failure:(void(^)(NSError*))failureBlock;
 
@@ -97,7 +101,6 @@ typedef NS_ENUM(NSInteger, ActionType) {
 
 #pragma mark - Oauth1Client interfaces
 
-- (void)setAccessToken:(AFOAuth1Token *)accessToken;
 - (void)acquireOAuthAccessTokenWithPath:(NSString *)path
                            requestToken:(AFOAuth1Token *)requestToken
                            accessMethod:(NSString *)accessMethod

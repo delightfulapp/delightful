@@ -10,9 +10,9 @@
 
 #import "Album.h"
 
-#import "PhotoBoxClient.h"
+#import "APIClient.h"
 
-#import <MBProgressHUD.h>
+#import "MBProgressHUD.h"
 
 typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     AlbumsPickerStateNormal,
@@ -122,7 +122,9 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
         [alert show];
     } else {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [[PhotoBoxClient sharedClient] POST:@"v1/album/create.json" parameters:@{@"name": albumName} resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        
+        /*
+        [[APIClient sharedClient] POST:@"v1/album/create.json" parameters:@{@"name": albumName} resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
             if (error) {
                 [self newAlbumDidFailWithError:error];
@@ -133,6 +135,7 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
                 }
             }
         }];
+         */
     }
 }
 

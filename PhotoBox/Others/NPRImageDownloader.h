@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Bolts.h>
+#import "Bolts.h"
 
 extern NSString *const NPRImageDownloadDidStartNotification;
 extern NSString *const NPRImageDownloadDidFinishNotification;
