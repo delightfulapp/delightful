@@ -32,9 +32,12 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setup {
+    [self.contentView autoPinEdgesToSuperviewEdges];
+    
     [self.permissionLabel setText:NSLocalizedString(@"Private", nil)];
     [self.permissionSwitch setOn:YES];
     

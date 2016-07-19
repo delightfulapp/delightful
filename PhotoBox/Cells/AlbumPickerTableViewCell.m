@@ -32,9 +32,13 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setup {
+    [self.contentView autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero excludingEdge:ALEdgeRight];
+    [self.contentView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self withOffset:-30];
+    
     [self.albumLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:15];
     [self.albumLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10];
     

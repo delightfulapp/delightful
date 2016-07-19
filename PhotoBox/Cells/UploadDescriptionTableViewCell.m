@@ -30,15 +30,16 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setup {
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
+    [self.contentView autoPinEdgesToSuperviewEdges];
     
     [self.textView autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:10];
     [self.textView autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-15];
     [self.textView autoPinEdge:ALEdgeTop toEdge:ALEdgeTop ofView:self.contentView withOffset:10];
-    
     [self.contentView autoPinEdge:ALEdgeBottom toEdge:ALEdgeBottom ofView:self.textView withOffset:10];
 }
 

@@ -31,10 +31,12 @@
 - (void)awakeFromNib
 {
     // Initialization code
+    [super awakeFromNib];
 }
 
 - (void)setup {
     [self.contentView setBackgroundColor:[UIColor whiteColor]];
+    [self.contentView autoPinEdgesToSuperviewEdges];
     
     [self.tagField autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.contentView withOffset:15];
     [self.tagField autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self.contentView withOffset:-15];
