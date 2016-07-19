@@ -1,2 +1,3 @@
+fastlane/Appfile
 fastlane/Deliverfile
 fastlane/Matchfile
