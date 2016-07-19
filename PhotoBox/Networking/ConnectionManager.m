@@ -170,7 +170,6 @@ NSString *PhotoBoxAccessTokenDidAcquiredNotification = @"com.photobox.accessToke
     [self setup];
     
     [[APIClient sharedClient] setAccessToken:nil];
-    [[APIClient sharedClient] setValue:@"http://trovebox.com" forKey:@"baseURL"];
     
     if (show) {
         [self openLoginFromStoryboardWithIdentifier:@"loginViewController"];
