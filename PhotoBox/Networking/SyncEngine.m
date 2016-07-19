@@ -487,15 +487,15 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
     
-    if (self.allPhotosSyncingOperation.state == NSURLSessionTaskStateRunning) {
+    if (self.allPhotosSyncingOperation && self.allPhotosSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeAllPhotos;
-    } else if (self.photosInTagSyncingOperation.state == NSURLSessionTaskStateRunning) {
+    } else if (self.photosInTagSyncingOperation && self.photosInTagSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeTagPhotos;
-    } else if (self.photosInAlbumSyncingOperation.state == NSURLSessionTaskStateRunning) {
+    } else if (self.photosInAlbumSyncingOperation && self.photosInAlbumSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeAlbumPhotos;
-    } else if (self.albumsSyncingOperation.state == NSURLSessionTaskStateRunning) {
+    } else if (self.albumsSyncingOperation && self.albumsSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeAlbums;
-    } else if (self.tagsSyncingOperation.state == NSURLSessionTaskStateRunning) {
+    } else if (self.tagsSyncingOperation && self.tagsSyncingOperation.state == NSURLSessionTaskStateRunning) {
         self.syncOperationType = SyncOperationTypeTags;
     } else {
         self.syncOperationType  =SyncOperationTypeNone;
