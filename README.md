@@ -2,13 +2,13 @@ Delightful for iPhone
 ==
 
 <p align="center">
-<a href="http://www.getdelightfulapp.com">Website</a> &bull; 
-<a href="http://twitter.com/delightfulapp">Twitter</a> &bull; 
-<a href="http://blog.getdelightfulapp.com/">Blog</a> &bull; 
-<a href="https://itunes.apple.com/us/app/delightful-trovebox-photo/id878230610?ls=1&mt=8">App Store</a> 
+<a href="http://www.getdelightfulapp.com">Website</a> &bull;
+<a href="http://twitter.com/delightfulapp">Twitter</a> &bull;
+<a href="http://blog.getdelightfulapp.com/">Blog</a> &bull;
+<a href="https://itunes.apple.com/us/app/delightful-trovebox-photo/id878230610?ls=1&mt=8">App Store</a>
 </p>
 
-Delightful is an unofficial [Trovebox](https://trovebox.com/) iPhone app client.
+Delightful is an unofficial [Trovebox](https://github.com/photo/frontend) iPhone/iPad app client.
 
 Screenshot
 --
@@ -52,7 +52,7 @@ New Features:
 - Option to resize photos after upload to save storage space in your device.
 - Remember user’s choice on Resize after upload option.
 - Guest access. User can skip login but will only see public photos/albums/tags and cannot upload.
-- Favoriting a photo will tag the photo with “Favorites” tag. 
+- Favoriting a photo will tag the photo with “Favorites” tag.
 - Migrate previous locally favorited photos to Favorites tag
 - Show indicator when migrating favorites.
 - Show indicator when syncing favorites.
@@ -76,8 +76,7 @@ Requirements
 --
 
 1. [iOS 8](https://developer.apple.com/devcenter/ios/index.action).
-2. [Xcode 6](https://developer.apple.com/devcenter/ios/index.action).
-3. [Cocoapods](http://cocoapods.org/).
+2. [Cocoapods](http://cocoapods.org/).
 
 How to
 --
@@ -86,6 +85,16 @@ How to
 2. Open `Delightful.xcworkspace`.
 2. Build and run!
 
+Development server
+--
+
+You can run development server using [Vagrant](https://www.vagrantup.com) and [VirtualBox](https://www.virtualbox.org). Once they're installed, go to `server` directory from command line, then run `vagrant up`. This will take time to boot and setup the development server.
+
+After the server is booted, you need to add `192.168.56.101 trovebox.dev` to your `/etc/hosts` file, then flush the DNS: `sudo killall -HUP mDNSResponder`. You can then open your browser and go to `http://trovebox.dev` to setup your Trovebox server:
+
+- Enter `127.0.0.1` for MySQL address.
+- Enter `root` for MySQL user.
+- Leave the MySQL password blank.
 
 Contact
 --
