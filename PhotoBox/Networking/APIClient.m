@@ -33,6 +33,7 @@
                              success:(void (^)(id))successBlock
                              failure:(void (^)(NSError *))failureBlock;
 
+- (NSURL *)baseURL;
 
 @end
 
@@ -43,14 +44,19 @@
     static dispatch_once_t onceTokenn;
     dispatch_once(&onceTokenn, ^{
         _sharedClient = [[APIClient alloc] init];
-        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
-        _sharedClient.session = [NSURLSession sessionWithConfiguration:config delegate:_sharedClient delegateQueue:[NSOperationQueue mainQueue]];
-        _sharedClient.uploadProgressDictionary = [NSMutableDictionary dictionary];
     });
     
     return _sharedClient;
 }
 
+- (instancetype)init {
+    if (self = [super init]) {
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        self.session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+        self.uploadProgressDictionary = [NSMutableDictionary dictionary];
+    }
+    return self;
+}
 
 
 - (void)refreshConnectionParameters {
@@ -267,8 +273,8 @@
                 resultKeyPath:(NSString *)keyPath
                       success:(void (^)(id))successBlock
                       failure:(void (^)(NSError *))failureBlock {
-    NSString *host = [[[ConnectionManager sharedManager] baseURL] host];
-    NSString *scheme = [[[ConnectionManager sharedManager] baseURL] scheme];;
+    NSString *host = [[self baseURL] host];
+    NSString *scheme = [[self baseURL] scheme];;
     NSURLRequest *request = [TDOAuth URLRequestForPath:path
                                             parameters:parameters
                                                   host:host
@@ -342,7 +348,7 @@
         }
     };
 
-    NSString *host = [[[ConnectionManager sharedManager] baseURL] host];
+    NSString *host = [[self baseURL] host];
     NSURLRequest *request = [TDOAuth URLRequestForPath:path
                                          GETParameters:parameters
                                                   host:host
@@ -410,8 +416,8 @@
                 [params addEntriesFromDictionary:@{@"description":asset.photoDescription}];
             }
             
-            NSString *host = [[[ConnectionManager sharedManager] baseURL] host];
-            NSString *scheme = [[[ConnectionManager sharedManager] baseURL] scheme];
+            NSString *host = [[self baseURL] host];
+            NSString *scheme = [[self baseURL] scheme];
             
             NSURLRequest *request = [TDOAuth URLRequestForPath:path
                                                     parameters:params
@@ -493,6 +499,10 @@ NSString *stringWithActionType(ActionType input) {
 
 - (NSDictionary *)tagsQueryDictionary:(NSString *)tag {
     return @{@"tags": tag};
+}
+
+- (NSURL *)baseURL {
+    return [[ConnectionManager sharedManager] baseURL];
 }
 
 #pragma mark - Oauth1Client

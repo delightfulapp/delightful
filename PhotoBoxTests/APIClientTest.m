@@ -15,9 +15,10 @@
 @interface APIClient ()
 - (BOOL)isLoggedIn;
 - (NSDictionary *)photoSizesDictionary;
-- (NSString *)sortByQueryString:(NSString *)sortBy;
-- (NSString *)albumsQueryString:(NSString *)album;
-- (NSString *)tagsQueryString:(NSString *)tag;
+- (NSString *)sortByQueryDictionary:(NSString *)sortBy;
+- (NSString *)albumsQueryDictionary:(NSString *)album;
+- (NSString *)tagsQueryDictionary:(NSString *)tag;
+- (NSURL *)baseURL;
 @end
 
 @interface APIClientTest : XCTestCase
@@ -48,7 +49,7 @@
     APIClient *apiClient = [[APIClient alloc] init];
     id apiClientMock = OCMPartialMock(apiClient);
     OCMStub([apiClientMock isLoggedIn]).andReturn(YES);
-    
+    OCMStub([apiClientMock baseURL]).andReturn([NSURL URLWithString:@"http://trovebox.dev"]);
     
     id expectation = [self expectationWithDescription:@"getPhotos return objects"];
     NSURLSessionDataTask * dataTask = [apiClientMock getPhotosForPage:0 sort:nil pageSize:10 success:^(id object) {
@@ -79,6 +80,7 @@
     APIClient *apiClient = [[APIClient alloc] init];
     id apiClientMock = OCMPartialMock(apiClient);
     OCMStub([apiClientMock isLoggedIn]).andReturn(YES);
+    OCMStub([apiClientMock baseURL]).andReturn([NSURL URLWithString:@"http://trovebox.dev"]);
     
     
     id expectation = [self expectationWithDescription:@"getPhotos call error block"];
@@ -110,6 +112,7 @@
     APIClient *apiClient = [[APIClient alloc] init];
     id apiClientMock = OCMPartialMock(apiClient);
     OCMStub([apiClientMock isLoggedIn]).andReturn(YES);
+    OCMStub([apiClientMock baseURL]).andReturn([NSURL URLWithString:@"http://trovebox.dev"]);
     
     
     id expectation = [self expectationWithDescription:@"getAlbums return objects"];
@@ -141,6 +144,7 @@
     APIClient *apiClient = [[APIClient alloc] init];
     id apiClientMock = OCMPartialMock(apiClient);
     OCMStub([apiClientMock isLoggedIn]).andReturn(YES);
+    OCMStub([apiClientMock baseURL]).andReturn([NSURL URLWithString:@"http://trovebox.dev"]);
     
     
     id expectation = [self expectationWithDescription:@"getAlbums call error block"];
@@ -172,6 +176,7 @@
     APIClient *apiClient = [[APIClient alloc] init];
     id apiClientMock = OCMPartialMock(apiClient);
     OCMStub([apiClientMock isLoggedIn]).andReturn(YES);
+    OCMStub([apiClientMock baseURL]).andReturn([NSURL URLWithString:@"http://trovebox.dev"]);
     
     
     id expectation = [self expectationWithDescription:@"getTags return objects"];
@@ -203,6 +208,7 @@
     APIClient *apiClient = [[APIClient alloc] init];
     id apiClientMock = OCMPartialMock(apiClient);
     OCMStub([apiClientMock isLoggedIn]).andReturn(YES);
+    OCMStub([apiClientMock baseURL]).andReturn([NSURL URLWithString:@"http://trovebox.dev"]);
     
     
     id expectation = [self expectationWithDescription:@"getTags call error block"];
@@ -225,11 +231,11 @@
     APIClient *apiClient = [[APIClient alloc] init];
     XCTAssertNotNil([apiClient photoSizesDictionary]);
     
-    XCTAssertNotNil([apiClient sortByQueryString:@"test"]);
+    XCTAssertNotNil([apiClient sortByQueryDictionary:@"test"]);
     
-    XCTAssertNotNil([apiClient albumsQueryString:@"album"]);
+    XCTAssertNotNil([apiClient albumsQueryDictionary:@"album"]);
     
-    XCTAssertNotNil([apiClient tagsQueryString:@"tags"]);
+    XCTAssertNotNil([apiClient tagsQueryDictionary:@"tags"]);
 }
 
 @end
