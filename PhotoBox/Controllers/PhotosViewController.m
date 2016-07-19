@@ -48,6 +48,7 @@
 #import "DLFPhotoCell.h"
 #import "DLFPhotosPickerViewController.h"
 #import "DLFDetailViewController.h"
+#import "CLPlacemark+Additionals.h"
 
 #define UPLOADED_MARK_TAG 123456910
 
@@ -343,7 +344,7 @@
         if (location) {
             [[[LocationManager sharedManager] nameForLocation:location] continueWithBlock:^id(BFTask *task) {
                 CLPlacemark *firstPlacemark = [((NSArray *)task.result) firstObject];
-                NSString *placemark = firstPlacemark.name?:firstPlacemark.locality?:firstPlacemark.country;
+                NSString *placemark = [firstPlacemark locationString];
                 if (cell.section == section) {
                     if (placemark && placemark.length > 0) {
                         [cell setLocationString:placemark];

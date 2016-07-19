@@ -54,7 +54,7 @@
 @implementation ShowFullScreenPresentationController
 
 - (BOOL)shouldRemovePresentersView {
-    return !self.isPresenting;
+    return NO;
 }
 
 @end

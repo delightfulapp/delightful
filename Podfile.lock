@@ -64,7 +64,7 @@ PODS:
   - TMCache (2.1.0)
   - TUSafariActivity (1.0.4)
   - UIColor-Crayola (1.0)
-  - UIImageViewModeScaleAspect (1.4)
+  - UIImageViewModeScaleAspect (1.5)
   - YapDatabase (2.5.4):
     - YapDatabase/standard (= 2.5.4)
   - YapDatabase/common (2.5.4):
@@ -134,7 +134,7 @@ SPEC CHECKSUMS:
   TMCache: 95ebcc9b3c7e90fb5fd8fc3036cba3aa781c9bed
   TUSafariActivity: afc55a00965377939107ce4fdc7f951f62454546
   UIColor-Crayola: 0d2f68032cbea6ba4669b360ffb641d203b41a0d
-  UIImageViewModeScaleAspect: d9c3ee0ae2c96c1aaeab6cdacab229473f4b7452
+  UIImageViewModeScaleAspect: 11a790a0b9d248a13dc63e3a78991f1463b6d84e
   YapDatabase: 52370b36f692e23c41c86e60f3bbf81b1c8ae44a
 
 PODFILE CHECKSUM: a0fee867d16aae69b491e60a23f707120c030c98

@@ -243,6 +243,12 @@
     return dataTask;
 }
 
+- (NSURLSessionDataTask *)createNewAlbum:(NSString *)albumName
+                                 success:(void(^)(id object))successBlock
+                                 failure:(void(^)(NSError*))failureBlock {
+    return [self POST:@"/v1/album/create.json" parameters:@{@"name": albumName} resultClass:[Album class] resultKeyPath:@"result" success:successBlock failure:failureBlock];
+}
+
 - (NSArray *)processResponseObject:(NSDictionary *)responseObject resourceClass:(Class)resource {
     id result = [responseObject objectForKey:@"result"];
     NSValueTransformer *transformer;
@@ -435,32 +441,6 @@
             }
             
             [task resume];
-            
-            /*
-            OVCMultipartPart *part = [OVCMultipartPart partWithData:imageData name:@"photo" type:type filename:fileName];
-            NSMutableURLRequest *request = [self multipartFormRequestWithMethod:@"POST" path:path parameters:params parts:@[part]];
-            [request setValue:[self.oauthClient authorizationHeaderForMethod:request.HTTPMethod path:path parameters:params] forHTTPHeaderField:@"Authorization"];
-            [request setHTTPShouldHandleCookies:NO];
-            OVCRequestOperation *operation = [self HTTPRequestOperationWithRequest:request resultClass:[Photo class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
-                if (error) {
-                    if (failureBlock) {
-                        failureBlock(error);
-                    }
-                } else {
-                    if (successBlock) {
-                        successBlock(responseObject);
-                    }
-                }
-            }];
-            if (progress) {
-                [operation setUploadProgressBlock:^(NSUInteger bytesWritten, long long totalBytesWritten, long long totalBytesExpectedToWrite) {
-                    float prog = (float)totalBytesWritten / (float)totalBytesExpectedToWrite;
-                    progress(prog);
-                }];
-            }
-            
-            [self enqueueHTTPRequestOperation:operation];
-             */
         }];
     }];
 }

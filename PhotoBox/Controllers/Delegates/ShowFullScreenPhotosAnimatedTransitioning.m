@@ -63,7 +63,6 @@
         toVC = (PhotosHorizontalScrollingViewController *)toVCContainer;
     }
     
-    
     UIView *containerView = transitionContext.containerView;
     
     UIImage *image = [fromVC imageToAnimate];
@@ -86,11 +85,16 @@
     
     [containerView insertSubview:self.imageViewToAnimate belowSubview:toVCContainer.view];
     
-    [UIView animateWithDuration:[self transitionDuration:nil] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0.5 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:[self transitionDuration:nil]
+                          delay:0 usingSpringWithDamping:0.7
+          initialSpringVelocity:0.5
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
         [self.imageViewToAnimate animaticToScaleAspectFit];
-        [toVCContainer.view setAlpha:1];
+        
         [self.whiteView setAlpha:1];
     } completion:^(BOOL finished) {
+        [toVCContainer.view setAlpha:1];
         [toVC.view setAlpha:1];
         [transitionContext completeTransition:YES];
     }];
@@ -117,7 +121,8 @@
     CGRect endRect = [toVC endRectInContainerView:containerView];
     
     // white view to hide the image in photos view controller
-    UIView *destinationView = [toVC destinationViewOnDismiss];UIView *whiteView = [[UIView alloc] initWithFrame:destinationView.bounds];
+    UIView *destinationView = [toVC destinationViewOnDismiss];
+    UIView *whiteView = [[UIView alloc] initWithFrame:destinationView.bounds];
     [whiteView setBackgroundColor:[UIColor whiteColor]];
     [destinationView addSubview:whiteView];
     
@@ -136,8 +141,6 @@
     // remove the image view from scroll view then move it to containerView
     [viewToAnimate removeFromSuperview];
     [containerView insertSubview:viewToAnimate belowSubview:fromVCContainer.view];
-    
-    [fromVC.view setAlpha:0];
     
     // set the frame of the image view in container's view coordinate
     [viewToAnimate setFrame:inContainerViewRect];

@@ -46,14 +46,12 @@
     
     [self setupConstrains];
     
-    [self.locationLabel setText:nil];
     [self.titleLabel setTextAlignment:NSTextAlignmentRight];
     [self.titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
     [self.titleLabel setNumberOfLines:2];
     
     [self insertSubview:self.blurView atIndex:0];
     [self.titleLabel setTextColor:[UIColor redColor]];
-    [self.locationLabel setTextColor:[[UIColor redColor] lighterColor]];
     
     [self setUserInteractionEnabled:YES];
     
@@ -64,7 +62,6 @@
 
 - (void)prepareForReuse {
     [self.titleLabel setText:nil];
-    [self.locationLabel setText:nil];
     
     [self.rightTitleConstraint setConstant:0];
 }
@@ -72,11 +69,7 @@
 - (void)setupConstrains {
     self.rightTitleConstraint = [self.titleLabel autoPinEdge:ALEdgeRight toEdge:ALEdgeRight ofView:self];
     [self.titleLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:0 relation:NSLayoutRelationGreaterThanOrEqual];
-//    [UIView autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-//        [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
-//    }];
-    [self.locationLabel autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self withOffset:10];
-    [self.locationLabel autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.titleLabel];
+    [self.titleLabel autoAlignAxisToSuperviewAxis:ALAxisHorizontal];
     [self.blurView autoMatchDimension:ALDimensionHeight toDimension:ALDimensionHeight ofView:self];
     [self.blurView autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self];
     [self.blurView autoCenterInSuperview];
@@ -168,14 +161,6 @@
         [_titleLabel setUserInteractionEnabled:YES];
     }
     return _titleLabel;
-}
-
-- (UILabel *)locationLabel {
-    if (!_locationLabel) {
-        _locationLabel = [self addSubviewClass:[UILabel class]];
-        [_locationLabel setUserInteractionEnabled:YES];
-    }
-    return _locationLabel;
 }
 
 - (UIView *)blurView {

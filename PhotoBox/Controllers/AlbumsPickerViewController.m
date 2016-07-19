@@ -123,19 +123,15 @@ typedef NS_ENUM(NSInteger, AlbumsPickerState) {
     } else {
         [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         
-        /*
-        [[APIClient sharedClient] POST:@"v1/album/create.json" parameters:@{@"name": albumName} resultClass:[Album class] resultKeyPath:@"result" completion:^(AFHTTPRequestOperation *operation, id responseObject, NSError *error) {
+        [[APIClient sharedClient] createNewAlbum:albumName success:^(id responseObject) {
             [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            if (error) {
-                [self newAlbumDidFailWithError:error];
-            } else {
-                CLS_LOG(@"New album = %@", responseObject);
-                if (self.delegate && [self.delegate respondsToSelector:@selector(albumsPickerViewController:didSelectAlbum:)]) {
-                    [self.delegate albumsPickerViewController:self didSelectAlbum:responseObject];
-                }
+            if (self.delegate && [self.delegate respondsToSelector:@selector(albumsPickerViewController:didSelectAlbum:)]) {
+                [self.delegate albumsPickerViewController:self didSelectAlbum:responseObject];
             }
+        } failure:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            [self newAlbumDidFailWithError:error];
         }];
-         */
     }
 }
 

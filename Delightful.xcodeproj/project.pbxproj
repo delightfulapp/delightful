@@ -58,6 +58,7 @@
 		032CBB9E17D0BDF3001205B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB7D17D0BDF3001205B1 /* Foundation.framework */; };
 		032CBB9F17D0BDF3001205B1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032CBB8117D0BDF3001205B1 /* UIKit.framework */; };
 		032CBBA717D0BDF3001205B1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 032CBBA517D0BDF3001205B1 /* InfoPlist.strings */; };
+		032E9CEF1D3D89B6006F1FC2 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 032E9CEE1D3D89B6006F1FC2 /* Fabric.framework */; };
 		032F0C0F1D3BF86700900EF5 /* photos.json in Resources */ = {isa = PBXBuildFile; fileRef = 032F0C0D1D3BF77500900EF5 /* photos.json */; };
 		032F0C111D3D025B00900EF5 /* tags.json in Resources */ = {isa = PBXBuildFile; fileRef = 032F0C101D3D025B00900EF5 /* tags.json */; };
 		032F0C131D3D07A100900EF5 /* ModelsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 032F0C121D3D07A100900EF5 /* ModelsTest.m */; };
@@ -129,6 +130,7 @@
 		036DF3741820D05E002E9FCB /* PhotoSectionHeaderViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */; };
 		036E050E17FC1BB10012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
 		036E050F17FC1BB90012DFB3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036E050D17FC1BB10012DFB3 /* CoreData.framework */; };
+		036FC7CC1D3E67F300BCFED9 /* CLPlacemark+Additionals.m in Sources */ = {isa = PBXBuildFile; fileRef = 036FC7CB1D3E67F300BCFED9 /* CLPlacemark+Additionals.m */; };
 		03736C0E1A4C1A1C0080CCD2 /* LoadingNavigationItemTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 03736C0D1A4C1A1C0080CCD2 /* LoadingNavigationItemTitleView.m */; };
 		037B089E1955A627001F55D6 /* UploadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B089D1955A627001F55D6 /* UploadViewController.m */; };
 		037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 037B08A21956B85C001F55D6 /* UploadAssetCell.m */; };
@@ -302,6 +304,7 @@
 		032CBB9C17D0BDF3001205B1 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		032CBBA417D0BDF3001205B1 /* DelightfulTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DelightfulTests-Info.plist"; sourceTree = "<group>"; };
 		032CBBA617D0BDF3001205B1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		032E9CEE1D3D89B6006F1FC2 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		032F0C0D1D3BF77500900EF5 /* photos.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = photos.json; sourceTree = "<group>"; };
 		032F0C101D3D025B00900EF5 /* tags.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = tags.json; sourceTree = "<group>"; };
 		032F0C121D3D07A100900EF5 /* ModelsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelsTest.m; sourceTree = "<group>"; };
@@ -429,6 +432,8 @@
 		036DF367181F65D8002E9FCB /* PhotoInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoInfoViewController.m; path = PhotoBox/Controllers/PhotoInfoViewController.m; sourceTree = "<group>"; };
 		036DF3731820D05E002E9FCB /* PhotoSectionHeaderViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoSectionHeaderViewTests.m; sourceTree = "<group>"; };
 		036E050D17FC1BB10012DFB3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		036FC7CA1D3E67F300BCFED9 /* CLPlacemark+Additionals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLPlacemark+Additionals.h"; sourceTree = "<group>"; };
+		036FC7CB1D3E67F300BCFED9 /* CLPlacemark+Additionals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLPlacemark+Additionals.m"; sourceTree = "<group>"; };
 		03736C0C1A4C1A1C0080CCD2 /* LoadingNavigationItemTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingNavigationItemTitleView.h; path = PhotoBox/Views/LoadingNavigationItemTitleView.h; sourceTree = "<group>"; };
 		03736C0D1A4C1A1C0080CCD2 /* LoadingNavigationItemTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingNavigationItemTitleView.m; path = PhotoBox/Views/LoadingNavigationItemTitleView.m; sourceTree = "<group>"; };
 		037B089C1955A627001F55D6 /* UploadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UploadViewController.h; path = PhotoBox/Controllers/UploadViewController.h; sourceTree = "<group>"; };
@@ -596,6 +601,7 @@
 				032CBB8217D0BDF3001205B1 /* UIKit.framework in Frameworks */,
 				032CBB7E17D0BDF3001205B1 /* Foundation.framework in Frameworks */,
 				32D4CA0AF3B8E29F3F40BCD3 /* Pods_Delightful.framework in Frameworks */,
+				032E9CEF1D3D89B6006F1FC2 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +697,8 @@
 				033A44401A4A491B000E24E2 /* PHPhotoLibrary+Additionals.m */,
 				033A44431A4A4DEF000E24E2 /* PHAsset+Additionals.h */,
 				033A44441A4A4DEF000E24E2 /* PHAsset+Additionals.m */,
+				036FC7CA1D3E67F300BCFED9 /* CLPlacemark+Additionals.h */,
+				036FC7CB1D3E67F300BCFED9 /* CLPlacemark+Additionals.m */,
 			);
 			name = Categories;
 			path = PhotoBox/Categories;
@@ -764,6 +772,7 @@
 				03FD482A191FD73200D4ADF7 /* MessageUI.framework */,
 				037EC050189CF76D009C54EE /* Crashlytics.framework */,
 				03635E191879746D0037851F /* libPods-DelightfulTests.a */,
+				032E9CEE1D3D89B6006F1FC2 /* Fabric.framework */,
 				03635E171879745D0037851F /* libPods.a */,
 				036E050D17FC1BB10012DFB3 /* CoreData.framework */,
 				032B0D2917D5B9B400ABFA9F /* MobileCoreServices.framework */,
@@ -1510,6 +1519,7 @@
 				0398D765180FC56700FDD83B /* NPRImageDownloader.m in Sources */,
 				037B08A31956B85C001F55D6 /* UploadAssetCell.m in Sources */,
 				03EB624219DCF0DA00E65248 /* PhotosHorizontalScrollingYapBackedViewController.m in Sources */,
+				036FC7CC1D3E67F300BCFED9 /* CLPlacemark+Additionals.m in Sources */,
 				03EB628619DE43A000E65248 /* ShowFullScreenTransitioningDelegate.m in Sources */,
 				0396BDDA1921AC60004B6290 /* HeaderImageView.m in Sources */,
 				035DACE31983490B00557547 /* UploadReloadView.m in Sources */,
@@ -1747,6 +1757,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/PhotoBox",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";
@@ -1798,6 +1809,7 @@
 					"$(inherited)",
 					"$(SRCROOT)",
 					"$(SRCROOT)/PhotoBox",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoBox/Delightful-Prefix.pch";

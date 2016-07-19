@@ -84,6 +84,12 @@ typedef NS_ENUM(NSInteger, ActionType) {
                              success:(void(^)(id object))successBlock
                              failure:(void(^)(NSError*))failureBlock;
 
+#pragma mark - Album
+
+- (NSURLSessionDataTask *)createNewAlbum:(NSString *)albumName
+                                 success:(void(^)(id object))successBlock
+                                 failure:(void(^)(NSError*))failureBlock;
+
 #pragma mark - Sharing
 
 - (void)fetchSharingTokenForPhotoWithId:(NSString *)photoId completionBlock:(void(^)(NSString *token))completion;
