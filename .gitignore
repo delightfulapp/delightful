@@ -33,3 +33,24 @@ PhotoBox/facebook-app-id
 
 #Vagrant
 .vagrant
+
+# fastlane specific
+fastlane/report.xml
+
+# deliver temporary files
+fastlane/Preview.html
+
+# snapshot generated screenshots
+fastlane/screenshots
+
+# scan temporary files
+fastlane/test_output
+
+build
+/keyrings/live/pubring.gpg~
+/keyrings/live/pubring.kbx~
+/keyrings/live/secring.gpg
+/fastlane/Deliverfile
+/fastlane/Matchfile
+/fastlane/Appfile
+/fabric_api_key

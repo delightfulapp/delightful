@@ -1,0 +1,1 @@
+browse,storage,cloud,backup,camera,image,gallery,manage

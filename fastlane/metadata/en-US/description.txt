@@ -1,0 +1,21 @@
+Delightful is third party app to view and share your personal photo collections in Trovebox photo storage service.
+
+IMPORTANT: Self hosted Trovebox server or Trovebox.com account is REQUIRED.
+
+Features:
+1. See more or less photos by pinching.
+2. Easily view photos in an album or a tag.
+3. Save photo to Favourites (tag as Favourite).
+4. View photo's metadata.
+5. Download photo to camera roll.
+6. Share photo (as Trovebox link or original photo) via Facebook, Twitter, etc.
+7. Photo location.
+8. Photos grouped by date taken or date upload.
+9. 1password extension to login.
+10. Sort photos, albums, and tags.
+11. Offline support.
+12. Upload photos using slide-to-select gesture to quickly select multiple photos.
+13. iOS 8 ready.
+14. Smart tags. Automatically tag photos based on photos' metadata when uploading.
+15. Guest login. Access a Trovebox server without logging in. You can only see public photos, albums, and tags; You cannot upload as guest either.
+16. Universal app. Works beautifully on the iPad and the iPhone.
