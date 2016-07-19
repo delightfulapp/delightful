@@ -9,15 +9,16 @@
 #import "NPRImageDownloader.h"
 #import "Photo.h"
 #import "DownloadedImageManager.h"
+#import <AFNetworking/AFNetworking.h>
 
 NSString *const NPRImageDownloadDidStartNotification = @"jp.touches.nprimagedownload.notification-didStart";
 NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedownload.notification-didFinish";
 
-@interface NPRImageDownloader ()
+@interface NPRImageDownloader () <NSURLSessionDownloadDelegate>
 
 @property (nonatomic, strong) NSMutableArray *downloads;
 @property (nonatomic, strong) NSMutableArray *downloadURLs;
-@property (nonatomic, strong) NSOperationQueue *downloadingQueue;
+@property (nonatomic, strong) NSURLSession *session;
 
 @end
 
@@ -30,7 +31,7 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
         _sharedDownloader = [[NPRImageDownloader alloc] init];
         _sharedDownloader.downloads = [[NSMutableArray alloc] init];
         _sharedDownloader.downloadURLs = [[NSMutableArray alloc] init];
-        _sharedDownloader.downloadingQueue = [[NSOperationQueue alloc] init];
+        _sharedDownloader.session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:_sharedDownloader delegateQueue:[NSOperationQueue mainQueue]];
     });
     
     return _sharedDownloader;
@@ -61,37 +62,40 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
         return NO;
     }
     
-    __weak NPRImageDownloader *weakSelf = self;
-    NPRImageDownloaderOperation *downloadOperation = [[NPRImageDownloaderOperation alloc] initWithURL:URL thumbnail:image progress:^(NPRImageDownloaderOperation *operation, NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        NPRImageDownloaderOperation *strongOperation = operation;
+    NPRImageDownloaderOperation *downloadOperation = [[NPRImageDownloaderOperation alloc] init];
+    downloadOperation.URL = URL;
+    downloadOperation.thumbnail = image;
+    downloadOperation.name = URL.lastPathComponent;
+    downloadOperation.photo = photo;
+    
+    NSURLSessionDownloadTask *downloadTask = [self.session downloadTaskWithURL:URL];
+    /*
+    if (error) {
         if (weakSelf) {
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didProgress:forOperation:atIndex:)]) {
-                [weakSelf.delegate didProgress:((float)totalBytesRead/(float)totalBytesExpectedToRead) forOperation:strongOperation atIndex:[weakSelf indexOfOperation:strongOperation]];
+            NSInteger index = [weakSelf indexOfOperation:downloadOperation];
+            [weakSelf removeOperation:downloadOperation URL:URL];
+            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didFailDownloadOperation:atIndex:)]) {
+                [weakSelf.delegate didFailDownloadOperation:downloadOperation atIndex:index];
             }
         }
-    } success:^(NPRImageDownloaderOperation *operation, NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        NPRImageDownloaderOperation *strongOperation = operation;
+    } else {
         if (weakSelf) {
-            NSInteger index = [weakSelf indexOfOperation:strongOperation];
-            [weakSelf removeOperation:strongOperation URL:request.URL];
+            NSData *data = [NSData dataWithContentsOfURL:location];
+            UIImage *image = [UIImage imageWithData:data];
+            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+            NSInteger index = [weakSelf indexOfOperation:downloadOperation];
+            [weakSelf removeOperation:downloadOperation URL:URL];
             if (photo) {
                 [[DownloadedImageManager sharedManager] addPhoto:photo];
             }
             if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didFinishDownloadOperation:atIndex:)]) {
-                [weakSelf.delegate didFinishDownloadOperation:strongOperation atIndex:index];
+                [weakSelf.delegate didFinishDownloadOperation:downloadOperation atIndex:index];
             }
         }
         [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidFinishNotification object:nil];
-    } failure:^(NPRImageDownloaderOperation *operation, NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        NPRImageDownloaderOperation *strongOperation = operation;
-        if (weakSelf) {
-            NSInteger index = [weakSelf indexOfOperation:strongOperation];
-            [weakSelf removeOperation:strongOperation URL:request.URL];
-            if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didFailDownloadOperation:atIndex:)]) {
-                [weakSelf.delegate didFailDownloadOperation:strongOperation atIndex:index];
-            }
-        }
-    }];
+    }
+     */
+    downloadOperation.taskIdentifier = downloadTask.taskIdentifier;
     
     @synchronized(self){
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
@@ -102,7 +106,7 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
         [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidStartNotification object:nil];
     }
     
-    [self.downloadingQueue addOperation:downloadOperation.operation];
+    [downloadTask resume];
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(didStartDownloadOperation:)]) {
         [self.delegate didStartDownloadOperation:downloadOperation];
@@ -130,6 +134,14 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     }
 }
 
+- (id)downloadOperationWithTaskIdentifier:(NSUInteger)taskIdentifier {
+    @synchronized(self){
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"%K == %ld", NSStringFromSelector(@selector(taskIdentifier)), taskIdentifier];
+        NSArray *operations = [self.downloads filteredArrayUsingPredicate:predicate];
+        return [operations firstObject];
+    }
+}
+
 - (BOOL)isDownloadingImageAtURL:(NSURL *)URL {
     @synchronized(self) {
         return [self.downloadURLs containsObject:URL]?YES:NO;
@@ -138,7 +150,7 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
 
 - (void)removeOperation:(id)operation URL:(NSURL *)URL {
     @synchronized(self) {
-        PBX_LOG(@"Removing 1 of %d operations.", self.downloadURLs.count);
+        PBX_LOG(@"Removing 1 of %lu operations.", (unsigned long)self.downloadURLs.count);
         [self willChangeValueForKey:NSStringFromSelector(@selector(numberOfDownloads))];
         [self.downloads removeObject:operation];
         [self.downloadURLs removeObject:URL];
@@ -160,56 +172,46 @@ NSString *const NPRImageDownloadDidFinishNotification = @"jp.touches.nprimagedow
     return taskCompletionSource.task;
 }
 
+#pragma mark - Session Delegate
+
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location {
+    NSData *data = [NSData dataWithContentsOfURL:location];
+    UIImage *image = [UIImage imageWithData:data];
+    UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    NPRImageDownloaderOperation *downloadOperation = [self downloadOperationWithTaskIdentifier:downloadTask.taskIdentifier];
+    NSInteger index = [self indexOfOperation:downloadOperation];
+    [self removeOperation:downloadOperation URL:downloadTask.originalRequest.URL];
+    if (downloadOperation.photo) {
+        [[DownloadedImageManager sharedManager] addPhoto:downloadOperation.photo];
+    }
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didFinishDownloadOperation:atIndex:)]) {
+        [self.delegate didFinishDownloadOperation:downloadOperation atIndex:index];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:NPRImageDownloadDidFinishNotification object:nil];
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error {
+    NPRImageDownloaderOperation *downloadOperation = [self downloadOperationWithTaskIdentifier:task.taskIdentifier];
+    NSInteger index = [self indexOfOperation:downloadOperation];
+    [self removeOperation:downloadOperation URL:task.originalRequest.URL];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didFailDownloadOperation:atIndex:)]) {
+        [self.delegate didFailDownloadOperation:downloadOperation atIndex:index];
+    }
+}
+
+
+- (void)URLSession:(NSURLSession *)session
+      downloadTask:(NSURLSessionDownloadTask *)downloadTask
+      didWriteData:(int64_t)bytesWritten
+ totalBytesWritten:(int64_t)totalBytesWritten
+totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite {
+    NPRImageDownloaderOperation *operation = [self downloadOperationWithTaskIdentifier:downloadTask.taskIdentifier];
+    if (operation && self.delegate && [self.delegate respondsToSelector:@selector(didProgress:forOperation:atIndex:)]) {
+        [self.delegate didProgress:((float)totalBytesWritten/(float)totalBytesExpectedToWrite) forOperation:operation atIndex:[self indexOfOperation:operation]];
+    }
+}
+
 @end
 
 @implementation NPRImageDownloaderOperation
-
-- (NSString *)name {
-    return self.URL.lastPathComponent;
-}
-
-- (id)initWithURL:(NSURL *)URL thumbnail:(UIImage *)thumbnail progress:(void (^)(NPRImageDownloaderOperation*, NSUInteger, long long, long long))progress success:(void (^)(NPRImageDownloaderOperation *operation, NSURLRequest *, NSHTTPURLResponse *, UIImage *))success failure:(void (^)(NPRImageDownloaderOperation *operation, NSURLRequest *, NSHTTPURLResponse *, NSError *))failure{
-    if (self = [super init]) {
-        _thumbnail = thumbnail;
-        _URL = URL;
-        [self setOperationWithURL:URL progress:progress success:success failure:failure];
-    }
-    return self;
-}
-
-- (void)setOperationWithURL:(NSURL *)URL progress:(void (^)(NPRImageDownloaderOperation*,NSUInteger, long long, long long))progress success:(void (^)(NPRImageDownloaderOperation *, NSURLRequest *, NSHTTPURLResponse *, UIImage *))success failure:(void (^)(NPRImageDownloaderOperation *, NSURLRequest *, NSHTTPURLResponse *, NSError *))failure{
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    
-    __weak NPRImageDownloaderOperation *weakOperation = self;
-    
-    /*
-    self.operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:^UIImage *(UIImage *image) {
-        if (image) {
-            PBX_LOG(@"Writing image to photos album");
-            UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
-        }
-        return image;
-    } success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        success(weakOperation, request, response, image);
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-        failure(weakOperation, request, response, error);
-    }];
-    
-    [self.operation setDownloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-        progress(weakOperation, bytesRead, totalBytesRead, totalBytesExpectedToRead);
-    }];
-     */
-}
-
-- (BOOL)isEqual:(NPRImageDownloaderOperation *)object {
-    if (![object isKindOfClass:[self class]]) {
-        return NO;
-    }
-    
-    if ([object.URL.absoluteURL isEqual:self.URL.absoluteURL]) {
-        return YES;
-    }
-    return NO;
-}
-
 @end

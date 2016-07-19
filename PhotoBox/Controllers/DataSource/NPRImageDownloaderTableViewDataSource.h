@@ -19,7 +19,7 @@
 
 @interface NPRImageDownloaderTableViewDataSource : NSObject <UITableViewDataSource, NPRImageDownloaderDelegate>
 
-@property (nonatomic, copy) void(^cellConfigureBlock)(id cell, id operation);
+@property (nonatomic, copy) void(^cellConfigureBlock)(id cell, NPRImageDownloaderOperation *operation);
 @property (nonatomic, copy) NSString *cellIdentifier;
 
 - (id)initWithTableView:(UITableView *)tableView;
