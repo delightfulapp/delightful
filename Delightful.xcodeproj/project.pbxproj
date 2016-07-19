@@ -1196,9 +1196,7 @@
 				03CE49C019C9366800817C28 /* Facebook App Id */,
 				032CBB7617D0BDF3001205B1 /* Sources */,
 				032CBB7717D0BDF3001205B1 /* Frameworks */,
-				037EC053189D05AF009C54EE /* Copy Crashlytics plist */,
 				032CBB7817D0BDF3001205B1 /* Resources */,
-				03635E1B187996290037851F /* Crashlytics */,
 				33AD987D50E7F7BDE14AEC87 /* [CP] Embed Pods Frameworks */,
 				F45399DEF000BCC2D09696FB /* [CP] Copy Pods Resources */,
 			);
@@ -1350,34 +1348,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		03635E1B187996290037851F /* Crashlytics */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = Crashlytics;
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "echo \"Gonna Running crashlytics framework\"\nFILE=./Crashlytics.framework/run\nAPI_KEY_PLIST=./PhotoBox/Crashlytics.plist\nBUILD_SECRET_FILE=./crashlytics-code\n\nAPI_KEY=$(/usr/libexec/PlistBuddy -c \"Print :key\" \"$API_KEY_PLIST\")\n\nif [ -f $BUILD_SECRET_FILE ];\nthen\nBUILD_SECRET=`head -1 $BUILD_SECRET_FILE`\necho $BUILD_SECRET\nif [ -f $FILE ];\nthen\necho \"Running crashlytics framework\"\n./Crashlytics.framework/run $API_KEY $BUILD_SECRET\nelse\necho \"No Crashlytics\"\nfi\nelse\necho \"No crashlytics-code\"\nfi\n\n";
-		};
-		037EC053189D05AF009C54EE /* Copy Crashlytics plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Crashlytics plist";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "FILE=./PhotoBox/Crashlytics.plist\nSTUB=./PhotoBox/Crashlytics.plist.stub.plist\n\nif [ -f $FILE ];\nthen\necho \"Crashlytics.plist exists\"\nelse\ncp $STUB $FILE\nfi";
-		};
 		03CE49C019C9366800817C28 /* Facebook App Id */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
