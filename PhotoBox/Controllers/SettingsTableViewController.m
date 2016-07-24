@@ -60,8 +60,9 @@ static void * imageDownloadContext = &imageDownloadContext;
                    @[@{@"title": NSLocalizedString(@"Delightful Version", nil), @"detail": appVersion},
                      @{@"title": NSLocalizedString(@"Delightful on Twitter", nil), @"detail": @"@delightfulapp"},
                      @{@"title": NSLocalizedString(@"Created by Nico", nil), @"detail": @"@nicnocquee"},
-                     @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @"", @"title_is_link": @(YES)}],
-                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @"", @"title_is_link": @(YES)}]
+                     @{@"title": NSLocalizedString(@"Open Source", nil), @"detail": @""},
+                     @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @""}],
+                   @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}]
                    ];
     
     self.numberOfDownloads = (int)[[NPRImageDownloader sharedDownloader] numberOfDownloads];
@@ -169,6 +170,8 @@ static void * imageDownloadContext = &imageDownloadContext;
         } else if (indexPath.row == 2) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/nicnocquee"]];
         } else if (indexPath.row == 3) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/delightfulapp/delightful"]];
+        } else if (indexPath.row == 4) {
             NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
             NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
             NSString *appVersion = [NSString stringWithFormat:@"%@ (%@)", shortVersion, version];
