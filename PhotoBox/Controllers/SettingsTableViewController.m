@@ -61,6 +61,7 @@ static void * imageDownloadContext = &imageDownloadContext;
                      @{@"title": NSLocalizedString(@"Delightful on Twitter", nil), @"detail": @"@delightfulapp"},
                      @{@"title": NSLocalizedString(@"Created by Nico", nil), @"detail": @"@nicnocquee"},
                      @{@"title": NSLocalizedString(@"Open Source", nil), @"detail": @""},
+                     @{@"title": NSLocalizedString(@"Credits", nil), @"detail": @""},
                      @{@"title": NSLocalizedString(@"Found a bug?", nil), @"detail": @""}],
                    @[@{@"title": NSLocalizedString(@"Gestures", nil), @"detail": @""}]
                    ];
@@ -165,13 +166,17 @@ static void * imageDownloadContext = &imageDownloadContext;
         UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:hints];
         [self presentViewController:navCon animated:YES completion:nil];
     } else if (indexPath.section == 2) {
-        if (indexPath.row == 1) {
+        if (indexPath.row == 0) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/delightfulapp/delightful/blob/master/WhatsNew.md"]];
+        } else if (indexPath.row == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/delightfulapp"]];
         } else if (indexPath.row == 2) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/nicnocquee"]];
         } else if (indexPath.row == 3) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/delightfulapp/delightful"]];
         } else if (indexPath.row == 4) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/delightfulapp/delightful/blob/master/Credits.md"]];
+        } else if (indexPath.row == 5) {
             NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
             NSString *shortVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
             NSString *appVersion = [NSString stringWithFormat:@"%@ (%@)", shortVersion, version];
