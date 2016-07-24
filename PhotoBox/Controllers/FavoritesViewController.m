@@ -254,6 +254,10 @@
             [self setIsFetching:NO];
             self.isDoneSyncing = YES;
         }
+        
+        if (self.dataSource.numberOfItems == 0) {
+            [self showNoItems:YES];
+        }
     }
 }
 
