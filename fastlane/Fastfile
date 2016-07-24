@@ -50,10 +50,11 @@ platform :ios do
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/openphoto root@"+droplet['ip']+":~"
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/Photos-Demo.zip root@"+droplet['ip']+":~"
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/import-photos.sh root@"+droplet['ip']+":~"
-    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" mysql -uroot trovebox -e \"update user set extra='{\"lastPhotoId\":\"100\",\"lastActionId\":\"\",\"lastGroupId\":\"\",\"lastWebhookId\":\"\",\"lastActivityId\":\"\"}' where id='support@delightfuldev.com'"
-"
     UI.message "Importing demo photos ..."
     sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" './import-photos.sh'"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/update-activity-import.sql root@"+droplet['ip']+":~"
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mysql -uroot trovebox < ./update-activity-import.sql'"
+
     clean_decrypt
     UI.message "Trovebox demo server is ready at #{droplet['ip']}"
   end
