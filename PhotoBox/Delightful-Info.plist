@@ -53,6 +53,8 @@
 	<string>378582835605137</string>
 	<key>FacebookDisplayName</key>
 	<string>Delightful</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
