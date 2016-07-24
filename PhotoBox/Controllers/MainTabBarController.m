@@ -12,7 +12,6 @@
 #import "NPRImageDownloader.h"
 #import "DLFImageUploader.h"
 #import "UIWindow+Additionals.h"
-#import "IntroViewController.h"
 #import "ConnectionManager.h"
 
 static void * imageDownloadContext = &imageDownloadContext;

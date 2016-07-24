@@ -175,7 +175,7 @@ static void * imageDownloadContext = &imageDownloadContext;
             
             MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
             [mail setSubject:[NSString stringWithFormat:@"Bug report %@", appVersion]];
-            [mail setToRecipients:@[@"officialdelightfulapp@gmail.com"]];
+            [mail setToRecipients:@[@"nico@delightfuldev.com"]];
             [mail setMessageBody:@"Please provide detail description of the bug and how to reproduce it." isHTML:NO];
             [mail setMailComposeDelegate:self];
             [self presentViewController:mail animated:YES completion:nil];

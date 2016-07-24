@@ -84,22 +84,9 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     if (!textField.text || textField.text.length == 0) {
-#ifdef IS_FEZZ
-        [textField setText:@"http://192.168.0.200"];
-#else
-       [textField setText:@".trovebox.com"];
-#endif
-        
+       [textField setText:@"https://"];
     }
     return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField {
-    if ([textField.text isEqualToString:@".trovebox.com"]) {
-        UITextPosition *newCursorPosition = [textField positionFromPosition:textField.beginningOfDocument offset:0];
-        UITextRange *newSelectedRange = [textField textRangeFromPosition:newCursorPosition toPosition:newCursorPosition];
-        [textField setSelectedTextRange:newSelectedRange];
-    }
 }
 
 
@@ -126,7 +113,7 @@
             [self.activityView stopAnimating];
         }];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL or IP address. Example: https://trovebox.com", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
         [alert show];
     }
     return YES;
