@@ -45,7 +45,7 @@
                        ];
     
     NSArray *grouped = [array groupedArrayBy:@"dateMonthYearTakenString"];
-    NSLog(@"%@", grouped);
+    
     XCTAssert(grouped.count==6, @"Wrong number of group. Actual = %d", (int)grouped.count);
     NSDictionary *group1 = [grouped objectAtIndex:0];
     XCTAssert([[group1 objectForKey:@"dateMonthYearTakenString"] isEqualToString:@"2013-10"], @"Wrong first group date. Expected 2013-10. Actual %@", [group1 objectForKey:@"dateMonthYearTakenString"] );

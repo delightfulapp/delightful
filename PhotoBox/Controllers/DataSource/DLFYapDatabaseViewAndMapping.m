@@ -141,7 +141,7 @@
     }
     
     if (!completionBlock) {
-        NSLog(@"registering extension %@", viewName);
+        
         [database registerExtension:view withName:viewName];
         return viewMappingInit();
     } else {

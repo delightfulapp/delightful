@@ -236,7 +236,7 @@
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
     if ([resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
-        NSLog(@"will start syncing");
+        
         [self setIsFetching:YES];
         self.isDoneSyncing = NO;
     }
@@ -247,10 +247,10 @@
     NSString *resource = userInfo[SyncEngineNotificationResourceKey];
     NSString *item = userInfo[SyncEngineNotificationIdentifierKey];
     if (![item isKindOfClass:[NSNull class]] && [resource isEqualToString:NSStringFromClass([self resourceClass])] && [item isEqualToString:self.item.itemId]) {
-        NSLog(@"did finish syncing");
+        
         NSNumber *count = userInfo[SyncEngineNotificationCountKey];
         if (count.intValue == 0) {
-            NSLog(@"fetched 0 photos");
+            
             [self setIsFetching:NO];
             self.isDoneSyncing = YES;
         }

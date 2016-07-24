@@ -83,18 +83,18 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     
     self.uploadingTask = [self.uploadingTask continueWithBlock:^id(BFTask *task) {
         BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
-        NSLog(@"uploading photo %@", asset.asset.localIdentifier);
+        
         [[APIClient sharedClient] uploadAsset:asset progress:^(float progress) {
             [selfie uploadProgress:progress asset:asset];
         } success:^(id object) {
             [selfie assetUploadDidSucceed:asset];
             [selfie removeFailAsset:asset];
             [taskCompletionSource setResult:asset];
-            NSLog(@"- done uploading %@", asset.asset.localIdentifier);
+            
         } failure:^(NSError *error) {
             [selfie assetUploadDidFail:asset error:error];
             [taskCompletionSource setError:error];
-            NSLog(@"x fail uploading %@", asset.asset.localIdentifier);
+            
         }];
         return taskCompletionSource.task;
     }];

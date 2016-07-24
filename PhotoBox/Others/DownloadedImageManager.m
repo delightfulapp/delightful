@@ -158,7 +158,7 @@
     };
     
     if (![database registeredExtension:viewName]) {
-        NSLog(@"registering extension %@", viewName);
+        
         [database registerExtension:view withName:viewName];
     }
     

@@ -499,7 +499,7 @@ NSString *const normalCellIdentifier = @"normalCell";
     NSString *format = [NSString stringWithFormat:@"%@.%@", NSStringFromSelector(@selector(asset)), NSStringFromSelector(@selector(localIdentifier))];
     DLFAsset *changedAsset = [[self.selectedAssets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", format, asset.asset.localIdentifier]] firstObject];
     [changedAsset setSmartTags:asset.smartTags];
-    NSLog(@"smart tags changed: %@", changedAsset.smartTags);
+    
 }
 
 #pragma mark - UITextViewDelegate

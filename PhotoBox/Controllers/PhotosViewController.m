@@ -470,7 +470,7 @@
     CGFloat preferredHeight = 200;
     CGFloat width = preferredHeight * size.width/size.height;
     CGSize preferredSize = CGSizeMake(width, preferredHeight);
-    //NSLog(@"size for %@ = %@", indexPath, NSStringFromCGSize(preferredSize));
+    //
     return preferredSize;
 }
 

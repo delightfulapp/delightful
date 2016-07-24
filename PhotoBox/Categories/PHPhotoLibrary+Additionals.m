@@ -49,7 +49,7 @@
         BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
         UIImage *newImage = task.result;
         [self performChanges:^{
-            NSLog(@"New image size = %@", NSStringFromCGSize(newImage.size));
+            
             PHAssetChangeRequest *createAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:newImage];
             createAssetRequest.creationDate = asset.creationDate;
             createAssetRequest.location = asset.location;
@@ -57,7 +57,7 @@
             if (success) {
                 [taskCompletionSource setResult:asset];
             } else {
-                NSLog(@"Error creating: %@", error);
+                
                 [taskCompletionSource setError:error];
             }
         }];
@@ -69,13 +69,13 @@
 - (BFTask *)resizeAndDeleteAsset:(PHAsset *)asset scale:(CGFloat)scale {
     return [[[asset fullResolutionImage] continueWithBlock:^id(BFTask *task) {
         UIImage *im = task.result;
-        NSLog(@"original image size = %@", NSStringFromCGSize(im.size));
+        
         return [self resizeImage:im scale:scale];
     }] continueWithBlock:^id(BFTask *task) {
         BFTaskCompletionSource *taskCompletionSource = [BFTaskCompletionSource taskCompletionSource];
         UIImage *newImage = task.result;
         [self performChanges:^{
-            NSLog(@"New image size = %@", NSStringFromCGSize(newImage.size));
+            
             PHAssetChangeRequest *createAssetRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:newImage];
             createAssetRequest.creationDate = asset.creationDate;
             createAssetRequest.location = asset.location;
@@ -84,7 +84,7 @@
             if (success) {
                 [taskCompletionSource setResult:asset];
             } else {
-                NSLog(@"Error creating: %@", error);
+                
                 [taskCompletionSource setError:error];
             }
         }];

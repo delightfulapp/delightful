@@ -65,7 +65,7 @@
     XCTAssertNotNil(dataTask.originalRequest);
     
     [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
     [OHHTTPStubs removeStub:stub];
 }
@@ -94,7 +94,7 @@
     XCTAssertNotNil(dataTask.originalRequest);
     
     [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
     [OHHTTPStubs removeStub:stub];
 }
@@ -129,7 +129,7 @@
     XCTAssertNotNil(dataTask.originalRequest);
     
     [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
     [OHHTTPStubs removeStub:stub];
 }
@@ -158,7 +158,7 @@
     XCTAssertNotNil(dataTask.originalRequest);
     
     [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
     [OHHTTPStubs removeStub:stub];
 }
@@ -193,7 +193,7 @@
     XCTAssertNotNil(dataTask.originalRequest);
     
     [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
     [OHHTTPStubs removeStub:stub];
 }
@@ -222,7 +222,7 @@
     XCTAssertNotNil(dataTask.originalRequest);
     
     [self waitForExpectationsWithTimeout:1 handler:^(NSError * _Nullable error) {
-        NSLog(@"%@", error);
+        
     }];
     [OHHTTPStubs removeStub:stub];
 }
