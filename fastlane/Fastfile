@@ -36,6 +36,7 @@ platform :ios do
   desc "Submit a new Beta Build to Apple TestFlight"
   desc "This will also make sure the profile is up to date"
   lane :beta do
+    decrypt
     match(type: "appstore") # more information: https://codesigning.guide
     increment_build_number
     increment_version_number
@@ -49,6 +50,7 @@ platform :ios do
       skip_waiting_for_build_processing: true,
       team_id: "320144"
     )
+    clean_decrypt
     commit_version_bump(
       xcodeproj: './Delightful.xcodeproj',
       force: true
@@ -66,6 +68,16 @@ platform :ios do
     gym(scheme: "Delightful") # Build your app - more options available
     deliver(force: true)
     # frameit
+  end
+
+  desc "Decrypt files"
+  private_lane :decrypt do
+    sh "blackbox_edit_start Appfile.gpg && blackbox_edit_start Deliverfile.gpg && blackbox_edit_start Matchfile.gpg"
+  end
+
+  desc "Clean Decrypted Files"
+  private_lane :clean_decrypt do
+    sh "rm Appfile && rm Deliverfile && rm Matchfile"
   end
 
   # You can define as many lanes as you want
