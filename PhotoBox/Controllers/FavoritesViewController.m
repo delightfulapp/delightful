@@ -129,13 +129,15 @@
         [super showEmptyLoading:show];
     } else {
         UIView *view = self.collectionView.backgroundView;
-        
-        //[self.collectionView setAlwaysBounceVertical:NO];
-        
+                
         if (!view) {
             view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
             [self.collectionView setBackgroundView:view];
             [view setBackgroundColor:[UIColor whiteColor]];
+        } else {
+            for (UIView *subview in view.subviews) {
+                [subview removeFromSuperview];
+            }
         }
         
         UILabel *textLabel = (UILabel *)[view viewWithTag:10000];
@@ -250,7 +252,6 @@
         if (count.intValue == 0) {
             NSLog(@"fetched 0 photos");
             [self setIsFetching:NO];
-            
             self.isDoneSyncing = YES;
         }
     }
