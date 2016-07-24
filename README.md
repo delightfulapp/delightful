@@ -1,19 +1,12 @@
 Delightful for iPhone
 ==
 
-<p align="center">
-<a href="http://www.getdelightfulapp.com">Website</a> &bull;
-<a href="http://twitter.com/delightfulapp">Twitter</a> &bull;
-<a href="http://blog.getdelightfulapp.com/">Blog</a> &bull;
-<a href="https://itunes.apple.com/us/app/delightful-trovebox-photo/id878230610?ls=1&mt=8">App Store</a>
-</p>
-
-Delightful is an unofficial [Trovebox](https://github.com/photo/frontend) iPhone/iPad app client.
+Delightful is an unofficial [Trovebox](https://github.com/photo/frontend) iPhone/iPad app client. Available on the [App Store](https://itunes.apple.com/us/app/delightful-trovebox-photo/id878230610?ls=1&mt=8).
 
 Screenshot
 --
 
-![Delightful app](http://f.cl.ly/items/423u39153T3w0r2p291G/iOS%20Simulator%20Screen%20Shot%20Dec%206,%202014,%2001.03.10.png)
+![Delightful app](https://github.com/delightfulapp/delightful/raw/master/delightful-iphone.png).
 
 App Preview
 --
@@ -43,35 +36,6 @@ Features (so far)
 17. Smart tags. Automatically tag photos based on photos' metadata when uploading.
 18. Guest login. Access a Trovebox server without logging in. You can only see public photos, albums, and tags; You cannot upload as guest either.
 
-What's New in 2.1.0
---
-
-New Features:
-
-- Optional Title and Description for photos to upload.
-- Option to resize photos after upload to save storage space in your device.
-- Remember user’s choice on Resize after upload option.
-- Guest access. User can skip login but will only see public photos/albums/tags and cannot upload.
-- Favoriting a photo will tag the photo with “Favorites” tag.
-- Migrate previous locally favorited photos to Favorites tag
-- Show indicator when migrating favorites.
-- Show indicator when syncing favorites.
-- Separate share link and share image.
-- Loading indicator on title view to indicate synchronization in operation.
-
-Bug Fixes:
-
-- Fix photos selection bug where sometimes photo got deselected.
-- Fix selected cell not visible when returning from full screen photos.
-- Fix crash when returning to Favorites after refreshing All Photos.
-- Fix crash after upload.
-- Fix 4S login
-- Fix refresh control not hiding in Favorites.
-- Fix stuck in launching.
-- Fix the crash when returning to the app after changing photos library (delete/insert/recover photos).
-- Fix bugs in title’s loading indicator.
-- Fix scrolling bug in iPhone 6 plus.
-
 Requirements
 --
 
@@ -100,6 +64,11 @@ Contact
 --
 
 [@nicnocquee](https://twitter.com/nicnocquee)
+
+Credits
+--
+
+Check out [Credits.md](https://github.com/delightfulapp/delightful/blob/master/Credits.md)
 
 
 License
