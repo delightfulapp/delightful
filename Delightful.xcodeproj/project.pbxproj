@@ -410,7 +410,6 @@
 		035DACE21983490B00557547 /* UploadReloadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UploadReloadView.m; path = PhotoBox/Views/UploadReloadView.m; sourceTree = "<group>"; };
 		035DACE61983555500557547 /* DLFAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DLFAsset.h; path = PhotoBox/Models/DLFAsset.h; sourceTree = "<group>"; };
 		035DACE71983555500557547 /* DLFAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DLFAsset.m; path = PhotoBox/Models/DLFAsset.m; sourceTree = "<group>"; };
-		035DACF41985EDBD00557547 /* Lookback.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Lookback.plist; sourceTree = "<group>"; };
 		03635E171879745D0037851F /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
 		03635E191879746D0037851F /* libPods-DelightfulTests.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DelightfulTests.a"; path = "Pods/build/Debug-iphoneos/libPods-DelightfulTests.a"; sourceTree = "<group>"; };
 		03643BC819F76A11003E4025 /* PhotosSubsetDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosSubsetDataSource.h; sourceTree = "<group>"; };
@@ -795,7 +794,6 @@
 			isa = PBXGroup;
 			children = (
 				03EB627919DE2EF000E65248 /* delightful.ttf */,
-				035DACF41985EDBD00557547 /* Lookback.plist */,
 				032CBB8517D0BDF3001205B1 /* Delightful-Info.plist */,
 				032CBB8617D0BDF3001205B1 /* InfoPlist.strings */,
 				032CBB8917D0BDF3001205B1 /* main.m */,

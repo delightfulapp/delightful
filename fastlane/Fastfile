@@ -37,7 +37,15 @@ platform :ios do
   desc "This will also make sure the profile is up to date"
   lane :beta do
     decrypt
+    fabric_key = Helper.backticks('cd .. && cat ./fabric_api_key')
     match(type: "appstore") # more information: https://codesigning.guide
+    update_info_plist(
+      xcodeproj: "./Delightful.xcodeproj",
+      plist_path: "./PhotoBox/Delightful-Info.plist",
+      block: lambda { |plist|
+        plist["Fabric"]["APIKey"] = fabric_key
+      }
+    )
     increment_build_number
     increment_version_number
     gym(
@@ -51,14 +59,19 @@ platform :ios do
       team_id: "320144"
     )
     clean_decrypt
+    update_info_plist(
+      xcodeproj: "./Delightful.xcodeproj",
+      plist_path: "./PhotoBox/Delightful-Info.plist",
+      block: lambda { |plist|
+        plist["Fabric"]["APIKey"] = ""
+      }
+    )
     commit_version_bump(
       xcodeproj: './Delightful.xcodeproj',
       force: true
     )
     add_git_tag
     push_to_git_remote
-    # sh "your_script.sh"
-    # You can also use other beta testing services here (run `fastlane actions`)
   end
 
   desc "Deploy a new version to the App Store"
@@ -73,11 +86,13 @@ platform :ios do
   desc "Decrypt files"
   private_lane :decrypt do
     sh "blackbox_edit_start Appfile.gpg && blackbox_edit_start Deliverfile.gpg && blackbox_edit_start Matchfile.gpg"
+    sh "cd .. && blackbox_edit_start fabric_api_key.gpg"
   end
 
   desc "Clean Decrypted Files"
   private_lane :clean_decrypt do
     sh "rm Appfile && rm Deliverfile && rm Matchfile"
+    sh "cd .. && rm fabric_api_key"
   end
 
   # You can define as many lanes as you want
