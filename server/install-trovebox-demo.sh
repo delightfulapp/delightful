@@ -1,5 +1,7 @@
+#!/bin/sh
+
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 curl vim git-core build-essential exiftran mysql-server-5.5 mysql-client-core-5.5 php5 libapache2-mod-php5 php5-curl curl php5-gd php5-mcrypt php5-mysql php-pear php-apc libpcre3-dev
+DEBIAN_FRONTEND=noninteractive apt-get install -y apache2 curl vim git-core build-essential unzip exiftran mysql-server-5.5 mysql-client-core-5.5 php5 libapache2-mod-php5 php5-curl curl php5-gd php5-mcrypt php5-mysql php-pear php-apc libpcre3-dev
 a2enmod rewrite
 DEBIAN_FRONTEND=noninteractive apt-get install -y php5-dev php5-imagick
 a2enmod deflate
@@ -19,6 +21,7 @@ chown www-data:www-data /var/www/openphoto/src/html/assets/cache
 mkdir /var/www/openphoto/src/html/photos
 chown www-data:www-data /var/www/openphoto/src/html/photos
 cp /var/www/openphoto/src/configs/openphoto-vhost.conf /etc/apache2/sites-available/openphoto.conf
+sed -e "s|\/path\/to\/openphoto\/html\/directory|\/var\/www\/openphoto\/src\/html|g" /var/www/openphoto/src/configs/openphoto-vhost.conf > /etc/apache2/sites-available/openphoto.conf
 a2dissite 000-default
 a2ensite openphoto
 sed -e "s/file_uploads.*/file_uploads = On/g" -e "s/upload_max_filesize.*/upload_max_filesize = 16M/g" -e "s/post_max_size.*/post_max_size = 16M/g" /etc/php5/apache2/php.ini > /etc/php5/apache2/php.ini.tmp

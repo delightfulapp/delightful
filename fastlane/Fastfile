@@ -22,6 +22,40 @@ platform :ios do
 
   end
 
+  desc "Create demo server"
+  lane :demo_server do
+    decrypt
+    UI.message "Creating droplet ..."
+    droplet = create_droplet
+    UI.message "Droplet #{droplet['ip']} created. Sleep for 1 minutes ..."
+    sleep(1.minute)
+    UI.message "Uploading install script ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/install-trovebox-demo.sh root@"+droplet['ip']+":~"
+    UI.message "Executing install script ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" './install-trovebox-demo.sh'"
+    UI.message "Uploading openphoto.conf ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/trovebox-demo.conf root@"+droplet['ip']+":/etc/apache2/sites-available/openphoto.conf"
+    UI.message "Uploading trovebox-demo.ini ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/trovebox-demo.ini root@"+droplet['ip']+":~/"+droplet['ip']+".ini"
+    UI.message "Editing trovebox-demo.ini ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mkdir /var/www/openphoto/src/userdata/configs && cp ~/"+droplet['ip']+".ini"+" /var/www/openphoto/src/userdata/configs/ && chown www-data:www-data /var/www/openphoto/src/userdata/configs && chown www-data:www-data /var/www/openphoto/src/userdata/configs/"+droplet['ip']+".ini"+" && sed -e \"s|IP_ADDRESS|"+droplet['ip']+"|g\" ~/"+droplet['ip']+".ini"+" > /var/www/openphoto/src/userdata/configs/"+droplet['ip']+".ini"+"'"
+    UI.message "Uploading trovebox.sql ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/trovebox.sql root@"+droplet['ip']+":~"
+    UI.message "Importing trovebox.sql ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mysql -uroot trovebox < ~/trovebox.sql'"
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'service apache2 reload'"
+    UI.message "Uploading demo photos ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/OpenPhotoOAuth.php root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/OAuthSimple.php root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/openphoto root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/Photos-Demo.zip root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/import-photos.sh root@"+droplet['ip']+":~"
+    UI.message "Importing demo photos ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" './import-photos.sh'"
+    clean_decrypt
+    UI.message "Trovebox demo server is ready at #{droplet['ip']}"
+  end
+
   desc "Runs all the tests"
   lane :test do
     scan(
@@ -87,12 +121,14 @@ platform :ios do
   private_lane :decrypt do
     sh "blackbox_edit_start Appfile.gpg && blackbox_edit_start Deliverfile.gpg && blackbox_edit_start Matchfile.gpg"
     sh "cd .. && blackbox_edit_start fabric_api_key.gpg"
+    sh "cd .. && blackbox_edit_start d_o_key.gpg"
   end
 
   desc "Clean Decrypted Files"
   private_lane :clean_decrypt do
     sh "rm Appfile && rm Deliverfile && rm Matchfile"
     sh "cd .. && rm fabric_api_key"
+    sh "cd .. && rm d_o_key"
   end
 
   # You can define as many lanes as you want
