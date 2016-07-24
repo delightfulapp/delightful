@@ -1,3 +1,4 @@
+d_o_key
 fabric_api_key
 fastlane/Appfile
 fastlane/Deliverfile
