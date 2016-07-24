@@ -391,7 +391,7 @@
         <scene sceneID="chS-4n-kSq">
             <objects>
                 <navigationController title="Favorites" automaticallyAdjustsScrollViewInsets="NO" id="htS-ly-I9l" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Favorites" image="star-fill.png" id="Zmu-Hw-fNi"/>
+                    <tabBarItem key="tabBarItem" title="Favorites" image="favorites" id="Zmu-Hw-fNi"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4fi-0x-WLb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -636,9 +636,9 @@
     </scenes>
     <resources>
         <image name="albums" width="25" height="25"/>
+        <image name="favorites" width="25" height="25"/>
         <image name="loginbackground.jpg" width="640" height="1136"/>
         <image name="photos" width="25" height="25"/>
-        <image name="star-fill.png" width="20" height="19"/>
         <image name="tags" width="25" height="25"/>
     </resources>
 </document>
