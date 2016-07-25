@@ -313,9 +313,24 @@ static void * kUserLoggedInContext = &kUserLoggedInContext;
     self.photosInAlbumSyncOperationCollection = album;
     
     return [[APIClient sharedClient] getPhotosInAlbum:album sort:sort page:page pageSize:FETCHING_PAGE_SIZE success:^(NSArray *photos) {
-        //
-        
-        [self didFetchPhotos:photos collection:album collectionType:[Album class] page:page sort:sort];
+        // Bug fix: This is to fix the bug in Trovebox where albums array is empty https://github.com/photo/frontend/issues/1563
+        NSMutableArray *mutablePhotos = [photos mutableCopy];
+        if (album) {
+            for (Photo *photo in mutablePhotos) {
+                NSArray *albums = photo.albums;
+                NSMutableArray *mutableAlbums;;
+                if (albums) {
+                    mutableAlbums = [albums mutableCopy];
+                } else {
+                    mutableAlbums = [NSMutableArray array];
+                }
+                [mutableAlbums addObject:album];
+                
+                [photo setValue:[NSArray arrayWithArray:mutableAlbums] forKey:NSStringFromSelector(@selector(albums))];
+            }
+        }
+        // end of the bug fix
+        [self didFetchPhotos:[NSArray arrayWithArray:mutablePhotos] collection:album collectionType:[Album class] page:page sort:sort];
     } failure:^(NSError *error) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SyncEngineDidFailFetchingNotification object:nil userInfo:@{SyncEngineNotificationErrorKey: error, SyncEngineNotificationResourceKey: NSStringFromClass([Photo class]), SyncEngineNotificationIdentifierKey:album, SyncEngineNotificationPageKey: @(page)}];
     }];
