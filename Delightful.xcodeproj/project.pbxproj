@@ -1673,7 +1673,7 @@
 				CODE_SIGN_ENTITLEMENTS = Delightful.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2704;
+				CURRENT_PROJECT_VERSION = 2706;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1727,7 +1727,7 @@
 				CODE_SIGN_ENTITLEMENTS = Delightful.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2704;
+				CURRENT_PROJECT_VERSION = 2706;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
