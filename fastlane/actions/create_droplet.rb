@@ -28,7 +28,7 @@ module Fastlane
         UI.message "Created Droplet ID: #{created.id}"
         droplet_ip = nil
         droplet_status = nil
-        while droplet_ip == nil && droplet_status == nil && droplet_ip != '' && droplet_status != ''
+        while droplet_ip == nil && droplet_status != 'active' && droplet_ip != ''
           drop = client.droplets.find(id: created.id)
           if drop['networks'] && drop['networks']['v4'] && drop['networks']['v4'][0]
             droplet_ip = drop['networks']['v4'][0]['ip_address']

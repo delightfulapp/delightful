@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.50, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.49, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: trovebox
 -- ------------------------------------------------------
--- Server version	5.5.50-0ubuntu0.14.04.1
+-- Server version	5.5.49-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -216,8 +216,8 @@ CREATE TABLE `credential` (
 --
 
 LOCK TABLES `credential` WRITE;
-INSERT INTO `credential` VALUES ('d7f6836fb0ed030c7a87a5e56a24ad','support@delightfuldev.com','support@delightfuldev.com','Import Demo',NULL,'7deed398f8','2f6f818edb2ad6ecc9e9c7f9e430a4','fd755e427c','','aa3679aaf6','access',1,1469379351);
 /*!40000 ALTER TABLE `credential` DISABLE KEYS */;
+INSERT INTO `credential` VALUES ('d7f6836fb0ed030c7a87a5e56a24ad','support@delightfuldev.com','support@delightfuldev.com','Import Demo',NULL,'7deed398f8','2f6f818edb2ad6ecc9e9c7f9e430a4','fd755e427c','','aa3679aaf6','access',1,1469379351);
 /*!40000 ALTER TABLE `credential` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +339,7 @@ CREATE TABLE `elementTag` (
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`owner`,`type`,`element`,`tag`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Tag mapping table for photos (and videos in the future)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tag mapping table for photos (and videos in the future)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -658,7 +658,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('support@delightfuldev.com','4a8df2f15b941e8dcab4f3cc5a739228452baf8c','{\"lastPhotoId\":\"\",\"lastActionId\":\"\",\"lastGroupId\":\"\",\"lastWebhookId\":\"\",\"lastActivityId\":\"\",\"attrstickyPermission\":\"0\",\"attrstickyLicense\":\"\",\"lastResourceMapId\":\"1\"}','2016-07-24 15:18:58');
+INSERT INTO `user` VALUES ('support@delightfuldev.com','4a8df2f15b941e8dcab4f3cc5a739228452baf8c','[]','2016-07-25 05:42:27');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -698,4 +698,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-24 11:28:48
+-- Dump completed on 2016-07-25  5:42:56

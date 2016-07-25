@@ -48,10 +48,12 @@ platform :ios do
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/OpenPhotoOAuth.php root@"+droplet['ip']+":~"
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/OAuthSimple.php root@"+droplet['ip']+":~"
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/openphoto root@"+droplet['ip']+":~"
+
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/Photos-Demo.zip root@"+droplet['ip']+":~"
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/import-photos.sh root@"+droplet['ip']+":~"
     UI.message "Importing demo photos ..."
     sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" './import-photos.sh'"
+    sleep(15.second)
     sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/update-activity-import.sql root@"+droplet['ip']+":~"
     sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mysql -uroot trovebox < ./update-activity-import.sql'"
 
@@ -132,6 +134,43 @@ platform :ios do
     sh "rm Appfile && rm Deliverfile && rm Matchfile"
     sh "cd .. && rm fabric_api_key"
     sh "cd .. && rm d_o_key"
+  end
+
+  desc "Create demo server without Blackbox"
+  lane :demo_server_manual do
+    UI.message "Creating droplet ..."
+    droplet = create_droplet
+    UI.message "Droplet #{droplet['ip']} created. Sleep for 1 minutes ..."
+    sleep(1.minute)
+    UI.message "Uploading install script ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/install-trovebox-demo.sh root@"+droplet['ip']+":~"
+    UI.message "Executing install script ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" './install-trovebox-demo.sh'"
+    UI.message "Uploading openphoto.conf ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/trovebox-demo.conf root@"+droplet['ip']+":/etc/apache2/sites-available/openphoto.conf"
+    UI.message "Uploading trovebox-demo.ini ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/trovebox-demo.ini root@"+droplet['ip']+":~/"+droplet['ip']+".ini"
+    UI.message "Editing trovebox-demo.ini ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mkdir /var/www/openphoto/src/userdata/configs && cp ~/"+droplet['ip']+".ini"+" /var/www/openphoto/src/userdata/configs/ && chown www-data:www-data /var/www/openphoto/src/userdata/configs && chown www-data:www-data /var/www/openphoto/src/userdata/configs/"+droplet['ip']+".ini"+" && sed -e \"s|IP_ADDRESS|"+droplet['ip']+"|g\" ~/"+droplet['ip']+".ini"+" > /var/www/openphoto/src/userdata/configs/"+droplet['ip']+".ini"+"'"
+    UI.message "Uploading trovebox.sql ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/trovebox.sql root@"+droplet['ip']+":~"
+    UI.message "Importing trovebox.sql ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mysql -uroot trovebox < ~/trovebox.sql'"
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'service apache2 reload'"
+    UI.message "Uploading demo photos ..."
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/OpenPhotoOAuth.php root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/OAuthSimple.php root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/openphoto root@"+droplet['ip']+":~"
+
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/Photos-Demo.zip root@"+droplet['ip']+":~"
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/import-photos.sh root@"+droplet['ip']+":~"
+    UI.message "Importing demo photos ..."
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" './import-photos.sh'"
+    sleep(15.second)
+    sh "cd .. && scp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no ./server/update-activity-import.sql root@"+droplet['ip']+":~"
+    sh "cd .. && ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@"+droplet['ip']+" 'mysql -uroot trovebox < ./update-activity-import.sql'"
+
+    UI.message "Trovebox demo server is ready at #{droplet['ip']}"
   end
 
   # You can define as many lanes as you want
