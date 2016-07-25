@@ -2,9 +2,12 @@
 
 ## 2.2.4 (2703)
 
-- Bug fixes for iOS 10
+- Bug fixes for latest iOS
 - Change tab bar icons
-- Remove default URL (trovebox.com) in login page
+- Remove default URL (trovebox.com) in login page's text field
+- Add link to What's New in More tab
+- Add link to the repository of Delightful app in More tab
+- Add link to third party libraries used in Delightful app in More tab
 
 ## 2.1.0
 
