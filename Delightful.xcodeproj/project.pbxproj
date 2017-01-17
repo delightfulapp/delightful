@@ -1673,7 +1673,8 @@
 				CODE_SIGN_ENTITLEMENTS = Delightful.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2706;
+				CURRENT_PROJECT_VERSION = 2709;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1712,7 +1713,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.getdelightfulapp.delightful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2e0042ae-e725-47ca-bf3f-2cd513b2c921";
+				PROVISIONING_PROFILE = "0c36c9a7-3c96-42e4-83af-9caa396615d8";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.getdelightfulapp.delightful";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1726,8 +1728,9 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Delightful.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2706;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CURRENT_PROJECT_VERSION = 2709;
+				DEVELOPMENT_TEAM = NNTV3ZQR3E;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1758,7 +1761,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.getdelightfulapp.delightful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "d54ee2f3-1884-49a3-bf09-b4250ba456b3";
+				PROVISIONING_PROFILE = "16d33a6e-3458-4ce4-8fe3-585c395f9ce2";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.getdelightfulapp.delightful";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
