@@ -34,15 +34,14 @@
 }
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [self.infoButton setImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	
-    [self.backgroundImageView addTransparentGradientWithStartColor:[UIColor blackColor]];
-    
+	    
     [self.infoButton setImage:[[UIImage imageNamed:@"info.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate]];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(infoButtonTapped:)];
     [self.infoButton setUserInteractionEnabled:YES];

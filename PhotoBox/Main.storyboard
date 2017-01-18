@@ -1,9 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="eYR-Kj-a0Y">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eYR-Kj-a0Y">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -15,20 +19,24 @@
                         <viewControllerLayoutGuide type="bottom" id="CKg-v4-fyG"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="nzJ-iX-cbD">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="loginbackground.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="nrr-cA-3go">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login-bg" translatesAutoresizingMaskIntoConstraints="NO" id="nrr-cA-3go">
+                                <rect key="frame" x="-25" y="-25" width="425" height="717"/>
+                                <color key="backgroundColor" red="0.73333333329999995" green="0.1529411765" blue="0.1137254902" alpha="1" colorSpace="calibratedRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="parallaxIntensity">
                                         <integer key="value" value="-20"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8u9-Qt-Zwp">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8u9-Qt-Zwp">
+                                <rect key="frame" x="45" y="309" width="286" height="50"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="23" verticalHuggingPriority="23" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ejh-My-8b8">
-                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="23" verticalHuggingPriority="23" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="https://" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ejh-My-8b8">
+                                        <rect key="frame" x="20" y="14" width="246" height="21"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="go"/>
                                         <connections>
@@ -36,7 +44,7 @@
                                         </connections>
                                     </textField>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.83999999999999997" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="0.38794987416107379" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Ejh-My-8b8" secondAttribute="trailing" constant="20" id="FMn-4x-FNL"/>
                                     <constraint firstAttribute="height" constant="50" id="P7q-4t-YKv"/>
@@ -45,30 +53,31 @@
                                     <constraint firstItem="Ejh-My-8b8" firstAttribute="leading" secondItem="8u9-Qt-Zwp" secondAttribute="leading" constant="20" id="vJ5-xd-uDG"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Delightful" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o85-wA-I2t">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delightful" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o85-wA-I2t">
+                                <rect key="frame" x="45" y="97" width="286" height="67.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-UltraLight" family="Helvetica Neue" pointSize="59"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Trovebox Photo Viewer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpG-xU-tbV">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trovebox Photo Viewer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cpG-xU-tbV">
+                                <rect key="frame" x="45" y="162.5" width="286" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="1" height="1"/>
                             </label>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2gu-0v-pEg">
-                                <rect key="frame" x="0.0" y="0.0" width="37" height="37"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="2gu-0v-pEg">
+                                <rect key="frame" x="170" y="463" width="37" height="37"/>
                             </activityIndicatorView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Your self-hosted trovebox server URL. Starts with http or https" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="0ps-1Z-HAn">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your self-hosted trovebox server URL. Starts with http or https" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="231" translatesAutoresizingMaskIntoConstraints="NO" id="0ps-1Z-HAn">
+                                <rect key="frame" x="45" y="367" width="286" height="34"/>
                                 <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="cpG-xU-tbV" firstAttribute="centerX" secondItem="o85-wA-I2t" secondAttribute="centerX" id="1BC-na-epl"/>
@@ -125,7 +134,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0rM-IL-g6P"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iXy-qh-nhv">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZVU-nt-A9t">
@@ -137,7 +146,6 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="dxV-cn-4Nk">
-                                        <rect key="frame" x="0.0" y="64" width="0.0" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -146,7 +154,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZVU-nt-A9t" firstAttribute="leading" secondItem="iXy-qh-nhv" secondAttribute="leading" id="WMm-CB-G8d"/>
                             <constraint firstItem="ZVU-nt-A9t" firstAttribute="top" secondItem="rdK-4r-U4K" secondAttribute="top" id="eSl-Er-dqm"/>
@@ -169,7 +177,7 @@
                 <navigationController title="Photos" automaticallyAdjustsScrollViewInsets="NO" id="fRH-fZ-8Pp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Photos" image="photos" id="bnj-gL-gYa"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jt5-Ze-zDa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jt5-Ze-zDa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -189,6 +197,7 @@
                     <toolbarItems/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="4ow-Fn-AMC">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
@@ -213,7 +222,7 @@
                         <viewControllerLayoutGuide type="bottom" id="GLs-pt-N0G"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8Rq-QG-UYS">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Mzk-zu-dYS">
@@ -226,7 +235,6 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="GfU-Cp-74q">
-                                        <rect key="frame" x="0.0" y="64" width="0.0" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -235,7 +243,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Mzk-zu-dYS" secondAttribute="trailing" constant="-16" id="O4d-bS-Qs7"/>
                             <constraint firstItem="GLs-pt-N0G" firstAttribute="top" secondItem="Mzk-zu-dYS" secondAttribute="bottom" id="aKg-Rl-E7T"/>
@@ -258,7 +266,7 @@
                 <navigationController title="Albums" automaticallyAdjustsScrollViewInsets="NO" id="bWy-DQ-TZW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Albums" image="albums" id="qIg-5W-7yy"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="abV-L7-LuX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="abV-L7-LuX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -280,7 +288,7 @@
                         <viewControllerLayoutGuide type="bottom" id="34p-4Z-FuN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="SrQ-G3-XeY">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="j1z-hy-DBi">
@@ -293,7 +301,6 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Bjq-Gd-Ozx">
-                                        <rect key="frame" x="0.0" y="64" width="0.0" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -302,7 +309,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="j1z-hy-DBi" firstAttribute="top" secondItem="loH-7N-pMV" secondAttribute="top" id="8RK-1m-T9x"/>
                             <constraint firstItem="34p-4Z-FuN" firstAttribute="top" secondItem="j1z-hy-DBi" secondAttribute="bottom" id="AIy-ee-RcB"/>
@@ -325,7 +332,7 @@
                 <navigationController title="Tags" automaticallyAdjustsScrollViewInsets="NO" id="Iy7-Zg-zZ3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tags" image="tags" id="u37-EN-Ogd"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ban-fj-SsR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ban-fj-SsR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -347,7 +354,7 @@
                         <viewControllerLayoutGuide type="bottom" id="6AO-vI-1Mm"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8Qr-W8-mWy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="iEF-kl-IsN">
@@ -359,7 +366,6 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="kok-7F-WNL">
-                                        <rect key="frame" x="0.0" y="64" width="0.0" height="0.0"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -368,7 +374,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="iEF-kl-IsN" firstAttribute="leading" secondItem="8Qr-W8-mWy" secondAttribute="leading" id="Qq8-Rx-dvz"/>
                             <constraint firstItem="iEF-kl-IsN" firstAttribute="top" secondItem="zWS-Hi-Ohi" secondAttribute="top" id="ZAc-G2-oTp"/>
@@ -392,7 +398,7 @@
                 <navigationController title="Favorites" automaticallyAdjustsScrollViewInsets="NO" id="htS-ly-I9l" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorites" image="favorites" id="Zmu-Hw-fNi"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4fi-0x-WLb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4fi-0x-WLb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -410,15 +416,15 @@
             <objects>
                 <tableViewController id="iiB-5n-FxC" customClass="SettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="n8v-Li-Ts2">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eHv-hu-u0M">
-                                <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eHv-hu-u0M" id="S0X-pY-fCi">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -476,7 +482,7 @@
                         <viewControllerLayoutGuide type="bottom" id="v6c-IP-PY8"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MPl-Md-foi">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3Hf-dn-SJJ">
@@ -496,7 +502,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="3Hf-dn-SJJ" firstAttribute="leading" secondItem="MPl-Md-foi" secondAttribute="leading" id="ZwL-9k-Do4"/>
                             <constraint firstAttribute="trailing" secondItem="3Hf-dn-SJJ" secondAttribute="trailing" id="dz8-ZK-2ce"/>
@@ -523,7 +529,7 @@
                         <viewControllerLayoutGuide type="bottom" id="isg-sz-o8e"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4qa-3l-WXC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="JN8-E8-ygJ">
@@ -543,7 +549,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="isg-sz-o8e" firstAttribute="top" secondItem="JN8-E8-ygJ" secondAttribute="bottom" id="C0c-7x-18r"/>
                             <constraint firstAttribute="trailing" secondItem="JN8-E8-ygJ" secondAttribute="trailing" id="T2f-6I-XwJ"/>
@@ -567,7 +573,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Ph-Ca-wfA" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="more" id="VAP-KG-ggf"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1CY-LA-vPu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1CY-LA-vPu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -589,7 +595,7 @@
                         <viewControllerLayoutGuide type="bottom" id="s6k-ok-Htw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Y8O-oj-lbp">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7zk-uB-EvR">
@@ -610,7 +616,7 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="s6k-ok-Htw" firstAttribute="top" secondItem="7zk-uB-EvR" secondAttribute="bottom" id="5bD-LM-h0g"/>
                             <constraint firstItem="7zk-uB-EvR" firstAttribute="leading" secondItem="Y8O-oj-lbp" secondAttribute="leadingMargin" constant="-16" id="D94-kp-492"/>
@@ -631,7 +637,7 @@
     <resources>
         <image name="albums" width="25" height="25"/>
         <image name="favorites" width="25" height="25"/>
-        <image name="loginbackground.jpg" width="640" height="1136"/>
+        <image name="login-bg" width="375" height="667"/>
         <image name="photos" width="25" height="25"/>
         <image name="tags" width="25" height="25"/>
     </resources>
