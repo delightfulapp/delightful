@@ -22,7 +22,7 @@
 
 - (NSString *)stringWithHttpSchemeAddedIfNeeded {
     NSString *urlToTest = self;
-    if (![self hasPrefix:@"http://"]) {
+    if (![self hasPrefix:@"http://"] && ![self hasPrefix:@"https://"]) {
         urlToTest = [NSString stringWithFormat:@"http://%@", self];
     }
     return urlToTest;

@@ -91,30 +91,58 @@
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    void (^errorBlock)() = ^void() {
+         [textField setEnabled:YES];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL or IP address. Example: https://trovebox.com. Also make sure this device is connected to the internet.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
+        [alert show];
+        [self.activityView stopAnimating];
+    };
+
     if ([textField.text isValidURL]) {
         [self restoreKeyboardAndTitleLabel];
         [textField setEnabled:NO];
         [self.activityView startAnimating];
         [self.view endEditing:YES];
         
-        NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:[textField.text stringWithHttpSchemeAddedIfNeeded]];
-        LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
-        [loginWebView setViewControllerDelegate:self];
-        [loginWebView setInitialURL:url];
-        if (!self.fallingTransitioningDelegate) {
-            FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
-            self.fallingTransitioningDelegate = falling;
-        }
+        NSString *serverURLString = [textField.text stringWithHttpSchemeAddedIfNeeded];
+        NSURL *serverURL = [NSURL URLWithString:serverURLString];
         
-        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-        [self presentViewController:navCon animated:YES completion:^{
-            [textField setEnabled:YES];
-            [self.activityView stopAnimating];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:serverURL];
+        [request setHTTPMethod:@"HEAD"];
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        config.timeoutIntervalForRequest = 10;
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:config];
+        NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (error) {
+                    errorBlock();
+                } else {
+                    NSHTTPURLResponse *resp = (NSHTTPURLResponse *)response;
+                    if (resp.statusCode == 200) {
+                        NSURL *url = [[ConnectionManager sharedManager] startOAuthAuthorizationWithServerURL:serverURLString];
+                        LoginWebViewViewController *loginWebView = [[LoginWebViewViewController alloc] init];
+                        [loginWebView setViewControllerDelegate:self];
+                        [loginWebView setInitialURL:url];
+                        if (!self.fallingTransitioningDelegate) {
+                            FallingTransitioningDelegate *falling = [[FallingTransitioningDelegate alloc] init];
+                            self.fallingTransitioningDelegate = falling;
+                        }
+                        
+                        UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:loginWebView];
+                        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
+                        [self presentViewController:navCon animated:YES completion:^{
+                            [textField setEnabled:YES];
+                            [self.activityView stopAnimating];
+                        }];
+                    } else {
+                        errorBlock();
+                    }
+                }
+            });
         }];
+        [dataTask resume];
     } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Invalid Server", nil) message:NSLocalizedString(@"Please provide a valid host URL or IP address. Example: https://trovebox.com", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles: nil];
-        [alert show];
+        errorBlock();
     }
     return YES;
 }
