@@ -210,6 +210,8 @@
 		03FD48371920B27300D4ADF7 /* star-fill.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48351920B27300D4ADF7 /* star-fill.png */; };
 		03FD48381920B27300D4ADF7 /* star-fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48361920B27300D4ADF7 /* star-fill@2x.png */; };
 		32D4CA0AF3B8E29F3F40BCD3 /* Pods_Delightful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE2BFDF08166F403D4AD491 /* Pods_Delightful.framework */; };
+		6447E45C1EF35D46006B64BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6447E45B1EF35D46006B64BD /* LaunchScreen.storyboard */; };
+		6447E45E1EF36F55006B64BD /* launch-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447E45D1EF36F55006B64BD /* launch-screen.png */; };
 		8E34E98BF5C24CF3A839C511 /* Pods_DelightfulTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A4D360FBC1B634615D4C23 /* Pods_DelightfulTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -566,6 +568,8 @@
 		32E28FA6AA3DF66CDAFF9F91 /* Pods-Delightful-TestFlight.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delightful-TestFlight.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delightful-TestFlight/Pods-Delightful-TestFlight.release.xcconfig"; sourceTree = "<group>"; };
 		49DC3171F5100AD279D2478D /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5FE2BFDF08166F403D4AD491 /* Pods_Delightful.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Delightful.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6447E45B1EF35D46006B64BD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		6447E45D1EF36F55006B64BD /* launch-screen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "launch-screen.png"; path = "../../../launch-screen.png"; sourceTree = "<group>"; };
 		66C5626B497058F7BF088D9C /* Pods-Delightful.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delightful.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Delightful/Pods-Delightful.debug.xcconfig"; sourceTree = "<group>"; };
 		698FACF2EFAB9E820C0A4467 /* Pods-Delightful.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Delightful.release.xcconfig"; path = "Pods/Target Support Files/Pods-Delightful/Pods-Delightful.release.xcconfig"; sourceTree = "<group>"; };
 		E1EA0693B737D6D16E94D5BA /* Pods-DelightfulTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DelightfulTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DelightfulTests/Pods-DelightfulTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -785,6 +789,7 @@
 				032CBB8D17D0BDF3001205B1 /* AppDelegate.m */,
 				032CBB9517D0BDF3001205B1 /* Images.xcassets */,
 				032CBB8417D0BDF3001205B1 /* Supporting Files */,
+				6447E45B1EF35D46006B64BD /* LaunchScreen.storyboard */,
 			);
 			name = Delightful;
 			path = PhotoBox;
@@ -1085,6 +1090,7 @@
 		03AE182717D8B2F5009CD844 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6447E45D1EF36F55006B64BD /* launch-screen.png */,
 				031B39311A5925CE00117BFC /* link.png */,
 				031B39321A5925CE00117BFC /* link@2x.png */,
 				0342D9791A0D1D4E000158B8 /* 1Password.xcassets */,
@@ -1263,8 +1269,10 @@
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				031B39351A5925CE00117BFC /* link@2x.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
+				6447E45E1EF36F55006B64BD /* launch-screen.png in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
+				6447E45C1EF35D46006B64BD /* LaunchScreen.storyboard in Resources */,
 				032222B31814CBF0004F3830 /* npr_notification_image_success.png in Resources */,
 				03AE182917D8B2F5009CD844 /* loginbackground.jpg in Resources */,
 				031DD2AC17D9BB8300A80167 /* download.png in Resources */,
@@ -1591,13 +1599,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
@@ -1635,13 +1651,21 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: nico prananta (3THTC55337)";
@@ -1669,7 +1693,6 @@
 			baseConfigurationReference = 66C5626B497058F7BF088D9C /* Pods-Delightful.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Delightful.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1725,7 +1748,6 @@
 			baseConfigurationReference = 698FACF2EFAB9E820C0A4467 /* Pods-Delightful.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = Delightful.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: nico prananta (NNTV3ZQR3E)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
