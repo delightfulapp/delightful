@@ -58,8 +58,7 @@
     [[SyncEngine sharedEngine] pauseSyncingAlbums:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -118,6 +117,10 @@
 
 - (Class)dataSourceClass {
     return AlbumsDataSource.class;
+}
+
+- (NSString *)noItemsText {
+    return NSLocalizedString(@"No albums", nil);
 }
 
 #pragma mark - Did stuff

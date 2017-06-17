@@ -58,16 +58,12 @@ NSString *const galleryContainerType = @"gallery";
     
     [self.dataSource setDebugName:NSStringFromClass([self class])];
     
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
-    
     [self setupConnectionManager];
     [self setupCollectionView];
     [self setupRefreshControl];
     [self setupNavigationItemTitle];
     
     [self.collectionView reloadData];
-    
-    [self restoreContentInset];
     
     [self setRegisterSyncingNotification:YES];
 }
@@ -109,10 +105,6 @@ NSString *const galleryContainerType = @"gallery";
         [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isUserLoggedIn))];
         [[ConnectionManager sharedManager] removeObserver:self forKeyPath:NSStringFromSelector(@selector(isShowingLoginPage))];
     }
-}
-
-- (void)restoreContentInset {
-    
 }
 
 - (void)showEmptyLoading:(BOOL)show {
@@ -165,7 +157,6 @@ NSString *const galleryContainerType = @"gallery";
         }
     } else {
         [self.collectionView setBackgroundView:nil];
-        //[self.collectionView setAlwaysBounceVertical:YES];
     }
 }
 
@@ -186,7 +177,7 @@ NSString *const galleryContainerType = @"gallery";
             [textLabel autoCenterInSuperview];
         }
         
-        [textLabel setText:NSLocalizedString(@"No Photos", nil)];
+        [textLabel setText:[self noItemsText]];
         [textLabel setTextAlignment:NSTextAlignmentCenter];
         [textLabel setFont:[UIFont systemFontOfSize:12]];
         [textLabel setTextColor:[UIColor lightGrayColor]];
@@ -250,7 +241,6 @@ NSString *const galleryContainerType = @"gallery";
         needToRestoreOffset = YES;
     }
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self restoreContentInsetForSize:size];
         [self.collectionView.collectionViewLayout invalidateLayout];
         if (needToRestoreOffset) {
             self.collectionView.contentOffset = CGPointMake(0, -self.collectionView.contentInset.top);
@@ -344,6 +334,10 @@ NSString *const galleryContainerType = @"gallery";
     return cell;
 }
 
+- (NSString *)noItemsText {
+    return NSLocalizedString(@"No Photos", nil);
+}
+
 #pragma mark - Setter
 
 - (void)setIsFetching:(BOOL)isFetching {
@@ -406,11 +400,6 @@ NSString *const galleryContainerType = @"gallery";
         return;
     }
     [self setTitle:title subtitle:nil];
-}
-
-- (void)restoreContentInsetForSize:(CGSize)size {
-    [self.collectionView setContentInset:UIEdgeInsetsMake(CGRectGetMaxY(self.navigationController.navigationBar.frame), 0, 0, 0)];
-    self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
 }
 
 - (void)refresh {
@@ -477,7 +466,10 @@ NSString *const galleryContainerType = @"gallery";
                     [self showEmptyLoading:NO];
                     [self showNoItems:YES];
                 }
-                
+            }
+        } else {
+            if ([self.dataSource numberOfItems] == 0) {
+                 [self showNoItems:YES];
             }
         }
     }

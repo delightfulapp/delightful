@@ -143,13 +143,12 @@ static char const * const isNavigationBarHidden = "isNavigationBarHidden";
 
 - (void)setNavigationBarHidden:(BOOL)hide animated:(BOOL)animated {
     if (animated) {
-        //[[UIApplication sharedApplication] setStatusBarHidden:hide withAnimation:UIStatusBarAnimationFade];
-        
         //Fade navigation bar
         [UINavigationBar beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3]; // Approximately the same time the status bar takes to fade.
+        [UIView setAnimationDuration:0.1]; // Approximately the same time the status bar takes to fade.
         
         self.navigationController.navigationBar.alpha = hide ? 0 : 1;
+        [self.navigationController setNeedsStatusBarAppearanceUpdate];
         
         [UINavigationBar commitAnimations];
         

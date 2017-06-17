@@ -53,9 +53,8 @@ static char *kSearchBarCenterContext;
     
     [self.searchBar addObserver:self forKeyPath:NSStringFromSelector(@selector(center)) options:NSKeyValueObservingOptionNew context:&kSearchBarCenterContext];
     
-    [self restoreContentInset];
-    
     self.viewJustDidLoad = YES;
+    self.collectionView.contentInset = UIEdgeInsetsMake(self.searchBar.frame.size.height, 0, 0, 0);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -72,21 +71,10 @@ static char *kSearchBarCenterContext;
     [self.searchBar removeObserver:self forKeyPath:NSStringFromSelector(@selector(center))];
 }
 
-- (void)restoreContentInset {
-    [self.collectionView setContentInset:UIEdgeInsetsMake(self.searchBar.isHidden?CGRectGetMaxY(self.navigationController.navigationBar.frame):CGRectGetMaxY(self.searchBar.frame), 0, 0, 0)];
-    [self.collectionView setScrollIndicatorInsets:self.collectionView.contentInset];
-    self.collectionViewInsets = self.collectionView.contentInset;
-}
-
-- (void)restoreContentInsetForSize:(CGSize)size {
-    [self restoreContentInset];
-}
-
 - (void)showSearchBar:(BOOL)show {
     if (self.searchBar.isHidden == show) {
         [self.searchBar setHidden:!show];
-        [self restoreContentInset];
-        [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top)];
+        [self.collectionView setContentOffset:CGPointMake(0, -self.collectionView.contentInset.top - CGRectGetMaxY(self.navigationController.navigationBar.frame))];
     }
 }
 
@@ -151,7 +139,6 @@ static char *kSearchBarCenterContext;
         if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
             needToRestoreOffset = YES;
         }
-        [self restoreContentInset];
         if (needToRestoreOffset) {
             self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
         }

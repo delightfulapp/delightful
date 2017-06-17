@@ -69,7 +69,6 @@
         if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
             needToRestoreOffset = YES;
         }
-        [self restoreContentInset];
         if (needToRestoreOffset) {
             self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
         }

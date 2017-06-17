@@ -56,6 +56,7 @@
     [self.scrollView setTranslatesAutoresizingMaskIntoConstraints:YES];
     [self.scrollView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.thisImageview setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [self.scrollView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
     [self.scrollView addSubview:self.thisImageview];
     [self.contentView addSubview:self.scrollView];
     

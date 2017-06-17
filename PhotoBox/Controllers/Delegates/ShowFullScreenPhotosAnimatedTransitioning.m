@@ -48,8 +48,6 @@
 }
 
 - (void)animateTransitionForPushOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
-    PBX_LOG(@"Animate push transition");
-    
     [self removeHelperViews];
     
     UIViewController *fromVCContainer = [transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
@@ -86,23 +84,22 @@
     [containerView insertSubview:self.imageViewToAnimate belowSubview:toVCContainer.view];
     
     [UIView animateWithDuration:[self transitionDuration:nil]
-                          delay:0 usingSpringWithDamping:0.7
+                          delay:0
+         usingSpringWithDamping:1
           initialSpringVelocity:0.5
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
         [self.imageViewToAnimate animaticToScaleAspectFit];
-        
+                         
         [self.whiteView setAlpha:1];
-    } completion:^(BOOL finished) {
         [toVCContainer.view setAlpha:1];
+    } completion:^(BOOL finished) {
         [toVC.view setAlpha:1];
         [transitionContext completeTransition:YES];
     }];
 }
 
 - (void)animateTransitionForPopOperation:(id<UIViewControllerContextTransitioning>)transitionContext {
-    PBX_LOG(@"Animate pop transition");
-    
     UIViewController *fromVCContainer = (UIViewController *)[transitionContext viewControllerForKey:UITransitionContextFromViewControllerKey];
     PhotosHorizontalScrollingViewController *fromVC;
     if ([fromVCContainer isKindOfClass:[UINavigationController class]]) {

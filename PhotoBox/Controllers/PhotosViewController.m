@@ -108,7 +108,6 @@
     if (self.collectionView.contentOffset.y == -self.collectionView.contentInset.top) {
         needToRestoreOffset = YES;
     }
-    [self restoreContentInset];
     if (needToRestoreOffset) {
         self.collectionView.contentOffset = CGPointMake(0,  -self.collectionView.contentInset.top);
     }
@@ -407,25 +406,6 @@
     return [GroupedPhotosDataSource class];
 }
 
-- (void)restoreContentInset {    
-    if (self.headerImageView) {
-        CGFloat headerHeight = self.headerImageView.intrinsicContentSize.height;
-        self.collectionView.contentInset = ({
-            UIEdgeInsets inset = self.collectionView.contentInset;
-            inset.top = headerHeight;
-            inset;
-        });
-        self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
-    } else {
-        [super restoreContentInsetForSize:self.view.frame.size];
-        self.collectionView.contentInset = ({
-            UIEdgeInsets inset = self.collectionView.contentInset;
-            inset;
-        });
-        self.collectionView.scrollIndicatorInsets = self.collectionView.contentInset;
-    }
-}
-
 #pragma mark - Do something
 
 - (void)backNavigationTapped:(id)sender {
@@ -497,6 +477,7 @@
     }
     UINavigationController *navCon = [[UINavigationController alloc] initWithRootViewController:destination];
     [navCon setTransitioningDelegate:self.transitionDelegate];
+    [destination setModalPresentationCapturesStatusBarAppearance:YES];
     [navCon setModalPresentationStyle:UIModalPresentationCustom];
     
     {

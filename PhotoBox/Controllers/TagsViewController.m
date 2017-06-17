@@ -28,8 +28,7 @@
 @implementation TagsViewController
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -60,8 +59,7 @@
     [[SyncEngine sharedEngine] pauseSyncingTags:YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -118,6 +116,10 @@
 
 - (NSString *)cellIdentifier {
     return @"tagCell";
+}
+
+- (NSString *)noItemsText {
+    return NSLocalizedString(@"No tags", nil);
 }
 
 #pragma mark - Collection view delegate

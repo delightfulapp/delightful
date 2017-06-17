@@ -38,6 +38,7 @@
 @property (nonatomic, strong) UIView *backgroundViewControllerView;
 @property (nonatomic, assign) NSInteger firstShownPhotoIndex;
 @property (nonatomic, strong) id<UIViewControllerTransitioningDelegate> transitionToInfoDelegate;
+@property (nonatomic, assign) BOOL fullScreen;
 
 @end
 
@@ -45,6 +46,8 @@
 
 + (PhotosHorizontalScrollingViewController *)defaultController {
     PhotosHorizontalLayout *layout = [[PhotosHorizontalLayout alloc] init];
+    layout.sectionInset = UIEdgeInsetsZero;
+    
     PhotosHorizontalScrollingViewController *controller = [[PhotosHorizontalScrollingViewController alloc] initWithCollectionViewLayout:layout];
     return controller;
 }
@@ -52,8 +55,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setAutomaticallyAdjustsScrollViewInsets:NO];
     
     self.previousPage = 0;
     
@@ -78,6 +79,8 @@
     self.darkBackgroundView = [[UIView alloc] initWithFrame:self.view.frame];
     [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:1 alpha:1]];
     [self.collectionView setBackgroundView:self.darkBackgroundView];
+    
+    [self.collectionView setContentInsetAdjustmentBehavior:UIScrollViewContentInsetAdjustmentNever];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -215,7 +218,6 @@
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 }
 
-
 #pragma mark - Interactive Gesture Recognizer Delegate
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRequireFailureOfGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
@@ -234,23 +236,31 @@
 }
 
 - (void)tapOnce:(id)sender {
-    [self toggleFullScreen];
+   [self toggleFullScreen];
 }
 
 - (void)toggleFullScreen {
-    if (self.navigationController.navigationBar.alpha == 1) {
-        [self setFullScreen:YES];
-    } else {
-        [self setFullScreen:NO];
-    }
+    self.fullScreen = !self.fullScreen;
 }
 
 - (void)setFullScreen:(BOOL)fullScreen {
-    [[UIApplication sharedApplication] setStatusBarHidden:fullScreen withAnimation:UIStatusBarAnimationFade];
-    [self.navigationController setToolbarHidden:fullScreen animated:YES];
-    if (fullScreen) [self darkenBackground];
-    else [self brightenBackground];
-    [self setNavigationBarHidden:fullScreen animated:YES];
+    if (_fullScreen != fullScreen) {
+        _fullScreen = fullScreen;
+        [self.navigationController setToolbarHidden:fullScreen animated:YES];
+        if (fullScreen) [self darkenBackground];
+        else [self brightenBackground];
+        [self setNavigationBarHidden:fullScreen animated:YES];
+    }
+}
+
+#pragma mark - Status Bar
+
+- (BOOL)prefersStatusBarHidden {
+    return self.fullScreen;
+}
+
+- (UIStatusBarAnimation)preferredStatusBarUpdateAnimation {
+    return UIStatusBarAnimationFade;
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
@@ -261,7 +271,7 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat width = collectionView.frame.size.width - PHOTO_SPACING;
-    CGFloat height = collectionView.frame.size.height - self.collectionView.contentInset.top - self.collectionView.contentInset.bottom;
+    CGFloat height = collectionView.frame.size.height - collectionView.contentInset.top - collectionView.contentInset.bottom ;
     return CGSizeMake(width, height);
 }
 
@@ -321,7 +331,7 @@
 }
 
 - (void)setBackgroundBrightness:(float)brightness {
-    [UIView animateWithDuration:0.4 animations:^{
+    [UIView animateWithDuration:0.3 animations:^{
         [self.darkBackgroundView setBackgroundColor:[UIColor colorWithWhite:brightness alpha:1]];
     }];
 }
@@ -335,7 +345,6 @@
 }
 
 - (void)didReachPercentageToClosePhotosHorizontalViewController {
-    PBX_LOG(@"Popping from horizontal view controller");
     [[self currentCell] setClosingViewController:YES];
     if (self.delegate && [self.delegate respondsToSelector:@selector(shouldClosePhotosHorizontalViewController:)]) {
         [self.delegate shouldClosePhotosHorizontalViewController:self];
@@ -493,8 +502,8 @@
         if (IS_IPAD) {
             [activity.popoverPresentationController setBarButtonItem:sender];
             /*
-            [activity.popoverPresentationController setSourceView:self.navigationController.toolbar];
-            [activity.popoverPresentationController setSourceRect:[sender frame]];
+             [activity.popoverPresentationController setSourceView:self.navigationController.toolbar];
+             [activity.popoverPresentationController setSourceRect:[sender frame]];
              */
         }
         [weakSelf presentViewController:activity animated:YES completion:nil];
@@ -557,6 +566,7 @@
     return CGRectZero;
 }
 
+
 #pragma mark - Hint
 
 - (void)showHintIfNeeded {
@@ -598,7 +608,7 @@
 - (void)didFinishDismissAnimationFromInfoControllerPresentationController:(id)presentationController {
 }
 
-#pragma mark - Alert 
+#pragma mark - Alert
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
