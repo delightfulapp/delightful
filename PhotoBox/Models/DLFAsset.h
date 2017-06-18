@@ -22,6 +22,11 @@
 @property (nonatomic, strong) NSString *photoTitle;
 @property (nonatomic, strong) NSString *photoDescription;
 
+@property (nonatomic, strong) CIImage *image;
+@property (nonatomic, strong) NSData *imageData;
+
+- (NSString *)identifier;
+- (CLLocation *)location;
 + (NSArray *)assetsArrayFromALAssetArray:(NSArray *)array;
 - (BFTask *)prepareSmartTagsWithCIImage:(CIImage *)image;
 

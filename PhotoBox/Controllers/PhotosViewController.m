@@ -52,7 +52,7 @@
 
 #define UPLOADED_MARK_TAG 123456910
 
-@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate, NHBalancedFlowLayoutDelegate, CollectionViewChangeColumnsNumberGestureRecognizerDelegate>
+@interface PhotosViewController () <UICollectionViewDelegateFlowLayout, PhotosHorizontalScrollingViewControllerDelegate, UINavigationControllerDelegate, TagsAlbumsPickerViewControllerDelegate, SortingDelegate, DLFPhotosPickerViewControllerDelegate, UploadViewControllerDelegate, NHBalancedFlowLayoutDelegate, CollectionViewChangeColumnsNumberGestureRecognizerDelegate, UICollectionViewDragDelegate, UICollectionViewDropDelegate>
 
 @property (nonatomic, strong) CollectionViewSelectCellGestureRecognizer *selectGesture;
 @property (nonatomic, assign) BOOL observing;
@@ -88,6 +88,7 @@
     [self.collectionView registerClass:[PhotoCell class] forCellWithReuseIdentifier:[self cellIdentifier]];
     [self.collectionView registerClass:[PhotosSectionHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:[self sectionHeaderIdentifier]];
     [self.collectionView registerClass:[FooterLoadingReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:[self footerIdentifier]];
+    self.collectionView.dropDelegate = self;
     
     self.title = NSLocalizedString(@"Photos", nil);
     
@@ -745,6 +746,55 @@ detailViewController:(DLFDetailViewController *)detailViewController
             [self refresh];
         }
         
+    }
+}
+
+#pragma mark - UICollectionViewDropDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView performDropWithCoordinator:(id<UICollectionViewDropCoordinator>)coordinator {
+    NSMutableArray *tasks = [NSMutableArray array];
+    for (id<UICollectionViewDropItem> item in coordinator.items) {
+        NSItemProvider *itemProvider = item.dragItem.itemProvider;
+        if ([itemProvider canLoadObjectOfClass:[UIImage class]]) {
+            BFTask *task = [[BFTask taskWithResult:nil] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+                BFTaskCompletionSource *loadObject = [BFTaskCompletionSource taskCompletionSource];
+                [itemProvider loadDataRepresentationForTypeIdentifier:@"public.image" completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
+                    if (data) {
+                        [loadObject setResult:data];
+                    }
+                    else [loadObject setError:error];
+                }];
+                return loadObject.task;
+            }];
+            [tasks addObject:task];
+        }
+    }
+    [[coordinator session] setProgressIndicatorStyle:UIDropSessionProgressIndicatorStyleNone];
+    
+    if (tasks.count > 0) {
+        [[BFTask taskForCompletionOfAllTasksWithResults:tasks] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            NSArray *imagesData = t.result;
+            NSMutableArray *assets = [NSMutableArray arrayWithCapacity:imagesData.count];
+            for (NSData *photoData in imagesData) {
+                CIImage *image = [CIImage imageWithData:photoData];
+                DLFAsset *asset = [[DLFAsset alloc] init];
+                asset.image = image;
+                asset.imageData = photoData;
+                [assets addObject:asset];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                [tagsalbumspicker setShowCancelButton:YES];
+                [tagsalbumspicker setSelectedAssets:assets];
+                [tagsalbumspicker setDelegate:self];
+                
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tagsalbumspicker];
+                nav.modalPresentationStyle = UIModalPresentationFormSheet;
+                
+                [self presentViewController:nav animated:YES completion:nil];
+            });
+            return nil;
+        }];
     }
 }
 

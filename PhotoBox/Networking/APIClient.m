@@ -378,8 +378,28 @@
            progress:(void(^)(float progress))progress
             success:(void(^)(id object))successBlock
             failure:(void(^)(NSError*))failureBlock {
-    PHAsset *photo = asset.asset;
-    [photo requestContentEditingInputWithOptions:nil completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+    BFTask *imageTask;
+    if (asset.asset) {
+        imageTask = [[BFTask taskWithResult:nil] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            BFTaskCompletionSource *requestImageTask = [BFTaskCompletionSource taskCompletionSource];
+            PHAsset *photo = asset.asset;
+            [photo requestContentEditingInputWithOptions:nil completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+                PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+                [options setResizeMode:PHImageRequestOptionsResizeModeNone];
+                [options setDeliveryMode:PHImageRequestOptionsDeliveryModeHighQualityFormat];
+                [[PHImageManager defaultManager] requestImageDataForAsset:photo options:options resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+                    [requestImageTask setResult:imageData];
+                }];
+            }];
+            
+            return requestImageTask.task;
+        }];
+    } else {
+        imageTask = [BFTask taskWithResult:asset.imageData];
+    }
+    
+    [imageTask continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+        NSData *imageData = t.result;
         NSString *tags = asset.tags;
         NSString *smartTags = [asset.smartTags componentsJoinedByString:@","];
         if (smartTags && smartTags.length > 0) {
@@ -390,64 +410,61 @@
         }
         Album *album = asset.album;
         BOOL privatePhotos = asset.privatePhoto;
-        NSString *fileName = contentEditingInput.fullSizeImageURL.lastPathComponent;
-        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-        [options setResizeMode:PHImageRequestOptionsResizeModeNone];
-        [options setDeliveryMode:PHImageRequestOptionsDeliveryModeHighQualityFormat];
-        [[PHImageManager defaultManager] requestImageDataForAsset:photo options:options resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-            CLLocation *location = photo.location;
-            NSString *path = @"/photo/upload.json";
-            NSMutableDictionary *params = [NSMutableDictionary dictionary];
-            [params setObject:[imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed] forKey:@"photo"];
-            if (location) {
-                [params addEntriesFromDictionary:@{@"latitude": [NSString stringWithFormat:@"%f", location.coordinate.latitude], @"longitude": [NSString stringWithFormat:@"%f", location.coordinate.longitude]}];
+        
+        CLLocation *location = [asset location];
+        NSString *path = @"/photo/upload.json";
+        NSMutableDictionary *params = [NSMutableDictionary dictionary];
+        [params setObject:[imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed] forKey:@"photo"];
+        if (location) {
+            [params addEntriesFromDictionary:@{@"latitude": [NSString stringWithFormat:@"%f", location.coordinate.latitude], @"longitude": [NSString stringWithFormat:@"%f", location.coordinate.longitude]}];
+        }
+        if (tags && tags.length > 0) {
+            [params addEntriesFromDictionary:@{@"tags": tags}];
+        }
+        if (album) {
+            [params addEntriesFromDictionary:@{@"albums": album.albumId}];
+        }
+        [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
+        if (asset.photoTitle) {
+            [params addEntriesFromDictionary:@{@"title":asset.photoTitle}];
+        }
+        if (asset.photoDescription) {
+            [params addEntriesFromDictionary:@{@"description":asset.photoDescription}];
+        }
+        
+        NSString *host = [[self baseURL] host];
+        NSString *scheme = [[self baseURL] scheme];
+        
+        NSURLRequest *request = [TDOAuth URLRequestForPath:path
+                                                parameters:params
+                                                      host:host
+                                               consumerKey:self.consumerToken.key
+                                            consumerSecret:self.consumerToken.secret
+                                               accessToken:self.accessToken.key
+                                               tokenSecret:self.accessToken.secret
+                                                    scheme:scheme
+                                             requestMethod:@"POST"
+                                              dataEncoding:TDOAuthContentTypeUrlEncodedForm
+                                              headerValues:nil
+                                           signatureMethod:TDOAuthSignatureMethodHmacSha1];
+        NSURLSessionDataTask *dataTask;
+        dataTask = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            [self.uploadProgressDictionary removeObjectForKey:[NSString stringWithFormat:@"%lu", (unsigned long)dataTask.taskIdentifier]];
+            if (error) {
+                failureBlock(error);
+            } else {
+                id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
             }
-            if (tags && tags.length > 0) {
-                [params addEntriesFromDictionary:@{@"tags": tags}];
-            }
-            if (album) {
-                [params addEntriesFromDictionary:@{@"albums": album.albumId}];
-            }
-            [params addEntriesFromDictionary:@{@"permission": (privatePhotos)?@"0":@"1"}];
-            if (asset.photoTitle) {
-                [params addEntriesFromDictionary:@{@"title":asset.photoTitle}];
-            }
-            if (asset.photoDescription) {
-                [params addEntriesFromDictionary:@{@"description":asset.photoDescription}];
-            }
-            
-            NSString *host = [[self baseURL] host];
-            NSString *scheme = [[self baseURL] scheme];
-            
-            NSURLRequest *request = [TDOAuth URLRequestForPath:path
-                                                    parameters:params
-                                                          host:host
-                                                   consumerKey:self.consumerToken.key
-                                                consumerSecret:self.consumerToken.secret
-                                                   accessToken:self.accessToken.key
-                                                   tokenSecret:self.accessToken.secret
-                                                        scheme:scheme
-                                                 requestMethod:@"POST"
-                                                  dataEncoding:TDOAuthContentTypeUrlEncodedForm
-                                                  headerValues:nil
-                                               signatureMethod:TDOAuthSignatureMethodHmacSha1];
-            NSURLSessionDataTask *task;
-            task = [self.session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                [self.uploadProgressDictionary removeObjectForKey:[NSString stringWithFormat:@"%lu", (unsigned long)task.taskIdentifier]];
-                if (error) {
-                    failureBlock(error);
-                } else {
-                    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                    successBlock([self processResponseObject:responseObject resourceClass:[Photo class]]);
-                }
-            }];
-            
-            if (progress) {
-                [self.uploadProgressDictionary setObject:[progress copy] forKey:[NSString stringWithFormat:@"%lu", (unsigned long)task.taskIdentifier]];
-            }
-            
-            [task resume];
         }];
+        
+        if (progress) {
+            [self.uploadProgressDictionary setObject:[progress copy] forKey:[NSString stringWithFormat:@"%lu", (unsigned long)dataTask.taskIdentifier]];
+        }
+        
+        [dataTask resume];
+        
+        return nil;
     }];
 }
 

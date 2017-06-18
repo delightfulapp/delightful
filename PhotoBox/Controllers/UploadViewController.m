@@ -265,7 +265,7 @@
     
     for (UploadAssetCell *cell in self.collectionView.visibleCells) {
         DLFAsset *cellAsset = (DLFAsset *)cell.item;
-        if ([[cellAsset.asset localIdentifier] isEqual:identifier]) {
+        if ([[cellAsset identifier] isEqual:identifier]) {
             [cell setUploadProgress:[notification.userInfo[kProgressKey] floatValue]];
             break;
         }
@@ -276,7 +276,7 @@
     DLFAsset *asset = notification.userInfo[kAssetKey];
     
     NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
-        if ([[obj.asset localIdentifier] isEqualToString:asset.asset.localIdentifier]) {
+        if ([[obj identifier] isEqualToString:[asset identifier]]) {
             *stop = YES;
             return YES;
         }
@@ -304,7 +304,7 @@
     DLFAsset *asset = notification.userInfo[kAssetKey];
     
     NSInteger index = [self.internalUploads indexOfObjectWithOptions:NSEnumerationConcurrent passingTest:^BOOL(DLFAsset *obj, NSUInteger idx, BOOL *stop) {
-        if ([[obj.asset localIdentifier] isEqualToString:asset.asset.localIdentifier]) {
+        if ([[obj identifier] isEqualToString:[asset identifier]]) {
             *stop = YES;
             return YES;
         }

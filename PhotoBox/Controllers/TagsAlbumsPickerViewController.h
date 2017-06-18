@@ -45,4 +45,6 @@ typedef NS_ENUM(NSInteger, TitleSectionRows) {
 
 @property (nonatomic, copy) NSArray *selectedAssets;
 
+@property (nonatomic, assign) BOOL showCancelButton;
+
 @end

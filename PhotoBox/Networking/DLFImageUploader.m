@@ -111,13 +111,13 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
 }
 
 - (void)uploadProgress:(float)progress asset:(DLFAsset *)asset {
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadProgressNotification object:nil userInfo:@{kAssetURLKey: [asset.asset localIdentifier], kProgressKey: @(progress)}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadProgressNotification object:nil userInfo:@{kAssetURLKey: [asset identifier], kProgressKey: @(progress)}];
 }
 
 - (void)assetUploadDidSucceed:(DLFAsset *)asset {
     [self removeAsset:asset];
     [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-        [transaction setObject:photoUploadedKey forKey:asset.asset.localIdentifier inCollection:uploadedCollectionName];
+        [transaction setObject:photoUploadedKey forKey:[asset identifier] inCollection:uploadedCollectionName];
     }];
     [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidSucceedNotification object:nil userInfo:@{kAssetKey: asset}];
 }
@@ -127,7 +127,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
     [self removeAsset:asset];
     [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidFailNotification object:nil userInfo:@{kAssetKey: asset, kErrorKey: error}];
     [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-        [transaction setObject:photoUploadedFailedKey forKey:asset.asset.localIdentifier inCollection:uploadedCollectionName];
+        [transaction setObject:photoUploadedFailedKey forKey:[asset identifier] inCollection:uploadedCollectionName];
     }];
 }
 
@@ -141,7 +141,7 @@ NSString *const DLFAssetUploadDidQueueAssetNotification = @"com.getdelightfulapp
         [[NSNotificationCenter defaultCenter] postNotificationName:DLFAssetUploadDidQueueAssetNotification object:nil userInfo:@{kAssetKey:asset}];
         
         [[[DLFDatabaseManager manager] writeConnection] asyncReadWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
-            [transaction setObject:photoQueuedKey forKey:asset.asset.localIdentifier inCollection:uploadedCollectionName];
+            [transaction setObject:photoQueuedKey forKey:[asset identifier] inCollection:uploadedCollectionName];
         }];
     }
 }

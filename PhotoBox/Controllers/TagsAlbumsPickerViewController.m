@@ -50,8 +50,7 @@ NSString *const normalCellIdentifier = @"normalCell";
 
 @implementation TagsAlbumsPickerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -59,8 +58,7 @@ NSString *const normalCellIdentifier = @"normalCell";
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     self.privatePhotos = YES;
@@ -83,7 +81,7 @@ NSString *const normalCellIdentifier = @"normalCell";
     [self.tableView registerClass:[UploadDescriptionTableViewCell class] forCellReuseIdentifier:[UploadDescriptionTableViewCell defaultCellReuseIdentifier]];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:normalCellIdentifier];
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStylePlain target:self action:@selector(doneButtonTapped:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Upload", nil) style:UIBarButtonItemStyleDone target:self action:@selector(doneButtonTapped:)];
     [self.navigationItem setRightBarButtonItem:doneButton];
     
     __weak typeof (self) selfie = self;
@@ -100,6 +98,12 @@ NSString *const normalCellIdentifier = @"normalCell";
         });
         return nil;
     }];
+    
+    if (self.showCancelButton) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didTapCancel:)];
+    }
+    
+    self.title = [NSString stringWithFormat:self.selectedAssets.count > 1 ? NSLocalizedString(@"%ld photos", nil) : NSLocalizedString(@"%ld photo", nil), self.selectedAssets.count];
 }
 
 - (BFTask *)prepareSmartTags {
@@ -110,16 +114,20 @@ NSString *const normalCellIdentifier = @"normalCell";
         for (DLFAsset *asset in self.selectedAssets) {
             smartTagsTask = [smartTagsTask continueWithBlock:^id(BFTask *task) {
                 BFTaskCompletionSource *imageFetchTask = [BFTaskCompletionSource taskCompletionSource];
-                PHContentEditingInputRequestOptions *editOptions = [[PHContentEditingInputRequestOptions alloc]init];
-                editOptions.networkAccessAllowed = YES;
-                PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-                [option setVersion:PHImageRequestOptionsVersionOriginal];
-                [[PHImageManager defaultManager] requestImageDataForAsset:asset.asset options:option resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                        CIImage *image = [CIImage imageWithData:imageData];
-                        [imageFetchTask setResult:image];
-                    });
-                }];
+                if (asset.asset) {
+                    PHContentEditingInputRequestOptions *editOptions = [[PHContentEditingInputRequestOptions alloc] init];
+                    editOptions.networkAccessAllowed = YES;
+                    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+                    [option setVersion:PHImageRequestOptionsVersionOriginal];
+                    [[PHImageManager defaultManager] requestImageDataForAsset:asset.asset options:option resultHandler:^(NSData *imageData, NSString *dataUTI, UIImageOrientation orientation, NSDictionary *info) {
+                        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                            CIImage *image = [CIImage imageWithData:imageData];
+                            [imageFetchTask setResult:image];
+                        });
+                    }];
+                } else if (asset.image) {
+                    [imageFetchTask setResult:asset.image];
+                }
                 
                 return [imageFetchTask.task continueWithBlock:^id(BFTask *task) {
                     CIImage *image = task.result;
@@ -493,11 +501,15 @@ NSString *const normalCellIdentifier = @"normalCell";
     }
 }
 
+- (void)didTapCancel:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - <PhotoTagsCollectionViewControllerDelegate>
 
 - (void)photoTagsViewController:(PhotoTagsCollectionViewController *)controller didChangeSmartTagsForAsset:(DLFAsset *)asset {
     NSString *format = [NSString stringWithFormat:@"%@.%@", NSStringFromSelector(@selector(asset)), NSStringFromSelector(@selector(localIdentifier))];
-    DLFAsset *changedAsset = [[self.selectedAssets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", format, asset.asset.localIdentifier]] firstObject];
+    DLFAsset *changedAsset = [[self.selectedAssets filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"%K = %@", format, [asset identifier]]] firstObject];
     [changedAsset setSmartTags:asset.smartTags];
     
 }

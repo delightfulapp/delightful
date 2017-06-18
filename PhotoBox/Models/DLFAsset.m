@@ -11,6 +11,11 @@
 #import "UIDevice+Additionals.h"
 #import "TDImageColors.h"
 
+@interface DLFAsset ()
+@property (nonatomic, strong) NSString *nonPHAssetIdentifier;
+@property (nonatomic, strong) CLLocation *nonPHAssetCLLocation;
+@end
+
 @implementation DLFAsset
 
 + (NSArray *)assetsArrayFromALAssetArray:(NSArray *)array {
@@ -23,8 +28,44 @@
     return dlfAssetArray;
 }
 
+- (void)setImage:(CIImage *)image {
+    if (_image != image) {
+        _image = image;
+        
+        self.nonPHAssetIdentifier = [[NSProcessInfo processInfo] globallyUniqueString];
+        
+        NSDictionary *metadata = image.properties;
+        NSDictionary *gps = metadata[@"{GPS}"];
+        if (gps) {
+            double latitudeMultiplier = [gps[@"LatitudeRef"] isEqualToString:@"N"] ? 1 : -1;
+            double longitudeMultiplier = [gps[@"LongitudeRef"] isEqualToString:@"E"] ? 1 : -1;
+            
+            CLLocationCoordinate2D coordinate = CLLocationCoordinate2DMake([gps[@"Latitude"] doubleValue] * latitudeMultiplier, [gps[@"Longitude"] doubleValue] * longitudeMultiplier);
+            NSString *dateStamp = gps[@"DateStamp"];
+            NSString *timeStamp = gps[@"TimeStamp"];
+            NSDateFormatter *dateFormatter;
+            dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.dateFormat = @"yyyy:MM:dd HH:mm:ss";
+            NSDate *date = [dateFormatter dateFromString:[NSString stringWithFormat:@"%@ %@", dateStamp, timeStamp]];
+            CLLocation *location = [[CLLocation alloc] initWithCoordinate:coordinate altitude:[gps[@"Altitude"] doubleValue] horizontalAccuracy:[gps[@"HPositioningError"] doubleValue] verticalAccuracy:0 timestamp:date];
+            self.nonPHAssetCLLocation = location;
+        }
+    }
+}
+
 - (BFTask *)prepareSmartTagsWithCIImage:(CIImage *)image {
-    BFTask *locationTask = [[[[LocationManager sharedManager] nameForLocation:self.asset.location] continueWithBlock:^id(BFTask *task) {
+    BFTask *locationTask;
+    if (self.asset.location) {
+        locationTask =  [[LocationManager sharedManager] nameForLocation:self.asset.location];
+    } else {
+        CLLocation *location = self.nonPHAssetCLLocation;
+        if (location) {
+            locationTask = [[LocationManager sharedManager] nameForLocation:location];
+        } else {
+            locationTask = [BFTask taskWithResult:nil];
+        }
+    }
+    return [[locationTask continueWithBlock:^id(BFTask *task) {
         CLPlacemark *placemark = [((NSArray *)task.result) firstObject];
         NSMutableArray *tags = [NSMutableArray array];
         NSString *name = placemark.name;
@@ -118,9 +159,14 @@
         
         return [BFTask taskWithResult:tags];
     }];
-    
-    return locationTask;
 }
 
+- (NSString *)identifier {
+    return self.asset.localIdentifier ?: self.nonPHAssetIdentifier;
+}
+
+- (CLLocation *)location {
+    return self.asset.location ?: self.nonPHAssetCLLocation;
+}
 
 @end

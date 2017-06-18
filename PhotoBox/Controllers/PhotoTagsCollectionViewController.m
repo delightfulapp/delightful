@@ -77,7 +77,7 @@ static NSString * const headerIdentifier = @"headerCell";
         }
         
         for (DLFAsset *asset in _assets) {
-            NSString *identifier = asset.asset.localIdentifier;
+            NSString *identifier = [asset identifier];
             NSArray *smartTags = asset.smartTags;
             NSMutableDictionary *thisAssetSmartTagsDictionary = [NSMutableDictionary dictionary];
             for (NSString *tag in smartTags) {
@@ -113,24 +113,30 @@ static NSString * const headerIdentifier = @"headerCell";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     PhotoTagsCell *cell = (PhotoTagsCell *)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     DLFAsset *asset = self.assets[indexPath.item];
-    [cell setLocalAssetIdentifier:asset.asset.localIdentifier];
-    [cell setTagsDictionary:self.smartTagsDictionary[asset.asset.localIdentifier]];
+    NSString *identifier = [asset identifier];
+    [cell setLocalAssetIdentifier:identifier];
+    [cell setTagsDictionary:self.smartTagsDictionary[identifier]];
     [cell setDelegate:self];
     NSInteger currentTag = cell.tag + 1;
     cell.tag = currentTag;
     
-    PHAsset *phAsset = asset.asset;
-    PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
-    [option setDeliveryMode:PHImageRequestOptionsDeliveryModeFastFormat];
-    [[PHImageManager defaultManager] requestImageForAsset:phAsset
-                                 targetSize:cell.imageViewSize
-                                contentMode:PHImageContentModeAspectFill
-                                    options:option
-                              resultHandler:^(UIImage *result, NSDictionary *info) {
-                                  if (cell.tag == currentTag) {
-                                      cell.imageView.image = result;
-                                  }
-                              }];
+    if (asset.asset) {
+        PHAsset *phAsset = asset.asset;
+        PHImageRequestOptions *option = [[PHImageRequestOptions alloc] init];
+        [option setDeliveryMode:PHImageRequestOptionsDeliveryModeFastFormat];
+        [[PHImageManager defaultManager] requestImageForAsset:phAsset
+                                                   targetSize:cell.imageViewSize
+                                                  contentMode:PHImageContentModeAspectFill
+                                                      options:option
+                                                resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                    if (cell.tag == currentTag) {
+                                                        cell.imageView.image = result;
+                                                    }
+                                                }];
+    } else {
+        cell.imageView.image = [UIImage imageWithCIImage:asset.image];
+    }
+    
     
     return cell;
 }
@@ -156,8 +162,9 @@ static NSString * const headerIdentifier = @"headerCell";
     CGFloat width = CGRectGetWidth(collectionView.frame) - 20;
     PhotoTagsCell *cell = [[PhotoTagsCell alloc] initWithFrame:CGRectMake(0, 0, width, CGFLOAT_MAX)];
     DLFAsset *asset = self.assets[indexPath.item];
-    [cell setLocalAssetIdentifier:asset.asset.localIdentifier];
-    [cell setTagsDictionary:self.smartTagsDictionary[asset.asset.localIdentifier]];
+    NSString *identifier = [asset identifier];
+    [cell setLocalAssetIdentifier:identifier];
+    [cell setTagsDictionary:self.smartTagsDictionary[identifier]];
     [cell.contentView setNeedsLayout];
     [cell.contentView layoutIfNeeded];
     CGFloat maxY = 0;
@@ -188,9 +195,9 @@ static NSString * const headerIdentifier = @"headerCell";
         [button setTagState:TagStateSelected];
     }
     [selectedAsset setSmartTags:smartTags];
-    NSMutableDictionary *dict = [self.smartTagsDictionary[selectedAsset.asset.localIdentifier] mutableCopy];
+    NSMutableDictionary *dict = [self.smartTagsDictionary[[selectedAsset identifier]] mutableCopy];
     [dict setObject:(smartTagIsIncluded)?@(YES):@(NO) forKey:button.titleLabel.text];
-    [self.smartTagsDictionary setObject:dict forKey:selectedAsset.asset.localIdentifier];
+    [self.smartTagsDictionary setObject:dict forKey:[selectedAsset identifier]];
     
     if (smartTagIsIncluded) {
         [CSNotificationView showInViewController:self

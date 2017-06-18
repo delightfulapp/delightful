@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eYR-Kj-a0Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="eYR-Kj-a0Y">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeueLights.ttc">
+            <string>HelveticaNeue-UltraLight</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Login View Controller-->
         <scene sceneID="OUY-Ln-cEK">
@@ -177,7 +181,7 @@
                 <navigationController title="Photos" automaticallyAdjustsScrollViewInsets="NO" id="fRH-fZ-8Pp" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Photos" image="photos" id="bnj-gL-gYa"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="jt5-Ze-zDa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="jt5-Ze-zDa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -266,7 +270,7 @@
                 <navigationController title="Albums" automaticallyAdjustsScrollViewInsets="NO" id="bWy-DQ-TZW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Albums" image="albums" id="qIg-5W-7yy"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="abV-L7-LuX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="abV-L7-LuX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -332,7 +336,7 @@
                 <navigationController title="Tags" automaticallyAdjustsScrollViewInsets="NO" id="Iy7-Zg-zZ3" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Tags" image="tags" id="u37-EN-Ogd"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ban-fj-SsR">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ban-fj-SsR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -398,7 +402,7 @@
                 <navigationController title="Favorites" automaticallyAdjustsScrollViewInsets="NO" id="htS-ly-I9l" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favorites" image="favorites" id="Zmu-Hw-fNi"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="4fi-0x-WLb">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="4fi-0x-WLb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -421,10 +425,10 @@
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="eHv-hu-u0M">
-                                <rect key="frame" x="0.0" y="56" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eHv-hu-u0M" id="S0X-pY-fCi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -447,7 +451,7 @@
                     <navigationItem key="navigationItem" id="Nsb-ub-QKk">
                         <nil key="title"/>
                         <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="t7B-eP-SdN">
-                            <rect key="frame" x="180" y="7" width="240" height="30"/>
+                            <rect key="frame" x="67.5" y="7" width="240" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <segments>
                                 <segment title="Favorites"/>
@@ -573,7 +577,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="2Ph-Ca-wfA" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" systemItem="more" id="VAP-KG-ggf"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="1CY-LA-vPu">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1CY-LA-vPu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
