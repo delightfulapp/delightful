@@ -211,7 +211,6 @@
 		03FD48381920B27300D4ADF7 /* star-fill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 03FD48361920B27300D4ADF7 /* star-fill@2x.png */; };
 		32D4CA0AF3B8E29F3F40BCD3 /* Pods_Delightful.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE2BFDF08166F403D4AD491 /* Pods_Delightful.framework */; };
 		6447E45C1EF35D46006B64BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6447E45B1EF35D46006B64BD /* LaunchScreen.storyboard */; };
-		6447E45E1EF36F55006B64BD /* launch-screen.png in Resources */ = {isa = PBXBuildFile; fileRef = 6447E45D1EF36F55006B64BD /* launch-screen.png */; };
 		8E34E98BF5C24CF3A839C511 /* Pods_DelightfulTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13A4D360FBC1B634615D4C23 /* Pods_DelightfulTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -1269,7 +1268,6 @@
 				0398D7C918103CD000FDD83B /* right.png in Resources */,
 				031B39351A5925CE00117BFC /* link@2x.png in Resources */,
 				03CE50E11818136E00445084 /* introbg@2x.jpg in Resources */,
-				6447E45E1EF36F55006B64BD /* launch-screen.png in Resources */,
 				0398D7CA18103CD000FDD83B /* right@2x.png in Resources */,
 				032222B51814CBF0004F3830 /* npr_notification_image_warning.png in Resources */,
 				6447E45C1EF35D46006B64BD /* LaunchScreen.storyboard in Resources */,
@@ -1736,7 +1734,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.getdelightfulapp.delightful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c36c9a7-3c96-42e4-83af-9caa396615d8";
+				PROVISIONING_PROFILE = "3d089ad9-2908-4df3-ae1a-ee86bec0cc9d";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.getdelightfulapp.delightful";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -1783,7 +1781,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.getdelightfulapp.delightful;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "16d33a6e-3458-4ce4-8fe3-585c395f9ce2";
+				PROVISIONING_PROFILE = "fd27b67d-a1db-4d4b-a600-d23c983aa3b5";
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.getdelightfulapp.delightful";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;

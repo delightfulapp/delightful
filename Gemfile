@@ -5,3 +5,4 @@ source "https://rubygems.org"
 # gem "rails"
 gem 'fastlane'
 gem 'droplet_kit'
+gem 'cocoapods'

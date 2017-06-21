@@ -177,12 +177,16 @@
     NSInteger currentTag = cell.tag + 1;
     cell.tag = currentTag;
     
-    PHAsset *photo = asset.asset;
-    [[PHCachingImageManager defaultManager] requestImageForAsset:photo targetSize:cell.frame.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
-        if (cell.tag == currentTag) {
-            cell.cellImageView.image = result;
-        }
-    }];
+    if (asset.asset) {
+        PHAsset *photo = asset.asset;
+        [[PHCachingImageManager defaultManager] requestImageForAsset:photo targetSize:cell.frame.size contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage *result, NSDictionary *info) {
+            if (cell.tag == currentTag) {
+                cell.cellImageView.image = result;
+            }
+        }];
+    } else {
+        cell.cellImageView.image = [UIImage imageWithCIImage:asset.image];
+    }
     
     if ([self.failUploads containsObject:asset]) {
         [cell setUploadProgress:0];
