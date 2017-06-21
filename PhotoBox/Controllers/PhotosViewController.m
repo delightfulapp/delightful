@@ -783,12 +783,12 @@ detailViewController:(DLFDetailViewController *)detailViewController
                 [assets addObject:asset];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                TagsAlbumsPickerViewController *tagsalbumspicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
-                [tagsalbumspicker setShowCancelButton:YES];
-                [tagsalbumspicker setSelectedAssets:assets];
-                [tagsalbumspicker setDelegate:self];
+                TagsAlbumsPickerViewController *tagsAlbumsPicker = [[TagsAlbumsPickerViewController alloc] initWithStyle:UITableViewStyleGrouped];
+                [tagsAlbumsPicker setShowCancelButton:YES];
+                [tagsAlbumsPicker setSelectedAssets:assets];
+                [tagsAlbumsPicker setDelegate:self];
                 
-                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tagsalbumspicker];
+                UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:tagsAlbumsPicker];
                 nav.modalPresentationStyle = UIModalPresentationFormSheet;
                 
                 [self presentViewController:nav animated:YES completion:nil];

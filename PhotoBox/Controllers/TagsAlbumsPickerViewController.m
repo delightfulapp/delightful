@@ -30,7 +30,7 @@
 
 NSString *const normalCellIdentifier = @"normalCell";
 
-@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate, PhotoTagsCollectionViewControllerDelegate, UITextViewDelegate>
+@interface TagsAlbumsPickerViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, TagsSuggestionTableViewControllerPickerDelegate, AlbumsPickerViewControllerDelegate, PhotoTagsCollectionViewControllerDelegate, UITextViewDelegate, UITableViewDropDelegate>
 
 @property (nonatomic, strong) NSArray *tags;
 @property (nonatomic, assign) BOOL isFetchingTags;
@@ -101,8 +101,13 @@ NSString *const normalCellIdentifier = @"normalCell";
     
     if (self.showCancelButton) {
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonItemStylePlain target:self action:@selector(didTapCancel:)];
+        self.tableView.dropDelegate = self;
     }
     
+    [self updateTitle];
+}
+
+- (void)updateTitle {
     self.title = [NSString stringWithFormat:self.selectedAssets.count > 1 ? NSLocalizedString(@"%ld photos", nil) : NSLocalizedString(@"%ld photo", nil), self.selectedAssets.count];
 }
 
@@ -518,6 +523,51 @@ NSString *const normalCellIdentifier = @"normalCell";
 
 - (void)textViewDidChange:(UITextView *)textView {
     self.uploadDescription = textView.text;
+}
+
+#pragma mark - UITableViewDropDelegate
+
+- (void)tableView:(UITableView *)tableView performDropWithCoordinator:(id<UITableViewDropCoordinator>)coordinator {
+    NSMutableArray *tasks = [NSMutableArray array];
+    for (id<UICollectionViewDropItem> item in coordinator.items) {
+        NSItemProvider *itemProvider = item.dragItem.itemProvider;
+        if ([itemProvider canLoadObjectOfClass:[UIImage class]]) {
+            BFTask *task = [[BFTask taskWithResult:nil] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+                BFTaskCompletionSource *loadObject = [BFTaskCompletionSource taskCompletionSource];
+                [itemProvider loadDataRepresentationForTypeIdentifier:@"public.image" completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
+                    if (data) {
+                        [loadObject setResult:data];
+                    }
+                    else [loadObject setError:error];
+                }];
+                return loadObject.task;
+            }];
+            [tasks addObject:task];
+        }
+    }
+    [[coordinator session] setProgressIndicatorStyle:UIDropSessionProgressIndicatorStyleNone];
+    
+    if (tasks.count > 0) {
+        [[BFTask taskForCompletionOfAllTasksWithResults:tasks] continueWithBlock:^id _Nullable(BFTask * _Nonnull t) {
+            NSArray *imagesData = t.result;
+            NSMutableArray *assets = [NSMutableArray arrayWithCapacity:imagesData.count];
+            for (NSData *photoData in imagesData) {
+                CIImage *image = [CIImage imageWithData:photoData];
+                DLFAsset *asset = [[DLFAsset alloc] init];
+                asset.image = image;
+                asset.imageData = photoData;
+                [assets addObject:asset];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.selectedAssets = [self.selectedAssets arrayByAddingObjectsFromArray:assets];
+                [self updateTitle];
+            });
+            
+            
+            return nil;
+        }];
+    }
 }
 
 
